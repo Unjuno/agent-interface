@@ -1,0 +1,22 @@
+"""Pure receipt/evidence join, without native control or runtime imports."""
+import hashlib,json
+
+def verify_join(before, verified, retained, artifact, raw_effects):
+    action=before['row']['action'];call_id=before['call_id']
+    effect=verified.get('task_effect') or {};receipt=effect.get('receipt') or {}
+    identity={'call_id':call_id,'operation_id':action['operation_id'],'target_generation':action['target_generation']}
+    try:
+        rows=[json.loads(line) for line in raw_effects.splitlines() if line]
+    except (ValueError,UnicodeError):
+        return {'source_json_valid':False}
+    checks={
+      'public_success':verified.get('status')=='verified' and verified.get('task_success') is True and effect.get('task_success') is True and receipt.get('outcome')=='success',
+      'identity_join':all(receipt.get(k)==v and artifact.get(k)==v for k,v in identity.items()) and verified.get('call_id')==call_id and retained.get('call_id')==call_id,
+      'fresh_observation':type(receipt.get('observed_monotonic_ns')) is int and effect.get('requested_monotonic_ns',-1)<=receipt['observed_monotonic_ns']<=effect.get('receipt_received_monotonic_ns',-1) and artifact.get('observed_monotonic_ns')==receipt['observed_monotonic_ns'],
+      'source_bytes':artifact.get('source_sha256')==hashlib.sha256(raw_effects).hexdigest() and artifact.get('source_rows')==rows,
+      'effect_precedes_fresh_observation':len(rows)==1 and type(rows[0]) is dict and type(rows[0].get('monotonic_ns')) is int and before['observed_ns']<rows[0]['monotonic_ns']<=receipt.get('observed_monotonic_ns',-1),
+      'action_scope_unchanged':retained.get('action')==action,
+      'replay_denied':verified.get('replay_allowed') is False and retained.get('replay_allowed') is False,
+      'effect_retained':retained.get('task_effect')==effect,
+    }
+    return checks

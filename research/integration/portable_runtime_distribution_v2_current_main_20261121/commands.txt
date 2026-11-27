@@ -1,0 +1,13 @@
+Windows build:
+py -3.13 -m runtime.distribution_v2.build --out outputs/distribution_main_038486e_20261121/agent-interface-runtime.pyz --manifest outputs/distribution_main_038486e_20261121/manifest.json --sums outputs/distribution_main_038486e_20261121/sha256.txt
+py -3.13 -m runtime.distribution_v2.build --out outputs/distribution_main_038486e_20261121/rebuild-check.pyz --manifest outputs/distribution_main_038486e_20261121/rebuild-check-manifest.json --sums outputs/distribution_main_038486e_20261121/rebuild-check-sha256.txt
+py -3.13 -m unittest discover -s runtime/distribution_v2 -p 'test_*.py' -v
+py -3.13 -O -m unittest discover -s runtime/distribution_v2 -p 'test_*.py' -v
+py -3.13 <outside-checkout>/agent-interface-runtime.pyz doctor
+py -3.13 <outside-checkout>/agent-interface-runtime.pyz validate --help
+
+Ubuntu WSL (Python 3.12.3):
+wsl.exe -d Ubuntu -- python3 <outside-checkout>/agent-interface-runtime.pyz doctor
+wsl.exe -d Ubuntu -- python3 <outside-checkout>/agent-interface-runtime.pyz validate --help
+wsl.exe -d Ubuntu -- python3 -m unittest discover -s /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/runtime/distribution_v2 -p 'test_*.py' -v
+wsl.exe -d Ubuntu -- python3 -O -m unittest discover -s /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/runtime/distribution_v2 -p 'test_*.py' -v

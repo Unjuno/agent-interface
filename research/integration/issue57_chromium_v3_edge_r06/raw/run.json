@@ -1,0 +1,370 @@
+{
+  "outcome": "TASK_SUCCEEDED",
+  "task_effect": "succeeded",
+  "delivery": "confirmed",
+  "accounting": {
+    "attempted_calls": 1,
+    "completed_calls": 1,
+    "duplicate_call_ids": [],
+    "usage_totals": {
+      "input_tokens": 0,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 0,
+      "reasoning_output_tokens": 0
+    },
+    "usage_coverage": {
+      "input_tokens": 1,
+      "cached_input_tokens": 1,
+      "cache_write_input_tokens": 1,
+      "output_tokens": 1,
+      "reasoning_output_tokens": 1
+    },
+    "visible_images_submitted": 1,
+    "visible_image_coverage": 1,
+    "model_wait_ns": 0,
+    "model_wait_coverage": 1,
+    "cost_coverage": 0,
+    "cost": null,
+    "cached_input_semantics": "subset of input_tokens; never added to input total"
+  },
+  "attempt_ledger": [
+    {
+      "attempt_id": "offline-target-contract",
+      "stage": "anchor_model",
+      "status": "completed",
+      "started_ns": 465877188105600,
+      "completed_ns": 465877188183000,
+      "call_id": "offline-target-contract",
+      "thread_id": null,
+      "requested_model": "offline-test-double",
+      "requested_effort": "medium",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "cost": null,
+      "visible_images_submitted": 1,
+      "wait_ns": 0,
+      "error": null
+    }
+  ],
+  "model_call_ledger": [
+    {
+      "attempt_id": "offline-target-contract",
+      "stage": "anchor_model",
+      "call_id": "offline-target-contract",
+      "output": {
+        "status": "target_reference",
+        "target": {
+          "interface": {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "edge-ocr-submit-v1",
+            "session_scope": "edge-ocr-session-v1",
+            "surface": "form",
+            "predicates": [
+              "field_pixels_changed",
+              "field_value_matches_task",
+              "field_target_present",
+              "submit_target_present",
+              "submission_pixels_changed"
+            ],
+            "symbols": {
+              "value_field": {
+                "kind": "target_reference",
+                "target_reference": "field",
+                "identity_predicate": "field_target_present",
+                "dependencies": [
+                  "field_target_present"
+                ]
+              },
+              "submit_control": {
+                "kind": "target_reference",
+                "target_reference": "submit",
+                "identity_predicate": "submit_target_present",
+                "dependencies": [
+                  "submit_target_present",
+                  "field_value_matches_task"
+                ]
+              }
+            },
+            "actions": {
+              "enter_token": {
+                "target_symbol": "value_field",
+                "operation": "enter_exact_token",
+                "expected_effect": {
+                  "field_value_matches_task": true
+                }
+              },
+              "submit_form": {
+                "target_symbol": "submit_control",
+                "operation": "activate_submit",
+                "expected_effect": {
+                  "submission_pixels_changed": true
+                }
+              }
+            },
+            "method": {
+              "name": "enter_verify_exact_value_then_submit",
+              "version": "2",
+              "initial_state": "verify_value",
+              "max_transitions": 2,
+              "max_runtime_ms": 10000,
+              "states": {
+                "empty": {
+                  "branches": [
+                    {
+                      "when": {
+                        "field_value_matches_task": false,
+                        "field_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "enter_token",
+                      "next_state": "verify_value",
+                      "reason": null
+                    }
+                  ]
+                },
+                "verify_value": {
+                  "branches": [
+                    {
+                      "when": {
+                        "field_value_matches_task": true,
+                        "submit_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "submit_form",
+                      "next_state": "submitted",
+                      "reason": null
+                    }
+                  ]
+                },
+                "submitted": {
+                  "branches": [
+                    {
+                      "when": {
+                        "submission_pixels_changed": true
+                      },
+                      "outcome": "complete",
+                      "action": null,
+                      "next_state": null,
+                      "reason": null
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "requested_model": "offline-test-double",
+      "requested_effort": "medium",
+      "cost": null,
+      "visible_images_submitted": 1,
+      "wait_ns": 0
+    }
+  ],
+  "execution_progress": {
+    "status": "completed"
+  },
+  "effect_receipt": {
+    "status": "succeeded",
+    "evidence_ref": "independent-http-post-1"
+  },
+  "compiled_execution_receipt": {
+    "format": "compiled-gui-runtime-receipt-v1",
+    "interface_id": "edge-ocr-submit-v1",
+    "method": "enter_verify_exact_value_then_submit",
+    "method_version": "2",
+    "session_scope": "edge-ocr-session-v1",
+    "outcome": "TASK_SUCCEEDED",
+    "reason": "method_complete",
+    "completed_transitions": 1,
+    "frontier_model_resumptions": 0,
+    "observations": [
+      {
+        "sequence": 1,
+        "captured_ns": 465877450748900,
+        "evidence_ref": "edge-frame-1",
+        "evidence_digest": "3077c1c635b420d40b528e9855d4d134b215c0d616d45414c369efb0e1d9752c",
+        "predicates": {
+          "field_pixels_changed": false,
+          "field_value_matches_task": true,
+          "field_target_present": true,
+          "submit_target_present": true,
+          "submission_pixels_changed": false
+        },
+        "observation_started_ns": 465877188402500,
+        "observation_accepted_ns": 465877450777100
+      },
+      {
+        "sequence": 2,
+        "captured_ns": 465877673690400,
+        "evidence_ref": "edge-frame-2",
+        "evidence_digest": "2066347dd5740013dde10c373b8276908a40e3102d4d8148b4469af3594924f1",
+        "predicates": {
+          "field_pixels_changed": true,
+          "field_value_matches_task": "unknown",
+          "field_target_present": true,
+          "submit_target_present": true,
+          "submission_pixels_changed": true
+        },
+        "observation_started_ns": 465877566097600,
+        "observation_accepted_ns": 465877673721200
+      }
+    ],
+    "transitions": [
+      {
+        "from_state": "verify_value",
+        "to_state": "submitted",
+        "action": "submit_form",
+        "matched_conditions": {
+          "field_value_matches_task": true,
+          "submit_target_present": true
+        },
+        "observation_sequence": 1,
+        "evidence_ref": "edge-frame-1",
+        "action_id": "edge-submit-1",
+        "effect_ref": "local-post-1",
+        "release_verified": true,
+        "execution_started_ns": 465877450825100,
+        "execution_accepted_ns": 465877566067400
+      }
+    ],
+    "critical_events": [
+      {
+        "event": "branch_selected",
+        "state": "verify_value",
+        "outcome": "action",
+        "action": "submit_form",
+        "matched_conditions": {
+          "field_value_matches_task": true,
+          "submit_target_present": true
+        },
+        "evidence_ref": "edge-frame-1"
+      },
+      {
+        "event": "action_terminal",
+        "action": "submit_form",
+        "status": "completed",
+        "action_id": "edge-submit-1",
+        "release_verified": true,
+        "execution_started_ns": 465877450825100,
+        "execution_accepted_ns": 465877566067400
+      },
+      {
+        "event": "effect_checked",
+        "action": "submit_form",
+        "status": "succeeded",
+        "evidence_ref": "edge-frame-2",
+        "action_id": "edge-submit-1",
+        "execution_accepted_ns": 465877566067400,
+        "effect_observation_captured_ns": 465877673690400,
+        "effect_observation_accepted_ns": 465877673721200,
+        "effect_verification_started_ns": 465877673739500,
+        "effect_verification_accepted_ns": 465877673798700,
+        "effect_verification_clock_domain": "graph"
+      },
+      {
+        "event": "branch_selected",
+        "state": "submitted",
+        "outcome": "complete",
+        "action": null,
+        "matched_conditions": {
+          "submission_pixels_changed": true
+        },
+        "evidence_ref": "edge-frame-2"
+      },
+      {
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "completed_transitions": 1
+      }
+    ],
+    "latest_evidence_ref": "edge-frame-2",
+    "pending_effect": null,
+    "started_ns": 465877188398700,
+    "ended_ns": 465877673824900,
+    "elapsed_ns": 485426200,
+    "input_authority": "admission_per_action_only",
+    "raw_evidence_retention": "adapter_responsibility_unverified"
+  },
+  "ocr_observations": [
+    {
+      "sequence": 1,
+      "runtime_state": "verify_value",
+      "state": true,
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_value_matches_task": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "capture_file": "frame-1.png",
+      "capture_sha256": "3077c1c635b420d40b528e9855d4d134b215c0d616d45414c369efb0e1d9752c",
+      "ocr_text": "t991025-4 Save",
+      "ocr_elapsed_ns": 165073300
+    },
+    {
+      "sequence": 2,
+      "runtime_state": "submitted",
+      "state": "unknown",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_value_matches_task": "unknown",
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": true
+      },
+      "capture_file": "frame-2.png",
+      "capture_sha256": "2066347dd5740013dde10c373b8276908a40e3102d4d8148b4469af3594924f1",
+      "ocr_text": "",
+      "ocr_elapsed_ns": 10504800
+    }
+  ],
+  "observer_errors": [],
+  "ocr_elapsed_ns": [
+    165073300,
+    10504800
+  ],
+  "value_states": [
+    true,
+    "unknown"
+  ],
+  "dispatched_operations": [
+    "activate_submit"
+  ],
+  "server_posts": [
+    {
+      "submitted_values": [
+        "t991025-4"
+      ],
+      "exact": true,
+      "raw_body_utf8": "value=t991025-4",
+      "received_ns": 465877540582500,
+      "path": "/submit"
+    }
+  ],
+  "edge_version": {
+    "Browser": "Edg/157.0.4341.60",
+    "File-Path-Style": "windows",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+    "V8-Version": "15.7.11.7",
+    "WebKit-Version": "537.36 (@fbcb2989a6c61b72a4919fe1028e58e70131cd46)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:63850/devtools/browser/96654b52-7117-4782-a5b8-27ce79c66217"
+  },
+  "python": "3.11.9"
+}

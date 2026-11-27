@@ -1,0 +1,38 @@
+{
+  "captured_at_utc": "2026-10-15T21:15:34.034591+00:00",
+  "base": "1b1c0064e4acc32f4aa451218130db3ac33a4e55",
+  "tested_code": "ff63eead85e3c68a72f27faad9412dea1245e5a3",
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "dependencies": {
+    "Pillow": "12.2.0",
+    "python-xlib": "0.33",
+    "mcp": "1.30.0"
+  },
+  "kind": "ordinary Fake X repair/regression; post-execution record; no formal allocation",
+  "scope": "actual MCP worker/public bridge/session/backend and owned Python fatal-stop probes",
+  "native_policy": "No display/WinDLL/input/game/model/WSL/container; DISPLAY removed for broad suites",
+  "failure_history": [
+    "First source tests failed6 assertions",
+    "Intermediate saved-report fallback failed2 directed assertions"
+  ],
+  "baseline": "Complete pinned old MCP module only;5methods9failures0errors normal/-O. Owned-child test excluded because child imports checkout source.",
+  "normal_direct_probes": "Two additional ordinary helper collections preserve complete stdout/stderr and generated request/image/report/interruption artifacts. No claimed independence or population failure rate.",
+  "commands": [
+    "python -m unittest runtime.cli_v1.test_mcp_interruption_receipt",
+    "python -O -m unittest runtime.cli_v1.test_mcp_interruption_receipt",
+    "python [-O] -m unittest discover -s runtime/cli_v1 -t . -p test*.py",
+    "python [-O] -m unittest discover -s runtime/distribution_v2 -t . -p test*.py",
+    "python [-O] <external>/baseline_mcp_interruption.py",
+    "python -B -m runtime.cli_v1.test_mcp_interruption_receipt --probe <fresh output> <KeyboardInterrupt|SystemExit>"
+  ],
+  "limitations": [
+    "native I/O/physical release bound",
+    "power-loss/directory durability",
+    "bounded filesystem writes",
+    "server restart receipt discovery",
+    "process-death/cross-backend/device custody",
+    "independent task effect/bounded semantic recovery",
+    "matched economics"
+  ]
+}

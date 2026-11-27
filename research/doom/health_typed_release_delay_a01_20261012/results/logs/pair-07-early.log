@@ -1,0 +1,196 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "admission": {
+    "authored": {
+      "critical_health_minimum": 45,
+      "max_source_age_ms": 5000,
+      "maximum_health_loss": 8,
+      "signal_id": "health"
+    },
+    "effective": {
+      "critical_health_minimum": 45,
+      "hard_minimum": 89,
+      "max_source_age_ms": 5000,
+      "maximum_health_loss": 8,
+      "signal_id": "health"
+    },
+    "grants_input_authority": false,
+    "monitor_mode": "health_only",
+    "source_ammo_signal": null,
+    "source_signal": {
+      "binding": {
+        "focus": 42,
+        "geometry": [
+          0,
+          0,
+          800,
+          600
+        ],
+        "surface": 7
+      },
+      "capture_ns": 1000000000,
+      "format": "observable-signal-v1",
+      "sequence": 1,
+      "signal_id": "health",
+      "status": "observed",
+      "value": 97,
+      "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "status": "admitted"
+  },
+  "all_assertions_passed": true,
+  "executor": {
+    "cancellation_requested": true,
+    "held_key_to_verified_release_ms": 2.0701,
+    "injected_delay_ms": 0.0,
+    "input_released_event": {
+      "event": "input_released",
+      "grants_input_authority": false,
+      "id": "cover-health-1",
+      "intent_token": "deterministic-intent-cover-health-1",
+      "owner_release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "deterministic-intent-cover-health-1",
+        "key_release_attempts": {
+          "65": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 9540054845,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 9540049410,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 9540051885
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              9540049410,
+              9540054845
+            ],
+            "keycode": 65
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "cancelled",
+        "valid_until_ns": 19537589655,
+        "verified": true,
+        "verified_ns": 9540065306
+      },
+      "program_terminal_pending": true,
+      "published_ns": 9540200004
+    },
+    "key_was_down_before_invalidation": true,
+    "owner_release_verified": true,
+    "pending_answer_eligible": false,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "owner_receipt": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "release",
+        "release_call_returned_ns": 9540462411,
+        "release_call_started_ns": 9540359693,
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 9540430854
+      },
+      "verified": true
+    },
+    "remaining_buttons": [],
+    "remaining_keys": [],
+    "terminal_status": "cancelled"
+  },
+  "head": "synthetic stack b6f0cc68adc1c67d6b1c878b7d9ce1af6abe3152",
+  "monitor_blob": "PR #8866 eb1367cc3ac1184862c454440a418dcf1add9267",
+  "monitor_module_path": "/study/worktree/research/live_control/observable_signal_guard_v2.py",
+  "monitor_module_sha256": "6dde213edf3a77c4de7dd24c4ee98d919436d73964a3307fdb0778880e8c7263",
+  "ordering": [
+    "executor_cancel_command",
+    "planner_interrupt",
+    "owner_release_verified",
+    "input_released",
+    "terminal"
+  ],
+  "schema": "health-only-typed-to-owner-release-composition-v1",
+  "scope": "Synthetic integration of current V39 health-only monitor and cancel helper with Executor V13/V4->V3->V12 using in-memory fake X. No physical input, GUI, game, live allocation, latency claim, useful feedback, recovery, survival, or task-success claim.",
+  "timestamps_ns": {
+    "executor_cancel": 9538166712,
+    "owner_verified_release": 9540065306,
+    "planner_interrupt": 9538189840,
+    "release_published": 9540200004,
+    "terminal": 9540516388
+  },
+  "trigger": {
+    "hard_minimum": 89,
+    "health": 40,
+    "kind": "typed_observation",
+    "monitor_event": {
+      "monitor_received_ns": 9538094857,
+      "outcome": {
+        "current_value": 40,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-1",
+        "hard_minimum": 89,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 100.0,
+        "source_value": 97,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 9538143634,
+      "outcome_evaluation_ms": 0.008102,
+      "sequence": 2,
+      "signal": {
+        "binding": {
+          "focus": 42,
+          "geometry": [
+            0,
+            0,
+            800,
+            600
+          ],
+          "surface": 7
+        },
+        "capture_ns": 1100000000,
+        "format": "observable-signal-v1",
+        "sequence": 2,
+        "signal_id": "health",
+        "status": "observed",
+        "value": 40,
+        "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "signal_extracted_ns": 9538135532,
+      "signal_extraction_ms": 0.040675,
+      "source_event_kind": "typed_observation"
+    },
+    "monitor_status": "HARD_INVALIDATED",
+    "sequence": 2
+  }
+}

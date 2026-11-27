@@ -1,0 +1,28 @@
+test_bounded_proposal_timeout_stops_before_second_input (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_bounded_proposal_timeout_stops_before_second_input) ... ok
+test_cancel_during_proposal_prevents_mint_and_input (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_cancel_during_proposal_prevents_mint_and_input) ... ok
+test_changed_binding_during_proposal_prevents_mint_and_input (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_changed_binding_during_proposal_prevents_mint_and_input) ... ok
+test_fresh_proposal_is_minted_then_guarded_for_second_action (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_fresh_proposal_is_minted_then_guarded_for_second_action) ... ok
+test_original_single_alias_is_rejected_before_any_input (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_original_single_alias_is_rejected_before_any_input) ... ok
+test_wrong_digest_refuses_second_action_without_retry (research.integration.test_calc_g10_fresh_admission_v1.G10FreshAdmissionTests.test_wrong_digest_refuses_second_action_without_retry) ... ok
+test_extra_transition_is_rejected (research.integration.test_calc_g10_fresh_admission_v1.G10InterfaceAdapterTests.test_extra_transition_is_rejected) ... ok
+test_retained_graph_is_adapted_without_changing_task_or_source (research.integration.test_calc_g10_fresh_admission_v1.G10InterfaceAdapterTests.test_retained_graph_is_adapted_without_changing_task_or_source) ... ok
+test_same_alias_is_rejected (research.integration.test_calc_g10_fresh_admission_v1.G10InterfaceAdapterTests.test_same_alias_is_rejected) ... ok
+test_unrecognized_effect_contract_is_rejected (research.integration.test_calc_g10_fresh_admission_v1.G10InterfaceAdapterTests.test_unrecognized_effect_contract_is_rejected) ... ok
+test_late_proposal_after_deadline_keeps_release_and_never_dispatches_second_input (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_late_proposal_after_deadline_keeps_release_and_never_dispatches_second_input) ... ok
+test_success_uses_fresh_native_alias_and_publishes_task_receipt_once (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_success_uses_fresh_native_alias_and_publishes_task_receipt_once) ... ok
+test_unknown_first_effect_keeps_prefix_and_skips_second_input_and_outer_score (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_unknown_first_effect_keeps_prefix_and_skips_second_input_and_outer_score) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.958s
+
+OK
+repository_commit=1de3dea2773a689ffb46e51e22f102e853402881
+python=3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+raw_json_sha256=890c68f13e5fa8598bcbb2f456b8ee5319c584249c19492744a7c96f170014bf
+import=research.live_control.calc_g10_interface_adapter_v1 path=D:\CodexData\Temp\agent-interface-current-main-20261028\research\live_control\calc_g10_interface_adapter_v1.py
+import=research.live_control.calc_g10_fresh_admission_v1 path=D:\CodexData\Temp\agent-interface-currentmain-calc-g10-delay-release-r01-20261028\research\live_control\calc_g10_fresh_admission_v1.py
+import=research.live_control.calc_fresh_reference_v1 path=D:\CodexData\Temp\agent-interface-currentmain-calc-g10-delay-release-r01-20261028\research\live_control\calc_fresh_reference_v1.py
+import=research.live_control.calc_bounded_proposal_v1 path=D:\CodexData\Temp\agent-interface-current-main-20261028\research\live_control\calc_bounded_proposal_v1.py
+import=research.integration.test_calc_g10_native_caller_composition_v1 path=D:\CodexData\Temp\agent-interface-current-main-20261028\research\integration\test_calc_g10_native_caller_composition_v1.py
+import=runtime.core_v1.compiled_gui path=D:\CodexData\Temp\agent-interface-current-main-20261028\runtime\core_v1\compiled_gui.py
+import=runtime.guarded_x11_v1.compiled path=D:\CodexData\Temp\agent-interface-current-main-20261028\runtime\guarded_x11_v1\compiled.py

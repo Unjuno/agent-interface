@@ -1,0 +1,7 @@
+# Degradation contracts under common-cause faults
+
+- **Status:** Two distinct allocations; first protocol mismatch preserved, corrected successor has result-custody HOLD.
+- **Source:** [Issue #8610](https://github.com/Unjuno/agent-interface/issues/8610), corrected successor [#8622](https://github.com/Unjuno/agent-interface/issues/8622); merged records [PR #8621](https://github.com/Unjuno/agent-interface/pull/8621) and [PR #8625](https://github.com/Unjuno/agent-interface/pull/8625).
+- **Idea:** Compare independence-assuming lookup, dependency-aware contracts, and fail-closed handling when nominally separate interface functions share a source, process, adapter, or evidence lineage.
+- **Outcome:** A01 candidate/auditor each ran once and the audit passed its own fixture, but the arms did not match #8610's registered protocol (`HOLD_PROTOCOL_ARM_MISMATCH`). A02 in #8622 ran the corrected three arms once each; the auditor reconstructed 10 cases, detected six overclaims in four cases, found zero unsupported dependency-aware outcomes and zero unknown fail-closed admissions, and checked release labels 10/10. The formal fixture/audit result remains `HOLD_RESULT_CUSTODY` because complete stdout digests/raw streams were unavailable. Neither allocation was rerun.
+- **Boundary:** These are finite contract-method results, not measured service availability, runtime safety, or production fault rates. Keep A01 and A02 dispositions separate.

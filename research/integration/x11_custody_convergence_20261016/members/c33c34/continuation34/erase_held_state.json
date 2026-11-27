@@ -1,0 +1,227 @@
+{
+  "V4-FIRST": [
+    {
+      "case": "XI1_indistinguishable",
+      "neutral_hex": "011e07000900000001000000000000000000000000000000000000000000000001240a000000000000000000000000000000000000000000000000000000000000000000",
+      "state_readable_flag": false,
+      "suppressed_hex": "011e07000900000001000000000000000000000000000000000000000000000001240a000000000000000000000000000000000000000000000000000000000000000000",
+      "visible_hex": "011e07000900000001000000000000000000000000000000000000000000000001240a000002000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "case": "suppressed_stubborn",
+      "emissions": 3,
+      "events": [
+        {
+          "number": 9,
+          "send": 4
+        },
+        {
+          "sync": true
+        },
+        {
+          "number": 9,
+          "send": 5
+        },
+        {
+          "sync": true
+        },
+        {
+          "number": 9,
+          "send": 5
+        },
+        {
+          "sync": true
+        },
+        {
+          "keymap": true
+        },
+        {
+          "core_pointer": true
+        },
+        {
+          "extension": "XInputExtension"
+        },
+        {
+          "xi_version": [
+            2,
+            0
+          ]
+        },
+        {
+          "xi_query": 1
+        }
+      ],
+      "owned": [],
+      "quarantine": false,
+      "query_packets": [
+        "0100050012000000010000000000000000000000000000000000000000000000020001000300010007000100706f696e7465720001000d0007000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "reply": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2
+          ],
+          "emissions": 3,
+          "ended_ns": 1,
+          "observations": [],
+          "program_emissions": 3,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 1,
+              "verified": true
+            }
+          ],
+          "started_ns": 1,
+          "waits": []
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "display.geometry",
+          "input.pointer",
+          "input.release_all"
+        ],
+        "status": "completed"
+      },
+      "synthetic_source_buttons": []
+    },
+    {
+      "case": "visible_stubborn",
+      "emissions": 3,
+      "events": [
+        {
+          "number": 9,
+          "send": 4
+        },
+        {
+          "sync": true
+        },
+        {
+          "number": 9,
+          "send": 5
+        },
+        {
+          "sync": true
+        },
+        {
+          "number": 9,
+          "send": 5
+        },
+        {
+          "sync": true
+        },
+        {
+          "keymap": true
+        },
+        {
+          "core_pointer": true
+        },
+        {
+          "extension": "XInputExtension"
+        },
+        {
+          "xi_version": [
+            2,
+            0
+          ]
+        },
+        {
+          "xi_query": 1
+        }
+      ],
+      "owned": [
+        "x2"
+      ],
+      "quarantine": true,
+      "query_packets": [
+        "0100050012000000010000000000000000000000000000000000000000000000020001000300010007000100706f696e7465720001000d0007000a000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "reply": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2
+          ],
+          "emissions": 3,
+          "ended_ns": 1,
+          "observations": [],
+          "program_emissions": 3,
+          "releases": [
+            {
+              "buttons_down": [
+                "x2"
+              ],
+              "keys_down": [],
+              "monotonic_ns": 1,
+              "verified": false
+            }
+          ],
+          "started_ns": 1,
+          "waits": []
+        },
+        "recovery_required": true,
+        "required_capabilities": [
+          "display.geometry",
+          "input.pointer",
+          "input.release_all"
+        ],
+        "status": "release_unverified"
+      },
+      "synthetic_source_buttons": [
+        9
+      ]
+    },
+    {
+      "errors": 1,
+      "failures": 1,
+      "forbidden": [],
+      "summary": true,
+      "tests": 4
+    }
+  ],
+  "MARKER-FIXED": [
+    {
+      "adoption": "HOLD",
+      "case": "generation_marker_indistinguishable",
+      "observations": [
+        {
+          "generation_scorer_only": "original",
+          "inventory_hex": "010005001700000001000000000000000000000000000000000000000000000007000300020001001a0001005669727475616c20636f726520585445535420706f696e746572000001000d0007000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "marker_hex": "010006000100000013000000000000000100000008000000000000000000000001000000",
+          "property_value": [
+            8,
+            [
+              1
+            ]
+          ]
+        },
+        {
+          "generation_scorer_only": "replacement",
+          "inventory_hex": "010005001700000001000000000000000000000000000000000000000000000007000300020001001a0001005669727475616c20636f726520585445535420706f696e746572000001000d0007000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "marker_hex": "010006000100000013000000000000000100000008000000000000000000000001000000",
+          "property_value": [
+            8,
+            [
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "forbidden": [],
+      "summary": true,
+      "tests": 1
+    }
+  ]
+}

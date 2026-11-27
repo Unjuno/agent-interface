@@ -1,0 +1,24 @@
+{
+  "attempt_id": "STANDARD-TASK-CLEANUP-RESULT-SEMANTICS-20261121-R01",
+  "frozen_at_utc": "2026-11-21T06:50:10Z",
+  "limits": "Deterministic adapter boundary probe only. No physical input, live caller, MAP01, provider, or efficiency claim.",
+  "probe_input": {
+    "cleanup_error": "release readback failed",
+    "result": {
+      "effect_status": "confirmed",
+      "program_completed": true,
+      "task_success": true
+    },
+    "status": "returned"
+  },
+  "python_modes": [
+    "normal",
+    "-O"
+  ],
+  "source_blobs": "source-blobs.txt",
+  "source_files": [
+    "runtime/cli_v1/golden_v3.py",
+    "runtime/cli_v1/test_golden_v3.py"
+  ],
+  "source_revision": "dd206c8e52571131e01d4f99cd75e9c5d2e43a5e"
+}

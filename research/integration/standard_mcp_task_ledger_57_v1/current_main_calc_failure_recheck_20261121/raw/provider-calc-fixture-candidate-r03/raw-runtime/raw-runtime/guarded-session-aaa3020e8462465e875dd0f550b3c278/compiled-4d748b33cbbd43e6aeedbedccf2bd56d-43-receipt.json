@@ -1,0 +1,171 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "planner-calc-two-cell-v1",
+  "method": "populate-and-save",
+  "method_version": "1",
+  "session_scope": "native-x11:d85b4a663ee646fc8a08fe801d9b0f2b",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_unavailable",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 255626490408100,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_match": "unknown"
+      },
+      "observation_started_ns": 255626454376900,
+      "observation_accepted_ns": 255626507354500
+    },
+    {
+      "sequence": 16,
+      "captured_ns": 255627935789900,
+      "evidence_ref": "observation-16",
+      "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_match": true
+      },
+      "observation_started_ns": 255627886974800,
+      "observation_accepted_ns": 255627955753000
+    },
+    {
+      "sequence": 20,
+      "captured_ns": 255628571180600,
+      "evidence_ref": "observation-20",
+      "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_match": true
+      },
+      "observation_started_ns": 255628527117700,
+      "observation_accepted_ns": 255628594962000
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "blank_sheet",
+      "to_state": "values_entered",
+      "action": "populate_cells",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-1d274d27039040c49a7dacf14cced893",
+      "effect_ref": "compiled-4d748b33cbbd43e6aeedbedccf2bd56d-20-execution",
+      "release_verified": true,
+      "execution_started_ns": 255626508228900,
+      "execution_accepted_ns": 255627886801200
+    },
+    {
+      "from_state": "values_entered",
+      "to_state": "save_handoff",
+      "action": "persist_document",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_match": true
+      },
+      "observation_sequence": 16,
+      "evidence_ref": "observation-16",
+      "action_id": "action-a31fa3ab2093433ea090ad69a211504e",
+      "effect_ref": "compiled-4d748b33cbbd43e6aeedbedccf2bd56d-34-execution",
+      "release_verified": true,
+      "execution_started_ns": 255627959389800,
+      "execution_accepted_ns": 255628526740400
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "blank_sheet",
+      "outcome": "action",
+      "action": "populate_cells",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "populate_cells",
+      "status": "completed",
+      "action_id": "action-1d274d27039040c49a7dacf14cced893",
+      "release_verified": true,
+      "execution_started_ns": 255626508228900,
+      "execution_accepted_ns": 255627886801200
+    },
+    {
+      "event": "effect_checked",
+      "action": "populate_cells",
+      "status": "succeeded",
+      "evidence_ref": "observation-16",
+      "action_id": "action-1d274d27039040c49a7dacf14cced893",
+      "execution_accepted_ns": 255627886801200,
+      "effect_observation_captured_ns": 255627935789900,
+      "effect_observation_accepted_ns": 255627955753000,
+      "effect_verification_started_ns": 255627955943200,
+      "effect_verification_accepted_ns": 255627957992100
+    },
+    {
+      "event": "branch_selected",
+      "state": "values_entered",
+      "outcome": "action",
+      "action": "persist_document",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_match": true
+      },
+      "evidence_ref": "observation-16"
+    },
+    {
+      "event": "action_terminal",
+      "action": "persist_document",
+      "status": "completed",
+      "action_id": "action-a31fa3ab2093433ea090ad69a211504e",
+      "release_verified": true,
+      "execution_started_ns": 255627959389800,
+      "execution_accepted_ns": 255628526740400
+    },
+    {
+      "event": "effect_checked",
+      "action": "persist_document",
+      "status": "unavailable",
+      "evidence_ref": "observation-20",
+      "action_id": "action-a31fa3ab2093433ea090ad69a211504e",
+      "execution_accepted_ns": 255628526740400,
+      "effect_observation_captured_ns": 255628571180600,
+      "effect_observation_accepted_ns": 255628594962000,
+      "effect_verification_started_ns": 255628595137200,
+      "effect_verification_accepted_ns": 255628613485700
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-20",
+  "pending_effect": {
+    "action": "persist_document",
+    "expected_effect": {
+      "cells_match": true
+    },
+    "effect_ref": "compiled-4d748b33cbbd43e6aeedbedccf2bd56d-34-execution"
+  },
+  "started_ns": 255626454370100,
+  "ended_ns": 255628613895300,
+  "elapsed_ns": 2159525200,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

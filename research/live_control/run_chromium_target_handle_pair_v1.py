@@ -148,7 +148,8 @@ def run_case(name, changed_target):
 def main():
     plan = json.loads((OUT / "preregistration.json").read_text(encoding="utf-8"))
     for name, digest in plan["sources"].items():
-        assert sha(HERE / name) == digest, name
+        if sha(HERE / name) != digest:
+            raise RuntimeError("source changed after preregistration: " + name)
     cases = [run_case(name, name == "changed-target")
              for name in plan["execution_order"]]
     by_name = {case["name"]: case for case in cases}

@@ -1,0 +1,117 @@
+{
+  "schema": "fake-owned-compiled-retention-mode-comparison-v1",
+  "date_local": "2026-11-16",
+  "repository_head": "b046c90d6ab80cedb47fcd1be85fac5111dfce0b",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "conditions": "Same test helper, FakeX owner, interface, alias point, one CTRL+A keyboard action, graph deadline 5000 ms, result wait 10000 ms; only journal vs files retention mode changed. Two counterbalanced execution pairs.",
+  "driver_normalized_sha256": [
+    "ecd775b0801b2d3bfe6a9a2a3d270fd00d21576fb4fa795a765469d53f6f441c",
+    "ecd775b0801b2d3bfe6a9a2a3d270fd00d21576fb4fa795a765469d53f6f441c",
+    "ecd775b0801b2d3bfe6a9a2a3d270fd00d21576fb4fa795a765469d53f6f441c",
+    "ecd775b0801b2d3bfe6a9a2a3d270fd00d21576fb4fa795a765469d53f6f441c"
+  ],
+  "same_driver_after_mode_normalization": true,
+  "runtime_source_sha256": {
+    "runtime/cli_v1/test_mcp_owned_process.py": "8869fd1224cc9927777e2ff8d9031c6d46358040767eeac552961b26cdb883b5",
+    "runtime/cli_v1/mcp_guarded.py": "b3f90a3f05a540c618a341e79860d90c5f3f145313a1155188c150e33c30943b",
+    "runtime/cli_v1/owned_guarded_session.py": "b84f8be9b1476d9f9d3a9d1e345952627ae1a77356df1339343c78e923428b45",
+    "runtime/guarded_x11_v1/bridge.py": "9855d537598d497182107d8dddcad53496ad7abe813d45ce106ce6d5c91b23b1",
+    "runtime/guarded_x11_v1/receipt_journal.py": "c46e07c3866b41c3abe95dad7efe640be70bbc94f0116a9d3376c1a56a7e8f43",
+    "runtime/core_v1/compiled_gui.py": "8899c20a359f4d1f79b5657c2b50b31715aeb5d865f28b2f33be87d8107e2e58"
+  },
+  "results": [
+    {
+      "pair": "pair1",
+      "order": "files_then_journal",
+      "mode": "files",
+      "call_id": "51639cd6337e4d9d98ccd3c55d5f5d68",
+      "core_elapsed_ns": 178188700,
+      "owner_elapsed_ns": 312000000,
+      "outcome": "TASK_SUCCEEDED",
+      "completed_transitions": 1,
+      "release_verified": true,
+      "effect_status": "succeeded",
+      "task_success": null,
+      "replay_allowed": false,
+      "close_status": "closed",
+      "close_verified": true,
+      "release_confirmed": true,
+      "owner_exitcode": 0,
+      "script": "standard-caller-files-mode-20261116/run_files_mode.py"
+    },
+    {
+      "pair": "pair1",
+      "order": "files_then_journal",
+      "mode": "journal",
+      "call_id": "dc26014fbc6c40c7b6200cfb8412e488",
+      "core_elapsed_ns": 3960350600,
+      "owner_elapsed_ns": 4672000000,
+      "outcome": "TASK_SUCCEEDED",
+      "completed_transitions": 1,
+      "release_verified": true,
+      "effect_status": "succeeded",
+      "task_success": null,
+      "replay_allowed": false,
+      "close_status": "closed",
+      "close_verified": true,
+      "release_confirmed": true,
+      "owner_exitcode": 0,
+      "script": "standard-caller-journal-mode-20261116/run_journal_mode.py"
+    },
+    {
+      "pair": "pair2",
+      "order": "journal_then_files",
+      "mode": "journal",
+      "call_id": "529767c95f554da99599d7dcd01c941c",
+      "core_elapsed_ns": 3890229900,
+      "owner_elapsed_ns": 4532000000,
+      "outcome": "TASK_SUCCEEDED",
+      "completed_transitions": 1,
+      "release_verified": true,
+      "effect_status": "succeeded",
+      "task_success": null,
+      "replay_allowed": false,
+      "close_status": "closed",
+      "close_verified": true,
+      "release_confirmed": true,
+      "owner_exitcode": 0,
+      "script": "standard-caller-journal-mode-r2-20261116/run_pair.py"
+    },
+    {
+      "pair": "pair2",
+      "order": "journal_then_files",
+      "mode": "files",
+      "call_id": "cec8cef8f35a48a9b0e19f7e12ceb6b0",
+      "core_elapsed_ns": 401859400,
+      "owner_elapsed_ns": 562000000,
+      "outcome": "TASK_SUCCEEDED",
+      "completed_transitions": 1,
+      "release_verified": true,
+      "effect_status": "succeeded",
+      "task_success": null,
+      "replay_allowed": false,
+      "close_status": "closed",
+      "close_verified": true,
+      "release_confirmed": true,
+      "owner_exitcode": 0,
+      "script": "standard-caller-files-mode-r2-20261116/run_pair.py"
+    }
+  ],
+  "medians": {
+    "files": {
+      "core_elapsed_median_ns": 290024050.0,
+      "owner_elapsed_median_ns": 437000000.0
+    },
+    "journal": {
+      "core_elapsed_median_ns": 3925290250.0,
+      "owner_elapsed_median_ns": 4602000000.0
+    },
+    "journal_to_files_ratio": {
+      "core_elapsed_median": 13.5343612021141,
+      "owner_elapsed_median": 10.530892448512585
+    }
+  },
+  "scope": "local Fake X only; descriptive n=2 per mode; not a live GUI, MAP01, broad reliability, or causal benchmark",
+  "durability_note": "The modes are not durability-equivalent. runtime/guarded_x11_v1/COMPILED.md states files retention is not fsync-backed crash durability; journal appends flush and fsync each record. Treat timing as a diagnostic storage-mode contrast, not a matched efficiency result."
+}

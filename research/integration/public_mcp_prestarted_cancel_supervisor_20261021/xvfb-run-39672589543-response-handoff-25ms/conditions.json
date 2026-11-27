@@ -1,0 +1,44 @@
+{
+  "workflow_run_id": 39672589543,
+  "workflow": "Runtime X11 v1 Integration",
+  "job": "x11-integration",
+  "pr_head_sha": "6018b66032509c9747469cc70195b4d796ab1d7a",
+  "workflow_merge_sha": "0db260cdb7fc9a6f3e7e2ef4b21a37948e7bb24b",
+  "base_main_sha": "59fe306fed57e54fe332e1d190c7628c1e89bb0d",
+  "conditions": {
+    "prestarted_cancel_supervisor": false,
+    "owner_call_blocked_at": "python-xlib Display.sync",
+    "cancel_control_ack_withheld_seconds": 1.0,
+    "caller_response_deadline_ms": 300,
+    "transaction_deadline_ms": 3000,
+    "integration_harness_cancel_return_bound_ms": 3000,
+    "delayed_keypress_horizon_ms": 8000,
+    "event_loop_heartbeat_period_ms": 1
+  },
+  "environment": {
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.43",
+    "python": "3.12.15",
+    "xvfb_package": "2:21.1.22-1ubuntu1.3",
+    "xvfb_binary_sha256": "97623d8c3972051fa29db5a91f64439b418a1ebc63ce449193556fc33900048e"
+  },
+  "observed": {
+    "cancel_response_ms": 276.446613,
+    "cancel_response_within_300_ms": true,
+    "max_event_loop_gap_ms": 2.549112,
+    "release_worker_elapsed_ms": 386.005453,
+    "release_worker_readback_verified": true,
+    "independent_parent_readback_all_keys_up": true,
+    "delayed_horizon_ms": 8501.036647,
+    "no_delayed_b_keypress_observed": true,
+    "synthetic_task_oracle": "pass",
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_release_confirmed": false,
+    "runtime_task_success": null,
+    "replay_allowed": false,
+    "late_server_request_possible": true
+  },
+  "source_artifact_sha256": {
+    "standard-mcp-xvfb-blocked-release.json": "e3e347d47a881a68a1355315fe6b935718bd5f29f831c3705dd19987077f22b7",
+    "standard-mcp-xvfb-blocked-release.observation.png": "751e00d5f926a15128a45baec1b2310aabee740b363119bd79dd224986d81f01"
+  }
+}

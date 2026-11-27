@@ -1,0 +1,235 @@
+{
+  "rows": [
+    {
+      "case": "selected_owner_decoded_lease",
+      "classification": "PASS_FAIL_CLOSED_CONTROL",
+      "admitted": 0,
+      "fake_keys_down": []
+    },
+    {
+      "case": "selected_owner_original_lease",
+      "classification": "PASS_FAKE_X_CONTROL",
+      "admitted": 1,
+      "fake_keys_down_after_release": []
+    },
+    {
+      "case": "timeout",
+      "classification": "FAIL_NO_STICKY_RPC_QUARANTINE",
+      "first_error": "input-owner RPC outcome unknown",
+      "sent": [
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890841288900,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 2,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890841288900,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "d"
+        }
+      ],
+      "scope": "Intercepted sends only; no service, socket or native input"
+    },
+    {
+      "case": "wrong_reply_id",
+      "classification": "FAIL_NO_STICKY_RPC_QUARANTINE",
+      "first_error": "input-owner RPC response identity invalid",
+      "sent": [
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890847408700,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 2,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890847408700,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "d"
+        }
+      ],
+      "scope": "Intercepted sends only; no service, socket or native input"
+    },
+    {
+      "case": "invalid_records",
+      "classification": "FAIL_NO_STICKY_RPC_QUARANTINE",
+      "first_error": "malformed owner-record snapshot",
+      "sent": [
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890853389400,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 2,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890853389400,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "d"
+        }
+      ],
+      "scope": "Intercepted sends only; no service, socket or native input"
+    },
+    {
+      "case": "healthy_control",
+      "classification": "PASS_SYNTHETIC_CONTROL",
+      "first_error": null,
+      "sent": [
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890861321500,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v1",
+          "request_id": 2,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 342890861321500,
+            "intent_token": "offline-owned-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false
+          },
+          "key": "d"
+        }
+      ],
+      "scope": "Intercepted sends only; no service, socket or native input"
+    },
+    {
+      "case": "generation_wire_collision",
+      "classification": "FAIL_CURRENT_IDENTITY_TRANSFER",
+      "wire": {
+        "deadline_ns": 342890867451300,
+        "intent_token": "offline-owned-intent",
+        "expected_focus": 41,
+        "expected_surface": 41,
+        "expected_geometry": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "cancel_requested": false,
+        "focus_invalid": false
+      },
+      "dropped_fields": [
+        "target_process_identity",
+        "target_window_identity"
+      ],
+      "changed_source_same_wire": true
+    }
+  ],
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+}

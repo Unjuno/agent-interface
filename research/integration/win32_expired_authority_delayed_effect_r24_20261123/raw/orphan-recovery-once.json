@@ -1,0 +1,83 @@
+{
+  "attempt_id": "cef2688bbcea4033b9a63e0f31ab2012",
+  "custody_record": {
+    "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+    "dispatch": {
+      "input_dispatched": true,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "do_not_replay": true,
+    "late_server_request_possible": true,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "observed_producer_live": false,
+    "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+    "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+  },
+  "exception": {
+    "message": "unhandled errors in a TaskGroup (1 sub-exception)",
+    "type": "ExceptionGroup"
+  },
+  "fence_after": {
+    "fenced_generations": [
+      "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+      "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "eab175df2940cb5ed04ed4696e5288db0f4c699266b584761afbe556ec6fcafc",
+      "9ac4c2fa8d399043222c19d420b10912b762d348e73c06af43390aa6c00497ad"
+    ],
+    "last_resolved": null,
+    "namespace_digest": "daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445",
+    "pending": {
+      "gate_state": "authorized",
+      "input_dispatched": true,
+      "late_input_horizon_required": true,
+      "obligations": [
+        "key:fixture:A:virtual_key"
+      ],
+      "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+      "phase": "recovery_pending",
+      "producer_identity": {
+        "creation_time_100ns": 134398491157343876,
+        "pid": 33804
+      },
+      "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+    },
+    "revision": 65,
+    "schema": "win32-custody-fence-v1",
+    "status": "unresolved"
+  },
+  "fence_path": "C:\\Users\\user\\AppData\\Local\\Unjuno\\AgentInterface\\custody-v1\\daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445.json",
+  "fence_pending": {
+    "gate_state": "authorized",
+    "input_dispatched": true,
+    "late_input_horizon_required": true,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+    "phase": "recovery_pending",
+    "producer_identity": {
+      "creation_time_100ns": 134398491157343876,
+      "pid": 33804
+    },
+    "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+  },
+  "fence_revision_before": 65,
+  "fence_sha256_after": "4a1f1130c1f06613e6c118efcbcdd26593084db66ae2bc23ce71df1bd4094be0",
+  "fence_sha256_before": "4a1f1130c1f06613e6c118efcbcdd26593084db66ae2bc23ce71df1bd4094be0",
+  "finished_ns": 418578390000000,
+  "obligations": [
+    "key:fixture:A:virtual_key"
+  ],
+  "producer_live_at_check": false,
+  "producer_pid": 33804,
+  "schema": "agent-interface/r24-orphan-recovery-attempt-v1",
+  "source_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+  "source_operation_id": "eb96730b07d3454095f478a8a3f2673c",
+  "target_hwnd": 26411224,
+  "target_pid": 43388,
+  "timeline": []
+}

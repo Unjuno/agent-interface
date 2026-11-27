@@ -1,0 +1,68 @@
+{
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "display": ":138",
+  "errors": [
+    "AttributeError: 'InputOwner' object has no attribute '_inner'"
+  ],
+  "executor_events": [
+    {
+      "accepted_ns": 109723148986,
+      "event": "accepted",
+      "id": "executor-crash-a02",
+      "steps": 1,
+      "valid_until_ns": 119723115246
+    },
+    {
+      "event": "step_started",
+      "id": "executor-crash-a02",
+      "issued_ns": 109723363523,
+      "operation": "hold",
+      "step": 0
+    },
+    {
+      "at_ns": 109723996678,
+      "event": "key_down_active",
+      "key": "a"
+    }
+  ],
+  "key_down_before_kill": true,
+  "key_press": {
+    "keycode": 38,
+    "observed_ns": 109724170806,
+    "type": 2,
+    "window": 2097152
+  },
+  "keycode": 38,
+  "kill_requested_ns": 109724463311,
+  "owner_close_returned_ns": 109726314772,
+  "owner_close_started_ns": 109725627502,
+  "owner_separate_from_executor": true,
+  "schema": "v39-executor-hardkill-supervised-xvfb-raw-a02-v1",
+  "scope": "current-main Executor V3 child separated from current InputOwner V4/V12 resident in supervisor process",
+  "status": "STOP",
+  "supervisor_events": [
+    {
+      "at_ns": 109724708411,
+      "event": "executor_channel_eof"
+    }
+  ],
+  "watcher_events": [
+    {
+      "keycode": 38,
+      "observed_ns": 109724150803,
+      "type": 3,
+      "window": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 109724170806,
+      "type": 2,
+      "window": 2097152
+    }
+  ],
+  "window": 2097152,
+  "worker_dead_ns": 109725618454,
+  "worker_returncode": -9
+}

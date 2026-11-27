@@ -1,0 +1,9 @@
+Frozen commit: b4046798ed8902745a36e8fda091204233bb06d3
+Runtime: /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 (CPython 3.12.14)
+Source tree: `git archive` of the exact frozen commit, paths `research/doom` and `research/live_control`.
+
+PYTHONPATH=research/doom:research/live_control /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_overlap_controller_v39_dual_signal research.doom.test_map01_overlap_controller_v39_cover_terminal research.doom.test_map01_v39_pending_observation_drain research.doom.test_session_map01_v15 research.live_control.test_executor_v13 research.live_control.test_input_owner_v12_explicit_up_cancel
+Result: Ran 107 tests; OK
+
+PYTHONPATH=research/doom:research/live_control /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B -O -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_overlap_controller_v39_dual_signal research.doom.test_map01_overlap_controller_v39_cover_terminal research.doom.test_map01_v39_pending_observation_drain research.doom.test_session_map01_v15 research.live_control.test_executor_v13 research.live_control.test_input_owner_v12_explicit_up_cancel
+Result: Ran 107 tests; OK

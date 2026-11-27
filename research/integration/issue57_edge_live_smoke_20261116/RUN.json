@@ -1,0 +1,62 @@
+{
+  "schema": "issue57-edge-live-smoke-v1",
+  "status": "task_effect_assertions_passed_cleanup_failed",
+  "observed_at_utc": "2026-11-16T11:02:46.7022494Z",
+  "source_commit": "a2ad6f08bff97469bc2bf29ba66ab3e1b57e17a9",
+  "task": "Submit one synthetic visible form token through the existing Edge/OCR/compiled caller and verify exact localhost server receipt.",
+  "expected_token": "t991025-1",
+  "network_scope": "127.0.0.1 only",
+  "model_scope": "offline test double; no provider call",
+  "frozen_attempt_limit": "one completed input attempt after a setup-only failure with zero input dispatch",
+  "attempt_01": {
+    "status": "failed_before_input",
+    "reason": "Windows OCR worker file absent from sparse checkout",
+    "raw_transcript": "attempt-01.log",
+    "input_dispatched": false,
+    "task_effect": "not_attempted"
+  },
+  "attempt_02": {
+    "finished_utc": "2026-11-16T11:05:41Z",
+    "test_process_status": "ERROR",
+    "failure_phase": "TemporaryDirectory cleanup after test body",
+    "failure": "PermissionError WinError 32 on profile\\Default\\Collections\\collectionsSQLite",
+    "assertions_reached_before_cleanup_error": [
+      "caller outcome TASK_SUCCEEDED",
+      "independent task_effect succeeded",
+      "exactly one server POST with the expected value",
+      "one completed compiled transition with verified release",
+      "zero frontier model resumptions",
+      "Edge shutdown control returned success"
+    ],
+    "input_dispatched": true,
+    "replay_attempted": false,
+    "raw_transcript": "attempt-02.log",
+    "residual_temp_profile": "C:\\Users\\user\\Documents\\Codex\\worktrees\\issue57-retain-observed-timeout-usage-20261116\\research\\live_control\\interface-edge-submit-0b0je6rq\\profile",
+    "ownership_check": "No current msedge process command line matched this exact temp profile during read-only inspection; no process was stopped.",
+    "cleanup_attempt": "A deletion command for the exact workspace-contained test temp folder was rejected by execution policy; no bypass was attempted and the folder remains."
+  },
+  "implementation": {
+    "test": "research/live_control/test_windows_compiled_gui_edge_live_v1.py",
+    "test_sha256": "63B282F6023FF89492E51B8D21003D71559F7A030B73960CF493DB1C9AAE8D6D",
+    "worker": "research/live_control/windows_ocr_worker_v1.ps1",
+    "worker_sha256": "9292982D55D698F0C341FEDDD399EE358F0DA2EF88BD20695890780F57610DA2"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "node": "v24.13.0",
+    "edge_file_version": "157.0.4341.60",
+    "edge_path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "node_path": "C:\\Program Files\\nodejs\\node.exe"
+  },
+  "acceptance": {
+    "one_exact_post": "value=t991025-1",
+    "compiled_receipt": "one completed transition with verified release and zero frontier model resumptions",
+    "stop_rule": "no input retry; any ambiguous delivery is retained UNKNOWN"
+  },
+  "limitations": [
+    "One synthetic local form task only; not the frozen Issue #57 three-arm Calc comparison.",
+    "No real provider or model usage; no efficiency claim.",
+    "The existing test deletes screenshot and HTTP request internals at teardown; only test transcript and pinned implementation are retained.",
+    "Task effect and release are supported by assertions reached before the teardown exception, but their original HTTP/capture payloads were not retained by the existing test."
+  ]
+}

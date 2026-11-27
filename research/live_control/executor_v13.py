@@ -17,11 +17,12 @@ class Executor(Previous):
         super().__init__(backend, emit)
         self.release_watch_stops = {}
 
-    def submit(self, identifier, steps, expected_sequence, valid_until_ns):
+    def submit(self, identifier, steps, expected_sequence, valid_until_ns, *, admission_deadline_ns=None):
         stop = threading.Event()
         self.release_watch_stops[identifier] = stop
         try:
-            super().submit(identifier, steps, expected_sequence, valid_until_ns)
+            super().submit(identifier, steps, expected_sequence, valid_until_ns,
+                           admission_deadline_ns=admission_deadline_ns)
         except BaseException:
             self.release_watch_stops.pop(identifier, None)
             raise
@@ -178,7 +179,9 @@ class Executor(Previous):
                         release, release_batch_publication, cleanup_publication
                     )
                 if release.get("verified") is not True:
-                    status = "failed"; error = "input release not verified"
+                    status = "failed"
+                    error = (f"{error}; input release not verified" if error
+                             else "input release not verified")
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 cancelled_pending = getattr(exc, "cancelled_pending_ups", None)

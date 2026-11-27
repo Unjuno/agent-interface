@@ -1,0 +1,32 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r32",
+  "callback_return_ns": 487974928505900,
+  "event_count": 41,
+  "exact_q_up_sendinput_spans": [
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 310486700,
+      "end_ns": 487974298487300,
+      "fields": {
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "scan_code": 0,
+        "vk": 81
+      },
+      "helper_role": "recovery",
+      "overlaps_callback": false,
+      "pid": 17000,
+      "start_ns": 487973987237800,
+      "unreturned_at_analysis_end": false
+    }
+  ],
+  "helper_processes": {
+    "17000": "recovery",
+    "9648": "observer"
+  },
+  "interpretation": "This packet has no text operations, so the exact recovery Q-up is isolated from Unicode compensation. The wrapper records entry and return from Win32Backend._send around SendInput, not the kernel/application physical state. A call interval spanning callback return is timing evidence only.",
+  "schema": "win32-supervised-standard-caller-r32-trace-analysis-v1",
+  "spans_overlapping_or_open_at_callback": [],
+  "strict_action_audit_status": "FAIL_OR_UNKNOWN"
+}

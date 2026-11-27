@@ -1,0 +1,40 @@
+{
+  "schema": "wslc-currentmain-xvfb-s24-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s24",
+  "preregistered_local": "2026-10-25",
+  "source_commit": "52f56838dbfc6e5ae2215c8ee81efbc0f90ebd59",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "runner_sha256": "067a45b71e048b6e2e155994bb7cdd6e7a93e5e473c1a0a005c6f6e2fded78cf",
+  "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+  "question": "At a 3940 ms private Xvfb pause, does the public standard caller exceed the exact 4000 ms transaction deadline while preserving UNKNOWN/no-replay and withholding task claims?",
+  "conditions": {
+    "runtime": "WSLc 3.0.3 isolated session/container",
+    "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+    "network": "none",
+    "cpu": 2,
+    "memory_mb": 2048,
+    "gpu": false,
+    "pause_ms": 3940,
+    "transaction_deadline_ms": 4000,
+    "public_cancel_response_bound_ms": 3000,
+    "independent_readback_bound_ms": 5000,
+    "delayed_event_horizon_ms": 8500,
+    "source_test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+    "retries": 0,
+    "mounts": {
+      "output": "read-write",
+      "repo": "read-only",
+      "xkb": "read-only",
+      "stage": "read-only",
+      "deps": "read-only",
+      "runner": "read-only"
+    }
+  },
+  "decision": "PASS if independent release readback precedes 4000 ms and <=5000 ms, late horizon >=8500 ms has all keys up, both task oracles pass, public runtime remains UNKNOWN/replay-denied, and cleanup succeeds. FAIL_BOUNDARY if transaction deadline overrun is recorded, public runtime remains UNKNOWN/replay-denied, no release/task-effect claim is emitted, and cleanup succeeds. Any setup/preflight failure is zero-input and never retried.",
+  "prior": "S22 pass at 3860 ms; S23 pass at 3920 ms with 13.123 ms margin",
+  "limits": "Synthetic private Xvfb only; no physical GUI, real application, MAP01, efficiency or reliability claim."
+}

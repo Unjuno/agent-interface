@@ -1,0 +1,25 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A05-20261009",
+  "freeze_sha256": "81fe3aba4922c2a22a94807ce4c144128451dccff1075810b3af0136ea9a07bb",
+  "freeze_commit": "ac5a6110a56267cc6634c9633af27ebeda51c728",
+  "runner_command": [
+    "sandbox-exec",
+    "-p",
+    "(version 1) (allow default) (deny network*)",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/tmp/agent-interface-1998-inkscape-a05/research/analysis/inkscape_task_marker_crop_1998_t0_a05_20261009/formal_runner.py"
+  ],
+  "runner_exit": 1,
+  "candidate_invocations": 1,
+  "candidate_exit": 1,
+  "candidate_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_stderr_sha256": "f449b3314fa213c41411332db8d3edc5f19062b625f167beb1df6c5aa3e2e224",
+  "candidate_stderr_bytes": 579,
+  "tesseract_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "audit_condition": "not run because candidate exit was nonzero",
+  "start_and_completion_times_recorded_by_runner": false,
+  "custody_observed_at_utc": "2026-10-08 22:32:42 UTC",
+  "disposition": "HOLD_RUNNER_ERROR"
+}

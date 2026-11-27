@@ -1,13 +1,16 @@
 """Shared X11 adapter boundaries; fake captures/input, no display or model."""
 import copy
+from contextlib import contextmanager
 import hashlib
 import time
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 import unittest
 from PIL import Image
 from runtime.core_v1.test_compiled_gui import interface
 from runtime.guarded_x11_v1.compiled import run, _Adapter
+from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import validate_and_bind_calc_plan
+from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import plan as calc_plan
 
 class Bridge:
     def __init__(self):
@@ -18,6 +21,20 @@ class Bridge:
         self.target='app'; self.history={}; self.saved=[]; self.inputs=[]
         self.store=SimpleNamespace(resolve_point=Mock(side_effect=self.resolve))
         self.phase=0; self.release=True
+        self.process_generation='a'*64
+        self.window_generation='c'*64
+        self.change_generation_after_first_input=False
+        self.generation_field_to_change='process_generation'
+        self.generation_change_mode='changed'
+        self.change_generation_before_input=False
+        self.guard=None
+    @contextmanager
+    def input_guard(self,alias,offset,*,tail,verify,interaction='keyboard'):
+        # Memory-only fixture: native fresh capture/fences are exercised by
+        # test_compiled_native_dependencies with the actual NativeHandleBridge.
+        self.guard=verify
+        try:yield
+        finally:self.guard=None
     def _save(self,name,value): self.saved.append((name,copy.deepcopy(value)))
     def _focus_within_target(self): return True
     def resolve(self,*args,**kwargs):
@@ -25,13 +42,29 @@ class Bridge:
     def observe(self):
         self.sequence+=1
         image=Image.new('RGB',(32,32),(self.phase,20,30))
+        binding={'surface':20}
+        for key in ('process_generation','window_generation'):
+            value=getattr(self,key)
+            if value is not None: binding[key]=value
         observation={'sequence':self.sequence,'capture_ns':time.monotonic_ns(),
-            'binding_revision':0,'pointer_binding':{'surface':20},
+            'binding_revision':0,'pointer_binding':binding,
             'native':{'artifact':{'sha256':hashlib.sha256(image.tobytes()).hexdigest()}}}
         self.history[self.sequence]=(observation,image)
         return observation
     def click(self,alias,offset,**kwargs):
+        if self.change_generation_before_input:
+            setattr(self,self.generation_field_to_change,
+                    None if self.generation_change_mode == 'missing' else 'b'*64)
+            self.change_generation_before_input=False
+            self.observe()  # Model the bridge's fresh pre-input binding capture.
+        if self.guard is not None:
+            native,image=self.history[self.sequence]
+            if self.guard('fixture_before_input',copy.deepcopy(native),image.copy()) is not True:
+                return {'status':'refused','input_dispatched':False}
         self.inputs.append((alias,offset,copy.deepcopy(kwargs))); self.phase+=1
+        if self.phase == 1 and self.change_generation_after_first_input:
+            setattr(self,self.generation_field_to_change,
+                    None if self.generation_change_mode == 'missing' else 'b'*64)
         return {'status':'completed','execution':{'releases':[{'verified':self.release,'keys_down':[],'buttons_down':[]}]}}
     keyboard=click; move=click
 
@@ -48,6 +81,349 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+
+    def test_action_completion_callback_receives_ordered_release_verified_rows(self):
+        b = Bridge()
+        completed = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, on_action_completed=lambda row:
+                completed.append((copy.deepcopy(row), b.sequence)))
+        self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
+        self.assertEqual([row['action'] for row, _ in completed],
+                         ['enter', 'save'])
+        self.assertEqual([sequence for _, sequence in completed], [1, 2])
+        for row, _ in completed:
+            self.assertTrue(row['release_verified'])
+            self.assertIsInstance(row['action_id'], str)
+            self.assertIsInstance(row['execution_accepted_ns'], int)
+
+    def test_before_dispatch_hook_receives_bridge_action_identity(self):
+        b = Bridge()
+        dispatched = []
+
+        def record_dispatch(row):
+            self.assertEqual(len(b.inputs), len(dispatched))
+            retained = dict(b.saved)[row['evidence_ref'] + '.json']
+            self.assertEqual(retained, row)
+            dispatched.append((copy.deepcopy(row), b.sequence))
+
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, before_action_dispatch=record_dispatch)
+        self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
+        self.assertEqual([row['action'] for row, _ in dispatched], ['enter', 'save'])
+        self.assertEqual([sequence for _, sequence in dispatched], [1, 2])
+        for (dispatch, _), transition in zip(dispatched, result['transitions']):
+            self.assertEqual(dispatch['action_id'], transition['action_id'])
+            self.assertGreaterEqual(dispatch['dispatch_started_ns'],
+                                    transition['execution_started_ns'])
+            self.assertLess(dispatch['dispatch_started_ns'],
+                            transition['execution_accepted_ns'])
+            self.assertEqual(dispatch['process_generation'], b.process_generation)
+            self.assertEqual(dispatch['window_generation'], b.window_generation)
+
+    def test_before_dispatch_hook_must_be_trusted_callable(self):
+        with self.assertRaisesRegex(ValueError, 'before_action_dispatch must be callable'):
+            run(Bridge(), spec(), bindings(), perceive=perceive,
+                verify_effect=verify, before_action_dispatch=object())
+
+    def test_before_dispatch_hook_is_skipped_when_input_guard_refuses(self):
+        b = Bridge()
+        dispatched = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            guard_perceive=lambda native, image: {'present':False},
+            verify_effect=verify,
+            before_action_dispatch=lambda row: dispatched.append(row))
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('SAFE_YIELD', 'execution_refused'))
+        self.assertEqual(dispatched, [])
+        self.assertEqual(b.inputs, [])
+        self.assertFalse(any(name.endswith('-pre-dispatch.json')
+                             for name, _ in b.saved))
+
+    def test_action_completion_callback_is_skipped_when_release_is_unknown(self):
+        b = Bridge()
+        b.release = False
+        completed = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify,
+            on_action_completed=lambda row: completed.append(row))
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('RUNTIME_FAILED', 'execution_failed'))
+        self.assertEqual(result['completed_transitions'], 0)
+        self.assertEqual(completed, [])
+        self.assertEqual(len(b.inputs), 1)
+
+    def test_action_completion_callback_failure_stops_before_next_action(self):
+        b = Bridge()
+        completed = []
+
+        def fail_after_record(row):
+            completed.append(row['action'])
+            raise OSError('custody snapshot failed')
+
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, on_action_completed=fail_after_record)
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('RUNTIME_FAILED', 'execution_failed'))
+        self.assertEqual(result['completed_transitions'], 1)
+        self.assertEqual(completed, ['enter'])
+        self.assertEqual(len(b.inputs), 1)
+
+    def test_invalid_action_completion_callback_is_rejected_before_dispatch(self):
+        b = Bridge()
+        with self.assertRaisesRegex(ValueError,
+                                    'on_action_completed must be callable'):
+            run(b, spec(), bindings(), perceive=perceive,
+                verify_effect=verify, on_action_completed=object())
+        self.assertEqual(b.inputs, [])
+
+    def test_reused_semantic_plan_requires_fresh_scope_binding(self):
+        first_bridge=Bridge()
+        first=validate_and_bind_calc_plan(calc_plan(),
+            session_scope=first_bridge.scope,surface='x11-window-20',
+            target_aliases={'entry':'entry_first','save':'save_first'})
+        action_bindings={name:{'interaction':'keyboard','offset':[1,1],
+            'tail':[]} for name in first['interface']['actions']}
+        _Adapter(first_bridge,first['interface'],action_bindings,perceive,
+            verify,lambda:False)
+
+        next_bridge=Bridge()
+        next_bridge.scope='next-session'
+        with self.assertRaisesRegex(ValueError,
+                                    'interface must name this bridge scope'):
+            _Adapter(next_bridge,first['interface'],action_bindings,perceive,
+                verify,lambda:False)
+        self.assertEqual(next_bridge.inputs,[])
+
+        second=validate_and_bind_calc_plan(calc_plan(),
+            session_scope=next_bridge.scope,surface='x11-window-20',
+            target_aliases={'entry':'entry_second','save':'save_second'})
+        self.assertEqual(first['plan_sha256'],second['plan_sha256'])
+        second_bindings={name:{'interaction':'keyboard','offset':[1,1],
+            'tail':[]} for name in second['interface']['actions']}
+        adapter=_Adapter(next_bridge,second['interface'],second_bindings,
+            perceive,verify,lambda:False)
+        self.assertEqual(adapter.interface['session_scope'],'next-session')
+        self.assertEqual(adapter.interface['symbols']['cell_entry']
+                         ['target_reference'],'entry_second')
+
+    def test_unchanged_frame_save_uses_opt_in_callback_and_stays_unverified(self):
+        b=Bridge(); original=b.observe
+        def observe_with_unchanged_save_frame():
+            native=original()
+            # The entry transition changes the frame once. The subsequent
+            # Save request leaves the pixels unchanged while the trusted
+            # observation predicate still advances from the app-level state.
+            native['native']['artifact']['sha256'] = (
+                'a'*64 if native['sequence'] == 1 else 'b'*64)
+            return native
+        b.observe=observe_with_unchanged_save_frame
+        unchanged=[]
+        def verify_unchanged(request,native,image):
+            unchanged.append(request['action'])
+            return {'status':'unavailable',
+                    'evidence_ref':request['observation']['evidence_ref']}
+        def observe_effect(native,image):
+            return {'phase':native['sequence']-1,'present':True}
+        result=run(b,spec(),bindings(),perceive=observe_effect,
+                   verify_effect=verify,
+                   verify_unchanged_effect=verify_unchanged)
+        self.assertEqual((result['outcome'],result['reason']),
+                         ('SAFE_YIELD','effect_unavailable'))
+        self.assertEqual(result['completed_transitions'],2)
+        self.assertEqual([row['action'] for row in result['transitions']],
+                         ['enter','save'])
+        self.assertTrue(all(row['release_verified']
+                            for row in result['transitions']))
+        self.assertEqual(len(b.inputs),2)
+        self.assertEqual(unchanged,['save'])
+        retained=[value for name,value in b.saved
+                  if name.endswith('-unchanged-effect.json')]
+        self.assertEqual(len(retained),1)
+        self.assertEqual(retained[0]['result']['status'],'unavailable')
+
+    def test_post_release_settle_waits_before_effect_observation(self):
+        b=Bridge(); times=[]
+        def observe(native,image):
+            times.append(time.monotonic_ns())
+            return perceive(native,image)
+        result=run(b,spec(),bindings(),perceive=observe,guard_perceive=perceive,
+                   verify_effect=verify,post_release_settle_ms=20)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        self.assertEqual(len(b.inputs),2)
+        self.assertGreaterEqual(times[1]-times[0],15_000_000)
+
+    def test_post_release_settle_honors_cancellation_before_next_observation(self):
+        b=Bridge(); state={'cancelled':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['cancelled']=True
+            return terminal
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=lambda:state['cancelled'],post_release_settle_ms=500)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_post_release_settle_cancellation_after_wait_starts(self):
+        b=Bridge(); state={'cancelled':False, 'sleep_called':False}
+        def interrupt_sleep(seconds):
+            state['sleep_called']=True
+            state['cancelled']=True
+        with patch('runtime.guarded_x11_v1.compiled.time.sleep', side_effect=interrupt_sleep):
+            result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                       cancelled=lambda:state['cancelled'],post_release_settle_ms=500)
+        self.assertTrue(state['sleep_called'])
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+        settle=next(value for name,value in b.saved if name.endswith('-post-release-settle.json'))
+        self.assertEqual(settle['status'],'cancelled')
+
+    def test_post_release_settle_latches_transient_cancellation(self):
+        b=Bridge(); state={'after_action':False,'sent':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['after_action']=True
+            return terminal
+        def cancelled():
+            if state['after_action'] and not state['sent']:
+                state['sent']=True
+                return True
+            return False
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=cancelled,post_release_settle_ms=100)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_post_release_settle_cancellation_error_is_not_success(self):
+        b=Bridge(); state={'after_action':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['after_action']=True
+            return terminal
+        def cancelled():
+            if state['after_action']:
+                raise RuntimeError('cancellation unavailable')
+            return False
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=cancelled,post_release_settle_ms=100)
+        self.assertEqual((result['outcome'],result['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(len(b.inputs),1)
+        self.assertEqual(result['unresolved_execution']['reason'],'execution_callback_failed')
+
+    def test_post_release_settle_uses_core_budget_start_after_plan_persistence(self):
+        b=Bridge(); saved=b._save
+        def slow_plan(name,value):
+            if name.endswith('-plan.json'):
+                time.sleep(.25)
+            return saved(name,value)
+        b._save=slow_plan
+        interface=spec();interface['actions'].pop('save')
+        interface['method']['max_transitions']=1
+        interface['method']['max_runtime_ms']=300
+        interface['method']['states'].pop('done')
+        interface['method']['states']['filled']={'branches':[{
+            'when':{'phase':1},'outcome':'complete','action':None,
+            'next_state':None,'reason':None}]}
+        result=run(b,interface,{'enter':bindings()['enter']},perceive=perceive,
+                   verify_effect=verify,post_release_settle_ms=100)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        settle=next(value for name,value in b.saved if name.endswith('-post-release-settle.json'))
+        self.assertEqual(settle['status'],'settled')
+        self.assertGreaterEqual(settle['ended_ns']-settle['started_ns'],80_000_000)
+
+    def test_post_release_settle_cannot_extend_method_budget(self):
+        b=Bridge(); interface=spec();interface['method']['max_runtime_ms']=200
+        result=run(b,interface,bindings(),perceive=perceive,verify_effect=verify,
+                   post_release_settle_ms=500)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','budget_exhausted'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_late_input_callback_retains_release_and_effect_without_continuation(self):
+        b=Bridge(); interface=spec(); interface['method']['max_runtime_ms']=200
+        received_deadlines=[]; effect_checks=[]; base=b.click
+        def delayed_click(alias,offset,**kwargs):
+            received_deadlines.append(kwargs.get('expires_at_ns'))
+            terminal=base(alias,offset,**kwargs)
+            time.sleep(.4)
+            return terminal
+        b.click=delayed_click
+        def verify_after_action(request,native,image):
+            effect_checks.append(request)
+            return verify(request,native,image)
+        result=run(b,interface,bindings(),perceive=perceive,
+                   verify_effect=verify_after_action)
+        self.assertEqual((result['outcome'],result['reason']),
+                         ('SAFE_YIELD','budget_exhausted'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual([row[0] for row in b.inputs],['field'])
+        self.assertEqual(len(received_deadlines),1)
+        self.assertIs(type(received_deadlines[0]),int)
+        self.assertEqual(effect_checks,[])
+        self.assertEqual(len(result['observations']),1)
+        self.assertTrue(result['transitions'][0]['release_verified'])
+        self.assertEqual(result['pending_effect']['action'],'enter')
+        retained=dict(b.saved)
+        execution = next(value for name,value in retained.items()
+                         if name.endswith('-execution.json'))
+        self.assertEqual(execution['result']['execution']['releases'],
+                         [{'verified':True,'keys_down':[],'buttons_down':[]}])
+        self.assertTrue(any(name.endswith('-receipt.json') for name in retained))
+
+    def test_post_release_settle_does_not_wait_after_unverified_release(self):
+        b=Bridge();b.release=False
+        with patch('runtime.guarded_x11_v1.compiled.time.sleep') as sleep:
+            result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                       post_release_settle_ms=100)
+        self.assertEqual(result['outcome'],'RUNTIME_FAILED')
+        sleep.assert_not_called()
+
+    def test_post_release_settle_rejects_invalid_values(self):
+        for value in (-1,1001,True,1.5,'50'):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                run(Bridge(),spec(),bindings(),perceive=perceive,verify_effect=verify,
+                    post_release_settle_ms=value)
+
+    def test_explicit_guard_perception_is_used_only_for_input_dependencies(self):
+        b=Bridge(); seen={'observation':0,'guard':0}
+        def observation(native,image):
+            seen['observation']+=1
+            return perceive(native,image)
+        def guard(native,image):
+            seen['guard']+=1
+            return {'present':True}
+        result=run(b,spec(),bindings(),perceive=observation,
+                   guard_perceive=guard,verify_effect=verify)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        self.assertEqual(seen['guard'],2)
+        self.assertEqual(seen['observation'],3)
+        self.assertEqual(len(b.inputs),2)
+
+    def test_explicit_guard_perception_missing_or_false_refuses_before_input(self):
+        for value in ({}, {'present':False}, {'present':'unknown'}):
+            with self.subTest(value=value):
+                b=Bridge()
+                result=run(b,spec(),bindings(),perceive=perceive,
+                           guard_perceive=lambda native,image: value,
+                           verify_effect=verify)
+                self.assertEqual(result['outcome'],'SAFE_YIELD')
+                self.assertEqual(result['reason'],'execution_refused')
+                self.assertEqual(b.inputs,[])
+
+    def test_guard_perception_must_be_callable_if_supplied(self):
+        with self.assertRaises(ValueError):
+            run(Bridge(),spec(),bindings(),perceive=perceive,
+                guard_perceive=False,verify_effect=verify)
 
     def test_capture_binding_change_returns_retained_prefix_without_fabricating_observation(self):
         from runtime.guarded_x11_v1 import bridge as native_bridge
@@ -183,6 +559,43 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertEqual(len(b.inputs),2)
         self.assertTrue(all(before < c[2]['expires_at_ns'] <= r['started_ns']+1_000_000_000 for c in b.inputs))
         self.assertTrue(any('receipt' in name for name,row in b.saved))
+
+    def test_target_generation_change_or_loss_after_action_cannot_verify_its_effect(self):
+        for field in ('process_generation','window_generation'):
+            for mode in ('changed','missing'):
+                with self.subTest(field=field,mode=mode):
+                    b=Bridge(); b.change_generation_after_first_input=True
+                    b.generation_field_to_change=field
+                    b.generation_change_mode=mode
+                    verifier=Mock(side_effect=verify)
+                    perceptions=[]
+                    def record_perception(native,image):
+                        perceptions.append(native['pointer_binding'].copy())
+                        return perceive(native,image)
+                    receipt=run(b,spec(),bindings(),perceive=record_perception,
+                                verify_effect=verifier)
+                    self.assertEqual((receipt['outcome'],receipt['reason']),
+                                     ('SAFE_YIELD','association_changed'))
+                    self.assertEqual(receipt['completed_transitions'],1)
+                    self.assertEqual(len(b.inputs),1)
+                    self.assertTrue(perceptions)
+                    baseline='a'*64 if field == 'process_generation' else 'c'*64
+                    self.assertTrue(all(row.get(field)==baseline
+                                        for row in perceptions))
+                    verifier.assert_not_called()
+
+    def test_generation_change_in_fresh_input_capture_is_not_perceived(self):
+        b=Bridge(); b.change_generation_before_input=True
+        perceptions=[]; verifier=Mock(side_effect=verify)
+        def record_perception(native,image):
+            perceptions.append(native['pointer_binding'].copy())
+            return perceive(native,image)
+        receipt=run(b,spec(),bindings(),perceive=record_perception,
+                    verify_effect=verifier)
+        self.assertEqual(b.inputs,[])
+        self.assertEqual(len(perceptions),1)
+        self.assertEqual(receipt['completed_transitions'],0)
+        verifier.assert_not_called()
     def test_unknown_pixels_never_send_input(self):
         b=Bridge(); r=run(b,spec(),bindings(),perceive=lambda n,i:{},verify_effect=verify)
         self.assertEqual(r['reason'],'unknown_state'); self.assertEqual(b.inputs,[])
@@ -307,4 +720,50 @@ class CompiledX11Tests(unittest.TestCase):
           'execution':{'program_emissions':1,'releases':[]}}
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
         self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+
+    def test_action_terminal_retention_failure_returns_typed_receipt_when_final_save_also_fails(self):
+        b=Bridge();failures=[]
+        def failing_save(name,value):
+            if name.endswith('-event.json') and value.get('event')=='action_terminal':
+                failures.append('action_terminal')
+                raise OSError('journal append failed after release')
+            if name.endswith('-receipt.json'):
+                failures.append('runtime_receipt')
+                raise OSError('journal is uncertain or closed')
+            b.saved.append((name,copy.deepcopy(value)))
+        b._save=failing_save
+        receipt=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(failures,['action_terminal','runtime_receipt'])
+        self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(receipt['completed_transitions'],1)
+        self.assertTrue(receipt['transitions'][0]['release_verified'])
+        self.assertEqual(receipt['pending_effect']['action'],'enter')
+        self.assertEqual(len(b.inputs),1)
+        self.assertEqual(receipt['raw_evidence_retention'],'failed')
+        self.assertFalse(receipt['retention_failure']['replay_allowed'])
+        self.assertEqual(receipt['retention_failure']['stage'],'runtime_receipt')
+        self.assertEqual(receipt['critical_events'][-1]['event'],'runtime_finished')
+        self.assertEqual(receipt['critical_events'][-1]['outcome'],'RUNTIME_FAILED')
+        self.assertTrue(any(event.get('event')=='journal_write_failed' and
+                            event.get('stage')=='runtime_receipt'
+                            for event in receipt['critical_events']))
+
+
+
+    def test_final_receipt_retention_failure_downgrades_graph_success(self):
+        b=Bridge()
+        def failing_save(name,value):
+            if name.endswith('-receipt.json'):
+                raise OSError('receipt storage unavailable')
+            b.saved.append((name,copy.deepcopy(value)))
+        b._save=failing_save
+        receipt=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(receipt['completed_transitions'],2)
+        self.assertEqual(len(b.inputs),2)
+        self.assertEqual(receipt['critical_events'][-1]['outcome'],'RUNTIME_FAILED')
+        self.assertEqual(receipt['raw_evidence_retention'],'failed')
+        self.assertFalse(receipt['retention_failure']['replay_allowed'])
+
+
 if __name__=='__main__': unittest.main()

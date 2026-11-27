@@ -1,0 +1,40 @@
+{
+  "schema": "agent-interface/public-mcp-cancel-operation-registry-v1",
+  "run_id": "public-mcp-cancel-operation-registry-r04",
+  "run_date": "2026-10-21",
+  "source_base_commit": "533637a5de7c7f6b7f64fb77c92624db19e7125d",
+  "main_sha_at_run": "19fd445eec25ec9e2a2bfc7a39de2e236adc8eb5",
+  "source_worktree": "fix/primary-mint-sparse-currentmain-r01 (dirty; source hashes in SHA256SUMS)",
+  "host": "Windows local workspace",
+  "python": "CPython 3.11.9",
+  "entrypoint": "public create_server MCP tool composition",
+  "fixture": "repository-owned Fake X process fixture; blocked release helper, cancelled request coroutine, and cancellation-worker KeyboardInterrupt injection",
+  "arms": [
+    {
+      "name": "normal",
+      "command": "python -B -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded",
+      "exit_code": 0,
+      "tests": 77
+    },
+    {
+      "name": "optimized",
+      "command": "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded",
+      "exit_code": 0,
+      "tests": 77
+    }
+  ],
+  "checks": [
+    "atomic current-call validation and one-operation admission",
+    "blocked cleanup caller response under the 450 ms test threshold and event-loop heartbeat maximum gap below 100 ms",
+    "duplicate cancellation reuses an operation ID and does not repeat release",
+    "request-task cancellation and cancellation-worker KeyboardInterrupt preserve UNKNOWN custody",
+    "terminal receipt binds operation ID, deadlines, owner generation and result",
+    "no release claim, task success, or replay permission on UNKNOWN"
+  ],
+  "not_used": ["WSL", "WSLc", "Docker", "live X server", "physical input", "model", "provider"],
+  "limitations": [
+    "fixture-controlled boundaries do not establish X11 server ordering or physical input release",
+    "no whole-transaction deadline, prestarted cleanup process, or process-kill bound is implemented",
+    "no independent task oracle, bounded recovery, MAP01, matched efficiency, or reliability population"
+  ]
+}

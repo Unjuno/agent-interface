@@ -1,0 +1,16 @@
+{
+  "experiment_id": "v39_pr8857_wslc_xvfb_receipt_a18_20261013",
+  "classification": "WSLC_XVFB_CONSTRUCTION_INTEGRATION_TEST",
+  "prior_attempt": "A17 STOP retained unchanged; event property and finalizer fixed in A18",
+  "pr_head": "4536ebff7d71848dc86fbf1cdc4f54957eb9ce2d",
+  "base_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+  "python": "3.14.8 linux/amd64",
+  "wslc": "3.0.1.0",
+  "container_name": "codex-wslc-pr8857-xvfb-a18-20261013",
+  "exact_command": "wslc run --rm --name codex-wslc-pr8857-xvfb-a18-20261013 --pull never --network none --cpus 1 --memory 512M --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume <study>/INPUT:/src:ro --volume <study>/results/a18-01:/out:rw --workdir /src/research/doom sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592 python experiment_candidate.py",
+  "candidate_attempts": 1,
+  "candidate_retries": 0,
+  "formal_or_live_allocation": false,
+  "scope": "One actual V10 owner explicit key release on isolated Xvfb, with PR #8857 V3 receipt wrapper and direct-retention analyzer."
+}

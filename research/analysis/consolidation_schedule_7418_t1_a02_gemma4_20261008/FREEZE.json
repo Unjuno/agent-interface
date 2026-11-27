@@ -1,0 +1,88 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A02-GEMMA4-20261008",
+  "base_main_sha": "08d3283f6d3c61cc6b032c6c9c5a63ec464c07ff",
+  "branch": "research/8406-schedule-t1-a02-gemma4-20261008",
+  "commands": [
+    "python3 -m unittest discover -s research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008 -p 'test_*.py' -v",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/candidate.py --package research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008 --raw research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/RAW.jsonl --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb > research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/candidate.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/candidate.stderr.txt",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/auditor.py research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/RAW.jsonl research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/queries.json research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/episode_ledger.json --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb --output research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/AUDIT.json > research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/auditor.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/auditor.stderr.txt"
+  ],
+  "companion_to": 7418,
+  "construction_tests": "4/4 PASS before freeze; no A02 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED for a >=0.10 paired exact-accuracy difference with same direction for one schedule contrast in all 3 seeds and a clean independent audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED if all pairwise abs differences are <0.10 for every seed and audit passes; otherwise UNCERTAIN; raw/model/method integrity failure => FAIL_METHOD",
+  "delta_from_T1_A01": [
+    "fresh seed set 4201/4202/4203",
+    "use unique stable tag gemma4:latest, rechecking exact model digest before every generation",
+    "request think:false to avoid reasoning tokens consuming response budget"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 256,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4201,
+      4202,
+      4203
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PROTOCOL.md": "6e908120fa5b4df769a239d9d3245b65451386acf507a5b601304ad6d48774c7",
+    "README.md": "7e829d53070714789ad50289496c3bc49c557868b9bec6c58c1f4b44e313026f",
+    "auditor.py": "483a7ce51e1d331bde07e21d2aa4870e4c486cde76073a60db2a3f8275121889",
+    "candidate.py": "0611559660d0eb4a5dab545da388cbcb8bab51d8ff5555560be73e893d741063",
+    "episode_ledger.json": "845849a94b83653d3f0bd91e176b75172de8a2753dc4919d74c690360f7341a0",
+    "prompts.json": "7ac8c338b8b47fb45ec63d9b028161c2fa492d6689a5c8580540667689591404",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "03e67972d424abeb0c30a2f8f1d7033a7e8a8bfb28b5d485d66cedefc4306cb9"
+  },
+  "issue": 8406,
+  "model": {
+    "digest": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+    "host": "127.0.0.1:11434",
+    "name": "gemma4:latest",
+    "ollama_version": "0.40.0",
+    "parameters": "8.0B",
+    "quantization": "Q4_K_M",
+    "size_bytes": 9608350718
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008",
+  "pre_freeze_HEAD": "73381cfd7e",
+  "predecessor_stop_commit": "73381cfd7e",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a02_gemma4_20261008/results/FORMAL_T1_A02/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local Ollama model boundary",
+    "gui": "none",
+    "network": "runner calls loopback only; no external API",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  }
+}

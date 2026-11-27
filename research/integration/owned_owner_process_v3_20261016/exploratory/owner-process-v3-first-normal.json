@@ -1,0 +1,934 @@
+{
+  "tests": 6,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "rows": [
+    {
+      "case": "client-death",
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "b7a221da687e4c9ba8dc206f853bcae5",
+        "display": ":fake",
+        "pid": 50696,
+        "parent_pid": 44704,
+        "supervisor_pid": 44704,
+        "owner_id": "760841aad7ea454f814436b08cfd9349",
+        "started_perf_ns": 345446148815100,
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_input_owner_process_v3.py": "dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_process_v3.py": "425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7"
+        }
+      },
+      "spawn_pid": 50696,
+      "client_spawn_pid": 38576,
+      "client_ready": {
+        "pid": 38576,
+        "parent_pid": 44704,
+        "admission": {
+          "event": "input_admission",
+          "key": "a",
+          "keycode": 38,
+          "admitted_ns": 345446664315400,
+          "input_ack_ns": 345446718077700,
+          "valid_until_ns": 345456663716400,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            345456663716400
+          ],
+          "intent_token": "owned-process-test-intent"
+        }
+      },
+      "client_exit": 73,
+      "report": {
+        "service_id": "b7a221da687e4c9ba8dc206f853bcae5",
+        "spawn_pid": 50696,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": true,
+        "recovery": {
+          "core": {
+            "close_error": null,
+            "display": ":fake",
+            "owner_thread_stopped": true,
+            "physical_verification_authoritative": false,
+            "protocol_error": "ConnectionResetError: [WinError 10054] \u65e2\u5b58\u306e\u63a5\u7d9a\u306f\u30ea\u30e2\u30fc\u30c8 \u30db\u30b9\u30c8\u306b\u5f37\u5236\u7684\u306b\u5207\u65ad\u3055\u308c\u307e\u3057\u305f\u3002",
+            "release_records": [
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": "owned-process-test-intent",
+                "key_release_attempts": {
+                  "38": {
+                    "attempts": [
+                      {
+                        "attempt": 1,
+                        "keymap_after_error": null,
+                        "keymap_before_error": null,
+                        "keymap_sampled_ns": 345446755454100,
+                        "keyrelease_error": null,
+                        "keyrelease_started_ns": 345446720679800,
+                        "server_key_down_after": false,
+                        "server_key_down_before": true,
+                        "sync_error": null,
+                        "sync_returned_ns": 345446755441300
+                      }
+                    ],
+                    "verified": true
+                  }
+                },
+                "key_release_intervals_ns": [
+                  {
+                    "interval_ns": [
+                      345446720679800,
+                      345446755454100
+                    ],
+                    "keycode": 38
+                  }
+                ],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "close",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  345456663716400
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": true,
+                  "thread_alive": false
+                },
+                "valid_until_ns": 345456663716400,
+                "verified": true,
+                "verified_ns": 345446755471800
+              }
+            ],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "b7a221da687e4c9ba8dc206f853bcae5",
+            "verified": true
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "760841aad7ea454f814436b08cfd9349",
+            "parent_pid": 44704,
+            "pid": 50696,
+            "service_id": "b7a221da687e4c9ba8dc206f853bcae5",
+            "supervisor_pid": 44704
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "0bb47a7a69b7a83bbf3348eafc29d243f2f1cf3611f712e1d78dca5ec4fe1023",
+          "verified": true
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "760841aad7ea454f814436b08cfd9349",
+            "parent_pid": 44704,
+            "pid": 50696,
+            "service_id": "b7a221da687e4c9ba8dc206f853bcae5",
+            "supervisor_pid": 44704
+          },
+          "initial_verification": true,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "d60aacb5b851b0fad79388166c3bead02925ed37f0283178006d6eead1992b1b",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "0bb47a7a69b7a83bbf3348eafc29d243f2f1cf3611f712e1d78dca5ec4fe1023",
+          "verified": true
+        },
+        "receipt_error": null,
+        "receipt_verified": true
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 50696,
+          "thread": 20860,
+          "at_ns": 345446664340200
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": [],
+          "pid": 50696,
+          "thread": 20860,
+          "at_ns": 345446720791600
+        }
+      ],
+      "files": {
+        "finish.json": {
+          "sha256": "218a1e33286bad70cf54b4046fe188af9cc393c368e31011898b70310ebcd563",
+          "text": "{\n  \"context_exit_success\": true,\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"760841aad7ea454f814436b08cfd9349\",\n    \"parent_pid\": 44704,\n    \"pid\": 50696,\n    \"service_id\": \"b7a221da687e4c9ba8dc206f853bcae5\",\n    \"supervisor_pid\": 44704\n  },\n  \"initial_verification\": true,\n  \"owner_thread_stopped\": true,\n  \"recovery_sha256\": \"d60aacb5b851b0fad79388166c3bead02925ed37f0283178006d6eead1992b1b\",\n  \"schema\": \"owned-owner-finish-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"0bb47a7a69b7a83bbf3348eafc29d243f2f1cf3611f712e1d78dca5ec4fe1023\",\n  \"verified\": true\n}\n"
+        },
+        "fixture-edges.jsonl": {
+          "sha256": "0d4d21f325f21e283fb10aa81230216c44c0cf2c016b5bc576d2d3639afaa41e",
+          "text": "{\"event\": 2, \"code\": 38, \"down\": [38], \"pid\": 50696, \"thread\": 20860, \"at_ns\": 345446664340200}\n{\"event\": 3, \"code\": 38, \"down\": [], \"pid\": 50696, \"thread\": 20860, \"at_ns\": 345446720791600}\n"
+        },
+        "recovery.json": {
+          "sha256": "d60aacb5b851b0fad79388166c3bead02925ed37f0283178006d6eead1992b1b",
+          "text": "{\n  \"core\": {\n    \"close_error\": null,\n    \"display\": \":fake\",\n    \"owner_thread_stopped\": true,\n    \"physical_verification_authoritative\": false,\n    \"protocol_error\": \"ConnectionResetError: [WinError 10054] \\u65e2\\u5b58\\u306e\\u63a5\\u7d9a\\u306f\\u30ea\\u30e2\\u30fc\\u30c8 \\u30db\\u30b9\\u30c8\\u306b\\u5f37\\u5236\\u7684\\u306b\\u5207\\u65ad\\u3055\\u308c\\u307e\\u3057\\u305f\\u3002\",\n    \"release_records\": [\n      {\n        \"buttons_down\": [],\n        \"event\": \"owner_release\",\n        \"intent_token\": \"owned-process-test-intent\",\n        \"key_release_attempts\": {\n          \"38\": {\n            \"attempts\": [\n              {\n                \"attempt\": 1,\n                \"keymap_after_error\": null,\n                \"keymap_before_error\": null,\n                \"keymap_sampled_ns\": 345446755454100,\n                \"keyrelease_error\": null,\n                \"keyrelease_started_ns\": 345446720679800,\n                \"server_key_down_after\": false,\n                \"server_key_down_before\": true,\n                \"sync_error\": null,\n                \"sync_returned_ns\": 345446755441300\n              }\n            ],\n            \"verified\": true\n          }\n        },\n        \"key_release_intervals_ns\": [\n          {\n            \"interval_ns\": [\n              345446720679800,\n              345446755454100\n            ],\n            \"keycode\": 38\n          }\n        ],\n        \"key_state_errors\": [],\n        \"key_state_source\": \"x11_query_keymap\",\n        \"keys_down\": [],\n        \"keys_unknown\": [],\n        \"reason\": \"close\",\n        \"target_focus_query_failed\": false,\n        \"target_process_identity\": [\n          1,\n          41,\n          \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          345456663716400\n        ],\n        \"target_process_identity_reader\": {\n          \"close_error\": null,\n          \"pending\": false,\n          \"retired\": true,\n          \"thread_alive\": false\n        },\n        \"valid_until_ns\": 345456663716400,\n        \"verified\": true,\n        \"verified_ns\": 345446755471800\n      }\n    ],\n    \"schema\": \"input-owner-service-close-v2\",\n    \"service_id\": \"b7a221da687e4c9ba8dc206f853bcae5\",\n    \"verified\": true\n  },\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"760841aad7ea454f814436b08cfd9349\",\n    \"parent_pid\": 44704,\n    \"pid\": 50696,\n    \"service_id\": \"b7a221da687e4c9ba8dc206f853bcae5\",\n    \"supervisor_pid\": 44704\n  },\n  \"schema\": \"owned-owner-recovery-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"0bb47a7a69b7a83bbf3348eafc29d243f2f1cf3611f712e1d78dca5ec4fe1023\",\n  \"verified\": true\n}\n"
+        },
+        "startup.json": {
+          "sha256": "0bb47a7a69b7a83bbf3348eafc29d243f2f1cf3611f712e1d78dca5ec4fe1023",
+          "text": "{\n  \"display\": \":fake\",\n  \"generation_kind\": \"fresh logical launch UUID; no native PID start-time proof\",\n  \"owner_id\": \"760841aad7ea454f814436b08cfd9349\",\n  \"parent_pid\": 44704,\n  \"pid\": 50696,\n  \"schema\": \"owned-owner-startup-v3\",\n  \"service_id\": \"b7a221da687e4c9ba8dc206f853bcae5\",\n  \"source_sha256_lf\": {\n    \"research/doom/doom_owner_thread_release_batch_backend_v1.py\": \"aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe\",\n    \"research/doom/doom_process_identity_backend_v1.py\": \"7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76\",\n    \"research/doom/doom_signal_value_domain_v1.py\": \"0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1\",\n    \"research/doom/doom_typed_coast_backend_v1.py\": \"fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079\",\n    \"research/doom/doom_typed_observation_v1.py\": \"13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1\",\n    \"research/doom/doom_typed_release_backend_v1.py\": \"ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f\",\n    \"research/doom/doom_typed_release_backend_v2.py\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\",\n    \"research/doom/test_map01_process_identity_backend.py\": \"7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad\",\n    \"research/live_control/action_validity_admission_v1.py\": \"16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021\",\n    \"research/live_control/coast_backend_v1.py\": \"fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009\",\n    \"research/live_control/executor_v11.py\": \"ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676\",\n    \"research/live_control/executor_v12.py\": \"c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965\",\n    \"research/live_control/executor_v13.py\": \"d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b\",\n    \"research/live_control/executor_v3.py\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\",\n    \"research/live_control/executor_v5.py\": \"a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400\",\n    \"research/live_control/input_owner.py\": \"a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3\",\n    \"research/live_control/input_owner_process_v3.py\": \"425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7\",\n    \"research/live_control/input_owner_rpc_v2.py\": \"a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c\",\n    \"research/live_control/input_owner_v10.py\": \"fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049\",\n    \"research/live_control/input_owner_v11.py\": \"4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c\",\n    \"research/live_control/input_owner_v12.py\": \"6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9\",\n    \"research/live_control/input_owner_v2.py\": \"bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22\",\n    \"research/live_control/input_owner_v5.py\": \"b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347\",\n    \"research/live_control/input_transition_owner_v3.py\": \"bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35\",\n    \"research/live_control/input_transition_owner_v4.py\": \"a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85\",\n    \"research/live_control/lease.py\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\",\n    \"research/live_control/lease_cause_v1.py\": \"1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305\",\n    \"research/live_control/lease_cause_v2.py\": \"6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47\",\n    \"research/live_control/lease_release_v1.py\": \"b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff\",\n    \"research/live_control/quiet_window.py\": \"4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0\",\n    \"research/live_control/session_v10.py\": \"a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d\",\n    \"research/live_control/session_v4.py\": \"04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee\",\n    \"research/live_control/session_v5.py\": \"041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12\",\n    \"research/live_control/session_v6.py\": \"cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7\",\n    \"research/live_control/session_v7.py\": \"68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11\",\n    \"research/live_control/session_v8.py\": \"22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40\",\n    \"research/live_control/session_v9.py\": \"6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0\",\n    \"research/live_control/target_process_identity_v1.py\": \"d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e\",\n    \"research/live_control/test_input_owner_process_v3.py\": \"dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d\",\n    \"research/live_control/test_input_owner_v12_explicit_up_cancel.py\": \"d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645\",\n    \"research/observation_gating/exact_gate.py\": \"6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944\",\n    \"research/observation_gating/gui_suite.py\": \"953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f\",\n    \"research/observation_tiles/image_artifact.py\": \"7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e\",\n    \"research/observation_tiles/tile_transport.py\": \"206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a\",\n    \"research/real_apps_v1/real_app_suite_v1.py\": \"ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764\",\n    \"runtime/guarded_x11_v1/__init__.py\": \"1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a\",\n    \"runtime/guarded_x11_v1/process_identity.py\": \"7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577\",\n    \"runtime/guarded_x11_v1/target_queries.py\": \"bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a\"\n  },\n  \"started_perf_ns\": 345446148815100,\n  \"supervisor_pid\": 44704\n}\n"
+        }
+      }
+    },
+    {
+      "case": "blocked-release",
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+        "display": ":fake",
+        "pid": 51736,
+        "parent_pid": 44704,
+        "supervisor_pid": 44704,
+        "owner_id": "cf3e5ddffa8947a7b56fc3399480fecd",
+        "started_perf_ns": 345447272914100,
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_input_owner_process_v3.py": "dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_process_v3.py": "425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7"
+        }
+      },
+      "spawn_pid": 51736,
+      "local_close": {
+        "verified": false,
+        "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "before": {
+        "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+        "spawn_pid": 51736,
+        "process_alive": true,
+        "exit_code": null,
+        "verified": false,
+        "recovery": {
+          "core": {
+            "close_error": "RuntimeError: input owner still alive; cleanup unverified",
+            "display": ":fake",
+            "owner_thread_stopped": false,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+            "verified": false
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "cf3e5ddffa8947a7b56fc3399480fecd",
+            "parent_pid": 44704,
+            "pid": 51736,
+            "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+            "supervisor_pid": 44704
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b",
+          "verified": false
+        },
+        "finish": null,
+        "receipt_error": null,
+        "receipt_verified": false
+      },
+      "after": {
+        "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+        "spawn_pid": 51736,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": false,
+        "recovery": {
+          "core": {
+            "close_error": "RuntimeError: input owner still alive; cleanup unverified",
+            "display": ":fake",
+            "owner_thread_stopped": false,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+            "verified": false
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "cf3e5ddffa8947a7b56fc3399480fecd",
+            "parent_pid": 44704,
+            "pid": 51736,
+            "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+            "supervisor_pid": 44704
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b",
+          "verified": false
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "cf3e5ddffa8947a7b56fc3399480fecd",
+            "parent_pid": 44704,
+            "pid": 51736,
+            "service_id": "a8a05d4cfc464ac1b5aa1611562d3a43",
+            "supervisor_pid": 44704
+          },
+          "initial_verification": false,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "b292c448a8faa40e2cea6ac1262d24ad30a9c09afda7a927f46341352ce9dd77",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b",
+          "verified": false
+        },
+        "receipt_error": null,
+        "receipt_verified": false
+      },
+      "initial_unchanged": true,
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 51736,
+          "thread": 28760,
+          "at_ns": 345447389492800
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": [],
+          "pid": 51736,
+          "thread": 28760,
+          "at_ns": 345452636608400
+        }
+      ],
+      "files": {
+        "finish.json": {
+          "sha256": "bc2a0b6f97453cb52d12f09a43e446affaeecc9e990681bf2b6f8678648df61f",
+          "text": "{\n  \"context_exit_success\": true,\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"cf3e5ddffa8947a7b56fc3399480fecd\",\n    \"parent_pid\": 44704,\n    \"pid\": 51736,\n    \"service_id\": \"a8a05d4cfc464ac1b5aa1611562d3a43\",\n    \"supervisor_pid\": 44704\n  },\n  \"initial_verification\": false,\n  \"owner_thread_stopped\": true,\n  \"recovery_sha256\": \"b292c448a8faa40e2cea6ac1262d24ad30a9c09afda7a927f46341352ce9dd77\",\n  \"schema\": \"owned-owner-finish-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b\",\n  \"verified\": false\n}\n"
+        },
+        "fixture-edges.jsonl": {
+          "sha256": "b8d18edf14c28e3f245387fc635822ffb093221baca4bcf5843c4a5844911ba3",
+          "text": "{\"event\": 2, \"code\": 38, \"down\": [38], \"pid\": 51736, \"thread\": 28760, \"at_ns\": 345447389492800}\n{\"event\": 3, \"code\": 38, \"down\": [], \"pid\": 51736, \"thread\": 28760, \"at_ns\": 345452636608400}\n"
+        },
+        "recovery.json": {
+          "sha256": "b292c448a8faa40e2cea6ac1262d24ad30a9c09afda7a927f46341352ce9dd77",
+          "text": "{\n  \"core\": {\n    \"close_error\": \"RuntimeError: input owner still alive; cleanup unverified\",\n    \"display\": \":fake\",\n    \"owner_thread_stopped\": false,\n    \"physical_verification_authoritative\": false,\n    \"protocol_error\": null,\n    \"release_records\": [],\n    \"schema\": \"input-owner-service-close-v2\",\n    \"service_id\": \"a8a05d4cfc464ac1b5aa1611562d3a43\",\n    \"verified\": false\n  },\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"cf3e5ddffa8947a7b56fc3399480fecd\",\n    \"parent_pid\": 44704,\n    \"pid\": 51736,\n    \"service_id\": \"a8a05d4cfc464ac1b5aa1611562d3a43\",\n    \"supervisor_pid\": 44704\n  },\n  \"schema\": \"owned-owner-recovery-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b\",\n  \"verified\": false\n}\n"
+        },
+        "startup.json": {
+          "sha256": "ea614180446e2a7f73c63b2efca1afb2281738ad033f65adb595eff87fca3e8b",
+          "text": "{\n  \"display\": \":fake\",\n  \"generation_kind\": \"fresh logical launch UUID; no native PID start-time proof\",\n  \"owner_id\": \"cf3e5ddffa8947a7b56fc3399480fecd\",\n  \"parent_pid\": 44704,\n  \"pid\": 51736,\n  \"schema\": \"owned-owner-startup-v3\",\n  \"service_id\": \"a8a05d4cfc464ac1b5aa1611562d3a43\",\n  \"source_sha256_lf\": {\n    \"research/doom/doom_owner_thread_release_batch_backend_v1.py\": \"aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe\",\n    \"research/doom/doom_process_identity_backend_v1.py\": \"7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76\",\n    \"research/doom/doom_signal_value_domain_v1.py\": \"0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1\",\n    \"research/doom/doom_typed_coast_backend_v1.py\": \"fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079\",\n    \"research/doom/doom_typed_observation_v1.py\": \"13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1\",\n    \"research/doom/doom_typed_release_backend_v1.py\": \"ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f\",\n    \"research/doom/doom_typed_release_backend_v2.py\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\",\n    \"research/doom/test_map01_process_identity_backend.py\": \"7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad\",\n    \"research/live_control/action_validity_admission_v1.py\": \"16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021\",\n    \"research/live_control/coast_backend_v1.py\": \"fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009\",\n    \"research/live_control/executor_v11.py\": \"ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676\",\n    \"research/live_control/executor_v12.py\": \"c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965\",\n    \"research/live_control/executor_v13.py\": \"d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b\",\n    \"research/live_control/executor_v3.py\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\",\n    \"research/live_control/executor_v5.py\": \"a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400\",\n    \"research/live_control/input_owner.py\": \"a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3\",\n    \"research/live_control/input_owner_process_v3.py\": \"425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7\",\n    \"research/live_control/input_owner_rpc_v2.py\": \"a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c\",\n    \"research/live_control/input_owner_v10.py\": \"fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049\",\n    \"research/live_control/input_owner_v11.py\": \"4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c\",\n    \"research/live_control/input_owner_v12.py\": \"6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9\",\n    \"research/live_control/input_owner_v2.py\": \"bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22\",\n    \"research/live_control/input_owner_v5.py\": \"b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347\",\n    \"research/live_control/input_transition_owner_v3.py\": \"bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35\",\n    \"research/live_control/input_transition_owner_v4.py\": \"a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85\",\n    \"research/live_control/lease.py\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\",\n    \"research/live_control/lease_cause_v1.py\": \"1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305\",\n    \"research/live_control/lease_cause_v2.py\": \"6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47\",\n    \"research/live_control/lease_release_v1.py\": \"b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff\",\n    \"research/live_control/quiet_window.py\": \"4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0\",\n    \"research/live_control/session_v10.py\": \"a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d\",\n    \"research/live_control/session_v4.py\": \"04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee\",\n    \"research/live_control/session_v5.py\": \"041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12\",\n    \"research/live_control/session_v6.py\": \"cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7\",\n    \"research/live_control/session_v7.py\": \"68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11\",\n    \"research/live_control/session_v8.py\": \"22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40\",\n    \"research/live_control/session_v9.py\": \"6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0\",\n    \"research/live_control/target_process_identity_v1.py\": \"d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e\",\n    \"research/live_control/test_input_owner_process_v3.py\": \"dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d\",\n    \"research/live_control/test_input_owner_v12_explicit_up_cancel.py\": \"d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645\",\n    \"research/observation_gating/exact_gate.py\": \"6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944\",\n    \"research/observation_gating/gui_suite.py\": \"953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f\",\n    \"research/observation_tiles/image_artifact.py\": \"7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e\",\n    \"research/observation_tiles/tile_transport.py\": \"206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a\",\n    \"research/real_apps_v1/real_app_suite_v1.py\": \"ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764\",\n    \"runtime/guarded_x11_v1/__init__.py\": \"1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a\",\n    \"runtime/guarded_x11_v1/process_identity.py\": \"7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577\",\n    \"runtime/guarded_x11_v1/target_queries.py\": \"bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a\"\n  },\n  \"started_perf_ns\": 345447272914100,\n  \"supervisor_pid\": 44704\n}\n"
+        }
+      }
+    },
+    {
+      "case": "normal",
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "83085f5f290849cea8892c6dc34050a0",
+        "display": ":fake",
+        "pid": 5264,
+        "parent_pid": 44704,
+        "supervisor_pid": 44704,
+        "owner_id": "c04101e69bd2405582de0fe31e3b1f8d",
+        "started_perf_ns": 345453159567700,
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_input_owner_process_v3.py": "dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_process_v3.py": "425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7"
+        }
+      },
+      "spawn_pid": 5264,
+      "admission": {
+        "event": "input_admission",
+        "key": "a",
+        "keycode": 38,
+        "admitted_ns": 345453281404700,
+        "input_ack_ns": 345453328326000,
+        "valid_until_ns": 345463280657600,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          345463280657600
+        ],
+        "intent_token": "owned-process-test-intent"
+      },
+      "report": {
+        "service_id": "83085f5f290849cea8892c6dc34050a0",
+        "spawn_pid": 5264,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": true,
+        "recovery": {
+          "core": {
+            "close_error": null,
+            "display": ":fake",
+            "owner_thread_stopped": true,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": "owned-process-test-intent",
+                "key_release_attempts": {
+                  "38": {
+                    "attempts": [
+                      {
+                        "attempt": 1,
+                        "keymap_after_error": null,
+                        "keymap_before_error": null,
+                        "keymap_sampled_ns": 345453365595400,
+                        "keyrelease_error": null,
+                        "keyrelease_started_ns": 345453329111200,
+                        "server_key_down_after": false,
+                        "server_key_down_before": true,
+                        "sync_error": null,
+                        "sync_returned_ns": 345453365580800
+                      }
+                    ],
+                    "verified": true
+                  }
+                },
+                "key_release_intervals_ns": [
+                  {
+                    "interval_ns": [
+                      345453329111200,
+                      345453365595400
+                    ],
+                    "keycode": 38
+                  }
+                ],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "close",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  345463280657600
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": true,
+                  "thread_alive": false
+                },
+                "valid_until_ns": 345463280657600,
+                "verified": true,
+                "verified_ns": 345453365617500
+              }
+            ],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "83085f5f290849cea8892c6dc34050a0",
+            "verified": true
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "c04101e69bd2405582de0fe31e3b1f8d",
+            "parent_pid": 44704,
+            "pid": 5264,
+            "service_id": "83085f5f290849cea8892c6dc34050a0",
+            "supervisor_pid": 44704
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "7a1f00a015c3e3bca33e39cbe3b9614494c978b2ae73e2cf786de32d96b04728",
+          "verified": true
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "c04101e69bd2405582de0fe31e3b1f8d",
+            "parent_pid": 44704,
+            "pid": 5264,
+            "service_id": "83085f5f290849cea8892c6dc34050a0",
+            "supervisor_pid": 44704
+          },
+          "initial_verification": true,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "e27d0f0da7606d700fb06a164b2c308535c9bf9b39723dfeac3f0e76a533c6fc",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "7a1f00a015c3e3bca33e39cbe3b9614494c978b2ae73e2cf786de32d96b04728",
+          "verified": true
+        },
+        "receipt_error": null,
+        "receipt_verified": true
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 5264,
+          "thread": 18144,
+          "at_ns": 345453281434600
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": [],
+          "pid": 5264,
+          "thread": 18144,
+          "at_ns": 345453329320000
+        }
+      ],
+      "files": {
+        "finish.json": {
+          "sha256": "0093d0d72d6287a69c60eec77ebea252d555656c92d9254df00debb42f70195b",
+          "text": "{\n  \"context_exit_success\": true,\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"c04101e69bd2405582de0fe31e3b1f8d\",\n    \"parent_pid\": 44704,\n    \"pid\": 5264,\n    \"service_id\": \"83085f5f290849cea8892c6dc34050a0\",\n    \"supervisor_pid\": 44704\n  },\n  \"initial_verification\": true,\n  \"owner_thread_stopped\": true,\n  \"recovery_sha256\": \"e27d0f0da7606d700fb06a164b2c308535c9bf9b39723dfeac3f0e76a533c6fc\",\n  \"schema\": \"owned-owner-finish-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"7a1f00a015c3e3bca33e39cbe3b9614494c978b2ae73e2cf786de32d96b04728\",\n  \"verified\": true\n}\n"
+        },
+        "fixture-edges.jsonl": {
+          "sha256": "190b00110a672ee45d2e459746ee0eaebc46088b1962eccfc0dc0e64c2b13b2e",
+          "text": "{\"event\": 2, \"code\": 38, \"down\": [38], \"pid\": 5264, \"thread\": 18144, \"at_ns\": 345453281434600}\n{\"event\": 3, \"code\": 38, \"down\": [], \"pid\": 5264, \"thread\": 18144, \"at_ns\": 345453329320000}\n"
+        },
+        "recovery.json": {
+          "sha256": "e27d0f0da7606d700fb06a164b2c308535c9bf9b39723dfeac3f0e76a533c6fc",
+          "text": "{\n  \"core\": {\n    \"close_error\": null,\n    \"display\": \":fake\",\n    \"owner_thread_stopped\": true,\n    \"physical_verification_authoritative\": false,\n    \"protocol_error\": null,\n    \"release_records\": [\n      {\n        \"buttons_down\": [],\n        \"event\": \"owner_release\",\n        \"intent_token\": \"owned-process-test-intent\",\n        \"key_release_attempts\": {\n          \"38\": {\n            \"attempts\": [\n              {\n                \"attempt\": 1,\n                \"keymap_after_error\": null,\n                \"keymap_before_error\": null,\n                \"keymap_sampled_ns\": 345453365595400,\n                \"keyrelease_error\": null,\n                \"keyrelease_started_ns\": 345453329111200,\n                \"server_key_down_after\": false,\n                \"server_key_down_before\": true,\n                \"sync_error\": null,\n                \"sync_returned_ns\": 345453365580800\n              }\n            ],\n            \"verified\": true\n          }\n        },\n        \"key_release_intervals_ns\": [\n          {\n            \"interval_ns\": [\n              345453329111200,\n              345453365595400\n            ],\n            \"keycode\": 38\n          }\n        ],\n        \"key_state_errors\": [],\n        \"key_state_source\": \"x11_query_keymap\",\n        \"keys_down\": [],\n        \"keys_unknown\": [],\n        \"reason\": \"close\",\n        \"target_focus_query_failed\": false,\n        \"target_process_identity\": [\n          1,\n          41,\n          \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          345463280657600\n        ],\n        \"target_process_identity_reader\": {\n          \"close_error\": null,\n          \"pending\": false,\n          \"retired\": true,\n          \"thread_alive\": false\n        },\n        \"valid_until_ns\": 345463280657600,\n        \"verified\": true,\n        \"verified_ns\": 345453365617500\n      }\n    ],\n    \"schema\": \"input-owner-service-close-v2\",\n    \"service_id\": \"83085f5f290849cea8892c6dc34050a0\",\n    \"verified\": true\n  },\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"c04101e69bd2405582de0fe31e3b1f8d\",\n    \"parent_pid\": 44704,\n    \"pid\": 5264,\n    \"service_id\": \"83085f5f290849cea8892c6dc34050a0\",\n    \"supervisor_pid\": 44704\n  },\n  \"schema\": \"owned-owner-recovery-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"7a1f00a015c3e3bca33e39cbe3b9614494c978b2ae73e2cf786de32d96b04728\",\n  \"verified\": true\n}\n"
+        },
+        "startup.json": {
+          "sha256": "7a1f00a015c3e3bca33e39cbe3b9614494c978b2ae73e2cf786de32d96b04728",
+          "text": "{\n  \"display\": \":fake\",\n  \"generation_kind\": \"fresh logical launch UUID; no native PID start-time proof\",\n  \"owner_id\": \"c04101e69bd2405582de0fe31e3b1f8d\",\n  \"parent_pid\": 44704,\n  \"pid\": 5264,\n  \"schema\": \"owned-owner-startup-v3\",\n  \"service_id\": \"83085f5f290849cea8892c6dc34050a0\",\n  \"source_sha256_lf\": {\n    \"research/doom/doom_owner_thread_release_batch_backend_v1.py\": \"aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe\",\n    \"research/doom/doom_process_identity_backend_v1.py\": \"7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76\",\n    \"research/doom/doom_signal_value_domain_v1.py\": \"0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1\",\n    \"research/doom/doom_typed_coast_backend_v1.py\": \"fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079\",\n    \"research/doom/doom_typed_observation_v1.py\": \"13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1\",\n    \"research/doom/doom_typed_release_backend_v1.py\": \"ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f\",\n    \"research/doom/doom_typed_release_backend_v2.py\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\",\n    \"research/doom/test_map01_process_identity_backend.py\": \"7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad\",\n    \"research/live_control/action_validity_admission_v1.py\": \"16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021\",\n    \"research/live_control/coast_backend_v1.py\": \"fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009\",\n    \"research/live_control/executor_v11.py\": \"ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676\",\n    \"research/live_control/executor_v12.py\": \"c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965\",\n    \"research/live_control/executor_v13.py\": \"d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b\",\n    \"research/live_control/executor_v3.py\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\",\n    \"research/live_control/executor_v5.py\": \"a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400\",\n    \"research/live_control/input_owner.py\": \"a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3\",\n    \"research/live_control/input_owner_process_v3.py\": \"425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7\",\n    \"research/live_control/input_owner_rpc_v2.py\": \"a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c\",\n    \"research/live_control/input_owner_v10.py\": \"fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049\",\n    \"research/live_control/input_owner_v11.py\": \"4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c\",\n    \"research/live_control/input_owner_v12.py\": \"6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9\",\n    \"research/live_control/input_owner_v2.py\": \"bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22\",\n    \"research/live_control/input_owner_v5.py\": \"b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347\",\n    \"research/live_control/input_transition_owner_v3.py\": \"bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35\",\n    \"research/live_control/input_transition_owner_v4.py\": \"a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85\",\n    \"research/live_control/lease.py\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\",\n    \"research/live_control/lease_cause_v1.py\": \"1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305\",\n    \"research/live_control/lease_cause_v2.py\": \"6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47\",\n    \"research/live_control/lease_release_v1.py\": \"b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff\",\n    \"research/live_control/quiet_window.py\": \"4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0\",\n    \"research/live_control/session_v10.py\": \"a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d\",\n    \"research/live_control/session_v4.py\": \"04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee\",\n    \"research/live_control/session_v5.py\": \"041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12\",\n    \"research/live_control/session_v6.py\": \"cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7\",\n    \"research/live_control/session_v7.py\": \"68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11\",\n    \"research/live_control/session_v8.py\": \"22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40\",\n    \"research/live_control/session_v9.py\": \"6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0\",\n    \"research/live_control/target_process_identity_v1.py\": \"d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e\",\n    \"research/live_control/test_input_owner_process_v3.py\": \"dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d\",\n    \"research/live_control/test_input_owner_v12_explicit_up_cancel.py\": \"d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645\",\n    \"research/observation_gating/exact_gate.py\": \"6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944\",\n    \"research/observation_gating/gui_suite.py\": \"953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f\",\n    \"research/observation_tiles/image_artifact.py\": \"7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e\",\n    \"research/observation_tiles/tile_transport.py\": \"206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a\",\n    \"research/real_apps_v1/real_app_suite_v1.py\": \"ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764\",\n    \"runtime/guarded_x11_v1/__init__.py\": \"1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a\",\n    \"runtime/guarded_x11_v1/process_identity.py\": \"7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577\",\n    \"runtime/guarded_x11_v1/target_queries.py\": \"bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a\"\n  },\n  \"started_perf_ns\": 345453159567700,\n  \"supervisor_pid\": 44704\n}\n"
+        }
+      }
+    },
+    {
+      "case": "service-death",
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "da5f8ad618cb480dbc28a9042cb3d995",
+        "display": ":fake",
+        "pid": 26676,
+        "parent_pid": 44704,
+        "supervisor_pid": 44704,
+        "owner_id": "e1725d2239ae4460990ce2eec0c432e3",
+        "started_perf_ns": 345453868378500,
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_input_owner_process_v3.py": "dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_process_v3.py": "425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7"
+        }
+      },
+      "spawn_pid": 26676,
+      "report": {
+        "service_id": "da5f8ad618cb480dbc28a9042cb3d995",
+        "spawn_pid": 26676,
+        "process_alive": false,
+        "exit_code": 71,
+        "verified": false,
+        "recovery": null,
+        "finish": null,
+        "receipt_error": null,
+        "receipt_verified": false
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 26676,
+          "thread": 27860,
+          "at_ns": 345453978072500
+        }
+      ],
+      "files": {
+        "fixture-edges.jsonl": {
+          "sha256": "f7a887eba1175a578a51342c5ec1864e38e88d355aca3c3387993ff60cec514d",
+          "text": "{\"event\": 2, \"code\": 38, \"down\": [38], \"pid\": 26676, \"thread\": 27860, \"at_ns\": 345453978072500}\n"
+        },
+        "startup.json": {
+          "sha256": "1ddc058e607882384424e1daf2a998e9a1eb5dadd432745d360752f257eb33b0",
+          "text": "{\n  \"display\": \":fake\",\n  \"generation_kind\": \"fresh logical launch UUID; no native PID start-time proof\",\n  \"owner_id\": \"e1725d2239ae4460990ce2eec0c432e3\",\n  \"parent_pid\": 44704,\n  \"pid\": 26676,\n  \"schema\": \"owned-owner-startup-v3\",\n  \"service_id\": \"da5f8ad618cb480dbc28a9042cb3d995\",\n  \"source_sha256_lf\": {\n    \"research/doom/doom_owner_thread_release_batch_backend_v1.py\": \"aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe\",\n    \"research/doom/doom_process_identity_backend_v1.py\": \"7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76\",\n    \"research/doom/doom_signal_value_domain_v1.py\": \"0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1\",\n    \"research/doom/doom_typed_coast_backend_v1.py\": \"fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079\",\n    \"research/doom/doom_typed_observation_v1.py\": \"13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1\",\n    \"research/doom/doom_typed_release_backend_v1.py\": \"ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f\",\n    \"research/doom/doom_typed_release_backend_v2.py\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\",\n    \"research/doom/test_map01_process_identity_backend.py\": \"7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad\",\n    \"research/live_control/action_validity_admission_v1.py\": \"16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021\",\n    \"research/live_control/coast_backend_v1.py\": \"fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009\",\n    \"research/live_control/executor_v11.py\": \"ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676\",\n    \"research/live_control/executor_v12.py\": \"c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965\",\n    \"research/live_control/executor_v13.py\": \"d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b\",\n    \"research/live_control/executor_v3.py\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\",\n    \"research/live_control/executor_v5.py\": \"a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400\",\n    \"research/live_control/input_owner.py\": \"a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3\",\n    \"research/live_control/input_owner_process_v3.py\": \"425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7\",\n    \"research/live_control/input_owner_rpc_v2.py\": \"a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c\",\n    \"research/live_control/input_owner_v10.py\": \"fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049\",\n    \"research/live_control/input_owner_v11.py\": \"4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c\",\n    \"research/live_control/input_owner_v12.py\": \"6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9\",\n    \"research/live_control/input_owner_v2.py\": \"bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22\",\n    \"research/live_control/input_owner_v5.py\": \"b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347\",\n    \"research/live_control/input_transition_owner_v3.py\": \"bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35\",\n    \"research/live_control/input_transition_owner_v4.py\": \"a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85\",\n    \"research/live_control/lease.py\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\",\n    \"research/live_control/lease_cause_v1.py\": \"1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305\",\n    \"research/live_control/lease_cause_v2.py\": \"6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47\",\n    \"research/live_control/lease_release_v1.py\": \"b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff\",\n    \"research/live_control/quiet_window.py\": \"4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0\",\n    \"research/live_control/session_v10.py\": \"a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d\",\n    \"research/live_control/session_v4.py\": \"04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee\",\n    \"research/live_control/session_v5.py\": \"041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12\",\n    \"research/live_control/session_v6.py\": \"cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7\",\n    \"research/live_control/session_v7.py\": \"68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11\",\n    \"research/live_control/session_v8.py\": \"22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40\",\n    \"research/live_control/session_v9.py\": \"6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0\",\n    \"research/live_control/target_process_identity_v1.py\": \"d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e\",\n    \"research/live_control/test_input_owner_process_v3.py\": \"dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d\",\n    \"research/live_control/test_input_owner_v12_explicit_up_cancel.py\": \"d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645\",\n    \"research/observation_gating/exact_gate.py\": \"6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944\",\n    \"research/observation_gating/gui_suite.py\": \"953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f\",\n    \"research/observation_tiles/image_artifact.py\": \"7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e\",\n    \"research/observation_tiles/tile_transport.py\": \"206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a\",\n    \"research/real_apps_v1/real_app_suite_v1.py\": \"ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764\",\n    \"runtime/guarded_x11_v1/__init__.py\": \"1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a\",\n    \"runtime/guarded_x11_v1/process_identity.py\": \"7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577\",\n    \"runtime/guarded_x11_v1/target_queries.py\": \"bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a\"\n  },\n  \"started_perf_ns\": 345453868378500,\n  \"supervisor_pid\": 44704\n}\n"
+        }
+      }
+    },
+    {
+      "case": "generation-and-exclusive",
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "a1e67f7937a0434ba91f395ec4190496",
+        "display": ":fake",
+        "pid": 36980,
+        "parent_pid": 44704,
+        "supervisor_pid": 44704,
+        "owner_id": "3aaa7ac7f3fb41b5a9b4c99e590799bf",
+        "started_perf_ns": 345454458002800,
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_input_owner_process_v3.py": "dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_process_v3.py": "425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7"
+        }
+      },
+      "spawn_pid": 36980,
+      "report": {
+        "service_id": "a1e67f7937a0434ba91f395ec4190496",
+        "spawn_pid": 36980,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": true,
+        "recovery": {
+          "core": {
+            "close_error": null,
+            "display": ":fake",
+            "owner_thread_stopped": true,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": null,
+                "key_release_attempts": {},
+                "key_release_intervals_ns": [],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "close",
+                "target_focus_query_failed": false,
+                "target_process_identity": null,
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": true,
+                  "thread_alive": false
+                },
+                "valid_until_ns": null,
+                "verified": true,
+                "verified_ns": 345454560818100
+              }
+            ],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "a1e67f7937a0434ba91f395ec4190496",
+            "verified": true
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "3aaa7ac7f3fb41b5a9b4c99e590799bf",
+            "parent_pid": 44704,
+            "pid": 36980,
+            "service_id": "a1e67f7937a0434ba91f395ec4190496",
+            "supervisor_pid": 44704
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "3f691c23abfdf80cb65a8b5ee930ca4cc4ac37894a7b09af0f45b4e2753eb592",
+          "verified": true
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "3aaa7ac7f3fb41b5a9b4c99e590799bf",
+            "parent_pid": 44704,
+            "pid": 36980,
+            "service_id": "a1e67f7937a0434ba91f395ec4190496",
+            "supervisor_pid": 44704
+          },
+          "initial_verification": true,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "ddc3fb0d56ab04703194535a8a9c90acb40b683022eaa83061fbf5d3c63b4fa4",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "3f691c23abfdf80cb65a8b5ee930ca4cc4ac37894a7b09af0f45b4e2753eb592",
+          "verified": true
+        },
+        "receipt_error": null,
+        "receipt_verified": true
+      },
+      "wrong_generation_refused": true,
+      "overwrite_refused": true,
+      "files": {
+        "finish.json": {
+          "sha256": "8e868dccf41491affeae87add8baeca84066a96797f4df7b35ec2351fa91c5bb",
+          "text": "{\n  \"context_exit_success\": true,\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"3aaa7ac7f3fb41b5a9b4c99e590799bf\",\n    \"parent_pid\": 44704,\n    \"pid\": 36980,\n    \"service_id\": \"a1e67f7937a0434ba91f395ec4190496\",\n    \"supervisor_pid\": 44704\n  },\n  \"initial_verification\": true,\n  \"owner_thread_stopped\": true,\n  \"recovery_sha256\": \"ddc3fb0d56ab04703194535a8a9c90acb40b683022eaa83061fbf5d3c63b4fa4\",\n  \"schema\": \"owned-owner-finish-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"3f691c23abfdf80cb65a8b5ee930ca4cc4ac37894a7b09af0f45b4e2753eb592\",\n  \"verified\": true\n}\n"
+        },
+        "recovery.json": {
+          "sha256": "ddc3fb0d56ab04703194535a8a9c90acb40b683022eaa83061fbf5d3c63b4fa4",
+          "text": "{\n  \"core\": {\n    \"close_error\": null,\n    \"display\": \":fake\",\n    \"owner_thread_stopped\": true,\n    \"physical_verification_authoritative\": false,\n    \"protocol_error\": null,\n    \"release_records\": [\n      {\n        \"buttons_down\": [],\n        \"event\": \"owner_release\",\n        \"intent_token\": null,\n        \"key_release_attempts\": {},\n        \"key_release_intervals_ns\": [],\n        \"key_state_errors\": [],\n        \"key_state_source\": \"x11_query_keymap\",\n        \"keys_down\": [],\n        \"keys_unknown\": [],\n        \"reason\": \"close\",\n        \"target_focus_query_failed\": false,\n        \"target_process_identity\": null,\n        \"target_process_identity_reader\": {\n          \"close_error\": null,\n          \"pending\": false,\n          \"retired\": true,\n          \"thread_alive\": false\n        },\n        \"valid_until_ns\": null,\n        \"verified\": true,\n        \"verified_ns\": 345454560818100\n      }\n    ],\n    \"schema\": \"input-owner-service-close-v2\",\n    \"service_id\": \"a1e67f7937a0434ba91f395ec4190496\",\n    \"verified\": true\n  },\n  \"directory_fsync_requested\": false,\n  \"file_fsync\": true,\n  \"identity\": {\n    \"display\": \":fake\",\n    \"owner_id\": \"3aaa7ac7f3fb41b5a9b4c99e590799bf\",\n    \"parent_pid\": 44704,\n    \"pid\": 36980,\n    \"service_id\": \"a1e67f7937a0434ba91f395ec4190496\",\n    \"supervisor_pid\": 44704\n  },\n  \"schema\": \"owned-owner-recovery-v3\",\n  \"service_error\": null,\n  \"startup_sha256\": \"3f691c23abfdf80cb65a8b5ee930ca4cc4ac37894a7b09af0f45b4e2753eb592\",\n  \"verified\": true\n}\n"
+        },
+        "startup.json": {
+          "sha256": "3f691c23abfdf80cb65a8b5ee930ca4cc4ac37894a7b09af0f45b4e2753eb592",
+          "text": "{\n  \"display\": \":fake\",\n  \"generation_kind\": \"fresh logical launch UUID; no native PID start-time proof\",\n  \"owner_id\": \"3aaa7ac7f3fb41b5a9b4c99e590799bf\",\n  \"parent_pid\": 44704,\n  \"pid\": 36980,\n  \"schema\": \"owned-owner-startup-v3\",\n  \"service_id\": \"a1e67f7937a0434ba91f395ec4190496\",\n  \"source_sha256_lf\": {\n    \"research/doom/doom_owner_thread_release_batch_backend_v1.py\": \"aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe\",\n    \"research/doom/doom_process_identity_backend_v1.py\": \"7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76\",\n    \"research/doom/doom_signal_value_domain_v1.py\": \"0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1\",\n    \"research/doom/doom_typed_coast_backend_v1.py\": \"fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079\",\n    \"research/doom/doom_typed_observation_v1.py\": \"13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1\",\n    \"research/doom/doom_typed_release_backend_v1.py\": \"ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f\",\n    \"research/doom/doom_typed_release_backend_v2.py\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\",\n    \"research/doom/test_map01_process_identity_backend.py\": \"7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad\",\n    \"research/live_control/action_validity_admission_v1.py\": \"16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021\",\n    \"research/live_control/coast_backend_v1.py\": \"fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009\",\n    \"research/live_control/executor_v11.py\": \"ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676\",\n    \"research/live_control/executor_v12.py\": \"c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965\",\n    \"research/live_control/executor_v13.py\": \"d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b\",\n    \"research/live_control/executor_v3.py\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\",\n    \"research/live_control/executor_v5.py\": \"a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400\",\n    \"research/live_control/input_owner.py\": \"a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3\",\n    \"research/live_control/input_owner_process_v3.py\": \"425f048739e7cb0d177735078e4673efcee8f7d1d4681da6e04d8f316d7533b7\",\n    \"research/live_control/input_owner_rpc_v2.py\": \"a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c\",\n    \"research/live_control/input_owner_v10.py\": \"fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049\",\n    \"research/live_control/input_owner_v11.py\": \"4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c\",\n    \"research/live_control/input_owner_v12.py\": \"6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9\",\n    \"research/live_control/input_owner_v2.py\": \"bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22\",\n    \"research/live_control/input_owner_v5.py\": \"b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347\",\n    \"research/live_control/input_transition_owner_v3.py\": \"bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35\",\n    \"research/live_control/input_transition_owner_v4.py\": \"a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85\",\n    \"research/live_control/lease.py\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\",\n    \"research/live_control/lease_cause_v1.py\": \"1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305\",\n    \"research/live_control/lease_cause_v2.py\": \"6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47\",\n    \"research/live_control/lease_release_v1.py\": \"b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff\",\n    \"research/live_control/quiet_window.py\": \"4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0\",\n    \"research/live_control/session_v10.py\": \"a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d\",\n    \"research/live_control/session_v4.py\": \"04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee\",\n    \"research/live_control/session_v5.py\": \"041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12\",\n    \"research/live_control/session_v6.py\": \"cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7\",\n    \"research/live_control/session_v7.py\": \"68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11\",\n    \"research/live_control/session_v8.py\": \"22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40\",\n    \"research/live_control/session_v9.py\": \"6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0\",\n    \"research/live_control/target_process_identity_v1.py\": \"d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e\",\n    \"research/live_control/test_input_owner_process_v3.py\": \"dc79d797ba9f2dfe5a2da7bb94126ca847f973f5c1a73152e90cc30ebfa91f5d\",\n    \"research/live_control/test_input_owner_v12_explicit_up_cancel.py\": \"d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645\",\n    \"research/observation_gating/exact_gate.py\": \"6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944\",\n    \"research/observation_gating/gui_suite.py\": \"953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f\",\n    \"research/observation_tiles/image_artifact.py\": \"7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e\",\n    \"research/observation_tiles/tile_transport.py\": \"206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a\",\n    \"research/real_apps_v1/real_app_suite_v1.py\": \"ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764\",\n    \"runtime/guarded_x11_v1/__init__.py\": \"1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a\",\n    \"runtime/guarded_x11_v1/process_identity.py\": \"7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577\",\n    \"runtime/guarded_x11_v1/target_queries.py\": \"bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a\"\n  },\n  \"started_perf_ns\": 345454458002800,\n  \"supervisor_pid\": 44704\n}\n"
+        }
+      }
+    }
+  ]
+}

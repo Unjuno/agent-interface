@@ -1,0 +1,77 @@
+{
+  "schema": "wslc-s20-relay-cancel-saturation-v1",
+  "attempt_id": "s20-4354abd1c3a0",
+  "created_utc": "2026-10-24T17:49:30.7140421Z",
+  "source_commit": "7b9383077f8f98873eab5eac70b13005c8d2138f",
+  "supersedes": "S19 pre-test runner path failure only; this is a fresh attempt with new session and storage and no S19 result reuse",
+  "source_snapshot": "S12 filtered Python snapshot mounted read-only; critical source blobs checked against current main",
+  "source_snapshot_manifest_sha256": "c216834ddf88f4c3bc1c945e2ffff83e4456311fe49f2b515868fce65d6a42dc",
+  "critical_sources": [
+    {
+      "path": "runtime/cli_v1/test_mcp_relay_composition.py",
+      "sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "origin_main_blob": "9867ec35f769143820afbac018ecaf5185f34c52",
+      "matches_origin_main": true
+    },
+    {
+      "path": "runtime/cli_v1/mcp_relay.py",
+      "sha256": "53237fc22f7b3ce036818432349bebd309cf263181fd8be354025ae7cc260ddf",
+      "origin_main_blob": "aa658d135a20fcc1aa73f384b09d52622914618f",
+      "matches_origin_main": true
+    },
+    {
+      "path": "runtime/cli_v1/mcp_server.py",
+      "sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "origin_main_blob": "40cd0c50ef3af59d606884ee238ef08f7261a1ae",
+      "matches_origin_main": true
+    },
+    {
+      "path": "runtime/cli_v1/owned_guarded_session.py",
+      "sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "origin_main_blob": "bd619265594124619af0610af6c828ea376edd1b",
+      "matches_origin_main": true
+    },
+    {
+      "path": "runtime/guarded_x11_v1/process_identity.py",
+      "sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "origin_main_blob": "b250123dfd60974ba0abb343a5fa5637bc43d611",
+      "matches_origin_main": true
+    },
+    {
+      "path": "research/integration/offline_proxy_reply_framing_20261019/fake_socket_relay.py",
+      "sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "origin_main_blob": "fad5dbb572da474070c91dc035ae84453f58f1df",
+      "matches_origin_main": true
+    }
+  ],
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller",
+  "question": "On WSLc, does the public standard relay dispatch cancel to the held Fake X caller while stdout is saturated, and does modeled release readback occur before stdout resumes while the result remains UNKNOWN/no-replay?",
+  "hypothesis": "The standard relay reserves a bounded cancel response path and reaches the caller-side Fake X release path before the blocked stdout writer resumes.",
+  "decision": "PASS_SCOPED only if exactly one unittest passes; the raw receipt shows 16 queued ordinary responses, cancel dispatched while stdout is blocked, fake readback before stdout resumes, no held keys afterward, cleanup UNKNOWN, release_confirmed false, task_success null, replay denied, late_server_request_possible true; exact container/image/session cleanup passes. Otherwise preserve FAIL_OR_UNKNOWN with no retry.",
+  "competing_explanation": "Fake X readback is injected deterministic test behavior, not an independent OS/X server or physical input readback.",
+  "uncertainty": "One synthetic WSLc platform-transfer sample only; no live GUI, real task effect, MAP01, matched efficiency, reliability estimate or task-success claim.",
+  "session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-s20-4354abd1c3a0",
+  "storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-s20-4354abd1c3a0",
+  "container_name": "ai-control-wslc-s20-4354abd1c3a0",
+  "output_path": "D:\\CodexData\\Temp\\agent-interface-wslc-s20-4354abd1c3a0-output",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "network_inside_container": "none",
+  "cpu_requested": 1,
+  "memory_mb_requested": 1536,
+  "container_timeout_seconds": 120,
+  "session_timeout_minutes": 15,
+  "retries": 0,
+  "preflight": "only new session + exact generated name filtered query; require exit 0 and empty output, no global inventory",
+  "source_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\goal-currentmain-validation-20261024-merge9531\\research\\integration\\wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0\\source-py",
+  "wheelhouse_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\goal-currentmain-validation-20261024-merge9531\\research\\integration\\wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42\\inputs\\wheelhouse-cp312",
+  "wheelhouse_manifest_sha256": "22d87feb3b0e92b144ab7e412deb3ef5cfab3d7731577a80b84b65df9cd014c8",
+  "requirements_lock_sha256": "7032f0239e612b497b4067974e0fd89c46be867923f16a229850de4e887476e8",
+  "runner_sha256": "500b2723891c9614aa2957bd77d5450e1b90b8919efbe6ff960139f57cd571d2",
+  "harness_source_sha256": "0189c2b7a1d865bb65a8aeab907d98f8af3b13b74502132c47dec1ea8d384538",
+  "test_snapshot_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+  "wheel_count": 31,
+  "harness_dll_sha256": "11f5eb1db8ae7fcf462d897fa80cdc43b69750f653fc0a0fcf7a0e3243a16dc9",
+  "wslc_version": "3.0.3.0",
+  "build_exit": "0"
+}

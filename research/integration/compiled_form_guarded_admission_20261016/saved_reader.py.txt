@@ -1,0 +1,50 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-form-guarded-final-20261016'
+KEY='test_compiled_form_guarded_x11.ROWS'
+MODES={'exact','wrong','unknown','missing_field','missing_submit','already_exact','direct_submit_admission'}
+def check(rows):
+    if len(rows)!=7 or {r['mode'] for r in rows}!=MODES:raise ValueError('coverage')
+    for row in rows:
+        mode=row['mode'];interface=row['interface']
+        if 'field_value_matches_task' not in interface['symbols']['submit_control']['dependencies']:raise ValueError('submit gate removed')
+        if mode=='direct_submit_admission':
+            if row['admission']['eligible'] or row['admission']['authorization'] is not None or row['inputs'] or row['resolution_calls']:raise ValueError('false submit admission')
+            continue
+        r=row['result'];prefix=2 if mode=='exact' else 1 if mode in ('wrong','unknown','missing_submit') else 0
+        expected=['field','submit'] if prefix==2 else ['field'] if prefix else []
+        if [v[0] for v in row['inputs']]!=expected or r['completed_transitions']!=prefix:raise ValueError('input/prefix')
+        if row['resolution_calls']!=prefix:raise ValueError('resolution count')
+        if not all(v['release_verified'] is True for v in r['transitions']):raise ValueError('release contradiction')
+        if r['outcome']!=('TASK_SUCCEEDED' if mode=='exact' else 'SAFE_YIELD'):raise ValueError('false completion')
+        if mode in ('wrong','unknown') and (r['reason']!=('effect_failed' if mode=='wrong' else 'effect_unavailable') or row['effect_calls']):raise ValueError('wrong/unknown effect')
+        if len(row['effect_calls'])!=(2 if mode=='exact' else 1 if mode=='missing_submit' else 0):raise ValueError('verifier count')
+        if mode=='exact' and [o['predicates']['field_value_matches_task'] for o in r['observations']]!=[False,True,True]:raise ValueError('state transition')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY];result=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (result['methods'],result['failures'],result['errors'],result['skipped'],len(set(result['selected'])))!=(366,0,0,0,366):raise ValueError('suite result')
+    count=check(rows);mutations=[]
+    for name in ('hidden_input','lost_prefix','wrong_value_success','false_submit_admission','wrong_reference','false_release'):
+        bad=copy.deepcopy(rows)
+        if name=='hidden_input':next(v for v in bad if v['mode']=='exact')['inputs']=[]
+        elif name=='lost_prefix':next(v for v in bad if v['mode']=='wrong')['result']['completed_transitions']=0
+        elif name=='wrong_value_success':next(v for v in bad if v['mode']=='wrong')['result']['outcome']='TASK_SUCCEEDED'
+        elif name=='false_submit_admission':next(v for v in bad if v['mode']=='direct_submit_admission')['admission']['eligible']=True
+        elif name=='wrong_reference':next(v for v in bad if v['mode']=='exact')['inputs'][1][0]='field'
+        else:next(v for v in bad if v['mode']=='exact')['result']['transitions'][0]['release_verified']=False
+        try:check(bad)
+        except ValueError as e:mutations.append(dict(name=name,rejected=str(e)))
+        else:raise ValueError('mutation accepted')
+    controls={}
+    for control,failures in [('baseline',4),('drop_submit_gate',1)]:
+        meta=json.loads((OUT/f'{control}-{mode}-result.json').read_text());old=json.loads((OUT/f'{control}-{mode}-records.json').read_text())
+        if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'])!=(7,failures,0,0):raise ValueError('control')
+        if control=='baseline':
+            positive=next(v for v in old if v['mode']=='exact')
+            if positive['inputs'] or positive['result']['reason']!='missing_symbol':raise ValueError('baseline contradiction absent')
+        elif not next(v for v in old if v['mode']=='direct_submit_admission')['admission']['eligible']:raise ValueError('bad repair control absent')
+        controls[control]=dict(methods=7,failures=failures,errors=0)
+    report[mode]=dict(methods=366,new_rows=count,mutations=mutations,controls=controls)
+print(json.dumps(dict(scope='saved-only guarded-adapter/form contract consistency; memory Bridge fixture, not native input or app score',modes=report),indent=2))

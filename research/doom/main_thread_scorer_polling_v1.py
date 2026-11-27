@@ -20,9 +20,43 @@ ClockNs = Callable[[], int]
 ReadFn = Callable[[int, int], bytes]
 
 
+if os.name == "nt":
+    import ctypes
+    import msvcrt
+    from ctypes import wintypes
+
+    _kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    _peek_named_pipe = _kernel32.PeekNamedPipe
+    _peek_named_pipe.argtypes = [
+        wintypes.HANDLE, wintypes.LPVOID, wintypes.DWORD,
+        ctypes.POINTER(wintypes.DWORD), ctypes.POINTER(wintypes.DWORD),
+        ctypes.POINTER(wintypes.DWORD),
+    ]
+    _peek_named_pipe.restype = wintypes.BOOL
+    _ERROR_BROKEN_PIPE = 109
+
+
 def _wait_readable(fd: int, timeout_s: float) -> bool:
-    ready, _, _ = select.select([fd], [], [], timeout_s)
-    return bool(ready)
+    if os.name != "nt":
+        ready, _, _ = select.select([fd], [], [], timeout_s)
+        return bool(ready)
+
+    handle = wintypes.HANDLE(msvcrt.get_osfhandle(fd))
+    deadline = time.monotonic() + max(0.0, timeout_s)
+    while True:
+        available = wintypes.DWORD()
+        if not _peek_named_pipe(handle, None, 0, None,
+                                ctypes.byref(available), None):
+            error = ctypes.get_last_error()
+            if error == _ERROR_BROKEN_PIPE:
+                return True
+            raise OSError(error, ctypes.FormatError(error))
+        if available.value > 0:
+            return True
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return False
+        time.sleep(min(0.001, remaining))
 
 
 @dataclass(frozen=True)

@@ -1,0 +1,111 @@
+{
+  "admission": {
+    "admitted_ns": 184860995736,
+    "event": "input_admission",
+    "input_ack_ns": 184861097173,
+    "intent_token": "a18-one-shot",
+    "key": "w",
+    "valid_until_ns": 194858936248
+  },
+  "analyzer": {
+    "ambiguous_admission_count": 0,
+    "decision": "FAIL: admission receipts do not form a complete verified release trace",
+    "hold_count": 0,
+    "holds": [],
+    "invalid_release_count": 1,
+    "malformed_admission_count": 1,
+    "measurement_ready": false,
+    "schema": "map01-direct-retained-input-v2",
+    "unmatched_admission_count": 0
+  },
+  "client_events": [
+    {
+      "detail": 25,
+      "observed_ns": 184861257732,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "detail": 25,
+      "observed_ns": 184861504421,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "client_window": 2097152,
+  "error": null,
+  "focus": 2097152,
+  "keycode": 25,
+  "keymap": {
+    "after_explicit_up": false,
+    "while_held": true
+  },
+  "owner_cleanup": {
+    "closed": true,
+    "records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "close",
+        "valid_until_ns": 194858936248,
+        "verified": true,
+        "verified_ns": 184861786470
+      }
+    ],
+    "stopped": true,
+    "thread_alive": false
+  },
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": 194858936248,
+      "verified": true,
+      "verified_ns": 184861786470
+    }
+  ],
+  "release_transition": {
+    "admission_receipt": {
+      "admitted_ns": 184860995736,
+      "event": "input_admission",
+      "input_ack_ns": 184861097173,
+      "intent_token": "a18-one-shot",
+      "key": "w",
+      "operation": "down",
+      "owner_id": "3d3fa48a4dfe4d069582822ee73e991d",
+      "valid_until_ns": 194858936248
+    },
+    "admission_receipt_valid": true,
+    "cancel_requested_at_request": false,
+    "event": "input_release_transition",
+    "focus_invalid_at_request": false,
+    "grants_input_authority": false,
+    "intent_token": "a18-one-shot",
+    "key": "w",
+    "lease_time_valid_at_request": true,
+    "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+    "operation": "up",
+    "ordinary_release_candidate": true,
+    "owner_cleanup_intervened": false,
+    "owner_explicit_keyup_failure": null,
+    "owner_id": "3d3fa48a4dfe4d069582822ee73e991d",
+    "owner_release_history_complete": true,
+    "owner_transition_verified": null,
+    "release_call_bracket_ns": 128819,
+    "release_call_returned_ns": 184861459656,
+    "release_call_started_ns": 184861330837,
+    "transition_schema": "input-release-transition-v3",
+    "valid_until_ns": 194858936248
+  },
+  "schema": "pr8857-wslc-xvfb-receipt-a18-raw-v1",
+  "scope": "one w key down/up through PR #8857 V3 wrapper over real V10 owner on private Xvfb",
+  "xvfb": {
+    "display": ":0",
+    "exit": 0,
+    "pid": 7,
+    "stderr": "_XSERVTransmkdir: ERROR: euid != 0,directory /tmp/.X11-unix will not be created.\n"
+  }
+}

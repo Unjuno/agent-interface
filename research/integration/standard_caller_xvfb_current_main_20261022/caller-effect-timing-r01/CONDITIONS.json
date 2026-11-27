@@ -1,0 +1,72 @@
+{
+  "hypothesis": "One clean trial will produce all timing endpoints from monotonic timestamps and pass the existing public-caller, release, delayed-request-horizon, and fresh-session synthetic-task assertions.",
+  "decision": {
+    "fail": "any assertion or nonzero exit",
+    "hold": "environment unavailable before test entry, or raw/result cannot be retained",
+    "pass": "exit code 0; result JSON exists and has exactly one committed fresh-app event; required timing fields are finite/nonnegative; existing independent release/horizon/fresh-task assertions pass; runtime old cancellation remains UNKNOWN, release_confirmed=false, task_success=null, replay_allowed=false",
+    "inference_limit": "one synthetic Xvfb trial validates instrumentation and a bounded caller scenario only; it is not a reliability, efficiency, physical GUI, MAP01, or WSLc result"
+  },
+  "run_id": "AI-XVFB-CALL-EFFECT-TIMING-20261022-R01",
+  "question": "Does the corrected standard-caller Xvfb harness record distinct input-invocation-to-app-event, app-event-to-effect-commit, effect-commit-to-independent-readback, and caller cancellation invocation-to-return intervals while preserving existing cancellation and recovery assertions?",
+  "source_commit": "0dba975b22fdbdf43f8981b56b0e74b1e8ca7382",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "pull_request": 9354,
+  "inputs": {
+    "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+    "independent_readback": "separate parent X client",
+    "task": "existing synthetic Xvfb held-key cancellation followed by one fresh-session key-c effect",
+    "delayed_request_horizon_ms": 8500,
+    "keys": [
+      "a",
+      "b",
+      "c"
+    ],
+    "application_effect": "synthetic app property committed after app_display.sync()"
+  },
+  "frozen_at_utc": "2026-10-22T00:16:11Z",
+  "repository": "Unjuno/agent-interface",
+  "source_branch": "codex/xvfb-call-effect-timing-r01-20261022",
+  "invocation": {
+    "command": "python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+    "timeout_seconds": 210,
+    "environment": {
+      "AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR": "1",
+      "AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS": "0",
+      "DISPLAY": ":88",
+      "AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT": "<packet>/result.json",
+      "AGENT_INTERFACE_MCP_XVFB_TEST": "1",
+      "AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S": "0",
+      "AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS": "1"
+    }
+  },
+  "design": {
+    "samples": 1,
+    "type": "single-run harness qualification",
+    "comparison": "none",
+    "retries": 0,
+    "arm": "prestarted supervisor enabled; server pause disabled; zero cancel-ack hold",
+    "stopping": "first run is terminal whether PASS, FAIL, HOLD, timeout, or missing receipt"
+  },
+  "allocation": {
+    "model": "none",
+    "WSLc": "NOT USED",
+    "Docker": "NOT USED",
+    "network": "only dependency install if the pinned packages are absent; no network during the trial"
+  },
+  "frozen_environment": {
+    "host_os": "Windows host with Ubuntu WSL2",
+    "dependencies": [
+      "python-xlib==0.33",
+      "Pillow==10.2.0",
+      "numpy==1.26.4",
+      "mcp==1.30.0"
+    ],
+    "xvfb": "installed /usr/bin/Xvfb; version to capture",
+    "python": "3.12.3",
+    "display": ":88, private Xvfb, 1024x768x24, -ac -nolisten tcp",
+    "wsl_kernel": "Linux 6.18.54.1-microsoft-standard-WSL2 x86_64",
+    "wsl_distro": "Ubuntu",
+    "wsl_release": "Ubuntu 24.04.3 LTS",
+    "storage": "repository packet under /mnt/c; temporary harness directory uses WSL /tmp"
+  }
+}

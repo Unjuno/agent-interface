@@ -1,0 +1,6 @@
+WSL Xvfb display connection preflight:
+- DISPLAY=:88 Python-Xlib connection returned :88.
+- Xvfb warned that /tmp/.X11-unix had mode 0777 and failed to create the Unix listener because the filesystem refused chmod to 1777.
+- The test fixture cannot use Xvfb over this WSL temp directory, so scored tests were not started in WSL.
+- A shell cleanup command also left owned PID 378; exact Xvfb :88 process was terminated and verified absent before container use.
+- No test application input was dispatched.

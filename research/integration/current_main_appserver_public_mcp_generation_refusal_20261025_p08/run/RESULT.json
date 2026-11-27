@@ -1,0 +1,78 @@
+{
+  "admission_refusals": [
+    {
+      "action": "enter",
+      "event": "admission_refused",
+      "reason": "association_changed",
+      "status": "association_changed"
+    }
+  ],
+  "application_state_unchanged": true,
+  "classification": "PASS_STALE_GENERATION_REFUSED_BEFORE_INPUT_FAKE_X_ONLY",
+  "compiled_status": "returned",
+  "completed_transitions": 0,
+  "effect_receipt_count": 0,
+  "effort": "low",
+  "elapsed_ns": 5575808300,
+  "generation_observations": [
+    {
+      "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sequence": 1
+    },
+    {
+      "process_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "sequence": 2
+    }
+  ],
+  "independent_final_pixel": [
+    31,
+    29,
+    1
+  ],
+  "independent_refusal_success": true,
+  "ledger_complete": true,
+  "ledger_summary": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "detailed_usage_status": "incomplete",
+    "image_input_tokens": null,
+    "independent_score_status": "recorded",
+    "input_tokens": 10185,
+    "model_attempt_count": 1,
+    "output_tokens": 60,
+    "reasoning_output_tokens": 41,
+    "task_success": true,
+    "tool_call_count": 3,
+    "usage_status": "complete"
+  },
+  "mint_created_sequence": 1,
+  "mint_source_sequence": 1,
+  "mint_status": "minted",
+  "model": "gpt-6.1-sol",
+  "model_image_sha256": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+  "observation_image_sha256": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+  "observation_sequence": 1,
+  "owner_click_count": 0,
+  "owner_input_events": [],
+  "physical_input": false,
+  "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "provider_status": "completed",
+  "provider_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 10185,
+    "output_tokens": 60,
+    "reasoning_output_tokens": 41,
+    "status": "reported"
+  },
+  "refusal_reason": "association_changed",
+  "runtime_outcome": "SAFE_YIELD",
+  "runtime_task_success": null,
+  "selected_point": [
+    16,
+    8
+  ],
+  "selected_point_inside_green": true,
+  "tool_call_submitted": true,
+  "wslc_used": false
+}

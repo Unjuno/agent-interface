@@ -1,0 +1,15 @@
+{
+  "cleanup": {
+    "xvfb_exit": 1
+  },
+  "client_events": [],
+  "errors": [
+    "RuntimeError: Xvfb exited: _XSERVTransmkdir: Mode of /tmp/.X11-unix should be set to 1777\n_XSERVTransSocketCreateListener: failed to bind listener\n_XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed\n_XSERVTransMakeAllCOTSServerListeners: failed to create listener for unix\nsh: 1: /usr/bin/xkbcomp: not found\nsh: 1: /usr/bin/xkbcomp: not found\nXKB: Failed to compile keymap\nKeyboard initialization failed. This could be a missing or incorrect setup of xkeyboard-config.\n(EE) \nFatal server error:\n(EE) Failed to activate virtual core keyboard: 2(EE) \n"
+  ],
+  "owner_queries": [],
+  "owner_records": [],
+  "schema": "v39-owner-close-xvfb-raw-a10-v1",
+  "scope": "one V12 owner key held then closed on isolated Xvfb; no game/model/physical input",
+  "status": "STOP",
+  "xvfb_pid": 384
+}

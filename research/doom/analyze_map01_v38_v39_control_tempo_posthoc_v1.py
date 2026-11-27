@@ -15,7 +15,10 @@ def read(path):
 
 
 def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    data = Path(path).read_bytes()
+    if Path(path).suffix in {".json", ".jsonl"}:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def ms(ns):

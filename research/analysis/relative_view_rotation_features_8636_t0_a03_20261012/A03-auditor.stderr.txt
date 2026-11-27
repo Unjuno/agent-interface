@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a03\research\analysis\relative_view_rotation_features_8636_t0_a03_20261012\auditor.py", line 346, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a03\research\analysis\relative_view_rotation_features_8636_t0_a03_20261012\auditor.py", line 345, in main
+    summary=audit(Path(a.output)); Path(a.result).write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n"); print(json.dumps(summary,sort_keys=True))
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a03\research\analysis\relative_view_rotation_features_8636_t0_a03_20261012\auditor.py", line 268, in audit
+    if stress_yield and r.get("yield_reason")!=stress_reason: raise ValueError("focal stress yield reason mismatch")
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: focal stress yield reason mismatch

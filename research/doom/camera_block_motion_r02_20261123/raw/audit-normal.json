@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "source manifest/event SHA-256",
+    "all source PNG hashes",
+    "typed RGB hashes and health labels",
+    "52 raw/global/blockwise scores",
+    "all 1,664 per-tile selected offsets and RGB residuals",
+    "original R01 raw/global AUC anchor",
+    "frozen acceptance criterion"
+  ],
+  "health_loss_pairs": 4,
+  "metrics_recomputed": {
+    "blockwise_compensated_auc": 0.4270833333333333,
+    "gain_vs_raw": 0.01041666666666663,
+    "global_translation_auc": 0.40625,
+    "loss_pairs_above_median": 1,
+    "world_raw_auc": 0.4166666666666667
+  },
+  "pairs_recomputed": 52,
+  "schema": "issue59-camera-block-motion-r02-audit-v1",
+  "scope": "same single offline episode as R01; not independent data or semantic threat/control evidence",
+  "source_main": "893c3400c694586ff42d30e2f8fa42f5868f5bba",
+  "status": "PASS_EVIDENCE_AND_RECOMPUTATION_SCOPED"
+}

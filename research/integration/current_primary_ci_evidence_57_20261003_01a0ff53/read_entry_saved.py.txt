@@ -1,0 +1,67 @@
+"""Data-only correction after the captured first driver reporter mismatch."""
+import datetime
+import hashlib
+import json
+import os
+import pathlib
+import re
+
+W=pathlib.Path('<OWN_WORKSPACE>/work/current-primary-ci-entry-v3')
+S=W/'source';P=json.loads((W/'PLAN.json').read_bytes())
+sha=lambda b:hashlib.sha256(b).hexdigest()
+read=lambda p:json.loads((W/p).read_bytes())
+before=read('SOURCE_PINS.before.json')
+after={str(p.relative_to(S)):{'bytes':len(b),'sha256':sha(b)} for p in sorted(S.rglob('*')) if p.is_file() for b in [p.read_bytes()]}
+assert before==after and sha(pathlib.Path(P['node_executable']).read_bytes())==P['node_sha256']
+assert read('ENTRY_OUTER_RECEIPT.json')['actual_exit']==1 and b'AssertionError: tests' in (W/'entry-outer.stderr.txt').read_bytes()
+receipts=[]
+for label in ['negative-no-runner-temp','negative-empty-runner-temp','negative-no-github-env','selected-entry-first']:
+    r=read(label+'/RECEIPT.json');receipts.append(r)
+    for stream in ['stdout','stderr']:
+        b=(W/label/(stream+'.raw.txt')).read_bytes()
+        assert len(b)==r[stream+'_bytes'] and sha(b)==r[stream+'_sha256']
+    assert datetime.datetime.fromisoformat(r['started_utc'])<datetime.datetime.fromisoformat(r['ended_utc'])
+    if label.startswith('negative'):
+        assert r['actual_exit']!=0 and r['stdout_bytes']==0 and r['stderr_bytes']>0
+        field='GITHUB_ENV' if label=='negative-no-github-env' else 'RUNNER_TEMP'
+        assert field.encode() in (W/label/'stderr.raw.txt').read_bytes()
+        assert r['environment_delta'][field] in [None,'']
+actual=receipts[-1]
+assert actual['actual_exit']==0 and actual['stderr_bytes']==0
+text=(W/'selected-entry-first/stdout.raw.txt').read_text()
+assert len(re.findall(r'^✔ first busy failure survives later (input|output) error \(',text,re.M))==2
+for label,count in [('tests',2),('pass',2),('fail',0),('cancelled',0),('skipped',0),('todo',0)]:
+    assert re.search(r'^ℹ '+label+' '+str(count)+r'$',text,re.M)
+roots=list((W/'runner-temp').iterdir());assert len(roots)==1 and roots[0].is_dir()
+root=roots[0]
+assert root.name.startswith('primary-failure-order.') and (W/'github-env.txt').read_text()=='PRIMARY_FAILURE_EVIDENCE='+str(root)+'\n'
+assert actual['environment_delta']['PRIMARY_FAILURE_EVIDENCE'] is None
+assert actual['environment_delta']['PATH'].split(os.pathsep)[0]==str(pathlib.Path(P['node_executable']).parent)
+witnesses=[]
+for channel in ['input','output']:
+    d=root/channel;w=json.loads((d/'WITNESS.json').read_bytes())
+    assert w['later_channel']==channel and w['before_release_settled'] is False
+    assert w['fixture_exit']['code']==0 and w['fixture_exit']['requests']==1 and w['fixture_exit']['request_bytes']==72
+    assert w['fixture_start']['pid']==w['fixture_exit']['pid'] and w['fixture_start']['ppid']==w['fixture_exit']['ppid']
+    assert w['host_exit']=={'code':0,'signal':None} and w['fixture_absent'] is True
+    assert w['owned_error_listeners']=={'input':0,'output':0} and w['statuses']==['ready','busy','returned']
+    assert 'primary busy response backlog' in w['error']['message']
+    pid=w['fixture_start']['pid']
+    try:os.kill(pid,0)
+    except ProcessLookupError:pass
+    else:raise AssertionError('owned fixture still present')
+    output=[json.loads(x) for x in (d/'output.raw.txt').read_bytes().splitlines()]
+    assert output==w['rows'] and output[2]['result']['id']==1 and output[2]['result']['next_id']==2
+    request=json.loads((d/'fixture-request.json').read_bytes())
+    assert request==json.loads((d/'host/request-1.json').read_bytes()) and request['id']==1 and request['tool']=='interface_clock'
+    events=[json.loads(x) for x in (d/'host/host-events.jsonl').read_bytes().splitlines()]
+    assert [e['kind'] for e in events]==['send_requested','reply_available','presentation_started','presentation_callbacks_completed','transport_closed']
+    reply=(d/'host/reply-1.json').read_bytes()
+    assert all(e['reply_sha256']==sha(reply) for e in events[1:4])
+    assert json.loads((d/'exchange/original-reply-1.json').read_bytes())==dict(json.loads(reply),attempt=1)
+    witnesses.append({'later_channel':channel,'fixture_pid':pid,'original_requests':1,'original_request_bytes':72,'returned_results':1,'same_pending_before_release':True,'host_exit':0,'fixture_exit':0,'owned_error_listeners':0,'actual_fixture_pid_absent_at_saved_read':True})
+result={'run_id':P['run_id'],'workflow_sha256':P['workflow_after_sha256'],'original_outer_driver_exit':1,'first_outer_failure':'saved reporter parsing expected TAP, actual captured Node spec; no product failure','data_only_correction':True,'actual_selected_runner_start_utc':actual['started_utc'],'actual_selected_runner_end_utc':actual['ended_utc'],'actual_selected_runner_exit':0,'actual_selected_tests':2,'actual_selected_pass':2,'negative_configuration_cases':3,'negative_reject_before_allocation_recorded_by_first_driver':True,'allocated_evidence_root':str(root),'exact_persisted_github_env_row':True,'artifact_reference_added':True,'source_pins_unchanged':len(after),'node_pin_unchanged':True,'cases':witnesses,'actual_full_workflow_executed':False,'consumed_red2_green41_replayed':False,'formal_native_producer_replayed':False,'main_sends':0,'limits':'Only literal allocation/persistence prefix plus selected unchanged module on macOSNode26.7/Bash. Complete hostedLinuxNode22/CI, original scientifically fixed captures, full task/physicalrelease/performance not executed or promoted.'}
+(W/'SOURCE_PINS.after.json').write_text(json.dumps(after,indent=2)+'\n')
+(W/'COMMAND_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+(W/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result))

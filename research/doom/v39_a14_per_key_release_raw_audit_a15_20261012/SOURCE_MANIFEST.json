@@ -1,0 +1,115 @@
+{
+  "experiment_id": "v39_a14_per_key_release_raw_reaudit_a15_20261012",
+  "classification": "READ_ONLY_HISTORICAL_RAW_REAUDIT",
+  "origin_commit": "2d16f5ff6387e3cdc8a6bb985c1b7a55bdcc0a34",
+  "origin_a14_status": "EXPLORATORY_PROTOCOL_DEVIATION",
+  "strict_release_source_commit": "5d3fe94c6f4b8934e2d05012467545cbe55cd615",
+  "strict_release_git_blob": "9a499364b07a1224ae4201dadb5cd45ec2e03fa0",
+  "wslc_image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "files": {
+    "analyze_map01_direct_retained_input_v1.py": {
+      "sha256": "c4f95e0e8bb3c25f871ec5c4723d5fbdad633fb8a6f955b5449145d01aeb53c1",
+      "bytes": 3272
+    },
+    "audit.py": {
+      "sha256": "9ab6ea864db62eb99a3f019b92524a1fa00f345552489f8e66e73d7b0e5bb657",
+      "bytes": 2766
+    },
+    "container-inventory-after.txt": {
+      "sha256": "41c2049d2b3c043110772181e76d772dcf06c92b922aeaef85add573b3fa7a43",
+      "bytes": 89
+    },
+    "derived/direct-retained-input.json": {
+      "sha256": "310d757f1d2c33bd83060198d3c00658dd331496befe39045bee320162bca3a6",
+      "bytes": 3240
+    },
+    "direct-retained-input.json": {
+      "sha256": "c8e740e84e9a36eb6702f5790d3f8879449bbbbdb699a134308d86ab9a8009de",
+      "bytes": 3360
+    },
+    "FREEZE.json": {
+      "sha256": "81b34b387e43c8c8a251caf1f56e0468d04b606deede2a3d63a8edb8ce004fd7",
+      "bytes": 784
+    },
+    "image-inspect.json": {
+      "sha256": "9dbe660cf0dddb8ffc126c4bcef0613091786efa182afa4fdc4c0f45ec6b3a17",
+      "bytes": 1695
+    },
+    "inputs/diagnostic-adapter.json": {
+      "sha256": "47d25827881c45553b869e36ec9d5368a9192cba41c535c90dc65cc70cd23ca1",
+      "bytes": 548
+    },
+    "inputs/events.jsonl": {
+      "sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
+      "bytes": 457736
+    },
+    "inputs/original-freeze.json": {
+      "sha256": "7053471c349a3e922bc631be8d821fd81c265e2960255e421c8e1c9679ed8d7c",
+      "bytes": 1016
+    },
+    "inputs/planner-protocol.jsonl": {
+      "sha256": "97d7c38290dbc0254a1d1fcc139a055a2b1e3afc9be5f8a5f7795c1ceea12a91",
+      "bytes": 270416
+    },
+    "inputs/raw-sha256sums.txt": {
+      "sha256": "e8b14fabebbf877eebbaf45f44fc2302f189a9a1969f507e3321ba0936ac7112",
+      "bytes": 32417
+    },
+    "inputs/report.json": {
+      "sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121",
+      "bytes": 262284
+    },
+    "inputs/runtime-sources.json": {
+      "sha256": "3bb2e40f6c424c54873d4e89c772199725b9f0739c592af5003098ac69e2cb3e",
+      "bytes": 3268
+    },
+    "inputs/strict_controller.py": {
+      "sha256": "754577e7749270a2f0bf52d7dc3ea1ef78f8f537776d5599e44fa5bbe6751b36",
+      "bytes": 113094
+    },
+    "README.md": {
+      "sha256": "bade8215b851dab31be8f2d53c3f75332f7caea6dcbe5a8f702ab45d806315a0",
+      "bytes": 2435
+    },
+    "REPRODUCE.md": {
+      "sha256": "7b6e9402b9b366ec565eecd5c304f5a664aff215640478a1c1e215155f5c7aff",
+      "bytes": 810
+    },
+    "RUN.json": {
+      "sha256": "e51a2382c1681f97bbd41cf7bd8a76888abd54408655f2908023fc2eea1034e0",
+      "bytes": 1636
+    },
+    "stdout-direct-retained.exit": {
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "stdout-direct-retained.txt": {
+      "sha256": "90dec1998fb2ad985fed62b1e5fa7f711d4c5011ead85cafd389df43747eb26a",
+      "bytes": 3478
+    },
+    "test_a15_per_key_release_audit.py": {
+      "sha256": "3c9e2e999f6f6a781227d9e4322bcfc7702acb0e809c93d3d1ac2f8fea84682f",
+      "bytes": 9053
+    },
+    "wslc-normal.exit": {
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "wslc-normal.txt": {
+      "sha256": "239f5dc88b00f28d7090949df2aa25358190400b6ed7b623d27218f5179decab",
+      "bytes": 1321
+    },
+    "wslc-optimized.exit": {
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "wslc-optimized.txt": {
+      "sha256": "469611cedf7f2356fcc299daa8c2e5bbc3d0dfcc0f39311e832384ad514b1394",
+      "bytes": 1321
+    }
+  },
+  "direct_retained_input_analyzer": {
+    "source": "research/doom/analyze_map01_direct_retained_input_v1.py",
+    "git_blob": "8aa3842d4d10744107408a367622498857263827"
+  }
+}

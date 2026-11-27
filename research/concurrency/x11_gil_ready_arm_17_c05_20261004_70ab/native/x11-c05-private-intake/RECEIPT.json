@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c05-private-intake",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && test ! -e /root/17-x11-c05-70ab && docker image inspect --format \"{{.Id}}\" sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f"
+  ],
+  "launcher_pid": 88614,
+  "start_utc": "2026-10-03T17:08:50.166309+00:00",
+  "start_ns": 58294987251916,
+  "pid": 88616,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T17:08:52.152543+00:00",
+  "end_ns": 58296973336416,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 72,
+      "sha256": "ecb6bdff3600c0dd45cadc09a426579a73f5cedaf052d334e307b3415037370d"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

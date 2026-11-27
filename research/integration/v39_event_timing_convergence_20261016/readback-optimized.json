@@ -1,0 +1,44 @@
+{
+  "decision": "PASS_SAVED_READBACK",
+  "modes": [
+    {
+      "mode": "normal",
+      "methods": 70,
+      "rows": 7,
+      "source_pins": 59,
+      "mutations_rejected": [
+        "duplicate-row",
+        "erased-source",
+        "wrong-suite",
+        "lost-primary",
+        "accept-duplicate-json",
+        "accept-control-failure",
+        "erase-log",
+        "erase-handoff",
+        "false-complete",
+        "wrong-interval",
+        "altered-frozen-source"
+      ]
+    },
+    {
+      "mode": "optimized",
+      "methods": 70,
+      "rows": 7,
+      "source_pins": 59,
+      "mutations_rejected": [
+        "duplicate-row",
+        "erased-source",
+        "wrong-suite",
+        "lost-primary",
+        "accept-duplicate-json",
+        "accept-control-failure",
+        "erase-log",
+        "erase-handoff",
+        "false-complete",
+        "wrong-interval",
+        "altered-frozen-source"
+      ]
+    }
+  ],
+  "scope": "actual extracted Python emitter/reader/wait and local regressions; no GUI/game/provider performance or task qualification"
+}

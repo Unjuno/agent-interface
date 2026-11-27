@@ -1,0 +1,10 @@
+{
+  "durable_fence_status": "clear",
+  "fixture_effect": "one B char inside exact operation interval; fresh state b",
+  "fixtures_closed": false,
+  "followup_action": "completed; release confirmed on distinct generation",
+  "outcome": "STOP_ORACLE_TIME_OUTSIDE_REQUEST_WINDOW_AFTER_B_RELEASE",
+  "public_task_verification": "UNKNOWN; observed_monotonic_ns rejected as earlier than oracle request",
+  "recovery": "recovered; release confirmed; neutral readback; verified 2 s horizon",
+  "source_action": "UNKNOWN; release unconfirmed; task_success null; replay denied"
+}

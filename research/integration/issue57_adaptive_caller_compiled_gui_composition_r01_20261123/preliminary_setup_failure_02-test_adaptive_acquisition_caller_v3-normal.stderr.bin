@@ -1,0 +1,18 @@
+test_adaptive_acquisition_caller_v3 (unittest.loader._FailedTest.test_adaptive_acquisition_caller_v3) ... ERROR
+
+======================================================================
+ERROR: test_adaptive_acquisition_caller_v3 (unittest.loader._FailedTest.test_adaptive_acquisition_caller_v3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_adaptive_acquisition_caller_v3
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+  File "\\wsl.localhost\Ubuntu\home\user\agent-interface-postrecovery-r42-20261123\research\live_control\test_adaptive_acquisition_caller_v3.py", line 4, in <module>
+    from adaptive_acquisition_caller_v3 import ModelFailure, run
+ModuleNotFoundError: No module named 'adaptive_acquisition_caller_v3'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

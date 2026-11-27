@@ -1,0 +1,59 @@
+test_close_error_prevents_engine_effects (__main__.RetirementBoundaryTests.test_close_error_prevents_engine_effects) ... ok
+test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) ... 
+  test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='finish') ... FAIL
+  test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='save_fixture') ... FAIL
+test_failure_save_and_delivery_errors_cannot_resume_effects (__main__.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects) ... 
+  test_failure_save_and_delivery_errors_cannot_resume_effects (__main__.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects) (fault='collision') ... FAIL
+  test_failure_save_and_delivery_errors_cannot_resume_effects (__main__.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects) (fault='delivery') ... FAIL
+test_unstarted_ambiguous_admission_is_not_retired (__main__.RetirementBoundaryTests.test_unstarted_ambiguous_admission_is_not_retired) ... FAIL
+test_verified_retirement_allows_each_original_effect_path (__main__.RetirementBoundaryTests.test_verified_retirement_allows_each_original_effect_path) ... ok
+
+======================================================================
+FAIL: test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='finish')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\session-retirement-red-control\test_map01_session_retirement_boundary.py", line 94, in test_failed_release_blocks_finish_and_fixture_effects
+    with self.assertRaisesRegex(RuntimeError, 'input retirement'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='save_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\session-retirement-red-control\test_map01_session_retirement_boundary.py", line 94, in test_failed_release_blocks_finish_and_fixture_effects
+    with self.assertRaisesRegex(RuntimeError, 'input retirement'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_failure_save_and_delivery_errors_cannot_resume_effects (__main__.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects) (fault='collision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\session-retirement-red-control\test_map01_session_retirement_boundary.py", line 164, in test_failure_save_and_delivery_errors_cannot_resume_effects
+    with self.assertRaises(OSError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: OSError not raised
+
+======================================================================
+FAIL: test_failure_save_and_delivery_errors_cannot_resume_effects (__main__.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects) (fault='delivery')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\session-retirement-red-control\test_map01_session_retirement_boundary.py", line 164, in test_failure_save_and_delivery_errors_cannot_resume_effects
+    with self.assertRaises(OSError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: OSError not raised
+
+======================================================================
+FAIL: test_unstarted_ambiguous_admission_is_not_retired (__main__.RetirementBoundaryTests.test_unstarted_ambiguous_admission_is_not_retired)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\session-retirement-red-control\test_map01_session_retirement_boundary.py", line 121, in test_unstarted_ambiguous_admission_is_not_retired
+    with self.assertRaisesRegex(RuntimeError, 'input retirement'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 4.348s
+
+FAILED (failures=5)

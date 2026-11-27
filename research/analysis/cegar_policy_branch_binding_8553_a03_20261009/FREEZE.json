@@ -1,0 +1,53 @@
+{
+  "a01_merge_commit": "6c153c298ce551b24dc2f0ab645ee54c655217d8",
+  "a01_pr": "https://github.com/Unjuno/agent-interface/pull/8559",
+  "a02_formal_invocations": {
+    "candidate": 0,
+    "independent_auditor": 0,
+    "legacy_diagnostic": 0,
+    "retries": 0
+  },
+  "a02_pre_run_disposition": "HOLD_MAIN_ADVANCED_PRE_RUN",
+  "allocation": "CEGAR-POLICY-BRANCH-BINDING-8553-A03-20261009",
+  "base_commit": "9ea5e64a52d2c953e6ea4f649af9e0a8ac1a2407",
+  "branch": "research/8553-observation-branch-a03-20261009",
+  "candidate_a01_sha256": "0bf12edd869f39c7a00338b74597c9264f70a98bd3629a89f9604c0df162622e",
+  "construction": {
+    "branch_audit_cli_invocations": 0,
+    "legacy_probe_cli_invocations": 1,
+    "python312_tests": "3/3 PASS",
+    "python314_tests": "3/3 PASS"
+  },
+  "container": false,
+  "container_reason": "Issue-scoped file replay uses only standard-library JSON and finite fixture transitions; same-host Docker content-store image-list error and no-retry rationale are retained on Issue #8553.",
+  "files": {
+    "CONSTRUCTION.stdout.txt": "1dd2d38aa8f59555a189eb3b9ee0867bcea3edc49f04e004ef6443036ec99a2f",
+    "PROTOCOL.md": "8bb58299cbcdc3f6bebebc46eea059604b22d6b78a61e8361b9d0ea4084febb3",
+    "README.md": "e638cc2fe03b254bc2af3b9341409aac3552f701eb4d7081d102b13b4239f6ce",
+    "branch_audit.py": "17ecef0a4a6f201a6d5ee99ed0d9a2fe39178c2f42199f13840cd0d9290088ca",
+    "input/audit-a01.json": "13f845490888e4704792726714077711cee58c66323c8ddcd6121119ec363c59",
+    "input/audit-a01.py": "a41336baaa7a01500be1c50b699b5de3388af33881d50661af1d31664f43e6c0",
+    "input/candidate-a01.json": "0bf12edd869f39c7a00338b74597c9264f70a98bd3629a89f9604c0df162622e",
+    "input/fixture.json": "514788d1b15a58a08469717370cd062762184cec9119082e5291ff8b66598baf",
+    "legacy_probe.py": "ced439c84cb8c7d619c2dc7e6063c1620d8d0aa26590320c0d6610a37d267f73",
+    "run_formal.py": "eef13d20020dcb443bb3e015cd4283e4d20e8692281ea597a037bdb7b3809ddc",
+    "test_construction.py": "e2e9b5c1806feb9a1c91e386fc1e16d60f99ed59bc79fab70a714ec86e203a5a"
+  },
+  "fixture_sha256": "514788d1b15a58a08469717370cd062762184cec9119082e5291ff8b66598baf",
+  "formal_invocations_before_freeze": {
+    "candidate": 0,
+    "independent_auditor": 0,
+    "legacy_diagnostic": 0,
+    "retries": 0
+  },
+  "formal_runtime": {
+    "executable": "/run/current-system/sw/bin/python3.12",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]"
+  },
+  "freeze_sha256": "972cdf4ce94a6c2011b946900bc5cf40a8dfc70f24b102894339768206747024",
+  "issue": 8553,
+  "legacy_audit_sha256": "a41336baaa7a01500be1c50b699b5de3388af33881d50661af1d31664f43e6c0",
+  "repo_relative_path": "research/analysis/cegar_policy_branch_binding_8553_a03_20261009",
+  "schema": "issue8553-a03-freeze-v1"
+}

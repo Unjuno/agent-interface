@@ -1,0 +1,829 @@
+x11-integration	Set up job	﻿2026-10-19T10:12:15.6972831Z Current runner version: '2.337.0'
+x11-integration	Set up job	2026-10-19T10:12:15.6991456Z ##[group]Runner Image Provisioner
+x11-integration	Set up job	2026-10-19T10:12:15.6992091Z Hosted Compute Agent
+x11-integration	Set up job	2026-10-19T10:12:15.6992446Z Version: 20261012.601
+x11-integration	Set up job	2026-10-19T10:12:15.6992922Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+x11-integration	Set up job	2026-10-19T10:12:15.6993349Z Build Date: 2026-10-12T17:48:21Z
+x11-integration	Set up job	2026-10-19T10:12:15.6993743Z Worker ID: {d915f35a-a763-4c55-8c29-4706431b5282}
+x11-integration	Set up job	2026-10-19T10:12:15.6994202Z Region: westus3
+x11-integration	Set up job	2026-10-19T10:12:15.6994536Z Cloud: Azure
+x11-integration	Set up job	2026-10-19T10:12:15.6994885Z ##[endgroup]
+x11-integration	Set up job	2026-10-19T10:12:15.6995690Z ##[group]Operating System
+x11-integration	Set up job	2026-10-19T10:12:15.6996056Z Ubuntu
+x11-integration	Set up job	2026-10-19T10:12:15.6996413Z 24.04.5
+x11-integration	Set up job	2026-10-19T10:12:15.6996743Z LTS
+x11-integration	Set up job	2026-10-19T10:12:15.6997167Z ##[endgroup]
+x11-integration	Set up job	2026-10-19T10:12:15.6997552Z ##[group]Runner Image
+x11-integration	Set up job	2026-10-19T10:12:15.6997921Z Image: ubuntu-24.04
+x11-integration	Set up job	2026-10-19T10:12:15.6998310Z Version: 20261012.334.1
+x11-integration	Set up job	2026-10-19T10:12:15.6998931Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+x11-integration	Set up job	2026-10-19T10:12:15.7000020Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+x11-integration	Set up job	2026-10-19T10:12:15.7000757Z ##[endgroup]
+x11-integration	Set up job	2026-10-19T10:12:15.7001441Z ##[group]GITHUB_TOKEN Permissions
+x11-integration	Set up job	2026-10-19T10:12:15.7002663Z Contents: read
+x11-integration	Set up job	2026-10-19T10:12:15.7003098Z Metadata: read
+x11-integration	Set up job	2026-10-19T10:12:15.7003432Z ##[endgroup]
+x11-integration	Set up job	2026-10-19T10:12:15.7004711Z Secret source: Actions
+x11-integration	Set up job	2026-10-19T10:12:15.7005334Z Cache mode: write
+x11-integration	Set up job	2026-10-19T10:12:15.7005781Z Prepare workflow directory
+x11-integration	Set up job	2026-10-19T10:12:15.7212953Z Prepare all required actions
+x11-integration	Set up job	2026-10-19T10:12:15.7244089Z Getting action download info
+x11-integration	Set up job	2026-10-19T10:12:16.0642784Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+x11-integration	Set up job	2026-10-19T10:12:16.1345268Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+x11-integration	Set up job	2026-10-19T10:12:16.2455872Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+x11-integration	Set up job	2026-10-19T10:12:16.4366655Z Complete job name: x11-integration
+x11-integration	Run actions/checkout@v4	﻿2026-10-19T10:12:16.4875219Z ##[group]Run actions/checkout@v4
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4875643Z with:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4875863Z   fetch-depth: 1
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4879558Z   sparse-checkout: runtime/core_v1
+x11-integration	Run actions/checkout@v4	runtime/guarded_x11_v1
+x11-integration	Run actions/checkout@v4	runtime/backends/x11_v1
+x11-integration	Run actions/checkout@v4	runtime/cli_v1
+x11-integration	Run actions/checkout@v4	runtime/selector_v1
+x11-integration	Run actions/checkout@v4	runtime/motor_state_v1
+x11-integration	Run actions/checkout@v4	research/live_control/agent_review.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_agent_review.py
+x11-integration	Run actions/checkout@v4	research/live_control/receipt_image.py
+x11-integration	Run actions/checkout@v4	research/live_control/receipt_references.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_receipt_references.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_review_recovery_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_exchange_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_exchange_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_cleanup_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_cleanup_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_visual_watch_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_visual_watch_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_release_observation_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_release_observation_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_handle_bridge_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_handle_bridge_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/native_tail_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/run_native_calc_self_use_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/test_native_finish_after_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/scoped_target_handle_v1.py
+x11-integration	Run actions/checkout@v4	research/live_control/scoped_target_handle_v2.py
+x11-integration	Run actions/checkout@v4	research/live_control/scoped_target_handle_v3.py
+x11-integration	Run actions/checkout@v4	research/live_control/coordinate_frame_transform_v1.py
+x11-integration	Run actions/checkout@v4	
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4883977Z   sparse-checkout-cone-mode: false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4884266Z   repository: Unjuno/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4886492Z   token: ***
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4886715Z   ssh-strict: true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4886938Z   ssh-user: git
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4887169Z   persist-credentials: true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4887419Z   clean: true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4887638Z   fetch-tags: false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4887867Z   show-progress: true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4888098Z   lfs: false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4888310Z   submodules: false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4888742Z   set-safe-directory: true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4889006Z   allow-unsafe-pr-checkout: false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.4889397Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5618049Z Syncing repository: Unjuno/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5619665Z ##[group]Getting Git version info
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5620468Z Working directory is '/home/runner/work/agent-interface/agent-interface'
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5621436Z [command]/usr/bin/git version
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5621860Z git version 2.55.0
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5623168Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5626695Z Temporarily overriding HOME='/home/runner/work/_temp/f58bf86e-3052-4db9-81c7-ba368ed740d2' before making global git config changes
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5627854Z Adding repository directory to the temporary git global config as a safe directory
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5628879Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-interface/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5674085Z Deleting the contents of '/home/runner/work/agent-interface/agent-interface'
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5687032Z ##[group]Initializing the repository
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5687832Z [command]/usr/bin/git init /home/runner/work/agent-interface/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5785854Z hint: Using 'master' as the name for the initial branch. This default branch name
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5806728Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5807915Z hint: to use in all of your new repositories, which will suppress this warning,
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5808695Z hint: call:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5809177Z hint:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5809755Z hint: 	git config --global init.defaultBranch <name>
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5810539Z hint:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5811156Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5812065Z hint: 'development'. The just-created branch can be renamed via this command:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5812846Z hint:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5813473Z hint: 	git branch -m <name>
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5814060Z hint:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5814723Z hint: Disable this message with "git config set advice.defaultBranchName false"
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5816151Z Initialized empty Git repository in /home/runner/work/agent-interface/agent-interface/.git/
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5818152Z [command]/usr/bin/git remote add origin https://github.com/Unjuno/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5847324Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5847761Z ##[group]Disabling automatic garbage collection
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5851094Z [command]/usr/bin/git config --local gc.auto 0
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5877163Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5877569Z ##[group]Setting up auth
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5883028Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.5913848Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6212423Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6241189Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6414553Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6442184Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6613229Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6646995Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6647674Z ##[group]Fetching the repository
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:16.6653819Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin +eaac71a770452194cda85094bb349a9fd81559c1:refs/remotes/pull/9171/merge
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0275689Z From https://github.com/Unjuno/agent-interface
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0276700Z  * [new ref]           eaac71a770452194cda85094bb349a9fd81559c1 -> pull/9171/merge
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0278818Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0279321Z ##[group]Determining the checkout info
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0281691Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0282163Z ##[group]Setting up sparse checkout
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0287546Z [command]/usr/bin/git config core.sparseCheckout true
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0375138Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0400951Z .git/info/sparse-checkout
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0408600Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0409396Z ##[group]Checking out the ref
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:18.0411236Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/9171/merge
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3399819Z Updating files:   0% (1/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3400576Z Updating files:   1% (2/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3401000Z Updating files:   2% (4/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3401328Z Updating files:   3% (6/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3401675Z Updating files:   4% (8/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3406206Z Updating files:   5% (10/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3406426Z Updating files:   6% (12/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3406640Z Updating files:   7% (14/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3406839Z Updating files:   8% (16/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3407203Z Updating files:   9% (18/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3407980Z Updating files:  10% (20/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3411699Z Updating files:  11% (22/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3412704Z Updating files:  12% (24/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3413344Z Updating files:  13% (26/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3414754Z Updating files:  14% (28/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3415432Z Updating files:  15% (30/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3416534Z Updating files:  16% (32/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3417561Z Updating files:  17% (34/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3419013Z Updating files:  18% (36/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3419798Z Updating files:  19% (38/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3421478Z Updating files:  20% (40/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3424084Z Updating files:  21% (42/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3426293Z Updating files:  22% (44/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3427089Z Updating files:  23% (46/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3427906Z Updating files:  24% (48/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3428956Z Updating files:  25% (50/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3430416Z Updating files:  26% (52/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3431263Z Updating files:  27% (54/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3432940Z Updating files:  28% (56/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3435167Z Updating files:  29% (58/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3436269Z Updating files:  30% (60/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3438076Z Updating files:  31% (62/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3439246Z Updating files:  32% (64/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3440556Z Updating files:  33% (66/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3442172Z Updating files:  34% (68/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3443812Z Updating files:  35% (70/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3444639Z Updating files:  36% (72/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3446038Z Updating files:  37% (74/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3446868Z Updating files:  38% (76/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3447443Z Updating files:  39% (78/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3449421Z Updating files:  40% (80/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3451360Z Updating files:  41% (82/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3453457Z Updating files:  42% (84/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3455441Z Updating files:  43% (86/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3458059Z Updating files:  44% (88/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3459313Z Updating files:  45% (90/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3460357Z Updating files:  46% (92/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3462219Z Updating files:  47% (94/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3463324Z Updating files:  48% (96/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3464667Z Updating files:  49% (98/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3465757Z Updating files:  50% (100/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3466472Z Updating files:  51% (102/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3467352Z Updating files:  52% (104/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3468903Z Updating files:  53% (106/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3469741Z Updating files:  54% (108/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3470964Z Updating files:  55% (110/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3472182Z Updating files:  56% (112/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3473393Z Updating files:  57% (114/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3474273Z Updating files:  58% (116/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3475370Z Updating files:  59% (118/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3476602Z Updating files:  60% (120/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3477389Z Updating files:  61% (122/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3478300Z Updating files:  62% (124/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3479061Z Updating files:  63% (126/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3479898Z Updating files:  64% (128/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3480907Z Updating files:  65% (130/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3482187Z Updating files:  66% (132/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3483023Z Updating files:  67% (134/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3483921Z Updating files:  68% (136/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3484855Z Updating files:  69% (138/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3485840Z Updating files:  70% (140/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3486677Z Updating files:  71% (142/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3488352Z Updating files:  72% (144/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3489694Z Updating files:  73% (146/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3496797Z Updating files:  74% (148/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3497172Z Updating files:  75% (150/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3497476Z Updating files:  76% (152/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3497779Z Updating files:  77% (154/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3498077Z Updating files:  78% (156/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3498380Z Updating files:  79% (158/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3498687Z Updating files:  80% (160/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3498994Z Updating files:  81% (162/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3499333Z Updating files:  82% (164/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3500821Z Updating files:  83% (166/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3501704Z Updating files:  84% (168/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3502736Z Updating files:  85% (170/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3503842Z Updating files:  86% (172/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3505215Z Updating files:  87% (174/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3507836Z Updating files:  88% (176/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3508161Z Updating files:  89% (178/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3509545Z Updating files:  90% (180/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3509864Z Updating files:  91% (182/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3510513Z Updating files:  92% (184/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3511084Z Updating files:  93% (186/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3511854Z Updating files:  94% (188/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3512480Z Updating files:  95% (190/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3513266Z Updating files:  96% (192/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3515662Z Updating files:  97% (194/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3516251Z Updating files:  98% (196/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3516627Z Updating files:  99% (198/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3516896Z Updating files: 100% (199/199)
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.3517176Z Updating files: 100% (199/199), done.
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4627486Z Note: switching to 'refs/remotes/pull/9171/merge'.
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4627947Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4628117Z You are in 'detached HEAD' state. You can look around, make experimental
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4628580Z changes and commit them, and you can discard any commits you make in this
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4628954Z state without impacting any branches by switching back to a branch.
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4629146Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4629296Z If you want to create a new branch to retain commits you create, you may
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4629626Z do so (now or later) by using -c with the switch command. Example:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4629802Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4629901Z   git switch -c <new-branch-name>
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630030Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630351Z Or undo this operation with:
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630527Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630636Z   git switch -
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630733Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4630893Z Turn off this advice by setting config variable advice.detachedHead to false
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4631103Z 
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4631356Z HEAD is now at eaac71a7 Merge 3b94963440a2fc1bef4b3da89d40626e3c4044f3 into f89e55b7a564c8168565d46d5276bf5a9d9e1c66
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4662404Z ##[endgroup]
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4706860Z [command]/usr/bin/git log -1 --format=%H
+x11-integration	Run actions/checkout@v4	2026-10-19T10:12:19.4730394Z eaac71a770452194cda85094bb349a9fd81559c1
+x11-integration	Run actions/setup-python@v5	﻿2026-10-19T10:12:19.4919292Z ##[group]Run actions/setup-python@v5
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4919565Z with:
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4919753Z   python-version: 3.12
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4919964Z   check-latest: false
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4921707Z   token: ***
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4921896Z   update-environment: true
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4922107Z   allow-prereleases: false
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4922315Z   freethreaded: false
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.4922509Z ##[endgroup]
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.5760512Z ##[group]Installed versions
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.5824504Z (node:2092) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.5825393Z (Use `node --trace-deprecation ...` to show where the warning was created)
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.5825862Z Successfully set up CPython (3.12.15)
+x11-integration	Run actions/setup-python@v5	2026-10-19T10:12:19.5826537Z ##[endgroup]
+x11-integration	Install X11 test dependency	﻿2026-10-19T10:12:19.6052076Z ##[group]Run python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0 numpy==1.26.4 mcp==1.30.0
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6053174Z ^[[36;1mpython -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0 numpy==1.26.4 mcp==1.30.0^[[0m
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6053790Z ^[[36;1msudo apt-get update -qq^[[0m
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6054170Z ^[[36;1msudo apt-get install -y -qq xvfb x11-xkb-utils^[[0m
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6282666Z shell: /usr/bin/bash -e {0}
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6283001Z env:
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6283253Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6283622Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6283938Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6284224Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6284509Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6284823Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Install X11 test dependency	2026-10-19T10:12:19.6285120Z ##[endgroup]
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.2562641Z Collecting python-xlib==0.33
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.3163727Z   Downloading python_xlib-0.33-py2.py3-none-any.whl.metadata (6.2 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.4272937Z Collecting Pillow==10.2.0
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.4376597Z   Downloading pillow-10.2.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.5371540Z Collecting numpy==1.26.4
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.5472139Z   Downloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.5732025Z Collecting mcp==1.30.0
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.5829105Z   Downloading mcp-1.30.0-py3-none-any.whl.metadata (9.3 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.5919229Z Collecting six>=1.10.0 (from python-xlib==0.33)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6015436Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6269743Z Collecting anyio>=4.5 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6366489Z   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6441545Z Collecting httpx-sse>=0.4 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6539094Z   Downloading httpx_sse-0.4.3-py3-none-any.whl.metadata (9.7 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6638089Z Collecting httpx<1.0.0,>=0.27.1 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6736488Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6856400Z Collecting jsonschema>=4.20.0 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.6962503Z   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.7081996Z Collecting pydantic-settings>=2.5.2 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.7211389Z   Downloading pydantic_settings-2.16.0-py3-none-any.whl.metadata (4.0 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.7756691Z Collecting pydantic<3.0.0,>=2.11.0 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.7858110Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8091226Z Collecting pyjwt>=2.10.1 (from pyjwt[crypto]>=2.10.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8190616Z   Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8461847Z Collecting python-multipart>=0.0.9 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8561744Z   Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8680035Z Collecting sse-starlette>=1.6.1 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8777088Z   Downloading sse_starlette-3.5.0-py3-none-any.whl.metadata (15 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.8934146Z Collecting starlette>=0.27 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9032452Z   Downloading starlette-1.9.0-py3-none-any.whl.metadata (6.6 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9157001Z Collecting typing-extensions>=4.9.0 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9261285Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9359104Z Collecting typing-inspection>=0.4.1 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9462300Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9657345Z Collecting uvicorn>=0.31.1 (from mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9760465Z   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:20.9944520Z Collecting certifi (from httpx<1.0.0,>=0.27.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0048144Z   Downloading certifi-2026.10.18-py3-none-any.whl.metadata (2.5 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0165031Z Collecting httpcore==1.* (from httpx<1.0.0,>=0.27.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0261953Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0361405Z Collecting idna (from httpx<1.0.0,>=0.27.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0458694Z   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0676890Z Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.27.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0773608Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0852808Z Collecting annotated-types>=0.6.0 (from pydantic<3.0.0,>=2.11.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.0948041Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.4534978Z Collecting pydantic-core==2.50.1 (from pydantic<3.0.0,>=2.11.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.4639201Z   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.4768005Z Collecting attrs>=22.2.0 (from jsonschema>=4.20.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.4864774Z   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.4948403Z Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=4.20.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.5050566Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.5202656Z Collecting referencing>=0.28.4 (from jsonschema>=4.20.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.5299906Z   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.6847889Z Collecting rpds-py>=0.25.0 (from jsonschema>=4.20.0->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.6950351Z   Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.7076207Z Collecting python-dotenv>=1.2.2 (from pydantic-settings>=2.5.2->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.7175189Z   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.8254600Z Collecting cryptography>=3.4.0 (from pyjwt[crypto]>=2.10.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.8355586Z   Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.4 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.8890912Z Collecting cffi>=2.0.0 (from cryptography>=3.4.0->pyjwt[crypto]>=2.10.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.8992081Z   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9076269Z Collecting pycparser (from cffi>=2.0.0->cryptography>=3.4.0->pyjwt[crypto]>=2.10.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9173575Z   Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9348911Z Collecting click>=7.0 (from uvicorn>=0.31.1->mcp==1.30.0)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9445503Z   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9668462Z Downloading python_xlib-0.33-py2.py3-none-any.whl (182 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:21.9818384Z Downloading pillow-10.2.0-cp312-cp312-manylinux_2_28_x86_64.whl (4.5 MB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.0556514Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 66.0 MB/s  0:00:00
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.0658282Z Downloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2172011Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 18.0/18.0 MB 118.4 MB/s  0:00:00
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2272903Z Downloading mcp-1.30.0-py3-none-any.whl (234 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2389939Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2503241Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2621773Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2740309Z Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.2904191Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 129.1 MB/s  0:00:00
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3001531Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3113580Z Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3226510Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3337280Z Downloading httpx_sse-0.4.3-py3-none-any.whl (9.0 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3447947Z Downloading idna-3.20-py3-none-any.whl (69 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3562440Z Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3676309Z Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3787051Z Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.3896649Z Downloading pydantic_settings-2.16.0-py3-none-any.whl (80 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4006800Z Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4117301Z Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4548857Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 108.8 MB/s  0:00:00
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4650995Z Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4769686Z Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4881286Z Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.4993389Z Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5108450Z Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (371 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5227877Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5342373Z Downloading sse_starlette-3.5.0-py3-none-any.whl (17 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5454190Z Downloading starlette-1.9.0-py3-none-any.whl (80 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5568921Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5681739Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5791757Z Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.5902909Z Downloading click-8.5.0-py3-none-any.whl (125 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.6013420Z Downloading certifi-2026.10.18-py3-none-any.whl (134 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.6126013Z Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+x11-integration	Install X11 test dependency	2026-10-19T10:12:22.7336828Z Installing collected packages: typing-extensions, six, rpds-py, python-multipart, python-dotenv, pyjwt, pycparser, Pillow, numpy, idna, httpx-sse, h11, click, certifi, attrs, annotated-types, uvicorn, typing-inspection, referencing, python-xlib, pydantic-core, httpcore, cffi, anyio, starlette, pydantic, jsonschema-specifications, httpx, cryptography, sse-starlette, pydantic-settings, jsonschema, mcp
+x11-integration	Install X11 test dependency	2026-10-19T10:12:25.1037784Z 
+x11-integration	Install X11 test dependency	2026-10-19T10:12:25.1056915Z Successfully installed Pillow-10.2.0 annotated-types-0.8.0 anyio-4.15.1 attrs-26.1.0 certifi-2026.10.18 cffi-2.1.1 click-8.5.0 cryptography-50.0.2 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 httpx-sse-0.4.3 idna-3.20 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 mcp-1.30.0 numpy-1.26.4 pycparser-3.11 pydantic-2.14.1 pydantic-core-2.50.1 pydantic-settings-2.16.0 pyjwt-2.15.1 python-dotenv-1.2.4 python-multipart-0.0.32 python-xlib-0.33 referencing-0.37.0 rpds-py-2026.9.1 six-1.17.0 sse-starlette-3.5.0 starlette-1.9.0 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0
+x11-integration	Compile runtime core and X11 backend	﻿2026-10-19T10:12:31.1298479Z ##[group]Run python -m compileall -q runtime/core_v1 runtime/backends/x11_v1
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1298787Z ^[[36;1mpython -m compileall -q runtime/core_v1 runtime/backends/x11_v1^[[0m
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1352486Z shell: /usr/bin/bash -e {0}
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1352626Z env:
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1352770Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1352995Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1353219Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1353412Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1353608Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1353806Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Compile runtime core and X11 backend	2026-10-19T10:12:31.1353977Z ##[endgroup]
+x11-integration	Test experimental handle bridge boundary	﻿2026-10-19T10:12:31.2163451Z ##[group]Run python -m unittest -v test_native_handle_bridge_v1 test_agent_review test_native_exchange_v1 test_receipt_references test_native_visual_watch_v1 test_native_release_observation_v1 test_native_cleanup_v1 test_native_finish_after_v1
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2164280Z ^[[36;1mpython -m unittest -v test_native_handle_bridge_v1 test_agent_review test_native_exchange_v1 test_receipt_references test_native_visual_watch_v1 test_native_release_observation_v1 test_native_cleanup_v1 test_native_finish_after_v1^[[0m
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2216672Z shell: /usr/bin/bash -e {0}
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2216808Z env:
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2216951Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2217176Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2217395Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2217590Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2217782Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2218005Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2218183Z   PYTHONPATH: research/live_control
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.2218321Z ##[endgroup]
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5214036Z test_child_focus_ancestry_is_bounded_and_does_not_grant_other_surface (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_child_focus_ancestry_is_bounded_and_does_not_grant_other_surface) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5241245Z test_existing_store_refuses_changed_pixels_at_native_check (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_existing_store_refuses_changed_pixels_at_native_check) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5270799Z test_expired_guard_does_not_capture_or_resolve (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_expired_guard_does_not_capture_or_resolve) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5305070Z test_failed_window_review_blocks_input_and_mint_until_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_failed_window_review_blocks_input_and_mint_until_success) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5331131Z test_feedback_capture_failure_is_retained_without_retry (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_capture_failure_is_retained_without_retry) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5361283Z test_feedback_changed_title_or_focus_requires_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_changed_title_or_focus_requires_review) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5376292Z test_feedback_match_is_observed_cue_not_task_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_match_is_observed_cue_not_task_success) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5377499Z test_feedback_rejection_and_timeout_are_distinct (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_rejection_and_timeout_are_distinct) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5401006Z test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5421592Z test_focused_client_missing_list_cycle_unknown_and_read_failure_stop (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_focused_client_missing_list_cycle_unknown_and_read_failure_stop) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5422694Z test_focused_client_uses_managed_ancestor_without_mutation_or_input (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_focused_client_uses_managed_ancestor_without_mutation_or_input) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5423746Z test_guarded_focus_preserves_validated_child_and_refuses_outsider (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_guarded_focus_preserves_validated_child_and_refuses_outsider) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5424800Z test_keyboard_continuation_has_no_pointer_ops_and_requires_release (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_continuation_has_no_pointer_ops_and_requires_release) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5425752Z test_keyboard_refusal_does_not_fall_back_to_click (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_refusal_does_not_fall_back_to_click) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5426874Z test_keyboard_rejects_empty_or_pointer_tail_before_admission (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_rejects_empty_or_pointer_tail_before_admission) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5427754Z test_mint_requires_explicit_retained_source (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_mint_requires_explicit_retained_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5428583Z test_point_change_after_move_prevents_native_press (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_point_change_after_move_prevents_native_press) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5429525Z test_public_dispatch_exception_is_retained_without_retry_or_close (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_public_dispatch_exception_is_retained_without_retry_or_close) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5430606Z test_public_dispatch_retains_report_and_caller_owned_session (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_public_dispatch_retains_report_and_caller_owned_session) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5431644Z test_public_observation_failure_retains_error_without_advancing_source (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_public_observation_failure_retains_error_without_advancing_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5432632Z test_public_observation_keeps_binding_change_refusal (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_public_observation_keeps_binding_change_refusal) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5433495Z test_refusal_before_admission_never_dispatches (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_refusal_before_admission_never_dispatches) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5434311Z test_release_is_not_blocked_by_guard_refusal (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_release_is_not_blocked_by_guard_refusal) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5435266Z test_stale_drawable_recovery_uses_read_only_discovery_then_explicit_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_stale_drawable_recovery_uses_read_only_discovery_then_explicit_review) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5436271Z test_window_review_cannot_mutate_scope_during_input (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_cannot_mutate_scope_during_input) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5437232Z test_window_review_capture_failure_requires_fresh_successful_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_capture_failure_requires_fresh_successful_review) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5438362Z test_window_review_does_not_clear_unverified_input_release (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_does_not_clear_unverified_input_release) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5439365Z test_window_review_revokes_old_sources_and_prevents_alias_rebinding (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_revokes_old_sources_and_prevents_alias_rebinding) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5440371Z test_client_title_precedes_visible_decoration (test_native_handle_bridge_v1.WindowTitleTests.test_client_title_precedes_visible_decoration) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5441108Z test_legacy_fallback_and_invalid_utf8 (test_native_handle_bridge_v1.WindowTitleTests.test_legacy_fallback_and_invalid_utf8) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5441859Z test_visible_utf8_fallback_when_client_name_missing (test_native_handle_bridge_v1.WindowTitleTests.test_visible_utf8_fallback_when_client_name_missing) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5442724Z test_archive_mapping_does_not_search_or_accept_escaping_references (test_agent_review.ReviewTests.test_archive_mapping_does_not_search_or_accept_escaping_references) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5443566Z test_cleanup_verification_requires_explicit_booleans (test_agent_review.ReviewTests.test_cleanup_verification_requires_explicit_booleans) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5444387Z test_compact_review_preserves_image_and_expands_to_full_receipt (test_agent_review.ReviewTests.test_compact_review_preserves_image_and_expands_to_full_receipt) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5445320Z test_conflicting_latest_image_is_not_silently_selected (test_agent_review.ReviewTests.test_conflicting_latest_image_is_not_silently_selected) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5446144Z test_explicit_native_archive_mapping_preserves_original_receipt (test_agent_review.ReviewTests.test_explicit_native_archive_mapping_preserves_original_receipt) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5446952Z test_image_bytes_and_full_result_share_one_response (test_agent_review.ReviewTests.test_image_bytes_and_full_result_share_one_response) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5447695Z test_missing_latest_does_not_fall_back_to_older_image (test_agent_review.ReviewTests.test_missing_latest_does_not_fall_back_to_older_image) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5448456Z test_mutated_image_preserves_result_without_rendering (test_agent_review.ReviewTests.test_mutated_image_preserves_result_without_rendering) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5449280Z test_native_bad_link_or_bytes_never_renders_and_preserves_receipt (test_agent_review.ReviewTests.test_native_bad_link_or_bytes_never_renders_and_preserves_receipt) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5450307Z test_native_missing_feedback_image_does_not_use_previous_source (test_agent_review.ReviewTests.test_native_missing_feedback_image_does_not_use_previous_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5454539Z test_native_observation_and_feedback_keep_exact_bytes_and_identity (test_agent_review.ReviewTests.test_native_observation_and_feedback_keep_exact_bytes_and_identity) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5455465Z test_native_refusal_projection_does_not_coerce_or_infer_input_safety (test_agent_review.ReviewTests.test_native_refusal_projection_does_not_coerce_or_infer_input_safety) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5456342Z test_native_summary_keeps_disagreeing_results_and_bad_image (test_agent_review.ReviewTests.test_native_summary_keeps_disagreeing_results_and_bad_image) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5500502Z test_native_summary_never_infers_success_or_uses_history (test_agent_review.ReviewTests.test_native_summary_never_infers_success_or_uses_history) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5501444Z test_native_target_refusal_is_visible_without_claiming_action_success (test_agent_review.ReviewTests.test_native_target_refusal_is_visible_without_claiming_action_success) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5502344Z test_no_observation_does_not_show_pre_action_source (test_agent_review.ReviewTests.test_no_observation_does_not_show_pre_action_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5503134Z test_public_dispatch_is_visible_through_research_review (test_agent_review.ReviewTests.test_public_dispatch_is_visible_through_research_review) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5529523Z test_continuation_never_infers_from_bad_or_terminal_sources (test_native_exchange_v1.NativeExchangeTests.test_continuation_never_infers_from_bad_or_terminal_sources) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5541443Z test_continuation_rejects_different_delivered_image_identity (test_native_exchange_v1.NativeExchangeTests.test_continuation_rejects_different_delivered_image_identity) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5552581Z test_continuation_requires_matching_source_and_unoccupied_slot (test_native_exchange_v1.NativeExchangeTests.test_continuation_requires_matching_source_and_unoccupied_slot) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5588970Z test_digest_resume_keeps_reply_binding_and_owner_loss_rules (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_keeps_reply_binding_and_owner_loss_rules) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5614439Z test_digest_resume_pending_then_reply_is_read_only (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_pending_then_reply_is_read_only) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5636203Z test_digest_resume_rejects_missing_changed_or_ambiguous_reference (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_rejects_missing_changed_or_ambiguous_reference) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5652440Z test_digest_resume_rejects_noncanonical_bytes_and_read_race (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_rejects_noncanonical_bytes_and_read_race) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5677957Z test_directory_sync_failure_leaves_occupied_slot_and_resume_is_read_only (test_native_exchange_v1.NativeExchangeTests.test_directory_sync_failure_leaves_occupied_slot_and_resume_is_read_only) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5706513Z test_foreign_and_malformed_owner_are_not_a_claim_of_process_death (test_native_exchange_v1.NativeExchangeTests.test_foreign_and_malformed_owner_are_not_a_claim_of_process_death) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5736074Z test_historical_bound_and_explicit_longer_session_contract (test_native_exchange_v1.NativeExchangeTests.test_historical_bound_and_explicit_longer_session_contract) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5754042Z test_invalid_stage_contract_never_publishes_request (test_native_exchange_v1.NativeExchangeTests.test_invalid_stage_contract_never_publishes_request) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5782254Z test_live_owner_is_pending_but_replaced_incarnation_requires_reconciliation (test_native_exchange_v1.NativeExchangeTests.test_live_owner_is_pending_but_replaced_incarnation_requires_reconciliation) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5790973Z test_owner_channel_payload_or_wrong_descriptor_refuses (test_native_exchange_v1.NativeExchangeTests.test_owner_channel_payload_or_wrong_descriptor_refuses) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5799502Z test_owner_pipe_lifetime_is_nonblocking_and_does_not_leak_on_exec (test_native_exchange_v1.NativeExchangeTests.test_owner_pipe_lifetime_is_nonblocking_and_does_not_leak_on_exec) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5818263Z test_publish_refuses_existing_slot_without_partial_overwrite (test_native_exchange_v1.NativeExchangeTests.test_publish_refuses_existing_slot_without_partial_overwrite) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5834107Z test_resume_missing_or_changed_request_does_not_publish (test_native_exchange_v1.NativeExchangeTests.test_resume_missing_or_changed_request_does_not_publish) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5851225Z test_review_recovery_forbids_input_without_consuming_request (test_native_exchange_v1.NativeExchangeTests.test_review_recovery_forbids_input_without_consuming_request) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5887223Z test_stopped_owner_is_not_terminal_and_finished_reply_takes_precedence (test_native_exchange_v1.NativeExchangeTests.test_stopped_owner_is_not_terminal_and_finished_reply_takes_precedence) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5905406Z test_syncs_complete_file_before_link_and_directory_before_return (test_native_exchange_v1.NativeExchangeTests.test_syncs_complete_file_before_link_and_directory_before_return) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5933758Z test_timeout_then_read_only_resume_never_republishes (test_native_exchange_v1.NativeExchangeTests.test_timeout_then_read_only_resume_never_republishes) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5955091Z test_wrong_reply_identity_and_wrong_source_are_rejected (test_native_exchange_v1.NativeExchangeTests.test_wrong_reply_identity_and_wrong_source_are_rejected) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5956379Z test_caller_metadata_is_not_overwritten (test_receipt_references.MultipleNativeReferenceTests.test_caller_metadata_is_not_overwritten) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5960574Z test_multiple_captures_roundtrip_with_literal_markers_and_errors (test_receipt_references.MultipleNativeReferenceTests.test_multiple_captures_roundtrip_with_literal_markers_and_errors) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5973420Z test_reference_chains_bad_markers_and_array_indices_refuse (test_receipt_references.MultipleNativeReferenceTests.test_reference_chains_bad_markers_and_array_indices_refuse) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5975459Z test_exact_observation_roundtrip_preserves_errors_and_literal_markers (test_receipt_references.NativeReferenceTests.test_exact_observation_roundtrip_preserves_errors_and_literal_markers) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5976360Z test_invalid_reference_cannot_replace_canonical_source (test_receipt_references.NativeReferenceTests.test_invalid_reference_cannot_replace_canonical_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5979739Z test_near_duplicates_and_small_reports_remain_unchanged (test_receipt_references.NativeReferenceTests.test_near_duplicates_and_small_reports_remain_unchanged) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5980738Z test_full_report_match_and_invalid_reference (test_receipt_references.ReferenceTests.test_full_report_match_and_invalid_reference) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5981510Z test_near_duplicates_and_unknown_fields_are_not_merged (test_receipt_references.ReferenceTests.test_near_duplicates_and_unknown_fields_are_not_merged) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5982372Z test_pointer_escaping_and_literal_reference_shaped_data (test_receipt_references.ReferenceTests.test_pointer_escaping_and_literal_reference_shaped_data) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5983073Z test_roundtrip_keeps_every_event_and_all_metadata (test_receipt_references.ReferenceTests.test_roundtrip_keeps_every_event_and_all_metadata) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5993910Z test_invalid_registration_does_not_capture (test_native_visual_watch_v1.WatchTests.test_invalid_registration_does_not_capture) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.5996543Z test_timeout_is_observed_false_not_unavailable (test_native_visual_watch_v1.WatchTests.test_timeout_is_observed_false_not_unavailable) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.6503246Z test_transitions_preserve_false_then_true (test_native_visual_watch_v1.WatchTests.test_transitions_preserve_false_then_true) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.6505920Z test_two_lanes_share_exact_capture_and_keep_truth_separate (test_native_visual_watch_v1.WatchTests.test_two_lanes_share_exact_capture_and_keep_truth_separate) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.6509265Z test_unavailable_never_becomes_false (test_native_visual_watch_v1.WatchTests.test_unavailable_never_becomes_false) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.6510690Z test_malformed_bitmap_stops_before_pointer_query (test_native_release_observation_v1.ReleaseObservationTests.test_malformed_bitmap_stops_before_pointer_query) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.6511576Z test_query_failure_is_unknown_not_neutral (test_native_release_observation_v1.ReleaseObservationTests.test_query_failure_is_unknown_not_neutral) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7015452Z test_records_state_changes_without_emission_or_recovery_claim (test_native_release_observation_v1.ReleaseObservationTests.test_records_state_changes_without_emission_or_recovery_claim) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7033026Z test_cleanup_does_not_replace_original_action_error (test_native_cleanup_v1.CleanupTests.test_cleanup_does_not_replace_original_action_error) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7045104Z test_copy_and_close_failures_do_not_skip_session (test_native_cleanup_v1.CleanupTests.test_copy_and_close_failures_do_not_skip_session) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7060448Z test_live_process_prevents_finished (test_native_cleanup_v1.CleanupTests.test_live_process_prevents_finished) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7072186Z test_persistence_failure_in_returned_reply (test_native_cleanup_v1.CleanupTests.test_persistence_failure_in_returned_reply) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7083663Z test_poll_failure_prevents_finished (test_native_cleanup_v1.CleanupTests.test_poll_failure_prevents_finished) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7094423Z test_publication_follows_cleanup (test_native_cleanup_v1.CleanupTests.test_publication_follows_cleanup) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7105809Z test_session_failure_still_checks_processes (test_native_cleanup_v1.CleanupTests.test_session_failure_still_checks_processes) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7117430Z test_task_failure_is_not_cleanup_failure (test_native_cleanup_v1.CleanupTests.test_task_failure_is_not_cleanup_failure) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7214355Z test_arbitrary_mint_error_does_not_continue (test_native_finish_after_v1.NativeFinishAfterTests.test_arbitrary_mint_error_does_not_continue) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7278018Z test_cleanup_failure_preserves_action_image_and_evaluation (test_native_finish_after_v1.NativeFinishAfterTests.test_cleanup_failure_preserves_action_image_and_evaluation) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7607682Z test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7668873Z test_directional_task_is_public_before_first_decision (test_native_finish_after_v1.NativeFinishAfterTests.test_directional_task_is_public_before_first_decision) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7747945Z test_explicit_observation_neither_mints_nor_dispatches_input (test_native_finish_after_v1.NativeFinishAfterTests.test_explicit_observation_neither_mints_nor_dispatches_input) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7867404Z test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.7976473Z test_failed_observation_requires_explicit_recovery (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_observation_requires_explicit_recovery) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8035405Z test_failed_review_after_refusal_stays_terminal (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_review_after_refusal_stays_terminal) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8096974Z test_failed_task_is_retained_in_finished_session (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_task_is_retained_in_finished_session) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8190261Z test_finish_after_on_last_permitted_stage (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_on_last_permitted_stage) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8260608Z test_finish_after_one_response_after_cleanup (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_one_response_after_cleanup) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8596233Z test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8804421Z test_flat_refusal_at_stage_limit_does_not_publish_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_at_stage_limit_does_not_publish_next_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.8901936Z test_flat_refusal_returns_new_boundary_then_explicit_action (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_returns_new_boundary_then_explicit_action) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9076781Z test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9246258Z test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9301495Z test_observation_rejects_hidden_input_fields (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_rejects_hidden_input_fields) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9381464Z test_observation_reviews_changed_focus_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_reviews_changed_focus_without_input) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9480005Z test_pending_review_rejects_input_before_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_pending_review_rejects_input_before_mint) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9600450Z test_post_input_failed_review_never_replays_and_ignores_finish_after (test_native_finish_after_v1.NativeFinishAfterTests.test_post_input_failed_review_never_replays_and_ignores_finish_after) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9854981Z test_repeated_review_failure_exhausts_stage_bound_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_repeated_review_failure_exhausts_stage_bound_without_input) ... ok
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9855654Z 
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9855800Z ----------------------------------------------------------------------
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9856100Z Ran 116 tests in 0.465s
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9856227Z 
+x11-integration	Test experimental handle bridge boundary	2026-10-19T10:12:31.9856294Z OK
+x11-integration	Run private Xvfb integration	﻿2026-10-19T10:12:32.0129358Z ##[group]Run set -euo pipefail
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0129563Z ^[[36;1mset -euo pipefail^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0129698Z ^[[36;1mAUTH="$RUNNER_TEMP/x11v1.auth"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0129838Z ^[[36;1m: > "$AUTH"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130003Z ^[[36;1mXvfb :88 -screen 0 1024x768x24 -ac >"$RUNNER_TEMP/xvfb.log" 2>&1 &^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130370Z ^[[36;1mXVFB_PID=$!^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130512Z ^[[36;1mtrap 'kill "$XVFB_PID" 2>/dev/null || true' EXIT^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130672Z ^[[36;1msleep 0.5^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130798Z ^[[36;1mexport DISPLAY=:88 XAUTHORITY="$AUTH"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0130964Z ^[[36;1mexport AGENT_INTERFACE_XORG_FENCE_TEST=1^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0131201Z ^[[36;1mexport AGENT_INTERFACE_XORG_FENCE_RESULT="$RUNNER_TEMP/x11-disconnect-fence.json"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0131530Z ^[[36;1mexport AGENT_INTERFACE_XORG_HELD_KEY_QUEUE_RESULT="$RUNNER_TEMP/x11-held-key-disconnect-queue.json"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0131810Z ^[[36;1mexport AGENT_INTERFACE_XVFB_PID="$XVFB_PID"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0132015Z ^[[36;1mexport AGENT_INTERFACE_MCP_XVFB_TEST=1^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0132256Z ^[[36;1mexport AGENT_INTERFACE_MCP_XVFB_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-generation.json"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0132582Z ^[[36;1mexport AGENT_INTERFACE_MCP_XVFB_IMAGE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-observation.png"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0132942Z ^[[36;1mexport AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-blocked-release.json"^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0134048Z ^[[36;1mpython -m unittest -v runtime.backends.x11_v1.test_integration runtime.backends.x11_v1.test_mapping_boundary runtime.backends.x11_v1.test_key_chord_held_modifier runtime.backends.x11_v1.test_held_preflight runtime.backends.x11_v1.test_text_plan runtime.backends.x11_v1.test_partial_execution runtime.backends.x11_v1.test_capture_artifacts runtime.cli_v1.test_native_golden_boundary runtime.guarded_x11_v1.test_xres_disconnect_fence_integration runtime.cli_v1.test_mcp_xvfb_generation_integration runtime.cli_v1.test_mcp_xvfb_blocked_release_integration^[[0m
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0188724Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0188910Z env:
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0189054Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0189273Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0189489Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0189689Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0189884Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0190080Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:32.0190446Z ##[endgroup]
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.3451441Z test_backend_specific_invalid_text_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_backend_specific_invalid_text_emits_zero_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.3454054Z test_expired_lease_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_expired_lease_emits_zero_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.3493226Z test_failure_after_real_button_press_retains_prefix_and_releases (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_failure_after_real_button_press_retains_prefix_and_releases) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.4648776Z test_held_shift_survives_paced_text_and_has_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_held_shift_survives_paced_text_and_has_independent_effect) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.4652015Z test_manifest_is_ready_with_narrow_text_detail (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_manifest_is_ready_with_narrow_text_detail) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.4661995Z test_paced_held_letter_refuses_before_native_program_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_paced_held_letter_refuses_before_native_program_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.4664941Z test_stale_binding_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_binding_emits_zero_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.4668003Z test_stale_observation_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_observation_emits_zero_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.5649647Z test_supported_punctuation_has_exact_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_supported_punctuation_has_exact_independent_effect) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.5718833Z test_synchronous_pointer_grab_keeps_recovery_explicit (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_synchronous_pointer_grab_keeps_recovery_explicit) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.5750686Z test_unverified_native_release_quarantines_persistent_session (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_unverified_native_release_quarantines_persistent_session) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.6703724Z test_valid_program_has_independent_effect_and_verified_release (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_valid_program_has_independent_effect_and_verified_release) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.7664445Z test_verify_refuses_before_save_and_session_can_continue (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_verify_refuses_before_save_and_session_can_continue) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:33.7698975Z test_midprogram_keymap_change_stops_before_suffix_and_save (runtime.backends.x11_v1.test_integration.X11MappingIntegrationTests.test_midprogram_keymap_change_stops_before_suffix_and_save)
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4651939Z Use only the caller-owned private test DISPLAY, restoring its map. ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4666629Z test_duplicate_keyboard_notification_accepts_unchanged_core_map (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_duplicate_keyboard_notification_accepts_unchanged_core_map) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4676609Z test_late_keyboard_map_stops_suffix_and_releases_original_code (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_late_keyboard_map_stops_suffix_and_releases_original_code) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4683979Z test_modifier_map_change_also_stops_new_keyboard_input (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_modifier_map_change_also_stops_new_keyboard_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4691906Z test_pointer_mapping_notification_does_not_refuse_keyboard (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_pointer_mapping_notification_does_not_refuse_keyboard) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4698609Z test_preflight_accepts_already_changed_map_for_new_program (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_preflight_accepts_already_changed_map_for_new_program) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4704501Z test_release_is_allowed_but_cannot_clear_changed_program_state (runtime.backends.x11_v1.test_mapping_boundary.MappingBoundaryTests.test_release_is_allowed_but_cannot_clear_changed_program_state) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4706150Z test_chord_preserves_preheld_modifier_through_keysym_alias (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_chord_preserves_preheld_modifier_through_keysym_alias) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4707256Z test_chord_preserves_same_named_preheld_modifier (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_chord_preserves_same_named_preheld_modifier) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4708325Z test_chord_refuses_preheld_nonmodifier_without_input (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_chord_refuses_preheld_nonmodifier_without_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4709467Z test_chord_reuses_original_code_for_same_named_preheld_modifier (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_chord_reuses_original_code_for_same_named_preheld_modifier) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4710771Z test_text_can_type_uppercase_while_preserving_held_shift (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_text_can_type_uppercase_while_preserving_held_shift) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4712075Z test_text_refuses_held_character_before_emitting_any_prefix (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_text_refuses_held_character_before_emitting_any_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4713207Z test_unheld_modifier_chord_keeps_balanced_press_release_order (runtime.backends.x11_v1.test_key_chord_held_modifier.HeldModifierChordTests.test_unheld_modifier_chord_keeps_balanced_press_release_order) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4714754Z test_late_chord_alias_overlap_refuses_whole_program (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_late_chord_alias_overlap_refuses_whole_program) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4722097Z test_late_overlap_with_key_pressed_in_program_refuses_whole_program (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_late_overlap_with_key_pressed_in_program_refuses_whole_program) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4729113Z test_late_overlap_with_preheld_key_refuses_paced_and_unpaced_prefix (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_late_overlap_with_preheld_key_refuses_paced_and_unpaced_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4735311Z test_preflight_does_not_clear_a_hold_when_releasing_another_logical_name (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_preflight_does_not_clear_a_hold_when_releasing_another_logical_name) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4743678Z test_release_before_text_is_valid_without_mutating_preflight_ledger (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_release_before_text_is_valid_without_mutating_preflight_ledger) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4750565Z test_release_keeps_original_physical_code_when_current_mapping_is_missing (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_release_keeps_original_physical_code_when_current_mapping_is_missing) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4756763Z test_session_refusal_cleans_existing_hold_without_typing_prefix (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_session_refusal_cleans_existing_hold_without_typing_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4774850Z test_shift_and_unrelated_letter_holds_allow_paced_text (runtime.backends.x11_v1.test_held_preflight.HeldPreflightTests.test_shift_and_unrelated_letter_holds_allow_paced_text) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4778514Z test_held_key_release_keeps_original_physical_code_after_remap (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_held_key_release_keeps_original_physical_code_after_remap) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4791998Z test_paced_text_preflights_all_characters_before_any_operation (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_paced_text_preflights_all_characters_before_any_operation) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4794143Z test_supported_punctuation_uses_x_keysym_names_and_shift (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_supported_punctuation_uses_x_keysym_names_and_shift) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4798543Z test_symbol_in_unsupported_level_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_symbol_in_unsupported_level_emits_no_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4804724Z test_symbols_follow_unshifted_or_shifted_live_mapping (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_symbols_follow_unshifted_or_shifted_live_mapping) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4805689Z test_unmapped_late_character_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_unmapped_late_character_emits_no_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4811441Z test_uppercase_refusal_explains_canonical_name_without_emission (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_uppercase_refusal_explains_canonical_name_without_emission) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4812855Z test_url_symbol_in_unsupported_group_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_url_symbol_in_unsupported_group_emits_no_prefix) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4814610Z test_url_symbols_follow_live_keymap_levels (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_url_symbols_follow_live_keymap_levels) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4816289Z test_activation_timeout_retains_request_and_stops_following_edit (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_activation_timeout_retains_request_and_stops_following_edit) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4817444Z test_explicit_recovery_requires_verified_empty_readback (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_explicit_recovery_requires_verified_empty_readback) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4828965Z test_partial_operation_and_observation_survive_failure_and_close (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_partial_operation_and_observation_survive_failure_and_close) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4831758Z test_preflight_refusal_distinguishes_prior_and_cleanup_emissions (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_preflight_refusal_distinguishes_prior_and_cleanup_emissions) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4835637Z test_release_down_readback_keeps_only_outstanding_inputs (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_release_down_readback_keeps_only_outstanding_inputs) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4838642Z test_release_readback_error_keeps_obligations_for_explicit_recovery (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_release_readback_error_keeps_obligations_for_explicit_recovery) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4840297Z test_target_disappearing_after_session_preflight_returns_failure (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_target_disappearing_after_session_preflight_returns_failure) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4852327Z test_uncertain_press_is_released_after_send_or_sync_failure (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_uncertain_press_is_released_after_send_or_sync_failure) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4854738Z test_unexpected_execution_exception_leaves_session_blocked (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unexpected_execution_exception_leaves_session_blocked) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4857629Z test_unsupported_verify_refuses_entire_program_before_input (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unsupported_verify_refuses_entire_program_before_input) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4870487Z test_unverified_release_blocks_later_dispatch_before_backend_access (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unverified_release_blocks_later_dispatch_before_backend_access) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4875557Z test_wait_receipt_survives_later_failure_without_claiming_an_update (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_wait_receipt_survives_later_failure_without_claiming_an_update) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4921013Z test_backend_encodes_one_capture_and_retains_packaging_failure (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_backend_encodes_one_capture_and_retains_packaging_failure) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4928858Z test_both_byte_orders_preserve_colors_and_source_identity (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_both_byte_orders_preserve_colors_and_source_identity) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4970248Z test_bridge_uses_current_rgb_after_png_verification_and_rejects_corruption (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_bridge_uses_current_rgb_after_png_verification_and_rejects_corruption) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4971493Z test_read_only_capture_calls_no_input_or_focus_methods (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_read_only_capture_calls_no_input_or_focus_methods) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4974455Z test_rgb_handoff_disabled_by_default_and_requires_bool (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_rgb_handoff_disabled_by_default_and_requires_bool) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4981281Z test_rgb_handoff_matches_saved_pixels_both_orders_and_consumes_once (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_rgb_handoff_matches_saved_pixels_both_orders_and_consumes_once) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4988040Z test_rgb_handoff_refuses_old_or_modified_identity_and_does_not_leak_after_failure (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_rgb_handoff_refuses_old_or_modified_identity_and_does_not_leak_after_failure) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4993242Z test_stage_brackets_retain_exact_artifact_identity (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_stage_brackets_retain_exact_artifact_identity) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4994815Z test_truncated_pixels_are_not_encoded (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_truncated_pixels_are_not_encoded) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4996418Z test_unsupported_format_writes_no_image (runtime.backends.x11_v1.test_capture_artifacts.CaptureArtifactTests.test_unsupported_format_writes_no_image) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4997537Z test_explicit_empty_usage_does_not_fall_back_to_other_usage (runtime.cli_v1.test_native_golden_boundary.EvidenceRetentionTests.test_explicit_empty_usage_does_not_fall_back_to_other_usage) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.4998687Z test_rejected_adapter_retains_unknown_raw_evidence (runtime.cli_v1.test_native_golden_boundary.EvidenceRetentionTests.test_rejected_adapter_retains_unknown_raw_evidence) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.5002923Z test_close_failure_preserves_completed_operation (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_close_failure_preserves_completed_operation) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.5008103Z test_completed_operation_is_not_an_application_score (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_completed_operation_is_not_an_application_score) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.5011896Z test_stale_source_refuses_without_execution (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_stale_source_refuses_without_execution) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.5015910Z test_unverified_release_keeps_execution_for_recovery (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_unverified_release_keeps_execution_for_recovery) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6262565Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6262881Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263072Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263249Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263421Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263591Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263767Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6263938Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.6707073Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.9020810Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:34.9461851Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:43.3635160Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:43.4015294Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:43.4094002Z test_dead_owner_delayed_xtest_outcome_after_fresh_cleanup (runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResDisconnectFenceIntegrationTests.test_dead_owner_delayed_xtest_outcome_after_fresh_cleanup) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:43.4639537Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:43.5019384Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:51.9642807Z test_later_delayed_keypress_after_disconnect_and_independent_release (runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResHeldKeyDisconnectIntegrationTests.test_later_delayed_keypress_after_disconnect_and_independent_release) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:51.9649441Z test_raw_provenance_binds_binary_hash_and_package_versions (runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XvfbBuildProvenanceTests.test_raw_provenance_binds_binary_hash_and_package_versions) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.0110219Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.0110637Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.0110906Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.4200842Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.4201152Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.5012508Z test_process_and_window_generation_flow_through_standard_mcp (runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp) ... ok
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.5268921Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:52.5269306Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:53.9139560Z test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb) ... Executing <Task pending name='Task-7' coro=<StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb() running at /home/runner/work/agent-interface/agent-interface/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py:502> wait_for=<Future pending cb=[Task.task_wakeup()] created at /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/asyncio/base_events.py:448> cb=[_run_until_complete_cb() at /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/asyncio/base_events.py:181] created at /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/asyncio/runners.py:100> took 1.007 seconds
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.0058309Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3049419Z Xlib.xauth: warning, no xauthority details available
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3646996Z FAIL
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3659276Z 
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3659739Z ======================================================================
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3661120Z FAIL: test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb)
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3662175Z ----------------------------------------------------------------------
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3662654Z Traceback (most recent call last):
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3669325Z   File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/asyncio/runners.py", line 118, in run
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3669669Z     return self._loop.run_until_complete(task)
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3669874Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3670489Z   File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3671021Z     return future.result()
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3671158Z            ^^^^^^^^^^^^^^^
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3671579Z   File "/home/runner/work/agent-interface/agent-interface/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", line 409, in test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3672028Z     self.assertTrue(cancel.get('owner_process_retired'), cancel)
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3673321Z AssertionError: False is not true : {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': False, 'owner_process_exitcode': None, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'owner_not_retired', 'worker_retired': None}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'child_rpc_snapshot', 'owner_input_obligations_live_read': {'status': 'not_read', 'reason': 'owner_not_retired'}, 'owner_release_attempt': {'status': 'not_attempted', 'reason': 'owner_not_retired'}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True}
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3674666Z 
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3674752Z ----------------------------------------------------------------------
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3674937Z Ran 77 tests in 21.482s
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3675017Z 
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.3675065Z FAILED (failures=1)
+x11-integration	Run private Xvfb integration	2026-10-19T10:12:54.4491703Z ##[error]Process completed with exit code 1.
+x11-integration	Retain XRes disconnect-fence receipt	﻿2026-10-19T10:12:54.4562708Z ##[group]Run actions/upload-artifact@v4
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4562875Z with:
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4562988Z   name: x11-disconnect-fence
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563155Z   path: /home/runner/work/_temp/x11-disconnect-fence.json
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563340Z   if-no-files-found: ignore
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563470Z   compression-level: 6
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563601Z   overwrite: false
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563721Z   include-hidden-files: false
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563849Z env:
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4563986Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4564213Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4564441Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4564644Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4564851Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4565058Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.4565255Z ##[endgroup]
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.5632079Z (node:2573) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.5632705Z (Use `node --trace-deprecation ...` to show where the warning was created)
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.5661087Z With the provided path, there will be 1 file uploaded
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.5684250Z Artifact name is valid!
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.5710580Z Root directory input is valid!
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.9091117Z Beginning upload of artifact content to blob storage
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:54.9195054Z (node:2573) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.1624920Z Uploaded bytes 1081
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.2255351Z Finished uploading artifact content to blob storage!
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.2255968Z SHA256 digest of uploaded artifact zip is 848b596b3c473d4a1814515225c16ef1f4f97b755f641fd67bac870998a943bd
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.2256937Z Finalizing artifact upload
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.4961090Z Artifact x11-disconnect-fence.zip successfully finalized. Artifact ID 12179476013
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.4962153Z Artifact x11-disconnect-fence has been successfully uploaded! Final size is 1081 bytes. Artifact ID is 12179476013
+x11-integration	Retain XRes disconnect-fence receipt	2026-10-19T10:12:55.4963512Z Artifact download URL: https://github.com/Unjuno/agent-interface/actions/runs/39235743221/artifacts/12179476013
+x11-integration	Retain held-key disconnect-order receipt	﻿2026-10-19T10:12:55.5422917Z ##[group]Run actions/upload-artifact@v4
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5423199Z with:
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5423385Z   name: x11-held-key-disconnect-queue
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5423692Z   path: /home/runner/work/_temp/x11-held-key-disconnect-queue.json
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5423998Z   if-no-files-found: error
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5424201Z   compression-level: 6
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5424393Z   overwrite: false
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5424579Z   include-hidden-files: false
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5424780Z env:
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5425008Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5425385Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5425745Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5426064Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5426417Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5426741Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.5427072Z ##[endgroup]
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.6471059Z (node:2585) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.6471646Z (Use `node --trace-deprecation ...` to show where the warning was created)
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.6499428Z With the provided path, there will be 1 file uploaded
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.6503021Z Artifact name is valid!
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:55.6503466Z Root directory input is valid!
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.0059633Z Beginning upload of artifact content to blob storage
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.0168765Z (node:2585) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.2384977Z Uploaded bytes 1073
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.3029546Z Finished uploading artifact content to blob storage!
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.3030061Z SHA256 digest of uploaded artifact zip is f4c32b4131af6223318f896f3080c4bfc0b69e2a43ec6170324e3fce1d3bef79
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.3031270Z Finalizing artifact upload
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.5520498Z Artifact x11-held-key-disconnect-queue.zip successfully finalized. Artifact ID 12179171285
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.5521325Z Artifact x11-held-key-disconnect-queue has been successfully uploaded! Final size is 1073 bytes. Artifact ID is 12179171285
+x11-integration	Retain held-key disconnect-order receipt	2026-10-19T10:12:56.5525434Z Artifact download URL: https://github.com/Unjuno/agent-interface/actions/runs/39235743221/artifacts/12179171285
+x11-integration	Retain standard-caller Xvfb generation receipt	﻿2026-10-19T10:12:56.5648517Z ##[group]Run actions/upload-artifact@v4
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5648757Z with:
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5649050Z   name: standard-mcp-xvfb-generation
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5649442Z   path: /home/runner/work/_temp/standard-mcp-xvfb-generation.json
+x11-integration	Retain standard-caller Xvfb generation receipt	/home/runner/work/_temp/standard-mcp-xvfb-observation.png
+x11-integration	Retain standard-caller Xvfb generation receipt	
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5649846Z   if-no-files-found: ignore
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5649990Z   compression-level: 6
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5650260Z   overwrite: false
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5650404Z   include-hidden-files: false
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5650545Z env:
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5650690Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5650928Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5651165Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5651380Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5651598Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5651844Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.5652026Z ##[endgroup]
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6683170Z (node:2597) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6683935Z (Use `node --trace-deprecation ...` to show where the warning was created)
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6763716Z Multiple search paths detected. Calculating the least common ancestor of all paths
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6781404Z The least common ancestor is /home/runner/work/_temp. This will be the root directory of the artifact
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6782003Z With the provided path, there will be 2 files uploaded
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6782640Z Artifact name is valid!
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:56.6782944Z Root directory input is valid!
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.0231942Z Beginning upload of artifact content to blob storage
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.0355160Z (node:2597) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.2737988Z Uploaded bytes 4341
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.3393317Z Finished uploading artifact content to blob storage!
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.3393798Z SHA256 digest of uploaded artifact zip is 32d2ae964adc7bc1d41ba6d536b946e76b00dac75217c967926c8e91fcdc936d
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.3395167Z Finalizing artifact upload
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.6160057Z Artifact standard-mcp-xvfb-generation.zip successfully finalized. Artifact ID 12179501024
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.6160813Z Artifact standard-mcp-xvfb-generation has been successfully uploaded! Final size is 4341 bytes. Artifact ID is 12179501024
+x11-integration	Retain standard-caller Xvfb generation receipt	2026-10-19T10:12:57.6166003Z Artifact download URL: https://github.com/Unjuno/agent-interface/actions/runs/39235743221/artifacts/12179501024
+x11-integration	Retain blocked-owner release receipt and observation image	﻿2026-10-19T10:12:57.6320899Z ##[group]Run actions/upload-artifact@v4
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6321191Z with:
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6321403Z   name: standard-mcp-xvfb-blocked-release
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6322003Z   path: /home/runner/work/_temp/standard-mcp-xvfb-blocked-release.json
+x11-integration	Retain blocked-owner release receipt and observation image	/home/runner/work/_temp/standard-mcp-xvfb-blocked-release.observation.png
+x11-integration	Retain blocked-owner release receipt and observation image	
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6322603Z   if-no-files-found: error
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6322839Z   compression-level: 6
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6323044Z   overwrite: false
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6323242Z   include-hidden-files: false
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6323461Z env:
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6323683Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6324059Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6324447Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6324804Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6325162Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6325578Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.6325894Z ##[endgroup]
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7390277Z (node:2609) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7390975Z (Use `node --trace-deprecation ...` to show where the warning was created)
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7423333Z Multiple search paths detected. Calculating the least common ancestor of all paths
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7431141Z The least common ancestor is /home/runner/work/_temp. This will be the root directory of the artifact
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7431761Z With the provided path, there will be 2 files uploaded
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7432422Z Artifact name is valid!
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:57.7433163Z Root directory input is valid!
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.1090069Z Beginning upload of artifact content to blob storage
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.1209353Z (node:2609) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.3462687Z Uploaded bytes 4471
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.4082363Z Finished uploading artifact content to blob storage!
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.4082924Z SHA256 digest of uploaded artifact zip is fd4fcaf4824da031f8d4f1dc96390071d55bf2c145ae32423565b85340f25e65
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.4084242Z Finalizing artifact upload
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.6586007Z Artifact standard-mcp-xvfb-blocked-release.zip successfully finalized. Artifact ID 12178587040
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.6586768Z Artifact standard-mcp-xvfb-blocked-release has been successfully uploaded! Final size is 4471 bytes. Artifact ID is 12178587040
+x11-integration	Retain blocked-owner release receipt and observation image	2026-10-19T10:12:58.6591193Z Artifact download URL: https://github.com/Unjuno/agent-interface/actions/runs/39235743221/artifacts/12178587040
+x11-integration	Post Run actions/checkout@v4	﻿2026-10-19T10:12:58.6747220Z Post job cleanup.
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7305183Z [command]/usr/bin/git version
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7340816Z git version 2.55.0
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7357850Z Temporarily overriding HOME='/home/runner/work/_temp/cfe8cbf8-a347-4a85-a924-d5c2390cfd06' before making global git config changes
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7358572Z Adding repository directory to the temporary git global config as a safe directory
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7363724Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-interface/agent-interface
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7390004Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7415532Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7759480Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7788984Z http.https://github.com/.extraheader
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7797676Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.7830446Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.8136931Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+x11-integration	Post Run actions/checkout@v4	2026-10-19T10:12:58.8169437Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+x11-integration	Complete job	﻿2026-10-19T10:12:58.8574910Z Cleaning up orphan processes
+x11-integration	Complete job	2026-10-19T10:12:58.8789874Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

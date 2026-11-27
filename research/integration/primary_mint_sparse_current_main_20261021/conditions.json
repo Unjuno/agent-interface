@@ -1,0 +1,33 @@
+{
+  "schema": "agent-interface/primary-mint-sparse-current-main-conditions-v1",
+  "observed_at_utc": "2026-10-20T23:03:24Z",
+  "base_ref": "main",
+  "base_sha": "bc10001a7a5e5648360d5cfa209248b65f15aacd",
+  "branch": "fix/primary-mint-sparse-currentmain-r01",
+  "pr_8354_source_head": "31f52fedfc26182e58960dcc8ec5a5ecc3577c38",
+  "pr_8354_base_sha": "f99ac0d3ad084c244cc7558d2219ac87247ded0c",
+  "pr_8354_relative_to_main": {
+    "status": "diverged",
+    "behind": 1382,
+    "ahead": 3
+  },
+  "implementation": "Replace Array.prototype.every with Array.from(value).every in single-mint pair validation so sparse holes become undefined and fail Number.isSafeInteger",
+  "test_scope": "primary caller local host validation only",
+  "model_calls": 0,
+  "formal_allocations": 0,
+  "live_gui_input": 0,
+  "wslc_or_docker_used": false,
+  "runtime": "Node v24.13.0 on Windows; Python 3.13 command alias for integration timing helper",
+  "source_worktree_text_eol": "CRLF checkout; Git autocrlf=true",
+  "source_files": {
+    "runtime/host_v1/primary_caller.mjs": "c840580c1bf77b278b2197f69167174365b5600b0b67a55e4743b64af477be6d",
+    "runtime/host_v1/test_primary_caller.mjs": "3a8c92a3c1708f0c659ff560df4acdd46f1bf336e6adb191e9337e0f1d22c91d",
+    "runtime/host_v1/test_primary_mint_sparse.mjs": "fbe090a7046bd9739a0b54154e9c39c4b35fa68a72303ab04b7e8f2bfcc6772a",
+    "runtime/integration_checks/host_timing.py": "d89335c5cd209b42703ba559ec56d0f0b411fa5542f8b2847cfd77d2261040c1"
+  },
+  "preserved_pr_8354_evidence_blob_sha256": {
+    "EVIDENCE.base64-gzip-json.txt": "33eb1a54b01ddee2419207e23c135fa23cfd7b7da4c8c5f285c3637c7df58651",
+    "CUSTODY.json": "282120d17c5f7ed41acbfeb347cec44f7067a4dccdc3d0e3b0e35a4482356590",
+    "README.md": "c2ddc8be4fd66668189a41adbe5aa99b58b082b6c3ba1535ae9961bd201a6e2b"
+  }
+}

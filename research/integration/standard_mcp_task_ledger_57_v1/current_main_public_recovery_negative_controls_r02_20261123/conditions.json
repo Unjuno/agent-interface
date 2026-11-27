@@ -1,0 +1,36 @@
+{
+  "schema": "agent-interface/public-recovery-task-verification-negative-controls-r02",
+  "frozen_source_main": "10680fe597678649c3de8a18a490462f4291edaf",
+  "candidate_changes": [
+    "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/test_mcp_supervised_win32.py"
+  ],
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "0d216735aa30e0d85f562f327cb86a58936189f4f1b3688e0e699ef36d4b5ebf"
+  },
+  "python": "CPython 3.11.9",
+  "platform": "Windows 11 Pro 10.0.26300 (build 26300)",
+  "commands": [
+    "python -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_recovered_unknown_task_gate_requires_exact_recovery_custody runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_task_oracle_is_not_invoked_for_unknown_public_custody runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_supervised_task_oracle_certifies_exact_completed_action_once",
+    "python -O -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_recovered_unknown_task_gate_requires_exact_recovery_custody runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_task_oracle_is_not_invoked_for_unknown_public_custody runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_supervised_task_oracle_certifies_exact_completed_action_once"
+  ],
+  "acceptance": [
+    "exact recovered operation and target generation plus confirmed release and verified horizon enable task verification",
+    "operation or target-generation mismatch, absent or false horizon, incomplete recovery, or unconfirmed release fail closed",
+    "public compiled caller preserves UNKNOWN source action, null action task_success, and replay denial after success from separate task oracle",
+    "public unknown-custody path does not invoke the oracle",
+    "completed-action task-oracle behavior remains intact"
+  ],
+  "scope": "one table-driven recovery-eligibility control and three public MCP regression controls; all inputs, task effect, recovery, and oracle are fake/local",
+  "not_tested": [
+    "live GUI or Win32 input",
+    "external application task effect",
+    "repeated reliability",
+    "MAP01",
+    "matched efficiency",
+    "WSLc or Docker allocation",
+    "Research Preview acceptance",
+    "distributable runtime acceptance"
+  ]
+}

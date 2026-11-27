@@ -1,0 +1,130 @@
+{
+  "cell_count": 4,
+  "cells": [
+    {
+      "appserver_latency_ns": 7589217600,
+      "arm": "direct",
+      "cell_id": "pair1-direct",
+      "elapsed_ns": 9116958600,
+      "error": null,
+      "pair": 1,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 3935426800,
+      "arm": "compiled",
+      "cell_id": "pair1-compiled",
+      "elapsed_ns": 5451712800,
+      "error": null,
+      "pair": 1,
+      "provider_turn_count": 1,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 4,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 4084255100,
+      "arm": "compiled",
+      "cell_id": "pair2-compiled",
+      "elapsed_ns": 5607979800,
+      "error": null,
+      "pair": 2,
+      "provider_turn_count": 1,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 4,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 7268378200,
+      "arm": "direct",
+      "cell_id": "pair2-direct",
+      "elapsed_ns": 8792162300,
+      "error": null,
+      "pair": 2,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "classification": "PASS_SCOPED_COUNTERBALANCED_WIN32_MATCHED_STUDY",
+  "conditions_sha256": "07b7b2b7141532216829bfbb2473afb5b1366f8621f1f2faa9fc0a6002211c19",
+  "docker_used": false,
+  "interpretation": "Two counterbalanced pairs (n=2 per arm) are descriptive only. AppServer protocol usage is not independent upstream billing evidence; image-token accounting is unavailable. No causal or reliability claim is permitted.",
+  "paired_differences": [
+    {
+      "both_task_pass": true,
+      "compiled_cell": "pair1-compiled",
+      "direct_cell": "pair1-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": 3653790800,
+        "dispatch_calls": 0,
+        "elapsed_ns": 3665245800,
+        "input_tokens": 10482,
+        "observation_calls": 1,
+        "output_tokens": 15,
+        "provider_turn_count": 1
+      },
+      "pair": 1
+    },
+    {
+      "both_task_pass": true,
+      "compiled_cell": "pair2-compiled",
+      "direct_cell": "pair2-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": 3184123100,
+        "dispatch_calls": 0,
+        "elapsed_ns": 3184182500,
+        "input_tokens": 10482,
+        "observation_calls": 1,
+        "output_tokens": 15,
+        "provider_turn_count": 1
+      },
+      "pair": 2
+    }
+  ],
+  "pretrial_sha256": "b82717dc8b5604ee0594b0ff0198f690ef64cd50fb331d31c2335efea2d8079c",
+  "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "source_commit": "cc42df79f4c6dbef2e9457d3dae31663e7368f31",
+  "study_id": "win32-appserver-matched-efficiency-r12e-20261026",
+  "wslc_used": false
+}

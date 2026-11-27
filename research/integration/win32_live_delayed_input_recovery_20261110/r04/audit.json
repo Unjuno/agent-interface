@@ -1,0 +1,31 @@
+{
+  "schema": "agent-interface/win32-custody-acl-audit-v1",
+  "audited_at": "2026-11-10T20:41:57.3600866+09:00",
+  "method": "read-only PowerShell Get-Acl and custody journal JSON read; no state mutation",
+  "source_operation_id": "a691feb96ad84a25944ff7f3f174be3e",
+  "checks": {
+    "journal_status": "clear",
+    "pending_is_null": true,
+    "revision": 18,
+    "last_resolved_matches_r03": true,
+    "directory_protected": true,
+    "directory_acl_principals": [
+      "SYSTEM",
+      "local_administrators",
+      "current_user"
+    ],
+    "journal_file_protected": true,
+    "journal_file_acl_principals": [
+      "SYSTEM",
+      "local_administrators",
+      "current_user"
+    ],
+    "registry_key_protected": true,
+    "registry_acl_principals": [
+      "SYSTEM",
+      "local_administrators",
+      "current_user"
+    ]
+  },
+  "scope": "This host logon custody journal and marker only. DACL protects against other Windows accounts; same-user/admin tampering remains outside this boundary."
+}

@@ -4,6 +4,9 @@
 
 ## Navigate
 
+Retained [Issue #59 journal-wire custody packet](appserver_journal_wire_custody_59_20261003_93c2_A01/README.md): exact saved nested-data proof and qualified rescue records, with observer/authentication and outer-auditor limits preserved; no source replay or runtime adoption.
+
+
 Retained [ExecutorV13 release-custody BaseException boundary experiment](baseexception_release_custody_59_20261005/README.md): synthetic worker-step result with custody-preserving terminal behavior, independent source audit, and scoped limits; the implementation is historical evidence, not a runtime adoption.
 
 Retained [ExecutorV13 `release_all()` BaseException custody-boundary experiment](executor_v13_release_cleanup_baseexception_59_20261005/README.md): the frozen parent regressions demonstrate the no-terminal failure; the synthetic candidate/AST audit passes, and the later integrated #7635 repair supersedes the candidate implementation. Historical evidence only; no live-control or task-effect claim.
@@ -66,7 +69,8 @@ flowchart TD
 | Target binding and coordinate frames | [`SCOPED_TARGET_HANDLES_V1.md`](SCOPED_TARGET_HANDLES_V1.md), [`FRAMED_POINTER_INTENTS_V1.md`](FRAMED_POINTER_INTENTS_V1.md) |
 | Recovery, continuation, and durability | [`AUTO_RECOVER_INK.md`](AUTO_RECOVER_INK.md), [`CHECKPOINT_CONTINUATION.md`](CHECKPOINT_CONTINUATION.md) |
 | Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
-| Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
+| App Server identity/usage through all-attempt ledger | [JSONL transport composition regression](test_grounding_appserver_usage_transport.py) — deterministic local peer; no live provider or task-effect claim |
+| Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md), [all-attempt runner recording seam](RECORDED_TARGET_HANDLE_MODEL_RUNNER_V1.md) |
 | Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
 | Issue #3311 allocation-01 pre-test STOP (historical source and disposition) | [Recovery record](issue3311_termination_report_v1/RECOVERY_STATUS.md) |
 
@@ -83,23 +87,28 @@ primary frames; health-loss and zero-ammo controls require cancel and verified
 empty release. It is not yet wired into a live controller and makes no latency
 or gameplay claim.
 
-Current next block: [integrated token-efficiency evaluation plan v1](INTEGRATED_EFFICIENCY_PLAN_V1.md).
-Issue #57's three-arm comparison retains a batched plain baseline and measures the
-same cold/warm/layout-invalidation/repair sequence against ephemeral and persistent
-compiled paths.  The composition and requirement matrix are selected; the live
-allocation is not yet preregistered or run.  The subsequent DOOM gate is a
-continuously advancing Freedoom `MAP01` clear attempt, not the existing small
-`basic.wad` transport scenario.
+Current status: the finite three-arm comparison in
+[integrated efficiency result v1](INTEGRATED_EFFICIENCY_LIVE_V1.md) is recorded as
+`RETAIN` for its declared six-task allocation. The independent
+[reconciliation](INTEGRATED_EFFICIENCY_LIVE_AUDIT_RECONCILIATION_20261004.md)
+reproduces the detailed report and audit, while leaving the separately committed
+aggregate-only summary unresolved. Broader reliability and transfer claims remain
+unestablished. The next registered domain gate is the ordinary-speed Freedoom
+`MAP01` attempt in
+[`research/doom/map01_finite_clear_attempt_v1/`](../doom/map01_finite_clear_attempt_v1/README.md),
+not the earlier small `basic.wad` transport scenario.
 
-Fixture checkpoint: `integrated_efficiency_fixture_v1.py` implements one
+Retained pre-formal integration work: `integrated_efficiency_fixture_v1.py` implements one
 append-only six-task scorer with A/A/A/B/B/B layouts.  Its exact, duplicate and
 wrong-token controls pass, and runtime/socket adapters now expose it through the
 existing `session_v33` checked-input path.  A no-input X11 smoke returns an exact
-initial frame and correctly scores all six tasks missing.  No arm has been run.
-The new `integrated_efficiency_protocol_v1.py` also fixes the arm schedule and
+initial frame and correctly scores all six tasks missing. The formal arms and
+their separate result report are recorded above. The
+`integrated_efficiency_protocol_v1.py` fixes the arm schedule and
 scores the frozen decision rule.  Five fail-closed controls pass after repairing
 an initial cross-task duplicate-call-ID validation hole.  The live controller
-and preregistration remain open.
+and formal run are documented in the retained v1 plan and result above; these
+pre-formal probes remain engineering evidence, not extra comparison arms.
 The two-layout socket probe initially rejected query-string URL text before any
 task input.  The preserved failure motivated path-only fixture URLs; the fresh
 probe then observes distinct exact A/B frames and four verified releases through
@@ -110,10 +119,11 @@ handles, refuses the old A handle as `MISSING` at task 4 with zero stale input,
 repairs by minting B handles, records 12 intended button-down admissions and
 verifies release on all 41 programs.  Human-inspected points and zero model calls
 exclude this evidence from the formal efficiency result.
-Issue #57's integration-gap follow-up is now represented by
-`integrated_efficiency_discoveries_v1.json`: three interface mismatches and four
-benchmark/setup/accounting defects, each tied to its retained allocation,
-smallest repair, regression and non-additive overhead.  The protocol rejects
+Issue #57's integration-gap follow-up is represented by
+`integrated_efficiency_discoveries_v1.json`: eight discoveries, comprising three
+interface mismatches and five benchmark/setup/accounting defects, each tied to
+its retained allocation, smallest repair, regression and non-additive overhead.
+The protocol rejects
 missing provenance and silent post-start repair, and returns HOLD when a formal
 discovery invalidates the allocation.
 The first common-client three-arm run then exposes and retains an invalid
@@ -674,3 +684,5 @@ or human-tempo claim.
 - [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
 - [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
 - [Send before response deadline: original comparison and audit qualification](appserver_send_boundary_59_20261003_01a0ff52/README.md): six historical Mac cells, response-only timeout and finite uncertain writer; original9/12 control refusals and later12/12 correction, no transport adoption or hard deadline claim.
+
+Current finite role recovery package and scope: [PR7264/8370 convergence](../integration/finite_role_recovery_convergence_20261016/README.md). Local file-backed checks do not qualify GUI/application recovery.

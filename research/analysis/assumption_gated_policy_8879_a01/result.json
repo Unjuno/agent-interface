@@ -1,0 +1,154 @@
+{
+  "adaptive_dr_violations": [],
+  "allocation": "8879-assumption-gate-a01-wsl-native-20261012-01",
+  "baseline_accuracy": "1/2",
+  "cost_per_observation": "1/100",
+  "depth2": {
+    "accuracy": "1",
+    "net_gain": "12/25"
+  },
+  "greedy": {
+    "immediate_net_marginals": {
+      "left": "-1/100",
+      "right": "-1/100"
+    },
+    "net_gain": "0",
+    "stops": true
+  },
+  "histories": [
+    {
+      "accuracy": "1/2",
+      "history": [],
+      "marginals": {
+        "left": "0",
+        "right": "0"
+      }
+    },
+    {
+      "accuracy": "1/2",
+      "history": [
+        [
+          "left",
+          0
+        ]
+      ],
+      "marginals": {
+        "right": "1/2"
+      }
+    },
+    {
+      "accuracy": "1/2",
+      "history": [
+        [
+          "left",
+          1
+        ]
+      ],
+      "marginals": {
+        "right": "1/2"
+      }
+    },
+    {
+      "accuracy": "1/2",
+      "history": [
+        [
+          "right",
+          0
+        ]
+      ],
+      "marginals": {
+        "left": "1/2"
+      }
+    },
+    {
+      "accuracy": "1/2",
+      "history": [
+        [
+          "right",
+          1
+        ]
+      ],
+      "marginals": {
+        "left": "1/2"
+      }
+    },
+    {
+      "accuracy": "1",
+      "history": [
+        [
+          "left",
+          0
+        ],
+        [
+          "right",
+          0
+        ]
+      ],
+      "marginals": {}
+    },
+    {
+      "accuracy": "1",
+      "history": [
+        [
+          "left",
+          0
+        ],
+        [
+          "right",
+          1
+        ]
+      ],
+      "marginals": {}
+    },
+    {
+      "accuracy": "1",
+      "history": [
+        [
+          "left",
+          1
+        ],
+        [
+          "right",
+          0
+        ]
+      ],
+      "marginals": {}
+    },
+    {
+      "accuracy": "1",
+      "history": [
+        [
+          "left",
+          1
+        ],
+        [
+          "right",
+          1
+        ]
+      ],
+      "marginals": {}
+    }
+  ],
+  "model": "xor_two_bits_v1",
+  "prior": "uniform",
+  "selected_policy": "greedy",
+  "target": "left XOR right",
+  "worlds": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ]
+  ]
+}

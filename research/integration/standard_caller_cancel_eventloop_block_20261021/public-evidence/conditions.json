@@ -1,0 +1,38 @@
+{
+  "schema": "agent-interface/standard-caller-cancel-eventloop-conditions-v1",
+  "classification": "local-standard-mcp-caller-fakex-composition-probe",
+  "question": "Does the current async public cancel tool block unrelated work on its event loop while its synchronous owned-session cleanup boundary is delayed?",
+  "source_revision": "e7d79d04de46202622873bf116adb909abb0dee2",
+  "runtime": "Windows host; Python multiprocessing spawn for the owned session; repository Fake X owner fixture; no X server, Xlib server operation, physical input, WSL, WSLc, Docker, or external model",
+  "arms": {
+    "no-injected-cleanup-delay": {
+      "trials": 3,
+      "delay_each_cleanup_boundary_ms": 0,
+      "expectation": "standard caller returns cancellation cleanup UNKNOWN, denies replay, and event-loop heartbeat is delayed by the existing synchronous control/retirement path"
+    },
+    "injected-cleanup-boundary-delay": {
+      "trials": 3,
+      "delay_each_cleanup_boundary_ms": 700,
+      "delayed_boundaries": ["XRes disconnect helper call", "retired-input release helper call"],
+      "expectation": "standard caller response and event-loop heartbeat include both injected delays; cleanup remains UNKNOWN and replay is denied"
+    }
+  },
+  "frozen_inputs": {
+    "target": {"name": "app", "native_id": 20},
+    "action": "one CTRL+a chord; fake owner blocks in its sync until parent retirement",
+    "response_wait_ms": 0,
+    "heartbeat_interval_ms": 10,
+    "fake_x_cleanup": "disconnect and release stage results are deterministic injected receipts; no physical release inference"
+  },
+  "measurements": [
+    "cancel_tool_elapsed_ms from immediately before public MCP tool invocation through returned metadata",
+    "maximum event-loop heartbeat gap in the interval beginning immediately before cancel invocation and ending immediately after it",
+    "cancel status, release_confirmed, cleanup_status, task_success, replay_allowed",
+    "owner retirement receipt, obligation snapshot and terminal standard-caller result"
+  ],
+  "decision": {
+    "classification": "DESCRIPTIVE_CURRENT_PATH_RESULT; no product PASS",
+    "evidence_rule": "All six trials must retain complete records and report cleanup UNKNOWN, release_confirmed=false, task_success=null and replay_allowed=false. Compare observed per-arm latency distributions; no claim of a release guarantee is permitted.",
+    "scope_limit": "Injected delays model synchronous waiting at cleanup boundaries; they are not actual Process.start delays, XRes wire calls, X11, physical input, or live release. This probe cannot validate the proposed architecture or its budgets."
+  }
+}

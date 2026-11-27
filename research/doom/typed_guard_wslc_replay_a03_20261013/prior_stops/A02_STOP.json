@@ -1,0 +1,27 @@
+{
+  "allocation": "WSLC-TYPED-POLICY-REPLAY-A02-20261013-01",
+  "auditor_invocation_count": 0,
+  "candidate_invocation_count": 0,
+  "cidfile_present": false,
+  "container_remains": false,
+  "disposition": "STOP_IMAGE_NOT_CACHED",
+  "formal_live_allocation_consumed": false,
+  "freeze_sha256": "f837b907b96d249367d06eaeef30dffd8aeb86286a8e056301a2688d5119675c",
+  "interpretation": "The pinned Python digest was not present in this WSLc image store. `--pull never` failed before container creation; no candidate or auditor ran. Preserve as infrastructure STOP. A separate allocation may use a distinct digest already evidenced on this WSLc host, with all science inputs and code unchanged.",
+  "network_pull_attempted": false,
+  "process_exit": 1,
+  "retries": 0,
+  "schema": "wslc-pre-container-image-stop-v1",
+  "scoped_unique_name_query": {
+    "name_query": {
+      "exit": 0,
+      "rows": [],
+      "text": "",
+      "verified": true
+    }
+  },
+  "stderr_sha256": "9f02b487f1a4ebba9806dc6b4d8ba40f18e3f91bd96505a412e57233b6aedf53",
+  "stderr_utf8": "\u30a8\u30f3\u30b8\u30f3\u304b\u3089\u306e\u30a8\u30e9\u30fc\u60c5\u5831: No such image: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f\r\n\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: WSLC_E_IMAGE_NOT_FOUND\r\n\u3053\u306e\u30a8\u30e9\u30fc\u304c\u4e88\u671f\u3057\u306a\u3044\u3082\u306e\u3067\u3042\u308b\u5834\u5408\u306f\u3001\u65e2\u5b58\u306e\u554f\u984c\u3092\u691c\u7d22\u3059\u308b\u304b\u3001https://github.com/microsoft/WSL/issues \u3067\u65b0\u3057\u3044\u554f\u984c\u3092\u63d0\u51fa\u3059\u308b\u3053\u3068\u3092\u691c\u8a0e\u3057\u3066\u304f\u3060\u3055\u3044\u3002\r\n",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "wslc_run_invocation_count": 1
+}

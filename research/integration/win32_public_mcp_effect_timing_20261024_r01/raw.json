@@ -1,0 +1,258 @@
+{
+  "attempt_id": "win32-public-mcp-effect-timing-20261024-r01",
+  "caller_kind": "mcp_stdio",
+  "dispatch": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"7d310d6a40f0b6b660bc66a9fe0ca492a438c2396828f6340da3e91ecaab6e68\", \"bytes\": 252, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"refused\", \"error\": \"TARGET_GENERATION_REQUIRED\", \"input_dispatched\": false, \"operation_invoked\": false, \"task_success\": null, \"replay_allowed\": false}}}, \"report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"refused\", \"error\": \"TARGET_GENERATION_REQUIRED\", \"input_dispatched\": false, \"operation_invoked\": false, \"task_success\": null, \"replay_allowed\": false}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null, \"input_release_verified\": null, \"failure_detail\": null, \"validation_operation_index\": null, \"failed_operation_index\": null, \"failed_operation_effect\": null, \"execution_status\": \"refused\", \"execution_error\": \"TARGET_GENERATION_REQUIRED\", \"execution_detail\": null, \"recovery_required\": null}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r01\\\\run\\\\mcp-calls\\\\a3aed8ab69fc4f78a12b7a38baa0f9d0\", \"call_id\": \"a3aed8ab69fc4f78a12b7a38baa0f9d0\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 469105546000000,
+    "started_monotonic_ns": 469105546000000
+  },
+  "dispatch_attempts": 1,
+  "finished_utc": "2026-10-23T17:49:59.666172+00:00",
+  "fixture_close_posted": true,
+  "fixture_events": [
+    {
+      "hwnd": 45811148,
+      "kind": "ready",
+      "monotonic_ns": 469104187000000
+    }
+  ],
+  "fixture_exit_code": 0,
+  "fixture_hwnd": 45811148,
+  "fixture_pid": 25060,
+  "fixture_stderr": "",
+  "listed_tools": [
+    "interface_clock",
+    "interface_dispatch",
+    "interface_observe",
+    "interface_results",
+    "interface_validate"
+  ],
+  "observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"9be86b1bad4ae267e52b2a183693776f49e54f38bdd7f845982e29ff07c1b5d8\", \"bytes\": 1279, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"9428e36e03064c0c9165b6a040bf2af5\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 168000, \"sha256\": \"a62969c86b4dac772a1940de78e980dde9bb6f77f3b021413d08d9473db56b13\", \"width\": 300, \"height\": 140, \"target\": \"fixture\", \"native_window_id\": 45811148, \"frame\": \"window_client\", \"region\": [0, 0, 300, 140], \"capture_started_ns\": 469105531000000, \"capture_ended_ns\": 469105531000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r01\\\\run\\\\mcp-calls\\\\b55359b0028d45b5bbe82a7838b21c1e\\\\images\\\\91d43688a72c4899910de71d1bf4220e.png\", \"sha256\": \"392c7c4192a12807eeae289b79924c376d3b8a0a586851c85ebb5eef053f27d0\", \"bytes\": 984, \"width\": 300, \"height\": 140, \"source_raw_sha256\": \"a62969c86b4dac772a1940de78e980dde9bb6f77f3b021413d08d9473db56b13\", \"timing_ns\": {\"started\": 469105531000000, \"converted\": 469105531000000, \"encoded\": 469105531000000, \"written\": 469105531000000}}}, \"target_generation\": \"db1ce3d348215706467a3fcba0ccf6372abee15510b8ff2fd5344480ab03701c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"9428e36e03064c0c9165b6a040bf2af5\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 168000, \"sha256\": \"a62969c86b4dac772a1940de78e980dde9bb6f77f3b021413d08d9473db56b13\", \"width\": 300, \"height\": 140, \"target\": \"fixture\", \"native_window_id\": 45811148, \"frame\": \"window_client\", \"region\": [0, 0, 300, 140], \"capture_started_ns\": 469105531000000, \"capture_ended_ns\": 469105531000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r01\\\\run\\\\mcp-calls\\\\b55359b0028d45b5bbe82a7838b21c1e\\\\images\\\\91d43688a72c4899910de71d1bf4220e.png\", \"sha256\": \"392c7c4192a12807eeae289b79924c376d3b8a0a586851c85ebb5eef053f27d0\", \"bytes\": 984, \"width\": 300, \"height\": 140, \"source_raw_sha256\": \"a62969c86b4dac772a1940de78e980dde9bb6f77f3b021413d08d9473db56b13\", \"timing_ns\": {\"started\": 469105531000000, \"converted\": 469105531000000, \"encoded\": 469105531000000, \"written\": 469105531000000}}}, \"target_generation\": \"db1ce3d348215706467a3fcba0ccf6372abee15510b8ff2fd5344480ab03701c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 469105531000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r01\\\\run\\\\mcp-calls\\\\b55359b0028d45b5bbe82a7838b21c1e\\\\images\\\\91d43688a72c4899910de71d1bf4220e.png\", \"relative_path\": \"images\\\\91d43688a72c4899910de71d1bf4220e.png\", \"sha256\": \"392c7c4192a12807eeae289b79924c376d3b8a0a586851c85ebb5eef053f27d0\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"9428e36e03064c0c9165b6a040bf2af5\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 45811148, \"frame\": \"window_client\", \"region\": [0, 0, 300, 140], \"width\": 300, \"height\": 140, \"capture_started_ns\": 469105531000000, \"capture_ended_ns\": 469105531000000}}, \"image_status\": \"image\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r01\\\\run\\\\mcp-calls\\\\b55359b0028d45b5bbe82a7838b21c1e\", \"call_id\": \"b55359b0028d45b5bbe82a7838b21c1e\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAASwAAACMCAIAAABJdAN4AAADn0lEQVR4nO3cQXKjSBRAQd3/tH2DmdU4FJIoPmD82jGZKxlBUZR4wl50P/4BUo96AvB/J0KIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBihyP8A7U7SgiJkN/njhJCVyN8PB53r/j6FI//XBzn+kyu273S4RweTybbL57xB+6BF3eUEPr1Ec7ncHGq+ZWeS+Lrx63tu+OI8G6XIpx/N1/xN0T4M/fZJMKjg5yL8ND1ivAiEX7PHL7L84m2Xs9H+CPC3+B8hLu3yO5fJls7P983kz9jXmYyH2drJl9vTQbcuurh9vW1vL8+tDjDRfs4z+cV+Lj/4837bi/T/rjak2V5cUcJobsi3L2Z1iOsBx+e69xbWwkdPfvwSo+O9v5i68cTBQ5PPXz9cuz8Jtmd/x0lhG6JcP11OHnr7gjnM9mdw/rA9bkW+289hYYRHt242Oe7Itydxu5X4Zc7SgidjPDot9ruUb8uwseT9TzDCOe7LY56fz3/sE5HuHZHCaHzEb6bfBJbR/18hMOZzIddZLBYq61z/Z0RfhzhdISHluXZHSWE4ifh7iHro+anno+5G+HRq5vfW8/7n47wykruHvU+n/Up1hEOJ/PujhJCZyLcvdtOfBJ5hPMn4fUIv+WKLm4/MYHJYl6J0JNwarFYRz+kE/EcOu+5t3YjHB574iF8aNp/Z4STY4eDLCZ8RwmhuyL8Wsf31dzaOPx43k/6PNqhcSYz2T32ZYSPYy62b13U1qmHV7qY2GQm7xP4eEUfZ/JxAot7ZrFcW9O7o4TQT/wriuGdB0N3lBC6JcLJswVOu6OE0F1PwuGvPXDCHSWE/PcWEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcT+BUD81wpkV1zdAAAAAElFTkSuQmCC",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 469105546000000,
+    "started_monotonic_ns": 469105515000000
+  },
+  "oracle": {
+    "char_event_count": 0,
+    "event_text": "",
+    "event_text_matches": false,
+    "expected_char_event_count": 24,
+    "nonclaims": [
+      "blocked-I/O bound",
+      "generation admission",
+      "supervisor recovery",
+      "model/token efficiency",
+      "MAP01",
+      "broad reliability"
+    ],
+    "release_pass": false,
+    "release_receipt": {},
+    "save_event_count": 0,
+    "task_pass": false
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 469125546000000,
+      "lease_id": "win32-mcp-timing-r01"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "MCP-LIVE-R07-TIMING-ONLY"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": 140,
+        "op": "observe",
+        "w": 300,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "win32-public-mcp-effect-timing-r01",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 3,
+      "observation_seq": 7
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "program_validation": {
+    "backend_checked": false,
+    "compilation": null,
+    "expanded_operation_count": 10,
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "runtime_admission": "not_evaluated",
+    "schema": "agent-interface/static-program-validation-v1",
+    "side_effect_authority": false,
+    "source_operation_count": 10,
+    "static_valid": true,
+    "status": "valid",
+    "task_success": null
+  },
+  "public_response": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_public_mcp_effect_timing_20261024_r01\\run\\mcp-calls\\a3aed8ab69fc4f78a12b7a38baa0f9d0",
+    "call_id": "a3aed8ab69fc4f78a12b7a38baa0f9d0",
+    "image_status": "no_observation",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "execution_detail": null,
+      "execution_error": "TARGET_GENERATION_REQUIRED",
+      "execution_status": "refused",
+      "failed_operation_effect": null,
+      "failed_operation_index": null,
+      "failure_detail": null,
+      "failure_phase": null,
+      "input_release_verified": null,
+      "recovery_required": null,
+      "reported_status": "returned",
+      "validation_operation_index": null
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "result": {
+          "error": "TARGET_GENERATION_REQUIRED",
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "replay_allowed": false,
+          "status": "refused",
+          "task_success": null
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 252,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "result": {
+            "error": "TARGET_GENERATION_REQUIRED",
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "status": "refused",
+            "task_success": null
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "sha256": "7d310d6a40f0b6b660bc66a9fe0ca492a438c2396828f6340da3e91ecaab6e68"
+      }
+    },
+    "schema": "agent-interface/review-v1"
+  },
+  "retained_report": {
+    "result": {
+      "error": "TARGET_GENERATION_REQUIRED",
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "status": "refused",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "schema": "win32-public-mcp-live-effect-receipt-v1",
+  "source_commit": "82f42b47e1701fa975c654d1d9d53312eef399a6",
+  "started_utc": "2026-10-23T17:49:56.112033+00:00",
+  "status": "FAIL_OR_UNKNOWN",
+  "target_identity_after": {
+    "generation": "db1ce3d348215706467a3fcba0ccf6372abee15510b8ff2fd5344480ab03701c",
+    "owner": {
+      "creation_time_100ns": 134372513961144972,
+      "pid": 25060,
+      "window_thread_id": 13808
+    }
+  },
+  "target_identity_before": {
+    "generation": "db1ce3d348215706467a3fcba0ccf6372abee15510b8ff2fd5344480ab03701c",
+    "owner": {
+      "creation_time_100ns": 134372513961144972,
+      "pid": 25060,
+      "window_thread_id": 13808
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import os,time,unittest
 from doom_controller_failure_cleanup_v1 import send_failure_finish
 
+@unittest.skipUnless(os.name == 'posix', 'bounded failure finish requires POSIX pipes')
 class Tests(unittest.TestCase):
     def test_full_pipe_times_out_without_blocking(self):
         read_fd,write_fd=os.pipe()

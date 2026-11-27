@@ -1,0 +1,574 @@
+{
+  "arms": {
+    "active_hard_health_invalidation": {
+      "backend_release_transitions": [
+        {
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "v39-executor-cancel-active-key-a01",
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owner_cleanup_intervened": false,
+          "owner_explicit_keyup_failure": null,
+          "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+          "owner_release_history_complete": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "v39-executor-cancel-active-key-a01",
+            "key": "a",
+            "key_state_source": "x11_query_keymap",
+            "keycode": 38,
+            "operation": "up",
+            "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+            "owner_keymap_sampled_ns": 18633344519,
+            "owner_keyrelease_started_ns": 18633079647,
+            "owner_sync_returned_ns": 18633212617,
+            "physical_verification_authoritative": false,
+            "release_batch_initial_up_count": 1,
+            "release_batch_key_order": [
+              "a"
+            ],
+            "server_key_down_after_keyup": false,
+            "server_keyup_attempt_count": 1,
+            "server_keyup_attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 18633344519,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 18633079647,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 18633212617
+              }
+            ],
+            "server_keyup_verified": true,
+            "server_sync_completed": true,
+            "valid_until_ns": 38624025264
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_transition_verified": true,
+          "release_call_bracket_ns": 463011,
+          "release_call_returned_ns": 18633390291,
+          "release_call_started_ns": 18632927280,
+          "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 38624025264
+        }
+      ],
+      "client_window": 2097152,
+      "executor_acceptance": {
+        "accepted_ns": 18625778697,
+        "event": "accepted",
+        "id": "active-cover-v3-a01",
+        "steps": 1,
+        "valid_until_ns": 33625752304
+      },
+      "executor_active_after_terminal": false,
+      "executor_cancel_matched": true,
+      "executor_events": [
+        {
+          "accepted_ns": 18625778697,
+          "event": "accepted",
+          "id": "active-cover-v3-a01",
+          "steps": 1,
+          "valid_until_ns": 33625752304
+        },
+        {
+          "event": "step_started",
+          "id": "active-cover-v3-a01",
+          "issued_ns": 18625876201,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "event": "cancel_requested",
+          "id": "active-cover-v3-a01",
+          "matched": true,
+          "requested_ns": 18632882143
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "active-cover-v3-a01",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "owner_transitions": [
+              {
+                "cancel_requested_after_sync": false,
+                "cancel_requested_at_request": false,
+                "event": "input_release_transition",
+                "focus_invalid_at_request": false,
+                "grants_input_authority": false,
+                "intent_token": "v39-executor-cancel-active-key-a01",
+                "key": "a",
+                "lease_time_valid_at_request": true,
+                "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+                "operation": "up",
+                "ordinary_release_candidate": true,
+                "owner_cleanup_intervened": false,
+                "owner_explicit_keyup_failure": null,
+                "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+                "owner_release_history_complete": true,
+                "owner_thread_keyup_history_complete": true,
+                "owner_thread_keyup_receipt": {
+                  "cancel_requested_after_sync": false,
+                  "event": "owner_explicit_keyup",
+                  "intent_token": "v39-executor-cancel-active-key-a01",
+                  "key": "a",
+                  "key_state_source": "x11_query_keymap",
+                  "keycode": 38,
+                  "operation": "up",
+                  "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+                  "owner_keymap_sampled_ns": 18633344519,
+                  "owner_keyrelease_started_ns": 18633079647,
+                  "owner_sync_returned_ns": 18633212617,
+                  "physical_verification_authoritative": false,
+                  "release_batch_initial_up_count": 1,
+                  "release_batch_key_order": [
+                    "a"
+                  ],
+                  "server_key_down_after_keyup": false,
+                  "server_keyup_attempt_count": 1,
+                  "server_keyup_attempts": [
+                    {
+                      "attempt": 1,
+                      "keymap_after_error": null,
+                      "keymap_before_error": null,
+                      "keymap_sampled_ns": 18633344519,
+                      "keyrelease_error": null,
+                      "keyrelease_started_ns": 18633079647,
+                      "server_key_down_after": false,
+                      "server_key_down_before": true,
+                      "sync_error": null,
+                      "sync_returned_ns": 18633212617
+                    }
+                  ],
+                  "server_keyup_verified": true,
+                  "server_sync_completed": true,
+                  "valid_until_ns": 38624025264
+                },
+                "owner_thread_keyup_receipt_count": 1,
+                "owner_thread_keyup_verified": true,
+                "owner_transition_verified": true,
+                "release_call_bracket_ns": 463011,
+                "release_call_returned_ns": 18633390291,
+                "release_call_started_ns": 18632927280,
+                "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+                "transition_schema": "input-release-transition-v3",
+                "valid_until_ns": 38624025264
+              }
+            ],
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "cancelled",
+          "steps_completed": 0,
+          "terminal_ns": 18633417401
+        }
+      ],
+      "executor_terminal": {
+        "error": null,
+        "event": "terminal",
+        "id": "active-cover-v3-a01",
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "owner_transitions": [
+            {
+              "cancel_requested_after_sync": false,
+              "cancel_requested_at_request": false,
+              "event": "input_release_transition",
+              "focus_invalid_at_request": false,
+              "grants_input_authority": false,
+              "intent_token": "v39-executor-cancel-active-key-a01",
+              "key": "a",
+              "lease_time_valid_at_request": true,
+              "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+              "operation": "up",
+              "ordinary_release_candidate": true,
+              "owner_cleanup_intervened": false,
+              "owner_explicit_keyup_failure": null,
+              "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+              "owner_release_history_complete": true,
+              "owner_thread_keyup_history_complete": true,
+              "owner_thread_keyup_receipt": {
+                "cancel_requested_after_sync": false,
+                "event": "owner_explicit_keyup",
+                "intent_token": "v39-executor-cancel-active-key-a01",
+                "key": "a",
+                "key_state_source": "x11_query_keymap",
+                "keycode": 38,
+                "operation": "up",
+                "owner_id": "2054a06434424897a3fc2d8703d76cbf",
+                "owner_keymap_sampled_ns": 18633344519,
+                "owner_keyrelease_started_ns": 18633079647,
+                "owner_sync_returned_ns": 18633212617,
+                "physical_verification_authoritative": false,
+                "release_batch_initial_up_count": 1,
+                "release_batch_key_order": [
+                  "a"
+                ],
+                "server_key_down_after_keyup": false,
+                "server_keyup_attempt_count": 1,
+                "server_keyup_attempts": [
+                  {
+                    "attempt": 1,
+                    "keymap_after_error": null,
+                    "keymap_before_error": null,
+                    "keymap_sampled_ns": 18633344519,
+                    "keyrelease_error": null,
+                    "keyrelease_started_ns": 18633079647,
+                    "server_key_down_after": false,
+                    "server_key_down_before": true,
+                    "sync_error": null,
+                    "sync_returned_ns": 18633212617
+                  }
+                ],
+                "server_keyup_verified": true,
+                "server_sync_completed": true,
+                "valid_until_ns": 38624025264
+              },
+              "owner_thread_keyup_receipt_count": 1,
+              "owner_thread_keyup_verified": true,
+              "owner_transition_verified": true,
+              "release_call_bracket_ns": 463011,
+              "release_call_returned_ns": 18633390291,
+              "release_call_started_ns": 18632927280,
+              "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+              "transition_schema": "input-release-transition-v3",
+              "valid_until_ns": 38624025264
+            }
+          ],
+          "verified": true
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "cancelled",
+        "steps_completed": 0,
+        "terminal_ns": 18633417401
+      },
+      "final_admission": {
+        "action_validity": null,
+        "controller_decided_ns": 18633693665,
+        "executor_admission": null,
+        "grants_input_authority": false,
+        "input_authority_admitted": false,
+        "planner_terminal": {
+          "answer_eligible": false,
+          "status": "completed",
+          "terminal_observed_ns": 18633693664,
+          "turn_id": "planner-turn-v3-a01"
+        },
+        "policy_invalidation": {
+          "event": "paired_signal_invalidation",
+          "grants_input_authority": false,
+          "monitor_received_ns": 18632803182,
+          "outcome": {
+            "current_value": 80,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-executor-v3-a01",
+            "hard_minimum": 89,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "health",
+            "source_age_ms": 180.0,
+            "source_value": 97,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          },
+          "outcome_evaluated_ns": 18632843700,
+          "outcomes": {
+            "ammo": {
+              "current_value": 48,
+              "format": "observable-signal-guard-outcome-v1",
+              "grants_input_authority": false,
+              "guard_id": "map01-executor-v3-a01-ammo",
+              "hard_minimum": 1,
+              "keep_existing_policy": true,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "reason": "signal_unchanged",
+              "requires_new_decision": false,
+              "semantic_change_identified": false,
+              "signal_id": "ammo",
+              "source_age_ms": 180.0,
+              "source_value": 48,
+              "status": "UNCHANGED",
+              "task_success_verified": false
+            },
+            "health": {
+              "current_value": 80,
+              "format": "observable-signal-guard-outcome-v1",
+              "grants_input_authority": false,
+              "guard_id": "map01-executor-v3-a01",
+              "hard_minimum": 89,
+              "keep_existing_policy": false,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "reason": "below_hard_minimum",
+              "requires_new_decision": true,
+              "semantic_change_identified": true,
+              "signal_id": "health",
+              "source_age_ms": 180.0,
+              "source_value": 97,
+              "status": "HARD_INVALIDATED",
+              "task_success_verified": false
+            }
+          },
+          "reason": "health:below_hard_minimum",
+          "requires_new_decision": true,
+          "sequence": 3,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "focus": 2097152,
+                "geometry": [
+                  0,
+                  0,
+                  320,
+                  200
+                ],
+                "surface": 2097152
+              },
+              "capture_ns": 18158872362,
+              "format": "observable-signal-v1",
+              "sequence": 3,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 48,
+              "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+            },
+            "health": {
+              "binding": {
+                "focus": 2097152,
+                "geometry": [
+                  0,
+                  0,
+                  320,
+                  200
+                ],
+                "surface": 2097152
+              },
+              "capture_ns": 18158872362,
+              "format": "observable-signal-v1",
+              "sequence": 3,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 80,
+              "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+            }
+          }
+        },
+        "reason": "below_hard_minimum",
+        "revocation": null,
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED"
+      },
+      "key_down_after_cancel_terminal": false,
+      "key_down_when_observation_arrived": true,
+      "key_press_event": {
+        "keycode": 38,
+        "observed_ns": 18626496204,
+        "type": 2,
+        "window": 2097152
+      },
+      "key_release_event": {
+        "keycode": 38,
+        "observed_ns": 18633281253,
+        "type": 3,
+        "window": 2097152
+      },
+      "key_release_observer_started_ns": 18623805567,
+      "keycode": 38,
+      "monitor_invalidation": {
+        "event": "paired_signal_invalidation",
+        "grants_input_authority": false,
+        "monitor_received_ns": 18632803182,
+        "outcome": {
+          "current_value": 80,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-executor-v3-a01",
+          "hard_minimum": 89,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 180.0,
+          "source_value": 97,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        },
+        "outcome_evaluated_ns": 18632843700,
+        "outcomes": {
+          "ammo": {
+            "current_value": 48,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-executor-v3-a01-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "ammo",
+            "source_age_ms": 180.0,
+            "source_value": 48,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 80,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-executor-v3-a01",
+            "hard_minimum": 89,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "health",
+            "source_age_ms": 180.0,
+            "source_value": 97,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          }
+        },
+        "reason": "health:below_hard_minimum",
+        "requires_new_decision": true,
+        "sequence": 3,
+        "signals": {
+          "ammo": {
+            "binding": {
+              "focus": 2097152,
+              "geometry": [
+                0,
+                0,
+                320,
+                200
+              ],
+              "surface": 2097152
+            },
+            "capture_ns": 18158872362,
+            "format": "observable-signal-v1",
+            "sequence": 3,
+            "signal_id": "ammo",
+            "status": "observed",
+            "value": 48,
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "health": {
+            "binding": {
+              "focus": 2097152,
+              "geometry": [
+                0,
+                0,
+                320,
+                200
+              ],
+              "surface": 2097152
+            },
+            "capture_ns": 18158872362,
+            "format": "observable-signal-v1",
+            "sequence": 3,
+            "signal_id": "health",
+            "status": "observed",
+            "value": 80,
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          }
+        }
+      },
+      "owner_close_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "v39-executor-cancel-active-key-a01",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 38624025264,
+        "verified": true,
+        "verified_ns": 18634228365
+      },
+      "owner_closed": true,
+      "owner_stopped": true,
+      "owner_thread_alive": false,
+      "planner_answer_eligible": false,
+      "planner_cancellation_requested": true,
+      "planner_events": [
+        "planner_turn_started",
+        "fresh_typed_observation_during_pending_turn",
+        "paired_policy_invalidated",
+        "planner_interrupt_transport_called",
+        "executor_terminal_before_planner_wait_return"
+      ],
+      "planner_interrupt_result": {
+        "outcome": "requested",
+        "response": {
+          "turn": {
+            "status": "interrupt_requested"
+          }
+        }
+      },
+      "xvfb_key_up_after_terminal": true
+    }
+  },
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "display": ":136",
+  "errors": [],
+  "input_pair": {
+    "binding_rebased_to_xvfb_window": {
+      "focus": 2097152,
+      "geometry": [
+        0,
+        0,
+        320,
+        200
+      ],
+      "surface": 2097152
+    },
+    "current_health_ammo": [
+      80,
+      48
+    ],
+    "current_png_sha256": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+    "current_sequence": 3,
+    "source_health_ammo": [
+      97,
+      48
+    ],
+    "source_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+    "source_sequence": 2
+  },
+  "schema": "v39-executor-cancel-active-key-xvfb-raw-a01-v1",
+  "scope": "current V39 hard-signal invalidation to production Executor V3 cancel and actual Xvfb owner release; no game/model/physical input",
+  "status": "CANDIDATE_COMPLETE"
+}

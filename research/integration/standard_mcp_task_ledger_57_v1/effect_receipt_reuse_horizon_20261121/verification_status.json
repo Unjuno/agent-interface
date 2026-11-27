@@ -1,0 +1,70 @@
+{
+  "status": "PASS_LOCAL_SYNTHETIC_COMPOSITION",
+  "base_commit": "a8402e9d8f74284e0bafd0aff3b55702f3dc4089",
+  "test_results": {
+    "composition_only": {
+      "normal": {
+        "tests": 3,
+        "exit_code": 0
+      },
+      "optimized": {
+        "tests": 3,
+        "exit_code": 0
+      }
+    },
+    "combined": {
+      "suites": [
+        "test_effect_receipt_handoff_v1",
+        "test_comparison_measurement_v1",
+        "test_effect_receipt_reuse_horizon_integration_v1"
+      ],
+      "normal": {
+        "tests": 33,
+        "exit_code": 0
+      },
+      "optimized": {
+        "tests": 33,
+        "exit_code": 0
+      }
+    }
+  },
+  "environment_resolution": {
+    "initial_failure": "Windows tempfile._get_default_tempdir blocked while probing inherited default TEMP",
+    "traceback": "raw-hang-traceback.txt shows tempfile.py _get_default_tempdir called by EffectReceiptHandoffTests.setUp",
+    "remedy": "run_local_tests.py creates a unique temporary directory under the isolated worktree, sets TEMP/TMP/TMPDIR before importing test modules, and cleans it after the run",
+    "retest": "both full 33-test runs passed with identical explicit temporary directory policy"
+  },
+  "initial_timeouts": "Several default-TEMP test invocations timed out and are preserved as raw records; explicit worktree-local TEMP runs supersede them.",
+  "claim_limits": [
+    "corrected normal-mode timely pilot reports correctness-qualified break-even at task index 2 for A and B; receipt task identity is bound before adaptation",
+    "synthetic/offline fixtures only",
+    "three integrated cases are asserted by test suite: timely effect qualifies at index 2; post-horizon effect preserves factual success and token break-even at index 2 but no correctness-qualified break-even; unknown timing preserves factual success and token break-even at index 2 but no correctness-qualified break-even",
+    "no live GUI/provider or real user task result",
+    "does not establish general runtime efficiency, speed, reliability, distribution readiness, or preview graduation"
+  ],
+  "validated_pilot": {
+    "command": "python -u pilot.py",
+    "exit_code": 0,
+    "output": {
+      "correctness_qualified_token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      }
+    },
+    "receipt_task_id_bound_before_adapter": true
+  },
+  "superseded_evidence": [
+    {
+      "file": "raw-pilot-normal-pre-correction.txt",
+      "reason": "The earlier pilot changed the C-arm task id after adapter receipt verification, leaving the retained receipt task_id inconsistent with the final measured run. It is retained as history and excluded from the accepted result."
+    }
+  ],
+  "python_version": "3.11.9",
+  "integration": {
+    "pull_request": 10396,
+    "merge_commit": "2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb",
+    "issue": "https://github.com/Unjuno/agent-interface/issues/57",
+    "issue_comment_id": 7061548603,
+    "issue_status": "open"
+  }
+}

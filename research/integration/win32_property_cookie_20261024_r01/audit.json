@@ -1,0 +1,45 @@
+{
+  "schema": "win32-cross-process-window-property-audit-v1",
+  "attempt_id": "win32-property-cookie-20261024-r01",
+  "status": "CROSS_PROCESS_PROPERTY_WORKS_NO_REUSE_OBSERVED",
+  "checks": [
+    {
+      "check": "attempt_and_source_match",
+      "passed": true
+    },
+    {
+      "check": "no_input_or_activation",
+      "passed": true
+    },
+    {
+      "check": "spawned_window_pid_matches",
+      "passed": true
+    },
+    {
+      "check": "production_owner_identity_matches_child",
+      "passed": true
+    },
+    {
+      "check": "setprop_readback_succeeded",
+      "passed": true
+    },
+    {
+      "check": "destroy_confirmed",
+      "passed": true
+    },
+    {
+      "check": "same_process_and_thread_recreated",
+      "passed": true
+    },
+    {
+      "check": "status_matches_observed_reuse",
+      "passed": true
+    },
+    {
+      "check": "child_clean_exit",
+      "passed": true
+    }
+  ],
+  "passed": 9,
+  "total": 9
+}

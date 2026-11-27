@@ -50,18 +50,66 @@ input runtime and independent exact-token scorer, and keeps the frozen compariso
 sources unchanged.
 
 ```bash
-./runtime/setup-golden-demo-v3.sh
+./runtime/setup-golden-demo-v3.sh --install-dependencies
 ./runtime/golden-demo-v3.sh doctor
 ./runtime/golden-demo-v3.sh audit-retained
-./runtime/golden-demo-v3.sh run
-./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
+agent_golden_run="$HOME/agent-interface-runs/golden-$(date -u +%Y%m%dT%H%M%SZ)-$$"
+./runtime/golden-demo-v3.sh run --out "$agent_golden_run"
+./runtime/golden-demo-v3.sh audit-live "$agent_golden_run"
 ```
 
-The setup script creates `runtime/.venv`, installs the nine pinned distributions in
-`requirements-golden.txt`, and runs the fifteen-check v3 `doctor`. It does not install Chrome or
-Codex; missing external executables remain explicit doctor failures.
+The example puts output in the Linux filesystem even if the source checkout is
+under `/mnt/c`; the output directory must be new and the runner will not reuse
+it. This can avoid cross-filesystem I/O delays during bounded GUI waits, but is
+not a guarantee that the demo will pass. A failed run remains evidence; inspect
+its terminal and release records before choosing a new attempt. The default
+without `--out` remains `artifacts-local/` under the checkout.
+### Runtime acquisition, dependency preparation, and model access are separate
+
+**Nothing is downloaded or installed merely by reading this guide or invoking a setup
+script without its explicit flag.** A user who wants a runnable runtime must first
+choose and explicitly perform one of these acquisition paths: check out the source,
+build the portable archive locally, or retrieve a platform artifact produced by CI.
+There is no supported command that silently downloads and installs a runtime package.
+The setup scripts below do not perform any of those runtime-acquisition steps.
+
+Nothing in the setup path implicitly acquires the runtime package or model weights. The setup
+flag authorizes only creation of `runtime/.venv`, download and installation of the pinned Python
+dependencies, and the following local `doctor` check. It does not authorize a checkout, portable
+runtime artifact retrieval, model/provider setup, GUI application install, Codex install, or image
+pull. Treat each as its own explicit action:
+
+| Action | Current path | What it acquires |
+|---|---|---|
+| Get runtime source | Explicitly clone/checkout the repository and chosen revision. | Source files only; no model weights or provider setup. |
+| Build the portable runtime | Explicitly run `python -m runtime.distribution_v2.build` with output paths. | A local `.pyz` plus manifest/checksum; this build reads committed source and performs no network acquisition. |
+| Retrieve a built runtime | Explicitly retrieve the `portable-runtime-<platform>` CI artifact and place it where intended. | A `.pyz` artifact; CI artifacts are not a release, and setup does not retrieve or install them. |
+| Prepare golden-demo Python dependencies | Explicitly pass `--install-dependencies` to the setup script. | Creates `runtime/.venv`, installs the nine pinned distributions from `requirements-golden.txt`, then runs the local fifteen-check v3 `doctor`. This does not get or install the runtime package. |
+| Use a model/provider | Use the existing Windows Codex installation and its separately configured authorization. | The bridge invokes that provider path; it does not download model weights or install/configure the provider. |
+| Install an external GUI application | Install it separately if needed. | Setup/doctor checks for Chromium and the Codex CLI bridge; it does not install them. |
+| Pull a container image | Explicitly select and pull the required image in the container workflow. | Golden-demo setup does not pull images or start containers. |
+
+There is currently no supported one-command runtime-package download/install flow or downloadable
+runtime release in this research-preview path. The CI workflow only builds and uploads artifacts;
+retrieving and placing one is a separate user action. The v3 setup script implements only the
+dependency-install action above. Missing external executables remain explicit `doctor` failures.
+
+This is also the boundary for any future installer: acquiring or installing the Agent Interface
+runtime must be a separately named, affirmative user action. Model/provider setup and Python
+dependency preparation must remain separate choices; selecting either must not implicitly download
+or install the runtime package. A combined first-run flow is acceptable only when each acquisition
+is independently disclosed and selected before it starts.
 
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
+
+The retained comparison and its independent recount include byte-pinned files.
+The repository attributes preserve those bytes in new checkouts even when Git
+is configured to convert line endings. Existing checkouts may still contain
+previously converted files; use a fresh checkout with the current attributes
+rather than editing retained evidence. A provenance audit that checks commit
+ancestry also needs enough Git history to verify the pinned commit; a shallow
+checkout may be unable to prove that relation.
+
 `audit-retained` verifies source hashes and the published fixed comparison without
 making a model call or opening a GUI. `run` creates a new timestamped directory
 under the ignored `artifacts-local/` directory, performs a fresh schema preflight, then runs only the
@@ -71,6 +119,12 @@ run and performs no automatic retry.
 `audit-live` recomputes call accounting, exact submissions, the stale-reference
 refusal, repair, and every terminal input release from the retained raw records.
 
+To explicitly select a model available through your configured Codex provider,
+add `--model MODEL_ID` to the v3 `run` command. The selected ID is used for
+both the fresh schema preflight and grounding, and the live audit checks that
+they match; the default remains `gpt-5.6-luna` at low reasoning effort. A
+model listing does not guarantee that a particular schema or image task will
+succeed, and a failed preflight does not authorize GUI input.
 The current task-grounding bridge uses two turns on one capability-minimized
 Codex app-server thread.  The schema preflight remains a separate compatibility
 call.  The first frozen v3 run completes 6/6 exact tasks with zero stale pointer
@@ -87,6 +141,13 @@ export AGENT_INTERFACE_WINDOWS_CODEX_JS=/mnt/c/Users/you/AppData/Roaming/npm/nod
 export AGENT_INTERFACE_CHROMIUM=/usr/bin/google-chrome
 ```
 
+For an existing native Windows Codex executable instead of the Node entrypoint,
+set `AGENT_INTERFACE_WINDOWS_CODEX_EXE` to its absolute WSL `/mnt/c/.../codex.exe`
+path. The native path takes precedence over the Node/JS pair and uses the
+separately configured `CODEX_HOME`; it does not install or authenticate Codex.
+When a user service launches the demo, Windows interop must also be available in
+that service for its whole lifetime. Run `doctor` in the same environment as
+`run` to check this before making a model call.
 This is a Research Preview path. A fresh persistent-only run checks mechanics and
 correctness; it does not reproduce the three-arm efficiency comparison or prove
 human-level speed and general GUI reliability.
@@ -107,3 +168,58 @@ changed-state refusals and explicit recovery. The direct route returned all six 
 cues through optional post-release capture. Extra observations, preview failures and
 the prior input-free STOP remain recorded. Provider model/settings, useful feedback,
 semantic latency, tokens/cost and human-tempo benefit remain unverified.
+
+## Runtime acquisition and consent boundaries
+
+Agent Interface does not automatically download or install its runtime, model
+weights, GUI applications, or container images. Each acquisition or execution
+is a separate user action. A command that prepares one category does not grant
+consent for another.
+
+| Action | What it does | What it does not do |
+|---|---|---|
+| Clone/fetch this repository | Downloads source files when the user runs Git. | Does not install the runtime, Python dependencies, model weights, applications, or containers. |
+| Build the portable runtime | `python -m runtime.distribution_v2.build` writes a `.pyz`, manifest, and checksum locally from committed source. | Does not download an artifact, install it, install backend dependencies, publish a release, or contact a model provider. See [`distribution_v2/README.md`](distribution_v2/README.md). |
+| Install runtime Python dependencies | A user-run `pip install` or the golden-demo opt-in downloads packages from configured indexes and executes package installation code. | Does not download Agent Interface source/runtime as a separate package, model weights, Chrome/Codex, or a container image. |
+| Download a runtime package | Requires a separate, explicit user action naming the package source and destination. Verify the artifact and checksum before running it. | No automatic runtime-package downloader is provided by the repository setup scripts. |
+| Run a model/provider-backed demonstration | Requires its own explicit invocation and configured provider/client. It may send prompts/images to a provider and may consume account quota. | Is not authorized by source checkout, runtime build, or Python dependency installation. The runtime setup scripts do not download model weights. |
+| Install a GUI application or acquire a container image | Requires a separate explicit install/pull action and target-specific review. | Is not authorized by any runtime/dependency setup option. |
+
+The GitHub Release assets currently describe research snapshots, not the
+portable runnable runtime package. Inspect a release's asset names and
+checksums before treating it as an installable runtime. A source archive is
+not a runtime installer.
+
+[`setup-golden-demo.sh`](setup-golden-demo.sh) and
+[`setup-golden-demo-v3.sh`](setup-golden-demo-v3.sh) require the explicit
+`--install-dependencies` argument. That option creates `runtime/.venv` and
+installs the pinned packages in [`requirements-golden.txt`](requirements-golden.txt),
+then runs the local `doctor` command. It does not execute the demo's `run`
+command or make a model/provider call. Without the exact option, each script
+exits before creating the environment or contacting the package index.
+
+There is no repository-wide `research/requirements.txt` on current main.
+Research experiments may have their own dependency files and setup instructions;
+review those instructions and the configured package index before a user-run
+package installation. Such a command prepares only that experiment's environment.
+
+To build the `.pyz` from a checkout, use the documented local builder:
+
+```sh
+python -m runtime.distribution_v2.build \
+  --out results-local/my-runtime/agent-interface-runtime.pyz \
+  --manifest results-local/my-runtime/manifest.json \
+  --sums results-local/my-runtime/sha256.txt
+```
+
+This is a local build from committed source; it is not a package download or
+installation. Running the archive is another explicit user action and requires
+the selected Python/backend dependencies to already be available. See the
+[portable runtime guide](distribution_v2/README.md) and
+[CLI guide](cli_v1/README.md) for supported commands and runtime limits.
+
+Keep setup commands narrow and fail closed when an acquisition scope is
+ambiguous. Before adding an automatic package, model, application, or image
+download, expose it as a separate explicit option with its source, destination,
+version/checksum, and side effects. Never infer authorization for a runtime
+download from model setup, or model/provider use from runtime setup.

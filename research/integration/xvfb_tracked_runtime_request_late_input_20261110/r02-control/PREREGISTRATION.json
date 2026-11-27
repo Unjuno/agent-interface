@@ -1,0 +1,19 @@
+{
+  "allocation": "local-cached-image-construction-r02-control-20261110",
+  "comparison": "Sequential one-attempt control; same source, container image, Xvfb geometry, cancellation bounds, and task procedure as r01. Not randomized or a performance comparison.",
+  "condition": {
+    "delay_ms": 8000,
+    "fixture_direct_delayed_key": "b",
+    "runtime_key": "a",
+    "tracked_delayed_second_press": false
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "schema": "agent-interface/xvfb-direct-injection-control-prereg-v1",
+  "scope_limit": "Private Xvfb/synthetic app only; direct fixture injection, not a runtime-issued/tracked request.",
+  "source_sha256": "85eff51e95895284784daa49b06b33257b562b9b9d63210cd93ec9197bdc9716",
+  "stop_rule": "one attempt; retain all output; no retry.",
+  "working_diff_sha256": "dd0738f0614883327ecf8cf83f5578c520800e179cf08963d19a8716b642b6a6"
+}

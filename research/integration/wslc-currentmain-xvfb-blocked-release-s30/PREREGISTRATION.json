@@ -1,0 +1,24 @@
+{
+  "schema": "agent-interface/wslc-s30-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s30-a57146d1c900",
+  "preregistered_utc": "2026-10-25T10:55:28.260Z",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "question": "On a distinct fresh WSLc session, does the current-main standard-caller private-Xvfb 3935 ms condition reproduce S29's bounded release, independent neutral readback, and task-effect results?",
+  "session_name": "agent-interface-wslc-s30-a57146d1c900",
+  "container_name": "ai-control-wslc-s30-a57146d1c900",
+  "runtime": "WSLc 3.0.3 fresh named session; no shared session/container inventory",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "source_input": "current-main runtime archive at the frozen commit; SHA-256 and test/server file hashes recorded before run",
+  "execution": "one run; no retry; session-scoped exact-container-name preflight; exact generated-container cleanup only",
+  "host_authority": "User explicitly confirmed this Windows PC may be used for WSLc experiments in this turn.",
+  "decision_rule": "PASS_SCOPED only if initial and fresh-generation task oracles pass; old canceled call remains UNKNOWN/replay-denied/task_success=null; release receipt <=4000 ms; separate all-up readback <=5000 ms; delayed horizon >=8500 ms remains all-up; test exits zero; exact container, image and session cleanup are confirmed.",
+  "failure_rule": "A bound miss after task input is FAIL. A setup failure before trial-started is HOLD and is not retried. A timeout or incomplete cleanup is UNKNOWN/HOLD with all receipts retained.",
+  "limitations": [
+    "one synthetic private-Xvfb replicate",
+    "not physical Windows input",
+    "not MAP01 or a live application",
+    "not a reliability estimate or stable threshold",
+    "not model/provider economics",
+    "does not resolve unrelated pre-existing WSLc ownership"
+  ]
+}

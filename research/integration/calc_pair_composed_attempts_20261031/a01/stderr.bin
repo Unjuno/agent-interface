@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/in/runner.py", line 37, in <module>
+    entry=b.mint_reference('entry',obs['sequence'],[80,150],region_size=(20,10));save=b.mint_reference('sheet',obs['sequence'],[440,28],region_size=(30,14))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/bridge.py", line 470, in mint_reference
+    result = self.store.mint(alias, "window_content", box, observation, image,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/handles.py", line 24, in mint
+    result = super().mint(
+             ^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/handles_texture.py", line 23, in mint
+    raise FlatTargetRefused("visually flat target region refused")
+runtime.guarded_x11_v1.handles_texture.FlatTargetRefused: visually flat target region refused

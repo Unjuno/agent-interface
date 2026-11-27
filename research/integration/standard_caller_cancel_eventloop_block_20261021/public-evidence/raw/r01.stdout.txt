@@ -1,0 +1,43 @@
+Traceback (most recent call last):
+  File "<LOCAL_WINDOWS_PATH>", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\cancel-eventloop-fakex-0c0fd_n_\\886001819d1041c493e2c2f89220467a\\.report.json.tmp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<LOCAL_WINDOWS_PATH>", line 182, in <module>
+    main()
+  File "<LOCAL_WINDOWS_PATH>", line 171, in main
+    result = asyncio.run(run())
+             ^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 133, in run
+    rows.append(await _one_trial(
+                ^^^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 35, in _one_trial
+    with tempfile.TemporaryDirectory(prefix="cancel-eventloop-fakex-") as temp:
+  File "<LOCAL_WINDOWS_PATH>", line 943, in __exit__
+    self.cleanup()
+  File "<LOCAL_WINDOWS_PATH>", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "<LOCAL_WINDOWS_PATH>", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "<LOCAL_WINDOWS_PATH>", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_WINDOWS_PATH>", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "<LOCAL_WINDOWS_PATH>", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "<LOCAL_WINDOWS_PATH>", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\cancel-eventloop-fakex-0c0fd_n_\\886001819d1041c493e2c2f89220467a\\.report.json.tmp'

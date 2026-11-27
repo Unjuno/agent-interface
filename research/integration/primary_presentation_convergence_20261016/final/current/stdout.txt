@@ -1,0 +1,766 @@
+TAP version 13
+# Subtest: malformed delivered envelope prevents a second effectful host call
+ok 1 - malformed delivered envelope prevents a second effectful host call
+  ---
+  duration_ms: 1.5114
+  type: 'test'
+  ...
+# Subtest: ordinary free-text MCP error returns original evidence and stops later input
+ok 2 - ordinary free-text MCP error returns original evidence and stops later input
+  ---
+  duration_ms: 0.1511
+  type: 'test'
+  ...
+# Subtest: missing text stops before the primary can send another call
+ok 3 - missing text stops before the primary can send another call
+  ---
+  duration_ms: 0.1323
+  type: 'test'
+  ...
+# Subtest: non-JSON text stops before the primary can send another call
+ok 4 - non-JSON text stops before the primary can send another call
+  ---
+  duration_ms: 0.0972
+  type: 'test'
+  ...
+# Subtest: null JSON stops before the primary can send another call
+ok 5 - null JSON stops before the primary can send another call
+  ---
+  duration_ms: 0.1351
+  type: 'test'
+  ...
+# Subtest: array JSON stops before the primary can send another call
+ok 6 - array JSON stops before the primary can send another call
+  ---
+  duration_ms: 0.1385
+  type: 'test'
+  ...
+# Subtest: extraction preserves the original exception and latches before propagation
+ok 7 - extraction preserves the original exception and latches before propagation
+  ---
+  duration_ms: 0.1357
+  type: 'test'
+  ...
+# Subtest: transport rejection preserves its exception and blocks later dispatch
+ok 8 - transport rejection preserves its exception and blocks later dispatch
+  ---
+  duration_ms: 0.1706
+  type: 'test'
+  ...
+# Subtest: fresh guarded observation uses the same no-target call as initial observation
+ok 9 - fresh guarded observation uses the same no-target call as initial observation
+  ---
+  duration_ms: 0.5099
+  type: 'test'
+  ...
+# Subtest: fresh observation rejects accidental per-call arguments before host dispatch
+ok 10 - fresh observation rejects accidental per-call arguments before host dispatch
+  ---
+  duration_ms: 0.1937
+  type: 'test'
+  ...
+# Subtest: explicit observation budget covers helper and raw tool calls before dispatch
+ok 11 - explicit observation budget covers helper and raw tool calls before dispatch
+  ---
+  duration_ms: 0.2612
+  type: 'test'
+  ...
+# Subtest: zero observation budget refuses first direct capture before host dispatch
+ok 12 - zero observation budget refuses first direct capture before host dispatch
+  ---
+  duration_ms: 0.1339
+  type: 'test'
+  ...
+# Subtest: invalid explicit observation budget -1 is rejected at construction
+ok 13 - invalid explicit observation budget -1 is rejected at construction
+  ---
+  duration_ms: 0.0794
+  type: 'test'
+  ...
+# Subtest: invalid explicit observation budget 1.5 is rejected at construction
+ok 14 - invalid explicit observation budget 1.5 is rejected at construction
+  ---
+  duration_ms: 0.0365
+  type: 'test'
+  ...
+# Subtest: invalid explicit observation budget 9007199254740992 is rejected at construction
+ok 15 - invalid explicit observation budget 9007199254740992 is rejected at construction
+  ---
+  duration_ms: 0.028
+  type: 'test'
+  ...
+# Subtest: invalid explicit observation budget null is rejected at construction
+ok 16 - invalid explicit observation budget null is rejected at construction
+  ---
+  duration_ms: 0.029
+  type: 'test'
+  ...
+# Subtest: direct observation preserves the explicit snapshotted observation configuration
+ok 17 - direct observation preserves the explicit snapshotted observation configuration
+  ---
+  duration_ms: 0.12
+  type: 'test'
+  ...
+# Subtest: a completed neutral direct result returns unchanged and permits the next call
+ok 18 - a completed neutral direct result returns unchanged and permits the next call
+  ---
+  duration_ms: 0.1237
+  type: 'test'
+  ...
+# Subtest: an exception during neutral-release validation blocks later input
+ok 19 - an exception during neutral-release validation blocks later input
+  ---
+  duration_ms: 0.2121
+  type: 'test'
+  ...
+# Subtest: malformed neutral-release keys_down value latches STOP before another input
+ok 20 - malformed neutral-release keys_down value latches STOP before another input
+  ---
+  duration_ms: 0.1368
+  type: 'test'
+  ...
+# Subtest: malformed neutral-release buttons_down value latches STOP before another input
+ok 21 - malformed neutral-release buttons_down value latches STOP before another input
+  ---
+  duration_ms: 0.052
+  type: 'test'
+  ...
+# Subtest: real host text-only declared refusal is presented and acknowledged without stopping
+ok 22 - real host text-only declared refusal is presented and acknowledged without stopping
+  ---
+  duration_ms: 60.795
+  type: 'test'
+  ...
+# Subtest: explicit input feedback matched retains evidence and enforces STOP
+ok 23 - explicit input feedback matched retains evidence and enforces STOP
+  ---
+  duration_ms: 0.207
+  type: 'test'
+  ...
+# Subtest: explicit input feedback pending retains evidence and enforces STOP
+ok 24 - explicit input feedback pending retains evidence and enforces STOP
+  ---
+  duration_ms: 0.0793
+  type: 'test'
+  ...
+# Subtest: explicit input feedback rejected retains evidence and enforces STOP
+ok 25 - explicit input feedback rejected retains evidence and enforces STOP
+  ---
+  duration_ms: 0.0488
+  type: 'test'
+  ...
+# Subtest: explicit input feedback needs_review retains evidence and enforces STOP
+ok 26 - explicit input feedback needs_review retains evidence and enforces STOP
+  ---
+  duration_ms: 0.0512
+  type: 'test'
+  ...
+# Subtest: original presentation resends only retained bytes even after primary STOP
+ok 27 - original presentation resends only retained bytes even after primary STOP
+  ---
+  duration_ms: 43.9454
+  type: 'test'
+  ...
+# Subtest: original presentation snapshots sinks and preserves the host exception
+ok 28 - original presentation snapshots sinks and preserves the host exception
+  ---
+  duration_ms: 0.2771
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: []
+ok 29 - original presentation rejects invalid arguments before host: []
+  ---
+  duration_ms: 0.0883
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [0]
+ok 30 - original presentation rejects invalid arguments before host: [0]
+  ---
+  duration_ms: 0.0422
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [1.5]
+ok 31 - original presentation rejects invalid arguments before host: [1.5]
+  ---
+  duration_ms: 0.0305
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: ["1"]
+ok 32 - original presentation rejects invalid arguments before host: ["1"]
+  ---
+  duration_ms: 0.0287
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [1,{"forceImage":false}]
+ok 33 - original presentation rejects invalid arguments before host: [1,{"forceImage":false}]
+  ---
+  duration_ms: 0.0258
+  type: 'test'
+  ...
+# Subtest: missing original presentation sinks refuse before the host
+ok 34 - missing original presentation sinks refuse before the host
+  ---
+  duration_ms: 0.0491
+  type: 'test'
+  ...
+# Subtest: original presentation fails closed on unknown-attempt without another relay request
+ok 35 - original presentation fails closed on unknown-attempt without another relay request
+  ---
+  duration_ms: 42.4307
+  type: 'test'
+  ...
+# Subtest: original presentation fails closed on changed-reply without another relay request
+ok 36 - original presentation fails closed on changed-reply without another relay request
+  ---
+  duration_ms: 42.3369
+  type: 'test'
+  ...
+# Subtest: original presentation sink getter failure stops before dispatch and preserves its exception
+ok 37 - original presentation sink getter failure stops before dispatch and preserves its exception
+  ---
+  duration_ms: 0.2566
+  type: 'test'
+  ...
+# Subtest: direct primary forwards one explicit interface_inspect_target without following its result
+ok 38 - direct primary forwards one explicit interface_inspect_target without following its result
+  ---
+  duration_ms: 0.1172
+  type: 'test'
+  ...
+# Subtest: direct primary forwards one explicit interface_review_target without following its result
+ok 39 - direct primary forwards one explicit interface_review_target without following its result
+  ---
+  duration_ms: 0.0358
+  type: 'test'
+  ...
+# Subtest: direct primary returns failed target selection once and blocks inspection/review retry
+ok 40 - direct primary returns failed target selection once and blocks inspection/review retry
+  ---
+  duration_ms: 0.1072
+  type: 'test'
+  ...
+# Subtest: guarded primary rejects persistent target tools locally
+ok 41 - guarded primary rejects persistent target tools locally
+  ---
+  duration_ms: 0.0624
+  type: 'test'
+  ...
+# Subtest: retained uncertain relay response returns unchanged and stops subsequent dispatch
+ok 42 - retained uncertain relay response returns unchanged and stops subsequent dispatch
+  ---
+  duration_ms: 0.1098
+  type: 'test'
+  ...
+# Subtest: one command preserves original text and bytes, with exclusive source-bound files
+ok 43 - one command preserves original text and bytes, with exclusive source-bound files
+  ---
+  duration_ms: 11.1263
+  type: 'test'
+  ...
+# Subtest: overlap refuses instead of queuing and snapshots the original arguments
+ok 44 - overlap refuses instead of queuing and snapshots the original arguments
+  ---
+  duration_ms: 2.116
+  type: 'test'
+  ...
+# Subtest: request persistence failure invokes no operation and permits only explicit close
+ok 45 - request persistence failure invokes no operation and permits only explicit close
+  ---
+  duration_ms: 2.3564
+  type: 'test'
+  ...
+# Subtest: reply persistence failure retains one effect and blocks replay
+ok 46 - reply persistence failure retains one effect and blocks replay
+  ---
+  duration_ms: 1.2172
+  type: 'test'
+  ...
+# Subtest: presentation persistence failure retains original reply and blocks another command
+ok 47 - presentation persistence failure retains original reply and blocks another command
+  ---
+  duration_ms: 2.5921
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"close","args":[]}
+ok 48 - invalid envelope is rejected before host or file publication: {"id":1,"method":"close","args":[]}
+  ---
+  duration_ms: 0.8938
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[],"extra":true}
+ok 49 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[],"extra":true}
+  ---
+  duration_ms: 0.5413
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+ok 50 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+  ---
+  duration_ms: 0.5022
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+ok 51 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+  ---
+  duration_ms: 0.5231
+  type: 'test'
+  ...
+# Subtest: unknown route refuses before allocating a directory
+ok 52 - unknown route refuses before allocating a directory
+  ---
+  duration_ms: 1.7537
+  type: 'test'
+  ...
+# Subtest: image write failure stops without a repeated native call or an implicit review
+ok 53 - image write failure stops without a repeated native call or an implicit review
+  ---
+  duration_ms: 2.0576
+  type: 'test'
+  ...
+# Subtest: original presentation is explicit and adds no new host send or review
+ok 54 - original presentation is explicit and adds no new host send or review
+  ---
+  duration_ms: 4.0304
+  type: 'test'
+  ...
+# Subtest: guarded-local presentation retains one file effect, stops resend, permits explicit close
+ok 55 - guarded-local presentation retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 20.8044
+  type: 'test'
+  ...
+# Subtest: guarded-local partial-effect retains one file effect, stops resend, permits explicit close
+ok 56 - guarded-local partial-effect retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 10.01
+  type: 'test'
+  ...
+# Subtest: direct-post presentation retains one file effect, stops resend, permits explicit close
+ok 57 - direct-post presentation retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 9.6305
+  type: 'test'
+  ...
+# Subtest: direct-post partial-effect retains one file effect, stops resend, permits explicit close
+ok 58 - direct-post partial-effect retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 5.3249
+  type: 'test'
+  ...
+# Subtest: explicit positional input preserves offset, tail, and original response
+ok 59 - explicit positional input preserves offset, tail, and original response
+  ---
+  duration_ms: 1.6909
+  type: 'test'
+  ...
+# Subtest: missing offset fails before dispatch and prevents corrected replay
+ok 60 - missing offset fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.4481
+  type: 'test'
+  ...
+# Subtest: object instead of positional arguments fails before dispatch and prevents corrected replay
+ok 61 - object instead of positional arguments fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.136
+  type: 'test'
+  ...
+# Subtest: fractional offset fails before dispatch and prevents corrected replay
+ok 62 - fractional offset fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.1152
+  type: 'test'
+  ...
+# Subtest: missing tail fails before dispatch and prevents corrected replay
+ok 63 - missing tail fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.1523
+  type: 'test'
+  ...
+# Subtest: invalid interaction fails before dispatch and prevents corrected replay
+ok 64 - invalid interaction fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.1252
+  type: 'test'
+  ...
+# Subtest: extra argument fails before dispatch and prevents corrected replay
+ok 65 - extra argument fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.1584
+  type: 'test'
+  ...
+# Subtest: direct caller cannot dispatch guarded positional input
+ok 66 - direct caller cannot dispatch guarded positional input
+  ---
+  duration_ms: 0.1304
+  type: 'test'
+  ...
+# Subtest: uncloneable tail stops before dispatch and cannot be retried
+ok 67 - uncloneable tail stops before dispatch and cannot be retried
+  ---
+  duration_ms: 0.877
+  type: 'test'
+  ...
+# Subtest: explicit inputWithFeedback snapshots the policy and retains original reply
+ok 68 - explicit inputWithFeedback snapshots the policy and retains original reply
+  ---
+  duration_ms: 0.4193
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback null stops before host dispatch
+ok 69 - invalid explicit feedback null stops before host dispatch
+  ---
+  duration_ms: 0.1318
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {} stops before host dispatch
+ok 70 - invalid explicit feedback {} stops before host dispatch
+  ---
+  duration_ms: 0.0696
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":""} stops before host dispatch
+ok 71 - invalid explicit feedback {"expected_title":""} stops before host dispatch
+  ---
+  duration_ms: 0.0622
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","timeout_ms":10001} stops before host dispatch
+ok 72 - invalid explicit feedback {"expected_title":"saved","timeout_ms":10001} stops before host dispatch
+  ---
+  duration_ms: 0.0547
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","timeout_ms":1.5} stops before host dispatch
+ok 73 - invalid explicit feedback {"expected_title":"saved","timeout_ms":1.5} stops before host dispatch
+  ---
+  duration_ms: 0.0555
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","rejected_titles":["saved"]} stops before host dispatch
+ok 74 - invalid explicit feedback {"expected_title":"saved","rejected_titles":["saved"]} stops before host dispatch
+  ---
+  duration_ms: 0.0469
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","rejected_titles":[null]} stops before host dispatch
+ok 75 - invalid explicit feedback {"expected_title":"saved","rejected_titles":[null]} stops before host dispatch
+  ---
+  duration_ms: 0.0497
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","extra":true} stops before host dispatch
+ok 76 - invalid explicit feedback {"expected_title":"saved","extra":true} stops before host dispatch
+  ---
+  duration_ms: 0.0509
+  type: 'test'
+  ...
+# Subtest: missing requested cue cannot pass through a completed input reply
+ok 77 - missing requested cue cannot pass through a completed input reply
+  ---
+  duration_ms: 0.1353
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue title preserves reply and stops next input
+ok 78 - inconsistent requested cue title preserves reply and stops next input
+  ---
+  duration_ms: 0.1746
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue after_title preserves reply and stops next input
+ok 79 - inconsistent requested cue after_title preserves reply and stops next input
+  ---
+  duration_ms: 0.0851
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue expected_title preserves reply and stops next input
+ok 80 - inconsistent requested cue expected_title preserves reply and stops next input
+  ---
+  duration_ms: 0.0689
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue rejected_titles preserves reply and stops next input
+ok 81 - inconsistent requested cue rejected_titles preserves reply and stops next input
+  ---
+  duration_ms: 0.0581
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue authority_granted preserves reply and stops next input
+ok 82 - inconsistent requested cue authority_granted preserves reply and stops next input
+  ---
+  duration_ms: 0.0815
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue input_dispatched preserves reply and stops next input
+ok 83 - inconsistent requested cue input_dispatched preserves reply and stops next input
+  ---
+  duration_ms: 0.0705
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue task_success preserves reply and stops next input
+ok 84 - inconsistent requested cue task_success preserves reply and stops next input
+  ---
+  duration_ms: 0.0627
+  type: 'test'
+  ...
+# Subtest: uncloneable feedback policy stops before dispatch
+ok 85 - uncloneable feedback policy stops before dispatch
+  ---
+  duration_ms: 0.1215
+  type: 'test'
+  ...
+# Subtest: positional mint sends exactly the public schema and preserves original result
+ok 86 - positional mint sends exactly the public schema and preserves original result
+  ---
+  duration_ms: 1.698
+  type: 'test'
+  ...
+# Subtest: missing size stops before any host request
+ok 87 - missing size stops before any host request
+  ---
+  duration_ms: 0.3868
+  type: 'test'
+  ...
+# Subtest: extra argument stops before any host request
+ok 88 - extra argument stops before any host request
+  ---
+  duration_ms: 0.1023
+  type: 'test'
+  ...
+# Subtest: wrong object shape stops before any host request
+ok 89 - wrong object shape stops before any host request
+  ---
+  duration_ms: 0.2028
+  type: 'test'
+  ...
+# Subtest: fractional source stops before any host request
+ok 90 - fractional source stops before any host request
+  ---
+  duration_ms: 0.1991
+  type: 'test'
+  ...
+# Subtest: invalid point stops before any host request
+ok 91 - invalid point stops before any host request
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: empty region stops before any host request
+ok 92 - empty region stops before any host request
+  ---
+  duration_ms: 0.1645
+  type: 'test'
+  ...
+# Subtest: too small region stops before any host request
+ok 93 - too small region stops before any host request
+  ---
+  duration_ms: 0.1815
+  type: 'test'
+  ...
+# Subtest: too large region stops before any host request
+ok 94 - too large region stops before any host request
+  ---
+  duration_ms: 0.2064
+  type: 'test'
+  ...
+# Subtest: empty alias stops before any host request
+ok 95 - empty alias stops before any host request
+  ---
+  duration_ms: 0.387
+  type: 'test'
+  ...
+# Subtest: direct route cannot mint a guarded alias
+ok 96 - direct route cannot mint a guarded alias
+  ---
+  duration_ms: 0.1799
+  type: 'test'
+  ...
+# Subtest: mint after STOP does not renew a reference or dispatch
+ok 97 - mint after STOP does not renew a reference or dispatch
+  ---
+  duration_ms: 0.1487
+  type: 'test'
+  ...
+# Subtest: mintMany sends one public request with a copied explicit same-source batch
+ok 98 - mintMany sends one public request with a copied explicit same-source batch
+  ---
+  duration_ms: 1.5116
+  type: 'test'
+  ...
+# Subtest: duplicate alias stops before registration and subsequent input
+ok 99 - duplicate alias stops before registration and subsequent input
+  ---
+  duration_ms: 0.4416
+  type: 'test'
+  ...
+# Subtest: extra argument stops before registration and subsequent input
+ok 100 - extra argument stops before registration and subsequent input
+  ---
+  duration_ms: 0.1505
+  type: 'test'
+  ...
+# Subtest: empty batch stops before registration and subsequent input
+ok 101 - empty batch stops before registration and subsequent input
+  ---
+  duration_ms: 0.1189
+  type: 'test'
+  ...
+# Subtest: over capacity stops before registration and subsequent input
+ok 102 - over capacity stops before registration and subsequent input
+  ---
+  duration_ms: 0.1185
+  type: 'test'
+  ...
+# Subtest: bad alias stops before registration and subsequent input
+ok 103 - bad alias stops before registration and subsequent input
+  ---
+  duration_ms: 0.1138
+  type: 'test'
+  ...
+# Subtest: unknown property stops before registration and subsequent input
+ok 104 - unknown property stops before registration and subsequent input
+  ---
+  duration_ms: 0.1153
+  type: 'test'
+  ...
+# Subtest: fractional source stops before registration and subsequent input
+ok 105 - fractional source stops before registration and subsequent input
+  ---
+  duration_ms: 0.114
+  type: 'test'
+  ...
+# Subtest: fractional point stops before registration and subsequent input
+ok 106 - fractional point stops before registration and subsequent input
+  ---
+  duration_ms: 0.3166
+  type: 'test'
+  ...
+# Subtest: hole in point stops before registration and subsequent input
+ok 107 - hole in point stops before registration and subsequent input
+  ---
+  duration_ms: 0.9567
+  type: 'test'
+  ...
+# Subtest: hole in batch stops before registration and subsequent input
+ok 108 - hole in batch stops before registration and subsequent input
+  ---
+  duration_ms: 0.1784
+  type: 'test'
+  ...
+# Subtest: out of range size stops before registration and subsequent input
+ok 109 - out of range size stops before registration and subsequent input
+  ---
+  duration_ms: 0.098
+  type: 'test'
+  ...
+# Subtest: partial registration returns original evidence and latches STOP without replay
+ok 110 - partial registration returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.1886
+  type: 'test'
+  ...
+# Subtest: missing reference returns original evidence and latches STOP without replay
+ok 111 - missing reference returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.0744
+  type: 'test'
+  ...
+# Subtest: wrong source returns original evidence and latches STOP without replay
+ok 112 - wrong source returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.0592
+  type: 'test'
+  ...
+# Subtest: wrong order returns original evidence and latches STOP without replay
+ok 113 - wrong order returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.066
+  type: 'test'
+  ...
+# Subtest: direct route cannot register guarded references
+ok 114 - direct route cannot register guarded references
+  ---
+  duration_ms: 0.0755
+  type: 'test'
+  ...
+# Subtest: raw batch call also refuses to continue after uncertain partial registration
+ok 115 - raw batch call also refuses to continue after uncertain partial registration
+  ---
+  duration_ms: 0.0901
+  type: 'test'
+  ...
+# Subtest: configured reviewWindow uses actual snapshotted target and unchanged result
+ok 116 - configured reviewWindow uses actual snapshotted target and unchanged result
+  ---
+  duration_ms: 2.0305
+  type: 'test'
+  ...
+# Subtest: invalid configured target undefined stops locally
+ok 117 - invalid configured target undefined stops locally
+  ---
+  duration_ms: 0.4168
+  type: 'test'
+  ...
+# Subtest: invalid configured target null stops locally
+ok 118 - invalid configured target null stops locally
+  ---
+  duration_ms: 0.0964
+  type: 'test'
+  ...
+# Subtest: invalid configured target 0 stops locally
+ok 119 - invalid configured target 0 stops locally
+  ---
+  duration_ms: 0.1362
+  type: 'test'
+  ...
+# Subtest: invalid configured target -1 stops locally
+ok 120 - invalid configured target -1 stops locally
+  ---
+  duration_ms: 0.1125
+  type: 'test'
+  ...
+# Subtest: invalid configured target 1.5 stops locally
+ok 121 - invalid configured target 1.5 stops locally
+  ---
+  duration_ms: 0.1115
+  type: 'test'
+  ...
+# Subtest: invalid configured target 8388611 stops locally
+ok 122 - invalid configured target 8388611 stops locally
+  ---
+  duration_ms: 0.0876
+  type: 'test'
+  ...
+# Subtest: invalid configured target NaN stops locally
+ok 123 - invalid configured target NaN stops locally
+  ---
+  duration_ms: 0.1024
+  type: 'test'
+  ...
+# Subtest: invalid configured target Infinity stops locally
+ok 124 - invalid configured target Infinity stops locally
+  ---
+  duration_ms: 0.1529
+  type: 'test'
+  ...
+# Subtest: per-call arguments cannot change target and STOP still allows close
+ok 125 - per-call arguments cannot change target and STOP still allows close
+  ---
+  duration_ms: 0.4478
+  type: 'test'
+  ...
+# Subtest: direct mode cannot review a guarded window
+ok 126 - direct mode cannot review a guarded window
+  ---
+  duration_ms: 0.1456
+  type: 'test'
+  ...
+1..126
+# tests 126
+# suites 0
+# pass 126
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 256.3279

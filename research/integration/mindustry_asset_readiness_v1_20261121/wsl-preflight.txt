@@ -1,0 +1,8 @@
+$ wsl.exe -d Ubuntu -- sh -lc 'python3 --version; (java -version 2>&1 || true); command -v Xvfb || true; command -v xvfb-run || true; command -v timeout || true; id -u; uname -a'
+Python 3.12.3
+sh: 1: java: not found
+/usr/bin/Xvfb
+/usr/bin/xvfb-run
+/usr/bin/timeout
+1000
+Linux DESKTOP-DRP9HRE 6.18.58.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct 27 00:24:11 UTC 2026 x86_64 GNU/Linux

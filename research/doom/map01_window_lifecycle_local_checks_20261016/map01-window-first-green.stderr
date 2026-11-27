@@ -1,0 +1,35 @@
+test_cancel_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_cancel_blocked_shared_lifecycle_releases_before_resume) ... ok
+test_capture_query_overlap_refuses_without_second_monitor_or_release_wait (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_capture_query_overlap_refuses_without_second_monitor_or_release_wait) ... ok
+test_destroy_during_capture_cannot_publish_or_bind_source (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_destroy_during_capture_cannot_publish_or_bind_source) ... ok
+test_expiry_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_expiry_blocked_shared_lifecycle_releases_before_resume) ... FAIL
+test_one_canonical_reader_transports_capture_lease_and_admission (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_one_canonical_reader_transports_capture_lease_and_admission) ... FAIL
+test_same_process_destroy_reuse_refuses_old_observation (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_same_process_destroy_reuse_refuses_old_observation) ... ok
+
+======================================================================
+FAIL: test_expiry_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_expiry_blocked_shared_lifecycle_releases_before_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 116, in test_expiry_blocked_shared_lifecycle_releases_before_resume
+    def test_expiry_blocked_shared_lifecycle_releases_before_resume(self): self.blocked('expiry')
+                                                                           ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 101, in blocked
+    self.assertTrue(entered.wait(1))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_one_canonical_reader_transports_capture_lease_and_admission (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_one_canonical_reader_transports_capture_lease_and_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 56, in test_one_canonical_reader_transports_capture_lease_and_admission
+    self.assertEqual(result['status'], 'completed')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'needs_decision' != 'completed'
+- needs_decision
++ completed
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.097s
+
+FAILED (failures=2)

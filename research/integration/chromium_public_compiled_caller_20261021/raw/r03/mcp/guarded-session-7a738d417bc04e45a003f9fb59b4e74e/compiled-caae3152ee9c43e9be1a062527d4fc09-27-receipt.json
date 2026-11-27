@@ -1,0 +1,63 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "chromium-public-caller-live-r01",
+  "method": "enter_then_submit",
+  "method_version": "1",
+  "session_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+  "outcome": "SAFE_YIELD",
+  "reason": "execution_failed",
+  "completed_transitions": 0,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 3,
+      "captured_ns": 397341605980,
+      "evidence_ref": "observation-3",
+      "evidence_digest": "71a6494fac75ae5d82f75862f41a24cc922bab5a1381d489febe4a1c7cc699b8",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 397340725734,
+      "observation_accepted_ns": 397370389422
+    }
+  ],
+  "transitions": [],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "empty",
+      "outcome": "action",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_pixels_changed": false,
+        "field_target_present": true
+      },
+      "evidence_ref": "observation-3"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter_token",
+      "status": "execution_failed",
+      "action_id": "action-6d1f25072f01424684c78f0b6ece4129",
+      "release_verified": true,
+      "execution_started_ns": 397378990585,
+      "execution_accepted_ns": 398129595307
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "execution_failed",
+      "completed_transitions": 0
+    }
+  ],
+  "latest_evidence_ref": "observation-3",
+  "pending_effect": null,
+  "started_ns": 397340716928,
+  "ended_ns": 398132141654,
+  "elapsed_ns": 791424726,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

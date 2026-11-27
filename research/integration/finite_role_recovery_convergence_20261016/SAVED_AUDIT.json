@@ -1,0 +1,96 @@
+{
+  "normal": {
+    "cells": 10,
+    "tests": {
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contradictions_rejected": [
+      {
+        "mutation": "wrong_disk",
+        "reason": "independent disk effect"
+      },
+      {
+        "mutation": "repeat_recovery",
+        "reason": "finite recovery count"
+      },
+      {
+        "mutation": "resend",
+        "reason": "attempt counters or resend"
+      },
+      {
+        "mutation": "false_success",
+        "reason": "false success"
+      },
+      {
+        "mutation": "wrong_calls",
+        "reason": "subject count"
+      },
+      {
+        "mutation": "lost_annotation",
+        "reason": "independent disk effect"
+      }
+    ],
+    "files": {
+      "stable-retain.txt": "452508644e8e5118eeee7cb380d10bf3a8e1fdb4bb0e3c304c2f00ef2962e76f",
+      "stable-replan.txt": "452508644e8e5118eeee7cb380d10bf3a8e1fdb4bb0e3c304c2f00ef2962e76f",
+      "annotation-retain.txt": "caa5fd67dde621add224b5cd434c3ec9f62b783b2565fbb33637d54973a9cc90",
+      "annotation-replan.txt": "caa5fd67dde621add224b5cd434c3ec9f62b783b2565fbb33637d54973a9cc90",
+      "role_change-retain.txt": "818d21d22b8f59b4d6b74ef0e037806e7d5cadd5ac3e548020608f56068c722d",
+      "role_change-replan.txt": "818d21d22b8f59b4d6b74ef0e037806e7d5cadd5ac3e548020608f56068c722d",
+      "second_change-retain.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "second_change-replan.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "unknown_replace-retain.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "unknown_replace-replan.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d"
+    }
+  },
+  "optimized": {
+    "cells": 10,
+    "tests": {
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contradictions_rejected": [
+      {
+        "mutation": "wrong_disk",
+        "reason": "independent disk effect"
+      },
+      {
+        "mutation": "repeat_recovery",
+        "reason": "finite recovery count"
+      },
+      {
+        "mutation": "resend",
+        "reason": "attempt counters or resend"
+      },
+      {
+        "mutation": "false_success",
+        "reason": "false success"
+      },
+      {
+        "mutation": "wrong_calls",
+        "reason": "subject count"
+      },
+      {
+        "mutation": "lost_annotation",
+        "reason": "independent disk effect"
+      }
+    ],
+    "files": {
+      "stable-retain.txt": "452508644e8e5118eeee7cb380d10bf3a8e1fdb4bb0e3c304c2f00ef2962e76f",
+      "stable-replan.txt": "452508644e8e5118eeee7cb380d10bf3a8e1fdb4bb0e3c304c2f00ef2962e76f",
+      "annotation-retain.txt": "caa5fd67dde621add224b5cd434c3ec9f62b783b2565fbb33637d54973a9cc90",
+      "annotation-replan.txt": "caa5fd67dde621add224b5cd434c3ec9f62b783b2565fbb33637d54973a9cc90",
+      "role_change-retain.txt": "818d21d22b8f59b4d6b74ef0e037806e7d5cadd5ac3e548020608f56068c722d",
+      "role_change-replan.txt": "818d21d22b8f59b4d6b74ef0e037806e7d5cadd5ac3e548020608f56068c722d",
+      "second_change-retain.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "second_change-replan.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "unknown_replace-retain.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d",
+      "unknown_replace-replan.txt": "1e4b54aa5ddb13a4adc9c07cf965fda8dcc746014a8875b547f34cc6d6b8f23d"
+    }
+  }
+}

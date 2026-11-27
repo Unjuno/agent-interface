@@ -1,0 +1,135 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "calc_one_row",
+    "session_scope": "native-x11:7439246c26a84283992d4ce28957a0e9",
+    "surface": "x11-window-6292258",
+    "predicates": [
+      "ready",
+      "row_visible"
+    ],
+    "symbols": {
+      "cell_symbol": {
+        "kind": "target_reference",
+        "target_reference": "cell",
+        "identity_predicate": "ready",
+        "dependencies": [
+          "ready"
+        ]
+      }
+    },
+    "actions": {
+      "enter": {
+        "target_symbol": "cell_symbol",
+        "operation": "enter_row",
+        "expected_effect": {
+          "row_visible": true
+        }
+      }
+    },
+    "method": {
+      "name": "one_row_save",
+      "version": "1",
+      "initial_state": "start",
+      "max_transitions": 1,
+      "max_runtime_ms": 10000,
+      "states": {
+        "start": {
+          "branches": [
+            {
+              "when": {
+                "ready": true
+              },
+              "outcome": "action",
+              "action": "enter",
+              "next_state": "done",
+              "reason": null
+            }
+          ]
+        },
+        "done": {
+          "branches": [
+            {
+              "when": {
+                "ready": true
+              },
+              "outcome": "complete",
+              "action": null,
+              "next_state": null,
+              "reason": null
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bindings": {
+    "enter": {
+      "interaction": "keyboard",
+      "offset": [
+        15,
+        7
+      ],
+      "tail": [
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "Home"
+          ]
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Down"
+          ]
+        },
+        {
+          "op": "text",
+          "text": "29",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "TAB"
+          ]
+        },
+        {
+          "op": "text",
+          "text": "31",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "TAB"
+          ]
+        },
+        {
+          "op": "text",
+          "text": "=A2*B2",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 500
+        }
+      ]
+    }
+  },
+  "scope": "trusted caller-owned read-only perception/effect callbacks; not independent task scoring"
+}

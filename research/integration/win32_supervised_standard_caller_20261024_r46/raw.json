@@ -1,0 +1,2943 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r46-59e927d9c5884c7cb6d1d5f5980e35d0",
+  "blocked_call_id": "becf347058bb4030a22fe2c455c3c9b7",
+  "blocked_io_independent_readback": {
+    "status": "replaced_by_prearmed_series"
+  },
+  "callback_timeout_budget": {
+    "cancel_permitted": true,
+    "cancel_response_timeout_ms": 1000,
+    "cancel_started_ns": 507889412849900,
+    "ceiling_ms": 2900,
+    "elapsed_before_cancel_ms": 199.6762,
+    "hook_entry_ns": 507889213173700,
+    "planned_post_cancel_hold_ms": 1400,
+    "projected_total_callback_ms": 2599.6762
+  },
+  "caller_kind": "mcp_stdio",
+  "cancellation_call_trace": [
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 507885892797600,
+      "pid": 45620
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 507886008494700,
+      "pid": 45620
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 507886667567500,
+      "pid": 27536
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 507886781282900,
+      "pid": 27536
+    },
+    {
+      "event": "helper_enter",
+      "helper": "recovery",
+      "monotonic_ns": 507887381129200,
+      "pid": 27536
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 507887430916200,
+      "pid": 25264
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 507887542738100,
+      "pid": 25264
+    },
+    {
+      "event": "helper_enter",
+      "helper": "observer",
+      "monotonic_ns": 507888142432100,
+      "pid": 25264
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 507888481392400,
+      "pid": 54500
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 507888596380400,
+      "pid": 54500
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 507889197353900,
+      "mouse_flags": 2,
+      "pid": 54500
+    },
+    {
+      "elapsed_ns": 10188600,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 507889207769400,
+      "mouse_flags": 2,
+      "pid": 54500
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 507889208190200,
+      "mouse_flags": 4,
+      "pid": 54500
+    },
+    {
+      "elapsed_ns": 684300,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 507889209071300,
+      "mouse_flags": 4,
+      "pid": 54500
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889209389800,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 258900,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889209837300,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889210033100,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 397500,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889210569100,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889210750600,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 500500,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889211384500,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889211604500,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 183600,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889211969200,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889212250900,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "elapsed_ns": 298300,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 507889212736600,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889212928600,
+      "pid": 54500,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "deadline_ns": 507892390000000,
+      "event": "exchange_enter",
+      "helper": "recovery",
+      "monotonic_ns": 507889418061200,
+      "pid": 45620,
+      "recovery_id": "14a20ab611244985984ce38de51acb5b",
+      "request_id": "14a20ab611244985984ce38de51acb5b"
+    },
+    {
+      "event": "recover_enter",
+      "monotonic_ns": 507889418656600,
+      "operation_id": "67eab78864604a48b8d82a620dfe340b",
+      "pid": 27536,
+      "recovery_id": "14a20ab611244985984ce38de51acb5b"
+    },
+    {
+      "event": "release_all_enter",
+      "monotonic_ns": 507889419440000,
+      "pid": 27536
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889419649000,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 313533700,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889733332600,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507889733669500,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "elapsed_ns": 313740200,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507890047655500,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507890048195000,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 314245800,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 507890362797600,
+      "pid": 27536,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 507890363188400,
+      "mouse_flags": 4,
+      "pid": 27536
+    },
+    {
+      "elapsed_ns": 1357300,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 507890364759000,
+      "mouse_flags": 4,
+      "pid": 27536
+    },
+    {
+      "elapsed_ns": 955893200,
+      "event": "release_all_return",
+      "monotonic_ns": 507890375522800,
+      "pid": 27536,
+      "verified": true
+    },
+    {
+      "elapsed_ns": 956988300,
+      "event": "recover_return",
+      "monotonic_ns": 507890375862300,
+      "operation_id": "67eab78864604a48b8d82a620dfe340b",
+      "pid": 27536,
+      "recovery_id": "14a20ab611244985984ce38de51acb5b",
+      "release_accepted": true
+    },
+    {
+      "elapsed_ns": 957626300,
+      "event": "exchange_return",
+      "helper": "recovery",
+      "monotonic_ns": 507890376150600,
+      "pid": 45620,
+      "request_id": "14a20ab611244985984ce38de51acb5b",
+      "result_neutral": null,
+      "result_release_accepted": true
+    },
+    {
+      "deadline_ns": 507892390000000,
+      "event": "exchange_enter",
+      "helper": "observer",
+      "monotonic_ns": 507890376369200,
+      "pid": 45620,
+      "recovery_id": "14a20ab611244985984ce38de51acb5b",
+      "request_id": "14a20ab611244985984ce38de51acb5b"
+    },
+    {
+      "elapsed_ns": 1040500,
+      "event": "exchange_return",
+      "helper": "observer",
+      "monotonic_ns": 507890377544100,
+      "pid": 45620,
+      "request_id": "14a20ab611244985984ce38de51acb5b",
+      "result_neutral": true,
+      "result_release_accepted": null
+    },
+    {
+      "event": "helper_exit",
+      "helper": "recovery",
+      "monotonic_ns": 507895074272200,
+      "pid": 27536
+    },
+    {
+      "event": "helper_exit",
+      "helper": "observer",
+      "monotonic_ns": 507895113629000,
+      "pid": 25264
+    }
+  ],
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 507888140000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "3479372b7770473c97625362c6963ac5"
+  },
+  "conditions_sha256": "d1d4adb065906565d43c800a6b102ddbb05ee87c69b5b2c729088afb1842f5d9",
+  "dispatch_attempts": 1,
+  "distinct_recovery_q_up_wait": {
+    "hook_events": [
+      {
+        "callback_entry_ns": 507889212467900,
+        "callback_return_ns": 507889212660600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "seen": false,
+    "timeout_seconds": 4
+  },
+  "effect_readback": {
+    "clicked": true,
+    "saved": true,
+    "text": ""
+  },
+  "ended_utc": "2026-10-24T04:36:28.055329+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "effect_path": "[LOCAL_PATH_REDACTED]",
+    "events": [
+      {
+        "hwnd": 527192,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": ""
+      },
+      {
+        "code": 113,
+        "kind": "char"
+      }
+    ],
+    "events_path": "[LOCAL_PATH_REDACTED]",
+    "exit_code": 0,
+    "foreground_activation": {
+      "activated": true,
+      "activation_result": "activated exact owned fixture using Computer Use",
+      "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r46-59e927d9c5884c7cb6d1d5f5980e35d0",
+      "created_utc": "2026-10-24T04:36:17.9252920Z",
+      "cua_window_id": 527192,
+      "fixture_hwnd": 527192,
+      "observed_foreground_hwnd": 527192,
+      "observed_monotonic_ns": 507885234000000,
+      "phase": "phase1",
+      "screenshot_inspected": true,
+      "window_title": "Agent Interface Win32 Fixture"
+    },
+    "hwnd": 527192,
+    "log_path": "[LOCAL_PATH_REDACTED]",
+    "meta": {
+      "height": 220,
+      "hwnd": 527192,
+      "width": 420
+    },
+    "meta_path": "[LOCAL_PATH_REDACTED]",
+    "pid": 3940,
+    "target_identity": {
+      "generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+      "owner": {
+        "creation_time_100ns": 134372901487069418,
+        "pid": 3940,
+        "window_thread_id": 53872
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 133750,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "hook_started": {
+    "callback_entry_ns": null,
+    "callback_return_ns": null,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 507889212467900,
+        "callback_return_ns": 507889212660600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "hook_handle": 23005841,
+    "ready_ns": 507885267187000,
+    "thread_id": 47608
+  },
+  "hook_stopped": {
+    "callback_entry_ns": 507889213173700,
+    "callback_return_ns": 507890820944200,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 507889212467900,
+        "callback_return_ns": 507889212660600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 23005841,
+    "q_down_callback_ns": 507889212467900,
+    "q_down_callback_return_ns": 507889212660600,
+    "q_up_callback_ns": 507889213173700,
+    "ready_ns": 507885267187000,
+    "thread_exited": true,
+    "thread_id": 47608,
+    "unhook_last_error": null,
+    "unhook_return": true,
+    "vk": 81
+  },
+  "hook_trace_after_dispatch": {
+    "callback_entry_ns": 507889213173700,
+    "callback_return_ns": 507890820944200,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 507889212467900,
+        "callback_return_ns": 507889212660600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 23005841,
+    "q_down_callback_ns": 507889212467900,
+    "q_down_callback_return_ns": 507889212660600,
+    "q_up_callback_ns": 507889213173700,
+    "ready_ns": 507885267187000,
+    "thread_id": 47608,
+    "vk": 81
+  },
+  "hook_trace_after_recovery": {
+    "callback_entry_ns": 507889213173700,
+    "callback_return_ns": 507890820944200,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 507889212467900,
+        "callback_return_ns": 507889212660600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 23005841,
+    "q_down_callback_ns": 507889212467900,
+    "q_down_callback_return_ns": 507889212660600,
+    "q_up_callback_ns": 507889213173700,
+    "ready_ns": 507885267187000,
+    "thread_id": 47608,
+    "vk": 81
+  },
+  "hook_wait": {
+    "ended_monotonic_ns": 507889213376700,
+    "entered": true,
+    "hook_trace": {
+      "callback_entry_ns": 507889213173700,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 507889212467900,
+          "callback_return_ns": 507889212660600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 507889213173700,
+          "callback_return_ns": 507890820944200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 23005841,
+      "q_down_callback_ns": 507889212467900,
+      "q_down_callback_return_ns": 507889212660600,
+      "q_up_callback_ns": 507889213173700,
+      "ready_ns": 507885267187000,
+      "thread_id": 47608,
+      "vk": 81
+    },
+    "poll_interval_ms": 50,
+    "started_monotonic_ns": 507888392618100,
+    "status_polls": [
+      {
+        "action_status": null,
+        "call_id": null,
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": null,
+        "is_error": true,
+        "operation_id": null,
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888393610200,
+        "started_monotonic_ns": 507888392621600,
+        "status": "unknown_call"
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888454043700,
+        "started_monotonic_ns": 507888452611300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888515263100,
+        "started_monotonic_ns": 507888513916100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888577087800,
+        "started_monotonic_ns": 507888575729700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888639475500,
+        "started_monotonic_ns": 507888638023500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888701291200,
+        "started_monotonic_ns": 507888699879600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888764158000,
+        "started_monotonic_ns": 507888762799200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888827045000,
+        "started_monotonic_ns": 507888825742700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888888494200,
+        "started_monotonic_ns": 507888887123200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507888951399500,
+        "started_monotonic_ns": 507888949770100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507889013953500,
+        "started_monotonic_ns": 507889012558600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507889076505400,
+        "started_monotonic_ns": 507889075195200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507889139549000,
+        "started_monotonic_ns": 507889138133500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 507889202163800,
+        "started_monotonic_ns": 507889200552100,
+        "status": null
+      }
+    ]
+  },
+  "independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "generation_after": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "generation_before": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "pid": 25848,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 507895021354100,
+    "started_monotonic_ns": 507895020775600,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 527192,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 3940,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53872
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 527192,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 3940,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53872
+      }
+    ],
+    "status": "observed"
+  },
+  "independent_state_series": {
+    "child_summary": {
+      "ended_monotonic_ns": 507895052580300,
+      "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+      "pid": 29488,
+      "record_type": "summary",
+      "sample_count": 632,
+      "started_monotonic_ns": 507888371365900,
+      "status": "observed"
+    },
+    "ended_monotonic_ns": 507895071350300,
+    "exit_code": 0,
+    "forced_termination": false,
+    "pid": 29488,
+    "samples_count": 632,
+    "samples_path": "run/independent-state-series.jsonl",
+    "started_monotonic_ns": 507888204061800,
+    "status": "observed"
+  },
+  "post_cancel_io_hold": {
+    "ended_monotonic_ns": 507890820801300,
+    "hook_trace_after_release": {
+      "callback_entry_ns": 507889213173700,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 507889212467900,
+          "callback_return_ns": 507889212660600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 507889213173700,
+          "callback_return_ns": 507890820944200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 23005841,
+      "q_down_callback_ns": 507889212467900,
+      "q_down_callback_return_ns": 507889212660600,
+      "q_up_callback_ns": 507889213173700,
+      "ready_ns": 507885267187000,
+      "thread_id": 47608,
+      "vk": 81
+    },
+    "hook_trace_before_release": {
+      "callback_entry_ns": 507889213173700,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 507889212467900,
+          "callback_return_ns": 507889212660600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 507889213173700,
+          "callback_return_ns": 507890820944200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 23005841,
+      "q_down_callback_ns": 507889212467900,
+      "q_down_callback_return_ns": 507889212660600,
+      "q_up_callback_ns": 507889213173700,
+      "ready_ns": 507885267187000,
+      "thread_id": 47608,
+      "vk": 81
+    },
+    "independent_readback_completed_before_release": null,
+    "independent_readback_delay_ms": 650,
+    "independent_readback_started_ns": null,
+    "started_monotonic_ns": 507889414166500,
+    "status_polls": [
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889415148000,
+        "started_monotonic_ns": 507889414167500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889438540000,
+        "started_monotonic_ns": 507889437206500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889454165900,
+        "started_monotonic_ns": 507889452805300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889469885000,
+        "started_monotonic_ns": 507889468205000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889484798900,
+        "started_monotonic_ns": 507889483309000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889499260800,
+        "started_monotonic_ns": 507889498027300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889515302200,
+        "started_monotonic_ns": 507889513785400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889530609000,
+        "started_monotonic_ns": 507889529422100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889546646500,
+        "started_monotonic_ns": 507889545423600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889561683400,
+        "started_monotonic_ns": 507889560613400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889577818700,
+        "started_monotonic_ns": 507889576653100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889593625900,
+        "started_monotonic_ns": 507889592304600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889609089200,
+        "started_monotonic_ns": 507889607943600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889624813900,
+        "started_monotonic_ns": 507889623372200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889640185500,
+        "started_monotonic_ns": 507889639063400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889655843200,
+        "started_monotonic_ns": 507889654308000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889671634100,
+        "started_monotonic_ns": 507889669986700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889687694900,
+        "started_monotonic_ns": 507889685651600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889702822900,
+        "started_monotonic_ns": 507889701158700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889718747600,
+        "started_monotonic_ns": 507889717244900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889734871600,
+        "started_monotonic_ns": 507889733115400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889749907400,
+        "started_monotonic_ns": 507889748772700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889765140200,
+        "started_monotonic_ns": 507889764004400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889781060000,
+        "started_monotonic_ns": 507889779899100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889797254000,
+        "started_monotonic_ns": 507889795901600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889812689200,
+        "started_monotonic_ns": 507889811385200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889828118900,
+        "started_monotonic_ns": 507889826763900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889843894200,
+        "started_monotonic_ns": 507889842653200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889859724400,
+        "started_monotonic_ns": 507889858367800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889875384100,
+        "started_monotonic_ns": 507889874048000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889891507900,
+        "started_monotonic_ns": 507889890333900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889907907000,
+        "started_monotonic_ns": 507889906288900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889923051000,
+        "started_monotonic_ns": 507889921444800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889938909900,
+        "started_monotonic_ns": 507889937170200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889954787900,
+        "started_monotonic_ns": 507889952489800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889969834600,
+        "started_monotonic_ns": 507889968039800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507889985289800,
+        "started_monotonic_ns": 507889983731700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890001244800,
+        "started_monotonic_ns": 507889999986000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890016641700,
+        "started_monotonic_ns": 507890015337600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890032453000,
+        "started_monotonic_ns": 507890031310600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890048973700,
+        "started_monotonic_ns": 507890047430900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890064360900,
+        "started_monotonic_ns": 507890063059600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890080439400,
+        "started_monotonic_ns": 507890078814700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890096041200,
+        "started_monotonic_ns": 507890094916600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890112093000,
+        "started_monotonic_ns": 507890110767900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890127748300,
+        "started_monotonic_ns": 507890126540800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890143082200,
+        "started_monotonic_ns": 507890141608700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890158794700,
+        "started_monotonic_ns": 507890157673800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890174561800,
+        "started_monotonic_ns": 507890173332800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890190734700,
+        "started_monotonic_ns": 507890189397300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890206057200,
+        "started_monotonic_ns": 507890204605600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890222452700,
+        "started_monotonic_ns": 507890220686200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890238362600,
+        "started_monotonic_ns": 507890236810900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890254827000,
+        "started_monotonic_ns": 507890252794300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890269753400,
+        "started_monotonic_ns": 507890268106000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890285592900,
+        "started_monotonic_ns": 507890284271300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890301035500,
+        "started_monotonic_ns": 507890299730900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890316974200,
+        "started_monotonic_ns": 507890315761500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890332478200,
+        "started_monotonic_ns": 507890331134700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890348704500,
+        "started_monotonic_ns": 507890347097700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 507890364100200,
+        "started_monotonic_ns": 507890362525700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890379978200,
+        "started_monotonic_ns": 507890378680900,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890395103400,
+        "started_monotonic_ns": 507890393821200,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890411525800,
+        "started_monotonic_ns": 507890410368200,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890427139500,
+        "started_monotonic_ns": 507890425900300,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890443336400,
+        "started_monotonic_ns": 507890442203400,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890458868200,
+        "started_monotonic_ns": 507890457716100,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890475180900,
+        "started_monotonic_ns": 507890473809600,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890490588000,
+        "started_monotonic_ns": 507890489297300,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890506893000,
+        "started_monotonic_ns": 507890505342300,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890522596300,
+        "started_monotonic_ns": 507890521308100,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890539079000,
+        "started_monotonic_ns": 507890537374400,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890554890500,
+        "started_monotonic_ns": 507890553115000,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890571263300,
+        "started_monotonic_ns": 507890569138900,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890587256300,
+        "started_monotonic_ns": 507890585205000,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890602841000,
+        "started_monotonic_ns": 507890601204600,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890618811100,
+        "started_monotonic_ns": 507890617200900,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890634263600,
+        "started_monotonic_ns": 507890632778400,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890649781900,
+        "started_monotonic_ns": 507890648416200,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890665845500,
+        "started_monotonic_ns": 507890664043600,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890681323400,
+        "started_monotonic_ns": 507890679995200,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890697408500,
+        "started_monotonic_ns": 507890696071900,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890712835700,
+        "started_monotonic_ns": 507890711492300,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890728884000,
+        "started_monotonic_ns": 507890727556400,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890744378300,
+        "started_monotonic_ns": 507890743097700,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890759928300,
+        "started_monotonic_ns": 507890758571400,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890775350500,
+        "started_monotonic_ns": 507890773702500,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890791154300,
+        "started_monotonic_ns": 507890789342700,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 507890807138000,
+        "started_monotonic_ns": 507890805243200,
+        "status": null
+      }
+    ],
+    "target_hold_ms": 1400
+  },
+  "pre_cancel_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "generation_after": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "generation_before": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "pid": 11368,
+    "process_retired": true,
+    "q_down": true,
+    "returned_monotonic_ns": 507889400986200,
+    "started_monotonic_ns": 507889400549900,
+    "state_witness": [],
+    "status": "observed"
+  },
+  "pre_cancel_status_readback": {
+    "action": {
+      "metadata": {
+        "program_id": "supervised-standard-cancel-q-release-r46",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "67eab78864604a48b8d82a620dfe340b",
+      "result": null,
+      "status": "running",
+      "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+    },
+    "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 507978140000000,
+        "lease_id": "supervised-standard-recovery-r46"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "supervised-standard-cancel-q-release-r46",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "prearmed_state_series_start": {
+    "interval_ms": 10,
+    "max_duration_ms": 8000,
+    "pid": 29488,
+    "samples_path": "run/independent-state-series.jsonl",
+    "started_monotonic_ns": 507888204061800
+  },
+  "previous_foreground_hwnd": 133750,
+  "probe_pid": 55696,
+  "probe_status": "completed_with_independent_effect",
+  "producer_exit_witness": {
+    "creation_time_100ns": 134372901812181888,
+    "observed_monotonic_ns": 507890821102000,
+    "pid": 54500,
+    "status": "exited",
+    "wait_started_monotonic_ns": 507890820851500
+  },
+  "producer_identity_from_cancel": {
+    "creation_time_100ns": 134372901812181888,
+    "pid": 54500
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 507978140000000,
+      "lease_id": "supervised-standard-recovery-r46"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-cancel-q-release-r46",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_cancel": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"becf347058bb4030a22fe2c455c3c9b7\", \"operation_id\": \"6ab28593d2aa440a867af841aa637ef9\", \"cancellation\": {\"operation_id\": \"6ab28593d2aa440a867af841aa637ef9\", \"action_operation_id\": \"67eab78864604a48b8d82a620dfe340b\", \"target_generation\": \"a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd\", \"status\": \"pending\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"operation_id\": \"67eab78864604a48b8d82a620dfe340b\", \"target_generation\": \"a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd\", \"deadline_ns\": 507978140000000, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:Q\", \"key:fixture:S\"], \"status\": \"pending\", \"producer_identity\": {\"pid\": 54500, \"creation_time_100ns\": 134372901812181888}, \"producer_exit_code\": null, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": 507892390000000, \"recovery_id\": null, \"release_confirmed\": false, \"completion_release_receipt\": null, \"completion_readback\": null, \"completion_readback_outcome\": \"not_attempted\", \"completion_readback_attempt\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"cancel_pending\"}, \"owner_phase\": \"cancel_pending\"}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"operation_invoked\": false, \"input_dispatched\": false, \"scope\": \"supervised_win32\"}",
+        "type": "text"
+      }
+    ],
+    "elapsed_ms": 1.2989,
+    "is_error": false,
+    "response": {
+      "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+      "cancellation": {
+        "action_operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_id": "6ab28593d2aa440a867af841aa637ef9",
+        "owner_phase": "cancel_pending",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 507892390000000,
+          "completion_readback": null,
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "not_attempted",
+          "completion_release_receipt": null,
+          "deadline_ns": 507978140000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S"
+          ],
+          "operation_id": "67eab78864604a48b8d82a620dfe340b",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372901812181888,
+            "pid": 54500
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "pending",
+        "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+        "task_success": null
+      },
+      "input_dispatched": false,
+      "operation_id": "6ab28593d2aa440a867af841aa637ef9",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 507889414148800,
+    "started_monotonic_ns": 507889412849900
+  },
+  "public_cancel_attempt": {
+    "attempt_count": 1,
+    "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+    "invocation_started": true,
+    "is_error": false,
+    "returned_monotonic_ns": 507889414148800,
+    "started_monotonic_ns": 507889412849900
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"24f557316f4743cb9c3b137f6cb3541e\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\936546940ee04c2f8bb7f4c2d6d5ad4a\", \"call_id\": \"936546940ee04c2f8bb7f4c2d6d5ad4a\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call_directory": "[LOCAL_PATH_REDACTED]",
+      "call_id": "936546940ee04c2f8bb7f4c2d6d5ad4a",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "session": {
+        "call_count": 1,
+        "mode": "supervised-win32",
+        "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+        "state": "closed",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "closed",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 507895158328300,
+    "started_monotonic_ns": 507895071640600
+  },
+  "public_close_attempts": [
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"24f557316f4743cb9c3b137f6cb3541e\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\936546940ee04c2f8bb7f4c2d6d5ad4a\", \"call_id\": \"936546940ee04c2f8bb7f4c2d6d5ad4a\"}",
+          "type": "text"
+        }
+      ],
+      "is_error": false,
+      "response": {
+        "call_directory": "[LOCAL_PATH_REDACTED]",
+        "call_id": "936546940ee04c2f8bb7f4c2d6d5ad4a",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 507895158328300,
+      "started_monotonic_ns": 507895071640600
+    }
+  ],
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"becf347058bb4030a22fe2c455c3c9b7\", \"call\": {\"call_id\": \"becf347058bb4030a22fe2c455c3c9b7\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"supervised-standard-cancel-q-release-r46\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"fixture\": \"a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd\"}}, \"authority\": {\"lease_id\": \"supervised-standard-recovery-r46\", \"expires_at_ns\": 507978140000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 70, \"y\": 70}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"keys\": [\"Q\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 507978140000000,
+              "lease_id": "supervised-standard-recovery-r46"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-q-release-r46",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "response_envelope": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 507978140000000,
+              "lease_id": "supervised-standard-recovery-r46"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-q-release-r46",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 507888392596900,
+    "started_monotonic_ns": 507888390701200,
+    "wait_for_result_ms": 0
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"c4b73cdab696b273e68db64407fbd74af839211637bd7d16a487c841a64a3959\", \"bytes\": 1461, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"7786073220f647b99e8599d3bc57524b\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 527192, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 507888156000000, \"capture_ended_ns\": 507888156000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\6b27b8432f68472ba2ece19a16d2ea76\\\\images\\\\ae835177557f4043b12075bd7534aa41.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 507888156000000, \"converted\": 507888156000000, \"encoded\": 507888156000000, \"written\": 507888156000000}}}, \"target_generation\": \"a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"24f557316f4743cb9c3b137f6cb3541e\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"7786073220f647b99e8599d3bc57524b\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 527192, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 507888156000000, \"capture_ended_ns\": 507888156000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\6b27b8432f68472ba2ece19a16d2ea76\\\\images\\\\ae835177557f4043b12075bd7534aa41.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 507888156000000, \"converted\": 507888156000000, \"encoded\": 507888156000000, \"written\": 507888156000000}}}, \"target_generation\": \"a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"24f557316f4743cb9c3b137f6cb3541e\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 507888156000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\6b27b8432f68472ba2ece19a16d2ea76\\\\images\\\\ae835177557f4043b12075bd7534aa41.png\", \"relative_path\": \"images\\\\ae835177557f4043b12075bd7534aa41.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"7786073220f647b99e8599d3bc57524b\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 527192, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 507888156000000, \"capture_ended_ns\": 507888156000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"24f557316f4743cb9c3b137f6cb3541e\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervised-r39\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r46\\\\run\\\\calls\\\\6b27b8432f68472ba2ece19a16d2ea76\", \"call_id\": \"6b27b8432f68472ba2ece19a16d2ea76\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "[LOCAL_PATH_REDACTED]",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 507888156000000,
+            "encoded": 507888156000000,
+            "started": 507888156000000,
+            "written": 507888156000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 507888156000000,
+        "capture_started_ns": 507888156000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 527192,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "7786073220f647b99e8599d3bc57524b",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "[LOCAL_PATH_REDACTED]",
+      "call_id": "6b27b8432f68472ba2ece19a16d2ea76",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 507888156000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "7786073220f647b99e8599d3bc57524b",
+        "path": "[LOCAL_PATH_REDACTED]",
+        "recorded_capture": {
+          "capture_ended_ns": 507888156000000,
+          "capture_started_ns": 507888156000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 527192,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\ae835177557f4043b12075bd7534aa41.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "[LOCAL_PATH_REDACTED]",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 507888156000000,
+                "encoded": 507888156000000,
+                "started": 507888156000000,
+                "written": 507888156000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 507888156000000,
+            "capture_started_ns": 507888156000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 527192,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "7786073220f647b99e8599d3bc57524b",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1461,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "[LOCAL_PATH_REDACTED]",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 507888156000000,
+                  "encoded": 507888156000000,
+                  "started": 507888156000000,
+                  "written": 507888156000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 507888156000000,
+              "capture_started_ns": 507888156000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 527192,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "7786073220f647b99e8599d3bc57524b",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "c4b73cdab696b273e68db64407fbd74af839211637bd7d16a487c841a64a3959"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 507888194177500,
+    "started_monotonic_ns": 507888172547300
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 7, \"expanded_operation_count\": 7, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 7,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 7,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 507888195540700,
+    "started_monotonic_ns": 507888194233700
+  },
+  "result_readbacks": [
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-q-release-r46",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "67eab78864604a48b8d82a620dfe340b",
+          "result": {
+            "effect_status": "unknown",
+            "input_dispatched": null,
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "task_success": null
+          },
+          "status": "recovered",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+        },
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation": {
+          "action_operation_id": "67eab78864604a48b8d82a620dfe340b",
+          "operation_id": "6ab28593d2aa440a867af841aa637ef9",
+          "owner_phase": "recovered",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 507892390000000,
+            "completion_readback": null,
+            "completion_readback_attempt": null,
+            "completion_readback_outcome": "not_attempted",
+            "completion_release_receipt": null,
+            "deadline_ns": 507978140000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S"
+            ],
+            "operation_id": "67eab78864604a48b8d82a620dfe340b",
+            "phase": "recovered",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372901812181888,
+              "pid": 54500
+            },
+            "recovery_id": "14a20ab611244985984ce38de51acb5b",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "status": "recovered",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 507978140000000,
+            "lease_id": "supervised-standard-recovery-r46"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-q-release-r46",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 507890822477700,
+      "started_monotonic_ns": 507890821208700
+    }
+  ],
+  "retained_report": {
+    "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+    "compilation": null,
+    "input_dispatched": null,
+    "normalization": null,
+    "operation_id": "67eab78864604a48b8d82a620dfe340b",
+    "operation_invoked": true,
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "metadata": {
+          "program_id": "supervised-standard-cancel-q-release-r46",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "result": {
+          "effect_status": "unknown",
+          "input_dispatched": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "task_success": null
+        },
+        "status": "recovered",
+        "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+      },
+      "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+      "cancellation": {
+        "action_operation_id": "67eab78864604a48b8d82a620dfe340b",
+        "operation_id": "6ab28593d2aa440a867af841aa637ef9",
+        "owner_phase": "recovered",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 507892390000000,
+          "completion_readback": null,
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "not_attempted",
+          "completion_release_receipt": null,
+          "deadline_ns": 507978140000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S"
+          ],
+          "operation_id": "67eab78864604a48b8d82a620dfe340b",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372901812181888,
+            "pid": 54500
+          },
+          "recovery_id": "14a20ab611244985984ce38de51acb5b",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "recovered",
+        "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+        "task_success": null
+      },
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 507978140000000,
+          "lease_id": "supervised-standard-recovery-r46"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-q-release-r46",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+    "task_success": null
+  },
+  "session_close_report": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "closed",
+    "task_success": null
+  },
+  "session_mode": "supervised-win32",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-24T04:35:48.565255+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}

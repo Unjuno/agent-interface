@@ -19,8 +19,25 @@ tail whose original focus binding was unknown or invalidated.
 The interval uses times after snapshot processing returns. It therefore includes
 capture, codec, artifact and synchronous logging overhead. It only measures
 equality at sampled points, not continuous visual inactivity. Capture or logging
-can overrun the timeout, and a final quiet result can be recognized after the
-nominal budget. This is cooperative observation, not hard real-time scheduling.
+can overrun the timeout because they are synchronous. After they return, the
+current implementation checks the timeout before accepting pixel quietness.
+This is cooperative observation, not hard real-time scheduling.
+
+## Timeout correction — 2026-10-15
+
+A timeout emits `settle_result(reason="timeout", semantic_completion="unknown")`
+and raises `DecisionRequired`. The executor performs its normal release path,
+ends as `needs_decision` when that release is verified, and does not execute the
+remaining preplanned input. A capture returning after the original settle budget
+cannot convert the timeout into `pixel_quiet`, even when the returned pixels
+match. A quiet result still establishes only equality at sampled points.
+
+Three regressions reproduced the prior behavior: timeout returned normally,
+the executor ran a following hold, and a late capture could report pixel quiet.
+The correction passes the settle/quiet/projection/lease suite (15 tests) in
+ordinary and optimized Python without a GUI or input. This does not establish
+a bound on blocked capture/X11 I/O, physical release latency, task effect or
+live recovery, and it does not change the historical trial below.
 
 ## Actual assistant use
 

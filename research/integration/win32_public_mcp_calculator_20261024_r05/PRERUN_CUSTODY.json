@@ -1,0 +1,57 @@
+{
+  "schema": "win32-public-mcp-calculator-r05-prerun-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r05-76fe423b62db484a9ee279c57cb36e65",
+  "recorded_at_utc": "2026-10-24T02:42:16.929392+00:00",
+  "source_commit": "6aea5d3f359f42811d4e1dd1060fc575560ceeae",
+  "parent_attempt": {
+    "attempt_id": "win32-public-mcp-calculator-20261024-r04-cd8092b5c5d04a8aa24c45f566046dd5",
+    "disposition": "static validation rejected 73-char program ID; no input",
+    "changed_factor": "short valid program_id only"
+  },
+  "authority": "User explicitly authorized this local Windows PC for computer-control experiments.",
+  "target": {
+    "app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+    "hwnd": 55117672,
+    "title": "電卓"
+  },
+  "resource_scope": {
+    "wslc_used": false,
+    "docker_used": false,
+    "user_files_in_scope": false
+  },
+  "program_id": "calc-r05-314plus728",
+  "program_id_contract": "1..64 ASCII letters/digits/._-",
+  "limits": {
+    "attempts": 1,
+    "pre_action_observations": 1,
+    "post_action_observations": 1,
+    "validations": 1,
+    "dispatches": 1,
+    "clock_reads": 1,
+    "results_polls_max": 5,
+    "recovery_calls": 0,
+    "replays": 0,
+    "wall_clock_seconds": 90,
+    "on_unexpected_or_uncertain_result": "stop; preserve UNKNOWN; no repair, replay, or retry"
+  },
+  "immutability": "Unique R05 attempt; R01–R04 unchanged.",
+  "supplemental_read_only_setup_observation": {
+    "file": "pre-run-sky-observation.jpg",
+    "sha256": "1b83ff6e269eee8c6fb68cf8a1e59f81cbcb0a21b1d65a698bf44604128e932f",
+    "window": {
+      "app": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+      "hwnd": 55117672,
+      "title": "電卓"
+    },
+    "image_geometry": [
+      322,
+      534
+    ],
+    "screen_origin": [
+      47,
+      32
+    ],
+    "visual": "Standard mode, prior expression 314 + 728 =, display 1,042",
+    "use": "setup-only; formal attempt still uses exactly one fresh public MCP pre-action observation"
+  }
+}

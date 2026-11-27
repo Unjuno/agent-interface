@@ -1,0 +1,22 @@
+{
+  "runner_cleanup_errors": [
+    "interface-edge-submit-406285ffe2a65e14: Edge profile remained locked after 16 cleanup attempts",
+    "interface-edge-submit-87f11ab97c081a0d: Edge profile remained locked after 16 cleanup attempts"
+  ],
+  "follow_up": [
+    {
+      "profile_marker": "interface-edge-submit-406285ffe2a65e14",
+      "matching_edge_processes_stopped": 0,
+      "matching_edge_processes_after_stop": 0,
+      "profile_directory_exists_after_cleanup": false
+    },
+    {
+      "profile_marker": "interface-edge-submit-87f11ab97c081a0d",
+      "matching_edge_processes_stopped": 9,
+      "matching_edge_processes_after_stop": 0,
+      "profile_directory_exists_after_cleanup": false
+    }
+  ],
+  "process_match": "msedge.exe command line contained the exact generated profile marker",
+  "unrelated_edge_processes_targeted": 0
+}

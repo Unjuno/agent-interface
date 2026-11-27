@@ -1,0 +1,5 @@
+# R46 audit correction
+
+The experiment was run once, with the fixed 3,860 ms pause. The first post-run auditor reported 24/27 checks because three predicates assumed different Docker CLI output forms: the image inspect output omitted the digest-qualified repo reference, mount lines had trailing semicolons, and this Docker version reports `no such object` after container removal. The first audit output showed exactly those three failed checks. Its generated `AUDIT.json` was overwritten by the corrected audit, so the original full report is not retained as a separate file. The captured container state, exact mount list, successful cleanup exit, absent-after-cleanup record, and raw test result show the trial itself completed and the exact container was removed.
+
+Only the auditor and supporting image-reference capture were corrected. The trial was not repeated. Original auditor SHA-256: `cc385f37ee402f59e294ce32c478e61ab8d77d752a62d53a3305da4c614e327a`; corrected auditor SHA-256 is recorded in `INVOCATION-METADATA.json`. The result classification and test outcome are unchanged.

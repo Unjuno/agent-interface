@@ -1,0 +1,58 @@
+{
+  "source_sha256": "ab4ceda4e707d3d4d2e3de95c0383c47e9b762b77f8ef0ae30278fbd257da449",
+  "rows": [
+    {
+      "id": "two-stable",
+      "matcher": {
+        "status": "REVALIDATED",
+        "candidate_index": 0,
+        "authority": "none"
+      },
+      "hidden_original_index": 0,
+      "semantic_correct": true,
+      "false_rebind": false,
+      "conservative_status": "UNKNOWN"
+    },
+    {
+      "id": "two-swapped",
+      "matcher": {
+        "status": "REVALIDATED",
+        "candidate_index": 0,
+        "authority": "none"
+      },
+      "hidden_original_index": 1,
+      "semantic_correct": false,
+      "false_rebind": true,
+      "conservative_status": "UNKNOWN"
+    },
+    {
+      "id": "single-stable",
+      "matcher": {
+        "status": "REVALIDATED",
+        "candidate_index": 0,
+        "authority": "none"
+      },
+      "hidden_original_index": 0,
+      "semantic_correct": true,
+      "false_rebind": false,
+      "conservative_status": "REVALIDATED"
+    },
+    {
+      "id": "single-replaced",
+      "matcher": {
+        "status": "REVALIDATED",
+        "candidate_index": 0,
+        "authority": "none"
+      },
+      "hidden_original_index": null,
+      "semantic_correct": false,
+      "false_rebind": true,
+      "conservative_status": "REVALIDATED"
+    }
+  ],
+  "two_candidate_inputs_identical": true,
+  "single_candidate_inputs_identical": true,
+  "false_rebind_cases": 2,
+  "conservative_abstentions": 2,
+  "classification": "SYNTHETIC_IDENTIFIABILITY_COUNTEREXAMPLE"
+}

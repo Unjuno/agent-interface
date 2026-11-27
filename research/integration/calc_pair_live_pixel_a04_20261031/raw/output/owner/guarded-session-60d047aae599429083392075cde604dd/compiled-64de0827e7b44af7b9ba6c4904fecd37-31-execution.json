@@ -1,0 +1,231 @@
+{
+  "request": {
+    "action": "save",
+    "operation": "request_xlsx_save",
+    "authorization": "db7a72a5905c4f6fbaeaa7541a9f5fd4",
+    "expected_sequence": 13,
+    "valid_until_ns": 6795508420
+  },
+  "action_id": "action-005a105a93614832b9278cf728376166",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 5392944075,
+      "ended_ns": 5596789388,
+      "emissions": 20,
+      "program_emissions": 4,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 5596787477
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 100,
+          "started_ns": 5496422931,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5596509505
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 14,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet",
+        "point": [
+          440,
+          28
+        ],
+        "observed_box": [
+          425,
+          21,
+          30,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 14,
+        "valid_until_ns": 6855611933,
+        "patch_sha256": "54724b82f9aa0544aa98e3da702656ab0699e256014c836e2e23abb25df91e04",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 15,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet",
+        "point": [
+          440,
+          28
+        ],
+        "observed_box": [
+          425,
+          21,
+          30,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 15,
+        "valid_until_ns": 6893133786,
+        "patch_sha256": "54724b82f9aa0544aa98e3da702656ab0699e256014c836e2e23abb25df91e04",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 16,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet",
+        "point": [
+          440,
+          28
+        ],
+        "observed_box": [
+          425,
+          21,
+          30,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 16,
+        "valid_until_ns": 6928261140,
+        "patch_sha256": "54724b82f9aa0544aa98e3da702656ab0699e256014c836e2e23abb25df91e04",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:s",
+        "observation_sequence": 17,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet",
+        "point": [
+          440,
+          28
+        ],
+        "observed_box": [
+          425,
+          21,
+          30,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 17,
+        "valid_until_ns": 6960978542,
+        "patch_sha256": "54724b82f9aa0544aa98e3da702656ab0699e256014c836e2e23abb25df91e04",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 14,
+        "scope": "native-x11:1607370ed8c44f2e97831a964339f322",
+        "binding_revision": 0,
+        "started_ns": 5382981615,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 5390026709
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 15,
+        "scope": "native-x11:1607370ed8c44f2e97831a964339f322",
+        "binding_revision": 0,
+        "started_ns": 5422584943,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 5427841105
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 16,
+        "scope": "native-x11:1607370ed8c44f2e97831a964339f322",
+        "binding_revision": 0,
+        "started_ns": 5456844552,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 5460527550
+      },
+      {
+        "stage": "before_key_press:s",
+        "observation_sequence": 17,
+        "scope": "native-x11:1607370ed8c44f2e97831a964339f322",
+        "binding_revision": 0,
+        "started_ns": 5488898158,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 5495874861
+      }
+    ]
+  }
+}

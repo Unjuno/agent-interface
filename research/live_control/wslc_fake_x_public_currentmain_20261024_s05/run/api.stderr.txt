@@ -1,0 +1,10 @@
+Unhandled exception. System.TypeInitializationException: The type initializer for '<Module>' threw an exception.
+ ---> System.DllNotFoundException: Unable to load DLL 'wslcsdk.dll' or one of its dependencies: ファイル名または拡張子が長すぎます。 (0x800700CE)
+   at System.Runtime.InteropServices.NativeLibrary.LoadLibraryByName(String libraryName, Assembly assembly, Nullable`1 searchPath, Boolean throwOnError)
+   at Microsoft.WSL.Containers.WinRTActivation.Initialize()
+   at .cctor()
+   --- End of inner exception stack trace ---
+   at Program.<Main>$(String[] args)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Program.<Main>$(String[] args)
+   at Program.<Main>(String[] args)

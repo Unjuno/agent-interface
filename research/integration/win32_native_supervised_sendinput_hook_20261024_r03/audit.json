@@ -1,0 +1,47 @@
+{
+  "checks": {
+    "cancel_response_at_most_250ms": true,
+    "cleanup_complete": true,
+    "frozen_conditions_hash": true,
+    "frozen_source_hashes": true,
+    "independent_immediate_readback_up": true,
+    "injected_f13_callback_entered": true,
+    "late_state_observer_after_1500ms": true,
+    "native_release_verified": true,
+    "no_emergency_release_required": true,
+    "no_runner_errors": true,
+    "one_prestarted_recovery_and_observer": true,
+    "owner_recovered_and_kept_task_unknown": true,
+    "producer_did_not_return_from_blocked_sendinput": true,
+    "producer_exit_confirmed": true,
+    "producer_retired_before_recovery_up": true,
+    "producer_target_generation_matched": true,
+    "real_target_generation_bound": true,
+    "recovery_generation_matches": true,
+    "recovery_requested_exactly_once": true,
+    "recovery_within_2500ms": true
+  },
+  "disposition": "PASS",
+  "hashes": {
+    "audit.py": "63e27c50b440581d607fa79868a6ba7639d902ddbf372c5f4d42b9711ed923b4",
+    "conditions.json": "13233cc44e899994c718e436f35f9e1b1d578d7331f5ebd751a3e56b49b78938",
+    "probe.py": "72037b78c32e36f840bcd7378a016e375c85061ad82ee8acb18afeeed38c4865",
+    "raw.json": "3048d66f6a4c69e266878764b8b870069fae36010665c6fd8b8d59adba01bbd5",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/guarded_win32_v1/operation_owner.py": "3a3d868510d1c41250516aacaddac9daed428a7eab72ca336d3b9684c90ba342",
+    "runtime/guarded_win32_v1/process_cancellation.py": "49202af88ced51a73c4218d113f118a57ad9f63f73fdd3b134cd31f41f9dfec6"
+  },
+  "measurements": {
+    "callback_entry_ns": 470841602288900,
+    "cancel_response_ms": 0.1971,
+    "horizon_observer_ns": 470843122144900,
+    "independent_readback_ns": 470841617603300,
+    "producer_exit_observed_ns": 470841605333100,
+    "recovery_elapsed_ms": 14.2328,
+    "recovery_up_returned_ns": 470841616666800,
+    "recovery_up_started_ns": 470841605937000
+  },
+  "method": "independent read-only hashes, IPC receipts, process timing, runtime release receipt, and backend state readback",
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r03",
+  "scope": "one Windows host and one finite WH_KEYBOARD_LL callback-stall schedule; no standard public caller or task-effect qualification"
+}

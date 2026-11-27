@@ -1,0 +1,233 @@
+{
+  "armed": {
+    "button": 1,
+    "display": ":0",
+    "focus_id": 2097152,
+    "intent_token": "137991e8f54d4f9a8da3a808473ff816",
+    "keys": [
+      "a",
+      "d"
+    ],
+    "owner_id": "09194037ca714f5da9d243211959c005",
+    "service_pid": 2168,
+    "type": "armed"
+  },
+  "button_down_before_kill": true,
+  "button_up_observed_ns": 3747988337752,
+  "display": ":0",
+  "focus_id": 2097152,
+  "forced_owner_kill": false,
+  "game_or_model": false,
+  "independent_buttonrelease": {
+    "detail": 1,
+    "observed_ns": 3747988387308,
+    "type": 5
+  },
+  "independent_keypress": {
+    "38": {
+      "detail": 38,
+      "observed_ns": 3747975886328,
+      "type": 2
+    },
+    "40": {
+      "detail": 40,
+      "observed_ns": 3747975891711,
+      "type": 2
+    }
+  },
+  "independent_keyrelease": {
+    "38": {
+      "detail": 38,
+      "observed_ns": 3747977755023,
+      "type": 3
+    },
+    "40": {
+      "detail": 40,
+      "observed_ns": 3747988381862,
+      "type": 3
+    }
+  },
+  "keycodes": {
+    "a": 38,
+    "d": 40
+  },
+  "keymap_down_before_kill": {
+    "a": true,
+    "d": true
+  },
+  "keymap_up_observed_ns": {
+    "a": 3747988221621,
+    "d": 3747988275503
+  },
+  "kill_requested_ns": 3747976199581,
+  "physical_input": false,
+  "ready_event": {
+    "display": ":0",
+    "event": "input_owner_process_ready",
+    "owner_id": "09194037ca714f5da9d243211959c005",
+    "receipt_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json",
+    "schema": "input-owner-process-ready-v1",
+    "service_pid": 2168
+  },
+  "receipt": {
+    "close_error": null,
+    "closed_ns": 3747978571714,
+    "display": ":0",
+    "event_publisher_errors": [],
+    "owner_id": "09194037ca714f5da9d243211959c005",
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "137991e8f54d4f9a8da3a808473ff816",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 3747977775271,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 3747977541138,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 3747977692591
+              }
+            ],
+            "verified": true
+          },
+          "40": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 3747978023376,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 3747977847490,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 3747977939479
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              3747977541138,
+              3747977775271
+            ],
+            "keycode": 38
+          },
+          {
+            "interval_ns": [
+              3747977847490,
+              3747978023376
+            ],
+            "keycode": 40
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 3772952711481,
+        "verified": true,
+        "verified_ns": 3747978366082
+      }
+    ],
+    "owner_thread_stopped": true,
+    "receipt_fsynced": true,
+    "recovery_verified": true,
+    "release_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "137991e8f54d4f9a8da3a808473ff816",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 3747977775271,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 3747977541138,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 3747977692591
+              }
+            ],
+            "verified": true
+          },
+          "40": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 3747978023376,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 3747977847490,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 3747977939479
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              3747977541138,
+              3747977775271
+            ],
+            "keycode": 38
+          },
+          {
+            "interval_ns": [
+              3747977847490,
+              3747978023376
+            ],
+            "keycode": 40
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 3772952711481,
+        "verified": true,
+        "verified_ns": 3747978366082
+      }
+    ],
+    "schema": "input-owner-recovery-v1",
+    "service_pid": 2168,
+    "trigger": "rpc_eof"
+  },
+  "recovery_pass": true,
+  "schema": "v39-v15-process-owner-xvfb-a12-raw-v1",
+  "service_wait_status": 0,
+  "session_kill_signal": 9,
+  "session_pid": 2139,
+  "session_return_code": -9,
+  "session_stderr": "",
+  "session_stdout": "",
+  "xvfb_displayfd_ready": true,
+  "xvfb_pid": 2135,
+  "xvfb_return_code": 0,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_tcp_enabled": false,
+  "xvfb_termination_requested": true
+}

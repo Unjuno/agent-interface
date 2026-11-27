@@ -1,0 +1,60 @@
+{
+  "cancel_completed_monotonic_ns": 7259877993641,
+  "cleanup_status": null,
+  "corrected_reconstruction": "The original reporter compared event time to fresh_start_ns immediately before task input. The field name says after new session, so the correct lower bound is session_start_monotonic_ns. The raw event is after new session start and before fresh task input.",
+  "final_keymap": {
+    "a": false,
+    "b": false,
+    "c": false
+  },
+  "forward_after_cancel_completed_ms": 414.045626,
+  "fresh_effect_before_task_input": [
+    4
+  ],
+  "fresh_effect_count_before_task_input": [
+    1
+  ],
+  "fresh_session_started_monotonic_ns": 7259893110477,
+  "fresh_task_input_started_monotonic_ns": 7260393037808,
+  "fresh_task_oracle": "fail",
+  "held_delay_ms": 800,
+  "old_task_oracle": "pass",
+  "original_report_late_old_a_keypress_after_new_session": false,
+  "owner_client_disconnect": {
+    "elapsed_ms": 125.11925600028917,
+    "error": "missing or ambiguous X-Resource process identity",
+    "error_type": "RuntimeError",
+    "reason": "query_failed",
+    "status": "unknown",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "owner_process_retired": true,
+  "owner_release_attempt": {
+    "reason": "owner_disconnect_not_confirmed",
+    "status": "not_attempted"
+  },
+  "proxy_client_closed_before_forward": true,
+  "proxy_forward_completed_ns": 7260292081500,
+  "proxy_forward_started_ns": 7260292039267,
+  "proxy_hold_started_ns": 7259491957375,
+  "raw_inputs": {
+    "proxy-events.jsonl_sha256": "0e1076e672dd21883d73da22abcb39271c5e7228b0f8a4c3d1c9bbb2eb402052",
+    "result.json_sha256": "187ad075280b41318bee3bc1ee55e5041caca342e2333adf3fffa736278ac560"
+  },
+  "release_confirmed": false,
+  "replay_allowed": false,
+  "schema": "agent-interface/xvfb-x11-tcp-delivery-timestamp-audit-v1",
+  "scope": "Deterministic reclassification of saved synthetic Xvfb/proxy records; no raw file was changed. Not natural network latency or local Unix-socket behavior.",
+  "stale_keypress_count": 1,
+  "stale_keypresses_on_fresh_target_before_task_input": [
+    {
+      "detail": 38,
+      "effect_committed_ns": 7260292831968,
+      "monotonic_ns": 7260292700201,
+      "type": 2,
+      "window": 2097154
+    }
+  ],
+  "test_status": "FAIL_CLEANUP"
+}

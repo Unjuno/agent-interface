@@ -1,0 +1,66 @@
+{
+  "schema": "wslc-currentmain-fakex-generation-refusal-s16-v1",
+  "attempt_id": "s16-83dfa34f5c09",
+  "created_utc": "2026-10-24T17:33:22.6031656Z",
+  "source_commit": "7a32514819294cf16297c414da5c297ed4d0d2e3",
+  "source_snapshot_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/source-py",
+  "source_manifest_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/inputs/SOURCE-PY-SHA256.json",
+  "source_manifest_sha256": "c216834ddf88f4c3bc1c945e2ffff83e4456311fe49f2b515868fce65d6a42dc",
+  "source_files": {
+    "runtime/cli_v1/test_mcp_relay_composition.py": {
+      "working_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "origin_main_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "equal": true
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/fake_socket_relay.py": {
+      "working_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "origin_main_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "equal": true
+    },
+    "runtime/cli_v1/mcp_server.py": {
+      "working_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "origin_main_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "equal": true
+    },
+    "runtime/guarded_x11_v1/process_identity.py": {
+      "working_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "origin_main_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "equal": true
+    },
+    "runtime/cli_v1/owned_guarded_session.py": {
+      "working_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "origin_main_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "equal": true
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py": {
+      "working_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb",
+      "origin_main_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb",
+      "equal": true
+    }
+  },
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action",
+  "session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-generation-refusal-s16-83dfa34f5c09",
+  "storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-generation-refusal-s16-83dfa34f5c09",
+  "container_name": "ai-control-wslc-fakex-generation-refusal-s16-83dfa34f5c09",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wheel_manifest_reference": "../wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42/inputs/wheelhouse-cp312/WHEELHOUSE-SHA256.json",
+  "wheel_manifest_sha256": "22d87feb3b0e92b144ab7e412deb3ef5cfab3d7731577a80b84b65df9cd014c8",
+  "pass": [
+    "one exact standard-caller target-generation mismatch test exits 0",
+    "raw records show current target generation differs from observed generation",
+    "input_dispatched=false and no Fake X accepted press",
+    "task_success null and replay denied",
+    "exact new container, image and isolated session cleanup receipts recorded"
+  ],
+  "fail": "Any test/receipt/cleanup failure is FAIL_OR_UNKNOWN; no retry",
+  "network": "none inside container",
+  "container_count": 1,
+  "retries": 0,
+  "scope": "Synthetic Fake X standard caller; no real GUI or OS input",
+  "runner_sha256": "a16bc656950e54c56ca00a008fc373918075e386041fdeb83bc6fd5986d03cb0",
+  "harness_source_sha256": "868458ec89dd418bbf98033ff64c3919c6e37ad900f6c26c55bf8e5ae63de5c0",
+  "harness_exe_sha256": "94367650044bd01c319e2624382f21640291a145339110dc4a080d6e0ae9ef1e",
+  "preflight": "After creating the new isolated session, run one exact-name filtered list against that named session; require empty JSON before image/container work.",
+  "fail_closed": "Nonzero/timeout/malformed/nonempty exact-name query terminates this attempt before input; no retry."
+}

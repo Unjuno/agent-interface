@@ -1,0 +1,25 @@
+{
+  "experiment_id": "v39_pr8857_wslc_xvfb_receipt_a17_20261013",
+  "classification": "WSLC_XVFB_CONSTRUCTION_INTEGRATION_TEST",
+  "pr": 8857,
+  "pr_head": "4536ebff7d71848dc86fbf1cdc4f54957eb9ce2d",
+  "base_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "image": "a09-owner-close-xvfb:20261012",
+  "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+  "image_python": "3.14.8 linux/amd64",
+  "runtime": "WSLc 3.0.1.0 on WSL 3.0.1.0",
+  "resources": {
+    "network": "none",
+    "cpu_requested": 1,
+    "memory_requested_bytes": 536870912,
+    "swap_limit": "unsupported; not claimed",
+    "source_mount": "read-only",
+    "output_mount": "separate writable output"
+  },
+  "candidate_attempts": 1,
+  "candidate_retries": 0,
+  "formal_or_live_allocation": false,
+  "scope": "One lowercase w explicit down/up through PR #8857 V3 receipt wrapper over V10 XTest owner, private Xvfb only.",
+  "container_name": "codex-wslc-pr8857-xvfb-a17-20261013",
+  "exact_command": "wslc run --rm --name codex-wslc-pr8857-xvfb-a17-20261013 --pull never --network none --cpus 1 --memory 512M --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume <study>/INPUT:/src:ro --volume <study>/results/a17-01:/out:rw --workdir /src/research/doom sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592 python experiment_candidate.py"
+}

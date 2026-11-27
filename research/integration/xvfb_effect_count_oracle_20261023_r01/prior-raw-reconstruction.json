@@ -1,0 +1,28 @@
+{
+  "scope": "Offline diagnostic from old event trace; NOT an independent live counter readback or replacement old result",
+  "source": "40da4ffd9:research/integration/xvfb_blocked_release_local_20261023_r01/result.json",
+  "derived_initial_handler_count": 1,
+  "derived_final_handler_count": 3,
+  "value_only": {
+    "status": "pass",
+    "task_success": true,
+    "checks": {
+      "initial_effect_exact": true,
+      "final_effect_exact": true,
+      "release_readback_all_up": true,
+      "horizon_readback_all_up": true
+    }
+  },
+  "counted_diagnostic": {
+    "status": "fail",
+    "task_success": false,
+    "checks": {
+      "initial_effect_exact": true,
+      "final_effect_exact": true,
+      "release_readback_all_up": true,
+      "horizon_readback_all_up": true,
+      "initial_effect_count_exact": true,
+      "final_effect_count_exact": false
+    }
+  }
+}

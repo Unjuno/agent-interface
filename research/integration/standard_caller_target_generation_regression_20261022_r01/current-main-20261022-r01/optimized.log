@@ -1,0 +1,27 @@
+test_activation_pins_source_and_rejects_destroy_before_native_request (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleBoundaries.test_activation_pins_source_and_rejects_destroy_before_native_request) ... ok
+test_capture_destroy_cannot_publish_sequence_or_history (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleBoundaries.test_capture_destroy_cannot_publish_sequence_or_history) ... ok
+test_selection_dependencies_and_cli_forwarding (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleBoundaries.test_selection_dependencies_and_cli_forwarding) ... ok
+test_cancel_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_lifecycle) ... ok
+test_cancel_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_qualified_persistence) ... ok
+test_destroy_between_final_check_and_xtest_emit (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_destroy_between_final_check_and_xtest_emit) ... ok
+test_destroy_during_initial_capture_refuses_source_through_caller (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_destroy_during_initial_capture_refuses_source_through_caller) ... ok
+test_expire_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_lifecycle) ... ok
+test_expire_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_qualified_persistence) ... ok
+test_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_healthy) ... ok
+test_isolated_observation_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_healthy) ... ok
+test_isolated_observation_modifier_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_modifier_released) ... ok
+test_modifier_prefix_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_modifier_prefix_released) ... ok
+test_reparent_remap (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_reparent_remap) ... ok
+test_same_process_destroy_reuse (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_same_process_destroy_reuse) ... ok
+test_unselected_process_only_still_allows_same_xid_residual (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_unselected_process_only_still_allows_same_xid_residual) ... ok
+test_standard_compiled_profile_uses_generation_bound_owned_caller (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_compiled_profile_uses_generation_bound_owned_caller) ... ok
+test_compiled_profile_stops_mid_action_on_process_generation_change (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change) ... ok
+test_owned_process_refuses_alias_after_target_generation_changes (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes) ... ok
+test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown)
+A new generation may proceed without rewriting the old cancel receipt. ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 17.469s
+
+OK
+EXIT_CODE=0

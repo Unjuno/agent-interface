@@ -323,7 +323,8 @@ class PartialExecutionTests(unittest.TestCase):
                     {"op": "text", "text": "done"}, {"op": "text", "text": "fault"},
                     {"op": "text", "text": "mustnotrun"}, {"op": "release_all"},
                 ]
-                with mock.patch("runtime.cli_v1.api.open_session", return_value=X11RuntimeSession(backend)):
+                with mock.patch("runtime.cli_v1.api.open_session", return_value=X11RuntimeSession(backend)), \
+                     mock.patch("runtime.backends.x11_v1.backend.time.monotonic_ns", return_value=9000):
                     row = dispatch_golden_v3(p, {"window-1": 1}, current_observation_seq=7,
                                              current_binding_revision=3)
                 self.assertEqual(calls, ["done", "fault"])

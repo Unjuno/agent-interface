@@ -1,0 +1,33 @@
+{
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "source_commit": "6c84826f1ec127e3ab95b259a4e6fff46a32a97f",
+  "run_id": "AI-LOCAL-WSL2-XVFB-PIDFD-20261023-R02",
+  "frozen_at_utc": "2026-10-23T06:30:04.739879+00:00",
+  "runtime": "local Ubuntu WSL2; not WSLc or Docker",
+  "previous_attempt": "R01 FAIL retained unchanged; no declared signal schedule entered",
+  "design_change": "Process-only readiness: two independent owned-process state observations around a 300 ms settle interval, no required X pathname transport. This does not establish X connection readiness.",
+  "hypothesis": "The frozen pause helper resumes its exact owned Linux process after normal delay and either declared post-STOP fault.",
+  "schedules": [
+    "healthy",
+    "status_read_error",
+    "timer_start_error"
+  ],
+  "samples": "one new owned Xvfb, one invocation, three predeclared schedules; stop on first failure; no retry",
+  "helper_normalized_sha256": "f13fa32bd40f266383ba0c61feaedaff7c5d8f6f40649aaddd7030a601000fec",
+  "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "python3",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xvfb_pidfd_live_20261023_r02/run_probe.py"
+  ],
+  "host_timeout_seconds": 60,
+  "pass": "Three PASS_PROCESS_SIGNALLING_SCOPED rows; healthy stopped readback T/t; every resumed readback not T/t/Z; exactly STOP/CONT through pidfds for owned child; post-run child exit and absence independently confirmed",
+  "failure": "Any unmet predicate after owned process launch; missing prerequisites before launch HOLD; execution/cleanup unknown is not PASS",
+  "input_operations": 0,
+  "wslc_allocations_consumed": 0,
+  "package_or_image_install": false,
+  "scope_limit": "Only Linux process signals. No X client, key/button input, GUI task, physical release, hard deadline, efficiency or reliability evidence."
+}

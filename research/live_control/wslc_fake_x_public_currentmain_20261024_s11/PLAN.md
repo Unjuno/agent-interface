@@ -1,0 +1,5 @@
+# S11 — independent WSLc replication of S10 Fake X characterization
+
+S10 passed the current-main Fake X public-path characterization in normal and optimized modes. S11 is a separate confirmatory attempt: unchanged probe semantics, identical digest-pinned dependencies and audit threshold, but a new WSLc session, storage path, container and native harness output directory. S10 remains immutable. This tests repeatability across an independent local WSLc session; it does not increase the claim beyond Fake X portability.
+
+**H/T/D/C/U:** H: the same three cases produce the same scoped audit status in a fresh WSLc session. T: verify current baseline, 247-file freeze and all 203 dependency bytes, build the API harness locally, and run exactly one session, one pinned image pull and one no-network container. D: both normal/optimized audits must each pass 26 checks and reject four mutations with exact cleanup; any failure ends S11 without retry. C: independent container startup, process scheduling or test timing may differ. U: no real X, physical input, GUI/app, cancellation, recovery proof, task effect, MAP01, efficiency or live-control claim.

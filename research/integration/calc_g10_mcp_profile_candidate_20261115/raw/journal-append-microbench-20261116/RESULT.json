@@ -1,0 +1,284 @@
+{
+  "schema": "receipt-journal-append-microbench-v1",
+  "source_journal_sha256": "6f042128467e027b1412862a0d74b83a7e3c8fef462f9c925aaa7693c1f69260",
+  "source_journal_bytes": 46796,
+  "records": 38,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "timings": [
+    {
+      "sequence": 1,
+      "reference": "public-observation-c722dcc9184846259d04c180471b5ad9",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1007,
+      "append_elapsed_ns": 35884900
+    },
+    {
+      "sequence": 2,
+      "reference": "observation-1",
+      "kind": "observation",
+      "payload_canonical_bytes": 1308,
+      "append_elapsed_ns": 37207900
+    },
+    {
+      "sequence": 3,
+      "reference": "mint-field",
+      "kind": "mint",
+      "payload_canonical_bytes": 370,
+      "append_elapsed_ns": 48209600
+    },
+    {
+      "sequence": 4,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-1-plan",
+      "kind": "compiled",
+      "payload_canonical_bytes": 1012,
+      "append_elapsed_ns": 38055400
+    },
+    {
+      "sequence": 5,
+      "reference": "public-observation-937be3e91fd54cf1ba5e07ca2512f618",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 37061000
+    },
+    {
+      "sequence": 6,
+      "reference": "observation-2",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 37182700
+    },
+    {
+      "sequence": 7,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-2-observation",
+      "kind": "compiled",
+      "payload_canonical_bytes": 313,
+      "append_elapsed_ns": 49139500
+    },
+    {
+      "sequence": 8,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-3-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 93,
+      "append_elapsed_ns": 59246800
+    },
+    {
+      "sequence": 9,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-4-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 144,
+      "append_elapsed_ns": 49136100
+    },
+    {
+      "sequence": 10,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-5-reference",
+      "kind": "compiled",
+      "payload_canonical_bytes": 487,
+      "append_elapsed_ns": 37244900
+    },
+    {
+      "sequence": 11,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-6-admission",
+      "kind": "compiled",
+      "payload_canonical_bytes": 671,
+      "append_elapsed_ns": 26085500
+    },
+    {
+      "sequence": 12,
+      "reference": "public-observation-916fbb2c44274e55a34e174620e10244",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 38056200
+    },
+    {
+      "sequence": 13,
+      "reference": "observation-3",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 26127000
+    },
+    {
+      "sequence": 14,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-7-input_dependency",
+      "kind": "compiled",
+      "payload_canonical_bytes": 255,
+      "append_elapsed_ns": 36971500
+    },
+    {
+      "sequence": 15,
+      "reference": "program-guarded-553dbf654ce64463967f649943f7f7d3",
+      "kind": "program",
+      "payload_canonical_bytes": 389,
+      "append_elapsed_ns": 60227100
+    },
+    {
+      "sequence": 16,
+      "reference": "public-observation-fc5c2487b8394d4d82bb6c48d630e695",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 26047300
+    },
+    {
+      "sequence": 17,
+      "reference": "observation-4",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 37178100
+    },
+    {
+      "sequence": 18,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-8-input_dependency",
+      "kind": "compiled",
+      "payload_canonical_bytes": 260,
+      "append_elapsed_ns": 26967400
+    },
+    {
+      "sequence": 19,
+      "reference": "public-observation-414774f8a7b24bb2bad141c63069997c",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 37193500
+    },
+    {
+      "sequence": 20,
+      "reference": "observation-5",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 38037600
+    },
+    {
+      "sequence": 21,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-9-input_dependency",
+      "kind": "compiled",
+      "payload_canonical_bytes": 257,
+      "append_elapsed_ns": 37198300
+    },
+    {
+      "sequence": 22,
+      "reference": "public-dispatch-guarded-553dbf654ce64463967f649943f7f7d3",
+      "kind": "public-dispatch",
+      "payload_canonical_bytes": 505,
+      "append_elapsed_ns": 37172000
+    },
+    {
+      "sequence": 23,
+      "reference": "result-b900ce795d654d04b1d8c7471dc51081",
+      "kind": "result",
+      "payload_canonical_bytes": 2684,
+      "append_elapsed_ns": 26984900
+    },
+    {
+      "sequence": 24,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-10-execution",
+      "kind": "compiled",
+      "payload_canonical_bytes": 2904,
+      "append_elapsed_ns": 37189600
+    },
+    {
+      "sequence": 25,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-11-terminal",
+      "kind": "compiled",
+      "payload_canonical_bytes": 207,
+      "append_elapsed_ns": 37122800
+    },
+    {
+      "sequence": 26,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-12-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 222,
+      "append_elapsed_ns": 26944100
+    },
+    {
+      "sequence": 27,
+      "reference": "public-observation-129083fc62e24400bd25845d3f59e4fd",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 37146900
+    },
+    {
+      "sequence": 28,
+      "reference": "observation-6",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 37141500
+    },
+    {
+      "sequence": 29,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-13-observation",
+      "kind": "compiled",
+      "payload_canonical_bytes": 311,
+      "append_elapsed_ns": 26987900
+    },
+    {
+      "sequence": 30,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-14-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 91,
+      "append_elapsed_ns": 48297100
+    },
+    {
+      "sequence": 31,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-15-effect",
+      "kind": "compiled",
+      "payload_canonical_bytes": 434,
+      "append_elapsed_ns": 27026300
+    },
+    {
+      "sequence": 32,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-16-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 386,
+      "append_elapsed_ns": 70332700
+    },
+    {
+      "sequence": 33,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-17-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 141,
+      "append_elapsed_ns": 48203000
+    },
+    {
+      "sequence": 34,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-18-event",
+      "kind": "compiled",
+      "payload_canonical_bytes": 108,
+      "append_elapsed_ns": 37966700
+    },
+    {
+      "sequence": 35,
+      "reference": "compiled-35d0c3bb361d4e3197d53b253ac2100f-19-receipt",
+      "kind": "compiled",
+      "payload_canonical_bytes": 2561,
+      "append_elapsed_ns": 37241700
+    },
+    {
+      "sequence": 36,
+      "reference": "public-observation-bdeacd5fd5654e80b4a1f347ce04f909",
+      "kind": "public-observation",
+      "payload_canonical_bytes": 1017,
+      "append_elapsed_ns": 48139100
+    },
+    {
+      "sequence": 37,
+      "reference": "observation-7",
+      "kind": "observation",
+      "payload_canonical_bytes": 1318,
+      "append_elapsed_ns": 26806700
+    },
+    {
+      "sequence": 38,
+      "reference": "session-close",
+      "kind": "session-close",
+      "payload_canonical_bytes": 268,
+      "append_elapsed_ns": 37213300
+    }
+  ],
+  "summary": {
+    "append_total_ns": 1466374600,
+    "append_median_ns": 37191550.0,
+    "append_p95_ns": 59246800,
+    "append_min_ns": 26047300,
+    "append_max_ns": 70332700,
+    "final_journal_bytes": 46796
+  }
+}

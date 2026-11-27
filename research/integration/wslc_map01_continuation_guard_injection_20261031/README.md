@@ -1,0 +1,14 @@
+# MAP01 continuation guard under injected HUD change
+
+This WSLc fault-injection series extends #9897. After a cancelled attack, verified release, visual 49 cue, fresh window review and refusal of the old alias, the caller prepares a preplanned guarded follow-up. An independent X11 client injects an 8x8 magenta child window over the HUD crop after the `before_focus` verification captured a valid 49 image and before the next input check. A test-only synchronization barrier makes this ordering deliberate; the barrier is not a production mechanism. The overlay remains until dispatch returns. Each four-run batch uses fire/inject/inject/fire order, identical source within the batch, and fresh private network-none WSLc containers: Freedoom2 MAP01 ASYNC_SPECTATOR 35 tics/s, seed 991031, skill 1, 1 CPU, 1 GiB, image sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25. Main was 075c39ffda178af61e329f9df6f741fff023cde2; runtime Python matched 6a9c787d2caf9740612de65bd2539846dd87cad4 in #9891 and intervening commits add research records only.
+
+| Runs | Follow-up | Guard result | Program input emissions | Evaluator ammo |
+| --- | --- | --- | ---: | --- |
+| x01, x04 | no overlay | completed, HUD check true before press | 2 each | 49 → 48 |
+| x02, x03 | overlay, original reference position | native reference MISSING before HUD pre-press callback | 0 each | 49 → 49 |
+| x05, x08 | no overlay, reference moved away | completed, HUD check true before press | 2 each | 49 → 48 |
+| x06, x07 | overlay, reference moved away | HUD dependency false before press, execution failed | 0 each | 49 → 49 |
+
+The first injection also intersected the native reference region, so it cannot prove the separate HUD predicate stopped the input. The second batch moves that reference outside the overlay; its `before_key_press:f` callback observed a crop different from the 49 template and returned false. The backend then refused the additional dependency, released inputs, and emitted no program key input. The corresponding controls completed and verified release. The original cancelled action's effect remains unknown; telemetry is evaluator-only. The callback reads saved observations, and `python audit.py` reconstructs the crop from each actual full-screen capture, checks guard and overlay ordering, native reference refusal, emissions, releases, stale alias refusal, controls and all eight retained traces.
+
+This is a narrow synchronized fault injection, not proof of atomic checking: the UI could change after the final screenshot and before the key event. The exact template can also be spoofed, and a HUD change is not a semantic task-effect proof or general replay authorization. No model was called and no enemy hit, production recovery or MAP01 completion is claimed. Source, all screenshots, receipts, conditions and failed/controlled runs are in the ZIP files.

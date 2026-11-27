@@ -1,0 +1,28 @@
+import hashlib,json,pathlib,re,sys
+root=pathlib.Path(__file__).parent; run=root/'run'; raw=run/'fake-x-raw'
+checks=[]
+def c(n,v):checks.append({'name':n,'passed':bool(v)})
+pre=json.loads((root/'PREREGISTRATION.json').read_text(encoding='utf-8-sig')); cond=json.loads((root/'CONDITIONS.json').read_text(encoding='utf-8-sig'))
+result=json.loads((run/'result.json').read_text()); cleanup=json.loads((run/'resource-cleanup.json').read_text()); log=(run/'harness.stdout.txt').read_text(encoding='utf-8'); test=(run/'test.stderr.txt').read_text(encoding='utf-8')
+c('preregistered_source_matches_main',all(x['equal'] and x['working_sha256']==x['origin_main_sha256'] for x in pre['source_files'].values()))
+c('source_manifest_1433_files_verified',cond['source_snapshot_files']==1433 and cond['source_snapshot_all_hashes_verified'] is True)
+c('runtime_version_3030','"Major":3' in log and '"Minor":0' in log and '"Revision":3' in log)
+c('new_path_absent_before_session',cond['storage_path_absent_before_start'] is True)
+c('exact_name_preflight_empty_scoped',pre['container_name'] in log and pre['session_name'] in log and '"exit":0' in log and '"stdout":""' in log and '"stderr":""' in log)
+c('pinned_image_and_no_network_container',pre['image']=='python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f' and '"network":"none"' in log)
+c('read_only_mounts',all(x in log for x in ('"source_read_only":true','"wheels_read_only":true','"runner_read_only":true')))
+c('offline_wheel_count',result['wheel_count']==31 and result['network']=='disabled in container')
+c('one_test_passed',result['exit_code']==0 and 'Ran 1 test' in test and test.rstrip().endswith('OK'))
+c('result_status_scoped_pass',result['status']=='PASS_FAKE_X_TARGET_GENERATION_REFUSAL_SCOPED')
+c('python31214',result['python'].startswith('3.12.14'))
+manifest=json.loads((run/'fake-x-raw-manifest.json').read_text()); entries={x['name']:x for x in manifest}; c('13_raw_records',result['raw_file_count']==13 and len(entries)==13 and len(list(raw.iterdir()))==13)
+c('raw_bytes_and_hashes_match',all((raw/n).is_file() and (raw/n).stat().st_size==x['bytes'] and hashlib.sha256((raw/n).read_bytes()).hexdigest()==x['sha256'] for n,x in entries.items()))
+ref=json.loads((raw/'target-generation-refusal.json').read_text()); sg=ref['source_generation']; cg=ref['current_generation']; c('generation_sha256_values_differ',re.fullmatch('[0-9a-f]{64}',sg or '') is not None and re.fullmatch('[0-9a-f]{64}',cg or '') is not None and sg!=cg)
+c('caller_refused_pre_dispatch',ref['result']['status']=='refused' and ref['result']['guard_checks'][0]['reason']=='process_generation_changed_or_missing' and ref['result']['input_dispatched'] is False)
+c('no_fake_press_receipt',ref['relay_press_seen'] is False and 'fake-x-accepted-press.json' not in entries)
+states=[json.loads((raw/f'identity-channel-state-{i}.json').read_text()) for i in (1,2)]; c('identity_channel_has_no_target_request',all(x['target_request'] is None for x in states))
+c('task_success_null_replay_denied',result['task_success'] is None and result['replay']=='denied' and ref['task_success'] is None and ref['replay_allowed'] is False)
+c('container_deleted_image_deleted_session_terminated',cleanup['deleted'] is True and cleanup['imageDeleted'] is True and cleanup['terminated'] is True and cleanup['exit']==0 and cleanup['failure'] is None)
+st=json.loads((root/'STORAGE-CLEANUP-STATUS.json').read_text(encoding='utf-8-sig')); vp=pathlib.Path(st['path']); c('isolated_storage_hash_matches',vp.is_file() and vp.stat().st_size==st['bytes'] and hashlib.sha256(vp.read_bytes()).hexdigest()==st['sha256'])
+a={'status':'PASS_SCOPED' if all(x['passed'] for x in checks) else 'FAIL_AUDIT','checks_passed':sum(x['passed'] for x in checks),'checks_total':len(checks),'checks':checks,'scope':'WSLc synthetic Fake X standard-caller target-generation refusal; not real GUI/input/task success'}
+(root/'AUDIT.json').write_text(json.dumps(a,indent=2,sort_keys=True)+'\n',encoding='utf-8');print(json.dumps(a,indent=2));sys.exit(0 if all(x['passed'] for x in checks) else 1)

@@ -1,0 +1,9 @@
+# Post-crash effect-reconciliation bootstrap — #8900
+
+- **Status:** Unverified transfer and evaluation-method proposal; no allocation or result is recorded.
+- **Source:** Open [Issue #8900](https://github.com/Unjuno/agent-interface/issues/8900).
+- **Idea:** Test whether a finite dependency graph can safely reacquire evidence for an in-doubt external effect after restart, using an independently rooted, read-only source while action and retry authority remain revoked. A missing or unavailable witness remains `UNKNOWN`.
+- **Relation to prior work:** #7802/#7807 separate external-effect truth from local durable receipts; #5970 models typed bootstrap reachability from independent seeds; #7042 studies reset scope. #8900 composes these questions for cross-domain effect reconciliation without claiming a GUI effect is transactional or exactly once.
+- **Proposed minimum test:** Exhaustively enumerate a small typed state graph and compare local-bits-only, always-UNKNOWN, and root-seeded staged reconciliation. Include valid independent roots, stale or shared-fault-domain roots, cycles, insufficient evidence, contradictory state, unavailable truth, and deadline expiry. An independent raw-only auditor checks provenance, reachable paths, classifications, and that authority never returns early.
+- **Decision boundary:** A scoped pass requires at least one valid-root case resolved beyond always-UNKNOWN with no false classifications, and every no-root/stale/cyclic/insufficient case left UNKNOWN. Any false independence claim, effect classification, or authority escape fails the method.
+- **Limits:** A finite authored root does not prove any real application has a fresh, independent effect witness. No crash, storage durability, GUI, network, action, retry, or external-effect claim follows from this method rung.

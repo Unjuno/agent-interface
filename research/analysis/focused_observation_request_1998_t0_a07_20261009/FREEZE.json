@@ -1,0 +1,49 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A07-20261009",
+  "auditor_invocations": 1,
+  "base_main_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "candidate_invocations": 1,
+  "case_count": 22,
+  "code_sources": {
+    "auditor.py": "bdbf2025dcb2068ac83aafc094892e3bbf973d931a5070806e054cfde1140c1f",
+    "candidate.py": "c311c66edf34be867d377378b6f79012bd76f06179b3fa1434a9a2ad34a250da",
+    "formal_runner.py": "35ad533718e81da237c3eb5f55cec7ad4377e0b4d8171ac5c20bd36f78d3448e",
+    "freeze_sources.py": "3331be1957acbcb570b6a7883ef95fd8ea4fec15d7ec6f5b5976a358d86984fa",
+    "test_construction.py": "5f2dec4af2af04c05dc193a9d387b536817d1756ef17bef4c62063ba00e5a15c"
+  },
+  "design_sha256": "a568c53f3a14f247228c86d75fd2dc7af29b42c6b2bcad1c215bcbb94bf11737",
+  "frame_count": 2,
+  "inputs": {
+    "research/analysis/focused_observation_request_1998_t0_a07_20261009/ENVIRONMENT.md": "e3fbf0c68bb0d6cc428b7eff8ac1d9f5763b70849c7394131f2a2b10597e45de",
+    "research/analysis/focused_observation_request_1998_t0_a07_20261009/design.json": "a568c53f3a14f247228c86d75fd2dc7af29b42c6b2bcad1c215bcbb94bf11737",
+    "research/analysis/focused_observation_request_successor_1935_v1/MANIFEST.json": "cd3294d96de0486bfac21b9d85f46f9fb8d7118556079799e38651dac1d47e33",
+    "research/analysis/focused_observation_request_successor_1935_v1/PLAN.md": "e0af10d208e23ed3739ccf5a3939136c1ec5d4d15239a1f1029ded887995afe4",
+    "research/analysis/focused_observation_request_successor_1935_v1/REPORT.md": "72f2e8e16a936ddc3d137f0e0e1cbf10943ce1a14035b53554050b22ddf406cd",
+    "research/analysis/focused_observation_request_successor_1935_v1/RESULT.json": "9c512403985beb7217bc25fdd2634ec3fa55d0c440fb44c91a0a173ce9b4766b",
+    "research/analysis/focused_observation_request_successor_1935_v1/audit.py": "ae0c07905a8cf16d9e6dd9d355698055ed0da20f6fbd35b60505f1d0c785b6a9",
+    "research/analysis/focused_observation_request_successor_1935_v1/experiment.py": "9f8681d909d8217cda93ba14116e1f68b62d3d9cbd9203f4254088d77e084acc"
+  },
+  "kernel_release": "27.0.0",
+  "machine": "arm64",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "predecessor": "focused_observation_request_successor_1935_v1",
+  "python_executable": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+  "python_version": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "request_templates_per_frame": 11,
+  "retries": 0,
+  "runtime": {
+    "container_engine_probe": {
+      "exit": 0,
+      "output": "29.4.0 linux/arm64\n"
+    },
+    "container_engine_probe_sha256": "58c3d29a3b6250d8531b9193eb531e6cd5db815c165c84926c65005fe7caaeb7",
+    "mode": "native-host-fallback",
+    "python_image_probe": {
+      "exit": 1,
+      "output": "\nError response from daemon: rpc error: code = Unknown desc = blob sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9: operation not supported\n"
+    },
+    "python_image_probe_sha256": "852fa98ce23f930b8dd85be71bde93ff7203f73420753284a6ce940b060f6de8"
+  },
+  "schema": "a07-freeze-v1",
+  "scope": "finite synthetic focused-observation request semantics only"
+}

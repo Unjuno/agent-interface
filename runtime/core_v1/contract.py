@@ -75,6 +75,7 @@ COORDINATE_FRAMES = frozenset({
 BUTTONS = frozenset({"left", "middle", "right", "x1", "x2"})
 IDENT_RE = re.compile(r"^[A-Za-z0-9._-]{1,64}$")
 KEY_RE = re.compile(r"^[A-Za-z0-9._+-]{1,32}$")
+KEY_ENCODINGS = frozenset({"virtual_key", "scan_code"})
 
 ERROR_CODES = frozenset({
     "UNSUPPORTED_CAPABILITY",
@@ -207,6 +208,15 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
     _need(isinstance(source, dict), "source must be object")
     _bounded_int(source.get("observation_seq"), "source.observation_seq", 0, 2**63 - 1)
     _bounded_int(source.get("binding_revision"), "source.binding_revision", 0, 2**63 - 1)
+    if "target_generations" in source:
+        target_generations = source["target_generations"]
+        _need(isinstance(target_generations, dict) and len(target_generations) <= 128,
+              "source.target_generations must be an object with at most 128 targets")
+        for target, generation in target_generations.items():
+            _identifier(target, "target generation target")
+            _need(isinstance(generation, str)
+                  and re.fullmatch(r"[0-9a-f]{64}", generation) is not None,
+                  "target generation must be a lowercase SHA-256 digest")
 
     authority = program.get("authority")
     _need(isinstance(authority, dict), "authority must be object")
@@ -224,6 +234,7 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
     _need(ops[-1].get("op") == "release_all", "release_all must be final operation")
 
     held_keys: set[str] = set()
+    held_key_encodings: dict[str, str | None] = {}
     held_buttons: set[str] = set()
 
     for index, op in enumerate(ops):
@@ -242,15 +253,25 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
                 _need(isinstance(keys, list) and 1 <= len(keys) <= 5, "invalid chord keys")
                 normalized = [_key(key) for key in keys]
                 _need(len(normalized) == len(set(normalized)), "duplicate key in chord")
+                encoding = op.get("encoding")
+                _need(encoding is None or (isinstance(encoding, str) and encoding in KEY_ENCODINGS),
+                      "invalid key encoding")
             elif op_type == "key_state":
                 key = _key(op.get("key"))
                 _need(type(op.get("down")) is bool, "key_state.down must be bool")
+                encoding = op.get("encoding")
+                _need(encoding is None or (isinstance(encoding, str) and encoding in KEY_ENCODINGS),
+                      "invalid key encoding")
                 if op["down"]:
                     _need(key not in held_keys, f"key {key} already held")
                     held_keys.add(key)
+                    held_key_encodings[key] = encoding
                 else:
                     _need(key in held_keys, f"key {key} released while not held")
+                    _need(encoding is None or encoding == held_key_encodings[key],
+                          f"key {key} released with a different encoding")
                     held_keys.remove(key)
+                    held_key_encodings.pop(key, None)
             elif op_type == "text":
                 text = op.get("text")
                 _need(isinstance(text, str) and len(text) <= 16384, "invalid text")
@@ -285,6 +306,7 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
             elif op_type == "release_all":
                 _need(len(op) == 1, "release_all has no arguments")
                 held_keys.clear()
+                held_key_encodings.clear()
                 held_buttons.clear()
             else:
                 raise ContractError(f"unsupported op {op_type}")

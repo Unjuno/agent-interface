@@ -1,0 +1,20 @@
+test_actual_client_process_abrupt_exit_leaves_service_to_release (__main__.OwnedOwnerProcessTests.test_actual_client_process_abrupt_exit_leaves_service_to_release) ... ok
+test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade (__main__.OwnedOwnerProcessTests.test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade) ... ok
+test_module_available (__main__.OwnedOwnerProcessTests.test_module_available) ... ok
+test_normal_close_binds_saved_receipts_and_owned_process_exit (__main__.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit) ... FAIL
+test_owner_process_death_has_no_acceptable_release_receipt (__main__.OwnedOwnerProcessTests.test_owner_process_death_has_no_acceptable_release_receipt) ... ok
+test_wrong_generation_and_overwrite_are_refused (__main__.OwnedOwnerProcessTests.test_wrong_generation_and_overwrite_are_refused) ... ok
+
+======================================================================
+FAIL: test_normal_close_binds_saved_receipts_and_owned_process_exit (__main__.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 117, in test_normal_close_binds_saved_receipts_and_owned_process_exit
+    self.assertIn('bytes_b64',metadata,'Saved raw must survive newline projection')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'bytes_b64' not found in {'sha256': '2b94aaa054d5a497a8b280a23ce2f1526fb6fbc8fae2c25800d1b7d86a07c41e', 'text': '{\n  "context_exit_success": true,\n  "directory_fsync_requested": false,\n  "file_fsync": true,\n  "identity": {\n    "display": ":fake",\n    "owner_id": "b29c2656a33c44ebb857e9358622bc9d",\n    "parent_pid": 31736,\n    "pid": 60308,\n    "service_id": "d4538204d55946bab1ae59fc40b08e30",\n    "supervisor_pid": 31736\n  },\n  "initial_verification": true,\n  "owner_thread_stopped": true,\n  "recovery_sha256": "ff2f4bf89af4aec083814a0d5ea2ad6c65e3684b96d5879c7c6d6e0234a9f075",\n  "schema": "owned-owner-finish-v3",\n  "service_error": null,\n  "startup_sha256": "9646f75252147da3f67f25320154927c22ac8abfd2e83780bfc0c56c33a429ab",\n  "verified": true\n}\n'} : Saved raw must survive newline projection
+
+----------------------------------------------------------------------
+Ran 6 tests in 8.975s
+
+FAILED (failures=1)

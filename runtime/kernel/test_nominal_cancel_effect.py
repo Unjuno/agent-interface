@@ -50,6 +50,21 @@ class JointRefusalRecoveryTests(unittest.TestCase):
         self.assertIsNone(flow.outcome().command_id)
         self.assertFalse(flow.outcome().effect_occurred)
 
+    def test_pre_authority_stop_without_release_does_not_claim_release_evidence(self):
+        for prepare in (
+            lambda flow: None,
+            lambda flow: flow.record_observation(observation()),
+            lambda flow: (flow.record_observation(observation()), flow.bind(binding())),
+        ):
+            with self.subTest(stage=prepare.__name__):
+                flow = RequestLifecycle()
+                prepare(flow)
+                flow.stop('cancelled before authority')
+                result = flow.outcome()
+                self.assertIsNone(result.command_id)
+                self.assertFalse(result.effect_occurred)
+                self.assertFalse(result.release_verified)
+
     def test_rejected_begin_does_not_claim_possible_effect(self):
         flow = self.authorized()
         with self.assertRaises(ContractError):

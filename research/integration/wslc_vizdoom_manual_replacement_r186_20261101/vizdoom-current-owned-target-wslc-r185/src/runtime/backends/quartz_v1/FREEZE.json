@@ -1,0 +1,39 @@
+{
+  "schema": "agent_interface_quartz_backend_freeze_v1",
+  "task": "RUNTIME-QUARTZ-BACKEND-V1-20260917-001",
+  "issue": 631,
+  "integration_base": "1293f827ec758aaa380201fc718bc6e42151459b",
+  "branch": "integration/runtime-quartz-v1-20260917",
+  "native_measured_cases_before_freeze": 0,
+  "container_preflight": {
+    "py_compile": "PASS",
+    "pure_helper_tests": {"passed": 2, "total": 2},
+    "native_claim": false
+  },
+  "source_blobs": {
+    "runtime/backends/quartz_v1/backend.py": "ed6fa7ac35cb3774de4386656e1b7bef51506b71",
+    "runtime/backends/quartz_v1/session.py": "b34d6ef1e5583ade0a07a3ef72068c2e0c3446a7",
+    "runtime/backends/quartz_v1/fixture_app.py": "e84a32cbe2cac65fb7b5fad22fcad18912521498",
+    "runtime/backends/quartz_v1/test_integration.py": "0a5ae031561c515b406b6003c3acee5377e07e00"
+  },
+  "preexisting_probe_evidence": {
+    "runner": "macos-26-arm64",
+    "accessibility": "granted",
+    "screen_recording": "granted",
+    "display": "1024x768",
+    "authority_granted_by_probe": false
+  },
+  "native_schedule": [
+    "actual permission manifest",
+    "valid native dialog effect+capture+release",
+    "physical pointer move readback",
+    "stale observation zero-events",
+    "stale binding zero-events",
+    "expired lease zero-events",
+    "unknown target native-preflight refusal",
+    "invalid Unicode native-preflight refusal",
+    "unsupported coordinate frame core refusal"
+  ],
+  "same_identity_rerun_budget": 0,
+  "promotion_requires_native_macos_pass": true
+}

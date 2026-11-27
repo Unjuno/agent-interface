@@ -23,6 +23,21 @@ python -m unittest -v runtime.backends.x11_v1.test_integration
 
 Promotion beyond this candidate still requires supported-host/application coverage.
 
+## Recovery custody when reusing a backend
+
+Failed release is retained on the backend object across serialized session
+wrappers. Constructing a new wrapper or directly calling backend cleanup does
+not reset recovery state. Explicit verified `session.recover_input()` acknowledges
+that wrapper's recovery epoch; wrappers predating the failure need their own
+acknowledgement. This prevents sibling recovery from reviving an old guarded
+alias. Use the guarded bridge's recovery method for its binding/history revocation
+and review requirement. Assigning `recovery_required=False` is not recovery.
+
+The [Fake X construction record](../../../research/live_control/x11_backend_recovery_custody_20261016/README.md)
+includes held/empty-ledger counterexamples and an unsafe no-epoch control.
+Callers still serialize use. This is not concurrent, cross-backend/process or
+durable custody, and does not qualify native/physical release bounds.
+
 ## Preflight refusal evidence
 
 A BACKEND_CONSTRAINT refusal before the execution loop explicitly records

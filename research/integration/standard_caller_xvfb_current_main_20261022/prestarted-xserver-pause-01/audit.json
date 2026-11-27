@@ -1,0 +1,108 @@
+{
+  "baseline_main": "b3fdbee40cce6e9040c9a3a9360ea35cc692995e",
+  "candidate_commit": "a85868f5deb36616db972b83edb591593db6986f",
+  "candidate_test_commit": "a85868f5deb36616db972b83edb591593db6986f",
+  "checks": {
+    "admission_to_response_within_300ms": true,
+    "all_candidate_source_hashes_match": true,
+    "all_raw_hashes_match": true,
+    "baseline_and_candidate_identity_match_frozen_conditions": true,
+    "caller_returned_while_xvfb_still_paused": true,
+    "fresh_generation_distinct_and_task_oracle_pass": true,
+    "independent_release_readback_all_up": true,
+    "late_horizon_all_up_and_no_delayed_old_press": true,
+    "old_cancellation_remained_unknown_and_replay_denied": true,
+    "only_test_harness_changed_from_baseline": true,
+    "pending_response_kept_unknown_fence": true,
+    "private_socket_namespace_ready": true,
+    "release_readback_completed_after_server_resumed": true,
+    "release_readback_within_100ms_after_resume": true,
+    "terminal_within_5s_from_admission": true,
+    "test_exited_zero": true,
+    "xvfb_cleanup_confirmed": true,
+    "xvfb_exited_zero": true,
+    "xvfb_pause_timer_resumed_without_error": true,
+    "xvfb_process_pause_duration_within_bound": true
+  },
+  "fresh_task_oracle": {
+    "checks": {
+      "all_keys_up_at_horizon": true,
+      "new_task_effect_after_input": true,
+      "new_task_effect_at_horizon": true,
+      "new_task_keys_up_after_input": true,
+      "new_task_precondition_exact": true,
+      "no_old_delayed_press_after_new_session": true,
+      "old_fence_unchanged_after_fresh_task": true,
+      "old_unknown_fence_preserved": true
+    },
+    "expected_effect": [
+      3
+    ],
+    "runtime_task_success": null,
+    "scope": "same-Xvfb fresh session while old cancel fence remains UNKNOWN",
+    "status": "pass",
+    "task_success": true
+  },
+  "limitations": [
+    "one 1.5 s stopped-process schedule, not reliability",
+    "test-only SIGSTOP of private Xvfb; no host-wide I/O or physical input",
+    "release occurs after X server resumes; no release is claimed while X server is stopped",
+    "fresh task oracle is synthetic and runtime task_success remains null",
+    "no physical GUI/MAP01, matched efficiency, or WSLc portability"
+  ],
+  "overall": "PASS_SCOPED_PAUSE_WITHIN_ADMISSION_BUDGET_AND_POST_RESUME_RECOVERY",
+  "raw_file_count": 24,
+  "raw_hashes_match": true,
+  "run_id": "AI-XVFB-SERVER-PAUSE-BOUNDARY-20261022-R01",
+  "runtime_fence": {
+    "late_server_request_possible": true,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "UNKNOWN",
+    "task_success": null
+  },
+  "schema": "agent-interface/xvfb-server-pause-audit-v1",
+  "source_hashes": [
+    {
+      "actual_sha256": "13835bdf8cdaac9313c006f984b01a1c8b4be21ca5b71ed244c759f7343c868a",
+      "expected_sha256": "13835bdf8cdaac9313c006f984b01a1c8b4be21ca5b71ed244c759f7343c868a",
+      "match": true,
+      "path": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py"
+    },
+    {
+      "actual_sha256": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "expected_sha256": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_guarded.py"
+    },
+    {
+      "actual_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "expected_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "match": true,
+      "path": "runtime/cli_v1/owned_guarded_session.py"
+    },
+    {
+      "actual_sha256": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "expected_sha256": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_server.py"
+    },
+    {
+      "actual_sha256": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "expected_sha256": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "match": true,
+      "path": "runtime/cli_v1/test_synthetic_task_oracle.py"
+    }
+  ],
+  "timings_ms": {
+    "admission_to_response": 253.56582,
+    "admission_to_terminal": 1513.071811,
+    "cancel_start_to_delayed_request_horizon": 8504.672452,
+    "pre_admission_harness_overhead": 54.687156,
+    "test_call_start_to_response": 308.252976,
+    "xvfb_pause_observed": 1500.674441,
+    "xvfb_resume_to_independent_parent_readback": 98.039206,
+    "xvfb_resume_to_supervisor_release_readback": 59.355231
+  },
+  "wrapper_status": "not captured by the initial execution-tool response; candidate and Xvfb exit codes are preserved; candidate was not retried"
+}

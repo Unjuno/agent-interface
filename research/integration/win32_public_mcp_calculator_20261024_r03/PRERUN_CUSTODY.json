@@ -1,0 +1,40 @@
+{
+  "schema": "win32-public-mcp-calculator-r03-prerun-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r03-9950ba9bfed148f6866ae8c3872ea8e9",
+  "recorded_at_utc": "2026-10-24T02:32:10.321570+00:00",
+  "source_commit": "35bbc613e6a6b70aeadcd3f9db86ac3fc5182d12",
+  "parent_attempt": {
+    "attempt_id": null,
+    "disposition": "STOP_BEFORE_INPUT",
+    "changed_factor": "capture frame in R02; R03 changes process-session custody only"
+  },
+  "custody": {
+    "authority": "User explicitly authorized this native Windows PC for the computer-control experiment.",
+    "target": {
+      "app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+      "hwnd": 55117672,
+      "title": "電卓",
+      "fresh_sky_observation": "Standard mode, display 0, screenshot after explicit activation",
+      "foreground": "explicit activation was issued; runner rechecks foreground before starting the runtime"
+    },
+    "resource_scope": {
+      "wslc_used": false,
+      "docker_used": false,
+      "user_files_in_scope": false
+    },
+    "attempt_limits": {
+      "attempts": 1,
+      "pre_action_observations": 1,
+      "post_action_observations": 1,
+      "validations": 1,
+      "dispatches": 1,
+      "clock_reads": 1,
+      "results_polls_max": 5,
+      "recovery_calls": 0,
+      "replays": 0,
+      "wall_clock_seconds": 90,
+      "on_unexpected_or_uncertain_result": "stop; preserve UNKNOWN; no repair, replay, or retry"
+    },
+    "immutability": "R01/R02 are not modified. R03 gets a distinct attempt ID, pre-run hashes, and fresh MCP receipts."
+  }
+}

@@ -1,0 +1,48 @@
+"""No-input ABI regression: real ctypes MSG storage, fake message transport."""
+import ctypes
+from ctypes import wintypes as W
+import importlib.util
+from pathlib import Path
+import sys
+import unittest
+from unittest.mock import patch
+
+source = Path(sys.argv.pop()) if len(sys.argv) > 1 and sys.argv[-1].endswith('.py') else Path(__file__).with_name('fixture_app.py')
+spec = importlib.util.spec_from_file_location('tested_fixture', source)
+fixture = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(fixture)
+
+class NativeMessageTests(unittest.TestCase):
+    def test_dynamic_lowercase_attribute_does_not_address_native_hwnd(self):
+        message = W.MSG()
+        message.hwnd = 123
+        self.assertIsNone(message.hWnd)
+        self.assertNotIn('hwnd', dict(W.MSG._fields_))
+        message.hWnd = 456
+        native_copy = W.MSG.from_buffer_copy(bytes(message))
+        self.assertEqual(native_copy.hWnd, 456)
+        self.assertFalse(hasattr(native_copy, 'hwnd'))
+
+    def test_os_returned_keyboard_msg_dispatch_preserves_native_fields(self):
+        message = W.MSG()
+        message.hWnd, message.message, message.wParam = 456, 0x100, 65
+        message.lParam, message.time = 0x001E0001, 1000
+        source_bytes = bytes(message)
+        events, dispatched = [], []
+        class Transport:
+            calls = 0
+            def PeekMessageW(self, out, window, low, high, remove):
+                self.calls += 1
+                if self.calls > 1: return False
+                ctypes.memmove(out, ctypes.byref(message), ctypes.sizeof(message))
+                return True
+            def TranslateMessage(self, out): return True
+            def DispatchMessageW(self, out):
+                dispatched.append(ctypes.string_at(out, ctypes.sizeof(message)))
+        with patch.object(fixture, 'U', Transport()), patch.object(fixture, 'state', {'phase':'resumed','alive':True}), patch.object(fixture, 'event', lambda kind, **kw: events.append({'kind':kind, **kw})):
+            fixture.remove_and_dispatch(0, 0)
+        self.assertEqual(dispatched, [source_bytes])
+        self.assertEqual(events[0]['hwnd'], 456)
+        self.assertEqual(events[0]['wparam'], 65)
+
+if __name__ == '__main__': unittest.main()

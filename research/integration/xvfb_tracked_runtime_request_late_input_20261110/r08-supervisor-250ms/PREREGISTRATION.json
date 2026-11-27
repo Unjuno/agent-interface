@@ -1,0 +1,26 @@
+{
+  "allocation": "local-cached-image-construction-r08-supervisor-250ms-20261110",
+  "comparator": "R06 standard caller on same source/image/250ms/two-a task/cancel parameters; sequential and not randomized.",
+  "condition": {
+    "cancel_ack_withhold_s": 1.0,
+    "delay_ms": 250,
+    "fixture_extra_key_injection": false,
+    "prestarted_cancel_supervisor": true,
+    "runtime_actions": [
+      "key_chord a",
+      "key_chord a"
+    ],
+    "runtime_key": "a",
+    "tracked_delayed_second_press": true
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "purpose": "Determine whether the prestarted supervisor changes completion-after-cancel, release evidence, old-task effect, or fresh-task outcome at the previously observed boundary.",
+  "schema": "agent-interface/xvfb-tracked-runtime-supervisor-comparison-prereg-v1",
+  "scope_limit": "Private Xvfb/synthetic application only. No WSLc, live application, network delay, or model call.",
+  "source_commit": "0f2859c732",
+  "source_sha256": "987215f513c285389f8550baab21ea55ed2d8c4976c35f2415e383c2bf269e47",
+  "stop_rule": "one attempt; retain all output; no retry."
+}

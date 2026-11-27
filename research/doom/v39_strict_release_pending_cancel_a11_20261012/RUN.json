@@ -1,0 +1,30 @@
+{
+  "experiment_id": "v39_strict_release_pending_cancel_integration_a11_20261012",
+  "date": "2026-10-12",
+  "result": "PASS_CONSTRUCTION_ONLY",
+  "command": "wslc run --rm --pull never --network none --cpus 1 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume <package>:/src:ro --workdir /src python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd python [-O] -m unittest -v test_strict_release_pending_cancel_integration",
+  "runtime": {
+    "wslc": "3.0.1.0",
+    "python": "3.14.8",
+    "platform": "linux/amd64",
+    "image_id": "sha256:16cfda0e6a1d9077709d0cbcd378562b025bb82d8243de633da2ab31d6489cb7"
+  },
+  "source_mount": "read-only",
+  "network": "none",
+  "cpu_requested": 1,
+  "memory_requested_bytes": 536870912,
+  "swap_warning": "WSL kernel reports swap limit capabilities unsupported; no swap limit claim",
+  "test_results": {
+    "normal": {
+      "tests": 2,
+      "passed": 2,
+      "exit": 0
+    },
+    "optimized": {
+      "tests": 2,
+      "passed": 2,
+      "exit": 0
+    }
+  },
+  "scope": "Synthetic source composition; planner, executor and terminal receipt fixture are simulated. No game, GUI, OS input, model, GPU or live allocation."
+}

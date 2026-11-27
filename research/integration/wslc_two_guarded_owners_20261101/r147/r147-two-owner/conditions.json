@@ -1,0 +1,9 @@
+{
+  "allocation": "idle-two-owner-same-key-r147",
+  "mode": "two-owner",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "manifest_sha256": "688cf1de2efb400b3ae77401f32abc125d81ab62e5b7c8baacfd16638bf6be30",
+  "protocol": "Private Xvfb: first real owner presses a and blocks with delayed b; fixture clears old a; second real guarded owner on same display presses a and blocks with own delayed b. Normal cancel of first performs original cleanup. Independent keymap and target events determine whether second hold survives; then cancel second and observe both horizons.",
+  "criteria": "old a down, fixture clears, second a down, old normal cancellation reaches confirmed disconnect and readback release, independent second a state after cleanup; record all receipts and target events. Single attempt.",
+  "limits": "Forced ordering, test fixture release and blocked sync on both real owners; direct owner API, not MCP transport or physical desktop; synthetic target, no MAP01 or probabilistic claim."
+}

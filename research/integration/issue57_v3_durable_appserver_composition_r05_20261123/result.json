@@ -1,0 +1,65 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r05",
+  "disposition": "PASS_SYNTHETIC_SUCCESS_WITH_UNKNOWN_USAGE_HELD_FROM_COMPARISON",
+  "current_main_sha": "8a9cb6d9b99b724732f3baf3caee83d2f043c0bb",
+  "host": "Windows CPython 3.13.14, Pillow 12.2.0",
+  "qualified_runs": [
+    {
+      "name": "focused-normal",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 1.698
+    },
+    {
+      "name": "module-normal",
+      "exit_code": 0,
+      "tests": 9,
+      "unittest_seconds": 32.751
+    },
+    {
+      "name": "focused-optimized",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 2.237
+    },
+    {
+      "name": "module-optimized",
+      "exit_code": 0,
+      "tests": 9,
+      "unittest_seconds": 32.661
+    }
+  ],
+  "observed": {
+    "provider_terminal_status": "completed",
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "usage_notification_present": false,
+    "caller_outcome": "TASK_SUCCEEDED",
+    "caller_task_effect": "succeeded",
+    "attempt_status": "completed",
+    "attempt_usage": null,
+    "usage_totals": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "cache_write_input_tokens": null,
+      "output_tokens": null,
+      "reasoning_output_tokens": null
+    },
+    "durable_custody": "audited",
+    "execution_receipt_persisted": true,
+    "effect_receipt_persisted": true,
+    "task_projection": "HOLD",
+    "projection_reason": "usage_incomplete_or_invalid",
+    "run_status": "HOLD",
+    "missing_assignments": 17,
+    "dispatch_enabled": false
+  },
+  "provider_live": false,
+  "gui_or_native_input": false,
+  "external_allocation": false,
+  "limitations": [
+    "Fake provider response and synthetic task effect only.",
+    "A successful caller task effect does not imply comparison eligibility when attempt accounting is incomplete.",
+    "No externally attested allocation, live GUI or live provider."
+  ]
+}

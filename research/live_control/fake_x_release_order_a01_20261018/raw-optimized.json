@@ -1,0 +1,355 @@
+{
+  "schema": "fake-x-release-order-a01-v1",
+  "mode": "optimized",
+  "source_freeze": "SOURCE_FREEZE.json",
+  "rows": [
+    {
+      "case": "healthy",
+      "mode": "optimized",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      },
+      "before_resume": {},
+      "final_down": [],
+      "final_ledger": {},
+      "writer_queued": [],
+      "control_queued": [],
+      "writer_outcomes": [],
+      "errors": [],
+      "input_calls": [
+        {
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37
+        }
+      ],
+      "server_events": [
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37,
+          "down_after": [
+            37
+          ]
+        },
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37,
+          "down_after": []
+        }
+      ]
+    },
+    {
+      "case": "same_connection_sync_block",
+      "mode": "optimized",
+      "before_resume": {
+        "writer_alive": true,
+        "release_alive": true,
+        "release_returned": false,
+        "writer_queued": [
+          [
+            2,
+            37
+          ]
+        ],
+        "server_down": [],
+        "held_ledger": {
+          "CTRL": 37
+        }
+      },
+      "final_down": [],
+      "final_ledger": {},
+      "writer_queued": [],
+      "control_queued": [],
+      "writer_outcomes": [
+        null,
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 14644046000000
+        }
+      ],
+      "errors": [],
+      "input_calls": [
+        {
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37
+        }
+      ],
+      "server_events": [
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37,
+          "down_after": [
+            37
+          ]
+        },
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 3,
+          "keycode": 37,
+          "down_after": []
+        }
+      ]
+    },
+    {
+      "case": "separate_up_before_send",
+      "mode": "optimized",
+      "before_resume": {
+        "release_returned": true,
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        },
+        "writer_alive": true,
+        "writer_queued": [],
+        "server_down": [],
+        "held_ledger": {}
+      },
+      "final_down": [
+        37
+      ],
+      "final_ledger": {},
+      "writer_queued": [],
+      "control_queued": [],
+      "writer_outcomes": [
+        null
+      ],
+      "errors": [],
+      "input_calls": [
+        {
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        }
+      ],
+      "server_events": [
+        {
+          "phase": "queued",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37,
+          "down_after": []
+        },
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37,
+          "down_after": [
+            37
+          ]
+        }
+      ]
+    },
+    {
+      "case": "separate_up_before_sync",
+      "mode": "optimized",
+      "before_resume": {
+        "release_returned": true,
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        },
+        "writer_alive": true,
+        "writer_queued": [
+          [
+            2,
+            37
+          ]
+        ],
+        "server_down": [],
+        "held_ledger": {}
+      },
+      "final_down": [
+        37
+      ],
+      "final_ledger": {},
+      "writer_queued": [],
+      "control_queued": [],
+      "writer_outcomes": [
+        null
+      ],
+      "errors": [],
+      "input_calls": [
+        {
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        }
+      ],
+      "server_events": [
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "phase": "queued",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37,
+          "down_after": []
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37,
+          "down_after": [
+            37
+          ]
+        }
+      ]
+    },
+    {
+      "case": "server_wide_stop",
+      "mode": "optimized",
+      "before_resume": {
+        "release_returned": false,
+        "release_alive": true,
+        "control_queued": [
+          [
+            3,
+            37
+          ]
+        ],
+        "server_down": [
+          37
+        ],
+        "held_ledger": {
+          "CTRL": 37
+        }
+      },
+      "final_down": [],
+      "final_ledger": {},
+      "writer_queued": [],
+      "control_queued": [],
+      "writer_outcomes": [
+        {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      ],
+      "errors": [],
+      "input_calls": [
+        {
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        }
+      ],
+      "server_events": [
+        {
+          "phase": "queued",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "writer",
+          "kind": 2,
+          "keycode": 37,
+          "down_after": [
+            37
+          ]
+        },
+        {
+          "phase": "queued",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37
+        },
+        {
+          "phase": "apply",
+          "connection": "control",
+          "kind": 3,
+          "keycode": 37,
+          "down_after": []
+        }
+      ]
+    }
+  ]
+}

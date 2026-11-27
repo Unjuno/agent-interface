@@ -1,0 +1,30 @@
+test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb) ... Executing <Task pending name='Task-2' coro=<StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb() running at /repo/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py:539> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /tmp/stage/lib/python3.12/asyncio/tasks.py:922, Task.task_wakeup()] created at /tmp/stage/lib/python3.12/asyncio/base_events.py:449> cb=[_run_until_complete_cb() at /tmp/stage/lib/python3.12/asyncio/base_events.py:182] created at /tmp/stage/lib/python3.12/asyncio/runners.py:100> took 0.125 seconds
+FAIL
+
+======================================================================
+FAIL: test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/stage/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/repo/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", line 899, in test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb
+    self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
+AssertionError: 'unknown' != 'disconnected'
+- unknown
++ disconnected
+ : {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'supervisor_status': 'unknown', 'supervisor_reason': 'transaction_deadline'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'worker_exitcode': -15}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True, 'operation_id': '44cfaed589574e3ab1caab405942e63b', 'cancellation': {'operation_id': '44cfaed589574e3ab1caab405942e63b', 'status': 'completed', 'admitted_monotonic_ns': 503519424180, 'caller_response_deadline_monotonic_ns': 503819424180, 'transaction_deadline_monotonic_ns': 507519424180, 'owner_generation': {'session_id': '72ccf037b5d74094b72ad235495190e1', 'child_pid': 26, 'x_resource_base': 6291456, 'binding_revision': 0}, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'result': {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'supervisor_status': 'unknown', 'supervisor_reason': 'transaction_deadline'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'worker_exitcode': -15}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True}, 'completed_monotonic_ns': 507524411801}}
+
+----------------------------------------------------------------------
+Ran 1 test in 7.133s
+
+FAILED (failures=1)

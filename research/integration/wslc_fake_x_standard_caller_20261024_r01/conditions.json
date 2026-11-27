@@ -1,0 +1,70 @@
+{
+  "schema": "wslc-fake-x-standard-caller-r01-v1",
+  "attempt_id": "wslc-fakex-standard-caller-r01-b458f57ae985475689d0097b24b80b49",
+  "frozen_at_utc": "2026-10-24T01:11:28.1959090Z",
+  "source_commit": "5e378a416bd083609f1a9f5b4b9ade3fad9a584d",
+  "source_sha256": {
+    "test_mcp_relay_composition_py": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+    "wslc_bounded_process_psm1": "6ca4ecb44f692ebf4afc9ee42840bc7c23e342aef4634f923e3a611330a3e617",
+    "run_wslc_ps1": "27228b3bd1f499c1f1e533269b7b4157c628c924f6afc8357af3b5cb7e6d6a51"
+  },
+  "environment": {
+    "runtime": "WSLc isolated Linux container",
+    "wsl_version": "3.0.3.0",
+    "wsl_kernel": "6.18.54.1-1",
+    "wslg": "1.0.79",
+    "wslc_version": "3.0.3.0",
+    "wslc_executable": "C:\\Program Files\\WSL\\wslc.exe",
+    "image_tag": "a09-owner-close-xvfb:20261012",
+    "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "python": "image metadata declares CPython 3.14.8",
+    "network": "none",
+    "source_mount": "read-only",
+    "results_mount": "attempt-scoped writable raw directory"
+  },
+  "test": {
+    "module": "runtime.cli_v1.test_mcp_relay_composition",
+    "unittest_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+    "purpose": "single standard-caller Fake X scenario with exact target generation, blocked reply, bounded cancel/terminal result, fail-closed release UNKNOWN, and no replay"
+  },
+  "allocation": {
+    "container_name": "agent-interface-wslc-fakex-r01-95928b447b0847b0a5bfe41855cba810",
+    "containers": 1,
+    "image_pull": "never",
+    "unique_container_name": true,
+    "automatic_cleanup": "--rm",
+    "exact_cid_followup_query": true,
+    "preflight_container_inventory_read": true,
+    "preflight_container_inventory_result": "no running containers returned; image inventory showed selected local image",
+    "global_container_mutation": false,
+    "retry": 0
+  },
+  "limits": {
+    "run_timeout_seconds": 60,
+    "cleanup_query_timeout_seconds": 15,
+    "requested_cpus": 1,
+    "requested_memory": "768M (requested limit, enforcement not inferred)",
+    "max_test_wait_seconds": 8
+  },
+  "decision": {
+    "pass": [
+      "one unittest case exits 0",
+      "raw Fake X event/effect/readback and standard-caller receipt preserved",
+      "generation equals exact observation generation through three identity replies",
+      "cancel response <3000ms; terminal status runtime_failed <5000ms",
+      "release remains UNKNOWN, task_success=null, replay disallowed",
+      "full CID recorded and exact-CID query confirms automatic cleanup"
+    ],
+    "fail": "Any test failure, timeout, invalid generation/receipt, missing raw record, unexpected effect, missing cleanup, or duplicate run is FAIL_OR_UNKNOWN; no retry"
+  },
+  "exclusions": [
+    "native Win32 GUI/control",
+    "physical desktop input",
+    "WSLc GUI",
+    "MAP01",
+    "actual provider/model",
+    "task success for a real app",
+    "matched efficiency",
+    "reliability estimate"
+  ]
+}

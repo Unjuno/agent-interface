@@ -1,0 +1,31 @@
+{
+  "run_id": "AI-LOCAL-WSL2-XTERM-PUBLIC-TASK-20261023-R01",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "source_commit": "36320756a4047b198b8f55dbf54bf0dd7321adc2",
+  "base_main": "338973df3d9eb19b00ca42fdee935a5b058002fc",
+  "frozen_at_utc": "2026-10-23T11:34:58.400989+00:00",
+  "H": "Current public guarded MCP controls a real pinned Ubuntu xterm/interactive shell and causes exactly one correct non-idempotent saved journal effect through a terminal PTY, while independently neutral and cleanly closed.",
+  "T": "One fresh owned authenticated Xvfb :188, rootless xterm390 with utmp disabled, private HOME/ENV/PATH. Bounded mapped-title readiness5s and fixed1s settle, public observe/mint/static prompt anchor, one input of text record a1 + Return, command-free oracle reads until2s then250ms duplicate horizon, public close and own pidfd cleanup. No input retry or formal rerun.",
+  "D": "PASS_SCOPED only if actual host exit0, guarded input/close complete, one journal row argv[a1], stdin/stdout TTY true and owned xterm ancestry, helper fsync completion before independent read, full keymap initially/finally neutral, source/native binary hashes match, independent raw audit and owned cleanup pass. Any formal failure/ambiguity retained, not retried.",
+  "C": "Known command and fixed ASCII prompt, custom record helper behind real terminal, static private environment and one task; no semantic model/planning challenge, no injected fault, no comparison arm. Hidden task journal is read only after the authored input, not forwarded for decision/admission.",
+  "U": "Not general terminal automation, arbitrary file-task exactly-once, Calc/MAP01, provider/model integration, matched efficiency or reliability. Directly invoking record could solve the known file task without GUI; this is GUI-path qualification, not superiority over shell execution.",
+  "environment": "User-selected PC, native Ubuntu WSL2/private Xvfb only; no WSLc/Docker/Windows desktop input. Fixed packages extracted in user cache; no global package install. Host fonts/OS remain host-specific.",
+  "limits": {
+    "jobs": 1,
+    "cpu_affinity_count": 2,
+    "nice_increment": 10,
+    "owned_deadline_seconds": 45,
+    "host_timeout_seconds": 90,
+    "cleanup_grace_seconds": 5,
+    "model_calls": 0
+  },
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--",
+    "/home/user/.cache/agent-interface/xvfb-observation-20261023-r01-venv/bin/python",
+    "-B",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_public_task_20261023_r01/run_probe.py"
+  ]
+}

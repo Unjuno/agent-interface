@@ -1,0 +1,65 @@
+{
+  "audit": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "hypothesis": "H_FAIL_NO_ADDED_DECISION_VALUE",
+  "hypothesis_gates": {
+    "DECISION_VALUE": {
+      "correctness_matched": true,
+      "cost_reduced": false
+    },
+    "TOTAL_UNCERTAINTY": {
+      "correctness_matched": true,
+      "cost_reduced": false
+    }
+  },
+  "metrics": {
+    "DECISION_VALUE": {
+      "correct": 0.875,
+      "cost": 0.15833333333333338,
+      "decision_changed": 0.35,
+      "hard_gate_violations": 0,
+      "n": 120,
+      "repeat": 0.3333333333333333,
+      "unknown": 0.5
+    },
+    "DECOMPOSED": {
+      "correct": 0.9416666666666667,
+      "cost": 0.25833333333333347,
+      "decision_changed": 0.425,
+      "hard_gate_violations": 0,
+      "n": 120,
+      "repeat": 0.16666666666666666,
+      "unknown": 0.5
+    },
+    "FIXED_REPEAT": {
+      "correct": 0.7083333333333334,
+      "cost": 0.19999999999999957,
+      "decision_changed": 0.2833333333333333,
+      "hard_gate_violations": 0,
+      "n": 120,
+      "repeat": 1.0,
+      "unknown": 0.0
+    },
+    "ORACLE_INTERVENTION": {
+      "correct": 0.8916666666666667,
+      "cost": 0.1333333333333335,
+      "decision_changed": 0.2833333333333333,
+      "hard_gate_violations": 0,
+      "n": 120,
+      "repeat": 0.16666666666666666,
+      "unknown": 0.6666666666666666
+    },
+    "TOTAL_UNCERTAINTY": {
+      "correct": 0.7083333333333334,
+      "cost": 0.19999999999999957,
+      "decision_changed": 0.2833333333333333,
+      "hard_gate_violations": 0,
+      "n": 120,
+      "repeat": 1.0,
+      "unknown": 0.0
+    }
+  },
+  "rows_reconstructed": 480,
+  "scope": "finite synthetic intervention-choice fixture only",
+  "source_classifier_accuracy": 0.8333333333333334
+}

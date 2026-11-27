@@ -1,0 +1,44 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A04-20261009",
+  "baseline_full_payload_bytes_repeated_per_case": 15770790,
+  "bytes_saved_vs_full": 9617403,
+  "case_count": 441,
+  "errors": [],
+  "fallback_full_frame": 21,
+  "focus_selected": 420,
+  "frame_count": 21,
+  "full_bounds_controls_fallback": 21,
+  "mutation_results": [
+    {
+      "name": "crop_png_crc_corruption",
+      "rejected": true
+    },
+    {
+      "name": "source_pixel_identity_tamper",
+      "rejected": true
+    },
+    {
+      "name": "region_bounds_tamper",
+      "rejected": true
+    },
+    {
+      "name": "serialized_byte_count_tamper",
+      "rejected": true
+    },
+    {
+      "name": "full_bounds_control_forced_to_focus",
+      "rejected": true
+    },
+    {
+      "name": "missing_case",
+      "rejected": true
+    }
+  ],
+  "mutations_rejected": 6,
+  "mutations_total": 6,
+  "schema": "1998-a04-pillow-png-audit-v1",
+  "scope": "Finite serialized-byte accounting on retained GUI PNG frames using main ImageArtifactSink and Pillow 12.3.0; no ROI-quality, model, token, latency, live GUI, authority, task-effect, or product claim.",
+  "selected_payload_bytes": 6153387,
+  "status": "PASS_METHOD_SCOPED",
+  "valid_crop_cases_with_positive_savings": 420
+}

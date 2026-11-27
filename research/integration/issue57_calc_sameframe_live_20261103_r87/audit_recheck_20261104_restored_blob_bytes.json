@@ -1,0 +1,32 @@
+{
+  "artifact_sha256": "20514fa067adcfc8a421f4586ed83ece7788c6a8e470c2638ee839da04e71f49",
+  "attempt_id": "issue57-r87-c11",
+  "failed_gates": [
+    "same_digest_across_final_save_observation"
+  ],
+  "gates": {
+    "container_exit_zero": true,
+    "owner_release_empty_and_exit_zero": true,
+    "parent_result_task_success_and_no_replay": true,
+    "postclose_parent_verifier_same_artifact": true,
+    "preclose_artifact_exact_731_864": true,
+    "raw_fods_hash_matches_parent_verifier": true,
+    "same_digest_across_final_save_observation": false,
+    "same_frame_save_effect_callback_recorded": true,
+    "single_call_and_generation_bound_save_request": true,
+    "target_and_launcher_natural_exit_zero": true,
+    "two_transitions_enter_save_released": true
+  },
+  "limitations": [
+    "one local Docker/Xvfb Calc task; no provider or model call",
+    "not a token, price, latency-comparison, WSLc, MAP01, or broad-reliability result"
+  ],
+  "method_outcome": "SAFE_YIELD",
+  "method_reason": "effect_unavailable",
+  "schema": "agent-interface/issue57-r87-sameframe-live-audit-v1",
+  "status": "FAIL_OR_UNKNOWN",
+  "task_cells": {
+    "A1": "731",
+    "A2": "864"
+  }
+}

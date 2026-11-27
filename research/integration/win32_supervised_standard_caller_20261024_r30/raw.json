@@ -1,0 +1,2027 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r30",
+  "blocked_call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+  "blocked_io_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "generation_after": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "generation_before": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "pid": 34232,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 487127835343700,
+    "started_monotonic_ns": 487127834763200,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 30147268,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 14788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 37172
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 30147268,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 14788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 37172
+      }
+    ],
+    "status": "observed"
+  },
+  "caller_kind": "mcp_stdio",
+  "cancellation_call_trace": [
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 487124425243100,
+      "pid": 45136
+    },
+    {
+      "event": "retirement_wrapper_installed",
+      "monotonic_ns": 487124512021700,
+      "pid": 45136
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 487125171740900,
+      "pid": 21380
+    },
+    {
+      "event": "retirement_wrapper_installed",
+      "monotonic_ns": 487125256564100,
+      "pid": 21380
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 487125902455300,
+      "pid": 4872
+    },
+    {
+      "event": "retirement_wrapper_installed",
+      "monotonic_ns": 487125986210700,
+      "pid": 4872
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 487126937705800,
+      "pid": 51176
+    },
+    {
+      "event": "retirement_wrapper_installed",
+      "monotonic_ns": 487127027695000,
+      "pid": 51176
+    },
+    {
+      "deadline_ns": 487130625000000,
+      "event": "retire_enter",
+      "monotonic_ns": 487127652107200,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "args_repr": "()",
+      "event": "process_method_enter",
+      "kwargs_repr": "{}",
+      "method": "is_alive",
+      "monotonic_ns": 487127652390900,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "elapsed_ns": 8400,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127652903300,
+      "pid": 45136,
+      "result_repr": "True",
+      "target_pid": 51176
+    },
+    {
+      "args_repr": "()",
+      "event": "process_method_enter",
+      "kwargs_repr": "{}",
+      "method": "terminate",
+      "monotonic_ns": 487127653486400,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "elapsed_ns": 106100,
+      "event": "process_method_return",
+      "method": "terminate",
+      "monotonic_ns": 487127653852200,
+      "pid": 45136,
+      "result_repr": "None",
+      "target_pid": 51176
+    },
+    {
+      "args_repr": "(0.1,)",
+      "event": "process_method_enter",
+      "kwargs_repr": "{}",
+      "method": "join",
+      "monotonic_ns": 487127654030200,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "elapsed_ns": 4128000,
+      "event": "process_method_return",
+      "method": "join",
+      "monotonic_ns": 487127658320500,
+      "pid": 45136,
+      "result_repr": "None",
+      "target_pid": 51176
+    },
+    {
+      "args_repr": "()",
+      "event": "process_method_enter",
+      "kwargs_repr": "{}",
+      "method": "is_alive",
+      "monotonic_ns": 487127658515000,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "elapsed_ns": 4100,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127658734500,
+      "pid": 45136,
+      "result_repr": "False",
+      "target_pid": 51176
+    },
+    {
+      "args_repr": "()",
+      "event": "process_method_enter",
+      "kwargs_repr": "{}",
+      "method": "is_alive",
+      "monotonic_ns": 487127658968600,
+      "pid": 45136,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    },
+    {
+      "elapsed_ns": 2300,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127659137000,
+      "pid": 45136,
+      "result_repr": "False",
+      "target_pid": 51176
+    },
+    {
+      "event": "retire_return",
+      "monotonic_ns": 487127659291000,
+      "pid": 45136,
+      "result": true,
+      "target_name": "SpawnProcess-3",
+      "target_pid": 51176
+    }
+  ],
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 487126578000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "e567378e0f16441c95e75bf40cb9e871"
+  },
+  "conditions_sha256": "fce36077299d4b9d04cc4d7cf5df36f8287f96669e3846d1cc01a56e490bc5fd",
+  "dispatch_attempts": 1,
+  "effect_readback": {
+    "clicked": true,
+    "saved": true,
+    "text": "R30-RETIREMENT-CALL-TRACE"
+  },
+  "ended_utc": "2026-10-23T22:50:21.718106+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "R30-RETIREMENT-CALL-TRACE"
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 30147268,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 51,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 84,
+        "kind": "char"
+      },
+      {
+        "code": 73,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 77,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 78,
+        "kind": "char"
+      },
+      {
+        "code": 84,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 65,
+        "kind": "char"
+      },
+      {
+        "code": 76,
+        "kind": "char"
+      },
+      {
+        "code": 76,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 84,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 65,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": "R30-RETIREMENT-CALL-TRACE"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 30147268,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 30147268,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\fixture\\fixture-meta.json",
+    "pid": 14788,
+    "target_identity": {
+      "generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+      "owner": {
+        "creation_time_100ns": 134372694159670416,
+        "pid": 14788,
+        "window_thread_id": 37172
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "hook_started": {
+    "callback_entry_ns": null,
+    "callback_return_ns": null,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 487127648538100,
+        "callback_return_ns": 487128906533600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 487128912571200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "hook_handle": 131729273,
+    "ready_ns": 487123797729400,
+    "thread_id": 27748
+  },
+  "hook_stopped": {
+    "callback_entry_ns": 487127648538100,
+    "callback_return_ns": 487128906533600,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 487127648538100,
+        "callback_return_ns": 487128906533600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 487128912571200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 131729273,
+    "q_up_callback_ns": 487128912571200,
+    "ready_ns": 487123797729400,
+    "thread_exited": true,
+    "thread_id": 27748,
+    "unhook_last_error": null,
+    "unhook_return": true,
+    "vk": 81
+  },
+  "hook_trace_after_dispatch": {
+    "callback_entry_ns": 487127648538100,
+    "callback_return_ns": 487128906533600,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 487127648538100,
+        "callback_return_ns": 487128906533600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 487128912571200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 131729273,
+    "ready_ns": 487123797729400,
+    "thread_id": 27748,
+    "vk": 81
+  },
+  "hook_trace_after_recovery": {
+    "callback_entry_ns": 487127648538100,
+    "callback_return_ns": 487128906533600,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 487127648538100,
+        "callback_return_ns": 487128906533600,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 487128912571200,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 131729273,
+    "q_up_callback_ns": 487128912571200,
+    "ready_ns": 487123797729400,
+    "thread_id": 27748,
+    "vk": 81
+  },
+  "hook_wait": {
+    "ended_monotonic_ns": 487127648965500,
+    "entered": true,
+    "hook_trace": {
+      "callback_entry_ns": 487127648538100,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 487127648538100,
+          "callback_return_ns": 487128906533600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 487128912571200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 131729273,
+      "ready_ns": 487123797729400,
+      "thread_id": 27748,
+      "vk": 81
+    },
+    "poll_interval_ms": 250,
+    "started_monotonic_ns": 487126627070900,
+    "status_polls": [
+      {
+        "action_status": null,
+        "call_id": null,
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": null,
+        "is_error": true,
+        "operation_id": null,
+        "operation_invoked": false,
+        "returned_monotonic_ns": 487126628061900,
+        "started_monotonic_ns": 487126627074100,
+        "status": "unknown_call"
+      },
+      {
+        "action_status": "running",
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 487126894538200,
+        "started_monotonic_ns": 487126890263200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 487127156952300,
+        "started_monotonic_ns": 487127155604100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 487127423187300,
+        "started_monotonic_ns": 487127421522300,
+        "status": null
+      }
+    ]
+  },
+  "independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "generation_after": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "generation_before": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "pid": 42892,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 487129155698700,
+    "started_monotonic_ns": 487129155128300,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 30147268,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 14788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 37172
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 30147268,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 14788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 37172
+      }
+    ],
+    "status": "observed"
+  },
+  "post_cancel_io_hold": {
+    "ended_monotonic_ns": 487128906249700,
+    "hook_trace_after_release": {
+      "callback_entry_ns": 487127648538100,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 487127648538100,
+          "callback_return_ns": 487128906533600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 487128912571200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 131729273,
+      "ready_ns": 487123797729400,
+      "thread_id": 27748,
+      "vk": 81
+    },
+    "hook_trace_before_release": {
+      "callback_entry_ns": 487127648538100,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 487127648538100,
+          "callback_return_ns": 487128906533600,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 487128912571200,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 131729273,
+      "ready_ns": 487123797729400,
+      "thread_id": 27748,
+      "vk": 81
+    },
+    "independent_readback_completed_before_release": true,
+    "started_monotonic_ns": 487127652382900,
+    "status_polls": [
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127653729200,
+        "started_monotonic_ns": 487127652390500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127719132900,
+        "started_monotonic_ns": 487127717642200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127782201100,
+        "started_monotonic_ns": 487127780481300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127845858100,
+        "started_monotonic_ns": 487127844358700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127911629900,
+        "started_monotonic_ns": 487127907235000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487127972538400,
+        "started_monotonic_ns": 487127970149100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128036853400,
+        "started_monotonic_ns": 487128032550200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128099279400,
+        "started_monotonic_ns": 487128094112200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128160752100,
+        "started_monotonic_ns": 487128155868200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128222315200,
+        "started_monotonic_ns": 487128217445500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128285370100,
+        "started_monotonic_ns": 487128280695700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128344989800,
+        "started_monotonic_ns": 487128343330600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128406838600,
+        "started_monotonic_ns": 487128405119600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128469248400,
+        "started_monotonic_ns": 487128467617000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128534869000,
+        "started_monotonic_ns": 487128531261300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128598524900,
+        "started_monotonic_ns": 487128592870600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128660237100,
+        "started_monotonic_ns": 487128655036600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128723039400,
+        "started_monotonic_ns": 487128718389900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128786613600,
+        "started_monotonic_ns": 487128781987300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 487128850597000,
+        "started_monotonic_ns": 487128845716900,
+        "status": null
+      }
+    ],
+    "target_hold_ms": 1250
+  },
+  "pre_cancel_status_readback": {
+    "action": {
+      "metadata": {
+        "program_id": "supervised-standard-cancel-effect-r30",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+      "result": null,
+      "status": "running",
+      "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+    },
+    "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 487216578000000,
+        "lease_id": "supervised-standard-cancel-r30"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "text",
+          "text": "R30-RETIREMENT-CALL-TRACE"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "supervised-standard-cancel-effect-r30",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "previous_foreground_hwnd": 393882,
+  "probe_pid": 1860,
+  "probe_status": "completed_with_independent_effect",
+  "producer_exit_witness": {
+    "creation_time_100ns": 134372694189927665,
+    "observed_monotonic_ns": 487128906848400,
+    "pid": 51176,
+    "status": "exited",
+    "wait_started_monotonic_ns": 487128906362500
+  },
+  "producer_identity_from_cancel": {
+    "creation_time_100ns": 134372694189927665,
+    "pid": 51176
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 487216578000000,
+      "lease_id": "supervised-standard-cancel-r30"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "R30-RETIREMENT-CALL-TRACE"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-cancel-effect-r30",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_cancel": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"0c46556762d64cd8b31b879c2e2acbb6\", \"operation_id\": \"389ba4278c4549c0af17727897cd5b8c\", \"cancellation\": {\"operation_id\": \"389ba4278c4549c0af17727897cd5b8c\", \"action_operation_id\": \"42e88d90cde04a77a33ecf22485e99c2\", \"target_generation\": \"719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8\", \"status\": \"pending\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"operation_id\": \"42e88d90cde04a77a33ecf22485e99c2\", \"target_generation\": \"719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8\", \"deadline_ns\": 487216578000000, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:Q\", \"key:fixture:S\", \"unicode:002D\", \"unicode:0030\", \"unicode:0033\", \"unicode:0041\", \"unicode:0043\", \"unicode:0045\", \"unicode:0049\", \"unicode:004C\", \"unicode:004D\", \"unicode:004E\", \"unicode:0052\", \"unicode:0054\"], \"status\": \"pending\", \"producer_identity\": {\"pid\": 51176, \"creation_time_100ns\": 134372694189927665}, \"producer_exit_code\": null, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": 487130625000000, \"recovery_id\": null, \"release_confirmed\": false, \"completion_release_receipt\": null, \"completion_readback\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"cancel_pending\"}, \"owner_phase\": \"cancel_pending\"}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"operation_invoked\": false, \"input_dispatched\": false, \"scope\": \"supervised_win32\"}",
+        "type": "text"
+      }
+    ],
+    "elapsed_ms": 1.6441,
+    "is_error": false,
+    "response": {
+      "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+      "cancellation": {
+        "action_operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "operation_id": "389ba4278c4549c0af17727897cd5b8c",
+        "owner_phase": "cancel_pending",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 487130625000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 487216578000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0033",
+            "unicode:0041",
+            "unicode:0043",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004C",
+            "unicode:004D",
+            "unicode:004E",
+            "unicode:0052",
+            "unicode:0054"
+          ],
+          "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372694189927665,
+            "pid": 51176
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "pending",
+        "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+        "task_success": null
+      },
+      "input_dispatched": false,
+      "operation_id": "389ba4278c4549c0af17727897cd5b8c",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 487127652362500,
+    "started_monotonic_ns": 487127650718400
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"4a431a9fa4a84df19af29d1a4143d9ba\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\74c223224dab45faad034c3fae7b7c12\", \"call_id\": \"74c223224dab45faad034c3fae7b7c12\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\74c223224dab45faad034c3fae7b7c12",
+      "call_id": "74c223224dab45faad034c3fae7b7c12",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "session": {
+        "call_count": 1,
+        "mode": "supervised-win32",
+        "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+        "state": "closed",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "closed",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 487129265711100,
+    "started_monotonic_ns": 487129180314500
+  },
+  "public_close_attempts": [
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"4a431a9fa4a84df19af29d1a4143d9ba\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\74c223224dab45faad034c3fae7b7c12\", \"call_id\": \"74c223224dab45faad034c3fae7b7c12\"}",
+          "type": "text"
+        }
+      ],
+      "is_error": false,
+      "response": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\74c223224dab45faad034c3fae7b7c12",
+        "call_id": "74c223224dab45faad034c3fae7b7c12",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 487129265711100,
+      "started_monotonic_ns": 487129180314500
+    }
+  ],
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"0c46556762d64cd8b31b879c2e2acbb6\", \"call\": {\"call_id\": \"0c46556762d64cd8b31b879c2e2acbb6\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"supervised-standard-cancel-effect-r30\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"fixture\": \"719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8\"}}, \"authority\": {\"lease_id\": \"supervised-standard-cancel-r30\", \"expires_at_ns\": 487216578000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 70, \"y\": 70}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"op\": \"text\", \"text\": \"R30-RETIREMENT-CALL-TRACE\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"keys\": [\"Q\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 487216578000000,
+              "lease_id": "supervised-standard-cancel-r30"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "R30-RETIREMENT-CALL-TRACE"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r30",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "response_envelope": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 487216578000000,
+              "lease_id": "supervised-standard-cancel-r30"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "R30-RETIREMENT-CALL-TRACE"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r30",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 487126627052000,
+    "started_monotonic_ns": 487126625824200,
+    "wait_for_result_ms": 0
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"acb6fa67d71e4dc5db633f590f337c1a300427a4ef113914d2a10546cc822282\", \"bytes\": 1459, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"185b838866074583a65486f85579a8f0\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 30147268, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 487126578000000, \"capture_ended_ns\": 487126578000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\4312ad84694e46c5be6c1fa5030a33e5\\\\images\\\\1d32d1b109fb400887eed3b7a763c38a.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 487126578000000, \"converted\": 487126593000000, \"encoded\": 487126593000000, \"written\": 487126593000000}}}, \"target_generation\": \"719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"4a431a9fa4a84df19af29d1a4143d9ba\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"185b838866074583a65486f85579a8f0\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 30147268, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 487126578000000, \"capture_ended_ns\": 487126578000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\4312ad84694e46c5be6c1fa5030a33e5\\\\images\\\\1d32d1b109fb400887eed3b7a763c38a.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 487126578000000, \"converted\": 487126593000000, \"encoded\": 487126593000000, \"written\": 487126593000000}}}, \"target_generation\": \"719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"4a431a9fa4a84df19af29d1a4143d9ba\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 487126578000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\4312ad84694e46c5be6c1fa5030a33e5\\\\images\\\\1d32d1b109fb400887eed3b7a763c38a.png\", \"relative_path\": \"images\\\\1d32d1b109fb400887eed3b7a763c38a.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"185b838866074583a65486f85579a8f0\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 30147268, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 487126578000000, \"capture_ended_ns\": 487126578000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"4a431a9fa4a84df19af29d1a4143d9ba\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r30\\\\run\\\\calls\\\\4312ad84694e46c5be6c1fa5030a33e5\", \"call_id\": \"4312ad84694e46c5be6c1fa5030a33e5\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\4312ad84694e46c5be6c1fa5030a33e5\\images\\1d32d1b109fb400887eed3b7a763c38a.png",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 487126593000000,
+            "encoded": 487126593000000,
+            "started": 487126578000000,
+            "written": 487126593000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 487126578000000,
+        "capture_started_ns": 487126578000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 30147268,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "185b838866074583a65486f85579a8f0",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\4312ad84694e46c5be6c1fa5030a33e5",
+      "call_id": "4312ad84694e46c5be6c1fa5030a33e5",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 487126578000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "185b838866074583a65486f85579a8f0",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\4312ad84694e46c5be6c1fa5030a33e5\\images\\1d32d1b109fb400887eed3b7a763c38a.png",
+        "recorded_capture": {
+          "capture_ended_ns": 487126578000000,
+          "capture_started_ns": 487126578000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 30147268,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\1d32d1b109fb400887eed3b7a763c38a.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\4312ad84694e46c5be6c1fa5030a33e5\\images\\1d32d1b109fb400887eed3b7a763c38a.png",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 487126593000000,
+                "encoded": 487126593000000,
+                "started": 487126578000000,
+                "written": 487126593000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 487126578000000,
+            "capture_started_ns": 487126578000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 30147268,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "185b838866074583a65486f85579a8f0",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1459,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\run\\calls\\4312ad84694e46c5be6c1fa5030a33e5\\images\\1d32d1b109fb400887eed3b7a763c38a.png",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 487126593000000,
+                  "encoded": 487126593000000,
+                  "started": 487126578000000,
+                  "written": 487126593000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 487126578000000,
+              "capture_started_ns": 487126578000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 30147268,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "185b838866074583a65486f85579a8f0",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "acb6fa67d71e4dc5db633f590f337c1a300427a4ef113914d2a10546cc822282"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 487126624437000,
+    "started_monotonic_ns": 487126603305800
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 8, \"expanded_operation_count\": 8, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 8,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 8,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 487126625810200,
+    "started_monotonic_ns": 487126624484300
+  },
+  "result_readbacks": [
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-effect-r30",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "result": null,
+          "status": "running",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+        },
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "cancellation": {
+          "action_operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "operation_id": "389ba4278c4549c0af17727897cd5b8c",
+          "owner_phase": "recovery_pending",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 487130625000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 487216578000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0033",
+              "unicode:0041",
+              "unicode:0043",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004C",
+              "unicode:004D",
+              "unicode:004E",
+              "unicode:0052",
+              "unicode:0054"
+            ],
+            "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+            "phase": "recovery_pending",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372694189927665,
+              "pid": 51176
+            },
+            "recovery_id": "c4fb3ac52717493d906c4f7d03d01532",
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "status": "pending",
+            "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "status": "pending",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 487216578000000,
+            "lease_id": "supervised-standard-cancel-r30"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "op": "text",
+              "text": "R30-RETIREMENT-CALL-TRACE"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-effect-r30",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 487128911134500,
+      "started_monotonic_ns": 487128907297200
+    },
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-effect-r30",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "result": {
+            "effect_status": "unknown",
+            "input_dispatched": null,
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "task_success": null
+          },
+          "status": "recovered",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+        },
+        "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+        "cancellation": {
+          "action_operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "operation_id": "389ba4278c4549c0af17727897cd5b8c",
+          "owner_phase": "recovered",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 487130625000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 487216578000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0033",
+              "unicode:0041",
+              "unicode:0043",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004C",
+              "unicode:004D",
+              "unicode:004E",
+              "unicode:0052",
+              "unicode:0054"
+            ],
+            "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+            "phase": "recovered",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372694189927665,
+              "pid": 51176
+            },
+            "recovery_id": "c4fb3ac52717493d906c4f7d03d01532",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "status": "recovered",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 487216578000000,
+            "lease_id": "supervised-standard-cancel-r30"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "op": "text",
+              "text": "R30-RETIREMENT-CALL-TRACE"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-effect-r30",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 487128972111500,
+      "started_monotonic_ns": 487128969498000
+    }
+  ],
+  "retained_report": {
+    "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+    "compilation": null,
+    "input_dispatched": null,
+    "normalization": null,
+    "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+    "operation_invoked": true,
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "4a431a9fa4a84df19af29d1a4143d9ba",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "metadata": {
+          "program_id": "supervised-standard-cancel-effect-r30",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "result": {
+          "effect_status": "unknown",
+          "input_dispatched": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "task_success": null
+        },
+        "status": "recovered",
+        "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+      },
+      "call_id": "0c46556762d64cd8b31b879c2e2acbb6",
+      "cancellation": {
+        "action_operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+        "operation_id": "389ba4278c4549c0af17727897cd5b8c",
+        "owner_phase": "recovered",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 487130625000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 487216578000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0033",
+            "unicode:0041",
+            "unicode:0043",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004C",
+            "unicode:004D",
+            "unicode:004E",
+            "unicode:0052",
+            "unicode:0054"
+          ],
+          "operation_id": "42e88d90cde04a77a33ecf22485e99c2",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372694189927665,
+            "pid": 51176
+          },
+          "recovery_id": "c4fb3ac52717493d906c4f7d03d01532",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "recovered",
+        "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+        "task_success": null
+      },
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 487216578000000,
+          "lease_id": "supervised-standard-cancel-r30"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "R30-RETIREMENT-CALL-TRACE"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-effect-r30",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "719ca9c9fa0bed773b467306537576affa280e4ef8fbc01cf61ed307f287e6f8",
+    "task_success": null
+  },
+  "session_close_report": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "closed",
+    "task_success": null
+  },
+  "session_mode": "supervised-win32",
+  "source_commit": "8dca97c0ce4998a85fdcc66e6b76ff2a1f34b20f",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-23T22:50:15.744039+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}

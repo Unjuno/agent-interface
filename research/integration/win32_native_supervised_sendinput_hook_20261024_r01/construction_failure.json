@@ -1,0 +1,24 @@
+{
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r01",
+  "disposition": "ABORTED_BEFORE_ACTION",
+  "stage": "module import, before main(), Win32 API access, fixture creation, process start, or input",
+  "command": "python research/integration/win32_native_supervised_sendinput_hook_20261024_r01/probe.py",
+  "exception": "ModuleNotFoundError: No module named 'runtime'",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (64-bit)",
+    "working_directory": "C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/main-a396aac",
+    "git_head": "3a198067f722fc957d802b679005e7a2ca959e82"
+  },
+  "frozen_hashes": {
+    "probe.py": "2fdb82cfe30e6b2d81894f9d647e409b64b487d7a13ea655e31e0d9e0cee3e84",
+    "conditions.json": "e3cec647d9fda906411ac1cb6af7cb374ea398f9336d940163065944c6f6d8f7"
+  },
+  "checks": {
+    "raw_file_created": false,
+    "native_input_emitted": false,
+    "fixture_created": false,
+    "child_process_started": false
+  },
+  "next": "Retain this construction failure; prospectively freeze corrected import-path source and conditions in R02."
+}

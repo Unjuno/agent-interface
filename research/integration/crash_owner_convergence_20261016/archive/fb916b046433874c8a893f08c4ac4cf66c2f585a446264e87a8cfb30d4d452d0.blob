@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "InputOwner service was not spawned by session",
+    "session kill, owner EOF, and InputOwner close ordering invalid",
+    "current InputOwner did not acknowledge key admission",
+    "admission receipt missing key identity or deadline",
+    "observed focus identity missing",
+    "release receipt intent/deadline mismatch",
+    "exactly one durable owner release record required",
+    "InputOwner release record did not verify empty state",
+    "recovery was not performed by InputOwner close",
+    "InputOwner thread did not stop",
+    "recovery receipt was not fsynced",
+    "InputOwner service did not exit cleanly"
+  ],
+  "decision": "STOP",
+  "evidence_kind": "isolated production InputOwner process test"
+}

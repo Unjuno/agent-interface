@@ -1,0 +1,144 @@
+{
+  "status": "PASS_TASK_EFFECT_AND_TIMING_SCOPED",
+  "result_recorded_at_utc": "2026-10-24T11:47:55.261169+00:00",
+  "evidence_note": "The runner printed PASS but its final RESULT.json write did not replace the initial stop record; this structured record reconstructs the terminal result from captured runner output plus immutable raw files. Initial no-input launch snapshot is preserved in INITIAL_STOP_RESULT.json and launch-stop.json.",
+  "preflight": {
+    "recorded_at_utc": "2026-10-24T11:46:24.081628+00:00",
+    "target": {
+      "name": "notepad-r17",
+      "hwnd": 370739280,
+      "generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+      "edit_hwnd": 177079380
+    },
+    "conditions": {
+      "is_window": true,
+      "visible": true,
+      "enabled": true,
+      "foreground_hwnd": 370739280,
+      "foreground_is_target": true,
+      "shift_down": false,
+      "text": "",
+      "characters": 0
+    },
+    "allocation": "authorized local Windows PC; WSLc=false; Docker=false"
+  },
+  "target_generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+  "marker": "AI-CTRL-20261024-R17",
+  "task": {
+    "dispatch": {
+      "call_id": "56cf58f8b1ce407b89eb21a1c63d0539",
+      "status": "completed",
+      "generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "emissions": 40
+    },
+    "dispatch_start_perf_counter_ns": 533692320285400,
+    "dispatch_return_perf_counter_ns": 533693748577100,
+    "dispatch_elapsed_ns": 1428291700,
+    "poll_count": 93,
+    "first_nonempty_observation": {
+      "perf_counter_ns": 533693122424200,
+      "elapsed_from_dispatch_start_ns": 802138800,
+      "text": "A",
+      "characters": 1
+    },
+    "first_exact_observation": {
+      "perf_counter_ns": 533693625041300,
+      "elapsed_from_dispatch_start_ns": 1304755900,
+      "text": "AI-CTRL-20261024-R17",
+      "characters": 20,
+      "edit_hwnd": 177079380
+    },
+    "verification_status": "verified",
+    "task_success": true,
+    "oracle_outcome": "success",
+    "oracle_observation": {
+      "start_perf_counter_ns": 533693749089500,
+      "observed_perf_counter_ns": 533693749853200,
+      "return_perf_counter_ns": 533693749854200,
+      "expected": "AI-CTRL-20261024-R17",
+      "observed_text": "AI-CTRL-20261024-R17",
+      "characters": 20,
+      "edit_hwnd": 177079380,
+      "observed_generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+      "generation_match": true,
+      "shift_down": false,
+      "foreground_hwnd": 370739280
+    },
+    "retained_result": {
+      "status": "verified",
+      "call_id": "56cf58f8b1ce407b89eb21a1c63d0539",
+      "task_effect": {
+        "status": "verified",
+        "task_success": true,
+        "receipt": {
+          "call_id": "56cf58f8b1ce407b89eb21a1c63d0539",
+          "operation_id": "9d9d7db2239f4861976dc6582357ec31",
+          "target_generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+          "oracle_id": "17171717171717171717171717171717",
+          "outcome": "success",
+          "observed_monotonic_ns": 533693718000000,
+          "evidence_ref": "oracle-log.json#56cf58f8b1ce407b89eb21a1c63d0539"
+        },
+        "requested_monotonic_ns": 533693718000000,
+        "receipt_received_monotonic_ns": 533693718000000
+      },
+      "task_success": true,
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32"
+    }
+  },
+  "cleanup": {
+    "dispatch": {
+      "call_id": "812437cee55e4dc2814b3351ecb9d3c9",
+      "status": "completed",
+      "generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "emissions": 9
+    },
+    "final_text": {
+      "text": "",
+      "characters": 0,
+      "child_hwnd": 177079380
+    },
+    "verification_status": "verified",
+    "task_success": true,
+    "oracle_outcome": "success",
+    "oracle_observation": {
+      "start_perf_counter_ns": 533694865792700,
+      "observed_perf_counter_ns": 533694866410800,
+      "return_perf_counter_ns": 533694866411400,
+      "expected": "",
+      "observed_text": "",
+      "characters": 0,
+      "edit_hwnd": 177079380,
+      "observed_generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+      "generation_match": true,
+      "shift_down": false,
+      "foreground_hwnd": 370739280
+    }
+  },
+  "scope": "one exact token via standard in-process supervised-Win32 public MCP caller; no model/provider or stdio",
+  "observation_generation": "3e0505c367c9faf8aac8133e4620a9d1de06ce481d487eb7265906286406888f",
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "3be609cbf75c46229c36281c2b479a3f",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 2,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-17-fresh-generation-task\\mcp-calls\\758ebaeb61e84c81ac5d94773d2c114f",
+    "call_id": "758ebaeb61e84c81ac5d94773d2c114f"
+  },
+  "initial_launch_stop_recovered_by_delayed_target": true
+}

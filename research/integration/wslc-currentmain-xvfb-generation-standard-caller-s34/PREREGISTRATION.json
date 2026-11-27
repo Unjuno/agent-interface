@@ -1,0 +1,24 @@
+{
+  "schema": "agent-interface/wslc-s34-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-generation-xvfb-20261025-s34-6da84c1efb73",
+  "preregistered_utc": "2026-10-25T11:19:56.4479199+00:00",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "question": "Does the current-main standard MCP Xvfb caller preserve process/window generation evidence through observation and mint, recover after one injected post-press/automatic-release fault, allow an exact fresh continuation task effect, and refuse a stale generation before input?",
+  "session_name": "agent-interface-wslc-s34-6da84c1efb73",
+  "container_name": "ai-control-wslc-s34-6da84c1efb73",
+  "storage_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s34-6da84c1efb73\\session-storage-s34",
+  "output_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s34-6da84c1efb73\\output",
+  "runtime": "WSLc 3.0.3; one new SDK session; pinned S29 repo/deps/stage/XKB assets",
+  "task": "runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp",
+  "execution": "one test body, one container, no retry; read-only mounts for repo/deps/stage/XKB/runner except isolated output",
+  "allocation": "fresh unique nonce and absent session-storage/output paths; no global inventory",
+  "host_authority": "User confirmed this Windows PC may be used for WSLc",
+  "success_rule": "test exit zero; test report PASS_SCOPED_XVFB_STANDARD_CALLER_RECOVERY; generation evidence matched at observe/mint; recovery and post-recovery task oracle pass with exact effect and release; stale-generation call refused with input_dispatched=false; exact SDK container/image/session cleanup",
+  "no_docker": true,
+  "no_global_inventory": true,
+  "no_retry": true,
+  "limitations": [
+    "private synthetic Xvfb only",
+    "not physical Windows input, MAP01/live app, reliability, or efficiency"
+  ]
+}

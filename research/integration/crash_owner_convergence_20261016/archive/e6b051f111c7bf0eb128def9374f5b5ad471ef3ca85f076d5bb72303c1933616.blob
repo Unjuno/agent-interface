@@ -1,0 +1,45 @@
+{
+  "experiment": "v39-active-invalidation-key-release-xvfb-a01-20261012",
+  "question": "Does current-main V39 health-guard invalidation during a pending planner turn run the production cancel-before-interrupt helper, release an actually held Xvfb key, reject the completed stale answer, and preserve the unchanged control?",
+  "base_sha": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "environment": {
+    "host": "WSL2 Ubuntu 24.04.3",
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "python": "CPython 3.12.3 system",
+    "python_xlib": "0.33-2 Ubuntu package",
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "docker": "unavailable",
+    "network": "not isolated; candidate code makes no network calls",
+    "display": ":133",
+    "resource_limits": "no hard CPU or memory cap"
+  },
+  "hypothesis": "H: A fresh typed health observation below the current authored hard minimum during a pending planner turn yields policy invalidation; the current V39 cancellation helper sends executor cancel before planner interruption, and an owner-backed Xvfb keyup is observed before the completed planner answer can be admitted.",
+  "test": "T: Two arms at source seq2/current seq3 with identical binding and retained frame: synthetic health=80 (source 97, authored max loss 8, hard minimum 89) and unchanged health=97 control. Each starts current-main InputOwner V4/V12, focuses an Xvfb client, holds key a, and begins a pending PersistentPlannerAdapter turn. The production DoomCoverSignalPairMonitor and cancel_invalidated_cover helper are AST-extracted from frozen current-main source. A minimal executor protocol peer translates the exact production cancel message to owner.call(up_batch); the real Xvfb server and independent observer verify keyup. One candidate invocation total; no game/model/physical input.",
+  "decision": "D: PASS_METHOD_SCOPED only if hard-drop arm produces health hard invalidation, cancel message before planner interrupt, verified owner keyup and independent KeyRelease before completed answer is observed, planner marks answer ineligible/cancellation requested, final action admission rejects policy invalidation with no Executor admission; unchanged control has no invalidation/cancel, eligible planner answer, READY_FOR_FRESH_EXECUTOR_ADMISSION, key held until owner cleanup, and Xvfb exits 0. STOP on runtime, release, ordering, or cleanup mismatch.",
+  "confounds": "C: Health=80 is synthetic typed telemetry from retained seq3, not a measured game event; fake executor consumes the real protocol cancel and invokes the actual current owner up_batch API, but does not run the production executor subprocess. Fake planner returns a deterministic completed answer; this intentionally tests stale-answer race handling, not model semantics.",
+  "unknowns": "U: No semantic visual threat, physical device, production executor process, task outcome, live MAP01 allocation, competing transport, scheduling stress, or hard resource limits. WSL2 substitutes the unavailable Docker environment; network is not isolated.",
+  "source_sha256": {
+    "action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "map01_overlap_controller_v39.py": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "doom_action_validity_contract_v1.py": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+    "doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "final_action_admission_v2.py": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+    "audit_raw.py": "7f9bb8e00efa74d76f7f5b69a2925528788b8374b9c5f01b5e24fa152af6e782",
+    "persistent_planner_adapter_v2.py": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "map01_stagnation_v1.py": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54",
+    "candidate.py": "4909cdf2b84926729beff8987cd01b7ad95aabb4850b402acfce74433133daf2",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+  },
+  "input_sha256": {
+    "003.png": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+    "events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "002.png": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1"
+  },
+  "candidate_sha256": "4909cdf2b84926729beff8987cd01b7ad95aabb4850b402acfce74433133daf2"
+}

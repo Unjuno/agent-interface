@@ -1,0 +1,92 @@
+diff --git a/runtime/guarded_x11_v1/README.md b/runtime/guarded_x11_v1/README.md
+index 8111ed738b..b0a482f000 100644
+--- a/runtime/guarded_x11_v1/README.md
++++ b/runtime/guarded_x11_v1/README.md
+@@ -35,6 +35,10 @@ choices. Existing source capture, scope, texture, exact-pixel matching, bounded
+ window translation and fresh guards remain unchanged. Missing/stale/changed
+ references refuse input; they never trigger automatic grounding or replay.
+ `keyboard(alias, offset, tail=...)` guards keyboard continuation without clicking.
++Keyboard tails may include bounded `key_state` presses and releases as well as
++text and chords; the bridge appends its mandatory `release_all`, and the caller
++must inspect the terminal native release receipt before treating input as
++neutral. Pointer and move tails continue to reject key-state operations.
+ `review_window(window_id)` explicitly revokes all old aliases even when review
+ fails; successful review does not infer semantic equivalence of windows.
+ Call `close()` in a finally block. It closes this connection, not the application.
+diff --git a/runtime/guarded_x11_v1/bridge.py b/runtime/guarded_x11_v1/bridge.py
+index c4e0b0ba4d..6e809bdb53 100644
+--- a/runtime/guarded_x11_v1/bridge.py
++++ b/runtime/guarded_x11_v1/bridge.py
+@@ -799,9 +799,15 @@ class NativeHandleBridge:
+         tail = expand_text_gaps(tail, max_ops={'click':123, 'move':125, 'keyboard':126}[interaction])[0]
+         if interaction == 'move' and any(op.get('op') not in {'wait_update', 'observe'} for op in tail):
+             raise ValueError('guarded move tail permits only wait_update and observe')
+-        if any(op.get("op") not in {"text", "key_chord", "wait_update", "observe"} for op in tail):
++        allowed_tail_ops = {"text", "key_chord", "wait_update", "observe"}
++        if interaction == 'keyboard':
++            allowed_tail_ops.add('key_state')
++        if any(op.get("op") not in allowed_tail_ops for op in tail):
+             raise ValueError("unsupported guarded-click tail")
+-        if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
++        if interaction == 'keyboard' and not any(
++                op.get('op') in {'text', 'key_chord'} or
++                (op.get('op') == 'key_state' and op.get('down') is True)
++                for op in tail):
+             raise ValueError('keyboard continuation requires explicit keyboard input')
+         self.active = (alias, offset)
+         self._active_process_identity = None
+diff --git a/runtime/guarded_x11_v1/test_input_dependency.py b/runtime/guarded_x11_v1/test_input_dependency.py
+index ce1a845e32..204a29783c 100644
+--- a/runtime/guarded_x11_v1/test_input_dependency.py
++++ b/runtime/guarded_x11_v1/test_input_dependency.py
+@@ -9,6 +9,50 @@ from runtime.backends.x11_v1.backend import X11Backend, X11BackendError, X11Exec
+ TAIL = [{'op':'key_chord','keys':['CTRL','s']}]
+ 
+ class InputDependencyTests(unittest.TestCase):
++    def guarded_tail_bridge(self):
++        b=self.b
++        b.active=None;b.review_required=False;b.session=SimpleNamespace(recovery_required=False)
++        b.scope='guard:test';b.binding_revision=2;b.sequence=1;b.target='app'
++        b.backend=SimpleNamespace(targets={'app':SimpleNamespace(id=20)})
++        b.checks=[];b.additional_checks=[];b._input_guard=None;b._process_identity_guard=False
++        b._save=Mock();b.deadline=None
++        return b
++
++    def test_keyboard_tail_accepts_bounded_key_state_hold_and_explicit_up(self):
++        b=self.guarded_tail_bridge()
++        tail=[{'op':'key_state','key':'w','down':True},
++              {'op':'wait_update','timeout_ms':600},
++              {'op':'key_state','key':'w','down':False}]
++        returned={'status':'returned','result':{'status':'completed','execution':{
++            'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}}
++        with patch.object(b,'check',return_value={'point':[100,200]}), \
++             patch('runtime.guarded_x11_v1.bridge.dispatch_in_session',return_value=returned) as dispatch:
++            row=b._run_guarded('forward_target',[12,19],tail=tail,interaction='keyboard')
++        self.assertEqual(row['status'],'completed')
++        program=dispatch.call_args.args[1]
++        self.assertEqual(program['ops'][1:4],tail)
++        self.assertEqual(program['ops'][-1],{'op':'release_all'})
++
++    def test_keyboard_state_release_without_any_press_is_not_new_input(self):
++        b=self.guarded_tail_bridge()
++        tail=[{'op':'key_state','key':'w','down':False}]
++        with patch.object(b,'check',return_value={'point':[100,200]}), \
++             patch('runtime.guarded_x11_v1.bridge.dispatch_in_session') as dispatch:
++            with self.assertRaisesRegex(ValueError,'explicit keyboard input'):
++                b._run_guarded('forward_target',[12,19],tail=tail,interaction='keyboard')
++        dispatch.assert_not_called()
++        self.assertIsNone(b.active)
++
++    def test_pointer_tail_cannot_smuggle_key_state(self):
++        b=self.guarded_tail_bridge()
++        tail=[{'op':'key_state','key':'w','down':True}]
++        with patch.object(b,'check',return_value={'point':[100,200]}), \
++             patch('runtime.guarded_x11_v1.bridge.dispatch_in_session') as dispatch:
++            with self.assertRaisesRegex(ValueError,'unsupported guarded-click tail'):
++                b._run_guarded('save',[0,0],tail=tail,interaction='click')
++        dispatch.assert_not_called()
++        self.assertIsNone(b.active)
++
+     def test_explicit_pointer_guard_freezes_interaction_even_with_empty_tail(self):
+         for interaction in ('click','move'):
+             with self.subTest(interaction=interaction),self.b.input_guard(

@@ -1,0 +1,7 @@
+{"direction":"send_prepared","observed_ns":321519660708400,"message":{"method":"thread/start","id":1,"params":{"model":"mock","cwd":".","approvalPolicy":"never","sandbox":"read-only","config":{"project_doc_max_bytes":0},"baseInstructions":"","ephemeral":true,"threadSource":"exec"}}}
+{"direction":"sent","observed_ns":321519660762100,"message":{"method":"thread/start","id":1,"params":{"model":"mock","cwd":".","approvalPolicy":"never","sandbox":"read-only","config":{"project_doc_max_bytes":0},"baseInstructions":"","ephemeral":true,"threadSource":"exec"}}}
+{"direction":"received","observed_ns":321519727623600,"message":{"id":1,"result":{"thread":{"id":"mock-thread"}}}}
+{"direction":"send_prepared","observed_ns":321519727727600,"message":{"method":"turn/start","id":2,"params":{"threadId":"mock-thread","input":[{"type":"text","text":"mock observation","text_elements":[]}],"model":"mock","effort":"low","outputSchema":{"type":"object"}}}}
+{"direction":"sent","observed_ns":321519728060200,"message":{"method":"turn/start","id":2,"params":{"threadId":"mock-thread","input":[{"type":"text","text":"mock observation","text_elements":[]}],"model":"mock","effort":"low","outputSchema":{"type":"object"}}}}
+{"direction":"received","observed_ns":321519728106200,"message":{"id":2,"result":{"turn":{"id":"mock-turn"}}}}
+{"direction":"received","observed_ns":321519778029900,"message":{"method":"fixture/pulse"}}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r29-x11-input-surface-fingerprint/probe.py", line 130, in <module>
+    main()
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r29-x11-input-surface-fingerprint/probe.py", line 92, in main
+    conn, row = inspect_connection(label, display_name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r29-x11-input-surface-fingerprint/probe.py", line 34, in inspect_connection
+    'root_window_id': int(screen.root),
+                      ^^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'Window'

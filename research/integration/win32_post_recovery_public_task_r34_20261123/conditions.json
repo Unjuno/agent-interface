@@ -1,0 +1,96 @@
+{
+  "allocation": {
+    "followup_public_dispatches": 1,
+    "fresh_fixtures": 1,
+    "recovery_calls_per_source": 1,
+    "retries": 0,
+    "task_verifications": 1,
+    "unknown_source_dispatches": 1
+  },
+  "experiment": "win32-post-recovery-public-task-r34",
+  "frozen_at_utc": "2026-11-23T02:33:58.017526+00:00",
+  "model": "none",
+  "order": [
+    1
+  ],
+  "pre_live_qualification": {
+    "ast_parse": "PASS_6_FILES",
+    "normal_task_server_handshake": "reused unchanged wrapper code from R32 PASS",
+    "optimized_task_server_handshake": "reused unchanged wrapper code from R32 PASS",
+    "retries": 0,
+    "uuid_import": "PASS",
+    "win32_dll_allowlist": [
+      "user32",
+      "gdi32",
+      "kernel32"
+    ]
+  },
+  "provider": "none",
+  "schema": "agent-interface/win32-post-recovery-public-task-r34-v1",
+  "source_hashes": {
+    "run_cohort.py": "c659d80518780115a0ee12c3f83fa23a44a82fd19507a58c83852ad2a9590a55",
+    "source/fixture_app.py": "2c59125d4f10dfa81f19009572ea2c86c4dbaa49cbd6dfee26e2b71d832fc1ec",
+    "source/foreground_probe.py": "38a3143cb6a54267ee6e025d764317c66c575b1181309eaa02202cc1c928dab4",
+    "source/handshake_smoke.py": "1ca8b006a9ec5972551f67632de2f6ec5ef96481ba8b776e5b967e6b2e413c3d",
+    "source/scorer.py": "37b2bed670ec331cc543f87bcab5d13cfd782c9318551125831c040c552b6eb4",
+    "task_oracle_server.py": "416d6ea0a870b42a2a20b0656e7f62ee528f6c8306507250aa025b62a89b099c"
+  },
+  "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+  "stop_rules": [
+    "One fresh owned fixture only; preserve every failure as this attempt outcome; zero retries.",
+    "Source dispatch is one focused A chord with 2 s authority; never replay, regardless of source outcome.",
+    "If source action is not UNKNOWN with release unconfirmed, stop before recovery/followup and preserve result.",
+    "Verify exact producer absence before at most one public orphan recovery. Keep old action UNKNOWN, task_success null, replay denied.",
+    "Stop and retain fixture/fence on any target identity, foreground, recovery release, neutral readback, 2 s horizon, or fence uncertainty.",
+    "After recovery, require new Computer Use exact-window activation, expected-title HWND/PID foreground probe, fresh observation and fresh target generation before one distinct B action.",
+    "Only followup B may pass the independent task oracle; it must be tied to exact followup call/operation/generation and a char-B event within that dispatch interval, with fixture state ab.",
+    "Close fixture only after followup action release and task effect are independently verified; otherwise preserve it and report STOP.",
+    "No model/provider, efficiency, MAP01, general reliability, preview graduation, or original-action task-success claim."
+  ],
+  "trial": {
+    "authority_lease_ms": 2000,
+    "capture_frame": "window_client",
+    "capture_region": [
+      0,
+      0,
+      400,
+      180
+    ],
+    "effect_delay_ms": 6000,
+    "followup_lease_id": "r34-31080d5fad264de0add3d30f94f19af0",
+    "followup_program_id": "r34-bd4329eab974423bb478e3d572c48872",
+    "followup_task": "After verified orphan recovery and a fresh observation/generation, append B; independent oracle requires exactly one new WM_CHAR B event within the new dispatch interval and fixture state ab.",
+    "horizon_ms": 2000,
+    "lease_id": "r34-1ee2f5654f5a44b981a61f5c98ef08ec",
+    "max_horizon_gap_ms": 100,
+    "ordinal": 1,
+    "program_id": "r34-38cf0495d22f451a819ab263b0e35579",
+    "trial_id": "r34-68365218900d4eaa887c26139b2e0306",
+    "window_title": "Agent Interface Win32 Fixture R34"
+  },
+  "trials": [
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r34-31080d5fad264de0add3d30f94f19af0",
+      "followup_program_id": "r34-bd4329eab974423bb478e3d572c48872",
+      "followup_task": "After verified orphan recovery and a fresh observation/generation, append B; independent oracle requires exactly one new WM_CHAR B event within the new dispatch interval and fixture state ab.",
+      "horizon_ms": 2000,
+      "lease_id": "r34-1ee2f5654f5a44b981a61f5c98ef08ec",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 1,
+      "program_id": "r34-38cf0495d22f451a819ab263b0e35579",
+      "trial_id": "r34-68365218900d4eaa887c26139b2e0306",
+      "window_title": "Agent Interface Win32 Fixture R34"
+    }
+  ],
+  "window_title": "Agent Interface Win32 Fixture R34",
+  "workload": "Two-stage native Win32 fixture: one public A action schedules factual delayed a at 6s under a 2s authority lease; after one public orphan recovery and a fresh observation, one new B action receives a separate independently verified task effect. The source action remains UNKNOWN and is never replayed."
+}

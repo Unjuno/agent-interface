@@ -1,0 +1,47 @@
+{
+  "schema": "wslc-fake-x-public-currentmain-s11-v1",
+  "attempt_id": "wslc-fake-x-public-currentmain-20261024-s11",
+  "replicates": "S10",
+  "preregistered_utc": "2026-10-24T14:23:36.8523749+00:00",
+  "source_baseline": "2166707229958e095d472c80e160c26449de7a29",
+  "source_freeze_sha256": "fdb7342248978fb361bd1809bf83cf2ec66e52ee0010008e93706bf7173c77e5",
+  "source_file_count": 247,
+  "dependency_manifest_file_count": 203,
+  "session_api": "Microsoft.WSL.Containers",
+  "session_api_version": "3.0.3",
+  "session_name": "agent-interface-wslc-fake-x-s11-61f3bcfd67aa4f54a62aa5b71463af8f",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fake-x-s11-61f3bcfd67aa4f54a62aa5b71463af8f",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "agent-interface-wslc-fake-x-s11-61f3bcfd67aa4f54a62aa5b71463af8f-probe",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "container_count": 1,
+  "pull_count": 1,
+  "container_network": "none",
+  "mounts": "source and dependencies read-only; attempt read-only; dedicated output writable",
+  "test_modes": [
+    "normal",
+    "optimized"
+  ],
+  "cases": [
+    "healthy",
+    "focus_query",
+    "release_sync"
+  ],
+  "capture": [
+    "stdout OutputReceived",
+    "stderr ErrorReceived"
+  ],
+  "prohibitions": [
+    "no Docker",
+    "no global WSLc inventory",
+    "no default/shared session",
+    "no real X server",
+    "no physical input",
+    "no GUI or app",
+    "no retries",
+    "no unrelated cleanup"
+  ],
+  "no_probe_claim_until_saved_audits": true,
+  "native_harness_output_path": "C:\\wslc-s11-61f3bcfd\\bin",
+  "pillow_wheel_sha256": "676b2815362456b5b3216b4fd5bd89d362100dc6f4945154ff172e206a22c024"
+}

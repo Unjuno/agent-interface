@@ -1,0 +1,590 @@
+[
+  {
+    "argv": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/main",
+      "refs/heads/research/17-cancel-wake-01a0ff52-70ab"
+    ],
+    "pid": 43244,
+    "start_utc": "2026-10-03T11:56:54.261157+00:00",
+    "end_utc": "2026-10-03T11:56:54.858571+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "9cc4ab7f2d3fb0c01c9c4592ffef078688640609a1cfabf3ed47f4e4363255c1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "-c",
+      "fetch.writeCommitGraph=false",
+      "fetch",
+      "--depth=1",
+      "--filter=blob:none",
+      "origin",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7"
+    ],
+    "pid": 43248,
+    "start_utc": "2026-10-03T11:56:54.859117+00:00",
+    "end_utc": "2026-10-03T11:56:55.760790+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "010591692379f19e7fb0cd27d9bb83c9ee2935700353e158e7abaa668fa7fb07"
+  },
+  {
+    "argv": [
+      "git",
+      "ls-tree",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+      "--",
+      "README.md",
+      "docs/CURRENT_GOAL.md",
+      "ROADMAP.md",
+      "docs/WORKER_QUICKSTART.md",
+      "docs/RESEARCH_METHOD.md",
+      "docs/ISSUE_FAILURE_CLASSIFICATION.md",
+      "docs/INTEGRATION_PLAN.md",
+      ".github/check_public_navigation.py",
+      "research/check_workspace_index.py",
+      "AGENTS.md",
+      "research/AGENTS.md",
+      "research/concurrency/AGENTS.md",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52"
+    ],
+    "pid": 43255,
+    "start_utc": "2026-10-03T11:56:55.761438+00:00",
+    "end_utc": "2026-10-03T11:56:55.773966+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "3a96f565b95fe030dadcff52482f30c3f2ca4e210ade47cf8a60f78cfb831b90",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "ls-tree",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+      "--",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52"
+    ],
+    "pid": 43257,
+    "start_utc": "2026-10-03T11:56:55.775955+00:00",
+    "end_utc": "2026-10-03T11:56:55.786499+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/research/17-cancel-wake-01a0ff52-70ab"
+    ],
+    "pid": 43258,
+    "start_utc": "2026-10-03T11:56:55.786811+00:00",
+    "end_utc": "2026-10-03T11:56:56.394772+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "read-tree",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7"
+    ],
+    "pid": 43261,
+    "start_utc": "2026-10-03T11:56:56.395257+00:00",
+    "end_utc": "2026-10-03T11:56:56.583582+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43262,
+    "start_utc": "2026-10-03T11:56:56.584194+00:00",
+    "end_utc": "2026-10-03T11:56:56.597190+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "65e53c0068b80afbf988d02cb7df5ff7a420e35c7c3d58af96128d1594feab6f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "a1ef705bd0ded2a1fc0033b3f7001cb4da1d2aeb",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/CONSTRUCTION.md"
+    ],
+    "pid": 43263,
+    "start_utc": "2026-10-03T11:56:56.597746+00:00",
+    "end_utc": "2026-10-03T11:56:56.667278+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43264,
+    "start_utc": "2026-10-03T11:56:56.667796+00:00",
+    "end_utc": "2026-10-03T11:56:56.680989+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "766899b80a2b5decf25151ab40564f680427f2624d5b558dd284abe5c3d12683",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "495b6ebfb62e8859d2d3392cef4bb95f60357b9d",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/FREEZE.json"
+    ],
+    "pid": 43265,
+    "start_utc": "2026-10-03T11:56:56.681400+00:00",
+    "end_utc": "2026-10-03T11:56:56.750304+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43266,
+    "start_utc": "2026-10-03T11:56:56.750819+00:00",
+    "end_utc": "2026-10-03T11:56:56.763662+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "70bd0bf1671b97e423db40aea086bb9a7380e774192ac8568b9dcce10780f346",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "e3c8e8ca13644c359f58f8f89e739f6f90995eb3",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/INPUTS.json"
+    ],
+    "pid": 43267,
+    "start_utc": "2026-10-03T11:56:56.764228+00:00",
+    "end_utc": "2026-10-03T11:56:56.832050+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43268,
+    "start_utc": "2026-10-03T11:56:56.832527+00:00",
+    "end_utc": "2026-10-03T11:56:56.845096+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "45a8775b0c77fbe6bf207b55f658e576fdd083261fe0f3aaee2e7c76b6d8d82d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "757f556a8a64f2347ad081ae08b8ad489ab7bac0",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/PROTOCOL.md"
+    ],
+    "pid": 43269,
+    "start_utc": "2026-10-03T11:56:56.845515+00:00",
+    "end_utc": "2026-10-03T11:56:56.915504+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43270,
+    "start_utc": "2026-10-03T11:56:56.916114+00:00",
+    "end_utc": "2026-10-03T11:56:56.928884+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "71bd08096a572cbe98ffb09a6424e9d585b4ee0606c8eff3f63e724329c9f32a",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "4eb90d556b2677b739fc1dfa08acc9c58424c335",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/README.md"
+    ],
+    "pid": 43271,
+    "start_utc": "2026-10-03T11:56:56.929413+00:00",
+    "end_utc": "2026-10-03T11:56:56.997751+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43272,
+    "start_utc": "2026-10-03T11:56:56.998246+00:00",
+    "end_utc": "2026-10-03T11:56:57.010498+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "07cf044e010cc52e4ba185dd72e892cfa7a8f2df53fce2ca3da10771be57e6b8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "56667839617c773f60b77fd37a825505c650193e",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/RUNBOOK.md"
+    ],
+    "pid": 43273,
+    "start_utc": "2026-10-03T11:56:57.010964+00:00",
+    "end_utc": "2026-10-03T11:56:57.078642+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43274,
+    "start_utc": "2026-10-03T11:56:57.079127+00:00",
+    "end_utc": "2026-10-03T11:56:57.091190+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "588be7cbc062a856af2954ea72602c100a0a80c61d1926787280521f156d18fb",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "d2cc2ba026bead2321ef6d1dd72bfaf95c7124fe",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/audit.py.txt"
+    ],
+    "pid": 43275,
+    "start_utc": "2026-10-03T11:56:57.091699+00:00",
+    "end_utc": "2026-10-03T11:56:57.160398+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43276,
+    "start_utc": "2026-10-03T11:56:57.160986+00:00",
+    "end_utc": "2026-10-03T11:56:57.175433+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "703d91313fbfabba4e5d0cf38b120abf8274a0a951f79b06e825cedc5e8eff0f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "c5d5c412067207c1ba2a8c03bd04c3a1911091d1",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/controls.py.txt"
+    ],
+    "pid": 43277,
+    "start_utc": "2026-10-03T11:56:57.175858+00:00",
+    "end_utc": "2026-10-03T11:56:57.246244+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "pid": 43278,
+    "start_utc": "2026-10-03T11:56:57.246776+00:00",
+    "end_utc": "2026-10-03T11:56:57.258932+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "30c93196a1144c89b4b0ec55c2d2797ff3c6e32976a4de79a67da4d822929b27",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644",
+      "e9de01d626a3fcce43310282e740df0d4e319852",
+      "research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/driver.py.txt"
+    ],
+    "pid": 43279,
+    "start_utc": "2026-10-03T11:56:57.259494+00:00",
+    "end_utc": "2026-10-03T11:56:57.329031+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "write-tree",
+      "--missing-ok"
+    ],
+    "pid": 43281,
+    "start_utc": "2026-10-03T11:56:57.329519+00:00",
+    "end_utc": "2026-10-03T11:56:57.406825+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "031843f81e4041d421457c0692fc66a1c36be9a08d1ad2e569339e9f9caf2bb8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "diff-tree",
+      "--no-commit-id",
+      "--name-status",
+      "-r",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+      "feea9d162f5fae70d67c27b1dde3abd1d010cc30"
+    ],
+    "pid": 43284,
+    "start_utc": "2026-10-03T11:56:57.407546+00:00",
+    "end_utc": "2026-10-03T11:56:57.431137+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e921af149eee5bd7235ea163b2be8df8128056f022301899a13f32d10fa9b73b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--check",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+      "feea9d162f5fae70d67c27b1dde3abd1d010cc30"
+    ],
+    "pid": 43286,
+    "start_utc": "2026-10-03T11:56:57.432038+00:00",
+    "end_utc": "2026-10-03T11:56:57.446766+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "-c",
+      "user.name=Unjuno",
+      "-c",
+      "user.email=241447786+Unjuno@users.noreply.github.com",
+      "commit-tree",
+      "feea9d162f5fae70d67c27b1dde3abd1d010cc30",
+      "-p",
+      "effc43f8bd11f20f83c3410101c04f31c0c353f7"
+    ],
+    "pid": 43288,
+    "start_utc": "2026-10-03T11:56:57.447563+00:00",
+    "end_utc": "2026-10-03T11:56:57.460508+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "6f000efd06474f42f45b6d3d44dc8e8fb66b0f1ffb78a5dab9f0a3f464a0e0ce",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "update-ref",
+      "refs/heads/research/17-cancel-wake-01a0ff52-70ab",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67",
+      "0000000000000000000000000000000000000000"
+    ],
+    "pid": 43289,
+    "start_utc": "2026-10-03T11:56:57.461314+00:00",
+    "end_utc": "2026-10-03T11:56:57.475186+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/CONSTRUCTION.md"
+    ],
+    "pid": 43291,
+    "start_utc": "2026-10-03T11:56:57.475915+00:00",
+    "end_utc": "2026-10-03T11:56:57.488699+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "958336eb246cfaa54cf4b5511ae30bac7c3dfc2e9dfafbc515ec4a8dcf19dbe8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/FREEZE.json"
+    ],
+    "pid": 43292,
+    "start_utc": "2026-10-03T11:56:57.489662+00:00",
+    "end_utc": "2026-10-03T11:56:57.503788+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "1548310abd8e4787e3bd758265f20760fbd8cad40fbae44774b1f5ac954b48f3",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/INPUTS.json"
+    ],
+    "pid": 43293,
+    "start_utc": "2026-10-03T11:56:57.504639+00:00",
+    "end_utc": "2026-10-03T11:56:57.517431+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "49507144a2429706b4796d459222e031450eea20b46b244f82202456e6c8db24",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/PROTOCOL.md"
+    ],
+    "pid": 43294,
+    "start_utc": "2026-10-03T11:56:57.518336+00:00",
+    "end_utc": "2026-10-03T11:56:57.530166+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "f6389f5678112cf36b742c087367febe6423c5e12f2e2e77eb957eb9372ea350",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/README.md"
+    ],
+    "pid": 43295,
+    "start_utc": "2026-10-03T11:56:57.530748+00:00",
+    "end_utc": "2026-10-03T11:56:57.543709+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "9239c6f35bd7ca3e45c89c6080c234b18036fbde8742e4a519fa1c6019bf599b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/RUNBOOK.md"
+    ],
+    "pid": 43296,
+    "start_utc": "2026-10-03T11:56:57.544342+00:00",
+    "end_utc": "2026-10-03T11:56:57.556791+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "e5fbb3369df7c43cb642478d7dc54cc44ab5b51f86627888807631634d7c0e6e",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/audit.py.txt"
+    ],
+    "pid": 43297,
+    "start_utc": "2026-10-03T11:56:57.557498+00:00",
+    "end_utc": "2026-10-03T11:56:57.570482+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "b6f05afcbfa4dbbcfee1bdff6fc620050b8f385317f576909573c90bd06519c8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/controls.py.txt"
+    ],
+    "pid": 43298,
+    "start_utc": "2026-10-03T11:56:57.571074+00:00",
+    "end_utc": "2026-10-03T11:56:57.584204+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "efef4b47dacbcbc522310e9c4205f68e0710aaf44e8b919d6adb5f3f35738e19",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "3bccdf99f657cc6f7426090a202fd59bee494e67:research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52/driver.py.txt"
+    ],
+    "pid": 43299,
+    "start_utc": "2026-10-03T11:56:57.584848+00:00",
+    "end_utc": "2026-10-03T11:56:57.597675+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "0d9cb5621d4ce11cab2fe3b671a0b50b29a8d525c9f74698afc04f2dce5eab08",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

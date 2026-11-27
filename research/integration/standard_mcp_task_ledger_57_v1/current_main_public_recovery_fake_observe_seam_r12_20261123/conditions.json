@@ -1,0 +1,29 @@
+{
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "prior": "R11 normal/optimized each reached the unique fake observation and verified the raw callback count/marker/raw input flag before failing on an unjustified envelope-level input_dispatched assertion. R11 remains failed and is not retried.",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "not_tested": [
+    "standard caller/recovery",
+    "native input/task effect",
+    "MAP01",
+    "efficiency",
+    "WSLc/Docker",
+    "preview/runtime distribution"
+  ],
+  "schema": "agent-interface/supervised-win32-fake-observe-injection-r12",
+  "environment": "CPython 3.11.9; Windows host",
+  "pass_rule": "Both fresh runs exit 0 and assert fake called once, marker returned, side_effect_authority false and raw input_dispatched false. No input operation occurs.",
+  "attempt_count": {
+    "total": 2,
+    "normal": 1,
+    "optimized": 1
+  },
+  "question": "Does the supervised-win32 observe seam invoke the injected fake exactly once and return its marker, with side-effect authority false and raw observation input_dispatched false?",
+  "scope": "Supervised Win32 fake observation injection validation only",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_supervised_observation_uses_injected_fake_backend",
+  "baseline": "R11 reached fake callback, but incorrectly asserted envelope-level input_dispatched=false; raw report itself is authoritative",
+  "instrumented_source_sha256": "ef82baa131fc40891b2230855c3ee11aff88a0fa6e4cd65c8da27861bf2965e2"
+}

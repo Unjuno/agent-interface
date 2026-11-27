@@ -1,0 +1,158 @@
+{
+  "admit": {
+    "data": {
+      "action": {
+        "metadata": {
+          "source": "synthetic_public_mcp_admission"
+        },
+        "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "result": null,
+        "status": "admitted",
+        "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+      },
+      "call_id": "30e09f1b85194dfeb605759a8d612226",
+      "cancellation": null,
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "scope": "synthetic_only",
+      "status": "admitted",
+      "task_effect": null,
+      "task_success": null
+    },
+    "is_error": false
+  },
+  "attempt_id": "win32-public-live-generation-20261023-r02",
+  "bind": {
+    "data": {
+      "expires_in_ms": 60000,
+      "input_dispatched": false,
+      "replay_allowed": false,
+      "status": "bound",
+      "target_binding_id": "05a3ed36f77247529e0cb52328fe1354",
+      "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+      "task_success": null,
+      "visual_observation": false
+    },
+    "is_error": false
+  },
+  "cleanup_errors": [],
+  "ended_utc": "2026-10-23T14:49:40.410314+00:00",
+  "fixtures": [
+    {
+      "close_posted": true,
+      "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\effect.json",
+      "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\events.jsonl",
+      "exit_code": 0,
+      "hwnd": 55118154,
+      "label": "generation-a",
+      "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture.log",
+      "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture-meta.json",
+      "pid": 25772,
+      "window_exists_after_exit": false
+    },
+    {
+      "close_posted": true,
+      "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\effect.json",
+      "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\events.jsonl",
+      "exit_code": 0,
+      "hwnd": 54527848,
+      "label": "generation-b",
+      "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture.log",
+      "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture-meta.json",
+      "pid": 25152,
+      "window_exists_after_exit": false
+    }
+  ],
+  "generation_a": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+  "generation_b": "37feae2ee110121942435c8ba4e72e974e37d0ecf93d8226f75180d235fcc00f",
+  "interface_results": {
+    "data": {
+      "action": {
+        "metadata": {
+          "source": "synthetic_public_mcp_admission"
+        },
+        "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "result": {
+          "error": "target_generation_changed_before_start",
+          "replay_allowed": false,
+          "status": "unknown",
+          "task_success": null
+        },
+        "status": "unknown",
+        "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+      },
+      "call_id": "30e09f1b85194dfeb605759a8d612226",
+      "cancellation": null,
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "task_effect": null,
+      "task_success": null
+    },
+    "is_error": false
+  },
+  "owner_close": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "busy",
+    "task_success": null,
+    "unresolved_operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "owner_result": {
+    "cleanup_deadline_ns": null,
+    "deadline_ns": 458298421000000,
+    "obligations": [
+      "key:CTRL"
+    ],
+    "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "phase": "unknown",
+    "producer_exit_code": null,
+    "producer_gate_state": "closed",
+    "producer_identity": null,
+    "recovery_id": null,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "unknown",
+    "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+    "task_success": null,
+    "uncertainty": "target_generation_changed_before_start"
+  },
+  "platform": "win32",
+  "producer_factory_calls": [],
+  "resource_commands": [],
+  "schema": "win32-public-live-generation-raw-v1",
+  "scope": "one public guarded-win32 call on registered create_server tools; two owned fixture_app HWND generations; no input dispatch",
+  "source_commit": "8f4aa65163dee86024371f8ad1e46888ef04de2f",
+  "start": {
+    "data": {
+      "action": {
+        "metadata": {
+          "source": "synthetic_public_mcp_admission"
+        },
+        "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "result": {
+          "error": "target_generation_changed_before_start",
+          "replay_allowed": false,
+          "status": "unknown",
+          "task_success": null
+        },
+        "status": "unknown",
+        "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+      },
+      "call_id": "30e09f1b85194dfeb605759a8d612226",
+      "cancellation": null,
+      "input_dispatched": false,
+      "operation_invoked": true,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "synthetic_only",
+      "status": "unknown",
+      "task_effect": null,
+      "task_success": null
+    },
+    "is_error": false
+  },
+  "started_utc": "2026-10-23T14:49:39.444010+00:00",
+  "status": "FAIL_OR_UNKNOWN"
+}

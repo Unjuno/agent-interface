@@ -1,0 +1,16 @@
+# Matched Calc recovery comparison, 2026-10-31
+
+This exploratory WSLc pair extends the fixed 731/864 Calc task with the same temporary target invalidation in both arms. After the first model response, an 8x8 X overlay changes the selected target. The scripted caller detects the changed pixels before mint or input, removes its own overlay, captures a fresh image, makes one new grounding call, and then follows either the fresh re-grounding route or the compiled local continuation. The fresh route has one further model call before scripted Save. Both use one persistent model session per arm, `gpt-6.1-sol` requested low, private Xvfb, one CPU, 1 GiB, and network-disabled containers; host model access is separate.
+
+| Allocation and order | Route | Task interval | Launcher interval | Model calls | Input (cached subset) | Output | Independent saved effect |
+|---|---|---:|---:|---:|---:|---:|---|
+| i01 first | fresh | 13.348 s | 15.698 s | 3 | 40,746 (25,472) | 234 | exact 731/864 |
+| i02 second | compiled | 9.965 s | 12.284 s | 2 | 25,779 (12,160) | 140 | exact 731/864 |
+
+Both rejected the stale image before minting, used a distinct call on a later screenshot, and ended with verified owner release and empty X key/button state. The task interval starts before the first model request and ends after close and saved-file scoring; it excludes application/container startup and final cleanup. The launcher interval includes the processes started by this harness but excludes source/fixture preparation and audit. Cached tokens are already included in input, not additional cost.
+
+The preceding h01 allocation failed before a model call or input because the Windows launcher used Python 3.11 while bounded app-server pipes require 3.12+. No mint or program is recorded. Its owner was closed in the runner's finally path, but that old harness did not retain the close receipt; no stronger neutral-state claim is made. h02 was not run. The distinct i01/i02 block changed to Python 3.13.14 and added final-neutral recording to the exception path before freezing. No consumed allocation was rerun.
+
+`public.zip` includes frozen candidates and conditions, h01 failure, i01/i02 selected raw observations, model usage, action receipts and saved documents. `audit.py` checks archive hashes, frozen candidate/source hashes, stale screenshot patches, new-image associations, call/session/usage links, action releases, independently parses the entire saved FODS, and verifies cleanup records. Run it with Python without optimization and Pillow. Private host protocol journals and launcher command paths are not included; their bytes are not independently audited here. Source snapshot runtime Python files and eight named model-client dependencies were checked against the recorded main, not a claim of full source identity.
+
+This is one fixed-order pair with different cache states and route internals, a manually scripted intervention that removes its own obstruction, and no third arm. The fixed reference encodes expected values, and Save is scripted. It does not prove recovery from persistent obstruction or partial input, general reliability, statistical significance, cost, MAP01 completion or project completion. The earlier non-obstruction comparison and this block must not be pooled as repeated identical trials. Issue 57 remains open.

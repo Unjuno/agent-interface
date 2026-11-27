@@ -1,0 +1,10 @@
+{
+  "schema": "v15-release-publication-failure-t7-freeze-v1",
+  "experiment": "v15-release-publication-failure-t7-20261008",
+  "current_main_commit": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
+  "current_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+  "current_backend_blob": "193c2bd231795e7ee57de64aedfd741c8b814013",
+  "adapter_source_path": "research/doom/v15_release_batch_t6_20261008/candidate/adapter.py",
+  "adapter_source_sha256": "6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c",
+  "hypothesis": "A publication failure before acceptance must leave a delivery gap that the adapter refuses. If the sink accepts the final row then raises, an unknown producer ledger can coexist with two actually observed ordered rows; the adapter's temporal label must remain noncausal and be described as row-evidence scoped."
+}

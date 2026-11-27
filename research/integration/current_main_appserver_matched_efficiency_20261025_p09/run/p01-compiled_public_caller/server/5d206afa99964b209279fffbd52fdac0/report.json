@@ -1,0 +1,135 @@
+{
+  "input_dispatched": false,
+  "observation_report": {
+    "input_dispatched": false,
+    "observation": {
+      "artifact": {
+        "bytes": 534,
+        "height": 32,
+        "mime_type": "image/png",
+        "path": "<private-path>",
+        "sha256": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+        "source_raw_sha256": "760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388",
+        "timing_ns": {
+          "converted": 561678566359100,
+          "encoded": 561678572565700,
+          "hashed": 561678572937700,
+          "started": 561678566331100,
+          "written": 561678572918200
+        },
+        "width": 32
+      },
+      "capture_started_ns": 561678572960500,
+      "height": 32,
+      "sha256": "760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388",
+      "width": 32
+    },
+    "observation_id": "23506e689e1444729db33fb4f5efef7d",
+    "schema": "agent-interface/runtime-observation-v1",
+    "side_effect_authority": false,
+    "status": "returned"
+  },
+  "operation": "guarded_observe",
+  "replay_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 0,
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:2eca387cc7ec4e598950212dfef194f0",
+    "compiled_surface": "x11-window-20",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 1,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 561678574934200,
+      "pid": 36100,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "owner_process_pid": 36100,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 18874368,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "review_required": false,
+    "session_id": "02e57cfc449e4d95b92dd8fe47ea13b9",
+    "state": "open",
+    "target": "app",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": false
+    },
+    "targets": {
+      "app": 20
+    },
+    "window_lifecycle": false
+  },
+  "source": {
+    "binding_revision": 0,
+    "capture_ns": 561678572960500,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 534,
+        "height": 32,
+        "mime_type": "image/png",
+        "path": "<private-path>",
+        "sha256": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+        "source_raw_sha256": "760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388",
+        "timing_ns": {
+          "converted": 561678566359100,
+          "encoded": 561678572565700,
+          "hashed": 561678572937700,
+          "started": 561678566331100,
+          "written": 561678572918200
+        },
+        "width": 32
+      },
+      "capture_started_ns": 561678572960500,
+      "height": 32,
+      "sha256": "760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388",
+      "width": 32
+    },
+    "observation_id": "23506e689e1444729db33fb4f5efef7d",
+    "pointer_binding": {
+      "focus": 20,
+      "geometry": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "surface": 20
+    },
+    "sequence": 1,
+    "timing_ns": {
+      "artifact_verified": 561678574022700,
+      "binding_checked": 561678573338600,
+      "decoded": 561678574026600,
+      "public_returned": 561678572962900,
+      "started": 561678566282400
+    }
+  },
+  "status": "observed",
+  "task_success": null
+}

@@ -1,0 +1,24 @@
+setUpClass (research.live_control.test_chromium_v5_edge_caller_v3_v1.ChromiumV5EdgeCallerV3Tests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (research.live_control.test_chromium_v5_edge_caller_v3_v1.ChromiumV5EdgeCallerV3Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_edge_caller_v3_v1.py", line 156, in setUpClass
+    source_hashes = {str(path.relative_to(REPO)):
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_edge_caller_v3_v1.py", line 157, in <dictcomp>
+    hashlib.sha256(path.read_bytes()).hexdigest()
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\issue57-chromium-v5-compiled-adapter-r01-20261123\\research\\integration\\issue57_chromium_v5_edge_caller_composition_r06_20261123\\raw\\PROTOCOL.md'
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)

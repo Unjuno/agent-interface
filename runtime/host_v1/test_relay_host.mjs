@@ -56,6 +56,18 @@ test('presentation failure is retained as a started-only boundary and blocks lat
  assert.throws(()=>client.send('save'),/renderer failed/);
  await client.close();assert.deepEqual((await events(dir)).map(r=>r.kind),['send_requested','reply_available','presentation_started','transport_closed']);
 });
+test('malformed base64 image is not presented as decoded evidence and blocks later action',async()=>{
+ const corrupted=fixture.replace("data:'AAECAw=='", "data:'AAECAw==junk'");
+ const {dir,client}=await setup({args:['-e',corrupted]});let images=0;
+ try {
+  const reply=await client.send('observe');
+  await assert.rejects(client.present(reply.attempt,{text:()=>{},image:()=>{images++;}}),/base64/i);
+  assert.equal(images,0);
+  assert.throws(()=>client.send('input'),/base64/i);
+  assert.equal(JSON.parse(await readFile(join(dir,'reply-1.json'))).result.content[1].data,'AAECAw==junk');
+  assert.equal((await events(dir)).some(row=>row.kind==='presentation_callbacks_completed'),false);
+ } finally {await client.close();}
+});
 test('invalid JSON does not consume an attempt and foreign review cannot gain an event',async()=>{
  const {dir,client}=await setup();assert.throws(()=>client.send('observe',{value:NaN}),/finite JSON/);
  assert.equal(client.state().attempts,0);await client.send('observe');

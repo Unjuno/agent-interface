@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/additive-outcome-correction-v1",
+  "trial": "P06",
+  "corrects": "run/RESULT.json:classification",
+  "original_raw_preserved": true,
+  "correct_classification": "FAIL_AFTER_PROVIDER_PRE_MINT",
+  "reason": "The single provider turn completed and produced a model-selected point. Argument preparation then raised KeyError(window_generation) before interface_guarded_mint; no input was dispatched.",
+  "provider_turn_completed": true,
+  "model_point": [16, 8],
+  "provider_usage": {
+    "input_tokens": 10185,
+    "output_tokens": 90,
+    "reasoning_output_tokens": 71,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0
+  },
+  "public_observation": {
+    "sequence": 1,
+    "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "window_generation_field_present": false
+  },
+  "mint_attempted": false,
+  "physical_input": false,
+  "effect_observed": false,
+  "retry_performed": false,
+  "scope": "synthetic Fake X only; no WSLc, Docker, physical desktop input, MAP01, matched efficiency, or reliability result"
+}

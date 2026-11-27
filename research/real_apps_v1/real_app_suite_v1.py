@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, csv, json, os, random, re, signal, subprocess, tempfile, time, xml.etree.ElementTree as ET
+import argparse, csv, json, os, random, re, secrets, signal, subprocess, tempfile, time, xml.etree.ElementTree as ET
 from pathlib import Path
 from statistics import median
 
@@ -19,15 +19,22 @@ class XSession:
         self.tmp=Path(tempfile.mkdtemp(prefix='realapp-x-'))
         self.display_num=self._pick_display()
         self.name=f':{self.display_num}'
-        self.auth=self.tmp/'Xauthority'; self.auth.touch()
+        self.auth=self.tmp/'Xauthority'; self.auth.touch(mode=0o600)
+        cookie=secrets.token_hex(16)
+        subprocess.run(['xauth','-f',str(self.auth),'add',self.name,
+                        'MIT-MAGIC-COOKIE-1',cookie],check=True,
+                       stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+        os.chmod(self.auth,0o600)
         self.env=os.environ.copy(); self.env['DISPLAY']=self.name; self.env['XAUTHORITY']=str(self.auth)
+        os.environ['DISPLAY']=self.name; os.environ['XAUTHORITY']=str(self.auth)
         self.procs=[]
-        self.xvfb=self._popen(['Xvfb',self.name,'-screen','0',f'{W}x{H}x24','-ac','-nolisten','tcp'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        self.xvfb=self._popen(['Xvfb',self.name,'-screen','0',f'{W}x{H}x24',
+                               '-auth',str(self.auth),'-nolisten','tcp'],
+                              stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         sock=Path(f'/tmp/.X11-unix/X{self.display_num}')
         self._wait(lambda:sock.exists(),2.0,'Xvfb')
         self.openbox=self._popen(['openbox','--config-file','/etc/xdg/openbox/rc.xml'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         time.sleep(.20)
-        os.environ['DISPLAY']=self.name; os.environ['XAUTHORITY']=str(self.auth)
         self.d=xdisplay.Display(self.name)
     def _pick_display(self):
         for n in range(120,190):

@@ -1,0 +1,7 @@
+Construction attempt r01 stopped before probe entry.
+
+Command: python -B research/integration/standard_caller_shutdown_cancel_drain_20261022/probe.py
+Exit code: 1
+Exception: ModuleNotFoundError: No module named 'runtime'
+Cause: executing the nested script placed its packet directory, not the checkout root, on sys.path.
+No server, input, cancellation operation, WSL/WSLc, Docker, or GUI was started by this attempt.

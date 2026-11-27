@@ -1,0 +1,29 @@
+{
+  "name": "agent-interface-calc-startup-15c345fc3ce844ad9f891e0ec1df46c9",
+  "image_id": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "probe_sha256": "a17b855cd3cbe70d11c265f769b5cd1cf9df383d715ae323d04f9863f3ccbd4e",
+  "scope": "one exploratory private-Xvfb blank Calc startup; removes --nodefault from A05; no input/model",
+  "timeout_s": 35,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-startup-15c345fc3ce844ad9f891e0ec1df46c9",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-startup-20261030-a06\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-startup-20261030-a06:/out:rw",
+    "--entrypoint",
+    "python3",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "-B",
+    "/out/probe.py"
+  ]
+}

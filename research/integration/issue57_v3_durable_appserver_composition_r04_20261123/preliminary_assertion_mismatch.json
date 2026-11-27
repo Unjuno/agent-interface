@@ -1,0 +1,12 @@
+{
+  "command": [
+    "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+    "-m",
+    "unittest",
+    "research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody",
+    "-v"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"\\\\wsl.localhost\\Ubuntu\\home\\user\\agent-interface-postrecovery-r42-20261123\\research\\live_control\\test_grounding_appserver_usage_transport.py\", line 581, in test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody\r\n    self.assertEqual(result[\"accounting\"][\"usage_totals\"], None)\r\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nAssertionError: {'input_tokens': None, 'cached_input_toke[95 chars]None} != None\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 1.690s\r\n\r\nFAILED (failures=1)\r\n"
+}

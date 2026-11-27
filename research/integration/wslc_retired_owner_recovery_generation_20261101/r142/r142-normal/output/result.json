@@ -1,0 +1,173 @@
+{
+  "status": "passed",
+  "mode": "normal",
+  "before_cancel_keys": {
+    "a": true,
+    "b": false
+  },
+  "response": {
+    "status": "cancel_requested",
+    "already_requested": false,
+    "input_dispatched": false,
+    "release_confirmed": false,
+    "review_required": true,
+    "replay_allowed": false,
+    "owner_process_retired": true,
+    "owner_retirement_in_progress_at_attempt": false,
+    "owner_process_exitcode": -15,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "resource_base": 6291456,
+      "expected_pid": 15,
+      "observed_pid": 22,
+      "observer_pid": 22,
+      "observer_resource_base": 6291456,
+      "worker_retired": true,
+      "worker_exitcode": 0,
+      "elapsed_ms": 55.632553000009466
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "a": 38
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "a": 38
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "worker_retired": true,
+      "worker_exitcode": 0,
+      "elapsed_ms": 354.2231010000023,
+      "release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 270665384897
+      }
+    },
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "late_server_request_possible": true
+  },
+  "cancel_elapsed_ms": 419.553442,
+  "action_result": {
+    "error": "EOFError()"
+  },
+  "after_cancel_keys": {
+    "a": false,
+    "b": false
+  },
+  "old_close": {
+    "status": "cleanup_failed",
+    "session_id": "47d58a11144c4b13b2d4d9413f9328e2",
+    "release_attempted": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "verified": false,
+    "connection_close_attempted": false,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "resource_base": 6291456,
+      "expected_pid": 15,
+      "observed_pid": 22,
+      "observer_pid": 22,
+      "observer_resource_base": 6291456,
+      "worker_retired": true,
+      "worker_exitcode": 0,
+      "elapsed_ms": 55.632553000009466
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "a": 38
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "a": 38
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "worker_retired": true,
+      "worker_exitcode": 0,
+      "elapsed_ms": 354.2231010000023,
+      "release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 270665384897
+      }
+    },
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "late_server_request_possible": true,
+    "retirement_reason": "cancel left input or server-request obligation",
+    "error": "cancel left input or server-request obligation"
+  },
+  "horizon_keys": {
+    "a": false,
+    "b": false
+  },
+  "target_result": {
+    "value": "aa",
+    "events": [
+      {
+        "type": "press",
+        "key": "a",
+        "host_ns": 270275861071
+      },
+      {
+        "type": "release",
+        "key": "a",
+        "host_ns": 270672163108
+      },
+      {
+        "type": "press",
+        "key": "a",
+        "host_ns": 279201243259
+      },
+      {
+        "type": "release",
+        "key": "a",
+        "host_ns": 279202343880
+      }
+    ]
+  },
+  "release_verified": true,
+  "fresh_close": {
+    "status": "closed",
+    "session_id": "7dd1b240456c43d9ab522d3825aa0cb5",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 279215316924
+    },
+    "verified": true,
+    "release_confirmed": true
+  },
+  "input_neutral": true,
+  "target_exit": 0,
+  "server_exit": 0
+}

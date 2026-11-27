@@ -1,0 +1,97 @@
+{
+  "C": "This is a replay of selected retained V39 events and a construction adapter, not the production controller path. WSLc CPU/memory flags are configuration only; memory/swap enforcement is not asserted.",
+  "D": "PASS_PORTABILITY_SCOPED only if candidate and independent auditor exit 0, all four source-bound rows match, soft rows are 96/160, invalidations are 99/170, authority remains false, and the exact run container is verified absent by scoped CID query. Otherwise retain STOP/FAIL/HOLD and do not retry.",
+  "H": "The candidate adapter using the exact current-main pure guard will reproduce the selected four report outcomes in WSLc with no artifact reads and no input authority; the raw-only auditor will independently reconstruct every selected row.",
+  "T": "One WSLc run of runner.py from a pinned cached Python image, network disabled, one CPU, 512 MiB configured, read-only input bind and dedicated writable output. Host subprocess deadline 60 s. Candidate and auditor each have internal 20 s deadline. No retry.",
+  "U": "No live game/model/GUI/input; no fresh task-effect or recovery; only one Windows host/runtime and four selected rows; report exposes 2 selected soft rows though its cumulative soft total is 3.",
+  "allocation": "WSLC-TYPED-POLICY-REPLAY-A01-20261012-01",
+  "cleanup_on_timeout": "only exact full cid from this run; scoped absence query; never global inventory",
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "wslc-typed-replay-a01-20261012",
+    "--cidfile",
+    "<out>/container.cid",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--memory",
+    "512M",
+    "--cpus",
+    "1",
+    "--volume",
+    "<input>:/input:ro",
+    "--volume",
+    "<out>:/out:rw",
+    "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "python",
+    "-B",
+    "/input/runner.py",
+    "/input/report.json",
+    "/input/events.jsonl",
+    "/input/observable_signal_guard_v2.py",
+    "/input/candidate.py",
+    "/input/auditor.py",
+    "/out"
+  ],
+  "created_before_candidate": true,
+  "formal_live_allocation_consumed": false,
+  "host_launcher": {
+    "bytes": 4176,
+    "path": "invoke_once.py",
+    "sha256": "5640b59625dc4b4761a8f37a6d3bfe493453972913dbe3c7402bb9ce4979fc63"
+  },
+  "host_launcher_timeout_seconds": 60,
+  "inputs": {
+    "auditor.py": {
+      "bytes": 3882,
+      "sha256": "c0af2c2a38b45f870289e7b94af435d711ba522d66eec272def22393fd990412"
+    },
+    "candidate.py": {
+      "bytes": 4911,
+      "sha256": "1f2f0090ad03c7ff5d0aa550ed2742e6f282a39ec2c4d27149609cd9e1061dfa"
+    },
+    "events.jsonl": {
+      "bytes": 457736,
+      "sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a"
+    },
+    "observable_signal_guard_v2.py": {
+      "bytes": 7404,
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "report.json": {
+      "bytes": 262284,
+      "sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121"
+    },
+    "runner.py": {
+      "bytes": 650,
+      "sha256": "91c41fdea8b97e3764d50a2fb1d37c9c86447cf56e9bad2379d9eb746561fedb"
+    }
+  },
+  "question": "Does the retained four-event V39 typed-policy replay and independent audit produce the frozen semantics inside the pinned Python image on WSLc?",
+  "retries": 0,
+  "runtime": {
+    "cidfile": "/out/container.cid",
+    "cpus": "1",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "memory": "512M",
+    "mounts": [
+      "/input:ro",
+      "/out:rw"
+    ],
+    "network": "none",
+    "pull": "never",
+    "rm": true,
+    "unique_name": "wslc-typed-replay-a01-20261012",
+    "wslc": "3.0.1.0"
+  },
+  "schema": "wslc-typed-policy-replay-freeze-v1",
+  "source": {
+    "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+    "main_sha": "964c9197d5083ab55ea7fdc9105427623e89e677",
+    "repo": "Unjuno/agent-interface"
+  }
+}

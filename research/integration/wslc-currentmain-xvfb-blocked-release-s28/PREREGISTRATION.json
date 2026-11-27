@@ -1,0 +1,53 @@
+{
+  "schema": "wslc-s27-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s28",
+  "preregistered_utc": "2026-10-24T18:52:03.028227+00:00",
+  "source_commit": "30feb421533e2db171562721c39b8aa7a8b40cd2",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "runner_sha256": "7c81e934704d2605d4f7ff47f9513960fb7e52dc91bccb6a641fb08b52329840",
+  "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+  "harness_source_sha256": "df57efcadebf059f7a0f6f80f533c276a16d810253095d78ef48bc0353541520",
+  "question": "Does a fresh independent WSLc run at the same 3930 ms pause reproduce S27 task/release/recovery evidence within the frozen bounds?",
+  "conditions": {
+    "schema": "wslc-currentmain-xvfb-s27-v1",
+    "attempt_id": "wslc-standard-caller-xvfb-20261025-s28",
+    "source_commit": "30feb421533e2db171562721c39b8aa7a8b40cd2",
+    "source_hashes": {
+      "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+      "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+    },
+    "runtime": "WSLc 3.0.3 isolated session/container",
+    "pause_ms": 3930,
+    "transaction_deadline_ms": 4000,
+    "independent_readback_bound_ms": 5000,
+    "delayed_event_horizon_ms": 8500,
+    "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+    "network": "none",
+    "cpu": 2,
+    "memory_mb": 2048,
+    "gpu": false,
+    "retries": 0,
+    "runner_sha256": "7c81e934704d2605d4f7ff47f9513960fb7e52dc91bccb6a641fb08b52329840",
+    "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+    "harness_source_sha256": "df57efcadebf059f7a0f6f80f533c276a16d810253095d78ef48bc0353541520",
+    "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+    "mounts": {
+      "repo": "read-only",
+      "deps": "read-only",
+      "stage": "read-only",
+      "xkb": "read-only",
+      "runner": "read-only",
+      "output": "read-write"
+    },
+    "question": "Does one 3930 ms standard-caller blocked-Xvfb trial stay within the 4 s transaction and 5 s independent release-readback bounds after 3920 ms scoped pass and 3940 ms scoped failures?",
+    "decision": "PASS_SCOPED only if exact 3930 ms test returns a release receipt before 4000 ms, independent all-up readback <=5000 ms, late horizon >=8500 ms stays all-up, both task oracles pass, runtime state remains UNKNOWN/replay-denied/task_success=null, and exact cleanup succeeds. Any safety-bound miss is FAIL; any setup failure before test input is HOLD with no retry."
+  },
+  "decision": "PASS_SCOPED only if release receipt is before 4000 ms, independent readback <=5000 ms, delayed horizon >=8500 ms remains all-up, both task oracles pass, runtime state stays UNKNOWN/replay-denied/task_success=null, and exact cleanup succeeds. Any bound miss is FAIL; setup failure before input is HOLD with no retry.",
+  "limits": "One independent replicate at the same synthetic private-Xvfb condition; no reliability or product claim.",
+  "replication_of": "S27 3930 ms trial; evaluate repeatability at the same condition"
+}

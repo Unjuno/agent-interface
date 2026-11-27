@@ -1,0 +1,9 @@
+# Standard-caller Xvfb cancel-retirement rerun — r08
+
+This packet preserves run [39268728350](https://github.com/Unjuno/agent-interface/actions/runs/39268728350), head `00da96532470fe372fd4041892b1df3edd12c094`, including the one-second withheld-ack baseline and four A-B-B-A ACK-immediate samples (two per trace mode). The raw JSON and observation PNGs are copied from workflow artifacts; `SHA256SUMS` records their bytes.
+
+The baseline returned `cancel_unconfirmed` in 874.924 ms, retired the exact owner (exit -15), observed owner-client disconnection, and recorded an independent fresh-client release readback with keys/buttons up. Parent readback and the 8.5 s horizon both showed `a=false`, `b=false`; no delayed `b` KeyPress was observed. The release worker exited cleanly. The API still reports `release_confirmed=false`, `cleanup_status=UNKNOWN`, `late_server_request_possible=true`, `task_success=null`, and replay denied. This remains the correct conservative caller result.
+
+All four comparison samples retired the exact owner, got a verified release-worker receipt, saw keys up in the independent horizon, and reported the standard UNKNOWN/replay-denied state. Cancel returns were 631.374 ms and 618.987 ms without tracing, 627.000 ms and 628.672 ms with tracing. These two-per-mode samples are diagnostic only and cannot establish a trace-performance or reliability claim. The baseline's 250 ms value remains only the child acknowledgement wait, not an end-to-end bound.
+
+The test used private Xvfb, a synthetic application, and an injected delayed X request. It demonstrates the bounded polling patch on this schedule and that this run did not reproduce r07's missed child retirement or unusable release-worker result. It does not prove physical release, server-outage bounds, product/MAP01 success, bounded recovery, or efficiency. No WSLc allocation was used. Keep r05–r08 as distinct immutable outcomes and keep Issue #17 open.

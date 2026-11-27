@@ -1,0 +1,27 @@
+{
+  "baseline": "0ddd716a3e2c07d7dad54c8fc81fb21aa5ee67d6",
+  "candidate": "67905decc40a468b9dfe45ecfbcc8a6b83999689",
+  "platform": "Windows",
+  "platform_version": "10.0.26300",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "os_name": "nt",
+  "scope": "Local anonymous pipes only. No display, game, input injection, model, WSL or allocation.",
+  "source_sha256_lf": {
+    "main_thread_scorer_polling_v1.py": "038d3a7d5b4a11054d429cf21c143277c3a96abc9bdf3348650a5d896658ac6f",
+    "test_main_thread_scorer_polling_v1.py": "9d49c59221c51e463857fea42e5293ea703f7d2d45cdee13fe8d3ab0f697e595"
+  },
+  "runs": {
+    "baseline-normal": {
+      "returncode": 1,
+      "log_sha256": "aeca0f4975c13d6cf3d4d7e3f2c6f61b76fbe710bb575a589f663b182d1d1fc1"
+    },
+    "candidate-normal": {
+      "returncode": 0,
+      "log_sha256": "65c3c2c08b4dd027345e1880259dee9c2bc5e6847c7cb68a257252a531317782"
+    },
+    "candidate-optimized": {
+      "returncode": 0,
+      "log_sha256": "a1c769553ef1ca77051aac1d07d4a292c84b3c4f8c83f097045f24f18a249866"
+    }
+  }
+}

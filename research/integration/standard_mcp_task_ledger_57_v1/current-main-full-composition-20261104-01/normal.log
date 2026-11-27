@@ -1,0 +1,44 @@
+....................................................................execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=52 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=52 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...................................................Executing <Task finished name='Task-281' coro=<OwnedProcessMCPTests.test_owned_process_window_discovery_is_read_only_and_uses_query_worker() done, defined at /workspace/runtime/cli_v1/test_mcp_owned_process.py:721> result=None created at /usr/lib/python3.11/asyncio/runners.py:100> took 1.061 seconds
+......E...........................................Executing <Task pending name='Task-510' coro=<ProviderToPublicMcpCompositionTests.test_async_attempt_joins_generation_bound_public_compiled_tool() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1144> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.277 seconds
+Executing <Task pending name='Task-510' coro=<ProviderToPublicMcpCompositionTests.test_async_attempt_joins_generation_bound_public_compiled_tool() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1184> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.101 seconds
+.Executing <Task pending name='Task-515' coro=<ProviderToPublicMcpCompositionTests.test_calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1981> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.113 seconds
+...Executing <Task pending name='Task-536' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1560> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.160 seconds
+Executing <Task finished name='Task-536' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() done, defined at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1329> result=None created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.152 seconds
+........................................Executing <Task pending name='Task-607' coro=<AppServerProviderToPublicMcpTests.test_app_server_turn_bytes_join_usage_and_public_tool_call() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_provider_to_public_mcp_v1.py:148> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.105 seconds
+Executing <Task finished name='Task-607' coro=<AppServerProviderToPublicMcpTests.test_app_server_turn_bytes_join_usage_and_public_tool_call() done, defined at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_provider_to_public_mcp_v1.py:67> result=None created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.123 seconds
+......
+======================================================================
+ERROR: test_prearmed_cleanup_can_precede_retired_owners_queued_down (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prearmed_cleanup_can_precede_retired_owners_queued_down)
+A separate cleanup receipt is false if the old connection queue can arrive later.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 3667, in test_prearmed_cleanup_can_precede_retired_owners_queued_down
+    self.assertTrue(cancelled['owner_process_retired'], cancelled)
+                    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'owner_process_retired'
+
+----------------------------------------------------------------------
+Ran 219 tests in 143.734s
+
+FAILED (errors=1)

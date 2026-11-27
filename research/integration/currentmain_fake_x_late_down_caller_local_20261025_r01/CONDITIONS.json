@@ -1,0 +1,50 @@
+{
+  "schema": "currentmain-fake-x-late-down-local-conditions-v1",
+  "source_commit": "6f3499249838eb56ecd10b3177c1818af6a043a7",
+  "source_files": {
+    "runtime/cli_v1/test_mcp_relay_composition.py": {
+      "working_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "origin_main_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "equal": true
+    },
+    "runtime/cli_v1/owned_guarded_session.py": {
+      "working_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "origin_main_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "equal": true
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/fake_socket_relay.py": {
+      "working_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "origin_main_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "equal": true
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py": {
+      "working_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb",
+      "origin_main_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb",
+      "equal": true
+    },
+    "runtime/guarded_x11_v1/process_identity.py": {
+      "working_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "origin_main_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "equal": true
+    },
+    "runtime/cli_v1/mcp_server.py": {
+      "working_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "origin_main_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "equal": true
+    }
+  },
+  "python": "Python 3.11.9",
+  "host": "Windows local regression; no WSLc/Docker",
+  "container": "none",
+  "network": "test uses local synthetic socket fixture",
+  "attempts": 1,
+  "retries": 0,
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_keeps_unknown_after_fake_late_down",
+  "required_raw": [
+    "fake-x-release-readback.json",
+    "fake-x-late-down.json",
+    "fake-x-server-queue.json",
+    "synthetic-effect-receipt.json",
+    "held-reply.json"
+  ]
+}

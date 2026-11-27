@@ -1,0 +1,25 @@
+{
+  "baseline_head": "edca09d9ba7a2eda1565a529aeebea54469b8b31",
+  "limits": [
+    "CLI reachability and deterministic Windows Fake X tests only; no live Xlib/Xvfb execution.",
+    "Does not establish bounded release with platform calls blocked, delayed request exclusion, independent task success, task recovery, MAP01, physical desktop, matched efficiency or reliability.",
+    "No WSLc or Docker allocation used."
+  ],
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_owned_process.py": "7c6272979437b83a0910f62495a0b58749b981f4a838cb5443c6d833f32a110f",
+    "runtime/cli_v1/mcp_server.py": "8e9400c7fa1c885932127a8be7f78996505b54cc2ac3bde74d5b5656558e7089"
+  },
+  "scope": "Expose the already opt-in prestarted cancellation supervisor in the standard MCP stdio caller CLI; verify forwarding and prerequisite rejection.",
+  "acceptance": [
+    "CLI flag forwards guarded_prestarted_cancel_supervisor=True to create_server.",
+    "Flag without --guarded-owned-process is rejected before output directory creation.",
+    "Existing public cancellation behavior suites remain green in normal and optimized Python."
+  ],
+  "captured_utc": "2026-10-21T14:08:44Z",
+  "packet": "public_mcp_prestarted_cancel_supervisor_20261021/r06",
+  "commands": [
+    "python -B -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence",
+    "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+  ],
+  "platform": "Windows 10 build 26300; CPython 3.11.9; multiprocessing spawn"
+}

@@ -11,17 +11,35 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def parse_runner_arguments(argv):
+    if len(argv) not in (9, 10):
+        raise ValueError("expected nine runner arguments and optional model")
+    model = argv[9] if len(argv) == 10 else "gpt-5.6-luna"
+    if (not isinstance(model, str) or not model or not model.isascii()
+            or not model[0].isalnum() or any(not (c.isalnum() or c in "-._:/") for c in model)):
+        raise ValueError("invalid model identifier")
+    return argv[:9], model
+
+
 def main():
-    node, cli, prompt_file, working, output, mode, image, instructions, schema = sys.argv[1:]
+    args, model = parse_runner_arguments(sys.argv[1:])
+    node, cli, prompt_file, working, output, mode, image, instructions, schema = args
+    if node == "--native-codex-exe":
+        executable = Path(cli)
+        if not executable.is_absolute() or executable.suffix.lower() != ".exe":
+            raise ValueError("native Codex executable must be an absolute Windows .exe path")
+        prefix = [str(executable)]
+    else:
+        prefix = [node, cli]
     if mode not in ("coordinate", "handle"):
         raise ValueError("mode must be coordinate or handle")
     root = Path(output).resolve()
     root.mkdir(parents=True, exist_ok=False)
     prompt = Path(prompt_file).read_text(encoding="utf-8")
     (root / "prompt.txt").write_text(prompt, encoding="utf-8", newline="\n")
-    args = [node, cli, "exec", "--ignore-user-config", "--ignore-rules",
+    args = [*prefix, "exec", "--ignore-user-config", "--ignore-rules",
             "--ephemeral", "--sandbox", "read-only", "--skip-git-repo-check",
-            "--json", "--model", "gpt-5.6-luna", "-c",
+            "--json", "--model", model, "-c",
             'model_reasoning_effort="low"', "-c",
             "model_instructions_file=" + json.dumps(Path(instructions).resolve().as_posix()),
             "-c", "project_doc_max_bytes=0", "--output-schema",
@@ -39,7 +57,7 @@ def main():
     plan = {
         "args": args,
         "mode": mode,
-        "requested_model": "gpt-5.6-luna",
+        "requested_model": model,
         "requested_effort": "low",
         "image_sha256": None if image_path is None else sha(image_path),
         "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
@@ -70,7 +88,7 @@ def main():
             arrivals.flush()
         code = process.wait()
     result = {"exit_code": code, "started_ns": started, "stdin_closed_ns": sent,
-              "exited_ns": time.perf_counter_ns(), "requested_model": "gpt-5.6-luna",
+              "exited_ns": time.perf_counter_ns(), "requested_model": model,
               "requested_effort": "low", "mode": mode,
               "observed_model_identity": None, "cost": None}
     (root / "process.json").write_text(json.dumps(result, indent=2) + "\n",

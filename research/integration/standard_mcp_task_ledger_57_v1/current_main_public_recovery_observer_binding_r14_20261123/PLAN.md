@@ -1,0 +1,3 @@
+# R14 plan
+
+Implement a per-server observer callable binding and validate it with a deterministic queued-worker experiment. Occupy the event loop's one-worker executor, create the supervised server while its observer symbol is patched to a unique fake, queue one public `interface_observe`, exit the fake patch scope while the request remains queued, release the worker, and require that the accepted call invokes the bound fake exactly once. Keep an independent fail-closed guard on the lower observation module's `open_session` through completion; any fallback to the real observer is recorded and fails without opening Win32. Run one normal and one `-O` process, no retries. No input/dispatch/task effect.

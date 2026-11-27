@@ -1,0 +1,46 @@
+{
+  "allocation_id": "GUI-QUERY-DPOR-8663-A01-20261009",
+  "base_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "commands": {
+    "auditor": "python3 -B audit.py",
+    "candidate": "python3 -B candidate.py",
+    "construction": "python3 -B test_construction.py"
+  },
+  "decision_thresholds": {
+    "commuting_control_schedule_reduction_minimum_fraction": 0.2,
+    "exact_predicate_dpor_outcomes": true,
+    "underdependency_mutants_caught": 3,
+    "unknown_always_dependent": true,
+    "unsafe_witness_classes_replayable": true
+  },
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "runtime": "local CPU, no container, no GUI, no model/API, no network"
+  },
+  "formal_invocation_limit": {
+    "candidate": 1,
+    "independent_auditor": 1
+  },
+  "frozen_at_utc": "2026-10-08T18:00:24.753199+00:00",
+  "issue": 8663,
+  "model_sha256": "cd20c6a3be5de7fb10b58987f3a760f7b4d53abdb5ad655b0e9dffe8db20433c",
+  "predecessors": {
+    "issues": [
+      8592,
+      8613
+    ],
+    "merged_pr": 8602,
+    "open_pr_8613": 8627,
+    "open_pr_8613_head": "f1b28260fbb35ea9b07f816783eaca32a9d28e58"
+  },
+  "schema": "gui-query-predicate-dpor-freeze-v1",
+  "scope": "finite synthetic UI predicate histories only; no production adapter or action authority",
+  "sha256": {
+    "MODEL.json": "cd20c6a3be5de7fb10b58987f3a760f7b4d53abdb5ad655b0e9dffe8db20433c",
+    "PREREGISTRATION.md": "9dfd1a6f942c4cdecc03e664f2e631d0583c848bfeee17420df3f4ab317cbdb3",
+    "audit.py": "58209409c2ca89c49c6f9f2ccc04dbb24e394b080dc6dd17d986d27dc35fb409",
+    "candidate.py": "1a2239644acfca67da72d6a6738dd323eea24e462889fbd478612aa6a3fd8286",
+    "test_construction.py": "2d16bd3c2392b005f4eda9ec42435f3bea004e6b80acc9b8c421da4c26e52852"
+  }
+}

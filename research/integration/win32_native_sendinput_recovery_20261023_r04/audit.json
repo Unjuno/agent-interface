@@ -1,0 +1,484 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r04",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-native-sendinput-recovery-20261023-r04",
+        "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154"
+      },
+      "name": "attempt_and_source_pinned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempt_id": "win32-native-sendinput-recovery-20261023-r04",
+        "helpers": {
+          "observer": {
+            "alive": true,
+            "identity": {
+              "creation_time_100ns": 134372402165578928,
+              "pid": 43756
+            },
+            "pid": 43756
+          },
+          "recovery": {
+            "alive": true,
+            "identity": {
+              "creation_time_100ns": 134372402163525212,
+              "pid": 51228
+            },
+            "pid": 51228
+          }
+        },
+        "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+        "status": "PASS"
+      },
+      "name": "spawn_helper_readiness_preflight",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "platform": "Windows-10-10.0.26300-SP0",
+        "resource_commands": [],
+        "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner"
+      },
+      "name": "native_windows_and_no_wslc",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "blocked-before-native-call",
+        "real-sendinput-accepted-before-backend-return"
+      ],
+      "name": "exactly_two_frozen_schedules",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "6710d71d2a1c39119b2105076ac28391ae10b9cd6f729f1d375e18ffe0ede06f",
+        "hwnd": 54265704,
+        "owner": {
+          "creation_time_100ns": 134372402190624120,
+          "pid": 3740,
+          "window_thread_id": 42680
+        },
+        "pid": 3740
+      },
+      "name": "schedule_1_owned_fixture_identity",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "state_before_cancel": {
+          "foreground_hwnd": 54265704,
+          "monotonic_ns": 457928078000000,
+          "state": false,
+          "witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 54265704,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 3740,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 42680
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 54265704,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 3740,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 42680
+            }
+          ]
+        },
+        "trigger": {
+          "monotonic_ns": 457928078000000,
+          "phase": "before_native_call"
+        }
+      },
+      "name": "schedule_1_frozen_trigger_and_input_state",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "alive": false,
+        "cancel_ms": 0.0,
+        "exitcode": -15,
+        "terminal": {
+          "cleanup_deadline_ns": 457936078000000,
+          "deadline_ns": 457947859000000,
+          "obligations": [
+            "CTRL"
+          ],
+          "operation_id": "native-sendinput-r04-schedule-1",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372402196441391,
+            "pid": 11112
+          },
+          "recovery_id": "b594d87046324f28a94227a80628b857",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "6710d71d2a1c39119b2105076ac28391ae10b9cd6f729f1d375e18ffe0ede06f",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "terminal_ms": 1515.0
+      },
+      "name": "schedule_1_bounded_cancel_and_exact_producer_retirement",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "claim": {
+          "kind": "recovery_claimed",
+          "monotonic_ns": 457928078000000,
+          "operation_id": "native-sendinput-r04-schedule-1",
+          "recovery_id": "b594d87046324f28a94227a80628b857",
+          "seq": 3
+        },
+        "recovery": {
+          "ended_ns": 457928093000000,
+          "foreground_hwnd": 54265704,
+          "foreground_ok": true,
+          "generation": "6710d71d2a1c39119b2105076ac28391ae10b9cd6f729f1d375e18ffe0ede06f",
+          "generation_ok": true,
+          "kind": "recovery",
+          "monotonic_ns": 457928078000000,
+          "operation_id": "native-sendinput-r04-schedule-1",
+          "recovery_id": "b594d87046324f28a94227a80628b857",
+          "release_accepted": true,
+          "release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 457928093000000,
+            "state_query_witnesses": {
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 54265704,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 3740,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 42680
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 54265704,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 3740,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 42680
+                }
+              ]
+            },
+            "verified": true
+          }
+        },
+        "timeline": [
+          {
+            "kind": "trigger_received",
+            "monotonic_ns": 457928078000000
+          },
+          {
+            "exitcode": -15,
+            "kind": "producer_exit_confirmed_by_join",
+            "monotonic_ns": 457928078000000,
+            "seq": 2
+          },
+          {
+            "kind": "recovery_claimed",
+            "monotonic_ns": 457928078000000,
+            "operation_id": "native-sendinput-r04-schedule-1",
+            "recovery_id": "b594d87046324f28a94227a80628b857",
+            "seq": 3
+          }
+        ]
+      },
+      "name": "schedule_1_retirement_before_one_verified_recovery_up",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observed_duration_ns": 1500000000,
+        "required_horizon_ns": 1500000000,
+        "sample_count": 59,
+        "states": [
+          "False"
+        ]
+      },
+      "name": "schedule_1_independent_neutral_state_through_late_down_horizon",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "92243e40b842137617883050169e0a16c33bd4edf7cdc90e9aaba221e7da0ead",
+        "hwnd": 15467204,
+        "owner": {
+          "creation_time_100ns": 134372402214326225,
+          "pid": 42564,
+          "window_thread_id": 51892
+        },
+        "pid": 42564
+      },
+      "name": "schedule_2_owned_fixture_identity",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "state_before_cancel": {
+          "foreground_hwnd": 15467204,
+          "monotonic_ns": 457930453000000,
+          "state": true,
+          "witness": []
+        },
+        "trigger": {
+          "accepted_emissions": 1,
+          "monotonic_ns": 457930453000000,
+          "phase": "sendinput_accepted"
+        }
+      },
+      "name": "schedule_2_frozen_trigger_and_input_state",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "alive": false,
+        "cancel_ms": 0.0,
+        "exitcode": -15,
+        "terminal": {
+          "cleanup_deadline_ns": 457938453000000,
+          "deadline_ns": 457950250000000,
+          "obligations": [
+            "CTRL"
+          ],
+          "operation_id": "native-sendinput-r04-schedule-2",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372402220336045,
+            "pid": 49364
+          },
+          "recovery_id": "52a0d19a11484a6d95e6600b2facd41d",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "92243e40b842137617883050169e0a16c33bd4edf7cdc90e9aaba221e7da0ead",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "terminal_ms": 1531.0
+      },
+      "name": "schedule_2_bounded_cancel_and_exact_producer_retirement",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "claim": {
+          "kind": "recovery_claimed",
+          "monotonic_ns": 457930453000000,
+          "operation_id": "native-sendinput-r04-schedule-2",
+          "recovery_id": "52a0d19a11484a6d95e6600b2facd41d",
+          "seq": 3
+        },
+        "recovery": {
+          "ended_ns": 457930468000000,
+          "foreground_hwnd": 15467204,
+          "foreground_ok": true,
+          "generation": "92243e40b842137617883050169e0a16c33bd4edf7cdc90e9aaba221e7da0ead",
+          "generation_ok": true,
+          "kind": "recovery",
+          "monotonic_ns": 457930453000000,
+          "operation_id": "native-sendinput-r04-schedule-2",
+          "recovery_id": "52a0d19a11484a6d95e6600b2facd41d",
+          "release_accepted": true,
+          "release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 457930468000000,
+            "state_query_witnesses": {
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 15467204,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 42564,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51892
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 15467204,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 42564,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51892
+                }
+              ]
+            },
+            "verified": true
+          }
+        },
+        "timeline": [
+          {
+            "kind": "trigger_received",
+            "monotonic_ns": 457930453000000
+          },
+          {
+            "exitcode": -15,
+            "kind": "producer_exit_confirmed_by_join",
+            "monotonic_ns": 457930453000000,
+            "seq": 2
+          },
+          {
+            "kind": "recovery_claimed",
+            "monotonic_ns": 457930453000000,
+            "operation_id": "native-sendinput-r04-schedule-2",
+            "recovery_id": "52a0d19a11484a6d95e6600b2facd41d",
+            "seq": 3
+          }
+        ]
+      },
+      "name": "schedule_2_retirement_before_one_verified_recovery_up",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observed_duration_ns": 1500000000,
+        "required_horizon_ns": 1500000000,
+        "sample_count": 60,
+        "states": [
+          "False"
+        ]
+      },
+      "name": "schedule_2_independent_neutral_state_through_late_down_horizon",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect_after_close": {
+          "clicked": false,
+          "saved": true,
+          "text": "NATIVE-RECOVERY-EFFECT-R04"
+        },
+        "effect_readback": {
+          "clicked": false,
+          "saved": true,
+          "text": "NATIVE-RECOVERY-EFFECT-R04"
+        },
+        "event_count": 28,
+        "exit_code": 0,
+        "fresh_generation": "4f27fa1cebb682795f659ad6ac530758fd1907ee028462d3f8fa8de533d38df9",
+        "hwnd_gone": false,
+        "prior_generations": [
+          "6710d71d2a1c39119b2105076ac28391ae10b9cd6f729f1d375e18ffe0ede06f",
+          "92243e40b842137617883050169e0a16c33bd4edf7cdc90e9aaba221e7da0ead"
+        ]
+      },
+      "name": "fresh_target_independent_task_effect",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "release": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 457933531000000,
+          "state_query_witnesses": {
+            "17": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 103876964,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 34520,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 51772
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 103876964,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 34520,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 51772
+              }
+            ],
+            "83": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 103876964,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 34520,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 51772
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 103876964,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 34520,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 51772
+              }
+            ]
+          },
+          "verified": true
+        },
+        "status": "completed"
+      },
+      "name": "fresh_public_mcp_task_and_verified_release",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "name": "runner_cleanup_confirmed",
+      "passed": true
+    }
+  ],
+  "passed": 17,
+  "schema": "win32-native-sendinput-recovery-audit-v1",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "status": "PASS",
+  "total": 17
+}

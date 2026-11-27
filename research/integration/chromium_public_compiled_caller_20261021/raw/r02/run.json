@@ -1,0 +1,132 @@
+{
+  "browser_version": "Google Chrome for Testing 156.0.8078.4",
+  "cleanup": {
+    "appserver_closed": true,
+    "browser_exitcode": 0,
+    "fixture_server_closed": true
+  },
+  "close": {
+    "release_confirmed": null,
+    "returned_ns": 311794723207,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cancellation_supervisor": {
+        "status": "not_started"
+      },
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:88a72cdf6ce64a9aa8a96e8ca9f4c3c8",
+      "compiled_surface": "x11-window-4194306",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 1,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 311793033712,
+        "pid": 580,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 12582912
+      },
+      "owner_process_pid": 580,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 12582912,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "9355c1bbe6ec4867bb83c5d1b07f037f",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 4194306
+      },
+      "window_lifecycle": true
+    },
+    "started_ns": 311717695738,
+    "status": "closed"
+  },
+  "display": ":95",
+  "error": "AppServerError('WSL Windows App Server requires CODEX_HOME as an absolute WSL path')",
+  "error_type": "AppServerError",
+  "input_attempted": false,
+  "local_fixture_origin": "http://127.0.0.1:42233/form",
+  "model": {
+    "effort": "medium",
+    "requested": "gpt-6.1-sol"
+  },
+  "page_render_readiness": {
+    "receipt": {
+      "body_bytes": 0,
+      "client_address": "127.0.0.1",
+      "event": "render_ready",
+      "path": "/ready",
+      "received_monotonic_ns": 310452218972
+    },
+    "signal": "local page POST after two requestAnimationFrame callbacks",
+    "wait_returned_ns": 310455909871,
+    "wait_started_ns": 310333826040
+  },
+  "run_id": "chromium-public-compiled-standard-caller-live-r02-20261021",
+  "schema": "agent-interface/chromium-public-compiled-caller-live-v1",
+  "source_observation": {
+    "call_returned_ns": 311700036107,
+    "call_started_ns": 310532061124,
+    "compiled_scope": "native-x11:88a72cdf6ce64a9aa8a96e8ca9f4c3c8",
+    "compiled_surface": "x11-window-4194306",
+    "image_sha256": "2c97e8de161e03a3646856524e0cba6e89fbfad4d87d662f9acc52297489c591",
+    "image_size": [
+      1024,
+      768
+    ],
+    "source_sequence": 1
+  },
+  "status": "FAIL_PRESERVED_NO_RETRY",
+  "target_window": {
+    "candidate_windows": [
+      {
+        "height": 767,
+        "id": 4194306,
+        "pid": 414,
+        "title": "",
+        "width": 1023,
+        "xres_local_client_pids": [
+          414
+        ]
+      }
+    ],
+    "height": 767,
+    "id": 4194306,
+    "pid": 414,
+    "title": "",
+    "width": 1023,
+    "xres_local_client_pids": [
+      414
+    ]
+  },
+  "timeline_ns": {
+    "browser_window_ready": 310333825709,
+    "failed_ns": 311717498335
+  },
+  "token": "uictrl-20261021-7d4c"
+}

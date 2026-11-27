@@ -1,0 +1,65 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r36",
+  "callback_duration_ms": 1442.3909,
+  "callback_entry_ns": 491285717323100,
+  "callback_return_after_cancel_ms": 1252.1201,
+  "callback_return_ns": 491287159714000,
+  "cancel_response_ms": 1.2663,
+  "cancel_returned_ns": 491285907593900,
+  "cancel_started_ns": 491285906327600,
+  "distinct_q_up_hook_callbacks": 1,
+  "interpretation": "SendInput wrapper intervals and same-generation readbacks are timing observations, not kernel-causality or physical application-time claims. The exact cancellation and action receipts plus independent Q-state readings are evaluated in evidence_review_r36.json.",
+  "post_cancel_hold_ms": 1251.953,
+  "public_close_release_confirmed": false,
+  "q_up_sendinput_spans": [
+    {
+      "after_cancel_start": true,
+      "crosses_cancel_response": false,
+      "elapsed_ms": 307.9676,
+      "end_ns": 491286535193900,
+      "overlaps_held_callback": true,
+      "pid": 13224,
+      "role": "recovery",
+      "start_ns": 491286226444200
+    }
+  ],
+  "recovery_terminal_receipt": {
+    "action_operation_id": "852c08c726d240799812fc595a817630",
+    "operation_id": "8d7dfd2cd2434aa3abffddd7279302ae",
+    "owner_phase": "recovered",
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "cleanup_deadline_ns": 491288875000000,
+      "completion_readback": null,
+      "completion_release_receipt": null,
+      "deadline_ns": 491374671000000,
+      "obligations": [
+        "button:fixture:left",
+        "key:fixture:CTRL",
+        "key:fixture:Q",
+        "key:fixture:S"
+      ],
+      "operation_id": "852c08c726d240799812fc595a817630",
+      "phase": "recovered",
+      "producer_exit_code": -15,
+      "producer_gate_state": "authorization_attempted",
+      "producer_identity": {
+        "creation_time_100ns": 134372735773525950,
+        "pid": 42472
+      },
+      "recovery_id": "998d575d71314aaea2fa6111855ee035",
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "target_generation": "12357ae7c79c7fc81d1489169c92f8a92609a805fd213ba82f762a2615e05c40",
+      "task_success": null,
+      "uncertainty": null
+    },
+    "status": "recovered",
+    "target_generation": "12357ae7c79c7fc81d1489169c92f8a92609a805fd213ba82f762a2615e05c40",
+    "task_success": null
+  },
+  "schema": "win32-supervised-standard-caller-r36-trace-analysis-v1",
+  "status_poll_count": 78
+}

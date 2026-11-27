@@ -1,0 +1,7 @@
+Source pin: acbdfc0f9db00358cbb755baebe7c7641867aeda
+Build: py -3.13 -m runtime.distribution_v2.build --out research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/agent-interface-runtime.pyz --manifest research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/manifest.json --sums research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/sha256.txt
+Tests (from repo root, TEMP/TMP outside every Git worktree): py -3.13 -m unittest -v runtime.distribution_v2.test_distribution runtime.distribution_v2.test_validator_zipapp runtime.distribution_v2.test_compiled_archive
+Optimized tests: py -3.13 -O -m unittest -v runtime.distribution_v2.test_distribution runtime.distribution_v2.test_validator_zipapp runtime.distribution_v2.test_compiled_archive
+Windows outside-checkout smoke: py -3.13 <external-copy>/agent-interface-runtime.pyz doctor ; py -3.13 <external-copy>/agent-interface-runtime.pyz validate --help
+Ubuntu WSL outside-checkout smoke: python3 <external-copy>/agent-interface-runtime.pyz doctor ; python3 <external-copy>/agent-interface-runtime.pyz validate --help
+Independent source/archive audit: py -3.13 research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/audit_packet.py

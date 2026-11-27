@@ -1,0 +1,83 @@
+{
+  "schema": "agent-interface/current-main-full-discovery-recheck-v1",
+  "base_revision": "6f33f6ac2d263d2183b8f730c087115afbf0414c",
+  "date": "2026-11-21",
+  "host": "Windows",
+  "python": "CPython 3.11.9",
+  "selector": "unittest discover -v -s research/integration/standard_mcp_task_ledger_57_v1 -p test_*.py",
+  "discovered_tests": 117,
+  "runs": [
+    {
+      "id": "R01-normal",
+      "mode": "normal",
+      "passed": 117,
+      "failed": 0,
+      "seconds": 70.137,
+      "raw": "raw/full-normal.log"
+    },
+    {
+      "id": "R01-optimized",
+      "mode": "-O",
+      "passed": 117,
+      "failed": 0,
+      "seconds": 69.72,
+      "raw": "raw/full-optimized.log"
+    },
+    {
+      "id": "R02-normal",
+      "mode": "normal",
+      "passed": 116,
+      "failed": 1,
+      "seconds": 90.837,
+      "failed_test": "test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+      "failure": "nested Calc fixture did not reach Save within its three-second test wait; cancellation did not reach terminal receipt before the test deadline",
+      "raw": "raw/full-normal-r02.log"
+    },
+    {
+      "id": "R02-optimized",
+      "mode": "-O",
+      "passed": 117,
+      "failed": 0,
+      "seconds": 78.116,
+      "raw": "raw/full-optimized-r02.log"
+    },
+    {
+      "id": "focused-normal",
+      "mode": "normal",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 6.161,
+      "selector": "test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+      "raw": "raw/focused-cancellation-normal.log"
+    },
+    {
+      "id": "focused-optimized",
+      "mode": "-O",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 6.143,
+      "selector": "test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+      "raw": "raw/focused-cancellation-optimized.log"
+    }
+  ],
+  "host_observation": "Other Python/CI and evidence jobs were visible during R02 normal. Their influence is unknown; no causal claim is made.",
+  "comparison": {
+    "prior_packet": "../current_main_late_usage_port_20261121/RESULT.md",
+    "prior_base_revision": "551cf28bb3ef3249af66d4c1ea33c2ca0b98882e",
+    "prior_discovery_count": 107,
+    "prior_failures": [
+      "test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+      "test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay"
+    ],
+    "historical_result_preserved": true
+  },
+  "scope_limits": [
+    "No runtime code changed in this recheck.",
+    "Offline Fake X and test-suite evidence only.",
+    "No live provider, GUI input, MAP01, matched efficiency, or recovery-reliability estimate."
+  ],
+  "source_sha256_lf_normalized": {
+    "research/integration/standard_mcp_task_ledger_57_v1/test_partial_input_cancel_accounting.py": "c517a6d52c1504fdad4c7b45bf2e1047555633208325312b269538d4700c5a9f",
+    "runtime/cli_v1/test_mcp_owned_process.py": "21574e053c6a1f637fb38b78eb264d0d878a0e06cef216142a8deea950ea7b02"
+  }
+}

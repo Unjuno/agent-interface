@@ -1,0 +1,123 @@
+{
+  "status": "SCHEDULE_ENDPOINTS_PASS_ORACLE_EXACT_ONCE_FAIL",
+  "checks": [
+    {
+      "check": "host and inner exit zero",
+      "passed": true
+    },
+    {
+      "check": "one actual test, no skips/errors/failures",
+      "passed": true
+    },
+    {
+      "check": "frozen sources unchanged",
+      "passed": true
+    },
+    {
+      "check": "actual cancel response within 300ms",
+      "passed": true
+    },
+    {
+      "check": "composite cancel interval within 3000ms",
+      "passed": true
+    },
+    {
+      "check": "exact owned pidfd pause and successful resume",
+      "passed": true
+    },
+    {
+      "check": "exact owner retired before recorded supervisor release",
+      "passed": true
+    },
+    {
+      "check": "independent all-up after resume",
+      "passed": true
+    },
+    {
+      "check": "8.5 second horizon and independent all-up",
+      "passed": true
+    },
+    {
+      "check": "fresh target distinct from old target",
+      "passed": true
+    },
+    {
+      "check": "fresh property transition and horizon value",
+      "passed": true
+    },
+    {
+      "check": "one fresh keypress in captured app trace",
+      "passed": true
+    },
+    {
+      "check": "fresh input/event/commit/readback ordering",
+      "passed": true
+    },
+    {
+      "check": "fresh interval recomputes from timestamps",
+      "passed": true
+    },
+    {
+      "check": "fresh task before old horizon",
+      "passed": true
+    },
+    {
+      "check": "cancel UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "terminal UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "after_fresh UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "neutral final cleanup",
+      "passed": true
+    },
+    {
+      "check": "owned server/test exited, no old-session members",
+      "passed": true
+    }
+  ],
+  "recomputed_ms": {
+    "cancel_invocation_to_return": 254.18363,
+    "resume_to_independent_all_up": 155.809827,
+    "fresh_input_to_independent_effect_readback": 89.901451
+  },
+  "exact_once_counterexample": {
+    "claimed_task_definition": "one initial a effect; no delayed b effect; both keys up after release and at the delayed-request horizon",
+    "runtime_test_oracle_status": "pass",
+    "old_target_keypress_count": 3,
+    "old_target_keypress_events": [
+      {
+        "detail": 38,
+        "effect_committed_ns": 42350994015,
+        "monotonic_ns": 42350865579,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 43385623453,
+        "monotonic_ns": 43385434374,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 43425875688,
+        "monotonic_ns": 43425756473,
+        "type": 2,
+        "window": 2097152
+      }
+    ],
+    "old_property_remained": [
+      1
+    ],
+    "exactly_one_old_keypress": false,
+    "interpretation": "Idempotent property assignment masks repeated KeyPress/effect handlers. Trace alone does not prove the cause of repeats or a non-idempotent external task outcome."
+  }
+}

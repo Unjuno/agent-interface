@@ -1,0 +1,6 @@
+# Dwell-time stability of switched local-control modes
+
+- **Status:** Finite abstract method results passed; eligible source-bound trajectory evidence was not found.
+- **Source:** Issue [#8471](https://github.com/Unjuno/agent-interface/issues/8471), successor to [#5352](https://github.com/Unjuno/agent-interface/issues/5352).
+- **Idea:** Test whether minimum dwell-time and per-prefix Lyapunov guards bound task-feature error when switching among individually stable local-control modes.
+- **Outcome:** A01 independently reconstructed 4,096 exact-rational mode words; 1,248 products were non-Schur-stable and 129 crossed the finite envelope. The prefix guard certified ten and no unstable/envelope-crossing rows. Hysteresis alone admitted all binary schedules; a 10-tick minimum-dwell rule admitted 16 tested schedules, all stable and within the declared finite envelope. A02 exhaustively checked 20 emergency-override cells and rejected three suppression/delay mutations. The separate T1 eligibility review found no synchronized source-bound trajectory bundle (`HOLD_NO_ELIGIBLE_SWITCHED_TRAJECTORY_TRACE`). No live controller, physical plant, or safety result. Merged [PR #8485](https://github.com/Unjuno/agent-interface/pull/8485) retains the scoped evidence.

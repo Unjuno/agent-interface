@@ -1,0 +1,124 @@
+{
+  "completed_transitions": 1,
+  "critical_events": [
+    {
+      "action": "enter_text",
+      "event": "branch_selected",
+      "evidence_ref": "1976cb274edc44f0a239efc28b437a88",
+      "matched_conditions": {
+        "clicked": false,
+        "ready": true,
+        "typed": false
+      },
+      "outcome": "action",
+      "state": "before"
+    },
+    {
+      "action": "enter_text",
+      "action_id": "ce12f623301148d99e2206f107fd858b",
+      "event": "action_terminal",
+      "execution_accepted_ns": 667983135378200,
+      "execution_started_ns": 667982371247600,
+      "input_dispatched": true,
+      "release_verified": true,
+      "status": "completed"
+    },
+    {
+      "action": "enter_text",
+      "action_id": "ce12f623301148d99e2206f107fd858b",
+      "effect_observation_accepted_ns": 667983158361000,
+      "effect_observation_captured_ns": 667983137728800,
+      "effect_verification_accepted_ns": 667983158880800,
+      "effect_verification_started_ns": 667983158377800,
+      "event": "effect_checked",
+      "evidence_ref": "missing-effect",
+      "execution_accepted_ns": 667983135378200,
+      "status": "failed"
+    },
+    {
+      "completed_transitions": 1,
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed"
+    }
+  ],
+  "elapsed_ns": 812251500,
+  "ended_ns": 667983158893900,
+  "format": "compiled-gui-runtime-receipt-v1",
+  "frontier_model_resumptions": 0,
+  "input_authority": "admission_per_action_only",
+  "interface_id": "win32-r12-two-stage-save",
+  "latest_evidence_ref": "d9c25978d9a246feb76eff4304a924ee",
+  "method": "model-grounded-two-stage-save",
+  "method_version": "1",
+  "observations": [
+    {
+      "captured_ns": 667982349222600,
+      "evidence_digest": "dd4ef1c47dee81e622a88eae5b6dd7f61bc899a790a58255a7bc0bf7a6b53c88",
+      "evidence_ref": "1976cb274edc44f0a239efc28b437a88",
+      "observation_accepted_ns": 667982371175700,
+      "observation_started_ns": 667982346644900,
+      "predicates": {
+        "clicked": false,
+        "ready": true,
+        "saved": false,
+        "typed": false
+      },
+      "sequence": 1
+    },
+    {
+      "captured_ns": 667983137728800,
+      "evidence_digest": "c9e7a596de1d9835a58d34ad7a51b16d9baf580b110dafac8e2b7a6021ec6a8f",
+      "evidence_ref": "d9c25978d9a246feb76eff4304a924ee",
+      "observation_accepted_ns": 667983158361000,
+      "observation_started_ns": 667983135395600,
+      "predicates": {
+        "clicked": true,
+        "ready": true,
+        "saved": false,
+        "typed": true
+      },
+      "sequence": 2
+    }
+  ],
+  "outcome": "SAFE_YIELD",
+  "pending_effect": {
+    "action": "enter_text",
+    "effect_ref": "standard-win32-enter_text",
+    "expected_effect": {
+      "clicked": true,
+      "typed": true
+    }
+  },
+  "raw_evidence_retention": "adapter_responsibility_unverified",
+  "reason": "effect_failed",
+  "session_scope": "one-owned-fixture-process",
+  "standard_action_call_ids": [
+    "cb2884723a0d4c1186037e3fbd2a881f"
+  ],
+  "standard_observation_call_ids": [
+    "a0d9fe51006040a7abc75300a121092f",
+    "d6013ad9712a495aac0b3e0170732958"
+  ],
+  "started_ns": 667982346642400,
+  "task_success": null,
+  "transitions": [
+    {
+      "action": "enter_text",
+      "action_id": "ce12f623301148d99e2206f107fd858b",
+      "effect_ref": "standard-win32-enter_text",
+      "evidence_ref": "1976cb274edc44f0a239efc28b437a88",
+      "execution_accepted_ns": 667983135378200,
+      "execution_started_ns": 667982371247600,
+      "from_state": "before",
+      "matched_conditions": {
+        "clicked": false,
+        "ready": true,
+        "typed": false
+      },
+      "observation_sequence": 1,
+      "release_verified": true,
+      "to_state": "after_entry"
+    }
+  ]
+}

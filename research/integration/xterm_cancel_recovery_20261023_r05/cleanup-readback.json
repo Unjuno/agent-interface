@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "no_xvfb_or_xterm_processes": true,
+    "private_display_resources_absent": true
+  },
+  "display_lock_and_socket_exists": {
+    "/tmp/.X11-unix/X191": false,
+    "/tmp/.X11-unix/X192": false,
+    "/tmp/.X191-lock": false,
+    "/tmp/.X192-lock": false
+  },
+  "matching_process_rows": [],
+  "observed_at_utc": "2026-10-23T12:17:58.834478+00:00",
+  "schema": "agent-interface/xterm-cancel-recovery-postrun-cleanup-v1",
+  "status": "PASS_R05_POSTRUN_CLEANUP"
+}

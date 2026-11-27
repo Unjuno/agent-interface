@@ -1,0 +1,37 @@
+{
+  "experiment_id": "v39_browser_key_event_receiver_a16_20261012",
+  "classification": "LOCAL_WINDOWS_BROWSER_APPLICATION_EVENT_CONSTRUCTION",
+  "hypothesis": "For a focused local browser receiver, one Computer Use key action for each of a, Space and Left generates an ordered trusted keydown/keyup pair in the receiver and leaves its application-maintained held-key set empty.",
+  "method": "Open the self-contained local HTML fixture in the preinstalled Brave browser. Focus the receiver via its accessible button, then send exactly one separate sky.press_key action for a, space and Left, refreshing state after each. Preserve the visible DOM event log. Separately run the fixture-contract tests in a pinned WSLc Python image.",
+  "decision_rule": "PASS only if each of the three actions yields exactly one trusted keydown then one trusted keyup for the expected code, the receiver remains the active element, and its held-key set returns to [] after every action. Otherwise preserve FAIL/STOP without retrying the key sequence.",
+  "sources": {
+    "repository_commit": "c67e28ec3b06d6534623dc725a2876be5eafea86",
+    "branch": "research/strict-release-wslc-a10-20261012",
+    "files": {
+      "index.html": {
+        "sha256": "ec34b4264697fd5275982007eb309ff665a26966869ac3b87f2b2793cb09191b",
+        "bytes": 2790
+      },
+      "test_receiver_contract.py": {
+        "sha256": "f7c36fe72c28b635e6589bb115057aa4c27654a15e08c0d49fb4b015cae769e2",
+        "bytes": 1219
+      }
+    }
+  },
+  "environment": {
+    "wslc": "3.0.1.0",
+    "image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+    "network": "none",
+    "cpu_requested": 1,
+    "memory_requested_bytes": 536870912,
+    "input_mount": "read-only",
+    "windows_app": "preinstalled Brave selected from sky.list_apps; exact version unrecorded"
+  },
+  "scope_limits": [
+    "Tests Windows browser DOM delivery and its internal pressed-key bookkeeping only.",
+    "This is not a hardware keyboard sensor and does not prove key state outside the browser/OS input path.",
+    "No X11, Doom, model call, game-time progression, threat, recovery, task effect or MAP01 completion is involved.",
+    "No live allocation is used or retried."
+  ],
+  "retry_policy": "No repeated action after any uncertain result; observe once and retain the first outcome."
+}

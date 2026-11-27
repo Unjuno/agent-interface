@@ -1,0 +1,9 @@
+# R28 result — independent current-main exact-call retrieval repeat
+
+The frozen audit passes **14/14** on one fresh native Windows fixture, using source commit `380e1a903ac8e58897a39856ca629a6005f998d9` (the main commit containing #9470). Dispatch was issued once and returned `pending` after 10,012.129 ms. The caller then queried `interface_results` read-only for that exact call ID six times; the first five returned `running`, and the sixth returned `completed` 11,052.806 ms after dispatch start. No cancel, replay, or second dispatch occurred.
+
+The terminal action receipt records verified all-up release at 10,826.954 ms. The same-generation independent readback was neutral; producer exit code was 0. The separate fixture oracle records exactly one click, all 38 expected character events, and one save with the exact R28 sentinel. The public session closed, fixture exited with code 0, and the previously foreground window was restored. The close response itself still says `release_confirmed=false`; release evidence comes from the terminal action receipt, producer exit, and neutral readback. Runtime `task_success` remains null.
+
+This reproduces R27's exact-call result retrieval once on current main. It does not establish broad reliability, matched efficiency, blocked-I/O release, MAP01, integrated runtime task success, or WSLc portability. This was a local Windows fixture experiment.
+
+The first input-free preflight stopped because R25's committed packet was not materialized in this sparse worktree; it sent no input. After materialization the preflight passed all checks. The first audit run was 13/14 because the audit referenced obsolete preflight key names. Its full output is preserved in `audit_attempt1.json`; only those field lookups were corrected, the packet hash was updated, preflight rerun without input, and the unchanged experimental criteria then passed 14/14.

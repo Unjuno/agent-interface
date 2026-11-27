@@ -1,0 +1,644 @@
+"""Inert process-lifecycle supervisor for the Win32 operation custody gate.
+
+This module does not import Win32 APIs or send input. Recovery and observation
+helpers start and report ready before operations are admitted. Cancellation
+closes admission synchronously, retires the exact producer, then reuses those
+helpers for recovery and independent neutral-state readback. This synthetic
+mechanism is not evidence of native input release or an OS-level hard
+real-time bound.
+"""
+from __future__ import annotations
+
+import os
+import queue
+import threading
+import time
+import uuid
+
+
+_ORPHAN_RECOVERY_TRANSACTION_NS = 5_000_000_000
+MAX_LATE_INPUT_HORIZON_NS = 60_000_000_000
+
+
+def _consistent_neutral_observation(readback, obligations):
+    """Validate sampled-state coverage and its reported neutral verdict."""
+    if (type(readback) is not dict or type(obligations) not in (list, tuple)
+            or any(type(item) is not str for item in obligations)):
+        return False
+    keys_buttons = sum(item.startswith(("key:", "button:")) for item in obligations)
+    unicode_units = sum(item.startswith("unicode:") for item in obligations)
+    if keys_buttons + unicode_units != len(obligations):
+        return False
+    states = readback.get("key_button_states")
+    reported_unicode = readback.get("unicode_event_units")
+    neutral = readback.get("neutral")
+    return (type(states) is list and len(states) == keys_buttons
+            and all(state is None or type(state) is bool for state in states)
+            and type(reported_unicode) is int and reported_unicode == unicode_units
+            and type(neutral) is bool
+            and neutral == all(state is False for state in states))
+
+
+class OperationCancellationSupervisor:
+    def __init__(self, owner, *, recovery_process_factory,
+                 observer_process_factory, process_identity_reader,
+                 clock_ns=time.monotonic_ns, terminate_grace_s=0.1,
+                 kill_grace_s=0.1, poll_interval_s=0.005,
+                 startup_timeout_s=2.0, late_input_horizon_ns=0,
+                 late_input_sample_interval_s=0.025):
+        required = (
+            "request_cancel", "producer_handle_for_retirement", "producer_retired",
+            "claim_recovery", "recovery_completed", "result", "mark_unknown",
+            "expire_cleanup",
+        )
+        if (any(not callable(getattr(owner, name, None)) for name in required)
+                or not callable(recovery_process_factory)
+                or not callable(observer_process_factory)
+                or not callable(process_identity_reader)
+                or not callable(clock_ns)):
+            raise ValueError("owner, child factories, identity and clock required")
+        for value, name, allow_zero in (
+                (terminate_grace_s, "terminate_grace_s", True),
+                (kill_grace_s, "kill_grace_s", True),
+                (poll_interval_s, "poll_interval_s", False),
+                (startup_timeout_s, "startup_timeout_s", False)):
+            if (type(value) not in (int, float) or value < 0
+                    or (not allow_zero and value == 0)):
+                raise ValueError(name + " must be positive or nonnegative")
+        if (type(late_input_horizon_ns) is not int
+                or not 0 <= late_input_horizon_ns <= MAX_LATE_INPUT_HORIZON_NS):
+            raise ValueError("late_input_horizon_ns must be between zero and 60 seconds")
+        if (type(late_input_sample_interval_s) not in (int, float)
+                or late_input_sample_interval_s <= 0):
+            raise ValueError("late_input_sample_interval_s must be positive")
+        self._owner = owner
+        self._recovery_process_factory = recovery_process_factory
+        self._observer_process_factory = observer_process_factory
+        self._process_identity_reader = process_identity_reader
+        self._clock_ns = clock_ns
+        self._terminate_grace_s = float(terminate_grace_s)
+        self._kill_grace_s = float(kill_grace_s)
+        self._poll_interval_s = float(poll_interval_s)
+        self.late_input_horizon_ns = late_input_horizon_ns
+        self._late_input_sample_interval_s = float(late_input_sample_interval_s)
+        # One in-flight command, at most one queued command, and room for the
+        # shutdown sentinel even when the helper is occupied.
+        self._queue = queue.Queue(maxsize=2)
+        self._lock = threading.Lock()
+        self._scheduled = set()
+        self._closed = False
+        self._startup_timeout_s = float(startup_timeout_s)
+        self._helpers = {}
+        self._thread = None
+        try:
+            self._helpers["recovery"] = self._start_helper(
+                "recovery", self._recovery_process_factory)
+            self._helpers["observer"] = self._start_helper(
+                "observer", self._observer_process_factory)
+        except BaseException as error:
+            self._close_helpers()
+            raise RuntimeError(
+                "prestarted cancellation helper failed readiness: " + str(error)
+            ) from error
+        self._ready = threading.Event()
+        self._thread = threading.Thread(target=self._serve,
+            name="win32-operation-cancel-supervisor", daemon=True)
+        self._thread.start()
+        if not self._ready.wait(self._startup_timeout_s):
+            self.close()
+            raise RuntimeError("cancellation helper did not start before deadline")
+
+    def _start_helper(self, name, factory):
+        process = connection = None
+        try:
+            process, connection = factory()
+            if (not callable(getattr(process, "start", None))
+                    or not callable(getattr(process, "join", None))
+                    or not callable(getattr(process, "is_alive", None))
+                    or not hasattr(process, "exitcode")
+                    or getattr(process, "pid", None) is not None
+                    or not all(callable(getattr(connection, attr, None))
+                               for attr in ("poll", "recv", "send", "close"))):
+                raise ValueError("helper factory must return an unstarted process and duplex connection")
+            process.start()
+            identity = self._process_identity_reader(process)
+            if not self._valid_process_identity(process, identity):
+                raise ValueError(name + " helper process identity is invalid")
+            if (not connection.poll(self._startup_timeout_s)
+                    or not process.is_alive()):
+                raise TimeoutError(name + " helper readiness timed out")
+            ready = connection.recv()
+            if (ready != {"status": "ready", "helper": name}
+                    or not process.is_alive()
+                    or self._process_identity_reader(process) != identity):
+                raise ValueError(name + " helper readiness or identity mismatched")
+            return {"process": process, "connection": connection,
+                    "identity": identity, "available": True,
+                    "lock": threading.Lock()}
+        except BaseException:
+            if process is not None:
+                self._stop_gated_child(process)
+                try:
+                    if not process.is_alive():
+                        process.close()
+                except BaseException:
+                    pass
+            if connection is not None:
+                try:
+                    connection.close()
+                except BaseException:
+                    pass
+            raise
+
+    @staticmethod
+    def _valid_process_identity(process, identity):
+        return (type(identity) is dict
+            and set(identity) == {"pid", "creation_time_100ns"}
+            and type(identity["pid"]) is int
+            and identity["pid"] == process.pid
+            and type(identity["creation_time_100ns"]) is int
+            and identity["creation_time_100ns"] > 0)
+
+    def cancel(self, operation_id, target_generation, *, cleanup_deadline_ns):
+        receipt = self._owner.request_cancel(operation_id, target_generation,
+            cleanup_deadline_ns=cleanup_deadline_ns)
+        if receipt["phase"] in ("cancel_pending", "producer_retired",
+                                "recovery_pending"):
+            self._schedule(operation_id, target_generation)
+        return self._owner.result(operation_id)
+
+    def producer_started(self, operation_id, target_generation, process_handle,
+                         *, process_identity):
+        accepted = self._owner.producer_started(operation_id, target_generation,
+            process_handle, process_identity=process_identity)
+        if not accepted and self._owner.result(operation_id)["phase"] == "cancel_pending":
+            self._schedule(operation_id, target_generation)
+        return accepted
+
+    def observe_completed(self, operation_id, target_generation, *,
+                          producer_exit_confirmed_ns, deadline_ns):
+        """Use the prestarted independent observer for normal completion.
+
+        The result is suitable for OperationOwner.producer_completed only when
+        the observer returns a matching operation/generation receipt with a
+        monotonic neutral observation after the caller's producer-exit witness.
+        """
+        if (type(producer_exit_confirmed_ns) is not int
+                or producer_exit_confirmed_ns <= 0
+                or type(deadline_ns) is not int
+                or deadline_ns <= self._clock_ns()):
+            raise ValueError("valid producer-exit witness and future deadline required")
+        try:
+            operation = self._owner.result(operation_id)
+        except Exception as error:
+            raise ValueError("unknown operation for normal readback") from error
+        if (operation.get("target_generation") != target_generation
+                or operation.get("phase") != "running"):
+            return None
+        completion_id = uuid.uuid4().hex
+        request = {
+            "request_id": completion_id,
+            "operation_id": operation_id,
+            "target_generation": target_generation,
+            "recovery_id": completion_id,
+            "deadline_ns": deadline_ns,
+            "obligations": operation["obligations"],
+        }
+        try:
+            receipt = self._exchange_helper("observer", request, deadline_ns)
+        except Exception as error:
+            self._owner.mark_unknown(operation_id, target_generation,
+                "normal_completion_observer_unconfirmed: " + type(error).__name__)
+            return None
+        now_ns = self._clock_ns()
+        valid = (
+            type(receipt) is dict
+            and receipt.get("operation_id") == operation_id
+            and receipt.get("target_generation") == target_generation
+            and receipt.get("recovery_id") == completion_id
+            and type(receipt.get("neutral")) is bool
+            and type(receipt.get("observed_monotonic_ns")) is int
+            and receipt["observed_monotonic_ns"] >= producer_exit_confirmed_ns
+            and receipt["observed_monotonic_ns"] <= now_ns
+            and now_ns < deadline_ns
+        )
+        if not valid:
+            self._invalidate_helper("observer", deadline_ns)
+            self._owner.mark_unknown(operation_id, target_generation,
+                "normal_completion_observer_receipt_invalid_or_late")
+            return None
+        return {
+            "operation_id": operation_id,
+            "target_generation": target_generation,
+            "producer_exit_confirmed_ns": producer_exit_confirmed_ns,
+            "observed_monotonic_ns": receipt["observed_monotonic_ns"],
+            "neutral": receipt["neutral"],
+        }
+
+    def _schedule(self, operation_id, target_generation):
+        with self._lock:
+            if self._closed:
+                self._owner.mark_unknown(operation_id, target_generation,
+                    "cancellation_supervisor_closed")
+                return
+            if operation_id in self._scheduled:
+                return
+            self._scheduled.add(operation_id)
+            try:
+                self._queue.put_nowait((operation_id, target_generation))
+            except queue.Full:
+                self._scheduled.discard(operation_id)
+                self._owner.mark_unknown(operation_id, target_generation,
+                    "cancellation_supervisor_capacity_exhausted")
+
+    def _serve(self):
+        self._ready.set()
+        while True:
+            item = self._queue.get()
+            if item is None:
+                return
+            operation_id, generation = item
+            try:
+                self._retire_and_recover(operation_id, generation)
+            except BaseException:
+                self._owner.mark_unknown(operation_id, generation,
+                    "cancellation_supervisor_exception")
+            finally:
+                with self._lock:
+                    self._scheduled.discard(operation_id)
+
+    def _retire_and_recover(self, operation_id, generation):
+        record = self._owner.result(operation_id)
+        if record["phase"] != "cancel_pending":
+            return
+        deadline_ns = record["cleanup_deadline_ns"]
+        producer = self._owner.producer_handle_for_retirement(operation_id, generation)
+        while producer is None and self._clock_ns() < deadline_ns:
+            # Cancellation may win the race with process.start(). Keep custody
+            # in this helper until the late handle is registered or the same
+            # absolute cleanup deadline expires.
+            time.sleep(self._bounded_wait(deadline_ns, self._poll_interval_s))
+            producer = self._owner.producer_handle_for_retirement(
+                operation_id, generation)
+        if producer is None:
+            self._owner.expire_cleanup(operation_id, generation)
+            return
+        if not self._retire_process(producer, deadline_ns):
+            self._owner.mark_unknown(operation_id, generation,
+                "producer_retirement_unconfirmed")
+            return
+        if not self._owner.producer_retired(operation_id, generation, producer):
+            self._owner.mark_unknown(operation_id, generation,
+                "producer_identity_or_exit_unconfirmed")
+            return
+        request = self._owner.claim_recovery(operation_id, generation)
+        if request is None:
+            self._owner.expire_cleanup(operation_id, generation)
+            return
+        self._run_recovery(operation_id, generation, request)
+
+    def _retire_process(self, process, deadline_ns):
+        try:
+            if process.is_alive():
+                process.terminate()
+                process.join(self._bounded_wait(deadline_ns, self._terminate_grace_s))
+            if process.is_alive():
+                kill = getattr(process, "kill", None)
+                if not callable(kill) or self._clock_ns() >= deadline_ns:
+                    return False
+                kill()
+                process.join(self._bounded_wait(deadline_ns, self._kill_grace_s))
+            return process.is_alive() is False and type(process.exitcode) is int
+        except BaseException:
+            return False
+
+    def _send_helper_request(self, connection, request, cutoff_ns):
+        # Only native Windows PipeConnection exposes the overlapped handle.
+        # Test doubles and non-Windows transports keep their existing path.
+        if os.name == "nt":
+            from multiprocessing.connection import PipeConnection
+            if isinstance(connection, PipeConnection):
+                from .win32_pipe_send import send_before
+                send_before(connection, request, cutoff_ns, clock_ns=self._clock_ns)
+                return
+        connection.send(request)
+
+    def _exchange_helper(self, name, request, deadline_ns):
+        helper = self._helpers[name]
+        process = helper["process"]
+        connection = helper["connection"]
+        request_id = request["request_id"]
+        cutoff_ns = deadline_ns - int(
+            (self._terminate_grace_s + self._kill_grace_s) * 1_000_000_000)
+        # Waiting for another request must not consume the cleanup reserve.
+        remaining_s = min((cutoff_ns - self._clock_ns()) / 1_000_000_000,
+                          threading.TIMEOUT_MAX)
+        if remaining_s <= 0 or not helper["lock"].acquire(timeout=remaining_s):
+            raise TimeoutError("helper lock unavailable before cutoff")
+        try:
+            if self._clock_ns() >= cutoff_ns:
+                raise TimeoutError("helper lock acquired after cutoff")
+            try:
+                if (not helper["available"] or not process.is_alive()
+                        or self._process_identity_reader(process) != helper["identity"]):
+                    raise RuntimeError("prestarted helper is unavailable or identity changed")
+                self._send_helper_request(connection, request, cutoff_ns)
+                result = completion = None
+                while self._clock_ns() < cutoff_ns:
+                    if not connection.poll(self._bounded_wait(cutoff_ns,
+                                                               self._poll_interval_s)):
+                        continue
+                    message = connection.recv()
+                    if type(message) is not dict:
+                        raise ValueError("helper returned a non-object message")
+                    if message.get("control") == "operation_complete":
+                        if (completion is not None
+                                or message.get("request_id") != request_id):
+                            raise ValueError("helper completion identity mismatched")
+                        completion = message
+                    elif result is None:
+                        result = message
+                    else:
+                        raise ValueError("helper returned duplicate result messages")
+                    if result is not None and completion is not None:
+                        break
+                if (result is None or completion is None
+                        or not helper["available"]
+                        or self._clock_ns() >= cutoff_ns
+                        or not process.is_alive()
+                        or self._process_identity_reader(process) != helper["identity"]):
+                    raise TimeoutError("helper result, completion or identity unconfirmed")
+                return result
+            except BaseException:
+                helper["available"] = False
+                self._retire_process(process, deadline_ns)
+                raise
+        finally:
+            helper["lock"].release()
+
+    def _invalidate_helper(self, name, deadline_ns):
+        helper = self._helpers[name]
+        # Close new admission immediately, even if an in-flight request owns
+        # the helper lock. Never wait beyond this cleanup deadline.
+        helper["available"] = False
+        remaining_s = min((deadline_ns - self._clock_ns()) / 1_000_000_000,
+                          threading.TIMEOUT_MAX)
+        if remaining_s <= 0 or not helper["lock"].acquire(timeout=remaining_s):
+            return
+        try:
+            if self._clock_ns() < deadline_ns:
+                self._retire_process(helper["process"], deadline_ns)
+        finally:
+            helper["lock"].release()
+
+    def _run_recovery(self, operation_id, generation, request):
+        if self._clock_ns() >= request["deadline_ns"]:
+            self._owner.expire_cleanup(operation_id, generation)
+            return
+        recovery_request = dict(request)
+        recovery_request["request_id"] = request["recovery_id"]
+        try:
+            receipt = self._exchange_helper("recovery", recovery_request,
+                                            request["deadline_ns"])
+        except TimeoutError:
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_process_exceeded_execution_window")
+            return
+        except BaseException:
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_process_or_readback_unconfirmed")
+            return
+        valid = (type(receipt) is dict
+            and receipt.get("operation_id") == operation_id
+            and receipt.get("target_generation") == generation
+            and receipt.get("recovery_id") == request["recovery_id"]
+            and receipt.get("release_accepted") is True)
+        release_received_ns = self._clock_ns() if valid else None
+        if not valid or release_received_ns >= request["deadline_ns"]:
+            self._invalidate_helper("recovery", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_receipt_invalid_or_late")
+            return
+        readback = self._run_observer(operation_id, generation, request, release_received_ns)
+        if readback is None:
+            return
+        horizon_observations = [readback]
+        horizon_end_ns = release_received_ns + self.late_input_horizon_ns
+        while self._clock_ns() < horizon_end_ns:
+            remaining_s = (horizon_end_ns - self._clock_ns()) / 1_000_000_000
+            time.sleep(min(self._late_input_sample_interval_s, remaining_s))
+            readback = self._run_observer(operation_id, generation, request,
+                horizon_observations[-1]["observed_monotonic_ns"])
+            if readback is None:
+                return
+            horizon_observations.append(readback)
+        self._owner.recovery_completed(operation_id, generation,
+            request["recovery_id"], release_accepted=True, readback=readback,
+            release_received_ns=release_received_ns,
+            late_input_horizon_ns=self.late_input_horizon_ns,
+            late_input_max_sample_gap_ns=(
+                max(25_000_000,
+                    int(self._late_input_sample_interval_s * 4 * 1_000_000_000))
+                if self.late_input_horizon_ns else None),
+            horizon_observations=horizon_observations)
+
+    def recover_orphaned_input(self, operation_id, generation, recovery_id,
+                               deadline_ns, obligations):
+        """Run one bounded release/readback for a custody record from a prior server.
+
+        This transaction is deliberately separate from the source action owner:
+        a successful release does not rewrite that action's UNKNOWN result.
+        """
+        if type(obligations) not in (list, tuple):
+            raise ValueError("orphan recovery request schema mismatch")
+        # Validate and dispatch the same immutable caller-supplied snapshot.
+        obligations = tuple(obligations)
+        if (type(operation_id) is not str or len(operation_id) != 32
+                or any(char not in "0123456789abcdef" for char in operation_id)
+                or type(generation) is not str or len(generation) != 64
+                or any(char not in "0123456789abcdef" for char in generation)
+                or type(recovery_id) is not str or len(recovery_id) != 32
+                or any(char not in "0123456789abcdef" for char in recovery_id)
+                or type(deadline_ns) is not int
+                or not obligations
+                or any(type(item) is not str or not item for item in obligations)
+                or len(set(obligations)) != len(obligations)):
+            raise ValueError("orphan recovery request schema mismatch")
+        now_ns = self._clock_ns()
+        if now_ns >= deadline_ns:
+            return {"status": "unknown", "reason": "deadline_before_recovery",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False}
+        if deadline_ns - now_ns > _ORPHAN_RECOVERY_TRANSACTION_NS:
+            raise ValueError("orphan recovery deadline exceeds the fixed bound")
+
+        request = {"operation_id": operation_id,
+                   "target_generation": generation,
+                   "recovery_id": recovery_id,
+                   "request_id": recovery_id,
+                   "deadline_ns": deadline_ns,
+                   "focus_target_before_release": True,
+                   "obligations": list(obligations)}
+        try:
+            release = self._exchange_helper("recovery", request, deadline_ns)
+        except BaseException as error:
+            return {"status": "unknown", "reason": "recovery_helper_unconfirmed",
+                    "error_type": type(error).__name__,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False}
+        release_matches = (type(release) is dict
+            and release.get("operation_id") == operation_id
+            and release.get("target_generation") == generation
+            and release.get("recovery_id") == recovery_id
+            and release.get("release_accepted") is True)
+        release_received_ns = self._clock_ns() if release_matches else None
+        if not release_matches or release_received_ns >= deadline_ns:
+            self._invalidate_helper("recovery", deadline_ns)
+            return {"status": "unknown", "reason": "release_receipt_unconfirmed",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release if type(release) is dict else None}
+
+        try:
+            readback = self._exchange_helper("observer", request, deadline_ns)
+        except BaseException as error:
+            return {"status": "unknown", "reason": "neutral_readback_unconfirmed",
+                    "error_type": type(error).__name__,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release}
+        readback_matches = (type(readback) is dict
+            and readback.get("operation_id") == operation_id
+            and readback.get("target_generation") == generation
+            and readback.get("recovery_id") == recovery_id
+            and readback.get("neutral") is True
+            and _consistent_neutral_observation(readback, obligations)
+            and type(readback.get("observed_monotonic_ns")) is int
+            and readback["observed_monotonic_ns"] >= release_received_ns)
+        # Use the same instant for the deadline decision and its receipt.
+        completed_ns = self._clock_ns() if readback_matches else None
+        if (not readback_matches or completed_ns >= deadline_ns
+                or readback["observed_monotonic_ns"] > completed_ns):
+            self._invalidate_helper("observer", deadline_ns)
+            return {"status": "unknown", "reason": "neutral_readback_not_confirmed",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release,
+                    "readback": readback if type(readback) is dict else None}
+        return {"status": "recovered", "operation_id": operation_id,
+                "target_generation": generation, "recovery_id": recovery_id,
+                "release_confirmed": True, "release_receipt": release,
+                "readback": readback,
+                "recovery_completed_monotonic_ns": completed_ns}
+
+    def _run_observer(self, operation_id, generation, request, not_before_ns):
+        observation_request = dict(request)
+        observation_request["request_id"] = uuid.uuid4().hex
+        try:
+            readback = self._exchange_helper("observer", observation_request,
+                                             request["deadline_ns"])
+        except TimeoutError:
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_observer_exceeded_execution_window")
+            return None
+        except BaseException:
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_observer_unconfirmed")
+            return None
+        if (type(readback) is not dict
+                or readback.get("operation_id") != operation_id
+                or readback.get("target_generation") != generation
+                or readback.get("recovery_id") != request["recovery_id"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_identity_mismatch")
+            return None
+        observed_ns = readback.get("observed_monotonic_ns")
+        completed_ns = self._clock_ns()
+        if (type(observed_ns) is not int or observed_ns < not_before_ns
+                or observed_ns > completed_ns or completed_ns >= request["deadline_ns"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_time_invalid")
+            return None
+        if not _consistent_neutral_observation(readback, request["obligations"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_state_invalid")
+            return None
+        return readback
+
+    @staticmethod
+    def _stop_gated_child(process):
+        try:
+            if not process.is_alive():
+                return
+            process.terminate()
+            process.join(0.05)
+            if process.is_alive():
+                kill = getattr(process, "kill", None)
+                if callable(kill):
+                    kill()
+                    process.join(0.05)
+        except BaseException:
+            pass
+
+    def _bounded_wait(self, deadline_ns, cap_s):
+        remaining = max(0.0, (deadline_ns - self._clock_ns()) / 1_000_000_000)
+        return min(float(cap_s), remaining)
+
+    def close(self):
+        with self._lock:
+            if self._closed:
+                return
+            self._closed = True
+            try:
+                self._queue.put_nowait(None)
+            except queue.Full:
+                pass
+        if self._thread is not None:
+            self._thread.join(1.0)
+        self._close_helpers()
+
+    def _close_helpers(self):
+        for helper in self._helpers.values():
+            process = helper["process"]
+            connection = helper["connection"]
+            helper["available"] = False
+            # Never interleave a shutdown message with an active exchange.
+            # A busy helper is retired instead of waiting for its lock.
+            if process.is_alive() and helper["lock"].acquire(blocking=False):
+                try:
+                    shutdown_deadline = self._clock_ns() + int(
+                        min(0.1, self._startup_timeout_s) * 1_000_000_000)
+                    self._send_helper_request(connection, None, shutdown_deadline)
+                    process.join(self._bounded_wait(shutdown_deadline, 0.1))
+                except BaseException:
+                    pass
+                finally:
+                    helper["lock"].release()
+            if process.is_alive():
+                deadline_ns = self._clock_ns() + int(
+                    (self._terminate_grace_s + self._kill_grace_s + 0.1)
+                    * 1_000_000_000)
+                self._retire_process(process, deadline_ns)
+            try:
+                connection.close()
+            except BaseException:
+                pass
+            try:
+                if not process.is_alive():
+                    process.close()
+            except BaseException:
+                pass
+        self._helpers.clear()

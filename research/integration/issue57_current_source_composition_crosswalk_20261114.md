@@ -1,0 +1,304 @@
+# Issue #57 current-source composition crosswalk (2026-11-14)
+
+## Decision
+
+The existing three-arm live result remains valid only for its frozen v1
+allocation. Do not edit or rerun its runner as a way to retrofit newer runtime
+semantics. The current source has a separate v3 composition that carries typed
+partial execution, model-attempt usage, images/wait, refreshed target selection,
+post-model evidence checks, and an independent effect receipt. However, the
+retained `run_integrated_efficiency_live_v1.py` still imports
+`adaptive_acquisition_caller_v2`
+and the recorded-model runner wrapper records only CLI-visible output. There is
+no current end-to-end three-arm result through the v3 composition and current
+public caller.
+
+This is an integration/version boundary, not evidence that the earlier live
+comparison was incorrect. Finite previous allocations remain separately
+classified; no result is promoted to the current integrated milestone.
+
+## Requirement-to-source/test map
+
+| Requirement | Current implementation | Existing focused evidence | Remaining gate |
+|---|---|---|---|
+| #52 typed stop and no target on refusal | v3 `_decision`, compiled receipt projection | `test_adaptive_acquisition_caller_v3.py`; `test_compiled_native_caller_composition.py` | Run the selected live comparison candidate through the same caller path. |
+| #53 every model attempt, failure, usage, visible image and wait | v3 attempt ledger and model-result contract; `v3_persistent_grounding_adapter_v1.py` maps App Server grounding success/failure metadata | `test_grounding_appserver_usage_transport.py`; v3 failed-call/accounting tests | Connect the validated acquisition/preflight path and all arms to one comparison trace; timeout/late usage semantics remain explicit. |
+| #54 schema preflight before authority | `schema_preflight_gate_v1.py`; historical three-arm runner preflights each arm | historical protocol/audit | Candidate must account the current preflight and its failures in the same lifecycle totals. |
+| #55 fresh identity after model wait | v3 post-model observation/revalidation receipts | v3 changed-source and same-frame refusal cases | Verify current native/public target identity and scorer provenance in selected live domain. |
+| Compiled lifecycle result | `integrated_efficiency_compiled_execution_v2.py` joins compiled core receipt to v3 caller | `test_compiled_caller_handoff_v2.py`; native bridge composition suite | Existing live three-arm runner still calls v2 directly and does not emit this public result shape. |
+| Release, no replay, typed recovery | core/bridge/InputOwner plus Win32 and X11 public paths | current focused runtime suites; MAP01 R175-R197 records | Keep native input/release/recovery separated from synthetic caller composition; finish the selected live task gate. |
+| Independent application effect | v3 `verify_effect` and evidence reference; fixture scorers | local/FakeX composition tests plus selected live packets | Connect the domain's independent durable scorer; successful core execution alone remains insufficient. |
+| #12/#46/#56 comparison integrity | frozen #57 protocol/result v1; existing cold/warm/invalidation/repair design | three-arm mechanics/protocol controls; finite historical result | Candidate must freeze same task/model/settings/order/budget and report cold cost, reuse, invalidation, repair and all failures together. |
+| v3 result to frozen #57 task row | `issue57_v3_trace_adapter_v1.py` projects only representable complete attempts, reconciles attempt rows against `model_call_ledger` and every public accounting aggregate, and calls the unchanged v1 evaluator once all 18 rows and preflights exist; HOLD retains assigned rows and original preflight/discovery inputs, and caller success must agree with the independent exact-submission score | `test_issue57_v3_trace_adapter_v1.py`, including frozen historical trace round-trip, malformed/missing preflight retention, conflicting-score, aggregate-usage, call-ledger, bool-as-count mismatch HOLD and explicit attempt-id validation | Live v3 task adapters, provider preflight accounting and independent scorer are still not connected. |
+
+## Concrete missing composed-path check
+
+The provider seam is now connected: a synthetic App Server JSONL peer feeds the
+retained `PersistentGroundingModel`, the new v3 adapter projects its result or
+typed failure into `adaptive_acquisition_caller_v3`, and the public caller result
+is appended and re-audited by the Issue #57 attempt ledger. This retains call and
+thread IDs, usage, image count, wait, missing usage and unattempted task effect.
+The provider fixture now also runs through the frozen task projector: its
+attempt, model-call row and usage/image/wait/cost aggregates reconcile, then the
+record is retained as HOLD because the provider attempt failed and no task
+effect is available. This verifies the actual App Server result shape against
+the projection boundary without treating a failed call as a comparable task.
+A separate public v3 compiled-caller/FakeX test joins the returned core receipt,
+release records and effect status in one row. The ledger rejects misleading
+release/effect receipts, post-write receipt tampering and deleted row fields.
+
+The retained G10-shaped caller/scorer fixture is now also connected to the same
+ledger: its public v3 caller result, compiled receipt, terminal release flags,
+independent saved-FODS score and raw FODS digest join in one audited row. Two
+additional outcome rows verify that an effect-unknown one-transition prefix is
+retained with unavailable release/effect receipts, and that an independent
+score failure retains its failed score and raw FODS digest. The fixture is
+FakeX and the FODS predates the simulated actions; these rows prove result
+shape and custody only. They cannot provide a fresh task effect, the frozen #57
+telemetry fields (for example `durable_calls` and per-input feedback), or live
+Calc comparison rows.
+
+The form-specific compiled grounding contract is now also exercised through the
+actual `runtime.core_v1.compiled_gui` runtime, public v3 caller, detached compiled
+receipt, and append-only Issue #57 ledger in
+`test_issue57_v3_form_caller_composition_v1.py`. Five synthetic rows cover
+unchanged reuse, a stale cached handle refused before any input, one bounded
+model reacquisition with post-model revalidation, a dispatched action with
+release unknown, and completed input with independent task effect unknown. The
+repair row retains the model attempt's usage; every row retains source evidence
+hashes, and successful release is derived from the actual returned core receipt.
+These are source-bound offline adapter checks: observations, target handles,
+input, provider envelope, and saved-form artifact are synthetic. They do not
+connect the live grounding runner, App Server, native GUI, or a fresh durable
+task scorer.
+
+The missing composed-path check is now narrower and concrete: no current
+comparison runner joins the live form grounding/acquisition and provider
+preflight path to the v3 compiled core, native GUI attempt/evidence, durable
+independent task scorer, and all three matched arms in one frozen lifecycle
+record. The historical live runner remains v2; no claim of a v3 live comparison
+follows from the synthetic transport, FakeX, or new form rows. The projection
+adapter validates old-protocol compatibility and preserves HOLD evidence, but
+it consumes v3 results rather than executing the provider/GUI/scorer path
+itself. Do not add a new primitive or runtime for this gap.
+
+## Next finite work
+
+Next, carry the same form-specific cases into a prospective live candidate by
+reusing the existing schema preflight and App Server adapter, then retain actual
+terminal receipts, independent saved-effect evidence, and all assigned
+attempts. The offline composed check now covers unchanged reuse, stale-target
+refusal with zero input, bounded post-model repair, release unknown, and effect
+unknown. Do not start another benchmark implementation or edit/rerun a frozen
+runner. A live candidate still needs a newly verified allocation/host and a
+fresh freeze; its audit must reconcile preflight and every model attempt, caller
+output, core receipt, real release/effect evidence, and raw hashes without
+dropping failures. Do not recycle an old allocation, condition, or result.
+
+## Local verification of the mapped seams
+
+On Windows Python 3.11.9, normal and optimized runs passed:
+
+- `test_compiled_caller_handoff_v2.py`: 15/15 each mode;
+- `test_compiled_native_caller_composition.py`: 8/8 each mode (the X server,
+  transport and input path use `FakeX`; this is not native-desktop evidence);
+- `test_adaptive_acquisition_caller_v3.py`: 14/14 each mode.
+- `test_issue57_v3_attempt_ledger_v1.py`: 18/18 each mode, including the eight
+  imported FakeX composition regressions and ten ledger-specific cases. The
+  joined row keeps the caller's independent effect as unavailable even when
+  the FakeX terminal release is verified.
+
+`test_v3_persistent_grounding_adapter_v1.py`: 3/3 each mode. These validate
+success projection, preservation of provider failure metadata and accounting
+retention when output projection fails.
+
+`test_issue57_v3_trace_adapter_v1.py`: 16/16 each mode. It checks exact v3→v1
+task projection, failed/unknown-usage HOLD with source retention, assigned-call
+count enforcement, attempt/call-ledger and accounting aggregate reconciliation,
+accounting and caller/scorer disagreement,
+all-18-row preservation,
+missing/malformed-preflight HOLD with original input retention, arm-order
+rejection and exact round-trip of the saved historical trace through the
+unchanged frozen evaluator.
+
+`research.integration.test_issue57_v3_g10_composition_v1`: 5/5 each mode,
+including the success row, effect-unknown prefix row, and independent-score
+failure row. The raw saved FODS digest is checked against the independent score
+receipt before append; successful release evidence is derived from each
+terminal event in the returned compiled receipt. Unknown release/effect is
+explicitly unavailable in the new failure rows. The application
+transport/effect is synthetic, and the historical FODS is not a post-action
+artifact.
+
+`research.integration.test_issue57_v3_form_caller_composition_v1`: 1/1 each
+mode. Five assigned synthetic outcomes pass through the compiled GUI core, v3
+caller and append-only ledger, including the current form grounding validator,
+usage retention for repair, stale zero-input refusal, release/effect unknown
+states, and raw source digest checks. This is offline integration evidence only.
+
+`test_grounding_appserver_usage_transport.py`: Python 3.11.9 skips 1/1 because
+the App Server pipe transport needs Python 3.12+. The available Python 3.13.14
+then passed 1/1 normally and under `-O`, now including App Server JSONL → v3
+adapter → adaptive caller → Issue #57 append-only ledger → re-audit → frozen
+task projector. Its provider attempt's usage, wait and image aggregates
+reconcile before the failed attempt is preserved as HOLD for the frozen row.
+An initial invocation used an
+incomplete import path and failed before tests; it was corrected and is not
+counted as test evidence. The full provider-to-scorer three-arm candidate remains
+unimplemented and unverified.
+
+The current public Win32 MCP suite was also rerun from this checkout on Python
+3.11.9, normal and optimized, for three source-bound cases: exact `call_id`
+result query joined to the task oracle (1/1 each), expiry followed by delayed
+release recovery and exact-call effect verification (1/1 each), and producer
+exception auto-recovery retaining the original action as UNKNOWN/no-replay
+(1/1 each). These tests use fake producer/supervisor/target/oracle components;
+they verify public result shape and sequencing, not native Win32 delivery or
+MAP01. The separate recorded R175-R197 native evidence remains the evidence for
+the scoped MAP01 boundary and is not changed by these test reruns.
+
+Four focused public stdio/MCP caller integrations were also rerun on CPython
+3.11.9 normally and with `-O`: exact result-query/task-oracle join, expiry
+followed by delayed recovery and exact-call effect, public compiled caller
+preserving an unknown producer exception, and automatic exception recovery
+while retaining the source action as UNKNOWN/no-replay. All 4/4 passed in each
+mode. They use synthetic stdio producer/supervisor/oracle fixtures; this checks
+the public caller/result shape but does not supply native Win32 delivery, a
+fresh MAP01 effect or a matched #57 comparison.
+
+This crosswalk is offline engineering direction. It does not create a live
+allocation, claim a new task effect, supersede the historical result or close
+Issue #57.
+
+## 2026-11-16 current-main runner entry audit
+
+At `86a52662dc2bb690dd670d52ea8d97816aef2a26`, the persisted runner boundary
+was inspected without executing it or touching its result directory. The
+retained runner still imports `adaptive_acquisition_caller_v2` and defaults to
+the fixed `results/integrated-efficiency-live-01` path. Its model backend
+selector is only a v2 function seam: it calls
+`model_call(root, prompt, image, contract, workspace)` and expects the legacy
+grounding/result shape consumed directly by `run_task`. The public v3 path is
+different: `V3PersistentGroundingAdapter` emits attempt metadata for
+`adaptive_acquisition_caller_v3`, and the compiled composition additionally
+requires a current target-specific interface factory, execution adapters,
+receipt persistence and independent effect evidence. Selecting the existing
+`AGENT_INTERFACE_MODEL_BACKEND=module` therefore cannot by itself switch this
+runner to v3, even if the selected function is the v3 adapter.
+
+This inspection establishes a concrete integration gap and a safety issue for
+prospective execution: the current runner has no run-scoped output-root
+argument, so an ordinary invocation targets the retained historical output
+directory. Do not run it or configure its legacy backend as a v3 comparison.
+The next code change should be a separate prospective v3 runner entry that
+reuses the frozen protocol/evaluator and v3 trace adapter, requires an explicit
+new allocation manifest and a fresh non-existing evidence root, and records
+each task/preflight/caller/core/release/effect receipt before continuing. It
+must reject a missing independent scorer or missing host/allocation evidence
+before dispatch. This is not a live authorization: no allocation or exclusive
+host was established by this audit, and WSLc/Docker ownership remains
+unresolved. No live input, model call, or benchmark output was produced here.
+
+The prospective run journal now connects to the frozen v3 task projector and
+evaluator in
+`research/live_control/issue57_v3_prospective_run_v1.py` with focused coverage
+in `research/integration/test_issue57_v3_prospective_run_v1.py`. It requires a
+new evidence root, exact frozen arm/task allocation, an explicitly exclusive
+host, a future timezone-aware expiry, model/settings/order seed, and a required
+trusted caller-supplied allocation attestor before creating that root. The
+attestor must check an authoritative external allocation source; this module
+does not provide one, so no current host/allocation has been attested. It pins
+the allocation digest, current source commit and source-file hashes. It appends
+each preflight/task envelope to an fsynced lifecycle journal, projects each
+v3 caller result against its independent score and telemetry, and runs
+`assemble_complete_trace` against the unchanged frozen evaluator at finalization.
+It rejects duplicate assignments and post-finalization mutation; absent
+assignments, invalid rows, or invalid preflights preserve the evidence and
+produce HOLD with no comparison trace. Its manifest explicitly records
+`dispatch_enabled: false`: this is a tested custody/projector boundary, not a
+live-runner or authority grant. Twelve focused journal tests pass normally and
+under `python -O`, including a complete synthetic 18-row path that reaches the
+unchanged frozen evaluator and a complete-assignment HOLD path with invalid
+caller evidence. They also exercise reuse of the existing G10 hash-linked task
+custodian, rejection of missing custody, and HOLD with raw caller output when
+the custodian event chain is corrupted. One test calls the public G10 durable
+allocation wrapper with only the compiled-core proposal boundary stubbed, then
+checks that the returned receipt and custody project through the v3 lifecycle;
+the source manifest now pins the exact imported runtime files. Two existing projector/evaluator cases
+(valid task row and missing-preflight HOLD) also pass in both modes. The live
+provider/native GUI/independent-score bindings are still absent from this
+comparison journal; the separately scoped G10 scorer and caller described
+below are not a matched three-arm comparison. No comparison or new task effect
+is claimed.
+## G10-to-current-main reuse audit (2026-11-16)
+
+The current-main Issue #57 body directs the next Calc step to compare archived
+G10 capture/recognition, release, effect and saved-byte scoring against current
+main before adding another adapter. This read-only audit used the archived G10
+report and read-only cost recount; it did not run the old actor, OCR, container,
+or auditor, and did not change or reinterpret the G10 allocation.
+
+| G10 evidence/contract | Current-main component | Scope boundary for #57 |
+|---|---|---|
+| G10 ran one fixed-geometry/font Calc construction, two guarded saves, and three capture-time-bound observations. Tesseract retained all seven subprocess outputs, including the initial blank. | Archived `calc-compiled-ocrlive-4d74/REPORT.md`, `compiled_ocr.py`, and the pinned run receipts. | OCR/graph success is a narrow live positive; primary model attempts and usage remain UNKNOWN. |
+| Two recorded native programs each have a verified-empty release. A fresh second target is requested only after first completion/release; `calc_fresh_reference_v1` checks current bridge sequence, source digest, scope/revision, capture age and no outstanding authority before mint. | `calc_g10_fresh_admission_v1.py` and `calc_fresh_reference_v1.py`; G10's offline adapter tests also exercise late proposal and unknown-effect suffix stopping. | These checks do not recover an earlier UNKNOWN operation and do not create independent task success. Preserve UNKNOWN/no-replay. |
+| The actual G10 graph's shared anchor is transformed into a distinct second alias while preserving the two-action graph contract. | `calc_g10_interface_adapter_v1.py` and `calc_g10_caller_v1.py`. | Interface-shape reuse is available; it does not itself select or ground the current target, execute OCR, or produce a matched arm. |
+| Saved `fods` bytes are independently parsed for exact six populated cells and formulas; scorer also checks saved digest, completed receipt, neutral physical state and final PNG digest. | Archived `saved_oracle.py` and original G10 audit. | The scorer's result timestamp is not joined to the host run, so end-to-end latency to independently scored effect is unavailable. |
+| Attempts, caller events, interface binding, compiled receipt, independent effect receipt and final caller outcome can be persisted before finalization. | Current `calc_g10_caller_v1.run_g10_in_durable_allocation` plus `calc_durable_allocation_v1.DurableCalcAllocation`; event rows are hash-linked and fsynced. | The local custodian explicitly has no independent post-crash custodian. It is a per-allocation G10 seam; it is not yet an 18-row #57 aggregator or external allocation attestor. |
+
+The independently stored read-only recount pins five historical source hashes.
+It reconstructs one run: host launcher 29.933 s, container 26.556 s, graph
+1.972 s, two native programs 0.569/0.566 s, and seven OCR subprocesses totalling
+0.494 s (1.906 s first-start-to-last-end span). These intervals have different
+and nested endpoints; do not subtract or add them to infer end-to-end time.
+The recount explicitly leaves primary model attempts/tokens/images/wait,
+time-to-independent-score, matched baseline, cold/warm/invalidation/repair and
+break-even unavailable. No speed or token-efficiency result follows.
+
+Implementation decision: keep the G10 graph/fresh-admission/saved-byte route as
+a candidate task adapter, and reuse its durable per-task caller/receipt
+integration if the selected comparison workload is this two-row Calc task.
+The prospective run journal now creates a G10 `DurableCalcAllocation` before
+each task attempt, binds it to the comparison allocation/arm/task/model/settings
+and pinned source hashes, and requires its `audit_allocation` result to match
+the caller attempt ledger and accounting before a task can project. Missing or
+corrupt custody retains the raw caller/scorer/telemetry and forces HOLD. This
+reuses the hash-linked per-task receipt custodian rather than substituting the
+run-level journal. Before a permitted fresh run, a trusted external allocation
+attestor and a timestamp-joined saved-byte scorer result must be supplied, and
+all model/OCR/native attempts must be retained under the same frozen arm,
+model, settings and task boundaries. The G10 result remains historical scoped
+evidence only; this audit adds no live attempt or task effect.
+
+## 2026-11-16 local Edge effect smoke
+
+The existing `research/live_control/test_windows_compiled_gui_edge_live_v1.py`
+was run as a live local effect smoke with Edge 157, Windows OCR, a temporary
+browser profile, a localhost-only synthetic form, and the existing v2 compiled
+caller. The first harness invocation stopped before input because this sparse
+checkout omitted the tracked Windows OCR worker; that setup failure is
+preserved separately. After materializing the exact worker from current main,
+the fresh-profile run reached the test body's assertions: one exact synthetic
+form POST was independently accepted, the caller reported task success, and
+the compiled receipt showed one completed transition, verified release and no
+frontier-model resumption. The overall test nevertheless errored at teardown
+when Windows denied deletion of a locked Edge `collectionsSQLite` file
+(`WinError 32`). No second input attempt was made. The exact-profile process
+query found no running Edge command line matching the temporary profile. A
+workspace-bounded cleanup command was rejected by execution policy, so the
+residual test-created profile remains untouched.
+
+The attempt transcript and frozen condition are retained in
+`research/integration/issue57_edge_live_smoke_20261116/`. This is a single
+synthetic local form effect using an offline test double and the older v2 path,
+without provider usage, matched arms, full raw HTTP/capture retention, Calc, or
+MAP01. It is a narrow live positive with a teardown failure, not Issue #57
+efficiency evidence or a claim of integrated completion. The test harness now
+uses a scope-checked bounded cleanup retry and terminates only the Edge process
+tree started by that test when its root process remains alive. A separate
+cleanup-helper regression passes 1/1 normally and 1/1 under `-O`; the live Edge
+run was repeated once under a new run ID and fresh profile. It passed the exact
+effect, release and transition assertions, and the fresh profile was removed.
+This verifies cleanup on that run but does not prove all Edge-held-lock states.
+The original failed-cleanup attempt and its distinct leftover temp profile
+remain preserved.

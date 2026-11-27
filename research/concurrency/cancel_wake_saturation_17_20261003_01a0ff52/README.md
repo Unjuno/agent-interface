@@ -1,0 +1,1 @@
+Prospective #17 control-wake saturation source. Native collector/auditor counts0; no scientific result yet. Read PROTOCOL.md and INPUTS.json. Sources are inert .py.txt and are executed only in the explicitly frozen disposable container. Dynamic results will be appended separately; source/freeze bytes remain immutable.

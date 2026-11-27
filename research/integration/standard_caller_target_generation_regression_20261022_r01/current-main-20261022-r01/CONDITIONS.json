@@ -1,0 +1,19 @@
+{
+  "run_id": "AI-TARGET-GENERATION-CURRENT-MAIN-20261022-R01",
+  "classification": "local regression recheck; not a formal live experiment",
+  "source_commit": "4bcf4e0a9254a8434032e00f6c4965e72c13293d",
+  "host": "Windows",
+  "runtime": "CPython 3.11.9",
+  "log_text_normalization": "CRLF converted to LF for repository storage; test output text is unchanged",
+  "commands": [
+    "py -3.11 -m unittest -v runtime.cli_v1.test_mcp_window_lifecycle runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_compiled_profile_uses_generation_bound_owned_caller runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown",
+    "py -3.11 -O -m unittest -v runtime.cli_v1.test_mcp_window_lifecycle runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_compiled_profile_uses_generation_bound_owned_caller runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown"
+  ],
+  "results": {
+    "normal": {"tests_run": 20, "passed": 20, "exit_code": 0},
+    "optimized": {"tests_run": 20, "passed": 20, "exit_code": 0}
+  },
+  "important_residual": "The final-check/use race remains: the constructed public-caller case permits a prefix press after DestroyNotify is drained by the lifecycle reader, then verifies release and refuses retry. This does not prove atomic target-generation validation.",
+  "formal_allocation_consumed": false,
+  "wslc_or_docker_used": false
+}

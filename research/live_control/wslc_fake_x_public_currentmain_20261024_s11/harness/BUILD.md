@@ -1,0 +1,1 @@
+S11 local harness build: dotnet restore harness/S11.csproj --ignore-failed-sources PASS; dotnet build harness/S11.csproj --no-restore --configuration Release --output C:\wslc-s11-61f3bcfd\bin PASS, 0 warnings/errors. Native DLL path length 60. No S11 WSLc session used by build.

@@ -1,0 +1,750 @@
+{
+  "cases": [
+    {
+      "case": "cancelled-empty",
+      "disposition": "accepted",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        },
+        {
+          "event": "turn_started",
+          "input": "fresh observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "answer": {
+            "action": "fresh"
+          },
+          "answer_eligible": true,
+          "event": "fresh_turn_result",
+          "thread_id": "thread-1"
+        }
+      ],
+      "expected_accept": true,
+      "fresh_result": {
+        "answer": {
+          "action": "fresh"
+        },
+        "answer_eligible": true,
+        "thread_id": "thread-1"
+      },
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "cancelled"
+    },
+    {
+      "case": "completed-empty-race",
+      "disposition": "accepted",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "completed"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        },
+        {
+          "event": "turn_started",
+          "input": "fresh observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "answer": {
+            "action": "fresh"
+          },
+          "answer_eligible": true,
+          "event": "fresh_turn_result",
+          "thread_id": "thread-1"
+        }
+      ],
+      "expected_accept": true,
+      "fresh_result": {
+        "answer": {
+          "action": "fresh"
+        },
+        "answer_eligible": true,
+        "thread_id": "thread-1"
+      },
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "completed"
+    },
+    {
+      "case": "expired-empty-race",
+      "disposition": "accepted",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "expired"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        },
+        {
+          "event": "turn_started",
+          "input": "fresh observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "answer": {
+            "action": "fresh"
+          },
+          "answer_eligible": true,
+          "event": "fresh_turn_result",
+          "thread_id": "thread-1"
+        }
+      ],
+      "expected_accept": true,
+      "fresh_result": {
+        "answer": {
+          "action": "fresh"
+        },
+        "answer_eligible": true,
+        "thread_id": "thread-1"
+      },
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "expired"
+    },
+    {
+      "case": "interrupt-transport-error",
+      "disposition": "accepted",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "request_error"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        },
+        {
+          "event": "turn_started",
+          "input": "fresh observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-2"
+        },
+        {
+          "answer": {
+            "action": "fresh"
+          },
+          "answer_eligible": true,
+          "event": "fresh_turn_result",
+          "thread_id": "thread-1"
+        }
+      ],
+      "expected_accept": true,
+      "fresh_result": {
+        "answer": {
+          "action": "fresh"
+        },
+        "answer_eligible": true,
+        "thread_id": "thread-1"
+      },
+      "interrupt_fails": true,
+      "interrupt_outcome": "request_error",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "cancelled"
+    },
+    {
+      "case": "failed-terminal",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "failed"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "failed"
+    },
+    {
+      "case": "needs-decision-terminal",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "needs_decision"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "needs_decision"
+    },
+    {
+      "case": "missing-release",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {},
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {},
+      "status": "cancelled"
+    },
+    {
+      "case": "unverified-release",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": false
+          },
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": false
+      },
+      "status": "cancelled"
+    },
+    {
+      "case": "held-key-release",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [
+              "space"
+            ],
+            "verified": true
+          },
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [
+          "space"
+        ],
+        "verified": true
+      },
+      "status": "cancelled"
+    },
+    {
+      "case": "held-button-release",
+      "disposition": "rejected",
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "input": "old observation",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "planner_interrupt",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_cancel",
+          "id": "cover-1",
+          "op": "cancel"
+        },
+        {
+          "event": "terminal_rejected",
+          "reason": "invalidated cover did not verify empty release"
+        },
+        {
+          "event": "interrupt_outcome",
+          "outcome": "requested"
+        },
+        {
+          "event": "cover_terminal",
+          "release": {
+            "buttons_down": [
+              "left"
+            ],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "cancelled"
+        },
+        {
+          "event": "turn_answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "answer": null,
+          "answer_eligible": false,
+          "event": "old_turn_result",
+          "status": "completed"
+        }
+      ],
+      "expected_accept": false,
+      "fresh_result": null,
+      "interrupt_fails": false,
+      "interrupt_outcome": "requested",
+      "old_answer": null,
+      "old_answer_eligible": false,
+      "release": {
+        "buttons_down": [
+          "left"
+        ],
+        "keys_down": [],
+        "verified": true
+      },
+      "status": "cancelled"
+    }
+  ],
+  "format": "v39-interrupt-cancel-composition-a03-v1",
+  "source_main": "f72cd82d62c9d9f3860d4fa40980c56618bf5aaf"
+}

@@ -1,0 +1,4 @@
+R07 runner attempt 1 stopped before MCP startup: execution from the experiment subdirectory put `raw/` and the research module path on Python import search, but omitted the repository root required for `runtime.cli_v1.mcp_relay`. No observation or dispatch was sent. Corrected by adding the frozen repository root to `sys.path`.
+R07 runner attempt 2 repeated the same pre-MCP import failure because the first text replacement did not match the file's line ending/encoding. No observation or dispatch was sent.
+
+R07 stopped after its first public observe and before dispatch. The check incorrectly compared the decoded PNG block digest to `observation.sha256`, which is the raw-source hash. The retained `artifact.sha256` matches the PNG block digest. No dispatch occurred; the event file contains only fixture readiness. This run ID/call ID is retired and will not be reused.

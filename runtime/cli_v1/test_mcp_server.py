@@ -2,6 +2,7 @@ import json
 import asyncio
 import threading
 import io
+import time
 from contextlib import redirect_stdout
 from pathlib import Path
 import tempfile
@@ -9,10 +10,109 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from runtime.cli_v1.mcp_server import create_server
+from runtime.cli_v1.mcp_server import create_server, main
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+
+    async def test_stdio_clock_is_parent_bracketed_and_issues_no_authority(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            targets = root / 'targets.json'
+            targets.write_text('{"fixture":123}')
+            output = root / 'receipts'
+            params = StdioServerParameters(command=sys.executable, args=[
+                '-m', 'runtime.cli_v1.mcp_server', '--targets', str(targets),
+                '--output-directory', str(output), '--display', 'not-a-valid-display'])
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    listed = await client.list_tools()
+                    clock_tool = next(tool for tool in listed.tools
+                                      if tool.name == 'interface_clock')
+                    self.assertFalse(clock_tool.inputSchema['additionalProperties'])
+                    self.assertEqual(clock_tool.inputSchema.get('properties'), {})
+                    rows = []
+                    for _ in range(2):
+                        before = time.monotonic_ns()
+                        reply = await client.call_tool('interface_clock', {})
+                        after = time.monotonic_ns()
+                        self.assertFalse(reply.isError)
+                        row = json.loads(reply.content[0].text)
+                        self.assertLessEqual(before, row['monotonic_ns'])
+                        self.assertLessEqual(row['monotonic_ns'], after)
+                        self.assertEqual(row['clock'], 'time.monotonic_ns')
+                        self.assertEqual(row['clock_info'],
+                                         vars(time.get_clock_info('monotonic')))
+                        self.assertIs(row['input_dispatched'], False)
+                        self.assertIs(row['authority_granted'], False)
+                        self.assertIs(row['lease_issued'], False)
+                        rows.append(row)
+                    self.assertEqual(rows[0]['server_instance_id'],
+                                     rows[1]['server_instance_id'])
+                    self.assertLessEqual(rows[0]['monotonic_ns'],
+                                         rows[1]['monotonic_ns'])
+            self.assertEqual(list(output.iterdir()), [])
+
+    async def test_journal_retention_requires_guarded_x11_and_is_forwarded_to_owned_process(self):
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaisesRegex(ValueError, 'requires guarded-x11'):
+                create_server({'app':1}, td, guarded_retention_mode='journal')
+            with patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner') as owner:
+                create_server({'app':1}, td, session_mode='guarded-x11',
+                    guarded_process_identity=True, guarded_query_worker=True,
+                    guarded_owned_process=True, guarded_retention_mode='journal')
+        self.assertEqual(owner.call_args.kwargs['retention_mode'], 'journal')
+
+    async def test_owned_process_receives_default_retention_option_for_child(self):
+        with tempfile.TemporaryDirectory() as td, \
+             patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner') as owner:
+            create_server({'app':1}, td, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True)
+
+        options = owner.call_args.kwargs
+        self.assertEqual(options['retention_mode'], 'files')
+        self.assertTrue(options['prestarted_cancel_supervisor'] is False)
+
+    async def test_non_owned_process_receives_selected_retention_mode(self):
+        with tempfile.TemporaryDirectory() as td, \
+             patch('runtime.cli_v1.mcp_guarded.GuardedSessionOwner') as owner:
+            create_server({'app':1}, td, session_mode='guarded-x11',
+                guarded_retention_mode='journal')
+
+        self.assertEqual(owner.call_args.kwargs['retention_mode'], 'journal')
+
+    def test_cli_exposes_supervised_win32_standard_session(self):
+        with tempfile.TemporaryDirectory() as td:
+            targets = Path(td) / 'targets.json'
+            targets.write_text('{"fixture": 123}', encoding='utf-8')
+            output = Path(td) / 'output'
+            server = type('ServerStub', (), {'run': lambda self, **kwargs: None})()
+            with patch('sys.argv', ['mcp_server', '--targets', str(targets),
+                                    '--output-directory', str(output),
+                                    '--session-mode', 'supervised-win32',
+                                    '--supervised-win32-late-input-horizon-ms', '250']), \
+                 patch('runtime.cli_v1.mcp_server.create_server', return_value=server) as factory:
+                main()
+            self.assertEqual(factory.call_args.kwargs['session_mode'], 'supervised-win32')
+            self.assertEqual(factory.call_args.kwargs[
+                'supervised_win32_late_input_horizon_ns'], 250_000_000)
+
+    def test_cli_restricts_late_input_horizon_to_supervised_win32(self):
+        with tempfile.TemporaryDirectory() as td:
+            targets = Path(td) / 'targets.json'
+            targets.write_text('{"fixture": 123}', encoding='utf-8')
+            output = Path(td) / 'output'
+            with patch('sys.argv', ['mcp_server', '--targets', str(targets),
+                    '--output-directory', str(output),
+                    '--supervised-win32-late-input-horizon-ms', '250']), \
+                 patch('runtime.cli_v1.mcp_server.create_server') as factory:
+                with self.assertRaises(SystemExit):
+                    main()
+            factory.assert_not_called()
 
     async def test_real_executor_rejection_does_not_strand_admission(self):
         from concurrent.futures import ThreadPoolExecutor
@@ -276,9 +376,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(Path(td, call_id, 'report.json').read_bytes(), raw_before)
                 observe.assert_called_once()
                 for invalid in ('false', 0):
-                    with self.assertRaises(Exception):
-                        await server.call_tool('interface_results', {
-                            'call_id': call_id, 'include_image': invalid})
+                    refused = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': invalid})
+                    self.assertTrue(refused.isError)
+                    refusal = json.loads(refused.content[0].text)
+                    self.assertEqual(refusal['status'], 'invalid_request')
+                    self.assertFalse(refusal['operation_invoked'])
+                    self.assertFalse(refusal['input_dispatched'])
 
     async def test_result_pages_are_stable_when_new_calls_arrive(self):
         with tempfile.TemporaryDirectory() as td:
@@ -370,7 +474,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'HOME', 'BACKSPACE', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
@@ -455,24 +559,25 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_cancelled_transport_keeps_worker_and_receipt_without_replay(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
-            entered, release = threading.Event(), threading.Event()
+            loop = asyncio.get_running_loop()
+            entered, presented = asyncio.Event(), asyncio.Event()
+            release = threading.Event()
             def delayed(*args, **kwargs):
-                entered.set()
+                loop.call_soon_threadsafe(entered.set)
                 if not release.wait(5):
                     raise RuntimeError('test deadline')
                 return {'status': 'returned'}
             from runtime.cli_v1.review import present_result
-            presented = threading.Event()
             def present(*args, **kwargs):
                 result = present_result(*args, **kwargs)
-                presented.set()
+                loop.call_soon_threadsafe(presented.set)
                 return result
             args = {'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0}
             with patch('runtime.cli_v1.mcp_server.dispatch', side_effect=delayed) as dispatch, patch(
                     'runtime.cli_v1.mcp_server.present_result', side_effect=present):
                 first = asyncio.create_task(server.call_tool('interface_dispatch', args))
                 try:
-                    self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+                    await asyncio.wait_for(entered.wait(), 2)
                     listed = json.loads((await server.call_tool('interface_results', {})).content[0].text)
                     call_id = listed['calls'][0]['call_id']
                     pending = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
@@ -485,7 +590,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(busy.isError)
                 finally:
                     release.set()
-                self.assertTrue(await asyncio.to_thread(presented.wait, 2))
+                await asyncio.wait_for(presented.wait(), 2)
                 reports = list(Path(td).glob('*/report.json'))
                 self.assertEqual(len(reports), 1)
                 self.assertEqual(json.loads(reports[0].read_text()), {'status': 'returned'})
@@ -541,7 +646,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'HOME', 'BACKSPACE', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
@@ -654,19 +759,69 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(json.loads((root/'report.json').read_text()), report)
             self.assertEqual(json.loads((root/'request.json').read_text())['targets'], {'fixture': 123})
 
+    async def test_public_win32_dispatch_rechecks_observed_generation_before_input(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        class FakeWin32Backend:
+            def __init__(self, current):
+                self.current = current
+                self.configure_capture_artifacts = Mock()
+                self.close = Mock()
+
+            def target_generation(self, target):
+                if target != 'fixture':
+                    raise ValueError('unknown target')
+                return self.current
+
+        generation = 'a' * 64
+        program = {
+            'schema': 'agent-interface/program-v1', 'program_id': 'public-generation-check',
+            'source': {'observation_seq': 4, 'binding_revision': 2,
+                       'target_generations': {'fixture': generation}},
+            'authority': {'lease_id': 'test', 'expires_at_ns': 99},
+            'terminal': {'release_all_required': True},
+            'ops': [{'op': 'focus', 'target': 'fixture'}, {'op': 'text', 'text': 'x'},
+                    {'op': 'release_all'}]}
+        for current, expected_status in ((generation, 'completed'), ('b' * 64, 'refused')):
+            with self.subTest(current=current), tempfile.TemporaryDirectory() as td:
+                backend = FakeWin32Backend(current)
+                session = SimpleNamespace(backend=backend,
+                    dispatch=Mock(return_value={'status': 'completed',
+                        'execution': {'releases': [{'verified': True, 'keys_down': [], 'buttons_down': []}]},
+                        'recovery_required': False}))
+                server = create_server({'fixture': 123}, td)
+                with patch('runtime.cli_v1.api.open_session', return_value=session):
+                    reply = await server.call_tool('interface_dispatch', {
+                        'program': program, 'current_observation_seq': 4,
+                        'current_binding_revision': 2})
+                receipt = json.loads(reply.content[0].text)
+                report = json.loads((Path(receipt['call_directory']) / 'report.json').read_text())
+                self.assertEqual(report['result']['status'], expected_status)
+                if expected_status == 'completed':
+                    session.dispatch.assert_called_once()
+                    backend.configure_capture_artifacts.assert_called_once()
+                else:
+                    session.dispatch.assert_not_called()
+                    backend.configure_capture_artifacts.assert_not_called()
+                backend.close.assert_called_once()
+
     async def test_image_is_forwarded_once_outside_text(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
+            generation = 'a' * 64
             envelope = {'status': 'returned', 'image': {
                 'type': 'image', 'mimeType': 'image/png', 'data': 'YWJj'}}
             with patch('runtime.cli_v1.mcp_server.observe', return_value={'status': 'returned'}) as observe, patch(
-                    'runtime.cli_v1.review.review_bytes', return_value=envelope):
+                    'runtime.cli_v1.review.review_bytes', return_value={**envelope,
+                        'receipt': {'source': {'raw_report': {'target_generation': generation}}}}):
                 reply = await server.call_tool('interface_observe', {
                     'target': 'fixture', 'frame': 'window_client', 'region': [0, 0, 10, 10]})
             observe.assert_called_once()
             self.assertEqual(len(reply.content), 2)
             self.assertEqual(reply.content[1].data, 'YWJj')
             self.assertNotIn('YWJj', reply.content[0].text)
+            self.assertIn(generation, reply.content[0].text)
+            self.assertIn('target_generation', reply.content[0].text)
             self.assertIn('image', envelope)
 
     async def test_unexpected_backend_and_review_errors_never_repeat_input(self):
@@ -686,9 +841,14 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             server = create_server({'fixture': 123}, td)
             for seq in (True, '1', 1.5):
                 with patch('runtime.cli_v1.mcp_server.dispatch') as dispatch:
-                    with self.assertRaises(Exception):
-                        await server.call_tool('interface_dispatch', {
-                            'program': {}, 'current_observation_seq': seq, 'current_binding_revision': 0})
+                    refused = await server.call_tool('interface_dispatch', {
+                        'program': {}, 'current_observation_seq': seq,
+                        'current_binding_revision': 0})
+                    self.assertTrue(refused.isError)
+                    refusal = json.loads(refused.content[0].text)
+                    self.assertEqual(refusal['status'], 'invalid_request')
+                    self.assertFalse(refusal['operation_invoked'])
+                    self.assertFalse(refusal['input_dispatched'])
                     dispatch.assert_not_called()
             self.assertEqual(list(Path(td).iterdir()), [])
 

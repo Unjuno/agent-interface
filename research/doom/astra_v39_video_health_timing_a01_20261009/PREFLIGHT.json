@@ -1,0 +1,27 @@
+{
+  "authority_boundary": "Offline local file analysis only. The current-main fresh live threat gate remains unrun because Issue #59 and the private game lane are unassigned. No running VM was entered or changed.",
+  "base_commit": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "date_utc": "2026-10-09",
+  "decision_gate": "PASS_POSTHOC_EXTRACTION only if every selected health row is observed, all three anchor scores are <=2.5, and no separate nonlocal match lies within 0.05 MAE of the best; otherwise preserve HOLD. Timing order is always unconfirmed when fit plus frame sampling overlaps, and video/event synchronization uncertainty remains unknown.",
+  "exploratory_before_freeze": {
+    "anchor_scan": "Previously sampled three exact source frames against all video frames; best matches were near 17.6 s, 22.0-22.1 s, and 28.6 s with downsampled scene MAE about 2.0. This motivated anchors and the score cap; it is not the frozen candidate output.",
+    "exact_health_reader_on_mp4": "unknown/invalid_right_aligned_number on a compressed-video sample; exact reader remains unchanged.",
+    "known_limit": "Controller report model_ns is 11.741060121 s, while controller_model_ended_ns minus controller_model_started_ns is 11.844595127 s; the 103.535006 ms difference is unexplained in the report and both fields will be retained.",
+    "visual_sampling": "Previously inspected a sparse montage only; apparent transitions near video 23.5-30.4 s are exploratory and not candidate evidence."
+  },
+  "hypothesis": "The retained video can establish a bounded health-value timeline and an approximate clock map for one historical slow model response; it cannot show what current V39 would have done.",
+  "inputs": {
+    "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894"
+  },
+  "schema": "astra-video-health-timing-a01-preflight-v1",
+  "status": "PASS_PREFLIGHT_READY",
+  "test": "Decode the exact retained MP4 once; compare three exact capture-frame anchors to video frames; read every frame in the frozen 22.0-30.4 s interval using current-main hash-bound WAD glyphs; map the recorded model-start/end interval by a frozen linear fit; independently replay all rows and run five mutation controls.",
+  "wad": {
+    "matches_existing_pin": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "source": "https://raw.githubusercontent.com/Farama-Foundation/ViZDoom/main/src/freedoom2.wad"
+  }
+}

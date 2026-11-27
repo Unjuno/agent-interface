@@ -1,0 +1,346 @@
+{
+  "captured_at_utc": "2026-11-23T17:25:34Z",
+  "origin_main_before_after": "164650754bce28fc849f630f0b744decb4034f87",
+  "membership_comparison_source": "docs/maintenance/repository-inventory-recheck-20261124-r180.json",
+  "github_membership": {
+    "open_issues": {
+      "count": 1640,
+      "added_vs_r177": [],
+      "removed_vs_r177": [],
+      "ids_sha256": "8ffa0fe03507328e29ced059f599f0f24a1bad1fe63afd53d6678cfcdbc647eb"
+    },
+    "open_pull_requests": {
+      "count": 403,
+      "added_vs_r177": [],
+      "removed_vs_r177": [],
+      "ids_sha256": "eb4d6ae6becb2d1000b7ccedcd3e785ddf7b8a5a06a8ca8791aedf65ff3e2a9c"
+    }
+  },
+  "worktree_source": "git worktree list --porcelain; git status --porcelain=v1 --untracked-files=normal and git rev-parse HEAD for each registered path",
+  "worktree_count": 33,
+  "dirty_worktree_count": 10,
+  "status_error_count": 0,
+  "untracked_directory_policy": "Normal mode can collapse untracked directories; nested registered worktrees are separately listed. Status hashes cover exact UTF-8 porcelain output. This snapshot does not recursively enumerate untracked directory contents.",
+  "worktrees": [
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120",
+      "branch": "refs/heads/main",
+      "head": "897f4896d23dd127a4523dc4955e573dace7d674",
+      "dirty": true,
+      "status_entry_count": 22,
+      "status_code_counts": {
+        " M": 11,
+        "??": 11
+      },
+      "status_sha256": "634ced74856d51f843303f078f1d7a8c3f1e5c38f5999311fe1bf63628f47fc9"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-calc-fixture-r01",
+      "branch": "refs/heads/codex/issue57-calc-fixture-r01",
+      "head": "bdd1fb57720ab05d671c81dd953e71ad0a70b98b",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-calc-merged-main-20261121",
+      "branch": "refs/heads/codex/issue57-effect-clock-domain-r01",
+      "head": "f5f28c0f3b2182e78d1074048978c945b5cee827",
+      "dirty": true,
+      "status_entry_count": 3,
+      "status_code_counts": {
+        " M": 2,
+        "??": 1
+      },
+      "status_sha256": "64b4f9f51c68db1748dea0c2d8a2822b8e5c3785fbf2752932067abb1f9de270"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-cancel-timing-diagnostic-r01",
+      "branch": "refs/heads/codex/issue57-native-owner-receipt-join-r01",
+      "head": "b8130b847aa0094ba1f82ed98636d5bd40c2618d",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-effect-clock-domain-postmerge-20261121",
+      "branch": "refs/heads/codex/issue57-full-discovery-recheck-20261121",
+      "head": "704d2a2b133ff54feea34017d5b81a80c9ccbede",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-effect-receipt-handoff-main-20261121",
+      "branch": "refs/heads/codex/issue57-effect-receipt-handoff-20261121",
+      "head": "ae10f768a8ed2dfe4d8a626ead25039842e88f87",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-native-owner-postmerge-r01",
+      "branch": "refs/heads/codex/issue57-native-owner-postmerge-evidence-r01",
+      "head": "d18f24af4e2fbe612172fefd59c7d10998a3c4a4",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121",
+      "branch": "refs/heads/codex/wslc-readonly-probe-20261121",
+      "head": "e5866db03e25c044f7ffead5118624a1cd8c33e9",
+      "dirty": true,
+      "status_entry_count": 1,
+      "status_code_counts": {
+        "??": 1
+      },
+      "status_sha256": "a661981c70341cfc24b3f789cf69b63eccfcc42eef7d6111b830d91b1a5f8219"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/portable-runtime-current-main-acbdfc0f9-r01",
+      "branch": "refs/heads/docs/g10-currentmain-stdio-rerun",
+      "head": "456b25eb8024090ad55946e438983df6ee6294fe",
+      "dirty": true,
+      "status_entry_count": 1,
+      "status_code_counts": {
+        "??": 1
+      },
+      "status_sha256": "f631e486b7792a9421df1280d9a3ae45b7847eec3f0ccc41cf26c1d37e9865a4"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/preview-retained-audit-source-r01",
+      "branch": "refs/heads/codex/preview-retained-audit-source-r01-20261122",
+      "head": "128c33f22a042b83a51351debdc32ef3ae5bfa4b",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/repo-current-main-audit-20261122",
+      "branch": "refs/heads/research/preview-current-main-chrome-config-r04",
+      "head": "1e5fe5503ef865a1b3a2bc8be7b718d4bf4ebe5a",
+      "dirty": true,
+      "status_entry_count": 1,
+      "status_code_counts": {
+        "??": 1
+      },
+      "status_sha256": "33a09f6694c06193b3290366818b30cdc6475323f759af9dbcea05b626bb2b00"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/repo-current-main-audit-20261122/.worktrees/preview-release-full-main-r03-20261123",
+      "branch": "detached",
+      "head": "c5fc0ee00b5fa5208088ee69004a336770336ac4",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/research-preview-builder-clean-r01",
+      "branch": "refs/heads/codex/preview-retained-audit-source-r02-20261122",
+      "head": "10c533f4617d939e759226365c4c38956c33dbc1",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/research-preview-host-recheck-20261122",
+      "branch": "detached",
+      "head": "10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51",
+      "dirty": true,
+      "status_entry_count": 3,
+      "status_code_counts": {
+        "??": 3
+      },
+      "status_sha256": "b2e9eaa92f2c8ddf854234a7974ba76b857a3157c306c0a352b68f4259d6fa0e"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/win32-r16-orphan-horizon-20261122",
+      "branch": "refs/heads/codex/win32-r16-orphan-horizon-20261122",
+      "head": "915b1d98289a88bb884b8968110be2cbd963962f",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-calc-failure-integrity-20261122",
+      "branch": "refs/heads/research/issue57-calc-failure-integrity-20261122",
+      "head": "aa24c2d31f87ebc5d2dfdb8c299a920ab5fea596",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-effect-receipt-handoff-r02-20261123",
+      "branch": "detached",
+      "head": "7e9caab2acf8428beeb48682edd5e7a0bace4967",
+      "dirty": true,
+      "status_entry_count": 1,
+      "status_code_counts": {
+        " M": 1
+      },
+      "status_sha256": "8d2b6a16c31df724f70d56b6ce6844375ee0bfcdd500dee4120dc4a863d7a7ab"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-latest-main-audit-20261122",
+      "branch": "refs/heads/codex/win32-r15-async-recovery-task-trial",
+      "head": "a5c2d2f3126f331636d3202fe186c30a3da58bcd",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/project-state-audit-update-20261123",
+      "branch": "refs/heads/research/project-state-audit-20261123",
+      "head": "66d4a436593508df7cea3678d32f5f95484ab1fd",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/public-recovery-drain-r05-20261123",
+      "branch": "refs/heads/research/issue57-public-recovery-drain-r05-20261123",
+      "head": "d2d0ee8f2b358e96033eee8e4a0c575220d345a5",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/public-recovery-drain-r06-20261123",
+      "branch": "refs/heads/research/map01-expanded-target-search-r02-20261123",
+      "head": "9145c0d5b8d66b2c3d407a15cb15a5ebb51e2ba4",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/repository-inventory-r163-20261122",
+      "branch": "refs/heads/research/win32-current-main-fixture-repeat-r04-20261122",
+      "head": "b422191ae9fa0e4d9b6e6d4114b25b8a31876279",
+      "dirty": true,
+      "status_entry_count": 2,
+      "status_code_counts": {
+        " M": 1,
+        "??": 1
+      },
+      "status_sha256": "21be3d644685b5805bacc0e1e139912b85712dba4052cb83ffabfc1dbcfa6347"
+    },
+    {
+      "path_from_workspace_root": "_audit-pr10340-c47ae761",
+      "branch": "detached",
+      "head": "c47ae761ed7a8c47e6d5d6b16937b468145956cd",
+      "dirty": true,
+      "status_entry_count": 2,
+      "status_code_counts": {
+        " M": 2
+      },
+      "status_sha256": "f4a1a65bfe3cc203d458bb2473cae93fd6d8cabd66e4061562c2d56aa6b79d91"
+    },
+    {
+      "path_from_workspace_root": "worktrees/b13-dispositions-r160-20261121",
+      "branch": "refs/heads/docs/r162-roadmap-20261122",
+      "head": "472b5ebf883d7ea7eedaa3f7ad257199178003a4",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/calc-current-main-recheck-r02-20261123",
+      "branch": "refs/heads/research/issue57-calc-effect-window-r02-20261123",
+      "head": "a565b5a67f2a503298538bb587aece2251e75bea",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/integrate-7741-t0d-20261122",
+      "branch": "refs/heads/research/integrate-7741-t0d-20261122",
+      "head": "6c2b473fbc48c74057a1e410be7190f767e5ac88",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/issue57-chromium-v3-adapter-r01-20261123",
+      "branch": "refs/heads/research/issue57-chromium-v3-edge-r06-20261123",
+      "head": "fe8e99f82c539cfcb63f74886679f3355428a24f",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/issue57-chromium-v5-compiled-adapter-r01-20261123",
+      "branch": "refs/heads/research/59-local-block-motion-r02-20261123",
+      "head": "6904093071431f3cc119ad014a084d5863a19fb7",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/public-navigation-current-main-r01",
+      "branch": "refs/heads/research/public-navigation-current-main-r01",
+      "head": "85ee895da349530b6e8c306bfb0bff3d0c7e525f",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/win32-local-form-r01-20261124",
+      "branch": "refs/heads/docs/repo-census-r180-20261124",
+      "head": "164650754bce28fc849f630f0b744decb4034f87",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/win32-public-recovery-r43",
+      "branch": "refs/heads/docs/root-custody-duplicates-r01-20261124",
+      "head": "e6f4a82997fb86076c95509ba9ec7b536198541e",
+      "dirty": true,
+      "status_entry_count": 1,
+      "status_code_counts": {
+        "??": 1
+      },
+      "status_sha256": "22f34597e9bcdd0d8ed61aadfd8a51e539af7cbdaf56adf0b0273a6456e77115"
+    },
+    {
+      "path_from_workspace_root": "worktrees/win32-public-recovery-r43/worktrees/repo-state-r179-20261124",
+      "branch": "refs/heads/research/issue57-attempt-ledger-v2-r01-20261124",
+      "head": "24cc9150890e21434227c67ccc3339965c2a8a0c",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_workspace_root": "worktrees/wslc-live-smoke-record-20261121",
+      "branch": "refs/heads/codex/fakex-expired-down-refusal-r02-20261121",
+      "head": "f8dbf9097c78942a21094e68d408c64537d7ef21",
+      "dirty": false,
+      "status_entry_count": 0,
+      "status_code_counts": {},
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

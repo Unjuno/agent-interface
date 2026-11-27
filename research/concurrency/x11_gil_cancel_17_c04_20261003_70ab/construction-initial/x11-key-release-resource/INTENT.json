@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-release-resource",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && cat /root/17-x11-key-release-70ab/CONSTRUCTION.json && docker inspect 17-x11-key-selftest-70ab --format \"{{json .State}}\" && date -u +%FT%TZ > /root/17-x11-key-release-70ab/RELEASED"
+  ],
+  "launcher_pid": 62205,
+  "start_utc": "2026-10-03T15:59:56.343012+00:00",
+  "start_ns": 54161176761000
+}

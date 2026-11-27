@@ -1,0 +1,7 @@
+# Win32 supervised standard MCP cancellation and recovery — R05
+
+This is a one-shot live Windows trial through the public stdio MCP caller. It reuses one freshly owned fixture and a unique task sentinel. The operation clicks, types, and saves the sentinel, then sends a single Q keystroke. A probe-owned `WH_KEYBOARD_LL` callback pauses only that injected Q-down. While it is paused, the probe finds the exact dispatch call ID in the caller's persisted request and invokes `interface_cancel` once.
+
+The packet retains the dispatch and cancel replies, hook event timestamps, the exact producer PID/creation-time exit witness, the public retained cancellation result, an independent fresh-process target-generation and Q-state readback, the fixture journal/effect file, and cleanup receipts. The frozen audit requires the injected Q-up callback to follow the exact producer exit and the independent readback to show Q-up on the same generation within 2500 ms. Runtime `task_success` must remain unknown; the saved effect is read from the fixture independently.
+
+Preflight only compiled the probe/audit and installed then removed the hook without sending input. `conditions.json`, source hashes, probe, audit, and this README are frozen before the sole live attempt. Any failed or unknown outcome is retained; no retry or replay is permitted. This attempt uses this local Windows PC and an owned fixture only. It uses no WSLc or Docker allocation.

@@ -1,0 +1,51 @@
+{
+  "schema": "integrated_efficiency_runtime_probe_v1",
+  "passed": true,
+  "seed": 991026,
+  "observations": [
+    {
+      "task_id": "task-1",
+      "layout": "A",
+      "sequence": 9,
+      "exact": true,
+      "image": "005.png",
+      "image_sha256": "0d429af67c07b34f0e2a1de050af90314cacb55f252f8f36ef29ce983f7d4576"
+    },
+    {
+      "task_id": "task-4",
+      "layout": "B",
+      "sequence": 17,
+      "exact": true,
+      "image": "013.png",
+      "image_sha256": "84d6206649ecb4622f97c54a9a3c053404c74362e9b870b4d23b4f3eaf487192"
+    }
+  ],
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "schema": "integrated_efficiency_oracle_v1",
+    "known_ns": 50678601918,
+    "success": false,
+    "record_count": 0,
+    "exact_counts": {
+      "task-1": 0,
+      "task-2": 0,
+      "task-3": 0,
+      "task-4": 0,
+      "task-5": 0,
+      "task-6": 0
+    },
+    "unexpected": [],
+    "duplicates": {},
+    "missing": [
+      "task-1",
+      "task-2",
+      "task-3",
+      "task-4",
+      "task-5",
+      "task-6"
+    ],
+    "emit_started_ns": 50678605194
+  },
+  "model_calls": 0,
+  "task_inputs": 0
+}

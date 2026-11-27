@@ -1,0 +1,51 @@
+{
+  "classification": "existing_synthetic_regression_rerun",
+  "main_commit": "6684486163046b699ade1d376f35cbd222199a38",
+  "platform_shell": "Windows PowerShell",
+  "python": "3.11.9",
+  "test": "runtime.guarded_win32_v1.test_process_cancellation.ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+  "sources": {
+    "runtime/guarded_win32_v1/test_process_cancellation.py": "git-blob:79fb5fe2ae4ace9b6c5f27d13aade373d032b2b9",
+    "runtime/guarded_win32_v1/process_cancellation.py": "git-blob:e58cc6e06e2ab35e1a1fbd13a5eb1821babc64ac",
+    "runtime/guarded_win32_v1/operation_owner.py": "git-blob:8e61c0aa1c4684957c55a1b1c087675e1af56ea3"
+  },
+  "test_parameters": {
+    "late_input_horizon_ms": 250,
+    "late_input_sample_interval_ms": 20,
+    "cleanup_deadline_ms": 3500,
+    "multiprocessing_start_method": "spawn"
+  },
+  "arms": [
+    {
+      "mode": "normal",
+      "command": "python -m unittest runtime.guarded_win32_v1.test_process_cancellation.ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "tests": 1,
+      "passed": 1,
+      "duration_seconds": 0.886,
+      "result": "PASS"
+    },
+    {
+      "mode": "optimized",
+      "command": "python -O -m unittest runtime.guarded_win32_v1.test_process_cancellation.ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "tests": 1,
+      "passed": 1,
+      "duration_seconds": 0.799,
+      "result": "PASS"
+    }
+  ],
+  "external_actions": {
+    "docker": false,
+    "wslc": false,
+    "provider": false,
+    "real_os_input": false,
+    "live_application": false
+  },
+  "claims": {
+    "owner_stays_fenced_on_delayed_synthetic_down": true,
+    "physical_input_release_proven": false,
+    "task_success_proven": false,
+    "live_gui_effect_proven": false,
+    "integrated_efficiency_proven": false,
+    "independent_audit_run": false
+  }
+}

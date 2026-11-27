@@ -1,0 +1,45 @@
+{
+  "schema": "agent-interface/issue57-effect-receipt-handoff-current-main-v1",
+  "source_revision": "3d1ce3abeceda889f4e1004d3c7fdfa93e0f006c",
+  "platform": "Windows",
+  "python": "CPython 3.11.9",
+  "commands": [
+    "python -u -m unittest test_effect_receipt_handoff_v1 test_recorded_comparison_adapter_v1 test_comparison_measurement_v1 -v",
+    "python -O -u -m unittest test_effect_receipt_handoff_v1 test_recorded_comparison_adapter_v1 test_comparison_measurement_v1 -v"
+  ],
+  "working_directory": "research/integration/standard_mcp_task_ledger_57_v1",
+  "pythonpath": ["repository root", "research/integration/standard_mcp_task_ledger_57_v1"],
+  "results": {
+    "normal": {"exit": 0, "passed": 42, "failed": 0, "seconds": 1.484},
+    "optimized": {"exit": 0, "passed": 42, "failed": 0, "seconds": 1.641}
+  },
+  "source_sha256": {
+    "effect_receipt_handoff_v1.py": "f17af85886a975c9ca49886dc27ba3711abf6cdb466ed7ed53cb2021b01bb21e",
+    "test_effect_receipt_handoff_v1.py": "8cce2db60dfaea12834cfdb4751ca35302335c95a5c3a3eec622bcdeff9b069c",
+    "test_recorded_comparison_adapter_v1.py": "847695ab638a19e45b64c65151ceccbd99932c39c70ae0d29662481818574e2a",
+    "test_comparison_measurement_v1.py": "da46bc40473991c99de397fb0ef97330f162943e61b0cd37a0de7e52e589b158"
+  },
+  "raw_sha256": {
+    "normal.stderr": "b417112c7e80d45a04601d0e0c10d541e3a81c660c2a0df98e0f3ba6c1db0400",
+    "normal.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "optimized.stderr": "57519898602a93c4753be5fdf8ae9e0df31ae4888f539009f2738dd59b4bc5bd",
+    "optimized.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "covered_contract": [
+    "independent scorer identity and before/after capture bracket",
+    "task/action/operation/target-generation binding",
+    "authority expiry, verified release and neutral horizon timing bands",
+    "ambiguous or missing timing remains ineligible",
+    "post-horizon factual effect remains distinct from authority-eligible success",
+    "measurement and matched-block break-even validation"
+  ],
+  "claim_boundary": {
+    "synthetic_retained_recorder_evidence_only": true,
+    "live_caller_receipt_adapter": false,
+    "external_provider_usage": false,
+    "map01": false,
+    "recovery_reliability": false,
+    "integrated_efficiency": false,
+    "research_preview_graduation": false
+  }
+}

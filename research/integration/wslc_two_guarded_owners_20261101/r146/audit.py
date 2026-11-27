@@ -1,0 +1,7 @@
+import hashlib,json,pathlib
+r=pathlib.Path(__file__).resolve().parent;p=r/'r146-two-owner';m=json.loads((r/'manifest.json').read_text());c=json.loads((p/'conditions.json').read_text());d=json.loads((p/'output/result.json').read_text());l=json.loads((p/'launcher-result.json').read_text());prior=json.loads((r.parent/'idle-normal-cancel-r142'/'manifest.json').read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
+assert all(sha((r/k).read_bytes())==v for k,v in m.items()) and c['manifest_sha256']==sha((r/'manifest.json').read_bytes()) and {k:v for k,v in m.items() if k.startswith('src/')}=={k:v for k,v in prior.items() if k.startswith('src/')}
+s=d['second'];assert l['returncode']==0 and d['status']=='passed' and d['before_cancel_keys']=={'a':True,'b':False} and s['connected'] and s['mint']['status']=='minted' and s['action']['status']=='completed' and s['action']['result']['admission']=='accepted' and s['close']['release_confirmed']
+assert d['keys_after_second']=={'a':True,'b':False,'c':False} and [(e['type'],e['key']) for e in d['target_result']['events']]==[('press','a'),('press','c'),('release','c'),('release','a')]
+assert d['response']['owner_release_attempt']['status']=='readback_verified' and d['old_close']['cleanup_status']=='UNKNOWN' and d['horizon_keys']=={'a':False,'b':False} and d['target_exit']==d['server_exit']==0
+print('PASS: two real owners, overlapping task, scoped release and raw events')

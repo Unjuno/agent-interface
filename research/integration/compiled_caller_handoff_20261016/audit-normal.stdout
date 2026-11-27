@@ -1,0 +1,223 @@
+{
+  "scientific_disposition": "FAIL_CURRENT_COMPOSITION",
+  "runtime_adopted": false,
+  "scope": "local core/helper/caller evidence custody; no native release or independent app effect",
+  "modes": {
+    "normal": {
+      "rows": 12,
+      "composition_failures": 8,
+      "verdicts": [
+        {
+          "version": "existing_v2",
+          "case": "healthy",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "existing_v2",
+          "case": "failed_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost after unverified effect"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unavailable_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost after unverified effect"
+        },
+        {
+          "version": "existing_v2",
+          "case": "sink_failure",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost before execute return"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unknown_release_first",
+          "known_completed_prefix": 0,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unknown_release_second",
+          "known_completed_prefix": 1,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "healthy",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "failed_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unavailable_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "sink_failure",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost before execute return"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unknown_release_first",
+          "known_completed_prefix": 0,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unknown_release_second",
+          "known_completed_prefix": 1,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        }
+      ],
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "rejected": "execution/verification count"
+        },
+        {
+          "name": "invented_prefix",
+          "rejected": "core prefix"
+        },
+        {
+          "name": "false_neutrality",
+          "rejected": "release state"
+        },
+        {
+          "name": "false_success",
+          "rejected": "sink failure result"
+        }
+      ]
+    },
+    "optimized": {
+      "rows": 12,
+      "composition_failures": 8,
+      "verdicts": [
+        {
+          "version": "existing_v2",
+          "case": "healthy",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "existing_v2",
+          "case": "failed_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost after unverified effect"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unavailable_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost after unverified effect"
+        },
+        {
+          "version": "existing_v2",
+          "case": "sink_failure",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost before execute return"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unknown_release_first",
+          "known_completed_prefix": 0,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "existing_v2",
+          "case": "unknown_release_second",
+          "known_completed_prefix": 1,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "healthy",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "failed_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unavailable_effect",
+          "known_completed_prefix": 2,
+          "composition_gate": "PASS_INERT_CONTROL_ONLY",
+          "gap": null
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "sink_failure",
+          "known_completed_prefix": 2,
+          "composition_gate": "FAIL",
+          "gap": "known completed receipt lost before execute return"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unknown_release_first",
+          "known_completed_prefix": 0,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        },
+        {
+          "version": "v3_import_swap_control",
+          "case": "unknown_release_second",
+          "known_completed_prefix": 1,
+          "composition_gate": "FAIL",
+          "gap": "failed release loses prefix and unresolved current delivery"
+        }
+      ],
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "rejected": "execution/verification count"
+        },
+        {
+          "name": "invented_prefix",
+          "rejected": "core prefix"
+        },
+        {
+          "name": "false_neutrality",
+          "rejected": "release state"
+        },
+        {
+          "name": "false_success",
+          "rejected": "sink failure result"
+        }
+      ]
+    }
+  }
+}

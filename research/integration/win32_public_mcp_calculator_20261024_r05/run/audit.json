@@ -1,0 +1,39 @@
+{
+  "schema": "win32-public-mcp-calculator-r05-audit-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r05-76fe423b62db484a9ee279c57cb36e65",
+  "checks": {
+    "conditions_hash_matches_preflight": true,
+    "attempt_and_source_match": true,
+    "pre_action_screen_and_generation_match": true,
+    "program_id_matches_frozen_short_id": true,
+    "static_validation_passed_once": true,
+    "one_dispatch_call_bound": true,
+    "action_completed_and_generation_bound": true,
+    "release_verified_and_neutral": true,
+    "no_recovery_or_replay": true,
+    "same_session_post_observation_matches_generation": true,
+    "post_image_hash_matches_raw_capture": true,
+    "post_observation_within_90s_of_pre_dispatch_clock": true,
+    "session_closed_without_unresolved_calls": true,
+    "task_success_left_unpromoted": true,
+    "integrated_runner_status_is_post_observed": true
+  },
+  "passed": 15,
+  "total": 15,
+  "disposition": "PASS_SCOPED for one native Calculator task action, normal completion release, and same-session generation-matched visual effect; no blocked-I/O/recovery or independent semantic oracle claim",
+  "visual_assessment": "Manual inspection of the SHA-256-bound same-session post-action screenshot shows Calculator Standard mode with display 1,042 after the frozen clear + 314 + 728 program. Runtime task_success remains null.",
+  "task_success": null,
+  "timing_ns": {
+    "pre_dispatch_clock": 501098484000000,
+    "action_started": 501109234000000,
+    "producer_exit": 501109453000000,
+    "neutral_completion_readback": 501109453000000,
+    "post_capture_started": 501109562000000,
+    "clock_to_post_capture": 11078000000
+  },
+  "scope_limits": [
+    "One target, one task, one attempt.",
+    "No cancellation, blocked platform I/O, bounded recovery, MAP01, matched efficiency, reliability estimate, or semantic application oracle was tested.",
+    "The action used one terminal release path and reports replay denied."
+  ]
+}

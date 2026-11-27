@@ -1,0 +1,308 @@
+{
+  "admission": {
+    "admitted_ns": 4150602676,
+    "event": "input_admission",
+    "input_ack_ns": 4150809931,
+    "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+    "key": "a",
+    "keycode": 38,
+    "valid_until_ns": 4450495676
+  },
+  "cleanup": {
+    "finished_ns": 4457071037,
+    "owner_closed": true,
+    "owner_error": null,
+    "owner_stopped": true,
+    "owner_thread_alive": false,
+    "xvfb_exit": 0,
+    "xvfb_runtime_ns": 589900529
+  },
+  "dispatch_context": {
+    "deadline_ns": 4450495676,
+    "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+    "key": "a",
+    "operation": "down",
+    "owner_id": "0339d4f97aa64029868fa85fa2b7c458"
+  },
+  "errors": [],
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A34-20261014-01",
+  "expiry_release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+    "key_release_attempts": {
+      "38": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 4451159568,
+            "keyrelease_error": null,
+            "keyrelease_started_ns": 4450760506,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_error": null,
+            "sync_returned_ns": 4450983067
+          }
+        ],
+        "verified": true
+      }
+    },
+    "key_release_intervals_ns": [
+      {
+        "interval_ns": [
+          4450760506,
+          4451159568
+        ],
+        "keycode": 38
+      }
+    ],
+    "key_state_errors": [],
+    "key_state_source": "x11_query_keymap",
+    "keys_down": [],
+    "keys_unknown": [],
+    "reason": "expired",
+    "valid_until_ns": 4450495676,
+    "verified": true,
+    "verified_ns": 4451463859
+  },
+  "expiry_terminal": {
+    "event": "terminal",
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 4451159568,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 4450760506,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 4450983067
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            4450760506,
+            4451159568
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "expired",
+      "valid_until_ns": 4450495676,
+      "verified": true,
+      "verified_ns": 4451463859
+    },
+    "status": "expired"
+  },
+  "expiry_verified_overshoot_ns": 968183,
+  "image_identity": {
+    "architecture": "amd64",
+    "id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "name": "a09-owner-close-xvfb:20261012",
+    "os": "linux",
+    "pull": "never",
+    "python": "3.14.8"
+  },
+  "input_dispatch_attempted": true,
+  "key_events": [
+    {
+      "keycode": 38,
+      "observed_ns": 4150967709,
+      "type": 2,
+      "window_id": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 4450908162,
+      "type": 3,
+      "window_id": 2097152
+    }
+  ],
+  "keycode": 38,
+  "lease": {
+    "app_response_bound_ns": 200000000,
+    "cancel_requested_before_expiry": false,
+    "deadline_ns": 4450495676,
+    "duration_ns": 300000000,
+    "input_ack_ns": 4150809931,
+    "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+    "recovery_bound_ns": 1000000000
+  },
+  "owner_id": "0339d4f97aa64029868fa85fa2b7c458",
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 4451159568,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 4450760506,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 4450983067
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            4450760506,
+            4451159568
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "expired",
+      "valid_until_ns": 4450495676,
+      "verified": true,
+      "verified_ns": 4451463859
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 4453608977
+    }
+  ],
+  "owner_records_before_close": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 4451159568,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 4450760506,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 4450983067
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            4450760506,
+            4451159568
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "expired",
+      "valid_until_ns": 4450495676,
+      "verified": true,
+      "verified_ns": 4451463859
+    }
+  ],
+  "release_event": {
+    "keycode": 38,
+    "observed_ns": 4450908162,
+    "type": 3,
+    "window_id": 2097152
+  },
+  "release_event_overshoot_ns": 412486,
+  "runtime": {
+    "display": ":143",
+    "python": "3.14.8 (main, Oct  6 2026, 04:36:55) [GCC 14.2.0]",
+    "uid": 0
+  },
+  "schema": "map01-v39-wslc-xvfb-app-effect-raw-a30-v1",
+  "scope": "synthetic X11 app; no game, model, physical input, or desktop control",
+  "server_keymap": {
+    "key_up": true,
+    "sampled_ns": 4450911848,
+    "source": "XQueryKeymap on second X11 connection"
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "map01_overlap_controller_v39.py": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7"
+  },
+  "status": "CANDIDATE_COMPLETE",
+  "target_app": {
+    "counter_property": "_A34_TASK_COUNTER",
+    "focus_id": 2097152,
+    "initial_counter_verified_by_second_connection": 0,
+    "window_id": 2097152
+  },
+  "task_effect": {
+    "after_keypress": 1,
+    "after_release": 1,
+    "app_property_write_ns": 4151202154,
+    "counter_before_action": 0,
+    "initial_counter": 0,
+    "response_latency_ns": 479160,
+    "server_observed_ns": 4151289091
+  },
+  "xvfb": {
+    "argv": [
+      "Xvfb",
+      ":143",
+      "-screen",
+      "0",
+      "640x480x24",
+      "-nolisten",
+      "tcp",
+      "-noreset",
+      "-ac"
+    ],
+    "pid": 9,
+    "started_ns": 3867170508
+  }
+}

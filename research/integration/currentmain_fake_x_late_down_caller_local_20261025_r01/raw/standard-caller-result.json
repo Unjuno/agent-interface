@@ -1,0 +1,82 @@
+{
+  "cancel": {
+    "cleanup_status": "UNKNOWN",
+    "late_server_request_possible": true,
+    "owner_client_disconnect": {
+      "elapsed_ms": 1.0,
+      "reason": "injected_fake_transport_eof",
+      "status": "disconnected",
+      "worker_retired": true
+    },
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {
+        "a": 2
+      }
+    },
+    "owner_process_retired": true,
+    "owner_release_attempt": {
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 554229578000000,
+        "verified": true
+      },
+      "status": "readback_verified",
+      "worker_retired": true
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "task_success": null
+  },
+  "mint": {
+    "status": "minted"
+  },
+  "observation": {
+    "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sequence": 1,
+    "status": "observed"
+  },
+  "pending": {
+    "status": "pending"
+  },
+  "synthetic_late_down": {
+    "late_down": {
+      "event": "KeyPress",
+      "event_index": 2,
+      "keycode": 2,
+      "keys_down_after_delivery": [
+        2
+      ],
+      "modeled_after_release_readback": true,
+      "monotonic_ns": 554229640000000,
+      "protocol_order_is_modeled_not_observed": true,
+      "source": "synthetic_queued_old_connection_request"
+    },
+    "queue": {
+      "connection": "retired_owner_connection",
+      "event": "KeyPress",
+      "keycode": 2,
+      "protocol_order_is_modeled_not_observed": true,
+      "state": "accepted_and_held_in_synthetic_queue"
+    },
+    "release_readback": {
+      "buttons_down": [],
+      "event_index": 1,
+      "keys_down": [],
+      "monotonic_ns": 554229578000000,
+      "source": "injected_separate_fake_release_readback"
+    }
+  },
+  "terminal": {
+    "cleanup_status": "UNKNOWN",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "runtime_failed",
+    "task_success": null
+  },
+  "timing": {
+    "cancel_elapsed_ms": 62.0,
+    "terminal_elapsed_ms": 0.0
+  }
+}

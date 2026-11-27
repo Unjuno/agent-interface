@@ -1,0 +1,5 @@
+# Relation-alias identifiability A01
+
+Before execution, freeze the input observations and hidden ground-truth labels in conditions.json. Compare the merged #8777 advisory matcher with a conservative policy that returns UNKNOWN when more than one candidate has the same surface/container/role/label. The two two-candidate cases have identical matcher-visible inputs but distinct hidden original targets; the two single-candidate cases likewise have identical inputs but one original is absent. Ground-truth labels are used only for scoring, never passed to the matcher.
+
+A single REVALIDATED output that points away from the declared original is a scoped synthetic false rebind. Identical visible inputs with different ground truth prove only that these declared fields cannot identify that particular synthetic world without additional evidence. Record false rebinds, abstentions, exact inputs/outputs and SHA-256. No external resource, physical input, model, GUI, WSLc or Docker is used; no empirical rate, runtime authority, or broad safety conclusion follows.

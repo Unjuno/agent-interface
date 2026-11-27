@@ -1,0 +1,75 @@
+"""Independent saved-request/result oracle; never import or execute producers."""
+from pathlib import Path
+import json,hashlib,copy,datetime
+O=Path(__file__).resolve().parent
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def exact(a,b,msg):
+    need(type(a) is type(b),msg+' type')
+    if isinstance(a,dict):
+        need(set(a)==set(b),msg+' keys')
+        for k in a:exact(a[k],b[k],msg+'/'+k)
+    elif isinstance(a,list):
+        need(len(a)==len(b),msg+' count')
+        for i in range(len(a)):exact(a[i],b[i],msg+'/'+str(i))
+    else:need(a==b,msg+' value')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def j(p):return json.loads(p.read_bytes())
+def t(s):
+    d=datetime.datetime.fromisoformat(s.replace('Z','+00:00'));need(d.tzinfo is not None,'aware clock');return d
+labels=['mint-stable','mint-mutated','mint-preclone','feedback-stable','feedback-mutated','feedback-helper']
+data={'original':j(O/'original/RESULT.json'),'candidate':j(O/'candidate-run/RESULT.json')}
+def reduce(d):
+    reduced=[]
+    for stage,r in d.items():
+        need(r['stage']==stage and r['node']=='v24.19.0','exact recorded stage/runtime');need(t(r['started_utc'])<=t(r['ended_utc']),'actual ordered overall span')
+        need([c['label'] for c in r['cases']]==labels,'all six offered cases');passes=0
+        for c in r['cases']:
+            label=c['label'];mint=label.startswith('mint');expected={'source_sequence':1,'references':[{'alias':'field','point':[1,2],'region_size':[8,8]}]} if mint else {'alias':'save','offset':[1,2],'interaction':'click','tail':[],'detail':'brief','observation_refs':True,'feedback':{'expected_title':'saved','rejected_titles':[],'timeout_ms':10}}
+            exact(c['original_arguments'],expected,'literal source-bound offered arguments');wire=c['wire_requests'];need(len(wire)==1,'one accepted fixture request');exact(wire[0]['arguments'],expected,'actual serialized original arguments');need(wire[0]['id']==1 and type(wire[0]['id']) is int,'first ID1');need(wire[0]['tool']==('interface_guarded_mint_many' if mint else 'interface_guarded_input'),'original tool')
+            fx=c['fixture_exit'];need(type(fx['code']) is int and fx['code']==0 and type(fx['requests']) is int and fx['requests']==1,'natural fixture0 one request');need(fx['pid']==c['fixture_start']['pid'] and fx['ppid']==c['fixture_start']['ppid']==r['pid'],'same original fixture parent/PID');need(type(c['host_exit']['code']) is int and c['host_exit']['code']==0 and c['host_exit']['signal'] is None,'original host0 no signal');exact(c['error'],None,'no producer exception');need(c['text_callbacks']==2 and type(c['text_callbacks']) is int,'explicit MCP status plus one actual JSON text presentation');exact(c['image_callbacks'],0 if mint else 1,'inert image presentations')
+            meta=json.loads(c['saved_reply']['result']['content'][0]['text']);need(c['saved_reply']['id']==1 and c['saved_reply']['next_id']==2 and c['saved_reply']['result']['isError'] is False,'original returned non-error1')
+            if mint:exact(meta,{'status':'minted','source_sequence':1,'minted':[{'alias':'field'}]},'source-consistent original mint')
+            else:
+                exact(meta,{'status':'completed','image_status':'image','result':{'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}},'feedback':{'status':'matched','expected_title':'saved','rejected_titles':[],'title':'saved','after_title':'saved','task_success':None,'authority_granted':False,'input_dispatched':False}},'literal inert completed feedback')
+            exact(c['original_reply'],dict(c['saved_reply'],attempt=1),'original return identity')
+            changed=label in ['mint-mutated','mint-preclone','feedback-mutated','feedback-helper'];after=copy.deepcopy(expected)
+            if changed:
+                if mint:after['references'][0]['alias']='changed'
+                else:after['feedback']['expected_title']='changed'
+            exact(c['caller_arguments_after'],after,'declared actual callback mutation')
+            # The old raw API reads its original mutable reference; clone/helper paths do not.
+            validation=after if stage=='original' and label in ['mint-mutated','feedback-mutated'] else expected
+            consistent=meta['minted'][0]['alias']==validation['references'][0]['alias'] if mint else meta['feedback']['expected_title']==validation['feedback']['expected_title']
+            reason=None if consistent else ('incomplete or inconsistent batch mint result' if mint else 'missing or inconsistent requested feedback')
+            exact(c['caller_state'],{'stopped':reason},'independently derived validation outcome');exact(c['semantic_pass'],consistent,'independent false STOP classification');exact(c['retained_original_wire_identity'],True,'actual original wire identity')
+            events=c['host_events'];need([e['kind'] for e in events]==['send_requested','reply_available','presentation_started','presentation_callbacks_completed','transport_closed'],'complete original five events')
+            for i,e in enumerate(events,1):need(type(e['sequence']) is int and e['sequence']==i,'contiguous events')
+            need(len({e['reply_sha256'] for e in events[1:4]})==1,'same retained reply binding');need(type(events[-1]['code']) is int and events[-1]['code']==0 and events[-1]['signal'] is None,'same terminal close')
+            passes+=int(consistent);reduced.append({'stage':stage,'label':label,'qualified':consistent,'wire_requests':1,'fixture_pid':fx['pid'],'stop':reason})
+        exact(r['pass'],passes,'full stage pass count');exact(r['fail'],6-passes,'full stage fail count')
+    return reduced
+for stage,r in data.items():
+    prefix='original' if stage=='original' else 'candidate-run'
+    for c in r['cases']:
+        p=O/prefix/c['label'];exact(j(p/'RESULT.json'),c,'full percase aggregate join');requests=[json.loads(s) for s in (p/'fixture-requests.jsonl').read_bytes().decode().splitlines()];exact(requests,c['wire_requests'],'actual fixture stream');exact(j(p/'host/request-1.json'),requests[0],'actual host same request');exact(j(p/'host/reply-1.json'),c['saved_reply'],'actual host same reply');exact(j(p/'host/exit.json'),c['host_exit'],'actual original host exit');exact(j(p/'fixture-exit.json'),c['fixture_exit'],'actual original fixture exit');need(c['host_events'][1]['reply_sha256']==sha((p/'host/reply-1.json').read_bytes()),'original reply byte binding')
+        actualevents=[json.loads(s) for s in (p/'host/host-events.jsonl').read_bytes().decode().splitlines()];exact(actualevents,c['host_events'],'all actual event bytes')
+rows=reduce(data)
+need(t(j(O/'FREEZE-A01.json')['frozen_utc'])<t(data['original']['started_utc']),'original prospective freeze');need(t(j(O/'CANDIDATE-FREEZE-A02.json')['frozen_utc'])<t(data['candidate']['started_utc']),'repaired candidate prospective freeze')
+need(j(O/'ORIGINAL_A01/receipt.json')['exit_code']==1 and j(O/'CANDIDATE_A01/receipt.json')['exit_code']==1 and j(O/'CANDIDATE_A02/receipt.json')['exit_code']==0,'all first source/setup outcomes retained')
+controls=[];C=O/'audit-controls';C.mkdir(exist_ok=True)
+def check(label,change):
+    d=copy.deepcopy(data);change(d);(C/(label+'.json')).write_bytes(json.dumps(d,ensure_ascii=True,sort_keys=True,indent=2).encode()+b'\n')
+    try:reduce(d)
+    except ValueError as e:controls.append({'label':label,'rejected':True,'reason':str(e)})
+    else:raise ValueError('escaped semantic corruption '+label)
+check('greenwash-original-false-stop',lambda d:d['original']['cases'][1]['caller_state'].__setitem__('stopped',None))
+check('changed-wire-alias',lambda d:d['candidate']['cases'][0]['wire_requests'][0]['arguments']['references'][0].__setitem__('alias','changed'))
+check('duplicate-request',lambda d:d['candidate']['cases'][0]['wire_requests'].append(copy.deepcopy(d['candidate']['cases'][0]['wire_requests'][0])))
+check('lost-original-reply',lambda d:d['candidate']['cases'][0].__setitem__('original_reply',None))
+check('false-exit-bool',lambda d:d['candidate']['cases'][0]['fixture_exit'].__setitem__('code',False))
+check('forged-parent',lambda d:d['candidate']['cases'][0]['fixture_exit'].__setitem__('ppid',-1))
+check('extra-event-tail',lambda d:d['candidate']['cases'][0]['host_events'].append(copy.deepcopy(d['candidate']['cases'][0]['host_events'][-1])))
+check('dropped-cell',lambda d:d['candidate']['cases'].pop())
+result={'status':'PASS_SAVED_REQUEST_VALIDATION_SCOPED','rows':rows,'original_pass':4,'original_false_stop':2,'candidate_pass':6,'first_candidate_setup_failure_retained':True,'effective_semantic_controls':controls,'control_count':len(controls),'original_or_formal_producer_replays':0,'member_executions':0,'main_sends':0,'scope':'actual inert relay request/return identity and caller liveness; no native image/task/release/latency qualification'}
+(O/'AUDIT-RESULT.json').write_bytes(json.dumps(result,sort_keys=True,indent=2).encode()+b'\n');print(json.dumps(result))

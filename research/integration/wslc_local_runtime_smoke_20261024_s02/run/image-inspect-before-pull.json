@@ -1,0 +1,19 @@
+{
+  "captured_utc": "2026-10-23T23:20:43.0039536Z",
+  "command": [
+    "wslc",
+    "--session",
+    "agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d",
+    "inspect",
+    "--type",
+    "image",
+    "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "--format",
+    "json"
+  ],
+  "exit_code": 1,
+  "timed_out": false,
+  "stdout": "",
+  "stderr": "セッションが見つかりません: 'agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d'\r\nエラー コード: WSLC_E_SESSION_NOT_FOUND\r\nこのエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。\r\n",
+  "classification": "unexpected_inspect_result"
+}

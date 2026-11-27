@@ -1,0 +1,1 @@
+A17 is a new additive construction experiment. It tests recovery (4Å®6) during a pending planner turn, distinct from A14/A16 decreases and controls. No prior A17 output exists. Freeze recorded before candidate invocation.

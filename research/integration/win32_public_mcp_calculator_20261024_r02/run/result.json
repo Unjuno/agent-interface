@@ -1,0 +1,34 @@
+{
+  "schema": "win32-public-mcp-calculator-run-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r02-2c8f1a17bf8b439ead88732edba5662f",
+  "source_commit": "e3b6293b4be42c54739936160e524b92ba706178",
+  "conditions_sha256": "7fed538a9ccd83f6b7a3e36aa6e7633ee6a20261badfb82b8dc9699eddae80de",
+  "status": "STOPPED_BEFORE_VALIDATION_OR_DISPATCH",
+  "reason": "The saved screen_physical_px observation clearly showed the intended Calculator Standard mode and initial display 0, but the runner process session became unreachable while waiting for the explicit DISPATCH token. The runner and its exact MCP server child processes were terminated before any input. No replay or recovery was attempted.",
+  "observation": {
+    "height": 541,
+    "image_file": "observe-0-1.png",
+    "native_window_id": 55117672,
+    "observation_id": "1ef24f733ca14beeb9417e8b3f227f3f",
+    "region": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "width": 336
+  },
+  "input_dispatched": false,
+  "validation_calls": 0,
+  "dispatch_calls": 0,
+  "session_close": "The runner could not issue interface_close after losing its terminal session. The matching MCP server and child processes were terminated; OS process termination released the local process resources. This is not a runtime release receipt.",
+  "task_success": null,
+  "action_release_confirmed": null,
+  "preservation": {
+    "paused_before_dispatch.json": "preserved unchanged",
+    "observation-0.json": "preserved unchanged",
+    "observe-0-1.png": "preserved unchanged",
+    "server-receipts": "preserved unchanged"
+  }
+}

@@ -27,6 +27,9 @@ RETAINED_FILES = (
     f"{RETAINED_DIR}/report.json",
     f"{RETAINED_DIR}/audit.json",
 )
+RETAINED_SOURCE_MANIFEST = (
+    "research/live_control/results/integrated-efficiency-live-01-frozen-source-v1/SOURCE_MANIFEST.json"
+)
 ROOT_RELEASE_FILES = ("LICENSE", "README.md", "SECURITY.md")
 LIVE_CONTROL_ASSETS = (
     "research/live_control/integrated_efficiency_discoveries_v1.json",
@@ -34,6 +37,14 @@ LIVE_CONTROL_ASSETS = (
     "research/live_control/plain_form_points_responder_v1.txt",
     "research/live_control/compiled_form_grounding_schema_v1.json",
     "research/live_control/compiled_form_grounding_responder_v1.txt",
+)
+# The Golden GUI child imports and records the hashes of these canonical sources.
+GOLDEN_GUI_SOURCES = (
+    "research/observation_tiles/tile_transport.py",
+    "research/observation_tiles/image_artifact.py",
+    "research/observation_gating/gui_suite.py",
+    "research/observation_gating/exact_gate.py",
+    "research/real_apps_v1/real_app_suite_v1.py",
 )
 REQUIRED_TRACKED = (
     "runtime/golden-demo-v3.sh",
@@ -48,6 +59,7 @@ REQUIRED_TRACKED = (
     "release/preview_bundle_v1/RELEASE_NOTES.md",
     *RETAINED_FILES,
     *LIVE_CONTROL_ASSETS,
+    *GOLDEN_GUI_SOURCES,
 )
 
 
@@ -92,9 +104,58 @@ def retained_source_paths(root: Path) -> set[str]:
     for name, digest in sources.items():
         if type(name) is not str or not name or "/" in name or "\\" in name:
             raise BuildError(f"unsafe retained source name: {name!r}")
-        if type(digest) is not str or len(digest) != 64:
+        if (type(digest) is not str or len(digest) != 64
+                or any(char not in "0123456789abcdef" for char in digest)):
             raise BuildError(f"malformed retained source digest for {name!r}")
         result.add("research/live_control/" + name)
+    return result
+
+
+def retained_source_archive_paths(root: Path) -> set[str]:
+    manifest_path = root / RETAINED_SOURCE_MANIFEST
+    if not manifest_path.is_file():
+        raise BuildError(f"missing retained source manifest: {RETAINED_SOURCE_MANIFEST}")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        prereg = json.loads((root / RETAINED_FILES[0]).read_text(encoding="utf-8"))
+        entries = manifest["files"]
+        expected = prereg["sources"]
+    except (OSError, KeyError, TypeError, json.JSONDecodeError) as error:
+        raise BuildError("retained frozen source archive metadata is unreadable") from error
+    if (not isinstance(entries, list) or not isinstance(expected, dict) or not expected
+            or any(not isinstance(entry, dict) or not isinstance(entry.get("name"), str)
+                   for entry in entries)):
+        raise BuildError("retained frozen source archive inventory is malformed")
+    archived = {entry["name"]: entry for entry in entries}
+    if (manifest.get("schema") != "integrated_efficiency_live_frozen_source_archive_v1"
+            or manifest.get("study") != "integrated-efficiency-live-01"
+            or not isinstance(manifest.get("source_commit"), str)
+            or len(manifest["source_commit"]) != 40
+            or any(char not in "0123456789abcdef" for char in manifest["source_commit"])
+            or manifest.get("source_count") != len(expected)
+            or len(archived) != len(entries)
+            or set(archived) != set(expected)):
+        raise BuildError("retained frozen source archive inventory differs from preregistration")
+    result = {RETAINED_SOURCE_MANIFEST}
+    for name, digest in expected.items():
+        if not isinstance(name, str) or not name or "/" in name or "\\" in name:
+            raise BuildError(f"unsafe retained frozen source name: {name!r}")
+        if (not isinstance(digest, str) or len(digest) != 64
+                or any(char not in "0123456789abcdef" for char in digest)):
+            raise BuildError(f"malformed retained frozen source digest: {name!r}")
+        entry = archived[name]
+        archive_file = name + ".source"
+        archive_path = RETAINED_SOURCE_MANIFEST.rsplit("/", 1)[0] + "/" + archive_file
+        if (entry.get("archive_file") != archive_file
+                or entry.get("source_path") != "research/live_control/" + name
+                or entry.get("sha256") != digest
+                or type(entry.get("size_bytes")) is not int):
+            raise BuildError(f"malformed retained frozen source entry: {name!r}")
+        path = root / archive_path
+        if (not path.is_file() or _sha256(path.read_bytes()) != digest
+                or path.stat().st_size != entry["size_bytes"]):
+            raise BuildError(f"retained frozen source bytes do not match preregistration: {name}")
+        result.add(archive_path)
     return result
 
 
@@ -110,8 +171,10 @@ def select_release_paths(root: Path, tracked: list[str]) -> list[str]:
         and name.endswith(".py")
     )
     selected.update(LIVE_CONTROL_ASSETS)
+    selected.update(GOLDEN_GUI_SOURCES)
     selected.update(RETAINED_FILES)
     selected.update(retained_source_paths(root))
+    selected.update(retained_source_archive_paths(root))
     missing = sorted(name for name in selected if name not in tracked_set or not (root / name).is_file())
     if missing:
         raise BuildError("selected release closure has missing tracked files: " + ", ".join(missing))
@@ -133,8 +196,16 @@ def inspect_rc(root: Path) -> dict:
     commit_time = str(_git(root, "show", "-s", "--format=%cI", "HEAD"))
     tracked = tracked_files(root)
     selected = select_release_paths(root, tracked)
-    stage = str(_git(root, "ls-files", "--stage", "--", *selected))
-    submodules = [line for line in stage.splitlines() if line.startswith("160000 ")]
+    # Keep the Git process argument list bounded. A preview closure can include
+    # tens of thousands of runtime files, exceeding Windows CreateProcess limits
+    # when every selected path is passed as a separate argument.
+    selected_bytes = {name.encode("utf-8") for name in selected}
+    stage_entries = bytes(_git(root, "ls-files", "--stage", "-z", binary=True)).split(b"\0")
+    submodules = []
+    for entry in stage_entries:
+        header, separator, path = entry.partition(b"\t")
+        if separator and path in selected_bytes and header.startswith(b"160000 "):
+            submodules.append(path.decode("utf-8", "replace"))
     if submodules:
         raise BuildError("submodule entries are unsupported in preview closure")
     return {
@@ -256,8 +327,10 @@ def build(root: Path, out: Path) -> dict:
             "all tracked release/**",
             "all top-level research/live_control/*.py",
             "explicit Golden Desktop schema/responder assets",
+            "canonical Python sources used by the Golden GUI child",
             "retained integrated-efficiency prereg/report/audit",
             "every source named by retained preregistration",
+            "byte-frozen source archive and manifest for the retained study",
         ],
         "required_closure": list(REQUIRED_TRACKED),
         "checks": {

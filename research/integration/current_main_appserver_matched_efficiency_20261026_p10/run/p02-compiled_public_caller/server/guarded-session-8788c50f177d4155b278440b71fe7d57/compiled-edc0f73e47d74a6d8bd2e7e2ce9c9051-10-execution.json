@@ -1,0 +1,178 @@
+{
+  "action_id": "action-293e5ddb8ae742d08badba7728d60cb5",
+  "request": {
+    "action": "enter",
+    "authorization": "<redacted>",
+    "expected_sequence": 2,
+    "operation": "enter",
+    "valid_until_ns": 671555391778500
+  },
+  "result": {
+    "additional_input_checks": [
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 671553899888000,
+        "observation_sequence": 3,
+        "scope": "native-x11:de3716c500004bd59a8a7563a779697f",
+        "stage": "before_admission",
+        "started_ns": 671553898980600
+      },
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 671553903817800,
+        "observation_sequence": 4,
+        "scope": "native-x11:de3716c500004bd59a8a7563a779697f",
+        "stage": "before_move",
+        "started_ns": 671553903060100
+      },
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 671553907000800,
+        "observation_sequence": 5,
+        "scope": "native-x11:de3716c500004bd59a8a7563a779697f",
+        "stage": "before_press",
+        "started_ns": 671553906332300
+      }
+    ],
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "emissions": 3,
+      "ended_ns": 671553908374100,
+      "observations": [],
+      "program_emissions": 3,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 671553908372900,
+          "verified": true
+        }
+      ],
+      "started_ns": 671553900493700,
+      "waits": []
+    },
+    "guard_checks": [
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "grounded_green",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "grounded_green",
+        "observation_sequence": 3,
+        "observed_box": [
+          15,
+          6,
+          4,
+          4
+        ],
+        "patch_sha256": "c49713e78b278c1e1d4b12402e0d0e56452e026e971a952c7d82f0850b1d627a",
+        "point": [
+          17,
+          8
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 3,
+        "stage": "before_admission",
+        "status": "VALID",
+        "valid_until_ns": 671555397081800
+      },
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "grounded_green",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "grounded_green",
+        "observation_sequence": 4,
+        "observed_box": [
+          15,
+          6,
+          4,
+          4
+        ],
+        "patch_sha256": "c49713e78b278c1e1d4b12402e0d0e56452e026e971a952c7d82f0850b1d627a",
+        "point": [
+          17,
+          8
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 4,
+        "stage": "before_move",
+        "status": "VALID",
+        "valid_until_ns": 671555401283700
+      },
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "grounded_green",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "grounded_green",
+        "observation_sequence": 5,
+        "observed_box": [
+          15,
+          6,
+          4,
+          4
+        ],
+        "patch_sha256": "c49713e78b278c1e1d4b12402e0d0e56452e026e971a952c7d82f0850b1d627a",
+        "point": [
+          17,
+          8
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 5,
+        "stage": "before_press",
+        "status": "VALID",
+        "valid_until_ns": 671555404505900
+      }
+    ],
+    "recovery_required": false,
+    "required_capabilities": [
+      "display.geometry",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "status": "completed"
+  }
+}

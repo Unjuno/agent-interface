@@ -1,0 +1,293 @@
+test_change_while_modifier_held_stops_suffix_and_releases (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_change_while_modifier_held_stops_suffix_and_releases) ... FAIL
+test_expired_authorization_never_rechecks_or_dispatches (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_expired_authorization_never_rechecks_or_dispatches) ... ok
+test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) ... 
+  test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='keyboard') ... FAIL
+  test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='click') ... FAIL
+  test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='move') ... FAIL
+test_hover_change_stops_button_press_and_releases (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_hover_change_stops_button_press_and_releases) ... FAIL
+test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) ... 
+  test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='keyboard') ... FAIL
+  test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='click') ... FAIL
+  test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='move') ... FAIL
+test_missing_guard_capability_is_rejected_before_capture (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_missing_guard_capability_is_rejected_before_capture) ... FAIL
+test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) ... 
+  test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='keyboard') ... FAIL
+  test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='click') ... FAIL
+  test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='move') ... FAIL
+test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) ... 
+  test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='keyboard') ... FAIL
+  test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='click') ... FAIL
+  test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='move') ... FAIL
+test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) ... 
+  test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='keyboard') ... FAIL
+  test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='click') ... FAIL
+  test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='move') ... FAIL
+
+======================================================================
+FAIL: test_change_while_modifier_held_stops_suffix_and_releases (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_change_while_modifier_held_stops_suffix_and_releases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 122, in test_change_while_modifier_held_stops_suffix_and_releases
+    self.assertEqual([e[:2] for e in row['events']],[[X.KeyPress,1],[X.KeyRelease,1]])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[2, 1], [2, 2], [3, 2], [3, 1]] != [[2, 1], [3, 1]]
+
+First differing element 1:
+[2, 2]
+[3, 1]
+
+First list contains 2 additional elements.
+First extra element 2:
+[3, 2]
+
+- [[2, 1], [2, 2], [3, 2], [3, 1]]
++ [[2, 1], [3, 1]]
+
+======================================================================
+FAIL: test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 105, in test_false_dependency_stops_each_interaction_before_input
+    self.assertEqual(row['events'],[])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+[2, 1, {}]
+
+- [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 105, in test_false_dependency_stops_each_interaction_before_input
+    self.assertEqual(row['events'],[])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_false_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_false_dependency_stops_each_interaction_before_input) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 105, in test_false_dependency_stops_each_interaction_before_input
+    self.assertEqual(row['events'],[])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}]] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}]]
++ []
+
+======================================================================
+FAIL: test_hover_change_stops_button_press_and_releases (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_hover_change_stops_button_press_and_releases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 128, in test_hover_change_stops_button_press_and_releases
+    self.assertEqual([e[0] for e in row['events']],[X.MotionNotify])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [6, 4, 5] != [6]
+
+First list contains 2 additional elements.
+First extra element 1:
+4
+
+- [6, 4, 5]
++ [6]
+
+======================================================================
+FAIL: test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 114, in test_lost_identity_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'missing')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+[2, 1, {}]
+
+- [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 114, in test_lost_identity_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'missing')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_lost_identity_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_lost_identity_stops_each_interaction) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 114, in test_lost_identity_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'missing')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}]] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}]]
++ []
+
+======================================================================
+FAIL: test_missing_guard_capability_is_rejected_before_capture (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_missing_guard_capability_is_rejected_before_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 25, in test_missing_guard_capability_is_rejected_before_capture
+    with self.assertRaisesRegex(ValueError,'input guard'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 118, in test_perception_exception_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'exception')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+[2, 1, {}]
+
+- [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 118, in test_perception_exception_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'exception')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_perception_exception_stops_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_perception_exception_stops_each_interaction) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 118, in test_perception_exception_stops_each_interaction
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'exception')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}]] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}]]
++ []
+
+======================================================================
+FAIL: test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 98, in test_stable_dependencies_allow_each_interaction
+    self.assertGreater(len(row['reads']),1)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 not greater than 1
+
+======================================================================
+FAIL: test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 98, in test_stable_dependencies_allow_each_interaction
+    self.assertGreater(len(row['reads']),1)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 not greater than 1
+
+======================================================================
+FAIL: test_stable_dependencies_allow_each_interaction (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_stable_dependencies_allow_each_interaction) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 98, in test_stable_dependencies_allow_each_interaction
+    self.assertGreater(len(row['reads']),1)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 not greater than 1
+
+======================================================================
+FAIL: test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 110, in test_unknown_dependency_stops_each_interaction_before_input
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'unknown')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+[2, 1, {}]
+
+- [[2, 1, {}], [2, 2, {}], [3, 2, {}], [3, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 110, in test_unknown_dependency_stops_each_interaction_before_input
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'unknown')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}], [4, 1, {}], [5, 1, {}]]
++ []
+
+======================================================================
+FAIL: test_unknown_dependency_stops_each_interaction_before_input (runtime.guarded_x11_v1.test_compiled_native_dependencies.CompiledNativeDependencyTests.test_unknown_dependency_stops_each_interaction_before_input) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\test_compiled_native_dependencies.py", line 110, in test_unknown_dependency_stops_each_interaction_before_input
+    with self.subTest(interaction=interaction):self.assertEqual(self.cell(interaction,'unknown')['events'],[])
+                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [[6, 0, {'x': 24, 'y': 8}]] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+[6, 0, {'x': 24, 'y': 8}]
+
+- [[6, 0, {'x': 24, 'y': 8}]]
++ []
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.390s
+
+FAILED (failures=18)

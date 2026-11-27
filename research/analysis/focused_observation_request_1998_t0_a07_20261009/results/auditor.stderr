@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-1998-contract-a07/research/analysis/focused_observation_request_1998_t0_a07_20261009/auditor.py", line 68, in <module>
+    if __name__=="__main__": raise SystemExit(main())
+                                              ~~~~^^
+  File "/private/tmp/agent-interface-1998-contract-a07/research/analysis/focused_observation_request_1998_t0_a07_20261009/auditor.py", line 61, in main
+    altered=copy.deepcopy(raw); mut(altered); caught=bool(check(altered,design,freeze["design_sha256"],freeze["inputs"])); controls.append({"name":name,"rejected":caught})
+                                ~~~^^^^^^^^^
+  File "/private/tmp/agent-interface-1998-contract-a07/research/analysis/focused_observation_request_1998_t0_a07_20261009/auditor.py", line 59, in <lambda>
+    muts=[("drop-row",lambda x:x["rows"].pop()),("duplicate-id",lambda x:x["rows"].__setitem__(1,copy.deepcopy(x["rows"][0]))),("corrupt-focused-pixels",lambda x:x["rows"][1]["result"]["evidence"]["pixels"][0].__setitem__(0,"X")),("grant-action",lambda x:x["rows"][0]["result"].__setitem__("action_authorized",True)),("wrong-frame-hash",lambda x:x["rows"][0].__setitem__("frame_sha256","0"*64)),("accept-stale",lambda x:x["rows"][2]["result"].update({"decision":"DECLARED_FOCUS","evidence":{"mode":"DECLARED_FOCUS"}}))]
+                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute '__setitem__'. Did you mean: '__getitem__'?

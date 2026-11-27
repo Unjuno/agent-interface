@@ -1,0 +1,79 @@
+"""Separate read-only audit from exact raw paths; no runner/runtime imports.
+
+Also checks six altered in-memory evidence sets. Never repeats native input.
+"""
+import copy,hashlib,json
+from pathlib import Path
+P=Path(__file__).resolve().parent
+def read(name):return json.loads((P/name).read_text(encoding='utf-8-sig'))
+def load():
+    return {name:read(name) for name in ('conditions.json','fixture-meta.json','submission.json',
+      'terminal-before-resume.json','terminal-after-effect.json','timeline.json','key-state-samples.json',
+      'custody-after.json','fixture-exit.json','runner-exit.json','resume.flag')} | {
+      'events':[json.loads(x) for x in (P/'events.jsonl').read_text().splitlines()]}
+def evaluate(d):
+    c=d['conditions.json'];meta=d['fixture-meta.json'];before=d['terminal-before-resume.json']
+    row=before['row'];after=d['terminal-after-effect.json'];action=row['action'];rr=row['cancellation']['result']
+    expiry=d['submission.json']['program']['authority']['expires_at_ns'];generation=action['target_generation']
+    release=rr['late_input_release_received_ns'];start=rr['late_input_observation_start_ns'];end=rr['late_input_observation_end_ns']
+    events=d['events'];resume=d['resume.flag']['requested_ns']
+    peeks=[e for e in events if e['kind']=='native_keyboard_peek_no_remove' and e['message']==256 and e['wparam']==65]
+    removed=[e for e in events if e['kind']=='native_keyboard_removed' and e['message']==256 and e['wparam']==65]
+    consumed=[e for e in events if e['kind']=='wndproc_keyboard' and e['message']==256 and e['wparam']==65]
+    effects=[e for e in events if e['kind']=='task_effect']
+    samples=d['key-state-samples.json']['samples'];after_samples=[s for s in samples if s['begin_ns']>=before['observed_ns']]
+    native_fields=('hwnd','message','wparam','lparam','os_time_ms')
+    checks={
+      'exact_call_operation_generation':before['call_id']==row['call_id']==after['call_id'] and
+        action['operation_id']==after['action']['operation_id']==rr['operation_id']==rr['readback']['operation_id'] and
+        generation==after['action']['target_generation']==rr['target_generation']==rr['readback']['target_generation']==d['submission.json']['program']['source']['target_generations']['fixture'],
+      'recovered_after_expiry':action['status']=='recovered' and action['input_dispatched'] is True and action['release_confirmed'] is True and rr['status']=='recovered' and expiry<before['observed_ns'],
+      'readback_and_bounded_horizon':rr['release_confirmed'] is True and rr['readback']['neutral'] is True and rr['readback']['key_button_states']==[False] and rr['late_input_horizon_ns']==2_000_000_000 and end-release>=2_000_000_000 and 0<=start-release<=100_000_000 and rr['late_input_observation_count']>=2 and 0<=rr['late_input_max_observed_gap_ns']<=rr['late_input_max_sample_gap_ns']<=100_000_000 and rr['late_input_validation_error'] is None,
+      'one_public_dispatch_no_fallback':sum(t['tool']=='interface_dispatch' for t in d['timeline.json'])==1 and not any(t['tool']=='interface_cancel' for t in d['timeline.json']),
+      'pre_expiry_down_sample':any(s['a_down'] and s['end_ns']<expiry and s['foreground']==meta['hwnd'] for s in samples),
+      'native_queue_across_boundary':any(e['monotonic_ns']<expiry for e in peeks) and any(end<e['monotonic_ns']<resume for e in peeks),
+      'same_native_record_once':len(removed)==1 and removed[0]['hwnd']==meta['hwnd'] and any(all(removed[0][k]==p[k] for k in native_fields) for p in peeks),
+      'no_consumption_before_resume':not any(e['kind'] in ('native_keyboard_removed','wndproc_keyboard','task_effect') and e['monotonic_ns']<resume for e in events),
+      'late_single_task_effect':len(consumed)==len(effects)==1 and effects[0]['counter']==1 and effects[0]['first_transition'] is True and effects[0]['key_event_ns']==consumed[0]['monotonic_ns'] and effects[0]['monotonic_ns']>max(expiry,end,before['observed_ns'],resume) and consumed[0]['a_async_down'] is False,
+      'no_unexpected_key':all(e['wparam'] in (65,97) for e in events if e['kind']=='wndproc_keyboard'),
+      'release_API_and_consumption_distinct':rr['recovery_release_key_up_attempts']==[{'encoding':'virtual_key','status':'returned','virtual_key':65}] and any(e['kind']=='wndproc_keyboard' and e['message']==257 and e['wparam']==65 for e in events),
+      'sampled_neutral_after_terminal':bool(after_samples) and not any(s['a_down'] for s in after_samples),
+      'task_authority_unchanged':all(r.get('task_success') is None and r.get('replay_allowed') is False for r in (row,after,action,after['action'])),
+      'durable_custody_clear':d['custody-after.json']['state']['status']=='clear' and d['custody-after.json']['state']['pending'] is None and d['custody-after.json']['state']['last_resolved']=={'operation_id':action['operation_id'],'target_generation':generation},
+      'normal_target_exit':d['fixture-exit.json']['state']=={'alive':False,'callback_error':None,'effects':1,'phase':'resumed'} and d['runner-exit.json']['exit_code']==0 and len([e for e in events if e['kind']=='hold_resumed' and e['timeout'] is False])==1,
+    }
+    metrics={'call_id':before['call_id'],'operation_id':action['operation_id'],'generation':generation,
+      'expiry_ns':expiry,'release_received_ns':release,'horizon_end_ns':end,'terminal_observed_ns':before['observed_ns'],
+      'effect_ns':effects[0]['monotonic_ns'] if len(effects)==1 else None,
+      'effect_after_expiry_ns':effects[0]['monotonic_ns']-expiry if len(effects)==1 else None,
+      'effect_after_horizon_ns':effects[0]['monotonic_ns']-end if len(effects)==1 else None,
+      'horizon_count':rr['late_input_observation_count'],'horizon_max_gap_ns':rr['late_input_max_observed_gap_ns'],
+      'sample_count':len(samples),'post_terminal_sample_count':len(after_samples),'A_down_sample_count':sum(s['a_down'] for s in samples),
+      'sample_max_gap_ns':max(b['begin_ns']-a['begin_ns'] for a,b in zip(samples,samples[1:])),
+      'unique_recovery_UP_attempts':rr['recovery_release_key_up_attempts']}
+    return checks,metrics
+
+if __name__=='__main__':
+    data=load();checks,metrics=evaluate(data)
+    c=data['conditions.json'];checks['frozen_sources_unchanged']=all(hashlib.sha256((P/n).read_bytes()).hexdigest()==h for n,h in c['file_hashes'].items())
+    negative={}
+    for name in ('missing_post_horizon_peek','wrong_dequeue_window','early_effect','missing_down_sample','task_success_upgrade','duplicate_effect'):
+        d=copy.deepcopy(data)
+        if name=='missing_post_horizon_peek':d['events']=[e for e in d['events'] if not(e['kind']=='native_keyboard_peek_no_remove' and e['monotonic_ns']>metrics['horizon_end_ns'])]
+        if name=='wrong_dequeue_window':
+            for e in d['events']:
+                if e['kind']=='native_keyboard_removed' and e['message']==256:e['hwnd']+=1
+        if name=='early_effect':
+            for e in d['events']:
+                if e['kind']=='task_effect':e['monotonic_ns']=metrics['expiry_ns']-1
+        if name=='missing_down_sample':
+            for s in d['key-state-samples.json']['samples']:s['a_down']=False
+        if name=='task_success_upgrade':d['terminal-after-effect.json']['task_success']=True
+        if name=='duplicate_effect':d['events'].append(copy.deepcopy(next(e for e in d['events'] if e['kind']=='task_effect')))
+        nc,_=evaluate(d);negative[name]=not all(nc.values())
+    result={'status':'PASS_SCOPED_QUEUED_EFFECT' if all(checks.values()) and all(negative.values()) else 'NOT_QUALIFIED',
+      'checks':checks,'negative_evidence_tests_rejected':negative,'metrics':metrics,
+      'independence':'Separate raw-path implementation by the same worker; no independent-person claim. No native input in audit.'}
+    with (P/'AUDIT_R149_INDEPENDENT.json').open('x',encoding='utf-8') as f:json.dump(result,f,indent=2);f.write('\n')
+    print(json.dumps(result,indent=2))
+    if result['status']!='PASS_SCOPED_QUEUED_EFFECT':raise SystemExit(1)

@@ -1,0 +1,348 @@
+# Standard MCP task ledger v1 — offline contract check
+
+Status: local measurement-infrastructure construction only. This does not run a
+model, GUI, WSLc, Docker, or a formal allocation, and does not qualify the
+integrated route.
+
+## Current-main public recovery writer-drain R05 - 2026-11-23
+
+On frozen main `d5a378ec`, the public Fake Win32 exact-result/recovery test passed 1/1 in normal and `-O` on CPython 3.11.9. This confirms only that the post-R04 report-temp drain/close change works in one focused sample; R04 remains 7/10 and no reliability or live-input claim follows. Raw setup-error bytes from the first incorrect wrapper invocation were lost before archival; its transcript is disclosed. Target outputs and committed-byte manifest are retained in [R05](current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).
+
+## Current-main Calc artifact receipt-window recheck R02 — 2026-11-23
+
+The frozen 20-test `calc_task_artifact_v1` suite passes on main `5156ec0e` under Windows CPython 3.11.9 in normal and `-O` modes. It covers timestamp inclusion within effect verification and rejection outside its interval. Synthetic artifact/receipt contract only; no live Calc task or efficiency claim. See [R02 result](calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).
+
+The earlier retained [r01 packet](composition-evidence-20261020/README.md)
+captures the immediate-response stale-generation case. The follow-up
+[r02 packet](composition-evidence-20261020-r02/README.md) holds the fake
+provider response, changes target generation while it is waiting, then confirms
+the standard public caller refuses before input. Its event journal orders the
+fake provider completion before the tool call. Both are synthetic composition
+evidence only; neither establishes a live model, physical release,
+blocked-I/O recovery, or matched efficiency.
+
+The [current-main R03 local recheck](current-main-20261022-r03-local-recheck/README.md)
+revalidates the supervisor/owned-caller/server-stop suite (63 tests, one
+skipped) and this ledger/provider-recorder/public-MCP suite (33 tests) in
+normal and optimized Python at commit `1263068a`. It includes the fake-provider
+target-generation refusal through the public compiled endpoint. The packet
+retains exact commands, raw output, exits, conditions and source blob IDs.
+This is still injected-provider contract evidence. It establishes neither a
+production provider adapter nor external usage reconciliation, live GUI
+effect, shared-desktop release, WSLc, matched efficiency, or reliability.
+
+## Persistent App Server composition adapter (offline, 2026-10-22)
+
+[`app_server_provider_to_public_mcp_v1.py`](app_server_provider_to_public_mcp_v1.py)
+adapts one already-started persistent Codex App Server planner turn to the
+existing `build_model_provider_call` → attempt recorder → standard public-MCP
+caller path. It copies the exact bytes appended to that turn's protocol
+journal into the per-attempt `model/events.jsonl` artifact, retains normalized
+turn usage and requested model/effort metadata, and parses exactly one matching
+completed `turn/completed` agent message as the tool request. Failed or
+ineligible turns remain failed attempts and do not reach the relay. For a
+completed turn, its returned usage must match the newest matching
+`thread/tokenUsage/updated` record in the retained journal slice; a mismatch
+fails closed before public-MCP dispatch. For an ineligible turn, matching valid
+fields are preserved as partial usage while omitted or invalid fields remain
+unknown. This is an internal consistency check on the same App Server source,
+not independent provider-log reconciliation. The adapter does not launch a
+model, retry a turn, or capture upstream provider wire logs.
+
+The adapter unit tests and end-to-end in-process composition tests pass in
+normal and optimized Windows CPython 3.11.9. Fake App Server turns pass through
+the recorder, public Relay and compiled Fake X endpoint, then separate
+synthetic pixel oracles. The success case verifies the intended effect while
+the runtime tool result leaves `task_success` unset. The stale-generation case
+changes generation after provider completion and confirms zero transitions,
+`SAFE_YIELD`, unknown task success and replay denial. This is offline synthetic
+evidence. It is not a live provider run, production routing change, external
+usage reconciliation or completion of Issue #57's matched efficiency gate.
+
+### Missing terminal turn usage correction (2026-11-03)
+
+The adapter's defensive `await_turn() -> None` path previously discarded a
+matching nonterminal token-usage event already present in the retained protocol
+journal. It now preserves that evidence as partial usage, still refuses the
+public-MCP dispatch, and records one complete failed model-attempt event. The
+new regression asserts both the generation result and durable ledger row. This
+fix improves local all-attempt accounting only; it does not supply a terminal
+provider total or independently reconcile provider-side retries.
+
+## Question and use
+
+Issue #57's current public `interface_guarded_compiled` caller lacks one joined
+record for provider attempts, MCP calls, and an independent application score.
+The current owner timing receipt covers only `run_compiled` after the call root
+exists. This packet adds a small validator for a future one-task comparison
+record so every returned, failed, timed-out, refused, malformed, and abstained
+model attempt can be represented alongside the fixed route and raw evidence.
+
+Each record pins comparison arm/block/order/seed, task fixture and scorer
+digests, source commit and route digest, environment digest, model/effort/request
+configuration, and relative raw-evidence paths with SHA-256 digests. Its event
+list can contain:
+
+- `model_attempt`: one actual provider attempt, including schema preflight,
+  grounding, repair, and failures. Usage is `reported`, `partial`, or
+  `unavailable`; missing fields are null.
+- `tool_call`: one standard-MCP operation, linked to the model attempt that
+  caused it or explicitly null for an orchestration call.
+- `task_score`: one independent final-state oracle result tied to a state hash.
+
+The summary counts every recorded model attempt. It emits token totals only
+when both token counts are reported for every attempt; otherwise both totals
+remain null and `usage_status` is `incomplete`. With no model attempts, zero is
+reported only when the event record explicitly contains none. A `task_success`
+field on a runtime tool result is never treated as independent task success.
+The validator checks raw-reference path and digest syntax, but does not open or
+hash the referenced files and cannot prove the event stream is exhaustive.
+When a provider adapter supplies the optional `cached_input_tokens`,
+`cache_write_input_tokens`, `reasoning_output_tokens`, and `image_input_tokens`
+fields, the summary carries a separate total for each. Each detailed total is
+null unless that field is known for every attempt; `detailed_usage_status` is
+`complete` only when every detailed field is present on every attempt. These
+provider-specific categories are preserved separately from input/output totals
+because their billing/subset semantics can differ. Missing details never
+become zero.
+
+## Durable provider-to-MCP attempt recorder
+
+[`provider_attempt_recorder.py`](provider_attempt_recorder.py) adds a generic,
+local recording boundary for an injected provider callable and an injected
+standard-MCP transport callable. It does not choose or launch a provider. Use
+one private, exclusively owned output directory per task.
+
+`ProviderAttemptRecorder.invoke` writes the exact caller-supplied request bytes
+and fsyncs a `model_attempt_started` row before calling the provider. It then
+stores returned response bytes and usage/status, or writes a failed/timeout/
+cancelled row with unavailable usage before re-raising the original exception.
+`begin_tool_call` / `finish_tool_call`, `invoke_tool`, and
+`invoke_tool_async` do the same around an MCP operation. When known, the
+completed model generation is joined by `model_attempt_id`. Passing
+`attempt_id=None` records an explicitly unlinked MCP operation when provider
+context lives outside the relay; it does not infer a model attempt or token
+usage. Tool raw filenames use a bounded digest-derived component, so maximum-
+length accepted IDs remain portable on Windows.
+All raw files have SHA-256-bound references in the journal; reconciliation re-reads the
+bytes, checks their digests, and exposes missing, mismatched, or unparseable MCP
+response data. The shared ledger rejects an MCP response/result mismatch.
+`invoke_async` and `invoke_tool_async` support awaited provider and MCP
+callbacks. They persist the start receipt before the first await, record
+`asyncio.CancelledError` as a cancelled terminal attempt, and then re-raise it.
+`record_task_score` can append one terminal score certificate after every
+provider/MCP operation has finished, retaining the scorer's canonical state
+bytes and digest with its scorer ID and `true` / `false` / `unknown` verdict.
+The recorder validates and preserves this caller-supplied certificate; it
+cannot establish that the scorer was truly independent. Recording a score also
+prevents later attempts from being appended to that run.
+`observe_late_usage` adds a separately timestamped, SHA-256-bound provider
+receipt after a failed, cancelled, or timed-out attempt has already returned.
+Each receipt is a cumulative total for that one attempt; known counters cannot
+decrease or disappear across snapshots. Reconciliation retains every receipt,
+the original terminal status and task score, and projects the latest snapshot
+onto the original attempt so aggregate totals count it once. A completed
+`reported` snapshot closes further late-usage updates. The recorder does not
+query a provider or infer billing. This is a local ledger capability; no real
+provider's post-timeout delivery behavior is established by the synthetic test.
+The recorder resolves the raw directory at startup and before each write; it
+refuses a path that no longer resolves to the run's direct `raw/` child. The
+caller must still provide a private, exclusively owned run directory.
+
+The local `test_mcp_endpoint_composition.py` tests drive asynchronous fake
+provider results into the actual public `interface_guarded_compiled` FastMCP
+entry point with the existing deterministic Fake X owner. The additive
+[`recorded_public_mcp_caller_v1.py`](recorded_public_mcp_caller_v1.py) adapter
+now supplies the reusable provider-attempt and public-Relay call boundaries
+used by the image/stale-generation composition cell; it persists each tool
+request before `Relay.request` and retains the complete returned envelope. Its
+`invoke_generation_to_tool` path submits only completed generations with
+captured response bytes; a failed generation is durably recorded without a
+tool submission.
+On the App Server adapter path, a timeout can carry an explicit late-usage
+source. The standard caller captures its same-turn usage/journal boundary only
+after the timeout terminal row is durable; its separate
+`observe_late_usage` method requires task-score custody and waits only for new
+usage notifications. It retains the exact App Server JSONL usage row separately
+from the normalized ledger receipt. The wait does not consume `turn/completed`
+or make another public MCP call. This is a deterministic adapter composition;
+`app_server_spool_worker_v1.py` now publishes the immutable UNKNOWN receipt
+first, then holds the App Server client for a fixed five-second grace. During
+that window it waits only for fresh same-turn usage notifications and stores
+each exact JSONL row in an immutable `*.late-usage-NNNNNN.json` sidecar with
+thread/turn identity and SHA-256 custody. A late `turn/completed` answer is
+ignored and never returned, the timed-out request is not retried, and the client closes
+after the grace. The sidecar is retained evidence; automatic ingestion into
+the downstream task ledger/scorer is now connected through an explicit
+post-score `RecordedPublicMcpCaller.observe_late_usage` call. `FileSpoolPlanner`
+validates the immutable UNKNOWN boundary, sidecar identity/hash, and matching
+same-turn journal row before returning usage to the existing recorder. This is
+still a deterministic composition: worker and provider test streams are
+synthetic, so they do not establish real provider timing or billing.
+This is a research composition adapter, not an automatic hook in the frozen
+integrated-efficiency runner or every production provider/orchestrator. The
+[`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)
+bridge accepts the current model-call signature and records its wrapper inputs,
+turn-level usage, and returned `model/events.jsonl` bytes before the composed
+public tool call. The captured request is the wrapper's prompt/contract/workspace
+and base64 image input, not the upstream provider wire request. The response is
+the runner's turn-level JSONL, not hidden provider retry logs. The synchronous
+model call runs in a worker thread; cancellation waits for that call to finish
+before returning its retained outcome because Python cannot terminate a
+`to_thread` worker. The
+success cell joins the generation-bound profile request to the tool receipt,
+matches the returned MCP text payload to its result object, and counts
+reported usage. The
+Fake X child writes its initial and final 32x32 BGRX state to a test-only side
+channel. A separate pixel oracle verifies that pixel (1,1) changed from
+non-red to red, then records the final state bytes and score in the task
+ledger. A second cell changes the process generation after the fake provider
+returns its stale request; the standard caller admits zero transitions, the
+state remains unchanged, replay is denied, and the same oracle records a false
+task score. Both public MCP results keep `task_success=null`. These are
+synthetic Fake X results only; the fixture has no real provider, production
+application, external scorer, native input, or live task. The saved response is
+the returned MCP text block, not a network-wire capture.
+
+### Explicit method allowlist (2026-11-04)
+
+`RecordedPublicMcpCaller` now requires a nonempty per-instance
+`allowed_methods` set and rejects any other method before Relay dispatch or
+ledger recording. The Relay should independently use the same per-attempt tool
+set. Structured JSON output alone does not constrain a model-selected method
+name. Calc orchestration must enumerate its full required set, including
+observation, fresh target review, prepare/compiled execution, result polling,
+close/release and independent task verification where applicable.
+
+The fixed `agent-interface-xvfb-mcp:late-input-r19` image was checked using a
+no-display, network-disabled stdio initialize/`tools/list` handshake (18 tools;
+schema digest is retained in the local continuation record). No GUI or input
+was invoked. This validates transport/tool exposure only, not provider-to-live-
+Calc composition or efficiency.
+
+The stale-generation composition now uses that bridge with an injected model
+call: it preserves the exact test image bytes in the wrapper-input receipt and
+captures synthetic JSONL generation events. The test sends the observation and
+compiled action through `Relay.request` before the actual FastMCP server, then
+changes process generation after model completion but before the compiled tool
+call. The public caller returns `SAFE_YIELD` with zero transitions; the
+independent Fake X pixel oracle records false, and ledger reconciliation matches
+all three relay responses while retaining usage and request bytes. A separate
+timeout case retains partial JSONL and unavailable usage and submits no tool
+call. These are injected-model/in-process Relay composition tests, not a real
+provider, stdio subprocess, external usage-log reconciliation, live
+application, or task qualification.
+
+One run of both composition cells, including the exact recorder journals,
+request/response bytes, Fake X owner receipts, and scorer-state bytes, is
+preserved in [`composition-evidence-20261020`](composition-evidence-20261020/README.md)
+with a per-file SHA-256 manifest. It records the tested synthetic outcomes; it
+does not increase their scope.
+
+## Finite reviewed-target replan composition (2026-10-24)
+
+`RecordedPublicMcpCaller.invoke_generation_to_tool_with_one_safe_recovery`
+adds one optional recovery after an explicit pre-input refusal with zero
+transitions and an owner snapshot showing no tracked obligations or pending
+recovery. It requires a newer public window-review receipt and the matching
+public mint receipt. Before the second tool call, it checks that the mint came
+from the reviewed sequence and same live owner/scope, that the alias differs
+from aliases in the first provider response, and that the second compiled
+profile binds the minted alias and offset to the reviewed scope/surface. A
+refused review, invalid mint, stale alias, or mismatched compiled target fails
+closed before dispatch. There is no retry loop. Empty obligation snapshots do
+not constitute physical-neutrality evidence.
+
+The positive composition test changes Fake X process generation after the
+first provider response, observes pre-input `association_changed`, explicitly
+reviews and remints, then completes one new transition. A separate synthetic
+pixel oracle verifies the changed application state; the action receipt also
+reports fixture release verification. Negative cases reject a refused review
+without another provider attempt and reject stale-alias arguments before tool
+dispatch. The normal and optimized three-module suites each pass 22 tests.
+Exact raw calls, ledger, synthetic states, stdout and SHA-256 manifests are
+retained in [`composition-evidence-20261024-r03`](composition-evidence-20261024-r03/README.md).
+This is a local Fake X result only; it proves neither physical release nor a
+hard deadline under permanently blocked platform I/O, and it is not a live
+provider run, WSLc result, or integrated efficiency/reliability comparison.
+
+`test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
+the journal contract for a caller-supplied score certificate. The composed
+tests additionally run a small pixel oracle against the Fake X side channel;
+the recorder preserves the certificate but cannot establish independence of a
+production scorer or exhaustiveness of an external provider log.
+
+An unfinished call makes strict reconciliation fail. A newly created recorder
+session cannot silently resume it or start later attempts in the same run
+directory. This makes interruption visible instead of turning an absent terminal
+record into zero calls or a successful result. Partial/unavailable usage stays
+unknown, and a runtime result's `task_success` is still not an independent task
+score.
+
+This is `PASS_CONTRACT_SCOPED` for the local recorder/composition contract,
+one synthetic Fake X before/after effect predicate, and one stale-generation
+refusal through both the direct public-MCP test seam and the in-process
+JSON-lines Relay request path. It remains a Fake X contract result.
+The wrapper cannot prove that an external orchestrator routed every model call
+or MCP operation through it. The caller must pass exact captured wire bytes;
+when bytes are unavailable, the receipt says so. No actual provider, GUI, WSLc,
+Docker, allocation, application effect, release, or efficiency experiment ran.
+Next: run the bridge only through a separately authorized, fresh model
+allocation and reconcile every emitted attempt against independent provider
+logs before claiming completeness. No frozen comparison runner was edited or
+rerun by this bridge test.
+
+## H / T / D / C / U
+
+- **H:** This envelope can prevent a future comparison report from silently
+  dropping failed model attempts, treating missing provider usage as zero, or
+  substituting a runtime verdict for an independent task score.
+- **T:** Validate a pinned one-task record with complete, incomplete, and
+  absent usage; model-to-tool joins; frozen conditions; raw references; and an
+  independent score. Reject duplicate, dangling, malformed, or escaping
+  references. Run the validator in normal and optimized Python.
+- **D:** `PASS_CONTRACT_SCOPED` only for these local validation rules. It does
+  not establish the ledger's exhaustiveness against provider logs or runtime
+  transport, actual token usage, any product/live task effect, release,
+  recovery, latency, or efficiency. The one synthetic pixel transition is
+  scoped to its Fake X fixture.
+- **C:** The caller currently operates at an MCP boundary while model usage is
+  owned by the outer provider/orchestrator. The validator cannot observe that
+  external boundary unless a future adapter emits and reconciles those raw
+  receipts.
+- **U:** No production provider adapter, model call, current GUI task, resource
+  allocation, physical release, or independent production-application run is
+  included. Missing usage stays unknown; referenced file existence/digest
+  matching is not verified, and this packet is not a live result.
+
+## Local check
+
+```powershell
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_ledger.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_ledger.py
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_provider_attempt_recorder.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_provider_attempt_recorder.py
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_recorded_model_call_usage.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_recorded_model_call_usage.py
+```
+
+The next integration step is independent reconciliation of the wrapper-level
+generation receipts with actual provider request/response and usage logs. The
+bridge tests do not establish real provider retries or usage accounting. A live
+comparison still requires a separately verified eligible allocation; #7924
+remains STOP/HOLD.
+
+## Post-authority task-effect attribution probe (2026-11-21)
+
+[`post_authority_effect_attribution_v1`](post_authority_effect_attribution_v1/RESULT.md)
+reconstructs the saved R149 timing boundary through the current standard task
+ledger. The ledger currently produces the same factual `task_success=true`
+summary for an in-authority effect and an R149 effect observed after authority
+expiry, confirmed release, and the neutral horizon. A separate research
+adjudicator retains factual score but marks that late effect ineligible as
+authorized task success. Its six tests and the existing 13 ledger tests pass
+normally and under `-O`. This is a measurement-contract finding and candidate
+seam; it is not yet connected to the frozen comparator or public caller, and
+does not add live/provider/MAP01 evidence.

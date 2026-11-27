@@ -6,14 +6,323 @@ import tempfile
 import ast
 from argparse import Namespace
 from pathlib import Path
+from unittest.mock import patch
 
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_owned_cancel_with_retired_reader_fails_before_continuation(self):
+        terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        with self.assertRaisesRegex(RuntimeError, "retired.*owned.*recovery"):
+            controller.recover_cover_owner_after_cancel_if_retired(
+                Namespace(stdin=object()), object(), terminal, minimum_sequence=7,
+                target_process_identity=True, target_window_lifecycle=False,
+                owned_input_service=True)
+
+    def test_owned_cancel_rotates_only_with_advertised_capability(self):
+        terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        with patch.object(controller,"rotate_retired_owner_after_cancel",return_value={"generation":1}) as rotate:
+            result=controller.recover_cover_owner_after_cancel_if_retired(
+                Namespace(stdin=object()),object(),terminal,minimum_sequence=7,
+                target_process_identity=True,target_window_lifecycle=False,
+                owned_input_service=True,owned_rotation_supported=True)
+        self.assertEqual(result,{"generation":1});rotate.assert_called_once()
+
+    def test_owned_cancel_with_healthy_reader_does_not_stop(self):
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": False}}}
+        self.assertIsNone(controller.recover_cover_owner_after_cancel_if_retired(
+            Namespace(stdin=object()), object(), terminal, minimum_sequence=7,
+            target_process_identity=True, target_window_lifecycle=False,
+            owned_input_service=True))
+
+    def test_cover_cancel_rotates_retired_owner_only_on_eligible_route(self):
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        process = Namespace(stdin=object())
+        wait = object()
+        rotation = {"generation": 2, "source_observation": {"sequence": 8}}
+        with patch.object(controller, "rotate_retired_owner_after_cancel",
+                          return_value=rotation) as rotate:
+            result = controller.recover_cover_owner_after_cancel_if_retired(
+                process, wait, terminal, minimum_sequence=7,
+                target_process_identity=True, target_window_lifecycle=False,
+                owned_input_service=False)
+        self.assertIs(result, rotation)
+        rotate.assert_called_once_with(process, wait, terminal, minimum_sequence=7)
+
+        for terminal_mutation, flags in (
+                (lambda row: row.update(status="completed"), (True, False, False)),
+                (lambda row: None, (False, False, False)),
+                (lambda row: None, (True, True, False)),
+        ):
+            candidate = {**terminal, "release": dict(terminal["release"])}
+            terminal_mutation(candidate)
+            with self.subTest(status=candidate["status"], flags=flags), \
+                    patch.object(controller, "rotate_retired_owner_after_cancel") as rotate:
+                result = controller.recover_cover_owner_after_cancel_if_retired(
+                    process, wait, candidate, minimum_sequence=7,
+                    target_process_identity=flags[0],
+                    target_window_lifecycle=flags[1],
+                    owned_input_service=flags[2])
+                self.assertIsNone(result)
+                rotate.assert_not_called()
+
+    def test_main_recovers_generation_after_each_policy_cover_cancel(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        calls = [node for node in ast.walk(main) if isinstance(node, ast.Call)
+                 and isinstance(node.func, ast.Name)]
+        cancel_lines = sorted(node.lineno for node in calls
+                              if node.func.id == "cancel_invalidated_cover")
+        recovery_lines = sorted(
+            node.lineno for node in calls
+            if node.func.id == "recover_cover_owner"
+            and node.args and isinstance(node.args[0], ast.Name)
+            and node.args[0].id == "current_terminal")
+        self.assertEqual(len(cancel_lines), 3)
+        self.assertEqual(len(recovery_lines), 4)
+        for cancel_line in cancel_lines:
+            with self.subTest(cancel_line=cancel_line):
+                self.assertTrue(any(0 < line - cancel_line <= 5
+                                    for line in recovery_lines))
+
+    def test_main_decision_records_include_cover_owner_recovery_receipts(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        decision_appends = [node for node in ast.walk(main)
+                            if isinstance(node, ast.Call)
+                            and isinstance(node.func, ast.Attribute)
+                            and isinstance(node.func.value, ast.Name)
+                            and node.func.value.id == "decisions"
+                            and node.func.attr == "append"]
+        self.assertGreater(len(decision_appends), 0)
+        for append in decision_appends:
+            with self.subTest(line=append.lineno):
+                row = append.args[0] if append.args else None
+                self.assertIsInstance(row, ast.Dict)
+                keys = {key.value for key in row.keys
+                        if isinstance(key, ast.Constant)}
+                self.assertIn("input_owner_generation_rotations", keys)
+
+    def test_retired_owner_rotation_requires_verified_cancel_and_matches_generation(self):
+        import io
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1,
+                    "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        process = Namespace(stdin=io.StringIO())
+        receipt = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner",
+                   "owner_id": "fresh-owner", "source_invalidated": True,
+                   "grants_input_authority": False}
+        observation = {"event": "observation", "id": "owner-generation-source-2-1",
+                       "input_owner_generation": 2, "sequence": 8,
+                       "pointer_binding": {"surface": 17},
+                       "target_process_identity": {"sequence": 8, "surface": 17,
+                                                    "digest": "d" * 64}}
+        refreshed = {"event": "input_owner_source_refreshed", "terminal_id": "plan-old",
+                     "generation": 2, "owner_id": "fresh-owner",
+                     "observation_id": observation["id"], "sequence": 8,
+                     "attempt": 1,
+                     "surface": 17, "digest": "d" * 64,
+                     "source_invalidated": False, "grants_input_authority": False}
+        events = [receipt, observation, refreshed]
+        def wait(predicate, timeout=40):
+            return next(row for row in events if predicate(row))
+        result = controller.rotate_retired_owner_after_cancel(
+            process, wait, terminal, minimum_sequence=7)
+        self.assertEqual(result["event"], "input_owner_generation")
+        self.assertEqual(result["source_observation"], observation)
+        self.assertEqual(result["source_refresh"], refreshed)
+        command = process.stdin.getvalue()
+        self.assertIn('"op": "rotate_input_owner"', command)
+        self.assertIn('"op": "refresh_owner_source"', command)
+        self.assertIn('"id": "plan-old"', command)
+
+    def test_post_rotation_source_refresh_stops_after_four_refusals(self):
+        import json
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1, "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        events = [{"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner", "owner_id": "fresh-owner",
+                   "source_invalidated": True, "grants_input_authority": False}]
+        class Stdin:
+            def __init__(self): self.commands = []
+            def write(self, payload):
+                command = json.loads(payload)
+                self.commands.append(command)
+                if command["op"] == "refresh_owner_source":
+                    events.append({"event": "rejected", "id": "plan-old",
+                                   "terminal_id": "plan-old",
+                                   "operation": "refresh_owner_source",
+                                   "attempt": len(self.commands) - 1,
+                                   "reason": "synthetic capture refusal"})
+            def flush(self): pass
+        stdin = Stdin()
+        def wait(predicate, timeout=40):
+            return next(row for row in reversed(events) if predicate(row))
+        with self.assertRaisesRegex(RuntimeError, "bounded post-rotation source refresh failed"):
+            controller.rotate_retired_owner_after_cancel(
+                Namespace(stdin=stdin), wait, terminal, minimum_sequence=7)
+        refreshes = [row for row in stdin.commands if row["op"] == "refresh_owner_source"]
+        self.assertEqual(len(refreshes), 4)
+        self.assertEqual(len(stdin.commands), 5)
+
+    def test_owner_rotation_refuses_unverified_or_wrong_generation_receipts(self):
+        import io
+        base = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                "input_owner_generation": 1,
+                "input_owner_id": "old-owner",
+                "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                            "keys_unknown": [], "key_state_errors": [],
+                            "target_process_identity_reader": {"retired": True}}}
+        for mutate in (
+                lambda row: row.update(status="completed"),
+                lambda row: row["release"].update(keys_down=["space"]),
+                lambda row: row["release"].pop("target_process_identity_reader"),
+        ):
+            terminal = {**base, "release": dict(base["release"])}
+            mutate(terminal)
+            with self.subTest(terminal=terminal), self.assertRaises(ValueError):
+                controller.rotate_retired_owner_after_cancel(
+                    Namespace(stdin=io.StringIO()), lambda _predicate: None, terminal,
+                    minimum_sequence=7)
+
+        terminal = dict(base)
+        process = Namespace(stdin=io.StringIO())
+        wrong_generation = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                            "generation": 3, "previous_generation": 2,
+                            "previous_owner_id": "other-owner",
+                            "owner_id": "fresh-owner", "source_invalidated": True,
+                            "grants_input_authority": False}
+        with self.assertRaisesRegex(RuntimeError, "refused or malformed"):
+            controller.rotate_retired_owner_after_cancel(
+                process, lambda predicate: wrong_generation if predicate(wrong_generation) else None,
+                terminal, minimum_sequence=7)
+
+    def test_post_rotation_observation_must_advance_sequence(self):
+        import io
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1, "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        receipt = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner", "owner_id": "fresh-owner",
+                   "source_invalidated": True, "grants_input_authority": False}
+        stale = {"event": "observation", "id": "owner-generation-source-2-1",
+                 "input_owner_generation": 2, "sequence": 10,
+                 "pointer_binding": {"surface": 17},
+                 "target_process_identity": {"sequence": 10, "surface": 17,
+                                              "digest": "d" * 64}}
+        def wait(predicate, timeout=40):
+            return next(row for row in (receipt, stale) if predicate(row))
+        with self.assertRaisesRegex(RuntimeError, "fresh post-rotation"):
+            controller.rotate_retired_owner_after_cancel(
+                Namespace(stdin=io.StringIO()), wait, terminal, minimum_sequence=10)
+
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
+    def test_pending_observation_hard_crossing_cancels_old_cover_after_model_wait(self):
+        from observable_signal_guard_v2 import (
+            ObservableSignalGuard, ObservableSignalPolicyMonitor)
+
+        binding = {"surface": 7, "geometry": [0, 0, 640, 480]}
+        wad = "b" * 64
+
+        def health_signal(value, sequence, capture_ns):
+            return {"format": "observable-signal-v1", "status": "observed",
+                    "signal_id": "health", "value": value, "sequence": sequence,
+                    "capture_ns": capture_ns, "binding": binding, "wad_sha256": wad}
+
+        source = health_signal(73, 1, 1_000)
+        spec = {"op": "observable_signal_guard", "guard_id": "cover-health",
+                "source_sequence": 1, "signal_id": "health", "source_value": 73,
+                "hard_minimum": 67, "max_source_age_ms": 30_000,
+                "on_soft_change": "preserve_existing_policy",
+                "on_hard_change": "needs_decision", "on_unknown": "needs_decision"}
+        monitor = ObservableSignalPolicyMonitor(
+            ObservableSignalGuard(spec, source, binding),
+            type("UnusedExtractor", (), {"read": lambda self, row: None})())
+
+        def observation(value, sequence, capture_ns):
+            health = health_signal(value, sequence, capture_ns)
+            ammo = dict(health, signal_id="ammo", value=40)
+            return {"event": "typed_observation", "schema": "doom-typed-observation-v1",
+                    "sequence": sequence, "capture_ns": capture_ns,
+                    "pointer_binding": binding, "frame_size": [640, 480],
+                    "frame_rgb_sha256": "a" * 64,
+                    "typed_extraction_started_ns": capture_ns + 1,
+                    "typed_ready_ns": capture_ns + 2,
+                    "signals": {"health": health, "ammo": ammo},
+                    "artifact_published": False, "grants_input_authority": False}
+
+        incoming = queue.Queue()
+        incoming.put(observation(70, 2, 2_000))  # soft loss preserves this policy
+        incoming.put(observation(65, 3, 3_000))  # authored hard floor is crossed
+        drained = controller.drain_pending_observation_events(
+            incoming, monitor, "cover-7")
+        self.assertEqual(monitor.soft_event_count, 1)
+        self.assertEqual(drained["invalidation"]["outcome"]["status"],
+                         "HARD_INVALIDATED")
+        self.assertEqual(drained["invalidation"]["sequence"], 3)
+
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def invalidate_turn(self, handle): return {"outcome": "locally_invalidated"}
+            def abort_pending_turn(self): pass
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        terminal = {"event": "terminal", "id": "cover-7", "status": "cancelled",
+                    "release": {"event": "owner_release", "verified": True,
+                                "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": []}}
+        process, planner, pending_turn = Process(), Planner(), object()
+        interruption, closed = controller.cancel_invalidated_cover(
+            planner, pending_turn, process,
+            lambda predicate, *, timeout=None: terminal if predicate(terminal) else None,
+            "cover-7")
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+        self.assertEqual(planner.interrupted, [pending_turn])
+        self.assertEqual(interruption["status"], "interrupted")
+        self.assertIs(closed, terminal)
+        self.assertEqual(closed["release"]["keys_down"], [])
+
     def test_stale_executor_rejection_replans_from_new_image_and_hud(self):
         from test_running_action_guard_v2 import (ready as ready_admission,
             action as guarded_action, compiler)
@@ -101,9 +410,11 @@ class Map01V39CoastTests(unittest.TestCase):
             sent = []
             replies = [
                 {"event": "accepted", "id": "refresh-0", "intent_token": "refresh-lease"},
-                dict(refresh_source, event="observation", id="refresh-0"),
-                {"event": "terminal", "id": "refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 dict(refresh_source, event="observation", id="refresh-0"),
+                 {"event": "terminal", "id": "refresh-0", "status": "completed",
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
+                             "keys_unknown": [], "key_state_errors": [],
                              "intent_token": "refresh-lease"}},
             ]
             def refresh_wait(predicate, **kwargs):
@@ -135,7 +446,8 @@ class Map01V39CoastTests(unittest.TestCase):
                 {"event": "accepted", "id": "bad-refresh-0", "intent_token": "lease-a"},
                 dict(refresh_source, event="observation", id="bad-refresh-0"),
                 {"event": "terminal", "id": "bad-refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
                              "intent_token": "different-lease"}},
             ]
             def bad_refresh_wait(predicate, **kwargs):
@@ -255,6 +567,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(receipt["monitor_mode"], "authored_policy_guard")
         self.assertEqual(receipt["authored"], authored)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_interrupts_planner_and_requires_verified_empty_release(self):
         class Stdin:
             def __init__(self): self.writes = []
@@ -263,17 +576,21 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             def __init__(self): self.stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def __init__(self): self.interrupted = []
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
                 self.interrupted.append(handle)
                 return {"status": "interrupted"}
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process, planner, handle = Process(), Planner(), object()
 
         interruption, result = controller.cancel_invalidated_cover(
-            planner, handle, process, lambda predicate: terminal, "cover-0")
+            planner, handle, process, lambda predicate, *, timeout=None: terminal, "cover-0")
 
         self.assertIs(result, terminal)
         self.assertEqual(planner.interrupted, [handle])
@@ -290,8 +607,9 @@ class Map01V39CoastTests(unittest.TestCase):
 
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process = Process()
         result = controller.cancel_initial_cover_before_planner(
             process, lambda predicate: terminal if predicate(terminal) else None,
@@ -300,9 +618,11 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIs(result, terminal)
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
         for release in (
-            {"verified": False, "keys_down": [], "buttons_down": []},
+            {"verified": False, "keys_down": [], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"]},
         ):
             unsafe_terminal = dict(terminal, release=release)
             with self.subTest(release=release), self.assertRaisesRegex(
@@ -326,8 +646,9 @@ class Map01V39CoastTests(unittest.TestCase):
                     "coherent_source_recovery": coherent}
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
 
         before_admission = controller.cover_submission_invalidation_receipt(rejected)
         after_admission = controller.cover_submission_invalidation_receipt(
@@ -374,6 +695,78 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIsNone(reset["receipt"])
         self.assertEqual(calls[0], ("build", fresh))
         self.assertEqual(calls[1][2:], ([], None))
+
+    def test_production_source_refresh_stops_loop_on_terminal_health_zero(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        refresh = source.index("latest, source_refresh = refresh_source(", execute)
+        terminal_predicate = source.index("terminal_predicate=lambda row, health, ammo:", refresh)
+        terminal_break = source.index('if source_refresh.get("status") == "terminal":', terminal_predicate)
+        loop_break = source.index("break", terminal_break)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', loop_break)
+        finish_path = source.index('failure_cleanup.set_stage("session_finish")', next_input_path)
+        report_path = source.index('failure_cleanup.set_stage("report_write")', finish_path)
+        model_session_filter = source.index(
+            'row["model_session_id"] for row in decisions if "model_session_id" in row',
+            finish_path, report_path)
+        model_wall_sum = source.index('x.get("model_ns", 0)', finish_path, report_path)
+        self.assertLess(refresh, terminal_predicate)
+        self.assertLess(terminal_predicate, terminal_break)
+        self.assertLess(terminal_break, loop_break)
+        self.assertLess(loop_break, next_input_path)
+        self.assertLess(next_input_path, finish_path)
+        self.assertLess(finish_path, report_path)
+        self.assertLess(model_session_filter, report_path)
+        self.assertLess(model_wall_sum, report_path)
+
+    def test_terminal_health_observation_is_reported_outside_planner_decisions(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        loop = source.index("for index in range(args.iterations):", execute)
+        terminal_branch = source.index('if source_refresh.get("status") == "terminal":', loop)
+        terminal_break = source.index("break", terminal_branch)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', terminal_break)
+        report_path = source.index('"terminal_health_observation":terminal_health_observation', next_input_path)
+        branch = source[terminal_branch:terminal_break]
+        self.assertIn("terminal_health_observation =", branch)
+        self.assertNotIn("decisions.append", branch)
+        self.assertLess(terminal_branch, terminal_break)
+        self.assertLess(terminal_break, next_input_path)
+        self.assertLess(next_input_path, report_path)
+        self.assertIn('"planner_turns":len(decisions)', source[report_path - 5000:report_path])
+        self.assertIn('x["final_action_admission"]["status"] for x in decisions', source[report_path - 3000:report_path])
+
+    def test_invalidated_planner_answer_is_discarded_before_motor_admission(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        loop = source.index("for index in range(args.iterations):", execute)
+        planner_source = source.index("action_source_observation=dict(latest)", loop)
+        invalidation = source.index("if invalidation is not None:", planner_source)
+        recover = source.index("recover_pending_observation_backlog(", invalidation)
+        fresh_source = source.index('latest = recovery["latest"]', recover)
+        discard = source.index('"model_action_discarded":True', fresh_source)
+        discard_reason = source.index(
+            '"discard_reason":"policy_dependency_invalidated"', discard)
+        continue_to_replan = source.index("continue", discard)
+        answer_gate = source.index("if not planner_result.answer_eligible:", continue_to_replan)
+        action_validation = source.index("validate_action(action)", continue_to_replan)
+        action_admission = source.index(
+            'failure_cleanup.set_stage("action_admission")', action_validation)
+        compile_for_input = source.index("steps=compile_commands(commands)", action_admission)
+
+        self.assertLess(loop, planner_source)
+        self.assertLess(planner_source, invalidation)
+        self.assertLess(invalidation, recover)
+        self.assertLess(recover, fresh_source)
+        self.assertLess(fresh_source, discard)
+        self.assertLess(discard, discard_reason)
+        self.assertLess(discard, continue_to_replan)
+        self.assertLess(continue_to_replan, answer_gate)
+        self.assertLess(answer_gate, action_validation)
+        self.assertLess(action_validation, action_admission)
+        self.assertLess(action_admission, compile_for_input)
 
     def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
         source = Path(controller.__file__).read_text(encoding="utf-8")
@@ -444,6 +837,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertLess(guard_admission, replay)
         self.assertLess(replay, terminal_wait)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
         class Stdin:
             def write(self, value): pass
@@ -451,6 +845,8 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
                 return {"status": "interrupted"}
@@ -459,7 +855,7 @@ class Map01V39CoastTests(unittest.TestCase):
             unrelated = dict(terminal, id="other-cover")
             rows = (unrelated, terminal)
 
-            def wait(predicate):
+            def wait(predicate, *, timeout=None):
                 return next((row for row in rows if predicate(row)), None)
 
             return wait
@@ -467,7 +863,9 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("completed", "expired"):
             neutral_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             result = controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), wait_for_matching_terminal(neutral_terminal),
                 "cover-0")
@@ -475,7 +873,9 @@ class Map01V39CoastTests(unittest.TestCase):
 
             held_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": ["space"], "buttons_down": []}}
+                "release": {"verified": True, "keys_down": ["space"],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                 controller.cancel_invalidated_cover(
                     Planner(), object(), Process(), wait_for_matching_terminal(held_terminal),
@@ -484,13 +884,16 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("failed", "needs_decision"):
             terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.subTest(status=status):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
                         Planner(), object(), Process(), wait_for_matching_terminal(terminal),
                         "cover-0")
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_rejects_nonempty_or_unverified_release(self):
         class Stdin:
             def write(self, value): pass
@@ -498,20 +901,25 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
                 return {"status": "interrupted"}
         for release in (
             {"verified": False, "keys_down": [], "buttons_down": []},
-            {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"verified": True, "keys_down": ["W"], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"],
+             "keys_unknown": [], "key_state_errors": []},
         ):
             terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                         "release": release}
             with self.subTest(release=release):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
-                        Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
+                        Planner(), object(), Process(), lambda predicate, *, timeout=None: terminal, "cover-0")
 
 
 if __name__ == "__main__":

@@ -2,10 +2,14 @@
 import argparse
 import atexit
 from collections import Counter
+from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 import hashlib
 import json
+import os
 import queue
+import select
 import subprocess
 import sys
 import threading
@@ -14,20 +18,30 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 from map01_stagnation_v1 import descriptor, normalized_mae
+from map01_cover_cycle_experiment_v1 import split_repeated_cover
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
-from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
+from doom_controller_failure_cleanup_v1 import (
+    ControllerFailureCleanup, load_controller_event, operation_release_verified,
+    reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
+from doom_cover_renewal_probe_v1 import (
+    EVENT as RENEWAL_PROBE_EVENT, request_passive_probe, verify_probe_frame)
+from executor_v11 import program_sha256
+from verified_interruption_release_v1 import qualified_interruption_release
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
     reconcile_artifact)
 from doom_action_validity_contract_v1 import (
     bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
-from codex_app_server_client_v2 import CodexAppServerClient
+from codex_app_server_client_v2 import (
+    CodexAppServerClient, AppServerConditionFenceTimeout,
+    wsl_environment_for_windows_executable)
+from native_app_server_job_v1 import WindowsAppServerOwner
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
     decide_final_admission, record_controller_no_input,
@@ -48,9 +62,9 @@ DISABLED_FEATURES = [
     "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
 ]
-DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
+COVER_RENEWAL_IO_SECONDS = 2.0
 
 
 def reusable_cover(decisions):
@@ -298,6 +312,8 @@ class DoomCoverSignalPairMonitor:
         self.last_binding = binding
         self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
         self.last_signals = signals
+        if event_kind == "observation":
+            self.last_pair_sequence = sequence
         return None
 
 
@@ -384,58 +400,94 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def terminal_release_is_known_empty(terminal):
+    """Return true only for an explicit, verified, known-empty terminal release."""
+    release = terminal.get("release") if type(terminal) is dict else None
+    return (type(terminal) is dict and terminal.get("event") == "terminal" and
+            type(release) is dict and release.get("event") == "owner_release" and
+            release.get("verified") is True and
+            release.get("keys_down") == [] and release.get("buttons_down") == [] and
+            release.get("keys_unknown") == [] and
+            release.get("key_state_errors") == [])
+
+
 def require_cover_terminal(terminal, *, cancellation_requested=False):
     """Require neutral closure before renewing cover or using a planner answer."""
     allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
         "completed", "expired")
-    release = terminal.get("release") if type(terminal) is dict else None
     if (type(terminal) is not dict or terminal.get("event") != "terminal" or
-            terminal.get("status") not in allowed or type(release) is not dict or
-            release.get("verified") is not True or release.get("keys_down") != [] or
-            release.get("buttons_down") != []):
+            terminal.get("status") not in allowed or
+            not terminal_release_is_known_empty(terminal)):
         raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
 
 
-def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
+def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id, *, failure_root=None):
+    # Answer invalidation does not need an App Server acknowledgement. Inspect
+    # input closure before entering that unrelated blocking transport.
+    local_invalidation = planner.invalidate_turn(planner_handle)
     cancel_error = None
+    terminal = None
 
-    def cancel_executor_program():
-        nonlocal cancel_error
+    def fail(error, *, cause=None):
+        receipt = {"schema": "cover-cancel-failure-v1", "id": cover_id,
+                   "terminal": deepcopy(terminal), "local_invalidation": deepcopy(local_invalidation),
+                   "failure": {"type": type(error).__name__, "message": str(error)[:200]},
+                   "physical_input_state": "unverified", "grants_input_authority": False,
+                   "task_effect": "unknown", "input_recovery_required": True}
+        error.cover_cancellation_receipt = deepcopy(receipt)
+        if failure_root is not None:
+            try:
+                with (Path(failure_root) / "cover-cancel-failure.json").open(
+                        "x", encoding="utf-8", newline="\n") as stream:
+                    json.dump(receipt, stream, indent=2, allow_nan=False)
+                    stream.write("\n")
+            except BaseException as save_error:
+                error.add_note("cover failure receipt save failed: " + type(save_error).__name__)
+        # Retire await_turn before its enclosing ThreadPoolExecutor joins it.
+        # The close operation itself is not a proven hard-time bound.
         try:
-            process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-            process.stdin.flush()
-        except BaseException as error:
-            cancel_error = error
-            raise
-
+            planner.abort_pending_turn()
+        except BaseException as abort_error:
+            error.add_note("planner transport abort failed: " + type(abort_error).__name__)
+        if cause is not None:
+            raise error from cause
+        raise error
     try:
-        planner_interrupt = planner.interrupt(
-            planner_handle, before_transport=cancel_executor_program)
-    except BaseException as interrupt_error:
-        if cancel_error is not None:
-            cancel_error.add_note(
-                "planner interrupt also failed: " + type(interrupt_error).__name__)
-            raise cancel_error from interrupt_error
-        raise
+        send_bounded_cover_command(process.stdin, {"op": "cancel", "id": cover_id})
+    except BaseException as error:
+        cancel_error = error
+    # A delivered cancel retains the session's normal terminal horizon.
+    # If delivery failed, only allow a short wait for independent closure.
+    terminal_timeout = 40 if cancel_error is None else COVER_RENEWAL_IO_SECONDS
     try:
-        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id,
+                        timeout=terminal_timeout)
     except BaseException as terminal_error:
         if cancel_error is not None:
-            terminal_error.add_note(
-                "executor cancel write also failed: " + type(cancel_error).__name__)
-        raise
-    release = terminal.get("release", {})
+            cancel_error.add_note("cover terminal wait also failed: " + type(terminal_error).__name__)
+        fail(cancel_error if cancel_error is not None else terminal_error)
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
     # races only when they independently verify that no input remains held.
-    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
-            release.get("verified") is not True or
-            release.get("buttons_down") != [] or release.get("keys_down") != []):
-        raise RuntimeError("invalidated cover did not verify empty release")
+    if (type(terminal) is not dict or
+            terminal.get("status") not in ("cancelled", "completed", "expired") or
+            not terminal_release_is_known_empty(terminal)):
+        error = RuntimeError("invalidated cover did not verify empty release")
+        if cancel_error is not None:
+            cancel_error.add_note(str(error))
+            fail(cancel_error)
+        fail(error)
+    try:
+        planner_interrupt = planner.interrupt(planner_handle)
+    except BaseException as interrupt_error:
+        if cancel_error is not None:
+            cancel_error.add_note("planner interrupt also failed: " + type(interrupt_error).__name__)
+            fail(cancel_error, cause=interrupt_error)
+        fail(interrupt_error)
     if cancel_error is not None:
-        raise RuntimeError(
+        fail(RuntimeError(
             "executor cancel write failed before planner interruption: "
-            + repr(cancel_error)) from cancel_error
+            + repr(cancel_error)), cause=cancel_error)
     if "before_transport_error" in planner_interrupt:
         raise RuntimeError(
             "executor cancel write failed before planner interruption: "
@@ -451,6 +503,236 @@ def cancel_initial_cover_before_planner(process, wait, cover_id):
                     row.get("id") == cover_id)
     require_cover_terminal(terminal, cancellation_requested=True)
     return terminal
+
+
+def send_bounded_cover_command(stream, command, *, timeout=COVER_RENEWAL_IO_SECONDS):
+    """Write one whole protocol line on the single-writer Linux session pipe."""
+    fd = stream.fileno()
+    data = (json.dumps(command) + "\n").encode("utf-8")
+    if len(data) > os.fpathconf(fd, "PC_PIPE_BUF"):
+        raise ValueError("cover command exceeds the atomic pipe write limit")
+    was_blocking = os.get_blocking(fd)
+    deadline = time.monotonic() + timeout
+    os.set_blocking(fd, False)
+    try:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or not select.select([], [fd], [], remaining)[1]:
+                raise TimeoutError("cover command pipe did not become writable")
+            if time.monotonic() >= deadline:
+                raise TimeoutError("cover command pipe became writable after its deadline")
+            try:
+                if os.write(fd, data) != len(data):
+                    raise OSError("cover command pipe write did not complete atomically")
+            except BlockingIOError:
+                continue
+            return
+    finally:
+        os.set_blocking(fd, was_blocking)
+
+
+def renewal_event_snapshot(row):
+    try:
+        json.dumps(row, allow_nan=False)
+    except (TypeError, ValueError):
+        return {"invalid_json": True, **{
+            key: row[key] for key in ("event", "id")
+            if type(row) is dict and type(row.get(key)) is str}}
+    return deepcopy(row)
+
+
+def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover_id, ack,
+                                   consumed_events, error, out):
+    """Attempt release and stop the planner even though renewal admission is unknown."""
+    receipt = {"schema": "cover-renewal-unverified-v1", "id": cover_id,
+               "admission": "UNKNOWN", "ack": renewal_event_snapshot(ack), "verified_empty_release": False,
+               "terminal": None, "failure_type": type(error).__name__,
+               "grants_input_authority": False, "task_effect": "unknown"}
+    try:
+        receipt["local_invalidation"] = planner.invalidate_turn(planner_handle)
+    except BaseException as invalidation_error:
+        receipt["local_invalidation_error"] = type(invalidation_error).__name__
+    try:
+        send_bounded_cover_command(process.stdin, {"op": "cancel", "id": cover_id})
+        receipt["cancel_write"] = "sent"
+    except BaseException as cancel_error:
+        receipt["cancel_write"] = "uncertain"
+        receipt["cancel_error"] = type(cancel_error).__name__
+    evidence = list(consumed_events)
+    if type(ack) is dict and not any(row is ack for row in evidence):
+        evidence.append(ack)
+    try:
+        terminal = wait(lambda row: row.get("event") == "terminal" and row.get("id") == cover_id,
+                        timeout=COVER_RENEWAL_IO_SECONDS, consumed_events=evidence)
+        receipt["terminal"] = renewal_event_snapshot(terminal)
+        require_cover_terminal(terminal, cancellation_requested=True)
+        if not any(row is terminal for row in evidence):
+            evidence.append(terminal)
+        owned_evidence = [row for row in evidence if type(row) is dict and row.get("id") == cover_id]
+        json.dumps(owned_evidence, allow_nan=False)
+        if not operation_release_verified(cover_id, owned_evidence, require_intent=True):
+            raise RuntimeError("renewal release does not match a verified accepted intent")
+        receipt["verified_release_intent_token"] = next(
+            row["intent_token"] for row in owned_evidence if row.get("event") == "accepted")
+        receipt["verified_empty_release"] = True
+    except BaseException as release_error:
+        receipt["release_error"] = type(release_error).__name__
+    try:
+        receipt["planner_abort"] = planner.abort_pending_turn()
+    except BaseException as abort_error:
+        receipt["planner_abort_error"] = type(abort_error).__name__
+    receipt["input_recovery_required"] = not receipt["verified_empty_release"]
+    error.cover_renewal_receipt = receipt
+    try:
+        with (Path(out) / "cover-renewal-unverified.json").open(
+                "x", encoding="utf-8", newline="\n") as stream:
+            json.dump(receipt, stream, indent=2, allow_nan=False)
+            stream.write("\n")
+    except BaseException as save_error:
+        error.add_note("cover renewal receipt save failed: " + type(save_error).__name__)
+
+
+class CoverCycleBudgetExhausted(RuntimeError):
+    """The experiment stopped after its bounded, released cover budget."""
+
+
+def qualify_cycle_terminal(accepted, terminal, events, source, steps, *, cancellation_requested=False):
+    require_cover_terminal(terminal, cancellation_requested=cancellation_requested)
+    identifier = terminal.get("id")
+    admissions = [row for row in events if type(row) is dict and row.get("id") == identifier
+                  and row.get("event") == "input_admission"]
+    if (type(accepted) is not dict or type(identifier) is not str
+            or accepted.get("id") != identifier or accepted.get("event") != "accepted"
+            or accepted.get("program_sha256") != program_sha256(steps)
+            or type(source) is not dict
+            or type(source.get("renewal_owner_id")) is not str
+            or not source["renewal_owner_id"]
+            or type(source.get("input_owner_generation")) is not int
+            or type(terminal.get("input_owner_generation")) is not int
+            or terminal.get("input_owner_id") != source["renewal_owner_id"]
+            or terminal.get("input_owner_generation") != source["input_owner_generation"]
+            or any(row.get("owner_id") != source["renewal_owner_id"] for row in admissions)
+            or not operation_release_verified(identifier, events, require_intent=True)):
+        raise ValueError("cycle terminal custody or release unverified")
+
+
+def stop_exhausted_cover_budget(planner, planner_handle, terminal, out, *,
+                                accepted_count=None, maximum_submissions=None,
+                                reason="budget_exhausted", renewal_response=None):
+    if reason not in ("terminal_release_unverified", "renewal_rejected"):
+        require_cover_terminal(terminal, cancellation_requested=reason == "cycle_custody_unverified")
+    latched_ns = time.perf_counter_ns()
+    error = CoverCycleBudgetExhausted("experimental cover-cycle HOLD: " + reason)
+    # The waiter pool must not join a transport that cannot be retired.
+    renewal_submit = "rejected" if reason == "renewal_rejected" else "not_sent"
+    error.cover_probe_failure_receipt = {"renewal_submit": renewal_submit}
+    results = queue.Queue(maxsize=1)
+
+    def retire():
+        result = {}
+        try:
+            result["invalidation"] = planner.invalidate_turn(planner_handle)
+        except BaseException as exc:
+            result["invalidation_error_type"] = type(exc).__name__
+        try:
+            result["abort"] = planner.abort_pending_turn()
+        except BaseException as exc:
+            result["abort_error_type"] = type(exc).__name__
+        results.put_nowait(result)
+
+    if reason in ("terminal_release_unverified", "renewal_rejected"):
+        # Reach child/input cleanup immediately when physical release is unknown.
+        retirement = {"outcome": "unknown", "reason": "deferred_to_failure_cleanup"}
+    else:
+        try:
+            threading.Thread(target=retire, daemon=True).start()
+        except Exception as exc:
+            retirement = {"outcome": "unknown", "reason": "thread_start_failed",
+                          "error_type": type(exc).__name__}
+        else:
+            try:
+                retirement = results.get(timeout=0.5)
+            except queue.Empty:
+                retirement = {"outcome": "unknown", "reason": "retirement_timeout"}
+    receipt = {"schema": "cover-cycle-budget-hold-v1", "outcome": "HOLD",
+               "reason": reason,
+               "physical_input_state": ("verified_empty" if reason == "budget_exhausted" else "unknown"),
+               "terminal": deepcopy(terminal), "renewal_submit": renewal_submit,
+               "renewal_response": deepcopy(renewal_response),
+               "accepted_count": accepted_count, "maximum_submissions": maximum_submissions,
+               "planner_turn_id": getattr(planner_handle, "turn_id", None),
+               "observation_ended_ns": latched_ns,
+               "retirement_observed_ns": time.perf_counter_ns(), "retirement": retirement}
+    error.cycle_budget_receipt = receipt
+    raise error
+
+
+@contextmanager
+def pending_cover_planner_pool():
+    pool = ThreadPoolExecutor(max_workers=1)
+    try:
+        yield pool
+    except BaseException as error:
+        # On uncertain admission or cancellation, let outer cleanup continue
+        # even when the planner transport abort could not wake the waiter.
+        uncertain_cover = (hasattr(error, "cover_renewal_receipt") or
+                           hasattr(error, "cover_cancellation_receipt") or
+                           hasattr(error, "cover_probe_failure_receipt"))
+        try:
+            pool.shutdown(wait=not uncertain_cover, cancel_futures=True)
+        except BaseException as shutdown_error:
+            error.add_note("planner waiter pool shutdown failed: " + type(shutdown_error).__name__)
+        raise
+    else:
+        pool.shutdown(wait=True)
+
+
+def retire_failed_cover(planner, planner_handle, future, terminal, error, out):
+    """Retain a fatal terminal before best-effort planner retirement, without ACK."""
+    try:
+        local_invalidation = planner.invalidate_turn(planner_handle)
+    except BaseException as invalidation_error:
+        local_invalidation = {"outcome": "failed", "error_type": type(invalidation_error).__name__}
+        error.add_note("planner local invalidation failed: " + type(invalidation_error).__name__)
+    receipt = {"schema": "fatal-cover-terminal-v1", "terminal": deepcopy(terminal),
+               "local_invalidation": deepcopy(local_invalidation),
+               "planner_future_done_at_receipt": future.done(),
+               "failure": {"type": type(error).__name__, "message": str(error)[:200]},
+               "physical_input_state": "unverified", "grants_input_authority": False,
+               "task_effect": "unknown", "input_recovery_required": True}
+    error.fatal_cover_receipt = deepcopy(receipt)
+    try:
+        with (Path(out) / "fatal-cover-terminal.json").open(
+                "x", encoding="utf-8", newline="\n") as stream:
+            json.dump(receipt, stream, indent=2, allow_nan=False)
+            stream.write("\n")
+    except BaseException as save_error:
+        error.add_note("fatal cover receipt save failed: " + type(save_error).__name__)
+    if not future.done():
+        for attempt in range(2):
+            try:
+                abort_result = planner.abort_pending_turn()
+            except AppServerConditionFenceTimeout as abort_error:
+                error.add_note("planner condition fence timed out: " + type(abort_error).__name__)
+                if attempt == 0 and not future.done():
+                    continue
+                break
+            except BaseException as abort_error:
+                error.add_note("planner transport abort failed: " + type(abort_error).__name__)
+                break
+            else:
+                if isinstance(abort_result, dict) and abort_result.get("outcome") == "aborted":
+                    error.add_note("pending planner turn transport aborted")
+                break
+
+
+def validate_planner_cover_terminal(planner, planner_handle, future, terminal, out,
+                                    *, cancellation_requested=False):
+    try:
+        require_cover_terminal(terminal, cancellation_requested=cancellation_requested)
+    except RuntimeError as error:
+        retire_failed_cover(planner, planner_handle, future, terminal, error, out)
+        raise
 
 
 def cover_submission_invalidation_receipt(result, terminal=None):
@@ -544,6 +826,49 @@ def final_admission_from_planner_result(planner_result, terminal_observed_ns,
         "answer_eligible": planner_result.answer_eligible,
         "terminal_observed_ns": terminal_observed_ns,
     }, policy_invalidation, decided_ns)
+
+
+def typed_event_transport_timing_rows(events):
+    """Retain producer, stdout, queue and monitor timestamps per typed event."""
+    timing_rows = []
+    stage_fields = (
+        "typed_ready_ns", "emit_ns", "stdout_handoff_started_ns",
+        "controller_parsed_ns", "controller_enqueued_ns",
+        "controller_dequeued_ns", "controller_monitor_started_ns",
+        "controller_monitor_finished_ns",
+    )
+    interval_fields = (
+        ("typed_ready_to_emit_call_ms", "typed_ready_ns", "emit_ns"),
+        ("producer_pre_handoff_ms", "emit_ns", "stdout_handoff_started_ns"),
+        ("stdout_handoff_to_controller_parse_ms", "stdout_handoff_started_ns",
+         "controller_parsed_ns"),
+        ("controller_parse_to_enqueue_ms", "controller_parsed_ns",
+         "controller_enqueued_ns"),
+        ("controller_queue_wait_ms", "controller_enqueued_ns",
+         "controller_dequeued_ns"),
+        ("controller_dispatch_to_monitor_ms", "controller_dequeued_ns",
+         "controller_monitor_started_ns"),
+        ("controller_monitor_service_ms", "controller_monitor_started_ns",
+         "controller_monitor_finished_ns"),
+    )
+    for event in events:
+        if type(event) is not dict or event.get("event") != "typed_observation":
+            continue
+        row = {"sequence": event.get("sequence")}
+        row.update({field: event.get(field) for field in stage_fields})
+        stamps = [row[field] for field in stage_fields]
+        row["stage_order_valid"] = (
+            all(type(stamp) is int for stamp in stamps) and
+            all(left <= right for left, right in zip(stamps, stamps[1:])))
+        row["intervals_ms"] = {}
+        for label, start_field, end_field in interval_fields:
+            start, end = row[start_field], row[end_field]
+            row["intervals_ms"][label] = (
+                (end - start) / 1e6
+                if type(start) is int and type(end) is int and end >= start
+                else None)
+        timing_rows.append(row)
+    return timing_rows
 
 
 def bind_first_plan_acceptance(receipt, record):
@@ -648,24 +973,263 @@ def persist_running_invalidation(root, identifier, boundary):
     return path
 
 
-def cancel_invalidated_action(process, wait, identifier, guard):
-    """Publish physical release first, then require terminal lifecycle closure."""
-    process.stdin.write(json.dumps({"op": "cancel", "id": identifier}) + "\n")
+class CancellationReleaseFailed(RuntimeError):
+    def __init__(self, receipt):
+        self._receipt = deepcopy(receipt)
+        super().__init__('cancellation release boundary failed: ' + receipt['reason'])
+
+    @property
+    def receipt(self):
+        return deepcopy(self._receipt)
+
+
+def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=None):
+    """Keep every matching boundary; unverified release never grants authority."""
+    phase = 'cancel_send'
+    observed = []
+    event = released = release_receipt = buffered_release = None
+
+    def fail(reason, row=None, cause=None):
+        try:
+            guard_receipt = guard.receipt()
+        except Exception as guard_error:
+            guard_receipt = {'receipt_error': type(guard_error).__name__}
+        receipt = {'schema': 'running-cancel-release-failure-v1', 'id': identifier,
+            'phase': phase, 'reason': reason, 'failure_event': deepcopy(row),
+            'observed_boundaries': deepcopy(observed), 'guard': deepcopy(guard_receipt),
+            'input_recovery_required': True, 'physical_input_state': 'unverified',
+            'grants_input_authority': False, 'task_effect': 'unknown',
+            'error': None if cause is None else {'type': type(cause).__name__, 'message': str(cause)[:200]}}
+        failure = CancellationReleaseFailed(receipt)
+        if failure_root is not None:
+            try:
+                path = Path(failure_root) / 'running-cancel-release-failure.json'
+                with path.open('x', encoding='utf-8', newline='\n') as stream:
+                    json.dump(receipt, stream, indent=2, allow_nan=False)
+                    stream.write('\n')
+            except Exception as save_error:
+                failure.add_note('failure receipt save failed: ' + type(save_error).__name__)
+        raise failure from cause
+
+    def record_release(row):
+        try:
+            return guard.record_input_released({key: row[key] for key in (
+                'event', 'id', 'intent_token', 'owner_release', 'published_ns',
+                'program_terminal_pending', 'grants_input_authority')})
+        except Exception as error:
+            fail('release_invalid', row, error)
+
+    try:
+        process.stdin.write(json.dumps({'op': 'cancel', 'id': identifier}) + '\n')
+        process.stdin.flush()
+    except Exception as error:
+        fail('cancel_send_failed', cause=error)
+    phase = 'cancel_ack'
+    boundary_types = ('cancel_requested', 'input_released', 'input_release_unverified', 'terminal')
+    while True:
+        try:
+            row = deepcopy(wait(lambda row: row.get('id') == identifier and row.get('event') in boundary_types))
+        except Exception as error:
+            fail('boundary_wait_failed', cause=error)
+        observed.append(deepcopy(row))
+        kind = row.get('event')
+        if kind == 'input_release_unverified':
+            fail('release_unverified', row)
+        if kind == 'cancel_requested':
+            if event is not None:
+                fail('duplicate_cancel_ack', row)
+            try:
+                guard.record_cancel_requested({key: row[key] for key in
+                    ('event', 'id', 'matched', 'requested_ns')})
+            except Exception as error:
+                fail('cancel_ack_invalid', row, error)
+            event = row
+            phase = 'release'
+            if buffered_release is not None:
+                released = buffered_release
+                release_receipt = record_release(released)
+                phase = 'terminal'
+        elif kind == 'input_released':
+            if released is not None or buffered_release is not None:
+                fail('duplicate_release_event', row)
+            if event is None:
+                buffered_release = row
+            else:
+                released = row
+                release_receipt = record_release(row)
+                phase = 'terminal'
+        elif kind == 'terminal':
+            if event is None:
+                fail('terminal_before_cancel_ack', row)
+            if released is None:
+                intent = guard.active_intent
+                if (type(intent) is dict and qualified_interruption_release(row, intent.get('intent_token'))):
+                    try:
+                        receipt = guard.record_interrupted_terminal(row)
+                    except Exception as error:
+                        fail('interrupted_terminal_invalid', row, error)
+                    return event, None, None, row, receipt
+                fail('terminal_without_release', row)
+            try:
+                receipt = guard.record_cancelled_terminal(row)
+            except Exception as error:
+                fail('terminal_invalid', row, error)
+            return event, released, release_receipt, row, receipt
+
+
+def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequence,
+                                      expected_intent_token=None):
+    """Rearm a retired owner after a qualified cancellation or interruption."""
+    allowed = (type(terminal) is dict and terminal.get("status") == "cancelled")
+    interrupted = qualified_interruption_release(terminal, expected_intent_token)
+    if (type(terminal) is not dict or terminal.get("event") != "terminal"
+            or not (allowed or interrupted)
+            or type(terminal.get("id")) is not str or not terminal["id"]):
+        raise ValueError("verified cancelled or qualified interruption terminal required")
+    release = terminal.get("release")
+    if (type(release) is not dict or release.get("verified") is not True
+            or any(release.get(name) != [] for name in
+                   ("keys_down", "buttons_down", "keys_unknown", "key_state_errors"))):
+        raise ValueError("verified empty input release required for owner generation rotation")
+    reader = release.get("target_process_identity_reader")
+    if type(reader) is not dict or type(reader.get("retired")) is not bool:
+        raise ValueError("terminal lacks process-identity reader state")
+    if reader["retired"] is not True:
+        return None
+    if (type(terminal.get("input_owner_generation")) is not int
+            or type(terminal.get("input_owner_id")) is not str):
+        raise ValueError("terminal lacks input owner generation identity")
+    if type(minimum_sequence) is not int or minimum_sequence < 0:
+        raise ValueError("latest pre-rotation observation sequence required")
+    process.stdin.write(json.dumps({"op": "rotate_input_owner", "id": terminal["id"]}) + "\n")
     process.stdin.flush()
-    event = wait(lambda row: row.get("event") == "cancel_requested" and
-                 row.get("id") == identifier)
-    guard.record_cancel_requested({
-        "event": "cancel_requested", "id": event["id"],
-        "matched": event["matched"], "requested_ns": event["requested_ns"]})
-    released = wait(lambda row: row.get("event") == "input_released" and
-                    row.get("id") == identifier)
-    release_receipt = guard.record_input_released({key: released[key] for key in (
-        "event", "id", "intent_token", "owner_release", "published_ns",
-        "program_terminal_pending", "grants_input_authority")})
-    terminal = wait(lambda row: row.get("event") == "terminal" and
-                    row.get("id") == identifier)
-    receipt = guard.record_cancelled_terminal(terminal)
-    return event, released, release_receipt, terminal, receipt
+    receipt = wait(lambda row: row.get("terminal_id", row.get("id")) == terminal["id"]
+                   and row.get("event") in ("input_owner_generation", "rejected"))
+    if (receipt.get("event") != "input_owner_generation"
+            or type(receipt.get("generation")) is not int
+            or receipt["generation"] != terminal["input_owner_generation"] + 1
+            or receipt.get("source_invalidated") is not True
+            or receipt.get("grants_input_authority") is not False
+            or receipt.get("terminal_id") != terminal["id"]
+            or receipt.get("previous_generation") != terminal.get("input_owner_generation")
+            or receipt.get("previous_owner_id") != terminal.get("input_owner_id")
+            or type(receipt.get("owner_id")) is not str
+            or not receipt["owner_id"]):
+        raise RuntimeError("input owner generation rotation was refused or malformed")
+    refresh_deadline = time.monotonic() + 2
+    last_refusal = None
+    for attempt in range(1, 5):
+        remaining = refresh_deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        process.stdin.write(json.dumps(
+            {"op": "refresh_owner_source", "id": terminal["id"]}) + "\n")
+        process.stdin.flush()
+        first = wait(lambda row: (
+            row.get("event") == "observation"
+            and row.get("id") ==
+                f"owner-generation-source-{receipt['generation']}-{attempt}")
+            or (row.get("event") == "rejected"
+                and row.get("operation") == "refresh_owner_source"
+                and row.get("terminal_id", row.get("id")) == terminal["id"]),
+            timeout=remaining)
+        if first.get("event") == "rejected":
+            last_refusal = first
+            continue
+        observation = first
+        identity = observation.get("target_process_identity")
+        pointer = observation.get("pointer_binding")
+        if (observation.get("input_owner_generation") != receipt["generation"]
+                or type(observation.get("sequence")) is not int
+                or observation.get("sequence") <= minimum_sequence
+                or type(identity) is not dict
+                or identity.get("sequence") != observation.get("sequence")
+                or type(identity.get("digest")) is not str
+                or len(identity["digest"]) != 64
+                or type(pointer) is not dict
+                or pointer.get("surface") != identity.get("surface")):
+            raise RuntimeError("fresh post-rotation process-bound observation was not verified")
+        refreshed = wait(lambda row: row.get("event") in
+                         ("input_owner_source_refreshed", "rejected")
+                         and row.get("terminal_id", row.get("id")) == terminal["id"],
+                         timeout=max(0.001, refresh_deadline - time.monotonic()))
+        if refreshed.get("event") == "rejected":
+            last_refusal = refreshed
+            continue
+        if (refreshed.get("generation") != receipt["generation"]
+                or refreshed.get("attempt") != attempt
+                or refreshed.get("owner_id") != receipt.get("owner_id")
+                or refreshed.get("observation_id") != observation.get("id")
+                or refreshed.get("sequence") != observation.get("sequence")
+                or refreshed.get("surface") != identity.get("surface")
+                or refreshed.get("digest") != identity.get("digest")
+                or refreshed.get("source_invalidated") is not False
+                or refreshed.get("grants_input_authority") is not False):
+            raise RuntimeError("post-rotation source refresh receipt was refused or malformed")
+        return dict(receipt, source_refresh=refreshed,
+                    source_observation=observation)
+    raise RuntimeError("bounded post-rotation source refresh failed: "
+                       + str(last_refusal or "two-second budget expired"))
+
+
+def recover_cover_owner_after_cancel_if_retired(
+        process, wait, terminal, *, minimum_sequence,
+        target_process_identity, target_window_lifecycle, owned_input_service,
+        owned_rotation_supported=False):
+    """Handle a retired identity reader before replanning after cancellation.
+
+    An owned service has no qualified generation transition yet, so stop before
+    another action; an in-process owner can use the supported rotation protocol.
+    Cancellation can retire the process-identity reader even though the
+    cancelled cover's release is verified empty. Reusing that reader for the
+    next action makes the owner reject its first key-down with an opaque
+    needs_decision terminal. Recover only on the backend route whose owner
+    lifecycle is explicitly supported; transferred owners and window-lifecycle
+    readers have separate custody contracts.
+    """
+    flags = (target_process_identity, target_window_lifecycle, owned_input_service, owned_rotation_supported)
+    if any(type(value) is not bool for value in flags):
+        raise ValueError("boolean owner-recovery route selection required")
+    if (owned_input_service and not owned_rotation_supported and target_process_identity and type(terminal) is dict
+            and terminal.get("status") == "cancelled"):
+        release = terminal.get("release")
+        reader = release.get("target_process_identity_reader") if type(release) is dict else None
+        if type(reader) is dict and reader.get("retired") is True:
+            raise RuntimeError("retired identity reader: owned service recovery unavailable")
+    if (not target_process_identity or target_window_lifecycle
+            or (owned_input_service and not owned_rotation_supported)
+            or type(terminal) is not dict or terminal.get("status") != "cancelled"):
+        return None
+    return rotate_retired_owner_after_cancel(
+        process, wait, terminal, minimum_sequence=minimum_sequence)
+
+
+def recover_owner_interruption(process, wait, terminal, guard, *,
+                               expected_intent_token, minimum_sequence):
+    """Revoke the interrupted action before any owner or source recovery work."""
+    if not qualified_interruption_release(terminal, expected_intent_token):
+        raise ValueError("qualified owner interruption required")
+    guard_receipt = guard.record_interrupted_terminal(terminal)
+    if (type(guard_receipt) is not dict
+            or guard_receipt.get("state") != "REVOKED_ACTION_NOT_CURRENT"
+            or guard_receipt.get("current_input_authority") is not False
+            or guard_receipt.get("physical_input_may_be_down") is not False
+            or guard_receipt.get("requires_new_decision") is not True):
+        raise RuntimeError("interrupted action guard did not close before recovery")
+    rotation = rotate_retired_owner_after_cancel(
+        process, wait, terminal, minimum_sequence=minimum_sequence,
+        expected_intent_token=expected_intent_token)
+    source = rotation.get("source_observation")
+    if (type(source) is not dict
+            or source.get("input_owner_generation") != rotation.get("generation")
+            or type(source.get("sequence")) is not int
+            or source.get("sequence") <= minimum_sequence
+            or type(source.get("target_process_identity")) is not dict
+            or source["target_process_identity"].get("sequence") != source.get("sequence")
+            or source["target_process_identity"].get("surface") !=
+               source.get("pointer_binding", {}).get("surface")):
+        raise RuntimeError("fresh post-interruption source was not verified")
+    return guard_receipt, rotation
 
 
 def win(path):
@@ -674,25 +1238,142 @@ def win(path):
 
 
 def app_server_command():
-    command = [NODE, CLI, "app-server", "--stdio"]
+    direct_executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+    if not direct_executable and os.name == "nt":
+        candidate = os.environ.get("CODEX_CLI_PATH")
+        if candidate and Path(candidate).suffix.lower() == ".exe" and Path(candidate).is_file():
+            direct_executable = candidate
+    if direct_executable:
+        command = [direct_executable, "app-server", "--stdio"]
+    else:
+        command = [NODE, CLI, "app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
-    for name in DISABLED_MCPS:
-        command += ["-c", f"mcp_servers.{name}.enabled=false"]
+    if os.environ.get("CODEX_HOME"):
+        codex_home = Path(os.environ["CODEX_HOME"])
+    else:
+        user_home = (os.environ.get("USERPROFILE") or os.environ.get("HOME") or
+                     os.environ.get("HOMEDRIVE", "") + os.environ.get("HOMEPATH", ""))
+        codex_home = Path(user_home) / ".codex" if user_home else Path.home() / ".codex"
+    config = codex_home / "config.toml"
+    import tomllib
+    try:
+        with config.open("rb") as source:
+            configured_mcps = tomllib.load(source).get("mcp_servers", {})
+    except FileNotFoundError:
+        configured_mcps = {}
+    if (type(configured_mcps) is not dict or any(
+            type(name) is not str or not name or type(server) is not dict
+            for name, server in configured_mcps.items())):
+        raise ValueError("MCP configuration must contain named server tables")
+    if configured_mcps:
+        # CLI parses only RHS as TOML and splits LHS literally on dots.
+        # One root table preserves arbitrary names and disables all entries in
+        # the same overlay; repeated root overrides would replace one another.
+        entries = ", ".join(json.dumps(name, ensure_ascii=False).replace("\x7f", "\\u007f") + "={enabled=false}"
+                            for name in configured_mcps)
+        command += ["-c", "mcp_servers={" + entries + "}"]
     return command
 
 
+def app_server_command_for_run(output):
+    """Retain bounded pre-start custody without configuration/exception text."""
+    try:
+        return app_server_command()
+    except Exception as error:
+        receipt = {
+            "schema": "map01-mcp-preflight-failure-v1",
+            "stage": "codex_mcp_configuration_read",
+            "status": "failed",
+            "error": {"type": type(error).__name__,
+                      "reason": "configuration_unavailable"},
+        }
+        try:
+            (output / "mcp-preflight-failure.json").write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8")
+        except Exception as receipt_error:
+            error.add_note("MCP preflight failure receipt could not be written: " +
+                           type(receipt_error).__name__)
+        raise
+
+
+def canonical_windows_executable(value, variable):
+    path = Path(value)
+    message = f"{variable} must resolve from an absolute WSL path to an existing .exe file"
+    if not path.is_absolute():
+        raise ValueError(message)
+    try:
+        executable = path.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise ValueError(message) from error
+    if executable.suffix.lower() != ".exe" or not executable.is_file():
+        raise ValueError(message)
+    return executable
+
+
+def start_planner_client(output):
+    command = app_server_command_for_run(output)
+    windows_owner = None
+    if os.name == "posix" and command[1:3] == ["app-server", "--stdio"]:
+        if not os.environ.get("WSL_INTEROP"):
+            raise ValueError("native Windows Codex requires WSL interop")
+        executable = canonical_windows_executable(command[0], "AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+        command = [str(executable), *command[1:]]
+        wsl_environment_for_windows_executable(command, os.environ)
+        python_variable = "AGENT_INTERFACE_WINDOWS_PYTHON"
+        python = canonical_windows_executable(os.environ.get(python_variable, ""), python_variable)
+        windows_owner = WindowsAppServerOwner(python, win, output.resolve())
+    return CodexAppServerClient(command, cwd=REPO, journal_path=output / "planner-protocol.jsonl",
+                                windows_owner=windows_owner)
+
+
+def validate_input_service_selection(args):
+    if getattr(args,'owned_input_service',False):
+        if not getattr(args,'measurement_session',False) or not getattr(args,'target_process_identity',False):
+            raise ValueError('owned input service requires measurement session and target process identity')
+        if getattr(args,'target_window_lifecycle',False):
+            raise ValueError('owned input service window lifecycle transfer is not qualified')
+
+
 def session_command(args, runtime):
+    validate_input_service_selection(args)
+    identity = getattr(args, "target_process_identity", False)
+    lifecycle = getattr(args, 'target_window_lifecycle', False)
+    if lifecycle and not identity:
+        raise ValueError('target window lifecycle requires --target-process-identity')
+    if identity and not getattr(args, "measurement_session", False):
+        raise ValueError("target process identity requires --measurement-session")
     # Keep the established v12 session as the default. The opt-in v15 wrapper
     # adds scorer-only progress sampling and per-key release telemetry without
     # exposing scorer state through the controller event stream.
     session = ("session_map01_v15.py"
                if getattr(args, "measurement_session", False)
                else "session_map01_v12.py")
-    return [sys.executable, str(HERE / session),
+    command = [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
-            "--timeout-seconds", "600", "--skill", "1",
+            "--timeout-seconds", str(getattr(args, "episode_timeout_seconds", 600)), "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    if identity:
+        command.append("--target-process-identity")
+    if lifecycle:
+        command.append('--target-window-lifecycle')
+    if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
+    if getattr(args, "renewal_passive_observer", False):
+        command.append("--renewal-passive-observer")
+    if getattr(args, "post_load_clock_gate", False):
+        if not getattr(args, "owned_input_service", False):
+            raise ValueError("post-load clock gate requires the owned input service")
+        command.append("--post-load-clock-gate")
+    return command
+
+
+def require_release_receipt_session(args):
+    """Reject the V10 default, whose receipts cannot satisfy the strict gate."""
+    if not getattr(args, "measurement_session", False):
+        raise ValueError(
+            "strict release-receipt validation requires --measurement-session "
+            "(V15/V12 producer); the V12 default uses V10 receipts")
 
 
 def validate_action(action):
@@ -711,8 +1392,12 @@ def validate_action(action):
         raise ValueError("contingency indices must be unique primary command indices")
 
 
+def short_primary_for_turn(enabled, index):
+    return enabled is True and type(index) is int and index == 0
+
+
 def begin_model_turn(planner, root, image, effect_memory, source_health, source_ammo,
-                     prior_soft_event_summary, output_schema):
+                     prior_soft_event_summary, output_schema, *, short_experiment=False):
     prompt_text = ("Select the next bounded MAP01 action from the new temporal sheet.\n"
                    + f"Current locally verified health: {source_health}.\n"
                    + f"Current locally verified ammo: {source_ammo}.\n"
@@ -720,6 +1405,12 @@ def begin_model_turn(planner, root, image, effect_memory, source_health, source_
                    + json.dumps(prior_soft_event_summary, separators=(",", ":")) + "\n"
                    + "Previous no-visible-effect actions: "
                    + json.dumps(effect_memory, separators=(",", ":")) + "\n")
+    if short_experiment:
+        prompt_text += ("For this experiment, when safe, prefer one short or pulse primary "
+                        "command. If a threat is visible and brief cover is appropriate, "
+                        "prefer one short or pulse next-cover command. Choose actions and "
+                        "validity from the current image; use empty cover or another plan "
+                        "when appropriate. Do not compromise safety.\n")
     (root / "prompt.txt").write_text(prompt_text)
     return planner.begin_turn(prompt_text, output_schema=output_schema,
                               image_path=win(image))
@@ -818,13 +1509,25 @@ def prefer_observation_invalidation(current, candidate):
     return current
 
 
-def observe_cover_submission_events(events, observation_monitor):
+def observe_cover_submission_events(events, observation_monitor, *, fail_closed=False):
     event_types = getattr(observation_monitor, "event_types", {"observation"})
     invalidation = None
     for row in events:
-        if row.get("event") in event_types:
-            invalidation = prefer_observation_invalidation(
-                invalidation, observation_monitor.observe(row))
+        try:
+            if row.get("event") in event_types:
+                invalidation = prefer_observation_invalidation(
+                    invalidation, observation_monitor.observe(row))
+        except Exception as error:
+            if not fail_closed:
+                raise
+            if invalidation is None:
+                invalidation = {
+                    "event": "policy_invalidation",
+                    "reason": "renewal_observation_unverified",
+                    "requires_new_decision": True,
+                    "grants_input_authority": False,
+                }
+            return dict(invalidation, observation_error_type=type(error).__name__)
     return invalidation
 
 
@@ -1086,11 +1789,42 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
+    parser.add_argument('--target-window-lifecycle', action='store_true',
+                        help='require shared direct-window continuity evidence; requires target process identity')
+    parser.add_argument("--target-process-identity", action="store_true",
+                        help="select trusted-local XRes/Linux process evidence in V15 input owner")
+    parser.add_argument('--owned-input-service',action='store_true',
+                        help='explicit independent input service; requires measurement and process identity')
+    parser.add_argument("--episode-timeout-seconds", type=int, default=600)
+    parser.add_argument("--post-load-clock-gate", action="store_true",
+                        help="qualify the loaded spectator clock before initial cover")
+    parser.add_argument("--renewal-passive-observer", action="store_true",
+                        help="observe the process-bound viewport before each renewal submission")
+    parser.add_argument("--experimental-cover-cycle", action="store_true",
+                        help="run authored cover one identical cycle at a time, with a fixed budget")
+    parser.add_argument("--experimental-short-primary", action="store_true",
+                        help="request a short first action when safe for the cycle experiment")
     args = parser.parse_args()
+    try:
+        require_release_receipt_session(args)
+        if not 10 <= args.episode_timeout_seconds <= 600:
+            raise ValueError("episode timeout must be between 10 and 600 seconds")
+        if args.renewal_passive_observer and not args.target_process_identity:
+            raise ValueError("renewal observer requires --target-process-identity")
+        if args.experimental_cover_cycle and not (args.renewal_passive_observer
+                                                  and args.post_load_clock_gate):
+            raise ValueError("cycle experiment requires passive observer and post-load clock gate")
+        if args.experimental_short_primary and not args.experimental_cover_cycle:
+            raise ValueError("short-primary experiment requires cover-cycle experiment")
+        validate_input_service_selection(args)
+        if args.post_load_clock_gate and not args.owned_input_service:
+            raise ValueError("post-load clock gate requires the owned input service")
+        if args.target_window_lifecycle and not args.target_process_identity:
+            raise ValueError('target window lifecycle requires --target-process-identity')
+    except ValueError as error:
+        parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
-    planner_client = CodexAppServerClient(
-        app_server_command(), cwd=REPO,
-        journal_path=args.out / "planner-protocol.jsonl")
+    planner_client = start_planner_client(args.out)
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
         failure_cleanup.set_stage("planner_initialize")
@@ -1113,7 +1847,14 @@ def main():
         def reader():
             try:
                 for line in process.stdout:
-                    row = json.loads(line); all_events.append(row); incoming.put(row)
+                    row = load_controller_event(line)
+                    is_typed = row.get("event") == "typed_observation"
+                    if is_typed:
+                        row["controller_parsed_ns"] = time.perf_counter_ns()
+                    all_events.append(row)
+                    if is_typed:
+                        row["controller_enqueued_ns"] = time.perf_counter_ns()
+                    incoming.put(row)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
@@ -1125,20 +1866,30 @@ def main():
             end = time.monotonic() + timeout
             while time.monotonic() < end:
                 try:
-                    row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
+                    row = incoming.get(timeout=min(.25,max(0.,end-time.monotonic())))
                 except queue.Empty:
                     if process.poll() is not None:
                         detail="stderr not synchronously drained"
                         raise RuntimeError(f"session exited before expected event: {detail}")
                     continue
+                is_typed = row.get("event") == "typed_observation"
+                if is_typed:
+                    row["controller_dequeued_ns"] = time.perf_counter_ns()
                 if consumed_events is not None:
                     consumed_events.append(row)
+                reject_control_boundary_failure(row)
                 if row["event"] == "observation":
                     latest = row
                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
                                if observation_monitor is not None else set())
                 if row["event"] in event_types:
-                    invalidation = observation_monitor.observe(row)
+                    if is_typed:
+                        row["controller_monitor_started_ns"] = time.perf_counter_ns()
+                    try:
+                        invalidation = observation_monitor.observe(row)
+                    finally:
+                        if is_typed:
+                            row["controller_monitor_finished_ns"] = time.perf_counter_ns()
                     if invalidation is not None:
                         if invalidation.get("event") == "running_action_invalidation":
                             return invalidation
@@ -1149,14 +1900,40 @@ def main():
         failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
         failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
+        operations = ready.get("operations")
+        owned_rotation_supported = (type(operations) is list and
+            "rotate_input_owner" in operations and "refresh_owner_source" in operations)
+        if args.renewal_passive_observer and "probe_cover_renewal" not in ready.get("operations", []):
+            raise RuntimeError("required passive renewal transport is unavailable")
+        if args.post_load_clock_gate:
+            gate = ready.get("post_load_clock_gate")
+            if type(gate) is not dict or gate.get("passed") is not True:
+                raise RuntimeError("required post-load clock evidence is unavailable")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
             raise RuntimeError("v28 requires a loaded fixture receipt")
         latest = wait(lambda r:r["event"] == "observation")
         decisions=[];model_session_id=planner.thread_id
         source_refreshes=[]
+        terminal_health_observation=None
         program_admissions=0
         for index in range(args.iterations):
+            owner_generation_rotations=[]
+
+            def recover_cover_owner(terminal, cause):
+                nonlocal latest
+                rotation = recover_cover_owner_after_cancel_if_retired(
+                    process, wait, terminal, minimum_sequence=latest["sequence"],
+                    target_process_identity=args.target_process_identity,
+                    target_window_lifecycle=args.target_window_lifecycle,
+                    owned_input_service=args.owned_input_service,
+                    owned_rotation_supported=owned_rotation_supported)
+                if rotation is not None:
+                    latest = rotation["source_observation"]
+                    owner_generation_rotations.append(
+                        dict(rotation, terminal_id=terminal["id"], cause=cause))
+                return rotation
+
             failure_cleanup.set_stage("source_refresh")
             if index and index % args.session_span == 0:
                 planner.start_session()
@@ -1167,7 +1944,11 @@ def main():
             try:
                 latest, source_refresh = refresh_source(
                     latest, signal_reader, ammo_reader, send_source_refresh, wait,
-                    f"source-refresh-{index}")
+                    f"source-refresh-{index}",
+                    terminal_predicate=lambda row, health, ammo: (
+                        row.get("event") == "observation" and
+                        health.get("status") == "observed" and
+                        type(health.get("value")) is int and health.get("value") == 0))
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
                 try:
@@ -1180,6 +1961,15 @@ def main():
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            if source_refresh.get("status") == "terminal":
+                terminal_health_observation = {
+                    "iteration": index,
+                    "status": "observed",
+                    "health": latest.get("signals", {}).get("health", {}).get("value"),
+                    "sequence": latest.get("sequence"),
+                    "source_refresh": dict(source_refresh, iteration=index),
+                }
+                break
             failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
@@ -1192,17 +1982,28 @@ def main():
                 cover_policy_source_iteration)
             failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
+            args._cycle_max_submissions = None
+            if args.experimental_cover_cycle and cover_semantic:
+                cover_steps, args._cycle_max_submissions = split_repeated_cover(
+                    cover_steps, hold_count=len(cover_semantic))
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
+            cover_submission_source = deepcopy(latest)
             cover_submission_recovery=None
             cover_submission_invalidation=None
-            def submit_cover(identifier, consumed_events=None):
+            def submit_cover(identifier, consumed_events=None, *, renewal=False, approval=None):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
-                process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
+                if approval is not None:
+                    command["renewal_approval"] = approval
+                if renewal:
+                    send_bounded_cover_command(process.stdin, command)
+                else:
+                    process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
                               (r.get("id")==identifier or r["event"]=="rejected"),
+                              timeout=COVER_RENEWAL_IO_SECONDS if renewal else 40,
                               consumed_events=consumed_events)
                 if accepted["event"]!="accepted":return accepted
                 cover_ids.append(identifier);return accepted
@@ -1237,6 +2038,7 @@ def main():
                     cover_submission_invalidation_receipt(
                         cover_result, cancel_terminal)
                 latest = cover_result["latest"]
+                recover_cover_owner(cancel_terminal, "initial_cover_invalidation")
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None
                 cover_policy_source_iteration=None;cover_steps=[]
@@ -1271,11 +2073,14 @@ def main():
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
-                prior_soft_event_summary,output_schema)
+                prior_soft_event_summary,output_schema,
+                short_experiment=short_primary_for_turn(args.experimental_short_primary, index))
             planner_interrupt=None
-            with ThreadPoolExecutor(max_workers=1) as pool:
+            with pending_cover_planner_pool() as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
                 current_cover=cover
+                current_cover_accepted=cover_ack
+                current_cover_source=cover_submission_source
                 current_terminal=None
                 while not future.done():
                     try:
@@ -1286,50 +2091,133 @@ def main():
                     except TimeoutError:
                         continue
                     if boundary["event"] == "policy_invalidation":
-                        invalidation=boundary["invalidation"]
-                        planner_interrupt,current_terminal=cancel_invalidated_cover(
-                            planner,planner_handle,process,wait,current_cover)
+                        invalidation = boundary["invalidation"]
+                    else:
+                        current_terminal = boundary
                         cover_terminals.append(current_terminal)
-                        break
-                    current_terminal=boundary
-                    cover_terminals.append(current_terminal)
-                    failure_cleanup.set_stage("cover_terminal_validation")
-                    try:
-                        require_cover_terminal(current_terminal)
-                    except RuntimeError as error:
-                        # The fatal cover error ends this control session. An
-                        # interrupt ACK does not complete await_turn, so retire
-                        # its transport if the future is still pending before
-                        # pool shutdown joins it. Keep the cover failure primary.
-                        if not future.done():
+                        failure_cleanup.set_stage("cover_terminal_validation")
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
                             try:
-                                interrupt_result = planner.interrupt(planner_handle)
-                            except BaseException as interrupt_error:
-                                error.add_note("planner interrupt failed: " +
-                                               type(interrupt_error).__name__)
-                            else:
-                                if (isinstance(interrupt_result, dict) and
-                                        interrupt_result.get("outcome") == "request_error"):
-                                    error.add_note("planner interrupt transport failed")
-                            if not future.done():
+                                require_cover_terminal(current_terminal)
+                            except RuntimeError:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=args._cycle_max_submissions,
+                                    reason="terminal_release_unverified")
+                        validate_planner_cover_terminal(planner, planner_handle, future,
+                                                        current_terminal, args.out)
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
+                            try:
+                                qualify_cycle_terminal(current_cover_accepted, current_terminal,
+                                                       all_events, current_cover_source, cover_steps)
+                            except ValueError as error:
                                 try:
-                                    abort_result = planner.abort_pending_turn()
-                                except BaseException as abort_error:
-                                    error.add_note("planner transport abort failed: " +
-                                                   type(abort_error).__name__)
-                                else:
-                                    if (isinstance(abort_result, dict) and
-                                            abort_result.get("outcome") == "aborted"):
-                                        error.add_note("pending planner turn transport aborted")
-                        raise
-                    if future.done():break
-                    next_cover=f"cover-{index}-renew-{len(cover_ids)}"
-                    next_accepted=submit_cover(next_cover)
-                    if next_accepted["event"] != "accepted":
-                        raise RuntimeError(next_accepted)
-                    cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
-                        current_terminal["terminal_ns"])/1e6)
-                    current_cover=next_cover;current_terminal=None
+                                    stop_exhausted_cover_budget(
+                                        planner, planner_handle, current_terminal, args.out,
+                                        accepted_count=len(cover_ids),
+                                        maximum_submissions=args._cycle_max_submissions,
+                                        reason="cycle_custody_unverified")
+                                except CoverCycleBudgetExhausted as hold:
+                                    raise hold from error
+                        if future.done():
+                            break
+                        cycle_limit = getattr(args, "_cycle_max_submissions", None)
+                        if cycle_limit is not None and len(cover_ids) >= cycle_limit:
+                            stop_exhausted_cover_budget(planner, planner_handle,
+                                                        current_terminal, args.out,
+                                                        accepted_count=len(cover_ids),
+                                                        maximum_submissions=cycle_limit)
+                        next_cover = f"cover-{index}-renew-{len(cover_ids)}"
+                        approval = {}
+                        if getattr(args, "renewal_passive_observer", False):
+                            failure_cleanup.set_stage("pre_renewal_passive_observation")
+                            source_at_probe = latest
+                            def receive_probe(identifier, deadline):
+                                return wait(lambda row: row.get("event") == "post_control_score" or
+                                            (row.get("id") == identifier and
+                                             row.get("event") in (RENEWAL_PROBE_EVENT,
+                                                                 "cover_renewal_passive_refused",
+                                                                 "rejected")),
+                                            timeout=max(0, (deadline - time.perf_counter_ns()) / 1e9))
+                            guards = getattr(invalidation_monitor, "guards", {})
+                            if isinstance(invalidation_monitor, ObservableSignalPolicyMonitor):
+                                guards = {"health": invalidation_monitor.guard}
+                            try:
+                                outcome = request_passive_probe(
+                                    lambda command: send_bounded_cover_command(
+                                        process.stdin, command, timeout=max(0,
+                                            (command["deadline_ns"] - time.perf_counter_ns()) / 1e9)),
+                                    receive_probe, next_cover,
+                                    dict(current_terminal, intent_token=current_cover_accepted.get("intent_token"),
+                                         program_sha256=current_cover_accepted.get("program_sha256")),
+                                    source_at_probe, guards,
+                                    done=future.done, verify_frame=lambda witness:
+                                        verify_probe_frame(runtime, witness,
+                                                           {"health": signal_reader, "ammo": ammo_reader}))
+                                if latest is not source_at_probe:
+                                    raise ValueError("source observation changed while awaiting renewal proof")
+                                with (model_root / "passive-renewals.jsonl").open("a", encoding="utf-8") as stream:
+                                    stream.write(json.dumps(outcome, allow_nan=False) + "\n")
+                                invalidation = outcome["invalidation"]
+                                if invalidation is not None:
+                                    planner.invalidate_turn(planner_handle)
+                                    if not future.done():
+                                        planner_interrupt = planner.interrupt(planner_handle)
+                            except BaseException as error:
+                                error.cover_probe_failure_receipt = {"id": next_cover,
+                                                                    "renewal_submit": "not_sent"}
+                                retire_failed_cover(planner, planner_handle, future,
+                                                    current_terminal, error, args.out)
+                                raise
+                            if not outcome["admit_renewal"] or future.done():
+                                break
+                            approval["approval"] = outcome["witness"]["approval_nonce"]
+                        # Keep observations until the ACK identifies the cover to cancel.
+                        consumed_events = []
+                        next_accepted = None
+                        try:
+                            next_accepted = submit_cover(next_cover, consumed_events, renewal=True, **approval)
+                            if (type(next_accepted) is not dict or next_accepted.get("id") != next_cover
+                                    or next_accepted.get("event") not in ("accepted", "rejected")):
+                                raise ValueError("unverified cover renewal acknowledgement")
+                            if next_accepted["event"] == "accepted" and (
+                                    type(next_accepted.get("accepted_ns")) is not int
+                                    or type(current_terminal.get("terminal_ns")) is not int
+                                    or not 0 < current_terminal["terminal_ns"] <= next_accepted["accepted_ns"]
+                                        <= time.perf_counter_ns()):
+                                raise ValueError("unverified cover renewal acknowledgement time")
+                        except BaseException as error:
+                            retire_uncertain_cover_renewal(
+                                planner, planner_handle, process, wait, next_cover, next_accepted,
+                                consumed_events, error, args.out)
+                            raise
+                        if next_accepted["event"] != "accepted":
+                            if cycle_limit is not None:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=cycle_limit,
+                                    reason="renewal_rejected", renewal_response=next_accepted)
+                            error = RuntimeError(next_accepted)
+                            retire_failed_cover(planner, planner_handle, future,
+                                                current_terminal, error, args.out)
+                            raise error
+                        cover_renewal_gaps_ms.append((next_accepted["accepted_ns"] -
+                            current_terminal["terminal_ns"]) / 1e6)
+                        current_cover, current_cover_accepted = next_cover, next_accepted
+                        if cycle_limit is not None:
+                            current_cover_source = deepcopy(source_at_probe)
+                        current_terminal = None
+                        invalidation = observe_cover_submission_events(
+                            consumed_events, invalidation_monitor, fail_closed=True)
+                        if invalidation is None:
+                            continue
+                    planner_interrupt, current_terminal = cancel_invalidated_cover(
+                        planner, planner_handle, process, wait, current_cover, failure_root=args.out)
+                    cover_terminals.append(current_terminal)
+                    recover_cover_owner(current_terminal, "policy_invalidated_cover")
+                    break
                 if future.done() and invalidation is None:
                     drained = drain_pending_observation_events(
                         incoming, invalidation_monitor, current_cover)
@@ -1339,13 +2227,24 @@ def main():
                         current_terminal = drained["terminal"]
                         cover_terminals.append(current_terminal)
                         failure_cleanup.set_stage("cover_terminal_validation")
-                        require_cover_terminal(current_terminal)
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
+                            try:
+                                require_cover_terminal(current_terminal)
+                            except RuntimeError:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=args._cycle_max_submissions,
+                                    reason="terminal_release_unverified")
+                        validate_planner_cover_terminal(planner, planner_handle, future,
+                                                        current_terminal, args.out)
                     if drained["invalidation"] is not None:
                         invalidation = drained["invalidation"]
                         if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
-                                planner,planner_handle,process,wait,current_cover)
+                                planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
+                            recover_cover_owner(current_terminal, "drained_policy_invalidation")
                     elif drained["pending_events"]:
                         invalidation = {
                             "event": "policy_invalidation",
@@ -1354,8 +2253,9 @@ def main():
                         }
                         if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
-                                planner,planner_handle,process,wait,current_cover)
+                                planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
+                            recover_cover_owner(current_terminal, "pending_observation_backlog")
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
@@ -1378,9 +2278,42 @@ def main():
                     else:
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
+                rotation = recover_cover_owner(
+                    current_terminal, "planner_turn_complete_cover_cancel")
+                if rotation is not None and invalidation is None:
+                    invalidation = {
+                        "event": "policy_invalidation",
+                        "reason": "retired_owner_generation_after_cover_cancel",
+                        "terminal_id": current_terminal["id"],
+                        "requires_new_decision": True,
+                    }
             failure_cleanup.set_stage("cover_terminal_validation")
             if current_cover is not None:
-                require_cover_terminal(current_terminal, cancellation_requested=True)
+                if getattr(args, "_cycle_max_submissions", None) is not None:
+                    try:
+                        require_cover_terminal(current_terminal, cancellation_requested=True)
+                    except RuntimeError:
+                        stop_exhausted_cover_budget(
+                            planner, planner_handle, current_terminal, args.out,
+                            accepted_count=len(cover_ids),
+                            maximum_submissions=args._cycle_max_submissions,
+                            reason="terminal_release_unverified")
+                validate_planner_cover_terminal(planner, planner_handle, future,
+                    current_terminal, args.out, cancellation_requested=True)
+                if getattr(args, "_cycle_max_submissions", None) is not None:
+                    try:
+                        qualify_cycle_terminal(current_cover_accepted, current_terminal,
+                                               all_events, current_cover_source, cover_steps,
+                                               cancellation_requested=True)
+                    except ValueError as error:
+                        try:
+                            stop_exhausted_cover_budget(
+                                planner, planner_handle, current_terminal, args.out,
+                                accepted_count=len(cover_ids),
+                                maximum_submissions=args._cycle_max_submissions,
+                                reason="cycle_custody_unverified")
+                        except CoverCycleBudgetExhausted as hold:
+                            raise hold from error
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
@@ -1419,6 +2352,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             if not planner_result.answer_eligible:
@@ -1444,6 +2378,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             try:
@@ -1476,6 +2411,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             if action["state"] != "active":
@@ -1499,6 +2435,7 @@ def main():
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "terminal_candidate":True,"model_action_discarded":False})
                 break
             failure_cleanup.set_stage("action_admission")
@@ -1533,6 +2470,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
@@ -1614,9 +2552,47 @@ def main():
                     persist_running_invalidation(args.out,identifier,boundary)
                     (cancel_event,physical_release_event,release_pending_receipt,
                      terminal,guard_receipt)=cancel_invalidated_action(
-                        process,wait,identifier,running_guard)
+                        process,wait,identifier,running_guard,failure_root=args.out)
+                    if index + 1 < args.iterations:
+                        if terminal.get('status') == 'needs_decision':
+                            if (not args.target_process_identity or args.target_window_lifecycle
+                                    or (args.owned_input_service and not owned_rotation_supported)):
+                                raise RuntimeError('qualified owner interruption has no eligible recovery slot')
+                            rotation=rotate_retired_owner_after_cancel(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                expected_intent_token=accepted.get('intent_token'))
+                        else:
+                            rotation=recover_cover_owner_after_cancel_if_retired(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                target_process_identity=args.target_process_identity,
+                                target_window_lifecycle=args.target_window_lifecycle,
+                                owned_input_service=args.owned_input_service,
+                                owned_rotation_supported=owned_rotation_supported)
+                        if rotation is not None:
+                            latest=rotation["source_observation"]
+                            owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:
                     terminal=boundary
+                    if (terminal.get("status")=="needs_decision"
+                            and qualified_interruption_release(
+                                terminal, accepted.get("intent_token"))):
+                        if (index + 1 >= args.iterations or not args.target_process_identity
+                                or args.target_window_lifecycle
+                                or (args.owned_input_service and not owned_rotation_supported)):
+                            raise RuntimeError("qualified owner interruption has no eligible recovery slot")
+                        guard_receipt,rotation=recover_owner_interruption(
+                            process,wait,terminal,running_guard,
+                            minimum_sequence=latest["sequence"],
+                            expected_intent_token=accepted["intent_token"])
+                        latest=rotation["source_observation"]
+                        rotation["cause"]="qualified_owner_interruption"
+                        owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
+                        return {"records":[],"invalidated":True,"partial":{
+                            "id":identifier,"role":role,"status":"interrupted_action_not_current",
+                            "intent_token":accepted["intent_token"]},
+                            "cancel_event":None,"physical_release_event":None,
+                            "release_pending_guard":None,"terminal":terminal,
+                            "guard":guard_receipt,"recovered_owner_interruption":rotation}
                     if terminal["status"]!="completed":raise RuntimeError(terminal)
                     guard_receipt=running_guard.record_completed_terminal(
                         terminal,final=False)
@@ -1684,14 +2660,13 @@ def main():
                 if boundary["event"]=="running_action_invalidation":
                     persist_running_invalidation(args.out,identifier,boundary)
                     terminal=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier)
-                    release=terminal.get("release",{})
-                    if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                            release.get("keys_down")!=[] or release.get("buttons_down")!=[]):
+                    if (terminal.get("status")!="completed" or
+                            not terminal_release_is_known_empty(terminal)):
                         raise RuntimeError("passive refresh did not verify empty release")
                     return False
-                terminal=boundary;release=terminal.get("release",{})
-                if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                        release.get("keys_down")!=[] or release.get("buttons_down")!=[] or
+                terminal=boundary
+                if (terminal.get("status")!="completed" or
+                        not terminal_release_is_known_empty(terminal) or
                         running_guard.receipt()["state"]!=RUNNING_READY):
                     raise RuntimeError("passive refresh did not establish current action")
                 return True
@@ -1712,7 +2687,8 @@ def main():
                     stale_recovery=result["stale_recovery"]
                     break
                 if result["invalidated"]:
-                    running_invalidation=result["guard"]["invalidation"]
+                    if result.get("recovered_owner_interruption") is None:
+                        running_invalidation=result["guard"]["invalidation"]
                     partial_execution=result["partial"]
                     break
                 contingency=contingencies.get(segment_end)
@@ -1775,6 +2751,7 @@ def main():
                   "running_action_guard":running_action_receipt,
                   "executor_preacceptance_rejection":stale_rejection,
                   "pending_observation_recovery":recovery,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "running_action_invalidation":running_invalidation,
                   "partial_execution":partial_execution,
                   "action_refresh_program_ids":refresh_program_ids,
@@ -1820,6 +2797,7 @@ def main():
                "final_action_admission":final_action_admission,
                "running_action_guard":running_action_receipt,
                "running_action_invalidation":running_invalidation,
+               "input_owner_generation_rotations":owner_generation_rotations,
                "partial_execution":partial_execution,
                "action_refresh_program_ids":refresh_program_ids,
                "planner_cancellation_requested":planner_result.cancellation_requested,
@@ -1875,14 +2853,19 @@ def main():
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
+          "target_process_identity":args.target_process_identity,
+          "target_window_lifecycle":getattr(args,'target_window_lifecycle',False),
+          "owned_input_service":getattr(args,'owned_input_service',False),
           "model_session_span":args.session_span,
-          "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
+          "model_session_ids":list(dict.fromkeys(
+              row["model_session_id"] for row in decisions if "model_session_id" in row)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
           "typed_observation_contract":"health/ammo and RGB SHA-256 are extracted from the captured in-memory frame and emitted before transport/artifact publication; every retained full observation must later match epoch, binding, RGB hash and both signal values",
+          "typed_event_timing_contract":"emit_ns marks producer callback/log start; stdout_handoff_started_ns follows both producer JSONL appends and precedes stdout serialization/write; controller timestamps mark parse, enqueue, dequeue and monitor boundaries on the same host monotonic clock; intervals are stage spans, not isolated pipe latency or a performance claim",
           "typed_observations":len(typed_events),
           "typed_artifact_reconciliations":typed_reconciliations,
           "typed_artifact_reconciled":sum(row["matched"] for row in typed_reconciliations),
@@ -1891,11 +2874,24 @@ def main():
                                        for row in typed_events.values()],
           "typed_ready_to_emit_ms":[(row["emit_ns"]-row["typed_ready_ns"])/1e6
                                     for row in typed_events.values()],
+          "typed_ready_to_emit_call_ms":[
+              (row["emit_ns"]-row["typed_ready_ns"])/1e6
+              for row in typed_events.values()],
           "typed_capture_to_artifact_ready_ms":[
               row["capture_to_artifact_ready_ms"] for row in full_events.values()],
           "typed_emit_to_artifact_ready_ms":[
               (full_events[sequence]["artifact_ready_ns"]-typed["emit_ns"])/1e6
               for sequence,typed in typed_events.items() if sequence in full_events],
+          "typed_emit_call_to_artifact_ready_ms":[
+              (full_events[sequence]["artifact_ready_ns"]-typed["emit_ns"])/1e6
+              for sequence,typed in typed_events.items() if sequence in full_events],
+          "typed_stdout_handoff_to_artifact_ready_ms":[
+              (full_events[sequence]["artifact_ready_ns"]-
+               typed["stdout_handoff_started_ns"])/1e6
+              for sequence,typed in typed_events.items()
+              if sequence in full_events and
+              type(typed.get("stdout_handoff_started_ns")) is int],
+          "typed_event_transport_timing_rows":typed_event_transport_timing_rows(all_events),
           "effect_receipt_extra_steps":0,
           "contingency_contract":"preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
           "contingencies_authored":sum(len(x["action"].get("contingencies",[]))
@@ -1948,7 +2944,11 @@ def main():
           "model_authored_cover_validity_envelopes":sum(isinstance(x.get("action"),dict) and
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
-          "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+          "model_wall_seconds":sum(x.get("model_ns", 0) for x in decisions)/1e9,
+          "terminal_health_observation":terminal_health_observation,
+          "terminal_health_policy_boundary":(
+              "Observed health zero ends the episode before another model turn or input; "
+              "it is a post-terminal reporting/custody path and does not claim death prevention.")}
         failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,

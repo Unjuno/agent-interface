@@ -1,0 +1,9 @@
+# Local current-main Fake X delayed old-DOWN contract check — R01
+
+**PASS_SCOPED (1 unittest, 12/12 post-run audit checks).** At source `6f3499249838eb56ecd10b3177c1818af6a043a7`, the local Windows host ran `test_standard_owned_caller_keeps_unknown_after_fake_late_down` once with CPython 3.11.9. The six relevant source files had byte-for-byte hashes matching `origin/main` before execution. The test took 1.446 s; its synthetic cancellation path reported 62 ms.
+
+The public standard caller observed and minted a synthetic target, dispatched a key press to a held Fake X reply, then received an injected disconnect fence and an injected release worker result with a separate empty-state readback. The test next delivered a modeled `KeyPress` from the retired connection after that readback. The synthetic state therefore returned to key-down. The public cancellation and terminal records still retained `cleanup_status=UNKNOWN`, `release_confirmed=false`, `task_success=null`, and `replay_allowed=false`; `late_server_request_possible=true`. This is the correct conservative disposition for the modeled late request.
+
+Raw outputs, test log, source hashes, host readback, and the post-run audit are retained in this packet. No application code changed. This was a local regression run, not a WSLc allocation. Fake X records a modeled ordering, not server-observed X protocol delivery or native input. It establishes no real key release, real GUI/app effect, MAP01 task success, efficiency, or reliability result.
+
+**Next discriminating gate:** obtain an authorized, verified unused WSLc allocation before another WSLc run. The current #7924 record still says shared ownership is unresolved. When that gate is cleared, the next WSLc test should use the public standard caller to measure bounded recovery against an independently observed effect, retaining a fresh target generation after recovery; this R01 result cannot stand in for that experiment.

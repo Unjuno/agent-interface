@@ -1,0 +1,37 @@
+{
+  "schema": "issue59-camera-block-motion-r02-run-v1",
+  "freeze_commit": "5e005a873af04daed3abf0ff945cc2b259cc1c1a",
+  "frozen_main": "893c3400c694586ff42d30e2f8fa42f5868f5bba",
+  "host": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.2.0",
+    "opencv": "absent"
+  },
+  "candidate_runs": {
+    "normal": {
+      "command": "python -B probe.py --repo-root <frozen dataset root>",
+      "exit_code": 0,
+      "status": "FAIL_SCOPED"
+    },
+    "optimized": {
+      "command": "python -O -B probe.py --repo-root <frozen dataset root>",
+      "exit_code": 0,
+      "status": "FAIL_SCOPED"
+    }
+  },
+  "candidate_outputs_equal": true,
+  "audit_runs": {
+    "normal": {
+      "exit_code": 0,
+      "status": "PASS_EVIDENCE_AND_RECOMPUTATION_SCOPED"
+    },
+    "optimized": {
+      "exit_code": 0,
+      "status": "PASS_EVIDENCE_AND_RECOMPUTATION_SCOPED"
+    }
+  },
+  "retries": 0,
+  "live_calls": 0,
+  "input_actions": 0
+}

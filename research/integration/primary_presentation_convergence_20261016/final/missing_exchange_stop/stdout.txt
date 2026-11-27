@@ -1,0 +1,98 @@
+TAP version 13
+# Subtest: guarded-local presentation retains one file effect, stops resend, permits explicit close
+not ok 1 - guarded-local presentation retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 15.1285
+  type: 'test'
+  location: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\primary-presentation-final-r2-20261016\\missing_exchange_stop\\subject\\test_primary_exchange_effect_boundary.mjs:11:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(afterFailure.stopped)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/outputs/repository-consolidation-20261015/primary-presentation-final-r2-20261016/missing_exchange_stop/subject/test_primary_exchange_effect_boundary.mjs:60:14)
+    async Test.run (node:internal/test_runner/test:1113:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: guarded-local partial-effect retains one file effect, stops resend, permits explicit close
+not ok 2 - guarded-local partial-effect retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 6.573
+  type: 'test'
+  location: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\primary-presentation-final-r2-20261016\\missing_exchange_stop\\subject\\test_primary_exchange_effect_boundary.mjs:11:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(afterFailure.stopped)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/outputs/repository-consolidation-20261015/primary-presentation-final-r2-20261016/missing_exchange_stop/subject/test_primary_exchange_effect_boundary.mjs:60:14)
+    async Test.run (node:internal/test_runner/test:1113:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: direct-post presentation retains one file effect, stops resend, permits explicit close
+not ok 3 - direct-post presentation retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 6.9201
+  type: 'test'
+  location: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\primary-presentation-final-r2-20261016\\missing_exchange_stop\\subject\\test_primary_exchange_effect_boundary.mjs:11:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(afterFailure.stopped)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/outputs/repository-consolidation-20261015/primary-presentation-final-r2-20261016/missing_exchange_stop/subject/test_primary_exchange_effect_boundary.mjs:60:14)
+    async Test.run (node:internal/test_runner/test:1113:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: direct-post partial-effect retains one file effect, stops resend, permits explicit close
+not ok 4 - direct-post partial-effect retains one file effect, stops resend, permits explicit close
+  ---
+  duration_ms: 4.5077
+  type: 'test'
+  location: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\primary-presentation-final-r2-20261016\\missing_exchange_stop\\subject\\test_primary_exchange_effect_boundary.mjs:11:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(afterFailure.stopped)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/outputs/repository-consolidation-20261015/primary-presentation-final-r2-20261016/missing_exchange_stop/subject/test_primary_exchange_effect_boundary.mjs:60:14)
+    async Test.run (node:internal/test_runner/test:1113:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 85.8799

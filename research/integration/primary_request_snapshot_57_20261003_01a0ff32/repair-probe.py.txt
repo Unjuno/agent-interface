@@ -1,0 +1,6 @@
+from pathlib import Path
+import json,hashlib,datetime
+O=Path(__file__).resolve().parent;s=(O/'probe.mjs').read_bytes().decode()
+s=s.replace("await mkdir(join(O,stage));","const output=stage+'-run';await mkdir(join(O,output));").replace("join(O,stage,label)","join(O,output,label)").replace("join(O,stage,'RESULT.json')","join(O,output,'RESULT.json')")
+(O/'probe-v2.mjs').write_bytes(s.encode())
+(O/'CANDIDATE-FREEZE-A02.json').write_bytes(json.dumps({'frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'new_probe_sha256':hashlib.sha256(s.encode()).hexdigest(),'source_and_fixture_unchanged':True,'six_gates_unchanged':True,'delta':'only separate result directory from candidate source directory','candidate_A01_exit1_EEXIST_preserved':True,'candidate_A01_fixture_calls':0,'original_stage_will_not_replay':True},indent=2).encode())

@@ -1,0 +1,37 @@
+test_cancel_during_press_send (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_during_press_send) ... ok
+test_cancel_during_press_sync (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_during_press_sync) ... ok
+test_cancel_during_release_send (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_during_release_send) ... ok
+test_cancel_during_release_sync (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_during_release_sync) ... ok
+test_cancel_with_press_queued_before_server_processing (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_with_press_queued_before_server_processing) ... ok
+test_stable_selected_worker_route (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_stable_selected_worker_route) ... ok
+test_blocked_readback_returns_pending_without_cancelling_worker (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_blocked_readback_returns_pending_without_cancelling_worker) ... ok
+test_blocked_release_send_returns_pending_without_release_claim (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_blocked_release_send_returns_pending_without_release_claim) ... ok
+test_blocked_release_sync_returns_pending_even_if_fake_neutral (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_blocked_release_sync_returns_pending_even_if_fake_neutral) ... ok
+test_cancelled_executor_handle_after_entry_returns_unknown_with_custody (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_cancelled_executor_handle_after_entry_returns_unknown_with_custody) ... ok
+test_cancelled_handle_before_entry_returns_call_id (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_cancelled_handle_before_entry_returns_call_id) ... ok
+test_executor_rejection_finishes_preallocated_record (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_executor_rejection_finishes_preallocated_record) ... ok
+test_failed_executor_handle_after_entry_keeps_live_writer_custody (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_failed_executor_handle_after_entry_keeps_live_writer_custody) ... ok
+test_failed_handle_before_entry_has_terminal_discoverable_record (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_failed_handle_before_entry_has_terminal_discoverable_record) ... ok
+test_invalid_wait_budget_does_not_open_or_register_input (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_invalid_wait_budget_does_not_open_or_register_input) ... ok
+test_optin_transport_cancellation_still_propagates_and_keeps_writer (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_optin_transport_cancellation_still_propagates_and_keeps_writer) ... ok
+test_queued_call_has_stable_id_and_executes_once (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_queued_call_has_stable_id_and_executes_once) ... ok
+test_quick_input_returns_original_terminal_shape (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_quick_input_returns_original_terminal_shape) ... ok
+test_real_stdio_returns_pending_before_blocked_release_sync_resumes (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_real_stdio_returns_pending_before_blocked_release_sync_resumes) ... execute program '/mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python': <_UnixSubprocessTransport pid=538 running stdin=<_UnixWritePipeTransport fd=9 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=10 polling>>
+<_UnixReadPipeTransport fd=10 polling> was closed by peer
+<_UnixSubprocessTransport pid=538 running stdin=<_UnixWritePipeTransport closed fd=9 closed> stdout=<_UnixReadPipeTransport closed fd=10 closed>> exited with return code 0
+ok
+test_recovery_wait_ends_but_same_attempt_keeps_revision_and_custody (runtime.cli_v1.test_mcp_wait_budget.WaitBudgetTests.test_recovery_wait_ends_but_same_attempt_keeps_revision_and_custody) ... ok
+test_change_after_modifier_releases_prefix_and_requires_review (runtime.cli_v1.test_mcp_process_identity.MCPIdentityTests.test_change_after_modifier_releases_prefix_and_requires_review) ... ok
+test_default_mode_does_not_query_or_claim_process_identity (runtime.cli_v1.test_mcp_process_identity.MCPIdentityTests.test_default_mode_does_not_query_or_claim_process_identity) ... ok
+test_same_xid_changed_process_refuses_old_alias_through_mcp (runtime.cli_v1.test_mcp_process_identity.MCPIdentityTests.test_same_xid_changed_process_refuses_old_alias_through_mcp) ... ok
+test_selected_identity_survives_delivery_retention_and_stable_input (runtime.cli_v1.test_mcp_process_identity.MCPIdentityTests.test_selected_identity_survives_delivery_retention_and_stable_input) ... ok
+test_unavailable_identity_does_not_reopen_or_downgrade (runtime.cli_v1.test_mcp_process_identity.MCPIdentityTests.test_unavailable_identity_does_not_reopen_or_downgrade) ... ok
+test_cli_forwards_explicit_startup_selection (runtime.cli_v1.test_mcp_process_identity.StartupTests.test_cli_forwards_explicit_startup_selection) ... ok
+test_cli_wrong_mode_refuses_before_reading_targets (runtime.cli_v1.test_mcp_process_identity.StartupTests.test_cli_wrong_mode_refuses_before_reading_targets) ... ok
+test_invalid_selection_refuses_before_creating_output_or_opening (runtime.cli_v1.test_mcp_process_identity.StartupTests.test_invalid_selection_refuses_before_creating_output_or_opening) ... ok
+test_owner_rejects_non_boolean_selection (runtime.cli_v1.test_mcp_process_identity.StartupTests.test_owner_rejects_non_boolean_selection) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 6.407s
+
+OK

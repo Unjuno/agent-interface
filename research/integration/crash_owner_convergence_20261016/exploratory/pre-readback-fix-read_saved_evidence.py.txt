@@ -1,0 +1,111 @@
+"""Read retained bytes/rows without importing any historical candidate."""
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+P = Path(__file__).resolve().parent
+ROOT = P.parents[2]
+
+
+def check_rows(data):
+    if (data['tests'], data['failures'], data['errors'], data['skipped']) != (3, 0, 0, 0):
+        raise ValueError('Test result counts differ')
+    rows = data['rows']
+    expected = {'generation_wire_collision', 'selected_owner_decoded_lease',
+                'selected_owner_original_lease', 'timeout', 'wrong_reply_id',
+                'invalid_records', 'healthy_control'}
+    if len(rows) != 7 or {r['case'] for r in rows} != expected:
+        raise ValueError('Row inventory differs')
+    rows = {r['case']: r for r in rows}
+    collision = rows['generation_wire_collision']
+    if collision['wire'] != collision['wire_after']:
+        raise ValueError('No wire collision')
+    for field in ('target_process_identity', 'target_window_identity'):
+        if (field in collision['wire'] or
+                collision['sources_before'][field] == collision['sources_after'][field]):
+            raise ValueError('Generation collision evidence differs')
+    refused = rows['selected_owner_decoded_lease']
+    if refused['admitted'] != 0 or refused['fake_keys_down'] or any(
+            r.get('event') == 'input_admission' for r in refused['owner_records']):
+        raise ValueError('Missing-source refusal differs')
+    control = rows['selected_owner_original_lease']
+    admissions = [r for r in control['owner_records'] if r.get('event') == 'input_admission']
+    if control['admitted'] != 1 or control['fake_keys_down_after_release'] or len(admissions) != 1:
+        raise ValueError('Original-source control differs')
+    if len(admissions[0]['target_process_identity']) != 4:
+        raise ValueError('Control lacks source binding')
+    for name in ('timeout', 'wrong_reply_id', 'invalid_records', 'healthy_control'):
+        row = rows[name]
+        if (row['first_error'] is None) != (name == 'healthy_control'):
+            raise ValueError('Injected reply outcome differs')
+        if [(r['request_id'], r['op'], r['key']) for r in row['sent']] != [(1, 'down', 'a'), (2, 'down', 'd')]:
+            raise ValueError('Post-error new-send evidence differs')
+    return True
+
+
+def main():
+    manifest = json.loads((P/'ORIGINAL_PATHS.json').read_text())
+    supplemental = json.loads((P/'SUPPLEMENTAL_SOURCES.json').read_text())
+    entries = manifest['entries'] + supplemental
+    lookup = {}
+    for row in entries:
+        raw = (P/row['archive']).read_bytes()
+        if len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']:
+            raise ValueError('Archived byte mismatch: '+row['original_path'])
+        lookup[row['original_path']] = raw
+    if len(manifest['entries']) != 614 or len(lookup) != len(entries):
+        raise ValueError('Incomplete/duplicate path inventory')
+    freeze_results = []
+    for n in (35, 36, 37):
+        prefix = f'research/doom/v39_v15_xvfb_shared_key_source_a{n}_20261012/'
+        frozen_raw = lookup[prefix+'FREEZE.json']
+        freeze = json.loads(frozen_raw.decode('utf-8-sig'))
+        harness = json.loads(lookup[prefix+'HARNESS.json'].decode('utf-8-sig'))
+        for row in freeze['files']:
+            if hashlib.sha256(lookup[row['path']]).hexdigest() != row['sha256']:
+                raise ValueError('Frozen-source hash differs')
+        if (harness['allocation_id'] != freeze['allocation_id'] or
+                hashlib.sha256(frozen_raw).hexdigest() != harness['freeze_sha256'] or
+                hashlib.sha256(lookup[harness['runner_path']]).hexdigest() != harness['runner_sha256']):
+            raise ValueError('Harness identity/hash differs')
+        tree = ast.parse(lookup[prefix+'candidate.py'])
+        ids = [v.value for node in ast.walk(tree) if isinstance(node, ast.Dict)
+               for k, v in zip(node.keys, node.values)
+               if isinstance(k, ast.Constant) and k.value == 'allocation_id' and
+               isinstance(v, ast.Constant) and isinstance(v.value, str)]
+        status = 'MATCHED_IDENTITY_AND_HASHES_ONLY' if ids == [freeze['allocation_id']] else 'STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH'
+        if (n == 35) != (status == 'MATCHED_IDENTITY_AND_HASHES_ONLY'):
+            raise ValueError('Historical identity classification differs')
+        freeze_results.append(dict(allocation=n, freeze_id=freeze['allocation_id'], candidate_ids=ids, status=status))
+    modes = {}
+    for mode in ('normal', 'optimized'):
+        data = json.loads((P/f'verification/{mode}.json').read_text())
+        check_rows(data)
+        for path, digest in data['source_sha256_lf'].items():
+            if hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n', b'\n')).hexdigest() != digest:
+                raise ValueError('Current source pin differs: '+path)
+        mutations = []
+        for name in ('drop_row', 'duplicate_row', 'restore_identity', 'erase_unknown', 'erase_second_send', 'fabricate_admission'):
+            bad = copy.deepcopy(data)
+            byname = {r['case']: r for r in bad['rows']}
+            if name == 'drop_row': bad['rows'].pop()
+            if name == 'duplicate_row': bad['rows'].append(copy.deepcopy(bad['rows'][0]))
+            if name == 'restore_identity': byname['generation_wire_collision']['wire']['target_process_identity'] = [1]
+            if name == 'erase_unknown': byname['timeout']['first_error'] = None
+            if name == 'erase_second_send': byname['wrong_reply_id']['sent'].pop()
+            if name == 'fabricate_admission': byname['selected_owner_decoded_lease']['admitted'] = 1
+            try: check_rows(bad)
+            except ValueError: mutations.append(name)
+            else: raise ValueError('Mutated row accepted: '+name)
+        modes[mode] = dict(rows=len(data['rows']), source_pins=len(data['source_sha256_lf']), rejected_mutations=mutations)
+    report = dict(status='PASS_SAVED_READBACK_ONLY', archived_changed_paths=614,
+                  supplemental_sources=len(supplemental), modes=modes, frozen_identity_backcheck=freeze_results,
+                  scope='Archive/identity/source/row checks; not a live experiment or revalidation of all historical outcomes')
+    (P/'verification/READBACK.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == '__main__':
+    main()

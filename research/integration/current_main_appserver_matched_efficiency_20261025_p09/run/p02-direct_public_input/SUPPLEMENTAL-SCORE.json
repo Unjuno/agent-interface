@@ -1,0 +1,32 @@
+{
+  "arm": "direct_public_input",
+  "checks": {
+    "exact_model_image": true,
+    "exactly_one_owner_effect": true,
+    "expected_persisted_pixel": true,
+    "mint_sequence_matches_observation": true,
+    "model_point_in_green": true,
+    "one_completed_provider_turn": true,
+    "owner_click_is_selected_point": true,
+    "provider_usage_reported": true,
+    "public_action_returned": true,
+    "verified_release_and_close": true
+  },
+  "independent_task_success_from_retained_evidence": true,
+  "observation_to_action_return_ms": 5403.5754,
+  "original_result_classification": "PASS_MODEL_GROUNDED_PUBLIC_MCP_FAKE_X_ONLY",
+  "pair": "p02",
+  "physical_input": false,
+  "provider_turn_ms": 5157.5768,
+  "schema": "agent-interface/p09-retained-evidence-supplemental-score-v1",
+  "scope": "post-hoc independent audit of original immutable evidence; no replay or replacement",
+  "total_trial_ms": 6193.3488,
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 10197,
+    "output_tokens": 60,
+    "reasoning_output_tokens": 41
+  },
+  "wslc_used": false
+}

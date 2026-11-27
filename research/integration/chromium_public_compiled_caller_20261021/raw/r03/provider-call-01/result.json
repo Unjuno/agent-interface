@@ -1,0 +1,59 @@
+{
+  "raw": {
+    "format": "compiled-form-grounding-v1",
+    "field": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 340,
+        "y": 327
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "submit": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 684,
+        "y": 327
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "grounding": {
+    "field_point": [
+      340,
+      327
+    ],
+    "submit_point": [
+      684,
+      327
+    ],
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "usage": {
+    "input_tokens": 13449,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 141,
+    "reasoning_output_tokens": 26
+  },
+  "call_id": "01a15b6f-906e-73e1-bbad-1cd0e079a88c",
+  "thread_id": "01a15b6f-8fc6-7cb0-a174-771d2f1c5824",
+  "turn_id": "01a15b6f-906e-73e1-bbad-1cd0e079a88c",
+  "turn_status": "completed",
+  "answer_eligible": true,
+  "runner_ns": 7112572842,
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "cost": null
+}

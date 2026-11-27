@@ -1,0 +1,77 @@
+{
+  "status": "PASS_METHOD_SCOPED",
+  "model": {
+    "states": [
+      "fault-A",
+      "fault-B",
+      "fault-C",
+      "fault-D",
+      "out-of-catalog"
+    ],
+    "policies": [
+      "no-cover",
+      "protective-cover",
+      "cover-plus-sentinel"
+    ],
+    "horizonTicks": 2,
+    "enumeratedTraces": 15
+  },
+  "pairChecks": [
+    {
+      "policy": "no-cover",
+      "pair": "fault-A|fault-B",
+      "equal": false,
+      "incompatible": true
+    },
+    {
+      "policy": "protective-cover",
+      "pair": "fault-A|fault-B",
+      "equal": true,
+      "incompatible": true
+    },
+    {
+      "policy": "cover-plus-sentinel",
+      "pair": "fault-A|fault-B",
+      "equal": false,
+      "incompatible": true
+    },
+    {
+      "policy": "protective-cover",
+      "pair": "fault-C|fault-D",
+      "equal": false,
+      "incompatible": false
+    }
+  ],
+  "safety": {
+    "unsafePrefixes": 0
+  },
+  "mutations": [
+    {
+      "name": "drop-one-transition-row",
+      "rejected": true
+    },
+    {
+      "name": "forge-passive-sentinel",
+      "rejected": true
+    },
+    {
+      "name": "unsafe-prefix",
+      "rejected": true
+    },
+    {
+      "name": "truncate-horizon",
+      "rejected": true
+    },
+    {
+      "name": "change-out-of-catalog-response",
+      "rejected": true
+    }
+  ],
+  "disposition": "MASK_WITNESS_SCOPED and RESTORATION_SCOPED within this authored model only",
+  "limits": [
+    "Deterministic hand-authored model; no Agent Interface runtime/GUI measured",
+    "Sentinel is assumed truthful by the frozen table; its provenance/correlation is not modeled",
+    "No prevalence, efficacy, or production safety claim",
+    "Out-of-catalog class remains UNKNOWN; no diagnosis is asserted"
+  ]
+}

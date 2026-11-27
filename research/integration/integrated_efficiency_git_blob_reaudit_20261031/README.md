@@ -1,0 +1,9 @@
+# Integrated-efficiency V3: Git-byte reconciliation
+
+The earlier 2026-10-29 local audit reported 21 mismatched V3 retained files and 13/16 source matches at the declared parent. This successor audits Git object bytes, rather than CRLF-converted working files, at main `0989d0bff9dfebbf7803d926b4699b6b92e35499` and the preregistered parent `c6451f14fbd26787ff87217b414d8cf75f1255f4`.
+
+All 232 of 232 retained files match the committed retention manifest in both SHA-256 and length. For 16 preregistered sources, 14 parent Git blobs match exactly; one more (`runtime/golden_desktop_demo.py`) matches the preregistered hash when the parent bytes are converted to CRLF. The prior claim of 13 exact parent-blob matches was wrong: its captured hashes included working-tree newline conversions. This comparison is byte evidence, not proof of the exact bytes actually loaded by the historical process.
+
+`runtime/requirements-golden.txt` does not match the expected hash as the parent Git blob or after CRLF conversion. A read-only search of four commits touching that path across locally available refs found two distinct blobs, neither with the preregistered hash. This is not a search of inaccessible or unreferenced history. Preserve the remaining source-lineage uncertainty and the single-run, non-randomized scope; this does not establish matched speedup, token savings, recovery, or a second-domain comparison.
+
+`previous-audit.json` preserves the input to this calculation; `audit.json` records per-file expected/actual hashes and sizes. Reproduce from a repository containing the pinned commits: `python research/integration/integrated_efficiency_git_blob_reaudit_20261031/audit.py research/integration/integrated_efficiency_git_blob_reaudit_20261031/previous-audit.json`. No model, GUI, or container was run.

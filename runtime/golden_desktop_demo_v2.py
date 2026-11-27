@@ -16,40 +16,60 @@ for path in (HERE, RESEARCH):
 
 import golden_desktop_demo as base
 from integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
+from native_codex_usage_v1 import POLICY, accounting
 
 
-def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel) -> dict:
+def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel,
+             on_output_claimed=None, model="gpt-5.6-luna") -> dict:
     health = base.doctor()
     if not health["passed"]:
         raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
-    if out.exists():
-        raise FileExistsError(f"refusing to reuse output directory: {out}")
-    out.mkdir(parents=True)
-    base.dump(out / "doctor.json", health)
+    base.claim_output(out, on_output_claimed)
     config = base.configuration()
     chromium = config["chromium"]
-    node = config["windows_node"]
-    cli = config["windows_cli"]
-    assert chromium is not None and node is not None and cli is not None
+    executable = config.get("windows_codex_exe")
+    if executable is not None:
+        run_root = out.resolve()
+        health = {**health, "native_run_root": {
+            "wsl_path": run_root.as_posix(), "windows_path": base.windows_arg(run_root)}}
+    base.dump(out / "doctor.json", health)
+    if chromium is None:
+        raise ValueError("Chromium path is required")
+    if executable is None:
+        node = config["windows_node"]
+        cli = config["windows_cli"]
+        if node is None or cli is None:
+            raise ValueError("Windows Node and the Codex JavaScript entrypoint are required")
+        launch = {"node": node, "cli": base.windows_arg(cli)}
+    else:
+        if config.get("windows_python") is None:
+            raise ValueError("native Golden requires Windows Python for Windows job supervision")
+        launch = {"executable": executable, "windows_python": config["windows_python"],
+                  "allow_missing_cache_write": True}
     implementation, client_type = base.configure_research_modules(config, chromium)
     implementation.OUT = out
     implementation.RuntimeClient = client_type
     started = time.perf_counter_ns()
-    preflight = implementation.preflight_call("persistent", "compiled")
+    options = {} if model == "gpt-5.6-luna" else {"model": model}
+    preflight = implementation.preflight_call("persistent", "compiled", **options)
+    if preflight.get("requested_model") != model:
+        raise ValueError("schema preflight model differs from grounding model")
     workspace = out / "workspaces" / "persistent"
     with grounding_model_type(
             out / "persistent-grounding-app-server", workspace,
-            node=node, cli=base.windows_arg(cli), contract="compiled",
-            model="gpt-5.6-luna", effort="low") as grounding:
-        implementation.call_model = grounding.call
-        rows, independent = implementation.run_arm("persistent", seed, workspace)
+            contract="compiled", model=model, effort="low", **launch) as grounding:
+        rows, independent = implementation.run_arm(
+            "persistent", seed, workspace, model_call=grounding.call)
         grounding_thread_id = grounding.thread_id
         grounding_turns = grounding.calls
+        job_reference = grounding.native_job_reference if executable is not None else None
     ended = time.perf_counter_ns()
     usage_fields = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
                     "output_tokens", "reasoning_output_tokens")
     calls = [preflight] + [call for row in rows for call in row["model_calls"]]
-    usage = {field: sum(call["usage"][field] for call in calls) for field in usage_fields}
+    native_accounting = accounting(calls) if executable is not None else None
+    usage = (native_accounting["usage"] if native_accounting else
+             {field: sum(call["usage"][field] for call in calls) for field in usage_fields})
     feedback_ms = [value / 1e6 for row in rows for value in row["input_feedback_ns"]]
     report = {
         "schema": "agent_interface_golden_desktop_live_v2",
@@ -63,9 +83,10 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
                 "attempted": True, "succeeded": True,
             }
             and grounding_turns == 2
-            and len({call["call_id"] for call in calls}) == len(calls)
+            and len({call["call_id"] for call in calls}) == len(calls) == 3
         ),
         "seed": seed,
+        "requested_model": model,
         "tasks_exact": sum(row["exact_submission"] for row in rows),
         "routes": [row["route"] for row in rows],
         "planner_generations_including_preflight": len(calls),
@@ -86,6 +107,10 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
         "environment": health,
         "scope": "one fresh persistent typed-grounding demonstration; no baseline, rate, generality, token-efficiency or human-speed claim",
     }
+    if native_accounting is not None:
+        report.update(native_accounting, accounting_policy=POLICY, functional_passed=report["passed"],
+                      app_server_windows_job={**job_reference, "thread_id": grounding_thread_id})
+        report["passed"] = report["functional_passed"] and report["usage_status"] == "complete"
     base.dump(out / "golden-report.json", report)
     return report
 

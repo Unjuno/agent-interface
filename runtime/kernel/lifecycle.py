@@ -49,6 +49,7 @@ class RequestLifecycle:
         self.execution: ExecutionReceipt | None = None
         self.effect: EffectReceipt | None = None
         self.stop_reason: str | None = None
+        self.stop_release: ReleaseReceipt | None = None
         self.execution_started_ns: int | None = None
 
     def record_observation(self, observation: Observation) -> None:
@@ -158,6 +159,7 @@ class RequestLifecycle:
                 raise ContractError("stopping active authority requires verified empty release")
             if self.execution_started_ns is not None and release.observed_ns < self.execution_started_ns:
                 raise ContractError("cancellation release predates execution begin")
+            self.stop_release = release
         if self.stage is Stage.EXECUTED and self.execution is not None and not self.execution.release.released:
             raise ContractError("executed lifecycle lacks verified release")
         self.stop_reason = reason
@@ -176,7 +178,8 @@ class RequestLifecycle:
         )
         verified = self.stage is Stage.VERIFIED
         release_verified = (
-            self.execution.release.released if self.execution is not None else self.stage is Stage.STOPPED
+            self.execution.release.released if self.execution is not None
+            else self.stop_release is not None and self.stop_release.released
         )
         reason = self.stop_reason or self.stage.value
         return KernelOutcome(

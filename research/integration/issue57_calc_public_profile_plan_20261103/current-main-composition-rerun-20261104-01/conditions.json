@@ -1,0 +1,35 @@
+{
+  "schema": "issue57-current-main-composition-rerun-v1",
+  "date": "2026-11-04",
+  "source_commit": "27c9814890ff753e632274658c35639b58ceb9e9",
+  "test_module": "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+  "run": "python3 -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py; python3 -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py",
+  "modes": [
+    "normal",
+    "optimized (-O)"
+  ],
+  "container": {
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "network": "none",
+    "cpus": 2,
+    "memory": "4g",
+    "memory_swap": "4g total",
+    "pids_limit": 256,
+    "source_mount": "read-only",
+    "evidence_mount": "read-write",
+    "cleanup": "--rm"
+  },
+  "predeclared_interpretation": {
+    "pass": "All existing composition tests pass in normal and optimized modes; this confirms only the offline synthetic public-Calc composition at the recorded source commit.",
+    "failure": "Preserve exact logs and do not treat this source revision as verified by this rerun.",
+    "not_claimed": [
+      "live provider call",
+      "new live allocation",
+      "token or latency efficiency",
+      "WSLc",
+      "MAP01",
+      "general reliability"
+    ]
+  }
+}

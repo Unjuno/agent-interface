@@ -1,0 +1,82 @@
+{
+  "status": "PASS_SCOPED_FIXTURE_EFFECT",
+  "run_id": "a23d2911ee634b31adb901fdb4340f37",
+  "target_generation": "ee5f1a0d37b2efb21766bedf18e59944ec4bed874b3272655f4fa5cdcb6a74db",
+  "call_id": "8e666b6ee67746a084b9747a87cd838d",
+  "operation_id": "797393bc36234503aa952b725704924a",
+  "dispatch_status": null,
+  "terminal_action_status": "completed",
+  "release_confirmed": true,
+  "task_success_public": null,
+  "independent_task_success": true,
+  "effect": {
+    "effect_delay_ms": 6000,
+    "effect_observed_ns": 380110343000000,
+    "key_down_accepted_ns": 380104343000000,
+    "text": "a",
+    "verified": true
+  },
+  "events": [
+    {
+      "hwnd": 56102806,
+      "kind": "ready"
+    },
+    {
+      "code": 65,
+      "kind": "key_down_accepted"
+    },
+    {
+      "code": 65,
+      "kind": "key_up_received"
+    },
+    {
+      "code": 65,
+      "kind": "key_up_received"
+    },
+    {
+      "code": 97,
+      "effect_delay_ms": 6000,
+      "effect_observed_ns": 380110343000000,
+      "key_down_accepted_ns": 380104343000000,
+      "kind": "delayed_effect",
+      "text": "a",
+      "verified": true
+    }
+  ],
+  "after_generation": "ee5f1a0d37b2efb21766bedf18e59944ec4bed874b3272655f4fa5cdcb6a74db",
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "2cb802143422440b832a355153f6a3b0",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 1,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\worktrees\\issue57-latest-main-audit-20261122\\research\\integration\\win32_public_task_effect_r06_20261122\\raw\\mcp\\bd498b4f2fa94a3694ccfe4b0a58baf5",
+    "call_id": "bd498b4f2fa94a3694ccfe4b0a58baf5"
+  },
+  "terminal_seen_ns": 380106640000000,
+  "dispatch_result_status": "completed",
+  "result_lookup_call_id": "8e666b6ee67746a084b9747a87cd838d",
+  "action_call_id": "8e666b6ee67746a084b9747a87cd838d",
+  "target_generation_before": "ee5f1a0d37b2efb21766bedf18e59944ec4bed874b3272655f4fa5cdcb6a74db",
+  "target_generation_after": "ee5f1a0d37b2efb21766bedf18e59944ec4bed874b3272655f4fa5cdcb6a74db",
+  "observation_id_before": "28fbd42bee2344269e9499e479ac649b",
+  "observation_id_after": "29ebe10c64a149a6b2c2cf6692aa1dd0",
+  "late_input_horizon_verified": true,
+  "late_input_horizon_ns": 2000000000,
+  "late_input_observation_count": 78,
+  "late_input_max_observed_gap_ns": 32000000,
+  "late_input_max_sample_gap_ns": 100000000,
+  "release_ns": 380104359000000,
+  "effect_observed_ns": 380110343000000,
+  "after_observation_started_ns": 380110406000000,
+  "fixture_pid": 45872,
+  "fixture_hwnd": 56102806,
+  "cleanup_ui_verified": true
+}

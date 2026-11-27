@@ -1,0 +1,16 @@
+{
+  "note": "Transcribed from the prelaunch verification command output returned before the first S28 WSLc invocation; no global inventory was used.",
+  "checks": {
+    "current-main source hashes and git blobs match": true,
+    "deps/stage/xkb asset manifests match local files": true,
+    "runner/init/harness source hashes match preregistration": true,
+    "output directory empty before run": true,
+    "fresh session storage path absent before run": true,
+    "fresh unique names absent from repository before run": true,
+    ".NET harness built with zero warnings/errors": true,
+    "WSLc exact generated-container-name preflight was empty": true,
+    "container had network none and read-only inputs": true,
+    "local XRes identity preflight passed before test input": true
+  },
+  "all_passed": true
+}

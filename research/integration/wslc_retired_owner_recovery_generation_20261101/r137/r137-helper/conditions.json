@@ -1,0 +1,23 @@
+{
+  "allocation": "idle-explicit-recovery-r137-helper",
+  "mode": "helper",
+  "order": [
+    [
+      "r137-control",
+      "control"
+    ],
+    [
+      "r137-helper",
+      "helper"
+    ]
+  ],
+  "main_at_predecessor_freeze": "11e5d65e5898c71d96de582f9c218d00dc2a635d",
+  "predecessor_head": "e6ed07edad270cc4631518bf3b53124e4ada28b6",
+  "candidate": "local r132; exact source in manifest",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "manifest_sha256": "6f6cbf1c6442df4747974e8a4d6cee2dddc32b03d34974e221de348c22bfedac",
+  "protocol": "Private Xvfb: real old guarded action holds a; delayed b queued during injected X sync block; real cancel acknowledged, parent pauses decision and retires child. Both return UNKNOWN with cleanup stubbed. Control releases a,b by test fixture; helper explicitly calls existing private retirement cleanup with real retirement receipt, no new owner; independently verify key state, delayed horizon and fresh owner task.",
+  "criteria": "both see a down before and after cancel, cancel UNKNOWN; control fixture release or helper disconnect plus readback_verified followed by independent keys up; delayed horizon neutral; fresh action produces aa and releases; old close remains UNKNOWN",
+  "stop": "one try per arm; stop on failure or unresolved final input; private Xvfb destroyed in finally",
+  "limits": "injected sync/delay and decision pause, explicit helper invocation, private exclusive display; not integrated automatic recovery or physical desktop or MAP01"
+}

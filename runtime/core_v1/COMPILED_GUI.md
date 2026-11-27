@@ -24,6 +24,21 @@ admission still owns its freshness/target checks. These ordering checks do not
 authenticate capture timestamps, establish clock-domain provenance, or certify
 application effects.
 
+The returned receipt keeps local timing bounds with each observation
+(`observation_started_ns`, `observation_accepted_ns`) and each accepted action
+(`execution_started_ns`, `execution_accepted_ns`). Acceptance timestamps are
+sampled only after the adapter result is privately validated/copied, so they
+include validation time and preserve callback-return custody. The `effect_checked`
+event links the action ID to the effect observation's capture and acceptance
+timestamps and, when called, the verifier's start and acceptance timestamps. All
+runtime timestamps come from the caller-supplied `clock`; `captured_ns` comes
+from the observation adapter. Consumers may calculate acceptance-to-capture
+and verifier durations only when those values share a monotonic clock domain.
+These stamps are diagnostics, not an independently authenticated application-
+effect timestamp. A verifier verdict and `TASK_SUCCEEDED` remain adapter/predicate
+evidence, not a separate application truth certificate. A blocked synchronous
+adapter still prevents the runtime from returning or enforcing its deadline.
+
 Expected effects compare the declared scalar type and value. An explicitly
 declared string literal `"unknown"` can match that same observed string, but
 still requires the effect verifier's verdict before continuation. A missing
@@ -135,8 +150,8 @@ any other container stops with RUNTIME_FAILED/execution_failed without invoking
 its equality, length, iteration or copy hooks. Verified completed transitions
 are preserved; the malformed return does not become a completed transition or
 a pre-input refusal. An action_terminal event records invalid_release with
-release_verified=false. The receipt additionally carries unresolved_execution
-only for this rejection: action, malformed_release_container reason, false
+release_verified=false. For this rejection the receipt additionally carries
+unresolved_execution: action, malformed_release_container reason, false
 release_verified, the returned strict input_dispatched flag or null, and bounded
 exact-string action/effect references or null. Opaque references are omitted.
 
@@ -148,7 +163,20 @@ permission. This path does not clean up input, retry, resume or provide durable
 recovery. Existing pending_effect semantics are unchanged. Other malformed
 terminal fields retain their original validation behavior; arbitrary objects
 and concurrent callback mutation remain outside the qualified scope. Exact
-built-in-list paths keep their prior receipt shape and behavior.
+built-in-list returns that fail verified neutrality also retain an
+`unresolved_execution` entry with reason `release_unverified`, the action,
+strict delivery flag or null, and bounded exact-string action/effect references
+or null. An explicitly attested pre-input refusal keeps its existing behavior.
+If a returned `input_dispatched` value is not a strict boolean, or falsely
+claims no input for a non-refusal status, the core instead returns
+`RUNTIME_FAILED/execution_failed` with `unresolved_execution` reason
+`invalid_delivery_attestation`. The delivery flag is unknown, bounded
+references and any verified prior transitions are retained, and no later
+operation is dispatched. Other malformed terminal fields retain their
+existing validation behavior.
+This metadata preserves declarations for reconciliation; it does not establish
+whether input was delivered, prove release, or authorize replay. Verified
+neutral returns retain their prior receipt shape and behavior.
 
 The execution-finished clock sample occurs after local terminal validation and
 the retained release/pre-input-refusal decisions, before the journal callback.
@@ -167,3 +195,14 @@ capture bound is sampled after local validation, so it is a consistency check
 against that sample rather than an authenticated instant of adapter return.
 Malformed observations keep their existing refusal/validation semantics; a
 validation exception can occur before the clock callback is invoked.
+
+An optional trusted `on_action_completed` adapter may receive a deep copy of
+each transition after the core has accepted its completed terminal and verified
+all-up release, and after the core samples `execution_accepted_ns`. It runs
+before the next observation or action, so parent custody code can snapshot a
+per-action artifact without relying on a later mutable file. The callback does
+not alter the transition retained by the core. If it raises, the core returns
+`RUNTIME_FAILED/execution_failed` with the completed prefix and dispatches no
+later action; this is not a retry or a task-success signal. This callback is
+trusted synchronous adapter code, not durable storage or an independent effect
+oracle.

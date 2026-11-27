@@ -1,0 +1,279 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A02-20261009",
+  "frame": {
+    "encoding": "gray8-row-major",
+    "epoch": 8,
+    "frame_id": "frame-current-01",
+    "height": 64,
+    "width": 64
+  },
+  "scenarios": [
+    {
+      "case_id": "valid_roi_08_00",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          8,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-00"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-00"
+      }
+    },
+    {
+      "case_id": "valid_roi_16_01",
+      "request": {
+        "bounds": [
+          4,
+          7,
+          20,
+          23
+        ],
+        "candidate_region_ids": [
+          "roi-01"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-01"
+      }
+    },
+    {
+      "case_id": "valid_roi_24_02",
+      "request": {
+        "bounds": [
+          8,
+          11,
+          32,
+          35
+        ],
+        "candidate_region_ids": [
+          "roi-02"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-02"
+      }
+    },
+    {
+      "case_id": "valid_roi_32_03",
+      "request": {
+        "bounds": [
+          16,
+          16,
+          48,
+          48
+        ],
+        "candidate_region_ids": [
+          "roi-03"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-03"
+      }
+    },
+    {
+      "case_id": "valid_roi_48_04",
+      "request": {
+        "bounds": [
+          8,
+          8,
+          56,
+          56
+        ],
+        "candidate_region_ids": [
+          "roi-04"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-04"
+      }
+    },
+    {
+      "case_id": "valid_roi_56_05",
+      "request": {
+        "bounds": [
+          4,
+          4,
+          60,
+          60
+        ],
+        "candidate_region_ids": [
+          "roi-05"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-05"
+      }
+    },
+    {
+      "case_id": "valid_roi_62_06",
+      "request": {
+        "bounds": [
+          1,
+          1,
+          63,
+          63
+        ],
+        "candidate_region_ids": [
+          "roi-06"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-06"
+      }
+    },
+    {
+      "case_id": "valid_roi_64_07",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "candidate_region_ids": [
+          "roi-07"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-07"
+      }
+    },
+    {
+      "case_id": "valid_roi_63_08",
+      "request": {
+        "bounds": [
+          1,
+          0,
+          64,
+          63
+        ],
+        "candidate_region_ids": [
+          "roi-08"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-08"
+      }
+    },
+    {
+      "case_id": "stale_epoch",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          8,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-stale"
+        ],
+        "epoch": 7,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-stale"
+      }
+    },
+    {
+      "case_id": "replaced_frame_identity",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          8,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-old"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-old-00",
+        "reason": "uncertain",
+        "region_id": "roi-old"
+      }
+    },
+    {
+      "case_id": "focus_lost",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          8,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-focus"
+        ],
+        "epoch": 8,
+        "focus_state": "lost",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-focus"
+      }
+    },
+    {
+      "case_id": "ambiguous_region",
+      "request": {
+        "bounds": [
+          0,
+          0,
+          8,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-a",
+          "roi-b"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-a"
+      }
+    },
+    {
+      "case_id": "out_of_bounds",
+      "request": {
+        "bounds": [
+          -1,
+          0,
+          7,
+          8
+        ],
+        "candidate_region_ids": [
+          "roi-bad"
+        ],
+        "epoch": 8,
+        "focus_state": "active",
+        "frame_id": "frame-current-01",
+        "reason": "uncertain",
+        "region_id": "roi-bad"
+      }
+    }
+  ]
+}

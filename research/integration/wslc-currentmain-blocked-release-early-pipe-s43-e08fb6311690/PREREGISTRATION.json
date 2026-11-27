@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/wslc-s43-preregistration-v1",
+  "attempt_id": "wslc-currentmain-blocked-release-early-pipe-20261026-s43-e08fb6311690",
+  "preregistered_utc": "2026-10-25T16:07:50.0058426+00:00",
+  "source_commit": "c058acb0700f9f02a29b9a13ec934b1c411a3a8a",
+  "session_name": "agent-interface-wslc-s43-e08fb6311690",
+  "container_name": "ai-control-wslc-s43-e08fb6311690",
+  "storage_path": "<private-wslc-session-storage>",
+  "output_path": "<private-wslc-output>",
+  "storage_absent": true,
+  "output_absent": true,
+  "source_root": "<local-source-snapshot>",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+  "condition": "Same as S42: 3935ms private-Xvfb server pause, prestarted supervisor, two injected early false polls then real poll; corrected result path AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT=/out/result.json",
+  "execution": "One invocation, one test body, no retry",
+  "success_rule": "unittest exit zero, structured result exists, forced-poll trace confirms two false polls then real poll, all S33 safety/task oracles pass, exact cleanup",
+  "no_global_inventory": true,
+  "no_docker": true,
+  "limitations": [
+    "Synthetic private Xvfb only",
+    "injected early-poll behavior, not Windows kernel pipe timing",
+    "not physical GUI/MAP01",
+    "not reliability or efficiency estimate"
+  ]
+}

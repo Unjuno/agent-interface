@@ -1,0 +1,18 @@
+{
+  "schema": "agent-interface/public-recovered-caller-fresh-lifecycle-r23",
+  "frozen_main": "1bf4d236466457f30a852add867a86d2b0f8a8e9",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "a3e542b26dc65b341b758cb7c8b7e59576dbe4110df92eeb2174882056ad22c5",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "2921346df4d4882dc43159b77f30c48bd5ef3a21506bb65d06ea1ec51bcde1fc"
+  },
+  "environment": "CPython 3.11.9; Windows 11 Pro; short dedicated C: TEMP per sample",
+  "attempt_count": {"normal": 5, "optimized": 5, "total": 10},
+  "order": ["normal-01", "optimized-01", "normal-02", "optimized-02", "normal-03", "optimized-03", "normal-04", "optimized-04", "normal-05", "optimized-05"],
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+  "freshness": "Each attempt is a separate interpreter process with a fresh server, owner, producer, call/operation IDs, recovery receipt, Fake observer receipts, effect fixture, and task-oracle attempt. Each attempt uses a unique short TEMP/TMP/TMPDIR path under C:\\Users\\user\\AppData\\Local\\Temp.",
+  "pass_rule": "An attempt passes only on exit 0 and unittest OK with all frozen assertions. Every failure remains in the denominator; no retry or replacement.",
+  "required_assertions": ["exact Fake callback/public observation ID receipt match", "lower real observer open_session guard untouched", "exact task oracle operation and target generation", "source action remains UNKNOWN/null task_success", "separate recovery release and matching horizon", "replay denied", "all accepted Futures/reports drained before close"],
+  "prior_context": "R04 7/10 used the prior candidate and default D: temp path. R16/R19/R20/R22 show strong temp-location effects. R23 tests whether the merged observer binding and short C: temp path improve this Fake-only lifecycle cohort.",
+  "scope": "Fake/local public-MCP recovery lifecycle repeatability only",
+  "not_tested": ["live Win32 input or GUI", "external task effect", "MAP01", "matched efficiency", "WSLc/Docker allocation", "Research Preview", "distribution"]
+}

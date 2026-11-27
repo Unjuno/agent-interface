@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_bound_source_cannot_be_relabelled_before_ordinary_send (test_owned_owner_backend_adapter.OwnedBackendTests.test_bound_source_cannot_be_relabelled_before_ordinary_send) (field='target_process_identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 172, in test_bound_source_cannot_be_relabelled_before_ordinary_send
+    with self.subTest(field=field),self.assertRaises(ValueError):adapter.call('down',lease,'a')
+                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bound_source_cannot_be_relabelled_before_ordinary_send (test_owned_owner_backend_adapter.OwnedBackendTests.test_bound_source_cannot_be_relabelled_before_ordinary_send)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 173, in test_bound_source_cannot_be_relabelled_before_ordinary_send
+    self.assertEqual(send.call_count,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=2)

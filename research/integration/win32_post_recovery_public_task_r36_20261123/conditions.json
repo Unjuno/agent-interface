@@ -1,0 +1,100 @@
+{
+  "allocation": {
+    "followup_public_dispatches": 1,
+    "fresh_fixtures": 2,
+    "recovery_calls_per_source": 1,
+    "retries": 0,
+    "task_verifications": 1,
+    "unknown_source_dispatches": 1
+  },
+  "experiment": "win32-post-recovery-public-task-r36-distinct-generation",
+  "frozen_at_utc": "2026-11-23T02:48:39.679570+00:00",
+  "model": "none",
+  "order": [
+    1
+  ],
+  "pre_live_qualification": {
+    "ast_parse": "PASS_6_FILES_NORMAL_AND_-O",
+    "native_title_setter": "SetWindowTextW has explicit HWND/wchar signature and checked return",
+    "normal_task_server_handshake": "PASS_HANDSHAKE_AND_TASK_ORACLE_REGISTERED; 12 tools; 0 dispatches; 0 observations",
+    "optimized_task_server_handshake": "PASS_HANDSHAKE_AND_TASK_ORACLE_REGISTERED; 12 tools; 0 dispatches; 0 observations",
+    "retries": 0,
+    "title_config_consistency": "PASS top-level trial exactly matches trials[0]",
+    "win32_dll_allowlist": [
+      "user32",
+      "gdi32",
+      "kernel32"
+    ]
+  },
+  "provider": "none",
+  "schema": "agent-interface/win32-post-recovery-public-task-r34-v1",
+  "source_hashes": {
+    "run_cohort.py": "04f0b3d782c096b275d53b243b1ab62f6431a12d7116348cedfaaaf74a942579",
+    "source/fixture_app.py": "ce1361818b06b97637dd30d18f58f1767d93e2117bdebab645be62eae44cb652",
+    "source/foreground_probe.py": "38a3143cb6a54267ee6e025d764317c66c575b1181309eaa02202cc1c928dab4",
+    "source/handshake_smoke.py": "d0a638c8b64f115255e08bf7c7c526931dc2a716023f4a139c46454b95f3e4d3",
+    "source/scorer.py": "37b2bed670ec331cc543f87bcab5d13cfd782c9318551125831c040c552b6eb4",
+    "task_oracle_server.py": "b84c9e8835470a29b7ff47bbdd684a1f93cb6295e61911b2500a752d143c5147"
+  },
+  "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+  "stop_rules": [
+    "One fresh owned fixture only; preserve every failure as this attempt outcome; zero retries.",
+    "Source dispatch is one focused A chord with 2 s authority; never replay, regardless of source outcome.",
+    "If source action is not UNKNOWN with release unconfirmed, stop before recovery/followup and preserve result.",
+    "Verify exact producer absence before at most one public orphan recovery. Keep old action UNKNOWN, task_success null, replay denied.",
+    "Stop and retain fixture/fence on any target identity, foreground, recovery release, neutral readback, 2 s horizon, or fence uncertainty.",
+    "After recovery, require new Computer Use exact-window activation, expected-title HWND/PID foreground probe, fresh observation and fresh target generation before one distinct B action.",
+    "Only followup B may pass the independent task oracle; it must be tied to exact followup call/operation/generation and a char-B event within that dispatch interval, with fixture state ab.",
+    "Close fixture only after followup action release and task effect are independently verified; otherwise preserve it and report STOP.",
+    "No model/provider, efficiency, MAP01, general reliability, preview graduation, or original-action task-success claim.",
+    "Follow-up target must be a separately-created process/window with distinct HWND, PID, and generation; never reuse fenced source generation."
+  ],
+  "trial": {
+    "authority_lease_ms": 2000,
+    "capture_frame": "window_client",
+    "capture_region": [
+      0,
+      0,
+      400,
+      180
+    ],
+    "effect_delay_ms": 6000,
+    "followup_lease_id": "r36-151c0066449d4bf3881d82bb7369d063",
+    "followup_program_id": "r36-320eb12627eb4313a3a26639de0ffade",
+    "followup_task": "After recovery, public B task on separately-created fixture process/window with distinct generation; oracle requires one WM_CHAR B in dispatch interval and fresh state b.",
+    "followup_window_title": "Agent Interface Win32 Fixture R36 Fresh Task",
+    "horizon_ms": 2000,
+    "lease_id": "r36-a39b86c6309f48c9933f28a272c4927c",
+    "max_horizon_gap_ms": 100,
+    "ordinal": 1,
+    "program_id": "r36-d4990e7f911b454eb6659bacfd914c0f",
+    "trial_id": "r36-213dd05c321c41aea442e2d036595c0e",
+    "window_title": "Agent Interface Win32 Fixture R36 Source"
+  },
+  "trials": [
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r36-151c0066449d4bf3881d82bb7369d063",
+      "followup_program_id": "r36-320eb12627eb4313a3a26639de0ffade",
+      "followup_task": "After recovery, public B task on separately-created fixture process/window with distinct generation; oracle requires one WM_CHAR B in dispatch interval and fresh state b.",
+      "followup_window_title": "Agent Interface Win32 Fixture R36 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r36-a39b86c6309f48c9933f28a272c4927c",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 1,
+      "program_id": "r36-d4990e7f911b454eb6659bacfd914c0f",
+      "trial_id": "r36-213dd05c321c41aea442e2d036595c0e",
+      "window_title": "Agent Interface Win32 Fixture R36 Source"
+    }
+  ],
+  "window_title": "Agent Interface Win32 Fixture R36 Source",
+  "workload": "Recover expired action on source window, then public B task on separately-created process/window with distinct HWND/PID/generation."
+}

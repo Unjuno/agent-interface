@@ -1,0 +1,29 @@
+{
+  "experiment_id": "fake-x-window-lifecycle-check-use-20261019-r01",
+  "scope": "Fake X standard MCP caller composition only",
+  "repo_base": "0bc669bcad494da450dc36a3d9a5122648db3dfb",
+  "intervention": "Queue DestroyNotify after the guarded backend's final local press fence and release-obligation prearm, then force an independent lifecycle query to drain and retire the reader before Fake XTEST emits the first press.",
+  "success_observables": [
+    "caller result and task_success",
+    "whether the first XTEST press was emitted after lifecycle reader retirement",
+    "later press refusal",
+    "prefix release and local keymap readback",
+    "review_required and replay_allowed"
+  ],
+  "limitations": [
+    "Synthetic event scheduling in Fake X; no server event ordering claim.",
+    "Fake XTEST and keymap; no OS or physical key-release guarantee.",
+    "No application effect, task success, MAP01, native desktop, WSLc, provider, or efficiency measurement."
+  ],
+  "runtime": {
+    "python": "3.11.9",
+    "mcp": "1.30.0",
+    "python_xlib": "0.33"
+  },
+  "commands": [
+    "python research/integration/fake_x_window_lifecycle_check_use_20261019/run.py",
+    "python -O research/integration/fake_x_window_lifecycle_check_use_20261019/run.py",
+    "python -m unittest runtime.cli_v1.test_mcp_window_lifecycle",
+    "python -O -m unittest runtime.cli_v1.test_mcp_window_lifecycle"
+  ]
+}

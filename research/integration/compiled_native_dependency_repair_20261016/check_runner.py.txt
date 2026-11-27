@@ -1,0 +1,76 @@
+import ast, hashlib, importlib, json, math, os, platform, subprocess, sys, time, unittest
+from datetime import datetime, timezone
+from pathlib import Path
+ROOT=Path(r"C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation")
+OUT=Path(__file__).parent/'compiled-native-dependency-final-r2-20261016'
+BASE=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+MODULES=sorted(p.stem for p in (ROOT/'research/live_control').glob('test_*.py') if p.stem.startswith('test_adaptive_acquisition') or p.stem in {'test_caller_diagnostic_composition','test_caller_failure_id_composition','test_cost_invocation_composition_93c2','test_failure_status_composition','test_usage_subset_route'})+['runtime.integration_checks.test_native_catalogue','test_grounding_failure_accounting','test_integrated_efficiency_app_server_model_v1','test_persistent_planner_adapter_v2']
+MODULES += ['test_compiled_caller_handoff_v2','test_integrated_efficiency_compiled_execution_v1','test_integrated_efficiency_compiled_adapter_v2'] + ['runtime.core_v1.'+p.stem for p in sorted((ROOT/'runtime/core_v1').glob('test_compiled*.py'))]
+MODULES += ['test_compiled_form_guarded_x11','test_compiled_native_caller_composition'] + ['runtime.guarded_x11_v1.'+p.stem for p in sorted((ROOT/'runtime/guarded_x11_v1').glob('test_*.py'))]
+def clean(v):
+    if isinstance(v,float) and not math.isfinite(v): return {'nonfinite_float':str(v)}
+    if isinstance(v,dict):return {str(k):clean(x) for k,x in v.items()}
+    if isinstance(v,(list,tuple)):return [clean(x) for x in v]
+    return v
+if len(sys.argv)>1 and sys.argv[1]=='child':
+    suite=unittest.defaultTestLoader.loadTestsFromNames(MODULES)
+    def ids(s):
+        for t in s:
+            if isinstance(t,unittest.TestSuite):yield from ids(t)
+            else:yield t.id()
+    selected=list(ids(suite)); result=unittest.TextTestRunner(verbosity=2).run(suite)
+    records={}
+    for name in MODULES:
+        module=sys.modules.get(name)
+        for field in ('ROWS','RECORDS'):
+            value=getattr(module,field,None)
+            if isinstance(value,list):records[name+'.'+field]=clean(value)
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'{mode}-records.json').write_text(json.dumps(records,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+    (OUT/f'{mode}-result.json').write_text(json.dumps(dict(modules=MODULES,selected=selected,methods=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),passed=result.wasSuccessful(),pid=os.getpid(),optimize=sys.flags.optimize),indent=2)+'\n')
+    sys.exit(not result.wasSuccessful())
+OUT.mkdir(exist_ok=False)
+head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+assert head==BASE
+paths=[n.replace('.','/')+'.py' if n.startswith('runtime.') else 'research/live_control/'+n+'.py' for n in MODULES]+['runtime/integration_checks/test_native_catalogue.py','runtime/integration_checks/native.py','runtime/core_v1/compiled_gui.py','research/live_control/adaptive_acquisition_caller_v2.py','research/live_control/adaptive_acquisition_caller_v3.py','research/live_control/caller_uncertain_tail_I13/LIVE_CALLER.json','research/live_control/caller_uncertain_tail_I13/RESPONSE3.json']
+paths += ['research/live_control/'+n for n in ['integrated_efficiency_app_server_model_v1.py','persistent_planner_adapter_v2.py','codex_app_server_client_v2.py','codex_app_server_command_v1.py','compiled_form_grounding_v1.py','plain_form_points_v1.py','compiled_form_grounding_schema_v1.json','plain_form_points_schema_v1.json','compiled_form_grounding_responder_v1.txt','plain_form_points_responder_v1.txt']]
+paths += ['research/live_control/integrated_efficiency_compiled_execution_v1.py','research/live_control/integrated_efficiency_compiled_execution_v2.py','research/live_control/integrated_efficiency_compiled_adapter_v2.py']
+paths += ['runtime/guarded_x11_v1/'+p.name for p in sorted((ROOT/'runtime/guarded_x11_v1').glob('*.py'))] + ['runtime/backends/x11_v1/backend.py','runtime/backends/x11_v1/session.py']
+paths += ['runtime/cli_v1/test_mcp_process_identity.py','runtime/cli_v1/api.py','runtime/cli_v1/observe.py','runtime/core_v1/contract.py']
+paths=list(dict.fromkeys(paths))
+request=''.join(f'{BASE}:{p}\n' for p in paths).encode()
+batch=subprocess.check_output(['git','cat-file','--batch'],input=request,cwd=ROOT)
+pos=0;pins=[]
+for path in paths:
+    end=batch.index(b'\n',pos);blob,typ,size=batch[pos:end].decode().split();pos=end+1;data=batch[pos:pos+int(size)];pos+=int(size)+1
+    actual=(ROOT/path).read_bytes();join=ast.dump(ast.parse(data))==ast.dump(ast.parse(actual)) if path.endswith('.py') else json.loads(data)==json.loads(actual) if path.endswith('.json') else data.decode().splitlines()==actual.decode().splitlines()
+    assert join,path
+    pins.append(dict(path=path,blob=blob,git_byte_sha256=hashlib.sha256(data).hexdigest(),worktree_byte_sha256=hashlib.sha256(actual).hexdigest(),semantic_join=join))
+(OUT/'SOURCE_PINS.json').write_text(json.dumps(pins,indent=2)+'\n')
+conditions=dict(base=BASE,created_utc=datetime.now(timezone.utc).isoformat(),python=sys.version,platform=platform.platform(),modules=MODULES,scope='ordinary current-main caller contract checks; synthetic adapter values and retained JSON fixture only; no native/model/provider/allocation',source_files=len(paths),runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),normal_and_optimized=True,record_projection='nonfinite floats represented as tagged string objects; other retained ROWS/RECORDS unchanged',old_prs={'7289':'0843f75feeb5d0de4cf3870d6ad610227374b154','7310':'a4c4fbb2c38db90b66b84161f238240ad122b387'})
+from importlib.metadata import version
+conditions['dependencies']={'Pillow':version('Pillow'),'python-xlib':version('python-xlib')}
+(OUT/'CONDITIONS.json').write_text(json.dumps(conditions,indent=2)+'\n')
+env=dict(os.environ,PYTHONPATH=os.pathsep.join([str(ROOT),str(ROOT/'research/live_control')]),PYTHONDONTWRITEBYTECODE='1')
+for key in ('DISPLAY','ROWS','ROWS_PATH','ROWS_OUTPUT','TRACE_OUTPUT','ID_ROWS','COLLECTOR_OUTPUT','CATALOGUE_SOURCE','COMPILED_CALLER_MODULE'):env.pop(key,None)
+receipts=[]
+for mode,flags in [('normal',[]),('optimized',['-O'])]:
+    cmd=[sys.executable,*flags,str(Path(__file__)),'child'];started=datetime.now(timezone.utc).isoformat();t=time.monotonic_ns()
+    run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+    for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]: (OUT/f'{mode}.{stream}').write_bytes(data)
+    receipts.append(dict(mode=mode,command=cmd,started_utc=started,ended_utc=datetime.now(timezone.utc).isoformat(),elapsed_ns=time.monotonic_ns()-t,returncode=run.returncode))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps(receipts,indent=2))
+for mode,_ in [('normal',[]),('optimized',[])]:
+    result=OUT/f'{mode}-result.json';print(mode,result.read_text() if result.exists() else 'No result artifact')
+
+
+
+
+
+
+
+
+
+
+

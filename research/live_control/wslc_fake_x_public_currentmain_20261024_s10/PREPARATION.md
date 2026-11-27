@@ -1,0 +1,3 @@
+S10 preregistered before WSLc run at 2026-10-24T14:19:31.2401408+00:00; baseline 2166707229958e095d472c80e160c26449de7a29; freeze 30dbca2bb9ff119c7ea1052700c8c78c757a650f8a19deffd9fd05fd453f8681 (247 files); dependencies 203, zero mismatches. Unique session agent-interface-wslc-fake-x-s10-c03cf909136e4d2994fd355a0ae85252; storage absent D:\CodexData\Temp\agent-interface-wslc-fake-x-s10-c03cf909136e4d2994fd355a0ae85252. S09 HOLD retained. S10 adds owner prearm fake callback, no runtime edits.
+
+Local preflight completed at 2026-10-24T14:20:09.2079442+00:00: normal and optimized each passed 26 checks and rejected four mutations on Windows Python 3.11. The separate WSLc output directory remains empty; no session has started.

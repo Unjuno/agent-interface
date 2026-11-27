@@ -1,0 +1,10 @@
+{
+  "command": ["python3", "-B", "probe_duplicate_admission.py"],
+  "exit_code": 0,
+  "result_sha256": "da4ac457b3e45fa6fa6cd76b36d323b6d63d2eeab4ac176a18df6a38e09ef985",
+  "probe_sha256": "9c42e7c547b4f0a80ece7a1829f226c19a7c640b1731448e57ab1c03ee214ff3",
+  "projector_sha256": "e88d0d40cd01cf4097aa1ee1664406942ad7dcc47d3e22a42a937a483f4db3df",
+  "fixture_sha256": "baf3ea6e262c887d52bc35a1b93c2c07460090ed5294f225e6d30f16178a331c",
+  "source_commit": "3ceac8ba779b7b8a43c7a29f135e040dc637b1f8",
+  "note": "Exit 0 means the counterexample was reproduced as expected; projector returned measurement_ready=true for duplicate A releases while B admission remained unmatched."
+}

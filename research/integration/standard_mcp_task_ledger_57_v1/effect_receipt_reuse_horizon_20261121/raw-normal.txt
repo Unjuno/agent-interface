@@ -1,0 +1,14 @@
+COMMAND: python -u -c import os,sys; os.environ.update(TEMP="C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121/.tmp-issue57-tests",TMP="C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121/.tmp-issue57-tests",TMPDIR="C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121/.tmp-issue57-tests"); import unittest; suite=unittest.defaultTestLoader.loadTestsFromName("test_effect_receipt_reuse_horizon_integration_v1"); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(0 if result.wasSuccessful() else 1)
+TMP/TEMP/TMPDIR: C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121/.tmp-issue57-tests
+EXIT_CODE: 0
+TIMEOUT: false
+STDOUT:
+STDERR:
+test_post_horizon_receipt_preserves_fact_but_blocks_qualified_break_even (test_effect_receipt_reuse_horizon_integration_v1.EffectReceiptReuseHorizonIntegrationTests.test_post_horizon_receipt_preserves_fact_but_blocks_qualified_break_even) ... ok
+test_timely_receipt_qualifies_integrated_horizon_break_even (test_effect_receipt_reuse_horizon_integration_v1.EffectReceiptReuseHorizonIntegrationTests.test_timely_receipt_qualifies_integrated_horizon_break_even) ... ok
+test_unknown_receipt_time_preserves_fact_but_blocks_qualified_break_even (test_effect_receipt_reuse_horizon_integration_v1.EffectReceiptReuseHorizonIntegrationTests.test_unknown_receipt_time_preserves_fact_but_blocks_qualified_break_even) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.189s
+
+OK

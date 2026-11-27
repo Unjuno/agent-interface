@@ -1,0 +1,10 @@
+Dockerfile:1
+--------------------
+   1 | >>> FROM sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7
+   2 |     USER root
+   3 |     RUN apt-get update && apt-get install -y --no-install-recommends libreoffice-calc openbox fonts-liberation tesseract-ocr tesseract-ocr-eng && dpkg-query -W > /opt/calc-ocr-packages.tsv && tesseract --version > /opt/tesseract-version.txt 2>&1
+--------------------
+ERROR: failed to solve: sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7: pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+
+エラー コード: E_FAIL
+このエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。

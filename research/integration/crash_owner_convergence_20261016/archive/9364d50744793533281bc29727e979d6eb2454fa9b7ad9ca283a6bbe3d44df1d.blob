@@ -1,0 +1,104 @@
+{
+  "schema": "v39-xvfb-second-device-held-key-a37-audit-v1",
+  "status": "STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH",
+  "allocation_id": "V39-XVFB-SECOND-DEVICE-HELD-KEY-A37-20261012-01",
+  "candidate_allocation_id": "V39-X11-SHARED-KEY-SOURCE-A37-20261012-01",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "frozen_before_invocation": true,
+  "freeze_sha256": "5ca112add5f690f573f069a8a3270f167ef9855f719ca425906eb21a7b3e6459",
+  "freeze_matches_harness": true,
+  "runner_sha256": "fbd61ac19bc9fff7dd07112c8688ae90effa766a664fc73ce9f8ba2db99e51d9",
+  "runner_matches_harness": true,
+  "source_hashes_match": true,
+  "source_hash_checks": [
+    {
+      "actual": "0b66cd5e39497fb949d3a329e3555764f4c1e51ea8eca9d0a5a8aee5544a5404",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a37_20261012/candidate.py",
+      "expected": "0b66cd5e39497fb949d3a329e3555764f4c1e51ea8eca9d0a5a8aee5544a5404",
+      "match": true
+    },
+    {
+      "actual": "0d395a31c01cf18f1da703d278e51697f90cdfe1e0d9cc56ccc991a34d78bf51",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a37_20261012/PLAN.md",
+      "expected": "0d395a31c01cf18f1da703d278e51697f90cdfe1e0d9cc56ccc991a34d78bf51",
+      "match": true
+    },
+    {
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "path": "research/live_control/input_owner_process_v1.py",
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "match": true
+    },
+    {
+      "actual": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "expected": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "match": true
+    },
+    {
+      "actual": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "expected": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+      "match": true
+    },
+    {
+      "actual": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+      "path": "research/live_control/input_owner_v12.py",
+      "expected": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+      "match": true
+    },
+    {
+      "actual": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "path": "research/live_control/input_owner_v10.py",
+      "expected": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "match": true
+    },
+    {
+      "actual": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "path": "research/live_control/executor_v3.py",
+      "expected": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "match": true
+    },
+    {
+      "actual": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "path": "research/live_control/lease_release_v1.py",
+      "expected": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "match": true
+    },
+    {
+      "actual": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "path": "research/live_control/lease.py",
+      "expected": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "match": true
+    }
+  ],
+  "raw_sha256": "5b55490195e2f1d189fe37f07955bc6887b53960b762fe54d3564ce858ac629c",
+  "owner_receipt_sha256": "60d9b20ddc0e34da4fceb7c7ea708c895c44246a111fe356a6bf469bddefe822",
+  "observations_recorded_exploratory": {
+    "synthetic_xtest_device_id": 5,
+    "separate_xvfb_keyboard_device_id": 7,
+    "owner_keyup_verified": true,
+    "global_keymap_down_after_separate_device_release": false,
+    "other_device_test_hold_remained_active_through_owner_up": true,
+    "xvfb_exit": 0,
+    "global_keymap_down_after_owner_release": false,
+    "owner_raw_release_sources": [
+      5
+    ],
+    "owner_receipt_verified_empty": true,
+    "separate_device_raw_release_sources": [
+      7
+    ],
+    "owner_exit": 0,
+    "separate_device_raw_press_sources": [
+      7
+    ]
+  },
+  "candidate_decision_error": {
+    "message": "separate-device release decision conjunction failed",
+    "type": "RuntimeError"
+  },
+  "decision": "Do not classify this as a formal FAIL_METHOD_SCOPED because candidate RAW allocation_id does not equal the frozen/plan allocation_id. Preserve the Xvfb observations as exploratory only. The observed keymap-up after XTEST source 5 release while source 7 test-side hold remained active matches the preregistered FAIL direction, but the allocation identity gate was not enforced before invocation. No A37 retry.",
+  "scope": "Private Xvfb synthetic device events only. No physical input, game, model, or shared display."
+}

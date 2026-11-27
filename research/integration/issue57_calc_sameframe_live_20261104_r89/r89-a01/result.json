@@ -1,0 +1,3069 @@
+{
+  "action_transition_count": 2,
+  "authority_granted": false,
+  "cleanup_summary": {
+    "clean_exit_verified": true,
+    "status": "not_needed",
+    "target_exit_reason": null,
+    "target_exit_status": "exited",
+    "verified_empty": null
+  },
+  "compiled_call_id": "9c056d595ea3495b8f1697daadf378fd",
+  "environment": {
+    "display": ":97",
+    "monotonic_ns": 1082818609262,
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.2",
+    "root_xid": 1293
+  },
+  "independent_artifact_read_before_close": {
+    "artifact_bytes": 19140,
+    "artifact_sha256": "9382705cdddce3bf70de1eea2e02b175b0b3883aa291ca30fbaa4abf58bd26d2",
+    "cells": {
+      "A1": "731",
+      "A2": "864"
+    },
+    "status": "verified",
+    "task_success": true
+  },
+  "input_dispatched": true,
+  "mode": "live Calc exact registered Save proof and graceful clean exit",
+  "ocr_guard_condition": "skip",
+  "post_launch_review_delay_s": 1.0,
+  "public_tools": [
+    "interface_clock",
+    "interface_close",
+    "interface_guarded_activate_window",
+    "interface_guarded_calc_compiled",
+    "interface_guarded_calc_launch",
+    "interface_guarded_calc_prepare",
+    "interface_guarded_cancel",
+    "interface_guarded_compiled",
+    "interface_guarded_input",
+    "interface_guarded_mint",
+    "interface_guarded_mint_many",
+    "interface_guarded_observe",
+    "interface_guarded_recover_input",
+    "interface_guarded_review_window",
+    "interface_guarded_window_metadata",
+    "interface_guarded_window_metadata_revalidate",
+    "interface_results",
+    "interface_validate",
+    "interface_verify_task"
+  ],
+  "release_confirmed": true,
+  "replay_allowed": false,
+  "schema": "agent-interface/issue57-live-calc-sameframe-r89-a01",
+  "stages": [
+    {
+      "prepare": {
+        "artifact_name": "task-artifact.fods",
+        "artifact_path": "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+        "attempt_id": "issue57-r89-a01",
+        "call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+        "expires_in_ms": 300000,
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "parent_process_custody": "not_established",
+        "replay_allowed": false,
+        "status": "prepared",
+        "target_launch_status": "not_attempted",
+        "task_plan_sha256": null,
+        "task_success": null,
+        "task_values": {
+          "A1": "731",
+          "A2": "864"
+        }
+      }
+    },
+    {
+      "launch": {
+        "attempt_id": "issue57-r89-a01",
+        "authority_granted": false,
+        "call_directory": "/evidence/r89-a01/server-output/33a0d425b2c64b2ca87db828f92b1159",
+        "call_id": "33a0d425b2c64b2ca87db828f92b1159",
+        "initial_process_group_custody": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "child_retained",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "launch_receipt": {
+          "argv": [
+            "/usr/lib/libreoffice/program/soffice",
+            "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+            "--calc",
+            "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+            "--nologo",
+            "--nodefault",
+            "--nofirststartwizard",
+            "--norestore"
+          ],
+          "artifact_path": "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+          "environment_overrides": {
+            "SAL_USE_VCLPLUGIN": "gen"
+          },
+          "input_dispatched": false,
+          "pid": 2242,
+          "profile_directory": "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+          "replay_allowed": false,
+          "start_ticks": 108356,
+          "status": "launched",
+          "task_success": null
+        },
+        "operation_invoked": true,
+        "parent_process_custody": "retained",
+        "prepared_call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+        "process_group_cleanup": null,
+        "replay_allowed": false,
+        "status": "candidate_found",
+        "target_launch_status": "launched",
+        "task_success": null,
+        "window_discovery": {
+          "authority_granted": false,
+          "candidate": {
+            "authenticated_role": false,
+            "discovery_title_hint": "task-artifact.fods",
+            "discovery_title_xid": 8389410,
+            "focused_after": true,
+            "focused_before": true,
+            "input_authority": false,
+            "mapped": true,
+            "observed_monotonic_ns": 1085515997888,
+            "parent_xid": 2097252,
+            "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+            "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+            "process_pid": 2257,
+            "process_start_ticks": 108442,
+            "query_started_monotonic_ns": 1085514845818,
+            "role_cue": null,
+            "schema": "agent-interface/x11-window-metadata-cues-v1",
+            "title_cue": "task-artifact.fods - LibreOffice Calc",
+            "transient_for_xid": null,
+            "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+            "wm_class": [
+              "libreoffice",
+              "libreoffice-calc"
+            ],
+            "xid": 8389410
+          },
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "samples": [
+            {
+              "monotonic_ns": 1083583115589,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1083738161781,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1083892442456,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084046649739,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084201007202,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084354856894,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2252,
+                  "replay_allowed": false,
+                  "start_ticks": 108357,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2252": 108357
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084508904901,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "advanced",
+                "task_success": null,
+                "transition": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "input_dispatched": false,
+                  "observed_monotonic_ns": 1084505687389,
+                  "previous_target": {
+                    "pid": 2252,
+                    "start_ticks": 108357
+                  },
+                  "replay_allowed": false,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  },
+                  "task_success": null,
+                  "transition": "pre_review_gui_child_replacement"
+                }
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084663102929,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1084816890554,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1085189752926,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1085356160457,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": []
+            },
+            {
+              "monotonic_ns": 1085521793443,
+              "query_status": "discovered",
+              "synchronization": {
+                "authority_granted": false,
+                "child": {
+                  "argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "authority_granted": false,
+                  "executable": "/usr/lib/libreoffice/program/soffice.bin",
+                  "expected_argv": [
+                    "/usr/lib/libreoffice/program/soffice.bin",
+                    "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                    "--calc",
+                    "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                    "--nologo",
+                    "--nodefault",
+                    "--nofirststartwizard",
+                    "--norestore"
+                  ],
+                  "input_dispatched": false,
+                  "launcher_pid": 2242,
+                  "launcher_start_ticks": 108356,
+                  "package_version": "4:7.4.7-1+deb12u14",
+                  "parent_pid": 2242,
+                  "pid": 2257,
+                  "replay_allowed": false,
+                  "start_ticks": 108442,
+                  "task_success": null
+                },
+                "custody": {
+                  "expected_members": {
+                    "2242": 108356,
+                    "2257": 108442
+                  },
+                  "launcher": {
+                    "pid": 2242,
+                    "start_ticks": 108356
+                  },
+                  "pgid": 2242,
+                  "schema": "agent-interface/calc-process-group-custody-v1",
+                  "session_id": 2242,
+                  "target": {
+                    "pid": 2257,
+                    "start_ticks": 108442
+                  }
+                },
+                "input_dispatched": false,
+                "replay_allowed": false,
+                "status": "unchanged",
+                "task_success": null
+              },
+              "windows": [
+                {
+                  "authenticated_role": false,
+                  "discovery_title_hint": "task-artifact.fods",
+                  "discovery_title_xid": 8389410,
+                  "focused_after": true,
+                  "focused_before": true,
+                  "input_authority": false,
+                  "mapped": true,
+                  "observed_monotonic_ns": 1085515997888,
+                  "parent_xid": 2097252,
+                  "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+                  "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+                  "process_pid": 2257,
+                  "process_start_ticks": 108442,
+                  "query_started_monotonic_ns": 1085514845818,
+                  "role_cue": null,
+                  "schema": "agent-interface/x11-window-metadata-cues-v1",
+                  "title_cue": "task-artifact.fods - LibreOffice Calc",
+                  "transient_for_xid": null,
+                  "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+                  "wm_class": [
+                    "libreoffice",
+                    "libreoffice-calc"
+                  ],
+                  "xid": 8389410
+                }
+              ]
+            }
+          ],
+          "status": "candidate_found",
+          "task_success": null
+        }
+      }
+    },
+    {
+      "review": {
+        "authority_granted": false,
+        "binding": {
+          "launcher_executable": "/usr/lib/libreoffice/program/oosplash",
+          "launcher_package_version": "4:7.4.7-1+deb12u14",
+          "launcher_pid": 2242,
+          "launcher_start_ticks": 108356,
+          "pid": 2257,
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "start_ticks": 108442,
+          "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+          "xid": 8389410
+        },
+        "call_directory": "/evidence/r89-a01/server-output/da0d233b57bd47c09ad941a10dfad1de",
+        "call_id": "da0d233b57bd47c09ad941a10dfad1de",
+        "candidate": {
+          "authenticated_role": false,
+          "discovery_title_hint": "task-artifact.fods",
+          "discovery_title_xid": 8389410,
+          "focused_after": true,
+          "focused_before": true,
+          "input_authority": false,
+          "mapped": true,
+          "observed_monotonic_ns": 1086615691763,
+          "parent_xid": 2097252,
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+          "process_pid": 2257,
+          "process_start_ticks": 108442,
+          "query_started_monotonic_ns": 1086614629190,
+          "role_cue": null,
+          "schema": "agent-interface/x11-window-metadata-cues-v1",
+          "title_cue": "task-artifact.fods - LibreOffice Calc",
+          "transient_for_xid": null,
+          "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+          "wm_class": [
+            "libreoffice",
+            "libreoffice-calc"
+          ],
+          "xid": 8389410
+        },
+        "fresh_metadata": {
+          "authenticated_role": false,
+          "focused_after": true,
+          "focused_before": true,
+          "input_authority": false,
+          "mapped": true,
+          "observed_monotonic_ns": 1086672391742,
+          "parent_xid": 2097252,
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+          "process_pid": 2257,
+          "process_start_ticks": 108442,
+          "query_started_monotonic_ns": 1086671234110,
+          "role_cue": null,
+          "schema": "agent-interface/x11-window-metadata-cues-v1",
+          "title_cue": "task-artifact.fods - LibreOffice Calc",
+          "transient_for_xid": null,
+          "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+          "wm_class": [
+            "libreoffice",
+            "libreoffice-calc"
+          ],
+          "xid": 8389410
+        },
+        "input_dispatched": false,
+        "replay_allowed": false,
+        "review": {
+          "input_dispatched": false,
+          "observation_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 55998,
+                "height": 800,
+                "mime_type": "image/png",
+                "path": "/evidence/r89-a01/server-output/da0d233b57bd47c09ad941a10dfad1de/calc-review/images/cc743809784442378d5b1a6921973be3.png",
+                "sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+                "source_raw_sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+                "timing_ns": {
+                  "converted": 1086636826412,
+                  "encoded": 1086659479708,
+                  "hashed": 1086664140964,
+                  "started": 1086635191234,
+                  "written": 1086662303431
+                },
+                "width": 1280
+              },
+              "bytes": 4096000,
+              "capture_ended_ns": 1086633478523,
+              "capture_started_ns": 1086627135429,
+              "frame": "screen_physical_px",
+              "height": 800,
+              "native_window_id": 8389410,
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ],
+              "sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+              "target": "calc",
+              "width": 1280
+            },
+            "observation_id": "b23a9d913863412a88ffa2b13816fdef",
+            "schema": "agent-interface/runtime-observation-v1",
+            "side_effect_authority": false,
+            "status": "returned"
+          },
+          "operation": "guarded_review_window",
+          "replay_allowed": false,
+          "review": {
+            "authority_granted": false,
+            "binding_revision": 1,
+            "ended_ns": 1086669194296,
+            "input_dispatched": false,
+            "observation": {
+              "binding_revision": 1,
+              "capture_ns": 1086627135429,
+              "image_source": "exact_capture_rgb_handoff",
+              "native": {
+                "artifact": {
+                  "bytes": 55998,
+                  "height": 800,
+                  "mime_type": "image/png",
+                  "path": "/evidence/r89-a01/server-output/da0d233b57bd47c09ad941a10dfad1de/calc-review/images/cc743809784442378d5b1a6921973be3.png",
+                  "sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+                  "source_raw_sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+                  "timing_ns": {
+                    "converted": 1086636826412,
+                    "encoded": 1086659479708,
+                    "hashed": 1086664140964,
+                    "started": 1086635191234,
+                    "written": 1086662303431
+                  },
+                  "width": 1280
+                },
+                "bytes": 4096000,
+                "capture_ended_ns": 1086633478523,
+                "capture_started_ns": 1086627135429,
+                "frame": "screen_physical_px",
+                "height": 800,
+                "native_window_id": 8389410,
+                "region": [
+                  0,
+                  0,
+                  1280,
+                  800
+                ],
+                "sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+                "target": "calc",
+                "width": 1280
+              },
+              "observation_id": "b23a9d913863412a88ffa2b13816fdef",
+              "pointer_binding": {
+                "focus": 8389410,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ],
+                "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+                "surface": 8389410,
+                "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+              },
+              "sequence": 1,
+              "timing_ns": {
+                "artifact_verified": 1086667673545,
+                "binding_checked": 1086666166040,
+                "decoded": 1086667678175,
+                "public_returned": 1086664235625,
+                "started": 1086626537506
+              }
+            },
+            "previous_binding_revision": 0,
+            "previous_scope": "native-x11:59ca0ed85e3f426fa20d833d1f32fde6",
+            "previous_window_id": 1293,
+            "requested_window_id": 8389410,
+            "scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+            "started_ns": 1086626246294,
+            "status": "reviewed"
+          },
+          "source": {
+            "binding_revision": 1,
+            "capture_ns": 1086627135429,
+            "image_source": "exact_capture_rgb_handoff",
+            "native": {
+              "artifact": {
+                "bytes": 55998,
+                "height": 800,
+                "mime_type": "image/png",
+                "path": "/evidence/r89-a01/server-output/da0d233b57bd47c09ad941a10dfad1de/calc-review/images/cc743809784442378d5b1a6921973be3.png",
+                "sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+                "source_raw_sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+                "timing_ns": {
+                  "converted": 1086636826412,
+                  "encoded": 1086659479708,
+                  "hashed": 1086664140964,
+                  "started": 1086635191234,
+                  "written": 1086662303431
+                },
+                "width": 1280
+              },
+              "bytes": 4096000,
+              "capture_ended_ns": 1086633478523,
+              "capture_started_ns": 1086627135429,
+              "frame": "screen_physical_px",
+              "height": 800,
+              "native_window_id": 8389410,
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ],
+              "sha256": "78380e2e4869306635bab29a7f7bbe9c48f9fe71301e86fb2b47e98fa553a404",
+              "target": "calc",
+              "width": 1280
+            },
+            "observation_id": "b23a9d913863412a88ffa2b13816fdef",
+            "pointer_binding": {
+              "focus": 8389410,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+              "surface": 8389410,
+              "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+            },
+            "sequence": 1,
+            "timing_ns": {
+              "artifact_verified": 1086667673545,
+              "binding_checked": 1086666166040,
+              "decoded": 1086667678175,
+              "public_returned": 1086664235625,
+              "started": 1086626537506
+            }
+          },
+          "status": "reviewed",
+          "task_success": null
+        },
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1086721933756,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "status": "reviewed",
+        "task_success": null
+      }
+    },
+    {
+      "surface_gate": {
+        "dimensions": [
+          1280,
+          800
+        ],
+        "dominant_fraction": 0.669220703125,
+        "dominant_rgb": [
+          255,
+          255,
+          255
+        ],
+        "passed": true,
+        "path": "/evidence/r89-a01/server-output/da0d233b57bd47c09ad941a10dfad1de/calc-review/images/cc743809784442378d5b1a6921973be3.png",
+        "sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+        "thresholds": {
+          "max_dominant_fraction": 0.9,
+          "min_unique_rgb_colors": 1500
+        },
+        "unique_rgb_colors": 2125
+      }
+    },
+    {
+      "mint_entry": {
+        "alias": "calc_entry",
+        "call_directory": "/evidence/r89-a01/server-output/ebd0849f6e9d42d2a3b39f682fe76241",
+        "call_id": "ebd0849f6e9d42d2a3b39f682fe76241",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 1386849813983,
+          "minted_ns": 1086849813983,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1086885319234,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      }
+    },
+    {
+      "mint_save": {
+        "alias": "calc_save",
+        "call_directory": "/evidence/r89-a01/server-output/49b3a162652b4199999b631a8dee2195",
+        "call_id": "49b3a162652b4199999b631a8dee2195",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 1386924827075,
+          "minted_ns": 1086924827075,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1086948908745,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      }
+    },
+    {
+      "compiled": {
+        "attempt_id": "issue57-r89-a01",
+        "call_directory": "/evidence/r89-a01/server-output/9c056d595ea3495b8f1697daadf378fd",
+        "call_id": "9c056d595ea3495b8f1697daadf378fd",
+        "feedback": {
+          "authority": "none",
+          "image": {
+            "data": "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oY/3AwAAQAYk1QCvXLny2MHHHnus161pj743TQt1+UMBAADwYdXLU6Az1v32y3LZac+ePXl5eX/913/d30EAAABOSr1pgPulHc2pHjgej1966aVDhgw59dRTY7HY/fffn6p7HjVqVF5e3qFDhzr++NnPfjbvP+zZsydVqwAAAGShHu9n3Y+NaMf3Xn/99Rn+3gx7//33r7766pEjR77++usDBw786U9/2tramqa1nn322SAI/uqv/uqPf/xjmpYAAADIEj07Atzvh2H7PUAG7Nix45133snPzz/ttNPOPPPM//bf/tvdd9/deevvf//7jgO2Y8aMWbduXcdgPB7/zGc+c9ppp40ePbq8vPydd97pcnDChAlvvfVWEASnnnpqXl5ev/x0AAAA/aUHDXCWNJ9ZEiN9xo8fP3r06FdffXXEiBGf+9znFi5c+O///u/RCQ0NDc8//3xra+sdd9wRBMHrr7/+hS98oaCgoLW19eGHH3744YdvvfXWLgf/z//5PyNHjgyC4P33329vb++fHw8AAKCfJHsKdFa1nZk/F/rEn3XU5a3xeLxHS3QqLCx89tln77333o0bNz777LPPPvvsD3/4w9/97ncdt44ZM+YLX/hCEAQDBw588803gyCor69///33n3nmmY985CMdczZv3vzxj3/82MHe5QEAAPhw6OUu0KTV2Wef/fDDD//hD3947rnnBgwY8OKLL/75z3/uuGnw4MEdX+Tn53ccxe34/ze/+c32/9Da2trlYP/8MAAAANkh2Qb4+uuv7/UOUn353uwPk3JvvPHG9OnTf/WrXx04cGDIkCGDBg0aM2ZM54HcY1155ZWFhYWPP/54U1PTiQeDIDj99NODIPjTn/6UtvgAAABZqge7QHf0jb07mbkv33vsXWW+++3yfObOM597fbZzl4qKiv785z//8z//8759+0499dRLL730gQceOMH8c845p6Gh4e677/6bv/mb/fv3B0HwX//rf12xYkWXg3Pnzr3zzjvHjx9/zjnnvPrqq1/84hcbGho67ufMM88866yzHCgGAAA+rHr2MUj93gN/uI/9dhgxYsQvfvGLY8eLi4ujO1d1fpZvEARTpkyZMmXKUfO7HCwvLy8vL+/8Y319fQoSAwAAnAx6fA1wP7agudD9AgAAkCa92QSrXxpR3S8AAAB90ctdoDPcjup+AQAA6KOeXQMc1ceTmXs0WfcLAABAHyXVAEe3TYrKTA+cplWO90OlW15eXr+sm1qp3fgaAAAgA5JqgGfOnJnuHJnX9x9KEwgAAHAS6eU1wAAAAHByyXv88cffeOON/o4BAAAAaRSLxQpisVgsFuvvJAAAAJBeToEGAAAgJ2iAOa433njj7LPP7u8UZB0PjA83f7/03YfpUZSmn8XdQl94TJ5EsvAvSwPMce3cuXPMmDH9nYKs44Hx4ebvl777MD2K0vSzuFvoC4/Jk0gW/mVpgAEAAMgJSX0O8LHCMMyGT8F95ZVXFi5cuGvXrnXr1g0dOrS/4wA907un8OWXX97Q0DBo0KC0ZiMHJfPQ6vbtr7Ky8uabbx43blzf87S1tc2ePfv+++8//fTT+35vnFzuuedb7733Xpc3DR48+M47785wHoAPje6PAP/iF7/40pe+NG3atFtuueWFF15IyapTpkxpa2s7arC8vDwMwzAMX3nllSTvZ/Xq1V/+8pfj8Xj0V+de3A+QKldddVUYhlOmTLnmmmvuvvvu3//+9yeY3OVTOHldvpKQyzoefp127tzZu/u5/PLLDx8+3ItvfOGFFwoKCsaNG/f++++HYfj+++933hSG4b59+4Ljv6vu37//8ssv/973vtc5MmDAgGnTpv3gBz/o3U9B/1qwYH70v55++3vvvRePPxMEQTz+TOd/HX88XmPM8Rz75Mp+6fj1O6qlpeWmm266/PLLKyoqWltbU37/9ML3v7+s4+Xi+99f1t9ZkvXww3V9Sdtl19blg/PYwb/85S8LFiyYNm3avffe297eHgTBO++8c9ttt/3lL3/pdt1uGuA//elP999//80337xu3bqbb765vr6+1z9ht+rq6uLxeElJSfLf8vbbb0+YMKHv9wOk0PLlyzdt2vS9731v7NixX/va17Zv3368mV0+haEvli9fHv8Pvf6Qv02bNvXuFIOnn356ypQpJ5hwgnfVn//855deeunmzZuPHDnSOfj5z39+48aNHW/tnFxqahbX1CyOfkF/6fLJlc0y8Ov3fffdd8kll/zkJz/51Kc+9cADD6T8/umFlpaW2gceqH3ggZaWlv7Okqzm5jf6krbLrq3LB+exg7/5zW8KCwufeuqpffv2vfzyy0EQLFu27Ktf/WpBQfcnOHfTAO/bt+8jH/nIpZdeesopp5x77rlVVVWdN/3whz8sKyubPn36s88+2zHy0ksv3XTTTdOmTbv++ut/85vfHG9w/vz5iUTisssuO+pfx0/sueee+/KXv3zFFVfcfvvtf/zjH4MguO2225qamr7yla/ceOONSd4JkBkDBgwoKSm58cYbP/e5z/3whz8MunopOOop/I//+I9hGF5xxRXz58//93//9yAIDh48eNVVV3XcYVtb2+WXXx5donevJOSgMAyPfcOKx+MzZsy45ppr1qxZc2zL2nEE+MiRI/fcc88XvvCFMAxnzJjReeux99bp+eefP++8804Q5gTvqk8//fR/+S//5Zxzzvlf/+t/dQ5+5CMfKSwsPIl+GcodX9p62vH+S+EqF1xwQRhO7vzvggsmpfDOc8dRT67HH3+882jw/v37r7rqqkOHDgXH+T02DMM1a9ZMnz790UcfDbp6qwqO83rS5b3Nnz//Jz/5yVHxjh3s8oXieO+JYRg+/vjj11xzzT/90z89//zz3/72tzsW/cMf/nC8+9+9e/f27dtnzZpVVFQ0a9asV199teP8FOh3XT44k3nE/uu//uugQYPOP//8ZFbppkX+67/+67PPPvuOO+64+OKLzzvvvAsuuCA////2zAcOHFixYsULL7xQW1v72c9+dv/+/f/9v//3+fPnjxs3bvv27XfeeeeKFSsOHz587ODixYunTJmyadOmAQMGJFmLffv2LVy48O67777ggguefPLJe+65Z9myZd/+9rfLy8vnzZvnCBJkrQsvvLChoaHL14ejnsIdb8+HDh168sknV65cefPNN5/4nnvxSkIuuOGGGzq+yM/P37x5c8fXR71h7d2794EHHli4cOHHPvaxjl9qu/Tb3/527969P/zhD4cMGRIdP+reOscTicTu3buLi4tPEO9476qvvfba4cOHzzvvvCuuuKKhoaG0tLTzW0aMGPHmm2+m5KJiUuvxTx04djC1DfB3v/s/UnhvuenYJ9ff//3fV1RUVFRUDBgw4Be/+MVnPvOZwsLCLt+nCgsLgyB45513Or8+9q2qy9eT493b4sVdnAtw7OAJfv3uUiKRWLly5dNPP/2Nb3zj1ltvfeqpp5544oknnnhiwYIFXd5/xytVx3kugwYNKi4ufuutt4YPH967CkMKdfngbGtrO3bwkksu+elPf3r11Vd/5jOfmTBhQmVl5b333pvkKt00wPn5+ffee++OHTteeeWVH/zgBw899NDSpUtPOeWUIAhmzZo1aNCgv/mbv3nnnXf+8pe/vPjii9u3b//qV7/a+b27du168803jx0cP358T2vx8ssvn3vuuZdeemkQBDfccMOaNWvee++9wYMH9/R+gAzrOHWzy9eHo14Kli9f3tDQsG/fvkQicckll2Q6KB8Wy5cvP/Zd5qg3rJdffvnCCy/8+Mc/HgTB9ddf/9RTT3V5V3/1V3+1Y8eORx555KKLLrr00ks7fv099t66PNsqLy8v+I/Hf+cXeXl5x3tXffrpp6+44oogCD796U/X1tbu2bOns5Fub2/vuDegF459co0cOXLcuHHPPffcZz7zmY0bN95yyy3BCd+nZs2a1fn0P/atqsvXk2Te9U6gyxeKE8yfOXPmoEGD/vZv/3b58uX/8A//0PHDPvTQQyf4luiryofvIovvf3/Z8U6cGTt27P/z/1RER8IwzESmJPzt3/5N59fZkyoIgqO2fjy2vJ3bHBxb3l7o8sF57ODAgQM7/3HnkUceueaaa37/+9939MBVVVUdT8njSWoX6HHjxo0bN+4LX/jCl7/85d/+9ref+cxngiDovD4qLy8vkUgEQXDRRRcd9fx88803jx086mdIxofvmQk54oUXXuh4y+/ypaDTSy+9tHnz5u985zsjR4587rnnfvSjHwVBkJ+f3/HaEgTBBx98cOx36QpI0rFvWMkYM2bMQw899Ktf/epnP/vZ97///eXLl3f8++/x7i0/P3/EiBF79uwpKSkpLCw89dRT9+7d2/FvtXv37i0oKOjc7O2od9VLLrnkl7/85f79++vq6jombNy4cdasWR1f79mzZ/To0X0tASetW26Z/dJLL3V8fcEFFzgm3CNHjhzp8sk1bdq0n/3sZyUlJQcPHpw06f+eWH6896nOIy5dvlUdz4nf9ZJx1AvFxz/+8eO9J3a8KOXn53e+OuXn559gk8gRI0a8/fbbhw8fHjRo0OHDh/fu3Tty5Mi+RD2pHP2bQzwe37lz5xtvvNEvaaJ+/vONnV9XV1f3X5CjvfHGG2effXZyc/v6i1mXD86//OUvJ3jE7tixo7m5+Stf+crNN9+8aNGiRCKxbNmyPjXAL730Ujwev+qqq0aNGvXiiy+e4ASJ888//7777mtoaLjssss6/52sy8EgCIYMGfLmm28m/5nI559//pIlS37zm99MmjRp5cqVH/3oRx3+hWzW1ta2e/fup59++tlnn33wwQeLi4u7fCnodPjw4QEDBgwePHjv3r2rV68eOHBgEASDBw8uKCj413/913PPPffJJ5889rt6+koCHc4777z77rvvhRde+OhHP/r444+fYObIkSOnT5/+uc99rry8/M9//nO3vyN+/OMff/nllzv287jkkksee+yxW2+9NT8//3/+z/958cUX5+fnd/mu+uyzz8Zisc6LEl944YX77ruvowF+55133n///bFjx6boR+ekUVhY+G//9vxFF328o/vt2AI6DCcfONDFedccz/GeXJMnT/4f/+N/rFmzpuPgcHD8X1mjunyr6vL1JJl7O4EuXyi6fU9M3ogRI8aPH79ixYp//ud//sEPfnDOOed8yM5/7ulByFgs1utNE1Mo2gBn1RHgo0TL23HsN4X7/B3vwXm8R2x7e/v3vve9uXPnBv9xxDSZ46bdNMDnnnvua6+9dtddd+3atWvEiBFf/epXzz333C5nDh06dPHixQ8++OB3v/vdQ4cOFRYWbty4scvBIAiuvfbam2666d1333366adPPfXUjntYtGjRpk2bgiCYPXt29NqtIAiGDx9+1113Pfjgg2+99da555575513niDzCe4HyIAbbrghPz9/6NCh559//ne+853/9J/+UxAEXb4UdLrooos++tGPXnvttSNGjPj0pz/9+uuvd4x/7Wtfu+eee/Lz86+99tpjF+rylYQc13kNcBAES5cuveiii46dc8YZZ9xxxx01NTVHjhz5z//5PxcVFXV5V+vXr6+trc3Lyxs+fPg//dM/JXOE5Atf+MKqVas6Nqf5+te//t3vfvdLX/pSe3v7xz/+8crKyuA476rLly+P7vE2adKkRCLxwgsvXHjhhVu2bPn7v/97Jztkp9Re7nuUL3/5+m996/+98867jhpvampK36IfPk8//fTxnlyf/exnn3766VWrVnXcdLxfWaO6fKvq8vXkePc2f/78Sy+99B//8R+jd1tZWRmG4ZVXXtk5crxfv0/8nng8XS76jW98o6amZuXKlRMmTIjuxgeZ1GXX1uWD83iP2J/+9Kef+tSnRo0aFQTBDTfcsGDBgry8vI6r308g76izuqFTPB7/l3/5l8bGxv4OQnbxwPhwy6m/33fffXf16tWvv/56lzvT9E5lZeXNN9+ckj2rEolERUXF/ffff/rpp/f93jLpw/Qo6uPPsmDB/C6PjSRzt83NzU888f91bFAcNXjw4DvvvDsdaY/nw/QXmj69ez05fPjwrbfe+p3vfKfjCguS9KF8TC5YML/2gQeCILhj7tyT5bPTkjkCnIV/WUldAwwAHyZ33333M888U1hYOHHixI5Tp1Ll/vvvT9Vd5efnf//730/VvZFhnbvC9PoUwfHjx999d3VqU5EOfXk9GTRokKc5HcaOHXvH3LlBEIwdO66/syRr7NixBQUD+ztFj2mAAcg53/rWt/o7Ah9yJ8sBHPrO6wkp0ff9kzPvZMwcBMGJPlWMHHf22Wdnw554ZBsPjA83f7/03YfpUZSmn8XdQl94TJ5EsvAvyzXAAAAA5ARHgAEAAMgJ/z9HdpG9fESw4QAAAABJRU5ErkJggg==",
+            "mimeType": "image/png",
+            "type": "image"
+          },
+          "image_reference": {
+            "authority": "none",
+            "capture_ns": 1089190590864,
+            "freshness": "historical referenced capture; no new observation",
+            "observation_id": "d22995b555e142bba8e345247528241b",
+            "path": "/evidence/r89-a01/server-output/9c056d595ea3495b8f1697daadf378fd/compiled/images/bdf317a34824418d8cdad2c930a13449.png",
+            "recorded_capture": {
+              "capture_ended_ns": 1089191988509,
+              "capture_started_ns": 1089190590864,
+              "frame": "screen_physical_px",
+              "height": 800,
+              "native_window_id": 8389410,
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ],
+              "target": "calc",
+              "width": 1280
+            },
+            "relative_path": "images/bdf317a34824418d8cdad2c930a13449.png",
+            "sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+            "status": "image"
+          },
+          "image_status": "image",
+          "outcome_summary": {
+            "cleanup_error": null,
+            "error": null,
+            "failure_phase": null,
+            "reported_status": "returned"
+          },
+          "owner_feedback_observation_id": "d22995b555e142bba8e345247528241b",
+          "owner_feedback_sequence": 19,
+          "receipt": {
+            "authority": "none",
+            "events": [],
+            "latest_observations": [],
+            "motor_state_validation": {
+              "accepted": false,
+              "present": false,
+              "reason": "missing"
+            },
+            "omitted_from_view": 0,
+            "record_counts": {},
+            "reference_scope": "Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.",
+            "report": {
+              "report_ref": "/source/raw_report"
+            },
+            "report_reference": "/source/raw_report",
+            "schema": "agent-interface/receipt-view-v3-report-ref",
+            "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+            "source": {
+              "bytes": 1037,
+              "kind": "received_bytes",
+              "path": null,
+              "raw_report": {
+                "input_dispatched": false,
+                "observation": {
+                  "artifact": {
+                    "bytes": 57025,
+                    "height": 800,
+                    "mime_type": "image/png",
+                    "path": "/evidence/r89-a01/server-output/9c056d595ea3495b8f1697daadf378fd/compiled/images/bdf317a34824418d8cdad2c930a13449.png",
+                    "sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+                    "source_raw_sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+                    "timing_ns": {
+                      "converted": 1089194192143,
+                      "encoded": 1089210474961,
+                      "hashed": 1089214112655,
+                      "started": 1089193790014,
+                      "written": 1089212419701
+                    },
+                    "width": 1280
+                  },
+                  "bytes": 4096000,
+                  "capture_ended_ns": 1089191988509,
+                  "capture_started_ns": 1089190590864,
+                  "frame": "screen_physical_px",
+                  "height": 800,
+                  "native_window_id": 8389410,
+                  "region": [
+                    0,
+                    0,
+                    1280,
+                    800
+                  ],
+                  "sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+                  "target": "calc",
+                  "width": 1280
+                },
+                "observation_id": "d22995b555e142bba8e345247528241b",
+                "schema": "agent-interface/runtime-observation-v1",
+                "side_effect_authority": false,
+                "status": "returned"
+              },
+              "sha256": "0d20dc5afa651421451891e3ff4b4f3f400e81fdd944a1a41829e18d58ab0312"
+            }
+          },
+          "schema": "agent-interface/review-v1"
+        },
+        "method_receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "observation-2",
+              "matched_conditions": {
+                "blank": true,
+                "context_ok": true
+              },
+              "outcome": "action",
+              "state": "initial"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-cd9e835d7418490b8ca8dd0d7229bfb9",
+              "event": "action_terminal",
+              "execution_accepted_ns": 1088155109411,
+              "execution_started_ns": 1087142877727,
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-cd9e835d7418490b8ca8dd0d7229bfb9",
+              "effect_observation_accepted_ns": 1088265497086,
+              "effect_observation_captured_ns": 1088157094682,
+              "effect_verification_accepted_ns": 1088269011681,
+              "effect_verification_started_ns": 1088267307631,
+              "event": "effect_checked",
+              "evidence_ref": "observation-13",
+              "execution_accepted_ns": 1088155109411,
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "observation-13",
+              "matched_conditions": {
+                "cells_filled": true,
+                "context_ok": true
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-ddb54803b0be48948edb2d6f5979d250",
+              "event": "action_terminal",
+              "execution_accepted_ns": 1089073265070,
+              "execution_started_ns": 1088273635731,
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "action_id": "action-ddb54803b0be48948edb2d6f5979d250",
+              "effect_observation_accepted_ns": 1089182716601,
+              "effect_observation_captured_ns": 1089075392861,
+              "effect_verification_accepted_ns": 1089185886914,
+              "effect_verification_started_ns": 1089184262594,
+              "event": "effect_checked",
+              "evidence_ref": "observation-18",
+              "execution_accepted_ns": 1089073265070,
+              "status": "unavailable"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "SAFE_YIELD",
+              "reason": "effect_unavailable"
+            }
+          ],
+          "elapsed_ns": 2174303591,
+          "ended_ns": 1089187114627,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "calc-ocr-save-v1",
+          "latest_evidence_ref": "observation-18",
+          "method": "calc-ocr-save-v1",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 1087013883720,
+              "evidence_digest": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+              "evidence_ref": "observation-2",
+              "observation_accepted_ns": 1087136285640,
+              "observation_started_ns": 1087012818413,
+              "predicates": {
+                "blank": true,
+                "cells_filled": "unknown",
+                "context_ok": true
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 1088157094682,
+              "evidence_digest": "4f2433b866c4f74cd5d69a080494ab16f366750b05bac0e18dde21dbaa3817d4",
+              "evidence_ref": "observation-13",
+              "observation_accepted_ns": 1088265497086,
+              "observation_started_ns": 1088156253822,
+              "predicates": {
+                "blank": false,
+                "cells_filled": true,
+                "context_ok": true
+              },
+              "sequence": 13
+            },
+            {
+              "captured_ns": 1089075392861,
+              "evidence_digest": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+              "evidence_ref": "observation-18",
+              "observation_accepted_ns": 1089182716601,
+              "observation_started_ns": 1089074512812,
+              "predicates": {
+                "blank": false,
+                "cells_filled": true,
+                "context_ok": true
+              },
+              "sequence": 18
+            }
+          ],
+          "outcome": "SAFE_YIELD",
+          "pending_effect": {
+            "action": "save",
+            "effect_ref": "compiled-da137203775246ec984438546cfeb7ea-32-execution",
+            "expected_effect": {
+              "cells_filled": true
+            }
+          },
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "effect_unavailable",
+          "session_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "started_ns": 1087012811036,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-cd9e835d7418490b8ca8dd0d7229bfb9",
+              "effect_ref": "compiled-da137203775246ec984438546cfeb7ea-17-execution",
+              "evidence_ref": "observation-2",
+              "execution_accepted_ns": 1088155109411,
+              "execution_started_ns": 1087142877727,
+              "from_state": "initial",
+              "matched_conditions": {
+                "blank": true,
+                "context_ok": true
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-ddb54803b0be48948edb2d6f5979d250",
+              "effect_ref": "compiled-da137203775246ec984438546cfeb7ea-32-execution",
+              "evidence_ref": "observation-13",
+              "execution_accepted_ns": 1089073265070,
+              "execution_started_ns": 1088273635731,
+              "from_state": "filled",
+              "matched_conditions": {
+                "cells_filled": true,
+                "context_ok": true
+              },
+              "observation_sequence": 13,
+              "release_verified": true,
+              "to_state": "handoff"
+            }
+          ]
+        },
+        "owner_timing": {
+          "clock": "time.monotonic_ns",
+          "completed_ns": 1089231174385,
+          "effect_status": null,
+          "elapsed_ns": 2225468733,
+          "error_type": null,
+          "method_outcome": "SAFE_YIELD",
+          "replay_allowed": false,
+          "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+          "scope": "run_compiled method entry through graph, feedback and session snapshot",
+          "started_ns": 1087005705652,
+          "status": "returned"
+        },
+        "owner_timing_retention": {
+          "status": "recorded"
+        },
+        "profile_id": "calc-ocr-save-v1",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 19,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1089341467161,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "task_artifact_admission": {
+          "artifact_name": "task-artifact.fods",
+          "attempt_id": "issue57-r89-a01",
+          "blank_bytes": 751,
+          "blank_identity": [
+            71,
+            281474981814734,
+            751,
+            1793760386505671300,
+            1793760386505671300
+          ],
+          "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+          "call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+          "expected_values": {
+            "A1": "731",
+            "A2": "864"
+          },
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "profile_id": "calc-ocr-save-v1",
+          "schema": "agent-interface/calc-task-artifact-descriptor-v1",
+          "target_pid": 2257,
+          "target_start_ticks": 108442,
+          "target_xid": 8389410,
+          "task_plan_sha256": null,
+          "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+        },
+        "task_artifact_root_call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+        "task_effect_verification": {
+          "reason": "trusted_save_controller_unavailable",
+          "status": "not_configured",
+          "task_success": null
+        },
+        "task_save_request": {
+          "attempt_id": "issue57-r89-a01",
+          "call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "save_request_id": "1de0af008530ba8107f912e1e46d6c7d",
+          "save_request_monotonic_ns": 1089184668229,
+          "schema": "agent-interface/calc-task-save-request-v1",
+          "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+        },
+        "task_success": null
+      }
+    },
+    {
+      "post_task_observation": {
+        "call_directory": "/evidence/r89-a01/server-output/f58b1a96fe0640c58377f5902794f43d",
+        "call_id": "f58b1a96fe0640c58377f5902794f43d",
+        "image_status": "image",
+        "input_dispatched": false,
+        "observation_report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 57025,
+              "height": 800,
+              "mime_type": "image/png",
+              "path": "/evidence/r89-a01/server-output/f58b1a96fe0640c58377f5902794f43d/images/00e11cf078fd4c3493d9eda6c32b1f92.png",
+              "sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+              "source_raw_sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+              "timing_ns": {
+                "converted": 1089388775393,
+                "encoded": 1089404875064,
+                "hashed": 1089408723017,
+                "started": 1089388257561,
+                "written": 1089406983603
+              },
+              "width": 1280
+            },
+            "bytes": 4096000,
+            "capture_ended_ns": 1089386536213,
+            "capture_started_ns": 1089384243941,
+            "frame": "screen_physical_px",
+            "height": 800,
+            "native_window_id": 8389410,
+            "region": [
+              0,
+              0,
+              1280,
+              800
+            ],
+            "sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+            "target": "calc",
+            "width": 1280
+          },
+          "observation_id": "a80f36d005d443e297ca4aae0bf8a818",
+          "schema": "agent-interface/runtime-observation-v1",
+          "side_effect_authority": false,
+          "status": "returned"
+        },
+        "operation": "guarded_observe",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 20,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1089444468955,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "source": {
+          "binding_revision": 1,
+          "capture_ns": 1089384243941,
+          "image_source": "exact_capture_rgb_handoff",
+          "native": {
+            "artifact": {
+              "bytes": 57025,
+              "height": 800,
+              "mime_type": "image/png",
+              "path": "/evidence/r89-a01/server-output/f58b1a96fe0640c58377f5902794f43d/images/00e11cf078fd4c3493d9eda6c32b1f92.png",
+              "sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+              "source_raw_sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+              "timing_ns": {
+                "converted": 1089388775393,
+                "encoded": 1089404875064,
+                "hashed": 1089408723017,
+                "started": 1089388257561,
+                "written": 1089406983603
+              },
+              "width": 1280
+            },
+            "bytes": 4096000,
+            "capture_ended_ns": 1089386536213,
+            "capture_started_ns": 1089384243941,
+            "frame": "screen_physical_px",
+            "height": 800,
+            "native_window_id": 8389410,
+            "region": [
+              0,
+              0,
+              1280,
+              800
+            ],
+            "sha256": "aa44e84ad96073510f4d7327a918de2da34b6e8ad5f006ed6f3b8efae4f5b4a2",
+            "target": "calc",
+            "width": 1280
+          },
+          "observation_id": "a80f36d005d443e297ca4aae0bf8a818",
+          "pointer_binding": {
+            "focus": 8389410,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+            "surface": 8389410,
+            "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+          },
+          "sequence": 20,
+          "timing_ns": {
+            "artifact_verified": 1089411932535,
+            "binding_checked": 1089410604567,
+            "decoded": 1089411935526,
+            "public_returned": 1089408753136,
+            "started": 1089383536924
+          }
+        },
+        "status": "observed",
+        "task_success": null
+      }
+    },
+    {
+      "mint_exit": {
+        "alias": "calc_exit",
+        "call_directory": "/evidence/r89-a01/server-output/5cc1fb70aef9405fb27a65a3dffd6d6c",
+        "call_id": "5cc1fb70aef9405fb27a65a3dffd6d6c",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 1389478922644,
+          "minted_ns": 1089478922644,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          16,
+          12
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 20,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1089528381332,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 20,
+        "status": "minted",
+        "task_success": null
+      }
+    },
+    {
+      "graceful_quit_input": {
+        "call_directory": "/evidence/r89-a01/server-output/5034b1acd5974a52a9fa700b882f4ccf",
+        "call_id": "5034b1acd5974a52a9fa700b882f4ccf",
+        "feedback_status": "not_requested",
+        "operation": "guarded_input",
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 24,
+            "ended_ns": 1090136709188,
+            "observations": [],
+            "program_emissions": 4,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1090136702229,
+                "verified": true
+              }
+            ],
+            "started_ns": 1089601354435,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1090134019661,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 500,
+                "started_ns": 1089633716838,
+                "update_observed": null
+              }
+            ]
+          },
+          "guard_checks": [
+            {
+              "authority": "resolution only; ordinary admission remains required",
+              "binding_translation": [
+                0,
+                0
+              ],
+              "eligible": true,
+              "handle": "calc_exit",
+              "local_translation": [
+                0,
+                0
+              ],
+              "name": "calc_exit",
+              "observation_sequence": 21,
+              "observed_box": [
+                67,
+                39,
+                32,
+                24
+              ],
+              "patch_sha256": "227ca5f487c01f3d2a83da6dc2ebb95d98ad414332339ddc2fdf1910f1a65f83",
+              "point": [
+                83,
+                51
+              ],
+              "private_registry_id_exposed": false,
+              "reason": "exact_region_match",
+              "reference_kind": "session_alias",
+              "sequence": 21,
+              "stage": "before_admission",
+              "status": "VALID",
+              "valid_until_ns": 1094567266836
+            },
+            {
+              "authority": "resolution only; ordinary admission remains required",
+              "binding_translation": [
+                0,
+                0
+              ],
+              "eligible": true,
+              "handle": "calc_exit",
+              "local_translation": [
+                0,
+                0
+              ],
+              "name": "calc_exit",
+              "observation_sequence": 22,
+              "observed_box": [
+                67,
+                39,
+                32,
+                24
+              ],
+              "patch_sha256": "227ca5f487c01f3d2a83da6dc2ebb95d98ad414332339ddc2fdf1910f1a65f83",
+              "point": [
+                83,
+                51
+              ],
+              "private_registry_id_exposed": false,
+              "reason": "exact_region_match",
+              "reference_kind": "session_alias",
+              "sequence": 22,
+              "stage": "before_focus",
+              "status": "VALID",
+              "valid_until_ns": 1094602326784
+            }
+          ],
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 22,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 1090187865198,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "open",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "status": "completed",
+        "task_success": null
+      }
+    },
+    {
+      "close": {
+        "authority_granted": false,
+        "calc_target_lifecycle": [
+          {
+            "prepared_call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+            "process_group_cleanup": {
+              "clean_exit_verified": true,
+              "replay_allowed": false,
+              "status": "not_needed",
+              "task_success": null,
+              "verified_empty": null
+            },
+            "target_process_exit_receipt": {
+              "custody": "libreoffice-oosplash-direct-child-v1",
+              "exit_code": 0,
+              "launcher_executable": "/usr/lib/libreoffice/program/oosplash",
+              "launcher_exit_code": 0,
+              "launcher_package_version": "4:7.4.7-1+deb12u14",
+              "launcher_pid": 2242,
+              "launcher_start_ticks": 108356,
+              "observed_monotonic_ns": 1090312974027,
+              "pid": 2257,
+              "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+              "replacement_observed": false,
+              "schema": "agent-interface/calc-target-exit-receipt-v2",
+              "start_ticks": 108442,
+              "status": "exited",
+              "verified": true,
+              "xid": 8389410
+            }
+          }
+        ],
+        "call_directory": "/evidence/r89-a01/server-output/d151c99492714340bd5772af3b8295fd",
+        "call_id": "d151c99492714340bd5772af3b8295fd",
+        "connection_close_attempted": true,
+        "owner_process_exitcode": 0,
+        "owner_process_retired": true,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 1090238440006,
+          "verified": true
+        },
+        "release_attempted": true,
+        "release_confirmed": true,
+        "restart_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "calc_process_group_cleanup": null,
+          "calc_process_group_custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "calc_process_group_custody_history": [
+            {
+              "custody": {
+                "expected_members": {
+                  "2242": 108356,
+                  "2252": 108357
+                },
+                "launcher": {
+                  "pid": 2242,
+                  "start_ticks": 108356
+                },
+                "pgid": 2242,
+                "schema": "agent-interface/calc-process-group-custody-v1",
+                "session_id": 2242,
+                "target": {
+                  "pid": 2252,
+                  "start_ticks": 108357
+                }
+              },
+              "observed_monotonic_ns": 1083577326943,
+              "transition": "initial"
+            },
+            {
+              "argv": [
+                "/usr/lib/libreoffice/program/soffice.bin",
+                "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+                "--calc",
+                "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+                "--nologo",
+                "--nodefault",
+                "--nofirststartwizard",
+                "--norestore"
+              ],
+              "authority_granted": false,
+              "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+              "input_dispatched": false,
+              "observed_monotonic_ns": 1084505687389,
+              "previous_target": {
+                "pid": 2252,
+                "start_ticks": 108357
+              },
+              "replay_allowed": false,
+              "target": {
+                "pid": 2257,
+                "start_ticks": 108442
+              },
+              "task_success": null,
+              "transition": "pre_review_gui_child_replacement"
+            }
+          ],
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:2aa37245336843ffb63ce37ecefb74de",
+          "compiled_surface": "x11-window-8389410",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 22,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": false,
+            "exitcode": 0,
+            "liveness_observed_monotonic_ns": 1090395849973,
+            "pid": 2238,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 4194304
+          },
+          "owner_process_pid": 2238,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 4194304,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+          "state": "closed",
+          "target": "calc",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": true,
+            "thread_alive": false
+          },
+          "targets": {
+            "calc": 8389410
+          },
+          "window_lifecycle": true
+        },
+        "session_id": "56561444f1544d1ebf801fe0cc7351eb",
+        "status": "closed",
+        "verified": true
+      }
+    },
+    {
+      "verify_task": {
+        "attempt_id": "issue57-r89-a01",
+        "call_id": "9c056d595ea3495b8f1697daadf378fd",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "scope": "guarded_x11_calc",
+        "status": "verified",
+        "task_effect": {
+          "artifact_bytes": 19140,
+          "artifact_identity": [
+            71,
+            562949958525474,
+            19140,
+            1793760392331354100,
+            1793760392334688000
+          ],
+          "artifact_sha256": "9382705cdddce3bf70de1eea2e02b175b0b3883aa291ca30fbaa4abf58bd26d2",
+          "attempt_id": "issue57-r89-a01",
+          "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+          "expected_values": {
+            "A1": "731",
+            "A2": "864"
+          },
+          "parsed_effect": {
+            "artifact_bytes": 19140,
+            "artifact_sha256": "9382705cdddce3bf70de1eea2e02b175b0b3883aa291ca30fbaa4abf58bd26d2",
+            "cells": {
+              "A1": "731",
+              "A2": "864"
+            },
+            "status": "verified",
+            "task_success": true
+          },
+          "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+          "profile_id": "calc-ocr-save-v1",
+          "reason": "registered_calc_saved_artifact_verified",
+          "replay_allowed": false,
+          "save_controller": {
+            "attempt_id": "issue57-r89-a01",
+            "call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+            "method_receipt_sha256": "c5bb641210323309f18999c29f5672571795522b13608795d3f341a3c640bc24",
+            "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+            "profile_id": "calc-ocr-save-v1",
+            "save_action_id": "action-ddb54803b0be48948edb2d6f5979d250",
+            "save_request_id": "1de0af008530ba8107f912e1e46d6c7d",
+            "save_request_monotonic_ns": 1089184668229,
+            "schema": "agent-interface/calc-registered-save-controller-v1",
+            "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+          },
+          "save_request_id": "1de0af008530ba8107f912e1e46d6c7d",
+          "save_request_monotonic_ns": 1089184668229,
+          "status": "verified",
+          "task_success": true,
+          "window_generation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9"
+        },
+        "task_success": true
+      }
+    }
+  ],
+  "task_success": true
+}

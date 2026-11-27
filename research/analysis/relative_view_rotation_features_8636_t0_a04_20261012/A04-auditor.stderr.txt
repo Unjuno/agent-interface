@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a04\research\analysis\relative_view_rotation_features_8636_t0_a04_20261012\auditor.py", line 352, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a04\research\analysis\relative_view_rotation_features_8636_t0_a04_20261012\auditor.py", line 351, in main
+    summary=audit(Path(a.output)); Path(a.result).write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n"); print(json.dumps(summary,sort_keys=True))
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\8636-t0-a04\research\analysis\relative_view_rotation_features_8636_t0_a04_20261012\auditor.py", line 273, in audit
+    if truth["arm"]=="viewstate_oracle" or not (expected_fault or stress_yield): raise ValueError("unexpected yield on valid fixture")
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unexpected yield on valid fixture

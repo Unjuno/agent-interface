@@ -1,0 +1,52 @@
+test_failed_release_saved_before_abort_without_remote_interrupt (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_failed_release_saved_before_abort_without_remote_interrupt) ... ERROR
+test_local_invalidation_does_not_consume_the_remote_request (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_local_invalidation_does_not_consume_the_remote_request) ... ERROR
+test_stale_invalidation_cannot_poison_a_fresh_turn (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_stale_invalidation_cannot_poison_a_fresh_turn) ... ERROR
+test_wait_failure_aborts_with_local_invalidation_retained (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_wait_failure_aborts_with_local_invalidation_retained) ... FAIL
+
+======================================================================
+ERROR: test_failed_release_saved_before_abort_without_remote_interrupt (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_failed_release_saved_before_abort_without_remote_interrupt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cover_local_invalidation.py", line 82, in test_failed_release_saved_before_abort_without_remote_interrupt
+    controller.cancel_invalidated_cover(value, handle, process, wait, 'cover', failure_root=root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cancel_invalidated_cover() got an unexpected keyword argument 'failure_root'
+
+======================================================================
+ERROR: test_local_invalidation_does_not_consume_the_remote_request (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_local_invalidation_does_not_consume_the_remote_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cover_local_invalidation.py", line 45, in test_local_invalidation_does_not_consume_the_remote_request
+    receipt = value.invalidate_turn(handle)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PersistentPlannerAdapter' object has no attribute 'invalidate_turn'
+
+======================================================================
+ERROR: test_stale_invalidation_cannot_poison_a_fresh_turn (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_stale_invalidation_cannot_poison_a_fresh_turn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cover_local_invalidation.py", line 57, in test_stale_invalidation_cannot_poison_a_fresh_turn
+    with self.assertRaises(PlannerProtocolError): value.invalidate_turn(old)
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PersistentPlannerAdapter' object has no attribute 'invalidate_turn'
+
+======================================================================
+FAIL: test_wait_failure_aborts_with_local_invalidation_retained (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_wait_failure_aborts_with_local_invalidation_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cover_local_invalidation.py", line 93, in test_wait_failure_aborts_with_local_invalidation_retained
+    self.assertEqual(client.interrupts, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('thread', 'turn-1')] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('thread', 'turn-1')
+
+- [('thread', 'turn-1')]
++ []
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=1, errors=3)

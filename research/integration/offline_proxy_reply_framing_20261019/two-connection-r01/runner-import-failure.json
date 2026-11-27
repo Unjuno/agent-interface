@@ -1,0 +1,27 @@
+{
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "runs": {
+    "protocol-and-relay-normal": {
+      "commands": [
+        "python",
+        "-m",
+        "unittest",
+        "-v",
+        "research.integration.offline_proxy_reply_framing_20261019.test_reply_gate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay",
+        "research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay"
+      ],
+      "exit_code": 1,
+      "output_tail": [
+        "----------------------------------------------------------------------",
+        "Ran 4 tests in 0.000s",
+        "",
+        "FAILED (errors=4)"
+      ],
+      "raw_file": "protocol-and-relay-normal.raw.gz",
+      "raw_sha256": "f02c314331f09cfc1d7349a1172fb5f443c4b9571fa5aca68f883903f65566c4"
+    }
+  }
+}

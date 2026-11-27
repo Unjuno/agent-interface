@@ -1,0 +1,17 @@
+{
+  "schema": "selected-win32-public-caller-regression-v1",
+  "source_commit": "76088cf3460c7e62da780fc03a6940ccedf6e066",
+  "python": "3.13.14",
+  "suites": [
+    "runtime.cli_v1.test_supervised_win32_compiled",
+    "runtime.cli_v1.test_mcp_win32_composition",
+    "runtime.cli_v1.test_target_generation_admission",
+    "runtime.cli_v1.test_win32_supervisor_helpers",
+    "runtime.cli_v1.test_owned_win32_session"
+  ],
+  "invocations": [
+    "py -3.13 -m unittest runtime.cli_v1.test_supervised_win32_compiled runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_target_generation_admission runtime.cli_v1.test_win32_supervisor_helpers runtime.cli_v1.test_owned_win32_session",
+    "py -3.13 -O -m unittest runtime.cli_v1.test_supervised_win32_compiled runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_target_generation_admission runtime.cli_v1.test_win32_supervisor_helpers runtime.cli_v1.test_owned_win32_session"
+  ],
+  "scope": "Selected fake/stub/supervised caller regressions only; no live GUI, GZDoom, WSLc, or Docker."
+}

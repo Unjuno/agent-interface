@@ -1,0 +1,36 @@
+{
+  "schema": "win32-screen-calculator-r18-conditions-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r18-18835bf5",
+  "frozen_utc": "2026-10-24T08:42:39.547873+00:00",
+  "host": "attached Windows PC; user-authorized native Win32 route",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "runner_sha256": "f6a236c4d34d556da45d8be238398ffc1ee0a74886ca0c269a36249941d0cc66",
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b",
+  "preregistration_sha256": "223237f242e19fe4a3b2e2ace50764816fa23aa585ebb04ef797a463d7daf1a4",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "baseline_display": "1044",
+  "expected_display": "1045",
+  "frame": "screen_physical_px",
+  "region": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "prior_screen_capture_sha256": "5c0c3c1d8e43e41818e8ad7ba9f7a9c21a98c46fdaaec46e4aa284fdbf386de8",
+  "task_oracle_schema_required": [
+    "call_id",
+    "operation_id",
+    "target_generation",
+    "oracle_id",
+    "outcome",
+    "observed_monotonic_ns",
+    "evidence_ref"
+  ],
+  "interaction_gate": "visually inspect saved same-session observation image before one PROCEED_R18 token",
+  "pending_rule": "one exact-call cancel and read-only poll <=4s; never replay",
+  "scope": "native Windows Calculator only"
+}

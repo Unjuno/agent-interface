@@ -1,0 +1,12 @@
+{
+  "schema": "win32-public-mcp-calculator-prelaunch-check-failure-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73",
+  "phase": "read-only frozen-hash verification before starting the runtime",
+  "status": "PRELAUNCH_CHECKER_PATH_ERROR",
+  "error": "The inline verifier incorrectly resolved repository-relative run_probe.py under the packet directory.",
+  "runtime_started": false,
+  "interface_observation_called": false,
+  "task_input_sent": false,
+  "formal_attempt_consumed": false,
+  "corrective_action": "Repair only the read-only manifest path resolution; verify the same frozen bytes; continue once if all hashes match."
+}

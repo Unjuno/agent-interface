@@ -1,0 +1,31 @@
+{
+  "schema": "win32-public-mcp-generation-fence-conditions-v1",
+  "attempt_id": "win32-public-mcp-generation-fence-20261023-r01",
+  "source_commit": "251f118222987c5e3072e694dd1b7a74d4bc51d3",
+  "platform": "user-authorized local Windows host",
+  "caller": "actual public stdio MCP server, interface_observe, interface_validate, interface_dispatch",
+  "target": "two sequentially owned fixture_app processes, one configured fixture HWND per MCP server process",
+  "procedure": [
+    "Start owned fixture process A and obtain its Win32 target generation from public interface_observe receipt.",
+    "Close process A and verify its HWND is destroyed and process exits.",
+    "Start distinct owned fixture process B and verify its target generation differs from A.",
+    "Submit one syntactically valid focused text program through public interface_validate and interface_dispatch, carrying process A generation while server B is configured for process B.",
+    "Require TARGET_GENERATION_CHANGED before session dispatch; independently check B event journal contains no input-caused events and no task effect file exists."
+  ],
+  "input_scope": "The only proposed action is one sentinel text payload addressed to owned fixture B. It must be refused before emission; if the guard fails, only the owned fixture can receive it. No pre-existing application is configured or targeted.",
+  "retry_policy": "One frozen trial only. Any timeout, ambiguous receipt, cleanup uncertainty, or failed check remains FAIL/UNKNOWN and is not replayed.",
+  "cleanup": "Post WM_CLOSE only to owned fixture HWNDs, wait boundedly, and terminate/kill only their owned process if close fails; preserve all output.",
+  "acceptance": [
+    "Public interface_observe succeeds and exposes a stable lowercase SHA-256 target_generation in its raw report.",
+    "Two distinct fixture process identities produce distinct target generations.",
+    "Public static validation accepts the caller program.",
+    "Public dispatch is attempted exactly once and returns TARGET_GENERATION_CHANGED with input_dispatched=false; fixture B records no character events.",
+    "Fixture B records only its initial ready event, no chars/click/save, no effect file exists, and both owned processes exit cleanly with HWNDs destroyed."
+  ],
+  "nonclaims": [
+    "atomic check/use or window-lifetime fencing after admission",
+    "native input delivery, release, blocked-I/O bounds, or recovery",
+    "task effect, MAP01, model efficiency, or reliability",
+    "WSLc portability or allocation qualification"
+  ]
+}

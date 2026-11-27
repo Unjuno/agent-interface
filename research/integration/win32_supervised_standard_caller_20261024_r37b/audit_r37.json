@@ -1,0 +1,256 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r37b-46d475b8a8324a11b40ff4b2719e369d",
+  "checks": [
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "conditions_id_matches_schema": true,
+        "frozen_packet_hashes_match": true,
+        "hook_timeout_registry_matches": true,
+        "instrumentation_loaded_without_input": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "preflight_passed_without_input",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "passed": 10,
+        "status": "STRICT_RELEASE_PASS",
+        "total": 10
+      },
+      "name": "phase1_strict_release_gate_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_audit_returned_monotonic_ns": 497701421000000,
+        "phase2_started_monotonic_ns": 497701421000000
+      },
+      "name": "phase2_started_only_after_phase1_gate",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_generation": "21434668355465cc22492abe806e653d672b0ee17828b3bfc57456ec60d927e9",
+        "phase2_generation": "f5061ae8cf5cf27c4caa9027a0f7ed79298bb3731542973aaad99fc7626debd1"
+      },
+      "name": "fresh_target_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_call_id": "46f526499f764cc1b3a82b7105e53d7d",
+        "phase1_operation_id": "06ec4a00274144fab1e20390b76581dc",
+        "phase2_call_id": "fcc4eb1098a54a99bd162ec83cbd0a51",
+        "phase2_operation_id": "85a9fd1851a5446d935bebddf7f475c8"
+      },
+      "name": "distinct_call_and_operation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "receipt": {
+          "call_id": "fcc4eb1098a54a99bd162ec83cbd0a51",
+          "evidence_ref": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r37b\\run\\phase2_task\\oracle-evidence.json",
+          "observed_monotonic_ns": 497715578000000,
+          "operation_id": "85a9fd1851a5446d935bebddf7f475c8",
+          "oracle_id": "46d475b8a8324a11b40ff4b2719e369d",
+          "outcome": "success",
+          "target_generation": "f5061ae8cf5cf27c4caa9027a0f7ed79298bb3731542973aaad99fc7626debd1"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "name": "task_oracle_success_bound_to_new_action",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_status": "completed",
+        "recovery_required": false,
+        "release_confirmed": true,
+        "release_receipts": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 497715281000000,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 5703924,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 39504,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 44700
+                }
+              ]
+            },
+            "verified": true
+          }
+        ]
+      },
+      "name": "phase2_action_completed_with_verified_neutral_release",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "release_receipt_count": 1,
+        "state_query_witnesses_present": true
+      },
+      "name": "phase2_completion_readback_has_independent_state_witness",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r37b-afd15137daa2"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r37b-afd15137daa2"
+        },
+        "oracle_actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r37b-afd15137daa2"
+        },
+        "oracle_outcome": "success"
+      },
+      "name": "task_effect_exactly_matches_frozen_expectation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "oracle_observed_monotonic_ns": 497715578000000,
+        "phase2_started_monotonic_ns": 497701421000000
+      },
+      "name": "task_effect_observed_after_recovery_phase",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_exit_code": 0,
+        "foreground_restored": true,
+        "phase2_exit_code": 0,
+        "server_close": {
+          "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r37b\\run\\phase2_task\\server-receipts\\779e86fbcd59412d8dcb324e42fd040c",
+          "call_id": "779e86fbcd59412d8dcb324e42fd040c",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "0febe58de380441bb7dbfc76308e10dc",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "bounded_cleanup_and_foreground_restore",
+      "passed": true
+    }
+  ],
+  "conditions_sha256": "f4294ee42a34e85a7273e9b8a0d44e4608ba1b1c237d27f525d57e4318dd99a4",
+  "nonclaims": [
+    "MAP01",
+    "WSLc GUI behavior",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)"
+  ],
+  "passed": 11,
+  "phase1_release_status": "STRICT_RELEASE_PASS",
+  "schema": "win32-r37-combined-audit-v1",
+  "source_commit": "5c907bb27f30b055180d3b9cdf7a4b706b1ff34f",
+  "status": "PASS_SCOPED",
+  "task_success": true,
+  "total": 11
+}

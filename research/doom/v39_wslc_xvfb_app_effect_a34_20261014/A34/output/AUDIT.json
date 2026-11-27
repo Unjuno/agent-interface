@@ -1,0 +1,292 @@
+{
+  "checks": [
+    {
+      "name": "frozen_input_manifest",
+      "observed": [
+        {
+          "actual": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+          "expected": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+          "pass": true,
+          "path": "input_owner_v10.py"
+        },
+        {
+          "actual": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+          "expected": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+          "pass": true,
+          "path": "input_owner_v12.py"
+        },
+        {
+          "actual": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "expected": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "pass": true,
+          "path": "input_transition_owner_v3.py"
+        },
+        {
+          "actual": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+          "expected": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+          "pass": true,
+          "path": "input_transition_owner_v4.py"
+        },
+        {
+          "actual": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7",
+          "expected": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7",
+          "pass": true,
+          "path": "map01_overlap_controller_v39.py"
+        },
+        {
+          "actual": "9397f1d9d1fd63f6660dd960a4b6dfdd078e6adccae566302d99172038956813",
+          "expected": "9397f1d9d1fd63f6660dd960a4b6dfdd078e6adccae566302d99172038956813",
+          "pass": true,
+          "path": "candidate.py"
+        },
+        {
+          "actual": "9ceabb8b714a937c6b035e05e6498563d42471dea0cf6ea8d2efefabb11ca17a",
+          "expected": "9ceabb8b714a937c6b035e05e6498563d42471dea0cf6ea8d2efefabb11ca17a",
+          "pass": true,
+          "path": "auditor.py"
+        },
+        {
+          "actual": "b3d1aa3f15acccf82cff6061ab80a2eeb95e546baf281ab0d00b18da96863854",
+          "expected": "b3d1aa3f15acccf82cff6061ab80a2eeb95e546baf281ab0d00b18da96863854",
+          "pass": true,
+          "path": "run-a34.sh"
+        },
+        {
+          "actual": "a7dd7d98d7f4962cff4c103fec01aa570a96214ec0e81e52949d43ccef8ae427",
+          "expected": "a7dd7d98d7f4962cff4c103fec01aa570a96214ec0e81e52949d43ccef8ae427",
+          "pass": true,
+          "path": "FREEZE.json"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "experiment_identity",
+      "observed": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A34-20261014-01",
+      "pass": true
+    },
+    {
+      "name": "candidate_complete",
+      "observed": {
+        "errors": [],
+        "status": "CANDIDATE_COMPLETE"
+      },
+      "pass": true
+    },
+    {
+      "name": "V4_admission_and_dispatch_identity",
+      "observed": {
+        "admission": {
+          "admitted_ns": 4150602676,
+          "event": "input_admission",
+          "input_ack_ns": 4150809931,
+          "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+          "key": "a",
+          "keycode": 38,
+          "valid_until_ns": 4450495676
+        },
+        "dispatch_context": {
+          "deadline_ns": 4450495676,
+          "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+          "key": "a",
+          "operation": "down",
+          "owner_id": "0339d4f97aa64029868fa85fa2b7c458"
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "application_received_matching_keypress",
+      "observed": {
+        "keycode": 38,
+        "observed_ns": 4150967709,
+        "type": 2,
+        "window_id": 2097152
+      },
+      "pass": true
+    },
+    {
+      "name": "application_received_matching_keyrelease",
+      "observed": {
+        "keycode": 38,
+        "observed_ns": 4450908162,
+        "type": 3,
+        "window_id": 2097152
+      },
+      "pass": true
+    },
+    {
+      "name": "application_task_effect",
+      "observed": {
+        "after_press": 1,
+        "after_release": 1,
+        "initial": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "bounded_application_feedback",
+      "observed": {
+        "bound_ns": 200000000,
+        "response_latency_ns": 479160
+      },
+      "pass": true
+    },
+    {
+      "name": "server_keymap_reports_up",
+      "observed": {
+        "key_up": true,
+        "sampled_ns": 4450911848,
+        "source": "XQueryKeymap on second X11 connection"
+      },
+      "pass": true
+    },
+    {
+      "name": "application_release_after_deadline_within_bound",
+      "observed": {
+        "bound_ns": 1000000000,
+        "release_overshoot_ns": 412486
+      },
+      "pass": true
+    },
+    {
+      "name": "current_V39_strict_terminal_release_accepts_receipt",
+      "observed": {
+        "replayed_terminal": {
+          "event": "terminal",
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keymap_after_error": null,
+                    "keymap_before_error": null,
+                    "keymap_sampled_ns": 4451159568,
+                    "keyrelease_error": null,
+                    "keyrelease_started_ns": 4450760506,
+                    "server_key_down_after": false,
+                    "server_key_down_before": true,
+                    "sync_error": null,
+                    "sync_returned_ns": 4450983067
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "interval_ns": [
+                  4450760506,
+                  4451159568
+                ],
+                "keycode": 38
+              }
+            ],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "expired",
+            "valid_until_ns": 4450495676,
+            "verified": true,
+            "verified_ns": 4451463859
+          },
+          "status": "expired"
+        },
+        "saved_matches_replay": true,
+        "saved_terminal": {
+          "event": "terminal",
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "MAP01-V39-WSLC-A34-20261014-01",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keymap_after_error": null,
+                    "keymap_before_error": null,
+                    "keymap_sampled_ns": 4451159568,
+                    "keyrelease_error": null,
+                    "keyrelease_started_ns": 4450760506,
+                    "server_key_down_after": false,
+                    "server_key_down_before": true,
+                    "sync_error": null,
+                    "sync_returned_ns": 4450983067
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "interval_ns": [
+                  4450760506,
+                  4451159568
+                ],
+                "keycode": 38
+              }
+            ],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "expired",
+            "valid_until_ns": 4450495676,
+            "verified": true,
+            "verified_ns": 4451463859
+          },
+          "status": "expired"
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "owner_expiry_recovery_is_bounded",
+      "observed": {
+        "bound_ns": 1000000000,
+        "reason": "expired",
+        "verified_overshoot_ns": 968183
+      },
+      "pass": true
+    },
+    {
+      "name": "owner_stopped_and_closed",
+      "observed": {
+        "finished_ns": 4457071037,
+        "owner_closed": true,
+        "owner_error": null,
+        "owner_stopped": true,
+        "owner_thread_alive": false,
+        "xvfb_exit": 0,
+        "xvfb_runtime_ns": 589900529
+      },
+      "pass": true
+    },
+    {
+      "name": "xvfb_exited_cleanly",
+      "observed": {
+        "finished_ns": 4457071037,
+        "owner_closed": true,
+        "owner_error": null,
+        "owner_stopped": true,
+        "owner_thread_alive": false,
+        "xvfb_exit": 0,
+        "xvfb_runtime_ns": 589900529
+      },
+      "pass": true
+    }
+  ],
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A34-20261014-01",
+  "independent_audit": true,
+  "interpretation": "A synthetic X11 application consumed one V4-owner keypress, changed its server-visible task counter, then received the bounded lease-expiry release. This does not establish Doom/MAP01 behavior, physical input, a live model, or general response latency.",
+  "schema": "map01-v39-wslc-xvfb-app-effect-audit-a30-v1",
+  "scope": "synthetic X11 application effect and lease-expiry release; no game, model, physical input, or desktop control",
+  "source": "saved RAW.json plus frozen input bytes; did not import candidate.py",
+  "status": "PASS"
+}

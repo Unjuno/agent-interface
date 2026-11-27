@@ -1,0 +1,6 @@
+Windows normal: exit 0, 1 test, 24.153 s, OK.
+Windows optimized: exit 0, 1 test, 22.886 s, OK.
+Docker normal: exit 0, 1 test, 10.593 s, OK.
+Docker optimized: exit 0, 1 test, 10.551 s, OK.
+
+Initial Windows construction attempt: exit 1; no task effect occurred because spool_root.mkdir() failed when its parent did not exist. The outer owner's finalizer correctly reported release_confirmed=null because no input was sent. Fixed by spool_root.mkdir(parents=True); kept this failed setup separate from passing executions. No release, correctness, or acceptance condition changed.

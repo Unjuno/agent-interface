@@ -1,0 +1,10 @@
+test_cancel_write_error_still_interrupts_and_waits_for_verified_release (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_cancel_write_error_still_interrupts_and_waits_for_verified_release) ... ok
+test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait) ... ok
+test_ready_failed_terminal_is_not_inspected_during_blocked_planner_interrupt (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_ready_failed_terminal_is_not_inspected_during_blocked_planner_interrupt)
+{"case": "ready-failed-cover-terminal-planner-interrupt-held", "terminal_ready": {"event": "terminal", "id": "cover-stalled", "status": "failed", "release": {"event": "owner_release", "verified": false, "keys_down": [38], "buttons_down": [], "keys_unknown": [38], "key_state_errors": []}}, "terminal_inspected": false, "planner_transport_resumed": false, "answer_locally_invalidated": true, "events": ["cancel_written", "cancel_flushed", "planner_interrupt_entered"], "scope": "in-process substitutes; no physical input claim"}
+Characterize the unresolved synchronous planner dependency, not a bound. ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

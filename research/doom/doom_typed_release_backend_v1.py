@@ -8,5 +8,6 @@ class Backend(Previous):
         super().__init__(session, out, emit, signal_readers)
         # Replacement occurs before measured capture or authority. The inherited
         # owner is closed empty; all subsequent binding/input uses owner v10.
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)

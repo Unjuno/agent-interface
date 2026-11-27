@@ -1,0 +1,389 @@
+{
+  "arm": "baseline",
+  "index": 3,
+  "status": "OBSERVED",
+  "started_ns": 79487191473,
+  "xvfb_pid": 425,
+  "xvfb_stat": "425 (Xvfb) R 287 287 287 34816 287 4194304 11 0 0 0 0 0 0 0 30 10 1 0 7948 2719744 0 18446744073709551615 104328787296256 104328788787589 140730637593680 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 104328789113936 104328789162248 104329637011456 140730637598930 140730637599032 140730637599032 140730637602794 0\n",
+  "pidfd_info": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t1348\nPid:\t425\nNSpid:\t425\n",
+  "window_id": 2097152,
+  "keycode": 38,
+  "keyboard_controls": {
+    "global_auto_repeat": 1,
+    "auto_repeats_hex": "00ffffffdffffbbffadfffefffedffff9ffffffffffffffffff7ffffffffffff"
+  },
+  "initial": {
+    "count": [
+      0
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 79995972959,
+    "completed_ns": 79996090294
+  },
+  "source_binding": {
+    "focus": 2097152,
+    "surface": 2097152,
+    "geometry": [
+      20,
+      20,
+      128,
+      128
+    ],
+    "process_generation": "6db34997d0e7466c895c2dc680e74bdf0401563c3c01eddd9bba2d8899374512"
+  },
+  "input_invoked_ns": 80075470021,
+  "held_start": {
+    "count": [
+      1
+    ],
+    "key_down": true,
+    "keymap_hex": "0000000040000000000000000000000000000000000000000000000000000000",
+    "started_ns": 80109736658,
+    "completed_ns": 80109849646
+  },
+  "held_end": {
+    "count": [
+      10
+    ],
+    "key_down": true,
+    "keymap_hex": "0000000040000000000000000000000000000000000000000000000000000000",
+    "started_ns": 81115059083,
+    "completed_ns": 81115900049
+  },
+  "gate_released_ns": 81115904803,
+  "input_result": {
+    "operation": "guarded_input",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "completed",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 80099344009,
+        "ended_ns": 81117711593,
+        "emissions": 2,
+        "program_emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 81117706412
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            52,
+            52
+          ],
+          "observed_box": [
+            40,
+            40,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 81586843354,
+          "patch_sha256": "3182c28359a2e10e13ebeb51e868b4827796f0cfd2351cf2c5aa536eb9cbaca9",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            52,
+            52
+          ],
+          "observed_box": [
+            40,
+            40,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 81599665947,
+          "patch_sha256": "3182c28359a2e10e13ebeb51e868b4827796f0cfd2351cf2c5aa536eb9cbaca9",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "feedback_status": "not_requested",
+    "session": {
+      "session_id": "f463ea3710c84b3bbf8679dcbd6d6be7",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097152
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:1b845a83d4a0475dbefdf7029862d40b",
+      "compiled_surface": "x11-window-2097152",
+      "observations": null,
+      "target_queries": null,
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_tap_completion_hold_20261023_r01/3-baseline/mcp/a0e1a8287890425fa6d93f24f2a77e6e",
+    "call_id": "a0e1a8287890425fa6d93f24f2a77e6e"
+  },
+  "input_returned_ns": 81138125431,
+  "final": {
+    "count": [
+      10
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 81288941656,
+    "completed_ns": 81289187439
+  },
+  "close": {
+    "status": "closed",
+    "session_id": "f463ea3710c84b3bbf8679dcbd6d6be7",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 81295407013
+    },
+    "session": {
+      "session_id": "f463ea3710c84b3bbf8679dcbd6d6be7",
+      "mode": "guarded-x11",
+      "state": "closed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097152
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:1b845a83d4a0475dbefdf7029862d40b",
+      "compiled_surface": "x11-window-2097152",
+      "observations": null,
+      "target_queries": null,
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_tap_completion_hold_20261023_r01/3-baseline/mcp/7eb1a4554bd441a894ea49dc6480b2fa",
+    "call_id": "7eb1a4554bd441a894ea49dc6480b2fa"
+  },
+  "hold": {
+    "real_sync_returned_ns": 80108959198,
+    "requests_at_entry": [
+      {
+        "type": 2,
+        "detail": 38,
+        "returned_ns": 80108863489
+      }
+    ],
+    "obligations_at_entry": {
+      "a": 38
+    },
+    "completion_returned_ns": 81116067860
+  },
+  "requests": [
+    {
+      "type": 2,
+      "detail": 38,
+      "returned_ns": 80108863489
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "returned_ns": 81116186173
+    }
+  ],
+  "application_thread_stopped": true,
+  "application_events": [
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80109602524,
+      "count": 1,
+      "committed_ns": 80109674625
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80771164270
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80771180137,
+      "count": 2,
+      "committed_ns": 80771375547
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80809865640
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80809889719,
+      "count": 3,
+      "committed_ns": 80810250354
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80849398378
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80849423754,
+      "count": 4,
+      "committed_ns": 80849946746
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80890613472
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80890638795,
+      "count": 5,
+      "committed_ns": 80891145479
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80929694920
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80929720090,
+      "count": 6,
+      "committed_ns": 80930068179
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 80970457063
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 80970467703,
+      "count": 7,
+      "committed_ns": 80970602497
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 81012552621
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 81012569588,
+      "count": 8,
+      "committed_ns": 81012839795
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 81052531599
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 81052538692,
+      "count": 9,
+      "committed_ns": 81052640974
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 81092508617
+    },
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 81092531585,
+      "count": 10,
+      "committed_ns": 81092936518
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 81117004719
+    }
+  ],
+  "xvfb_exit_code": 0,
+  "ended_ns": 81339707310
+}

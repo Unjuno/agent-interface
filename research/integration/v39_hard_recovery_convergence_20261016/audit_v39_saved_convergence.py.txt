@@ -1,0 +1,83 @@
+"""Saved-data audits only; never imports controller or runs old producer."""
+import copy,hashlib,json,os,shutil,subprocess,sys
+from pathlib import Path
+
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+PACKET=ROOT/'research/integration/v39_hard_recovery_convergence_20261016'
+OUT=Path(__file__).parent/'v39-hard-recovery-saved-r2-20261016'
+OUT.mkdir(exist_ok=False)
+OLD='743ae74ec5be2472ff27fa06fe13d5ecf8534de5'
+STUDY='research/doom/v39_hard_recovery_pending_a01_20261009'
+meta=json.loads((PACKET/'ORIGINAL_FILES.json').read_text())
+FROZEN=OUT/'frozen-root';SOURCE_ROWS=[]
+raw=json.loads((PACKET/'original-pr/results/candidate.json').read_text())
+sources=[('research/doom/map01_overlap_controller_v39.py','controller_sha256'),
+         ('research/live_control/observable_signal_guard_v2.py','guard_sha256')]
+for name,key in sources:
+ original=subprocess.check_output(['git','show',OLD+':'+name],cwd=ROOT)
+ variants=[('Git bytes',original),('Git CRLF to LF',original.replace(b'\r\n',b'\n')),
+           ('Git LF to CRLF',original.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))]
+ label,b=next((label,b) for label,b in variants if hashlib.sha256(b).hexdigest()==raw[key])
+ p=FROZEN/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+ current=subprocess.check_output(['git','show','HEAD:'+name],cwd=ROOT)
+ p=OUT/'current-source-root'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(current)
+ SOURCE_ROWS.append(dict(path=name,original_commit=OLD,projection=label,
+  frozen_sha256=hashlib.sha256(b).hexdigest(),current_sha256=hashlib.sha256(current).hexdigest(),
+  current_lf_equal=current.replace(b'\r\n',b'\n')==b.replace(b'\r\n',b'\n')))
+package=FROZEN/STUDY
+for row in meta['files']:
+ relative=Path(row['path']).relative_to(STUDY);p=package/relative;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((PACKET/row['archive']).read_bytes())
+receipts=[]
+def run(name,command,expected):
+ folder=OUT/'checks'/name;folder.mkdir(parents=True)
+ with (folder/'stdout').open('wb') as stdout,(folder/'stderr').open('wb') as stderr:
+  process=subprocess.Popen(command,stdout=stdout,stderr=stderr,cwd=FROZEN)
+  code=process.wait(timeout=30)
+ row=dict(name=name,pid=process.pid,command=command,exit_code=code,expected=expected)
+ receipts.append(row);(folder/'PROCESS.json').write_text(json.dumps(row,indent=2))
+ assert code==expected,(name,code)
+ return folder
+
+for mode,options in [('normal',[]),('optimized',['-O'])]:
+ for candidate in ('candidate.json','candidate-normal.json','candidate-optimized.json'):
+  name=mode+'-'+candidate
+  folder=OUT/'checks'/name
+  run(name,[sys.executable,'-I',*options,str(package/'audit_v2.py'),'--candidate',str(package/'results'/candidate),
+    '--root',str(FROZEN),'--output',str(folder/'audit.json')],0 if candidate=='candidate.json' else 1)
+  result=json.loads((folder/'audit.json').read_text());assert result['independent_assertions']==11 and result['errors']==([] if candidate=='candidate.json' else ['fresh recovery admission'])
+ run(mode+'-audit-unit',[sys.executable,'-I',*options,str(package/'test_final_admission_audit_v2.py')],0)
+ folder=OUT/'checks'/(mode+'-current-source')
+ run(mode+'-current-source',[sys.executable,'-I',*options,str(package/'audit_v2.py'),'--candidate',str(package/'results/candidate.json'),
+  '--root',str(OUT/'current-source-root'),'--output',str(folder/'audit.json')],1)
+ result=json.loads((folder/'audit.json').read_text());assert set(result['errors'])=={'controller sha','guard sha'}
+
+mutations={
+ 'admission_ready':lambda r:r['final_admission'].update(status='READY_FOR_ACTION_VALIDITY'),
+ 'input_authority':lambda r:r['final_admission'].update(input_authority_admitted=True),
+ 'grants_authority':lambda r:r['final_admission'].update(grants_input_authority=True),
+ 'executor_admitted':lambda r:r['final_admission'].update(executor_admission={'status':'admitted'}),
+ 'action_validity':lambda r:r['final_admission'].update(action_validity={'status':'valid'}),
+ 'soft_invalidation':lambda r:r['final_admission']['policy_invalidation']['outcome'].update(status='SOFT_CHANGED'),
+}
+for name,mutate in mutations.items():
+ bad=copy.deepcopy(raw);mutate(bad);candidate=OUT/(name+'.json');candidate.write_text(json.dumps(bad))
+ folder=OUT/'checks'/('mutation-'+name)
+ run('mutation-'+name,[sys.executable,'-I',str(package/'audit_v2.py'),'--candidate',str(candidate),
+  '--root',str(FROZEN),'--output',str(folder/'audit.json')],1)
+ assert 'final admission' in json.loads((folder/'audit.json').read_text())['errors']
+
+# Reproduce only the historical auditor's known false pass on saved altered data.
+# This runs no controller/actor and writes only the dedicated shadow's results.
+for name in ('admission_ready','input_authority'):
+ original=(package/'results/candidate.json').read_bytes()
+ try:
+  shutil.copyfile(OUT/(name+'.json'),package/'results/candidate.json')
+  folder=run('v1-false-pass-'+name,[sys.executable,'-I',str(package/'audit.py')],0)
+  assert json.loads((folder/'stdout').read_text())['status']=='PASS_SCOPED_REPLAY'
+ finally:(package/'results/candidate.json').write_bytes(original)
+
+(OUT/'SOURCE_CROSSWALK.json').write_text(json.dumps(SOURCE_ROWS,indent=2))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2))
+print(json.dumps(dict(original_images=len(meta['files']),latest_saved_candidate_passes=2,older_normal_optimized_missing_fresh_fields=4,audit_unit_processes=2,
+ current_source_rejections=2,corrected_admission_mutations=6,old_auditor_false_passes=2,
+ current_lf_equal=[r['current_lf_equal'] for r in SOURCE_ROWS],producer_runs=0),indent=2))

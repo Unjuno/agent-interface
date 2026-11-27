@@ -1,0 +1,15 @@
+.........E.........
+======================================================================
+ERROR: test_full_observation_without_typed_companion_is_dispatched (research.doom.test_map01_overlap_controller_v39_dual_signal.PairedCoverGuardTests.test_full_observation_without_typed_companion_is_dispatched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_dual_signal.py", line 288, in test_full_observation_without_typed_companion_is_dispatched
+    event = wait(lambda row: row["event"] == "observation",
+                 timeout=0.2, observation_monitor=monitor)
+  File "<controller-wait-dispatch>", line 1363, in wait
+NameError: name 'reject_control_boundary_failure' is not defined
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.023s
+
+FAILED (errors=1)

@@ -1,0 +1,54 @@
+{
+  "scope": "saved-only arithmetic/receipt consistency; synthetic effect and admission; not independent app scorer or provider usage",
+  "modes": {
+    "normal": {
+      "methods": 76,
+      "rows_checked": 221,
+      "progress_rows": 4,
+      "compiled_refusal_rows": 2,
+      "mutations": [
+        {
+          "name": "lost_receipt",
+          "rejected": "lost completed receipt"
+        },
+        {
+          "name": "false_success",
+          "rejected": "false success"
+        },
+        {
+          "name": "lost_attempt",
+          "rejected": "attempt conservation"
+        },
+        {
+          "name": "changed_usage",
+          "rejected": "usage conservation"
+        }
+      ]
+    },
+    "optimized": {
+      "methods": 76,
+      "rows_checked": 221,
+      "progress_rows": 4,
+      "compiled_refusal_rows": 2,
+      "mutations": [
+        {
+          "name": "lost_receipt",
+          "rejected": "lost completed receipt"
+        },
+        {
+          "name": "false_success",
+          "rejected": "false success"
+        },
+        {
+          "name": "lost_attempt",
+          "rejected": "attempt conservation"
+        },
+        {
+          "name": "changed_usage",
+          "rejected": "usage conservation"
+        }
+      ]
+    }
+  },
+  "normal_optimized_record_bytes_equal": false
+}

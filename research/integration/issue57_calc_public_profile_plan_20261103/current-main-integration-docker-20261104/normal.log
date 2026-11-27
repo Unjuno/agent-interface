@@ -1,0 +1,38 @@
+....................................................................execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...................................................Executing <Task finished name='Task-281' coro=<OwnedProcessMCPTests.test_owned_process_window_discovery_is_read_only_and_uses_query_worker() done, defined at /workspace/runtime/cli_v1/test_mcp_owned_process.py:716> result=None created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.954 seconds
+.F.............................................................................................
+======================================================================
+FAIL: test_parent_custodied_calc_launch_is_opt_in_and_gates_profile (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_parent_custodied_calc_launch_is_opt_in_and_gates_profile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 977, in test_parent_custodied_calc_launch_is_opt_in_and_gates_profile
+    self.assertEqual(result['status'],'needs_review',result)
+AssertionError: 'invalid_request' != 'needs_review'
+- invalid_request
++ needs_review
+ : {'status': 'invalid_request', 'error': 'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE', 'detail': 'entry alias has no matching mint receipt in this MCP session', 'operation_invoked': False, 'input_dispatched': False, 'release_confirmed': None, 'effect_status': 'unknown', 'task_success': None, 'replay_allowed': False}
+
+----------------------------------------------------------------------
+Ran 214 tests in 111.458s
+
+FAILED (failures=1)

@@ -1,0 +1,2292 @@
+{
+  "changed_source_during_provider_wait": {
+    "binding_revision": 0,
+    "capture_ns": 171486125000000,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 5109,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\2ccc0fb828fc4a7cb3e907f9ddb169de\\images\\de6f244d4e7949f18d6196869c96f7c3.png",
+        "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+        "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+        "timing_ns": {
+          "converted": 171486140000000,
+          "encoded": 171486140000000,
+          "hashed": 171486156000000,
+          "started": 171486140000000,
+          "written": 171486140000000
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 171486125000000,
+      "capture_started_ns": 171486125000000,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 20,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+      "target": "app",
+      "width": 1280
+    },
+    "observation_id": "4673172f683849efb5e36e6e2bb882b9",
+    "pointer_binding": {
+      "focus": 20,
+      "geometry": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "surface": 20,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "sequence": 2,
+    "timing_ns": {
+      "artifact_verified": 171486156000000,
+      "binding_checked": 171486156000000,
+      "decoded": 171486156000000,
+      "public_returned": 171486156000000,
+      "started": 171486125000000
+    }
+  },
+  "environment": {
+    "optimization_level": 0,
+    "plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+    "provider": "FakePlanner",
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "runtime": "Windows owned guarded-X11 composition",
+    "target": "FakeX Calc fixture",
+    "task_values": {
+      "A1": "731",
+      "A2": "864"
+    },
+    "test_command": "python -m unittest -k calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+    "timing_note": "monotonic phase diagnostics only; provider wait and usage are synthetic; no warm-vs-cold efficiency comparison"
+  },
+  "first_attempt_had_fake_input_state": false,
+  "first_stale_response": {
+    "detail": "reviewed sequence is not the latest source observed through this MCP session",
+    "effect_status": "unknown",
+    "error": "CALC_REVIEW_SOURCE_STALE",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "release_confirmed": null,
+    "replay_allowed": false,
+    "status": "invalid_request",
+    "task_success": null
+  },
+  "fresh_sequence_after_wait": 3,
+  "independent_fods_values": [
+    "731",
+    "864"
+  ],
+  "joined_summary": {
+    "cache_write_input_tokens": 3,
+    "cached_input_tokens": 30,
+    "detailed_usage_status": "incomplete",
+    "image_input_tokens": null,
+    "independent_score_status": "recorded",
+    "input_tokens": 150,
+    "model_attempt_count": 3,
+    "output_tokens": 33,
+    "reasoning_output_tokens": 0,
+    "task_success": true,
+    "tool_call_count": 12,
+    "usage_status": "complete"
+  },
+  "limits": [
+    "FakePlanner_only",
+    "FakeX_only",
+    "no_live_provider",
+    "no_live_Calc",
+    "no_efficiency_claim"
+  ],
+  "live_calc_task_effect": false,
+  "model_plan_replay": {
+    "adapted_task_values": {
+      "A1": "731",
+      "A2": "864"
+    },
+    "adapter": "runtime.guarded_x11_v1.calc_model_plan_adapter_v1",
+    "authority_carried_from_plan": false,
+    "fresh_observation_required": true,
+    "historical_usage": {
+      "inputTokens": 11938,
+      "outputTokens": 76,
+      "totalTokens": 12014
+    },
+    "new_provider_call_for_replay": false,
+    "source": "saved-r93-worker-result",
+    "source_sha256": "24a3b0abf462f3de5a9ab71d593095048abab8bd3ff236057dfce75284d7e04a"
+  },
+  "owner_close": {
+    "authority_granted": false,
+    "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\f69377f52787455c9fe31bae0ce33171",
+    "call_id": "f69377f52787455c9fe31bae0ce33171",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 171490156000000,
+      "verified": true
+    },
+    "release_attempted": true,
+    "release_confirmed": true,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 19,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 171490390000000,
+        "pid": 9368,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 9368,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "bf2afbd4ca254b8a88d3ed16132d82ea",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": false
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "bf2afbd4ca254b8a88d3ed16132d82ea",
+    "status": "closed",
+    "verified": true
+  },
+  "post_repair_reuse": {
+    "attempt_id": "calc-wait-attempt-03",
+    "close": {
+      "authority_granted": false,
+      "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\707839ac8bb44eb9a0bf702ff8d36154",
+      "call_id": "707839ac8bb44eb9a0bf702ff8d36154",
+      "connection_close_attempted": true,
+      "owner_process_exitcode": 0,
+      "owner_process_retired": true,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 171493937000000,
+        "verified": true
+      },
+      "release_attempted": true,
+      "release_confirmed": true,
+      "restart_allowed": false,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "cleanup_status": null,
+        "compiled_scope": "native-x11:af0a299a390e413cb0e0b3c62f075d06",
+        "compiled_surface": "x11-window-20",
+        "error": null,
+        "interrupted_execution": null,
+        "mode": "guarded-x11-owned-process",
+        "observation_sequence": 21,
+        "observation_worker": false,
+        "observations": null,
+        "owner_client_disconnect": null,
+        "owner_input_obligations": {
+          "buttons": [],
+          "keys": {}
+        },
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_process": {
+          "alive": false,
+          "exitcode": 0,
+          "liveness_observed_monotonic_ns": 171494156000000,
+          "pid": 2848,
+          "release_confirmed": null,
+          "retired": false,
+          "x_client_resource_base": 18874368
+        },
+        "owner_process_pid": 2848,
+        "owner_release_attempt": null,
+        "owner_x_client_resource_base": 18874368,
+        "process_identity": true,
+        "query_worker": true,
+        "recovery_required": false,
+        "restart_allowed": false,
+        "retention_mode": "files",
+        "review_required": false,
+        "session_id": "177ae0d1242c466c887c1653491e659b",
+        "state": "closed",
+        "target": "app",
+        "target_queries": {
+          "close_error": null,
+          "pending": false,
+          "retired": true,
+          "thread_alive": false
+        },
+        "targets": {
+          "app": 20
+        },
+        "window_lifecycle": true
+      },
+      "session_id": "177ae0d1242c466c887c1653491e659b",
+      "status": "closed",
+      "verified": true
+    },
+    "observed_source": {
+      "binding_revision": 0,
+      "capture_ns": 171491796000000,
+      "image_source": "exact_capture_rgb_handoff",
+      "native": {
+        "artifact": {
+          "bytes": 5109,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\0eb57aa202e54e1ba713b0d564270130\\images\\f07d6db3069a417387dd50a68eec25cc.png",
+          "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+          "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+          "timing_ns": {
+            "converted": 171491812000000,
+            "encoded": 171491828000000,
+            "hashed": 171491843000000,
+            "started": 171491812000000,
+            "written": 171491828000000
+          },
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 171491796000000,
+        "capture_started_ns": 171491796000000,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 20,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+        "target": "app",
+        "width": 1280
+      },
+      "observation_id": "faec151e154446d7a64e4d54eff9de52",
+      "pointer_binding": {
+        "focus": 20,
+        "geometry": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+        "surface": 20,
+        "window_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "sequence": 1,
+      "timing_ns": {
+        "artifact_verified": 171491843000000,
+        "binding_checked": 171491843000000,
+        "decoded": 171491843000000,
+        "public_returned": 171491843000000,
+        "started": 171491796000000
+      }
+    },
+    "plan_origin": "prior_attempt_reuse",
+    "plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+    "plan_source_attempt_id": "calc-wait-attempt-02",
+    "prepared": {
+      "artifact_name": "task-artifact.fods",
+      "artifact_path": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\eb196f06be0a499bbbdbb3f85b73cc43\\task-artifact.fods",
+      "attempt_id": "calc-wait-attempt-03",
+      "call_id": "eb196f06be0a499bbbdbb3f85b73cc43",
+      "expires_in_ms": 300000,
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "parent_process_custody": "not_established",
+      "replay_allowed": false,
+      "status": "prepared",
+      "target_launch_status": "not_attempted",
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "task_success": null,
+      "task_values": {
+        "A1": "11223",
+        "A2": "44556"
+      }
+    },
+    "provider_generation_count": 0,
+    "provider_usage": "not measured; no provider was invoked",
+    "result": {
+      "attempt_id": "calc-wait-attempt-03",
+      "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\6e6ab6a1a7314957b67015846df8e670",
+      "call_id": "6e6ab6a1a7314957b67015846df8e670",
+      "feedback": {
+        "authority": "none",
+        "image": {
+          "data": "iVBORw0KGgoAAAANSUhEUgAABQAAAAMgCAIAAADz+lisAAAT3UlEQVR4nO3aMU7kQBRFUZo1EDcx+18R3ognZiQ0tga7qrjnBD9CwhVevX7s+/4CAAAAv93r6A8AAACAOwhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIOFLAG/b9iMXAAAAZvMlgJ/P57Zt/39HPQYAAAC+8/cC/CMNPOoxAAAA8B0LMAAAAAkWYAAAABIswAAAACRYgAEAAEiwAAMAAJBgAQYAACDBAgwAAECCBRgAAIAECzAAAAAJFmAAAAASLMAAAAAkWIABAABIsAADAACQ8Nj3ffQ3AAAAwOVe//0nAAAAsD4BDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEm4N4G3bJr/3m+HVM1wAAIDL7Xf5/Pxc4t5phvfOcAEAAG5wXwDvX5vn7e1tH91dM5TYDK+e4QIAAFzNAjyyxGZ47wwXAADgBsMW4Dnv/WZ49QwXAADgahbgkSU2w3tnuAAAADewAA8usRlePcMFAAC4mgV4ZInN8N4ZLgAAwA0swINLbIZXz3ABAACuZgEeWWIzvHeGCwAAcAML8OASm+HVM1wAAICrWYBHltgM753hAgAA3MACPLjEZnj1DBcAAOBqFuCRJTbDe2e4AAAAN7AADy6xGV49wwUAALiaBXhkic3w3hkuAADADSzAg0tshlfPcAEAAK722Pf9BQAAAH6719EfAAAAAHcYFsDv7++j/jUAAABBfgINAABAgp9AAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAHLVt26UXAADgUo9930d/A8vYtu35fF5xR78MAAD4/SzAHHVd/VqAAQCAG1iAOcECDAAArMsCzFEWYAAAYGkWYE6wAAMAAOuyAHOUBRgAAFiaBZgTLMAAAMC6LMAcZQEGAACWZgHmBAswAACwLgswR1mAAQCApVmAOcECDAAArMsCzFEWYAAAYGkWYE6wAAMAAOuyAHOUBRgAAFiaBZgTLMAAAMC6LMAcZQEGAACWZgHmBAswAACwLgswR1mAAQCApVmAOcECDAAArMsCzFEWYAAAYGkWYE6wAAMAAOuyAHOUBRgAAFiaBZgTLMAAAMC6LMAcZQEGAACWZgHmBAswAACwLgswR1mAAQCApVmAOcECDAAArMsCzFEWYAAAYGkWYE6wAAMAAOuyAHOUBRgAAFiaBRgAAIAECzAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwDDYx8fH6E8AAICEx77vo78BAAAALmcBBgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJDwB3lHX2ShHW/KAAAAAElFTkSuQmCC",
+          "mimeType": "image/png",
+          "type": "image"
+        },
+        "image_reference": {
+          "authority": "none",
+          "capture_ns": 171493734000000,
+          "freshness": "historical referenced capture; no new observation",
+          "observation_id": "7fc1b662d5504749b76bccace3104a59",
+          "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\6e6ab6a1a7314957b67015846df8e670\\compiled\\images\\84379cf7b5ca48d78885c21451fc087d.png",
+          "recorded_capture": {
+            "capture_ended_ns": 171493734000000,
+            "capture_started_ns": 171493734000000,
+            "frame": "screen_physical_px",
+            "height": 800,
+            "native_window_id": 20,
+            "region": [
+              0,
+              0,
+              1280,
+              800
+            ],
+            "target": "app",
+            "width": 1280
+          },
+          "relative_path": "images\\84379cf7b5ca48d78885c21451fc087d.png",
+          "sha256": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+          "status": "image"
+        },
+        "image_status": "image",
+        "outcome_summary": {
+          "cleanup_error": null,
+          "error": null,
+          "failure_phase": null,
+          "reported_status": "returned"
+        },
+        "owner_feedback_observation_id": "7fc1b662d5504749b76bccace3104a59",
+        "owner_feedback_sequence": 21,
+        "receipt": {
+          "authority": "none",
+          "events": [],
+          "latest_observations": [],
+          "motor_state_validation": {
+            "accepted": false,
+            "present": false,
+            "reason": "missing"
+          },
+          "omitted_from_view": 0,
+          "record_counts": {},
+          "reference_scope": "Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.",
+          "report": {
+            "report_ref": "/source/raw_report"
+          },
+          "report_reference": "/source/raw_report",
+          "schema": "agent-interface/receipt-view-v3-report-ref",
+          "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+          "source": {
+            "bytes": 1073,
+            "kind": "received_bytes",
+            "path": null,
+            "raw_report": {
+              "input_dispatched": false,
+              "observation": {
+                "artifact": {
+                  "bytes": 5142,
+                  "height": 800,
+                  "mime_type": "image/png",
+                  "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\post-repair-warm-owner\\6e6ab6a1a7314957b67015846df8e670\\compiled\\images\\84379cf7b5ca48d78885c21451fc087d.png",
+                  "sha256": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+                  "source_raw_sha256": "2486a17e45c0ee427af0fdb39dfc6db279ae4f4edbe783707aeca92381603594",
+                  "timing_ns": {
+                    "converted": 171493750000000,
+                    "encoded": 171493750000000,
+                    "hashed": 171493765000000,
+                    "started": 171493734000000,
+                    "written": 171493750000000
+                  },
+                  "width": 1280
+                },
+                "bytes": 4096000,
+                "capture_ended_ns": 171493734000000,
+                "capture_started_ns": 171493734000000,
+                "frame": "screen_physical_px",
+                "height": 800,
+                "native_window_id": 20,
+                "region": [
+                  0,
+                  0,
+                  1280,
+                  800
+                ],
+                "sha256": "2486a17e45c0ee427af0fdb39dfc6db279ae4f4edbe783707aeca92381603594",
+                "target": "app",
+                "width": 1280
+              },
+              "observation_id": "7fc1b662d5504749b76bccace3104a59",
+              "schema": "agent-interface/runtime-observation-v1",
+              "side_effect_authority": false,
+              "status": "returned"
+            },
+            "sha256": "141a934f024bc4a2852f6a3206f77ed7f7c0cfd6185aee602f059ccaca980d9f"
+          }
+        },
+        "schema": "agent-interface/review-v1"
+      },
+      "method_receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "populate_cells",
+            "event": "branch_selected",
+            "evidence_ref": "observation-2",
+            "matched_conditions": {
+              "blank": true,
+              "context_ok": true
+            },
+            "outcome": "action",
+            "state": "blank_sheet"
+          },
+          {
+            "action": "populate_cells",
+            "action_id": "action-b31157bfbe054aecb4067901138e6988",
+            "event": "action_terminal",
+            "execution_accepted_ns": 171493171000000,
+            "execution_started_ns": 171492140000000,
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "populate_cells",
+            "action_id": "action-b31157bfbe054aecb4067901138e6988",
+            "effect_observation_accepted_ns": 171493218000000,
+            "effect_observation_captured_ns": 171493171000000,
+            "effect_verification_accepted_ns": 171493218000000,
+            "effect_verification_started_ns": 171493218000000,
+            "event": "effect_checked",
+            "evidence_ref": "observation-16",
+            "execution_accepted_ns": 171493171000000,
+            "status": "succeeded"
+          },
+          {
+            "action": "persist_document",
+            "event": "branch_selected",
+            "evidence_ref": "observation-16",
+            "matched_conditions": {
+              "cells_match": true,
+              "context_ok": true
+            },
+            "outcome": "action",
+            "state": "values_entered"
+          },
+          {
+            "action": "persist_document",
+            "action_id": "action-b6bcbbc6409143a087fb59e11d33a9f2",
+            "event": "action_terminal",
+            "execution_accepted_ns": 171493687000000,
+            "execution_started_ns": 171493218000000,
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "persist_document",
+            "action_id": "action-b6bcbbc6409143a087fb59e11d33a9f2",
+            "effect_observation_accepted_ns": 171493734000000,
+            "effect_observation_captured_ns": 171493687000000,
+            "effect_verification_accepted_ns": 171493734000000,
+            "effect_verification_started_ns": 171493734000000,
+            "event": "effect_checked",
+            "evidence_ref": "observation-20",
+            "execution_accepted_ns": 171493687000000,
+            "status": "unavailable"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_unavailable"
+          }
+        ],
+        "elapsed_ns": 1625000000,
+        "ended_ns": 171493734000000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "planner-calc-two-cell-v1",
+        "latest_evidence_ref": "observation-20",
+        "method": "populate-and-save",
+        "method_version": "1",
+        "observations": [
+          {
+            "captured_ns": 171492109000000,
+            "evidence_digest": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+            "evidence_ref": "observation-2",
+            "observation_accepted_ns": 171492140000000,
+            "observation_started_ns": 171492109000000,
+            "predicates": {
+              "blank": true,
+              "cells_match": "unknown",
+              "context_ok": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 171493171000000,
+            "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+            "evidence_ref": "observation-16",
+            "observation_accepted_ns": 171493218000000,
+            "observation_started_ns": 171493171000000,
+            "predicates": {
+              "blank": false,
+              "cells_match": true,
+              "context_ok": true
+            },
+            "sequence": 16
+          },
+          {
+            "captured_ns": 171493687000000,
+            "evidence_digest": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+            "evidence_ref": "observation-20",
+            "observation_accepted_ns": 171493734000000,
+            "observation_started_ns": 171493687000000,
+            "predicates": {
+              "blank": false,
+              "cells_match": true,
+              "context_ok": true
+            },
+            "sequence": 20
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "persist_document",
+          "effect_ref": "compiled-2484c5a56911455c8b11fb5fedebf959-34-execution",
+          "expected_effect": {
+            "cells_match": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_unavailable",
+        "session_scope": "native-x11:af0a299a390e413cb0e0b3c62f075d06",
+        "started_ns": 171492109000000,
+        "task_plan_interface": {
+          "actions": {
+            "persist_document": {
+              "expected_effect": {
+                "cells_match": true
+              },
+              "operation": "request_save",
+              "target_symbol": "save_control"
+            },
+            "populate_cells": {
+              "expected_effect": {
+                "cells_match": true
+              },
+              "operation": "enter_pair",
+              "target_symbol": "cell_entry"
+            }
+          },
+          "format": "compiled-gui-interface-v1",
+          "interface_id": "planner-calc-two-cell-v1",
+          "method": {
+            "initial_state": "blank_sheet",
+            "max_runtime_ms": 9000,
+            "max_transitions": 2,
+            "name": "populate-and-save",
+            "states": {
+              "blank_sheet": {
+                "branches": [
+                  {
+                    "action": "populate_cells",
+                    "next_state": "values_entered",
+                    "outcome": "action",
+                    "reason": null,
+                    "when": {
+                      "blank": true,
+                      "context_ok": true
+                    }
+                  }
+                ]
+              },
+              "save_handoff": {
+                "branches": [
+                  {
+                    "action": null,
+                    "next_state": null,
+                    "outcome": "yield",
+                    "reason": "effect_unavailable",
+                    "when": {
+                      "context_ok": true
+                    }
+                  }
+                ]
+              },
+              "values_entered": {
+                "branches": [
+                  {
+                    "action": "persist_document",
+                    "next_state": "save_handoff",
+                    "outcome": "action",
+                    "reason": null,
+                    "when": {
+                      "cells_match": true,
+                      "context_ok": true
+                    }
+                  }
+                ]
+              }
+            },
+            "version": "1"
+          },
+          "predicates": [
+            "context_ok",
+            "blank",
+            "cells_match"
+          ],
+          "session_scope": "native-x11:af0a299a390e413cb0e0b3c62f075d06",
+          "surface": "x11-window-20",
+          "symbols": {
+            "cell_entry": {
+              "dependencies": [
+                "context_ok"
+              ],
+              "identity_predicate": "context_ok",
+              "kind": "target_reference",
+              "target_reference": "entry_postrepair"
+            },
+            "save_control": {
+              "dependencies": [
+                "context_ok",
+                "cells_match"
+              ],
+              "identity_predicate": "context_ok",
+              "kind": "target_reference",
+              "target_reference": "save_postrepair"
+            }
+          }
+        },
+        "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+        "transitions": [
+          {
+            "action": "populate_cells",
+            "action_id": "action-b31157bfbe054aecb4067901138e6988",
+            "effect_ref": "compiled-2484c5a56911455c8b11fb5fedebf959-20-execution",
+            "evidence_ref": "observation-2",
+            "execution_accepted_ns": 171493171000000,
+            "execution_started_ns": 171492140000000,
+            "from_state": "blank_sheet",
+            "matched_conditions": {
+              "blank": true,
+              "context_ok": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "values_entered"
+          },
+          {
+            "action": "persist_document",
+            "action_id": "action-b6bcbbc6409143a087fb59e11d33a9f2",
+            "effect_ref": "compiled-2484c5a56911455c8b11fb5fedebf959-34-execution",
+            "evidence_ref": "observation-16",
+            "execution_accepted_ns": 171493687000000,
+            "execution_started_ns": 171493218000000,
+            "from_state": "values_entered",
+            "matched_conditions": {
+              "cells_match": true,
+              "context_ok": true
+            },
+            "observation_sequence": 16,
+            "release_verified": true,
+            "to_state": "save_handoff"
+          }
+        ]
+      },
+      "owner_timing": {
+        "clock": "time.monotonic_ns",
+        "completed_ns": 171493765000000,
+        "effect_status": null,
+        "elapsed_ns": 1672000000,
+        "error_type": null,
+        "method_outcome": "SAFE_YIELD",
+        "replay_allowed": false,
+        "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+        "scope": "run_compiled method entry through graph, feedback and session snapshot",
+        "started_ns": 171492093000000,
+        "status": "returned"
+      },
+      "owner_timing_retention": {
+        "status": "recorded"
+      },
+      "profile_id": "calc-ocr-save-v1",
+      "replay_allowed": false,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "cleanup_status": null,
+        "compiled_scope": "native-x11:af0a299a390e413cb0e0b3c62f075d06",
+        "compiled_surface": "x11-window-20",
+        "error": null,
+        "interrupted_execution": null,
+        "mode": "guarded-x11-owned-process",
+        "observation_sequence": 21,
+        "observation_worker": false,
+        "observations": null,
+        "owner_client_disconnect": null,
+        "owner_input_obligations": {
+          "buttons": [],
+          "keys": {}
+        },
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_process": {
+          "alive": true,
+          "exitcode": null,
+          "liveness_observed_monotonic_ns": 171493890000000,
+          "pid": 2848,
+          "release_confirmed": null,
+          "retired": false,
+          "x_client_resource_base": 18874368
+        },
+        "owner_process_pid": 2848,
+        "owner_release_attempt": null,
+        "owner_x_client_resource_base": 18874368,
+        "process_identity": true,
+        "query_worker": true,
+        "recovery_required": false,
+        "restart_allowed": false,
+        "retention_mode": "files",
+        "review_required": false,
+        "session_id": "177ae0d1242c466c887c1653491e659b",
+        "state": "open",
+        "target": "app",
+        "target_queries": {
+          "close_error": null,
+          "pending": false,
+          "retired": false,
+          "thread_alive": true
+        },
+        "targets": {
+          "app": 20
+        },
+        "window_lifecycle": true
+      },
+      "target_process_exit_receipt": {
+        "custody": "libreoffice-oosplash-direct-child-v1",
+        "exit_code": 0,
+        "launcher_executable": "/usr/lib/libreoffice/program/oosplash",
+        "launcher_exit_code": 0,
+        "launcher_package_version": "4:7.4.7-1+deb12u14",
+        "launcher_pid": 4422,
+        "launcher_start_ticks": 123456,
+        "observed_monotonic_ns": 171493859000000,
+        "pid": 4322,
+        "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+        "replacement_observed": false,
+        "schema": "agent-interface/calc-target-exit-receipt-v2",
+        "start_ticks": 98766,
+        "status": "exited",
+        "verified": true,
+        "xid": 20
+      },
+      "task_artifact_admission": {
+        "artifact_name": "task-artifact.fods",
+        "attempt_id": "calc-wait-attempt-03",
+        "blank_bytes": 751,
+        "blank_identity": [
+          2130424111,
+          2814749771037505,
+          751,
+          1793771885729518300,
+          1793771885729518300
+        ],
+        "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+        "call_id": "eb196f06be0a499bbbdbb3f85b73cc43",
+        "expected_values": {
+          "A1": "11223",
+          "A2": "44556"
+        },
+        "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+        "profile_id": "calc-ocr-save-v1",
+        "schema": "agent-interface/calc-task-artifact-descriptor-v1",
+        "target_pid": 4322,
+        "target_start_ticks": 98766,
+        "target_xid": 20,
+        "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+        "window_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "task_artifact_root_call_id": "eb196f06be0a499bbbdbb3f85b73cc43",
+      "task_effect_verification": {
+        "reason": "trusted_save_controller_unavailable",
+        "status": "not_configured",
+        "task_success": null
+      },
+      "task_plan_interface": {
+        "actions": {
+          "persist_document": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "request_save",
+            "target_symbol": "save_control"
+          },
+          "populate_cells": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "enter_pair",
+            "target_symbol": "cell_entry"
+          }
+        },
+        "format": "compiled-gui-interface-v1",
+        "interface_id": "planner-calc-two-cell-v1",
+        "method": {
+          "initial_state": "blank_sheet",
+          "max_runtime_ms": 9000,
+          "max_transitions": 2,
+          "name": "populate-and-save",
+          "states": {
+            "blank_sheet": {
+              "branches": [
+                {
+                  "action": "populate_cells",
+                  "next_state": "values_entered",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "blank": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "save_handoff": {
+              "branches": [
+                {
+                  "action": null,
+                  "next_state": null,
+                  "outcome": "yield",
+                  "reason": "effect_unavailable",
+                  "when": {
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "values_entered": {
+              "branches": [
+                {
+                  "action": "persist_document",
+                  "next_state": "save_handoff",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "cells_match": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            }
+          },
+          "version": "1"
+        },
+        "predicates": [
+          "context_ok",
+          "blank",
+          "cells_match"
+        ],
+        "session_scope": "native-x11:af0a299a390e413cb0e0b3c62f075d06",
+        "surface": "x11-window-20",
+        "symbols": {
+          "cell_entry": {
+            "dependencies": [
+              "context_ok"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "entry_postrepair"
+          },
+          "save_control": {
+            "dependencies": [
+              "context_ok",
+              "cells_match"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "save_postrepair"
+          }
+        }
+      },
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "task_save_request": {
+        "attempt_id": "calc-wait-attempt-03",
+        "call_id": "eb196f06be0a499bbbdbb3f85b73cc43",
+        "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+        "save_request_id": "4746dcf5f4ef8eb781ad4ef126fc8dc9",
+        "save_request_monotonic_ns": 171493734000000,
+        "schema": "agent-interface/calc-task-save-request-v1",
+        "window_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "task_success": null
+    },
+    "task_values": {
+      "A1": "11223",
+      "A2": "44556"
+    },
+    "verification": {
+      "attempt_id": "calc-wait-attempt-03",
+      "call_id": "6e6ab6a1a7314957b67015846df8e670",
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "scope": "guarded_x11_calc",
+      "status": "verified",
+      "task_effect": {
+        "artifact_bytes": 515,
+        "artifact_identity": [
+          2130424111,
+          2814749771037505,
+          515,
+          1793771888191370900,
+          1793771885729518300
+        ],
+        "artifact_sha256": "f4fa64623b21818388dabb31911d56cd8ff0ec6cb6e89a5c6da1331e892df5aa",
+        "attempt_id": "calc-wait-attempt-03",
+        "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+        "expected_values": {
+          "A1": "11223",
+          "A2": "44556"
+        },
+        "parsed_effect": {
+          "artifact_bytes": 515,
+          "artifact_sha256": "f4fa64623b21818388dabb31911d56cd8ff0ec6cb6e89a5c6da1331e892df5aa",
+          "cells": {
+            "A1": "11223",
+            "A2": "44556"
+          },
+          "status": "verified",
+          "task_success": true
+        },
+        "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+        "profile_id": "calc-ocr-save-v1",
+        "reason": "registered_calc_saved_artifact_verified",
+        "replay_allowed": false,
+        "save_controller": {
+          "attempt_id": "calc-wait-attempt-03",
+          "call_id": "eb196f06be0a499bbbdbb3f85b73cc43",
+          "method_receipt_sha256": "de4cfa575af9a2c9b3b0fe372200af82c07012cd99bf5cb15d49ddaf9f91db1d",
+          "process_generation": "dd85fa4de1294442020a45515e3710654e997689312fed4e57f9c1e776122ef3",
+          "profile_id": "calc-ocr-save-v1",
+          "save_action_id": "action-b6bcbbc6409143a087fb59e11d33a9f2",
+          "save_request_id": "4746dcf5f4ef8eb781ad4ef126fc8dc9",
+          "save_request_monotonic_ns": 171493734000000,
+          "schema": "agent-interface/calc-registered-save-controller-v1",
+          "window_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "save_request_id": "4746dcf5f4ef8eb781ad4ef126fc8dc9",
+        "save_request_monotonic_ns": 171493734000000,
+        "status": "verified",
+        "task_success": true,
+        "window_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "task_success": true
+    }
+  },
+  "provider_attempts": 3,
+  "repair_source": {
+    "binding_revision": 0,
+    "capture_ns": 171486609000000,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 5109,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\94ed47b064784839beffad60fdf443fb\\images\\353df58925cc4031a4660ce52451c8c6.png",
+        "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+        "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+        "timing_ns": {
+          "converted": 171486625000000,
+          "encoded": 171486625000000,
+          "hashed": 171486640000000,
+          "started": 171486625000000,
+          "written": 171486625000000
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 171486609000000,
+      "capture_started_ns": 171486609000000,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 20,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+      "target": "app",
+      "width": 1280
+    },
+    "observation_id": "a5cb223e6dc1459a96352aad772c5cda",
+    "pointer_binding": {
+      "focus": 20,
+      "geometry": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "surface": 20,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "sequence": 3,
+    "timing_ns": {
+      "artifact_verified": 171486640000000,
+      "binding_checked": 171486640000000,
+      "decoded": 171486640000000,
+      "public_returned": 171486640000000,
+      "started": 171486609000000
+    }
+  },
+  "repaired_execution_result": {
+    "attempt_id": "calc-wait-attempt-02",
+    "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\7b1458db595947e0a481e8cf22df3543",
+    "call_id": "7b1458db595947e0a481e8cf22df3543",
+    "feedback": {
+      "authority": "none",
+      "image": {
+        "data": "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JAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwDDYx8fH6E8AAICEx77vo78BAAAALmcBBgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJDwB3lHX2ShHW/KAAAAAElFTkSuQmCC",
+        "mimeType": "image/png",
+        "type": "image"
+      },
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 171489781000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "11735fae9f824c64b98b08f29c70b674",
+        "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\7b1458db595947e0a481e8cf22df3543\\compiled\\images\\70008f8935ff47fb8fb773d746a7e560.png",
+        "recorded_capture": {
+          "capture_ended_ns": 171489781000000,
+          "capture_started_ns": 171489781000000,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 20,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "target": "app",
+          "width": 1280
+        },
+        "relative_path": "images\\70008f8935ff47fb8fb773d746a7e560.png",
+        "sha256": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "owner_feedback_observation_id": "11735fae9f824c64b98b08f29c70b674",
+      "owner_feedback_sequence": 19,
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "reference_scope": "Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.",
+        "report": {
+          "report_ref": "/source/raw_report"
+        },
+        "report_reference": "/source/raw_report",
+        "schema": "agent-interface/receipt-view-v3-report-ref",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1057,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 5142,
+                "height": 800,
+                "mime_type": "image/png",
+                "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\7b1458db595947e0a481e8cf22df3543\\compiled\\images\\70008f8935ff47fb8fb773d746a7e560.png",
+                "sha256": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+                "source_raw_sha256": "2486a17e45c0ee427af0fdb39dfc6db279ae4f4edbe783707aeca92381603594",
+                "timing_ns": {
+                  "converted": 171489796000000,
+                  "encoded": 171489812000000,
+                  "hashed": 171489828000000,
+                  "started": 171489796000000,
+                  "written": 171489812000000
+                },
+                "width": 1280
+              },
+              "bytes": 4096000,
+              "capture_ended_ns": 171489781000000,
+              "capture_started_ns": 171489781000000,
+              "frame": "screen_physical_px",
+              "height": 800,
+              "native_window_id": 20,
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ],
+              "sha256": "2486a17e45c0ee427af0fdb39dfc6db279ae4f4edbe783707aeca92381603594",
+              "target": "app",
+              "width": 1280
+            },
+            "observation_id": "11735fae9f824c64b98b08f29c70b674",
+            "schema": "agent-interface/runtime-observation-v1",
+            "side_effect_authority": false,
+            "status": "returned"
+          },
+          "sha256": "fcb866bcea3c55d980c95b8cac523d2e67555d387fc3eed9e8ff3243937d017e"
+        }
+      },
+      "schema": "agent-interface/review-v1"
+    },
+    "method_receipt": {
+      "completed_transitions": 2,
+      "critical_events": [
+        {
+          "action": "populate_cells",
+          "event": "branch_selected",
+          "evidence_ref": "observation-4",
+          "matched_conditions": {
+            "blank": true,
+            "context_ok": true
+          },
+          "outcome": "action",
+          "state": "blank_sheet"
+        },
+        {
+          "action": "populate_cells",
+          "action_id": "action-62d00523d1314205a1f386b7fdb1b7d7",
+          "event": "action_terminal",
+          "execution_accepted_ns": 171489156000000,
+          "execution_started_ns": 171488171000000,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "populate_cells",
+          "action_id": "action-62d00523d1314205a1f386b7fdb1b7d7",
+          "effect_observation_accepted_ns": 171489203000000,
+          "effect_observation_captured_ns": 171489156000000,
+          "effect_verification_accepted_ns": 171489203000000,
+          "effect_verification_started_ns": 171489203000000,
+          "event": "effect_checked",
+          "evidence_ref": "observation-14",
+          "execution_accepted_ns": 171489156000000,
+          "status": "succeeded"
+        },
+        {
+          "action": "persist_document",
+          "event": "branch_selected",
+          "evidence_ref": "observation-14",
+          "matched_conditions": {
+            "cells_match": true,
+            "context_ok": true
+          },
+          "outcome": "action",
+          "state": "values_entered"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a8d7008bdd68440f9d97b0fcf98c77bd",
+          "event": "action_terminal",
+          "execution_accepted_ns": 171489718000000,
+          "execution_started_ns": 171489203000000,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a8d7008bdd68440f9d97b0fcf98c77bd",
+          "effect_observation_accepted_ns": 171489765000000,
+          "effect_observation_captured_ns": 171489718000000,
+          "effect_verification_accepted_ns": 171489781000000,
+          "effect_verification_started_ns": 171489781000000,
+          "event": "effect_checked",
+          "evidence_ref": "observation-18",
+          "execution_accepted_ns": 171489718000000,
+          "status": "unavailable"
+        },
+        {
+          "completed_transitions": 2,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_unavailable"
+        }
+      ],
+      "elapsed_ns": 1703000000,
+      "ended_ns": 171489781000000,
+      "format": "compiled-gui-runtime-receipt-v1",
+      "frontier_model_resumptions": 0,
+      "input_authority": "admission_per_action_only",
+      "interface_id": "planner-calc-two-cell-v1",
+      "latest_evidence_ref": "observation-18",
+      "method": "populate-and-save",
+      "method_version": "1",
+      "observations": [
+        {
+          "captured_ns": 171488078000000,
+          "evidence_digest": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+          "evidence_ref": "observation-4",
+          "observation_accepted_ns": 171488156000000,
+          "observation_started_ns": 171488078000000,
+          "predicates": {
+            "blank": true,
+            "cells_match": "unknown",
+            "context_ok": true
+          },
+          "sequence": 4
+        },
+        {
+          "captured_ns": 171489156000000,
+          "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+          "evidence_ref": "observation-14",
+          "observation_accepted_ns": 171489203000000,
+          "observation_started_ns": 171489156000000,
+          "predicates": {
+            "blank": false,
+            "cells_match": true,
+            "context_ok": true
+          },
+          "sequence": 14
+        },
+        {
+          "captured_ns": 171489718000000,
+          "evidence_digest": "c48b36c9ba9c3e29ff22d3da43451c2ae96baee4676cc84456063d8b0519fb3b",
+          "evidence_ref": "observation-18",
+          "observation_accepted_ns": 171489765000000,
+          "observation_started_ns": 171489718000000,
+          "predicates": {
+            "blank": false,
+            "cells_match": true,
+            "context_ok": true
+          },
+          "sequence": 18
+        }
+      ],
+      "outcome": "SAFE_YIELD",
+      "pending_effect": {
+        "action": "persist_document",
+        "effect_ref": "compiled-de4352ef6136434bac12b13eadc0060b-30-execution",
+        "expected_effect": {
+          "cells_match": true
+        }
+      },
+      "raw_evidence_retention": "adapter_responsibility_unverified",
+      "reason": "effect_unavailable",
+      "session_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "started_ns": 171488078000000,
+      "task_plan_interface": {
+        "actions": {
+          "persist_document": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "request_save",
+            "target_symbol": "save_control"
+          },
+          "populate_cells": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "enter_pair",
+            "target_symbol": "cell_entry"
+          }
+        },
+        "format": "compiled-gui-interface-v1",
+        "interface_id": "planner-calc-two-cell-v1",
+        "method": {
+          "initial_state": "blank_sheet",
+          "max_runtime_ms": 9000,
+          "max_transitions": 2,
+          "name": "populate-and-save",
+          "states": {
+            "blank_sheet": {
+              "branches": [
+                {
+                  "action": "populate_cells",
+                  "next_state": "values_entered",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "blank": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "save_handoff": {
+              "branches": [
+                {
+                  "action": null,
+                  "next_state": null,
+                  "outcome": "yield",
+                  "reason": "effect_unavailable",
+                  "when": {
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "values_entered": {
+              "branches": [
+                {
+                  "action": "persist_document",
+                  "next_state": "save_handoff",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "cells_match": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            }
+          },
+          "version": "1"
+        },
+        "predicates": [
+          "context_ok",
+          "blank",
+          "cells_match"
+        ],
+        "session_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+        "surface": "x11-window-20",
+        "symbols": {
+          "cell_entry": {
+            "dependencies": [
+              "context_ok"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "entry_fresh"
+          },
+          "save_control": {
+            "dependencies": [
+              "context_ok",
+              "cells_match"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "save_fresh"
+          }
+        }
+      },
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "transitions": [
+        {
+          "action": "populate_cells",
+          "action_id": "action-62d00523d1314205a1f386b7fdb1b7d7",
+          "effect_ref": "compiled-de4352ef6136434bac12b13eadc0060b-16-execution",
+          "evidence_ref": "observation-4",
+          "execution_accepted_ns": 171489156000000,
+          "execution_started_ns": 171488171000000,
+          "from_state": "blank_sheet",
+          "matched_conditions": {
+            "blank": true,
+            "context_ok": true
+          },
+          "observation_sequence": 4,
+          "release_verified": true,
+          "to_state": "values_entered"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a8d7008bdd68440f9d97b0fcf98c77bd",
+          "effect_ref": "compiled-de4352ef6136434bac12b13eadc0060b-30-execution",
+          "evidence_ref": "observation-14",
+          "execution_accepted_ns": 171489718000000,
+          "execution_started_ns": 171489203000000,
+          "from_state": "values_entered",
+          "matched_conditions": {
+            "cells_match": true,
+            "context_ok": true
+          },
+          "observation_sequence": 14,
+          "release_verified": true,
+          "to_state": "save_handoff"
+        }
+      ]
+    },
+    "owner_timing": {
+      "clock": "time.monotonic_ns",
+      "completed_ns": 171489828000000,
+      "effect_status": null,
+      "elapsed_ns": 1750000000,
+      "error_type": null,
+      "method_outcome": "SAFE_YIELD",
+      "replay_allowed": false,
+      "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+      "scope": "run_compiled method entry through graph, feedback and session snapshot",
+      "started_ns": 171488078000000,
+      "status": "returned"
+    },
+    "owner_timing_retention": {
+      "status": "recorded"
+    },
+    "profile_id": "calc-ocr-save-v1",
+    "replay_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 19,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 171489937000000,
+        "pid": 9368,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 9368,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "bf2afbd4ca254b8a88d3ed16132d82ea",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "target_process_exit_receipt": {
+      "custody": "libreoffice-oosplash-direct-child-v1",
+      "exit_code": 0,
+      "launcher_executable": "/usr/lib/libreoffice/program/oosplash",
+      "launcher_exit_code": 0,
+      "launcher_package_version": "4:7.4.7-1+deb12u14",
+      "launcher_pid": 4421,
+      "launcher_start_ticks": 123456,
+      "observed_monotonic_ns": 171489906000000,
+      "pid": 4321,
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "replacement_observed": false,
+      "schema": "agent-interface/calc-target-exit-receipt-v2",
+      "start_ticks": 98765,
+      "status": "exited",
+      "verified": true,
+      "xid": 20
+    },
+    "task_artifact_admission": {
+      "artifact_name": "task-artifact.fods",
+      "attempt_id": "calc-wait-attempt-02",
+      "blank_bytes": 751,
+      "blank_identity": [
+        2130424111,
+        2814749771032399,
+        751,
+        1793771882459124100,
+        1793771882459124100
+      ],
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "call_id": "3762d92b231541ec80643c69a4ee5706",
+      "expected_values": {
+        "A1": "731",
+        "A2": "864"
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "schema": "agent-interface/calc-task-artifact-descriptor-v1",
+      "target_pid": 4321,
+      "target_start_ticks": 98765,
+      "target_xid": 20,
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_artifact_root_call_id": "3762d92b231541ec80643c69a4ee5706",
+    "task_effect_verification": {
+      "reason": "trusted_save_controller_unavailable",
+      "status": "not_configured",
+      "task_success": null
+    },
+    "task_plan_interface": {
+      "actions": {
+        "persist_document": {
+          "expected_effect": {
+            "cells_match": true
+          },
+          "operation": "request_save",
+          "target_symbol": "save_control"
+        },
+        "populate_cells": {
+          "expected_effect": {
+            "cells_match": true
+          },
+          "operation": "enter_pair",
+          "target_symbol": "cell_entry"
+        }
+      },
+      "format": "compiled-gui-interface-v1",
+      "interface_id": "planner-calc-two-cell-v1",
+      "method": {
+        "initial_state": "blank_sheet",
+        "max_runtime_ms": 9000,
+        "max_transitions": 2,
+        "name": "populate-and-save",
+        "states": {
+          "blank_sheet": {
+            "branches": [
+              {
+                "action": "populate_cells",
+                "next_state": "values_entered",
+                "outcome": "action",
+                "reason": null,
+                "when": {
+                  "blank": true,
+                  "context_ok": true
+                }
+              }
+            ]
+          },
+          "save_handoff": {
+            "branches": [
+              {
+                "action": null,
+                "next_state": null,
+                "outcome": "yield",
+                "reason": "effect_unavailable",
+                "when": {
+                  "context_ok": true
+                }
+              }
+            ]
+          },
+          "values_entered": {
+            "branches": [
+              {
+                "action": "persist_document",
+                "next_state": "save_handoff",
+                "outcome": "action",
+                "reason": null,
+                "when": {
+                  "cells_match": true,
+                  "context_ok": true
+                }
+              }
+            ]
+          }
+        },
+        "version": "1"
+      },
+      "predicates": [
+        "context_ok",
+        "blank",
+        "cells_match"
+      ],
+      "session_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "surface": "x11-window-20",
+      "symbols": {
+        "cell_entry": {
+          "dependencies": [
+            "context_ok"
+          ],
+          "identity_predicate": "context_ok",
+          "kind": "target_reference",
+          "target_reference": "entry_fresh"
+        },
+        "save_control": {
+          "dependencies": [
+            "context_ok",
+            "cells_match"
+          ],
+          "identity_predicate": "context_ok",
+          "kind": "target_reference",
+          "target_reference": "save_fresh"
+        }
+      }
+    },
+    "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+    "task_save_request": {
+      "attempt_id": "calc-wait-attempt-02",
+      "call_id": "3762d92b231541ec80643c69a4ee5706",
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "save_request_id": "9274f9094d7504ef54c844bee78d0146",
+      "save_request_monotonic_ns": 171489781000000,
+      "schema": "agent-interface/calc-task-save-request-v1",
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_success": null
+  },
+  "schema": "agent-interface/calc-provider-wait-repair-reuse-v1",
+  "source_sha256": {
+    "research/integration/standard_mcp_task_ledger_57_v1/app_server_provider_to_public_mcp_v1.py": "7d1d7713431ff4aa8adfbd2faabdb93ca7085a60c4330dcd49cecc3f4bc5d32c",
+    "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py": "f78fb733f866aa725a277d30b9b492984d341673aba9846421b7c31560436e24",
+    "runtime/cli_v1/mcp_guarded.py": "0d57ea6b5eb3babad5586d7e39b74d5096f91e28cc62888ee83115e238fadeeb",
+    "runtime/cli_v1/mcp_server.py": "d3015ba5d8935eefc85f077ae14aa0221336ff934c81464c43877f1408ffd74c",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "8f3b7cdd14620837aaa444916662a09201693965dae61115abc2ab5a0eba9aa9",
+    "runtime/guarded_x11_v1/calc_symbolic_plan_v1.py": "5096414d131116662d2cf3ae6039ac275e9304b32807d1236ac1cc6731d35464"
+  },
+  "stale_alias_rejection": {
+    "attempt_id": "calc-wait-attempt-04",
+    "close": {
+      "authority_granted": false,
+      "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\e2fbb0ca72a644e9994fc5d6ec259f9c",
+      "call_id": "e2fbb0ca72a644e9994fc5d6ec259f9c",
+      "connection_close_attempted": true,
+      "owner_process_exitcode": 0,
+      "owner_process_retired": true,
+      "release_attempted": false,
+      "release_confirmed": null,
+      "restart_allowed": false,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "cleanup_status": null,
+        "compiled_scope": "native-x11:5390e150712e412ea52f3a180f722b3c",
+        "compiled_surface": "x11-window-20",
+        "error": null,
+        "interrupted_execution": null,
+        "mode": "guarded-x11-owned-process",
+        "observation_sequence": 2,
+        "observation_worker": false,
+        "observations": null,
+        "owner_client_disconnect": null,
+        "owner_input_obligations": {
+          "buttons": [],
+          "keys": {}
+        },
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_process": {
+          "alive": false,
+          "exitcode": 0,
+          "liveness_observed_monotonic_ns": 171495781000000,
+          "pid": 44036,
+          "release_confirmed": null,
+          "retired": false,
+          "x_client_resource_base": 18874368
+        },
+        "owner_process_pid": 44036,
+        "owner_release_attempt": null,
+        "owner_x_client_resource_base": 18874368,
+        "process_identity": true,
+        "query_worker": true,
+        "recovery_required": false,
+        "restart_allowed": false,
+        "retention_mode": "files",
+        "review_required": false,
+        "session_id": "8b7cf98175164f9b9b2e87132486f669",
+        "state": "closed",
+        "target": "app",
+        "target_queries": {
+          "close_error": null,
+          "pending": false,
+          "retired": true,
+          "thread_alive": true
+        },
+        "targets": {
+          "app": 20
+        },
+        "window_lifecycle": true
+      },
+      "session_id": "8b7cf98175164f9b9b2e87132486f669",
+      "status": "closed",
+      "verified": true
+    },
+    "fake_input_state_created": false,
+    "observed_source": {
+      "binding_revision": 0,
+      "capture_ns": 171495203000000,
+      "image_source": "exact_capture_rgb_handoff",
+      "native": {
+        "artifact": {
+          "bytes": 5109,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\271a853ebed949a6b52d9ca5c0c7d6ca\\images\\786b0a0d03d44b1aa0a66df0034cf15e.png",
+          "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+          "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+          "timing_ns": {
+            "converted": 171495203000000,
+            "encoded": 171495234000000,
+            "hashed": 171495234000000,
+            "started": 171495203000000,
+            "written": 171495234000000
+          },
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 171495203000000,
+        "capture_started_ns": 171495203000000,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 20,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+        "target": "app",
+        "width": 1280
+      },
+      "observation_id": "4f39b9ea18344ae7ad56704d83f5b413",
+      "pointer_binding": {
+        "focus": 20,
+        "geometry": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "process_generation": "8eaa5263ab843c796bd93bba40711ad6e4515569e5fcc2228c82cebdbf8e05e3",
+        "surface": 20,
+        "window_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "sequence": 1,
+      "timing_ns": {
+        "artifact_verified": 171495250000000,
+        "binding_checked": 171495250000000,
+        "decoded": 171495250000000,
+        "public_returned": 171495234000000,
+        "started": 171495203000000
+      }
+    },
+    "plan_origin": "prior_attempt_reuse",
+    "plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+    "plan_source_attempt_id": "calc-wait-attempt-02",
+    "release_interpretation": "unknown in owner close receipt; the MCP boundary independently proves operation_invoked=false",
+    "runtime_result": {
+      "detail": "entry alias has no matching mint receipt in this MCP session",
+      "effect_status": "unknown",
+      "error": "CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE",
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "release_confirmed": null,
+      "replay_allowed": false,
+      "status": "invalid_request",
+      "task_success": null
+    },
+    "same_owner_superseded_frame": {
+      "latest_source": {
+        "binding_revision": 0,
+        "capture_ns": 171495484000000,
+        "image_source": "exact_capture_rgb_handoff",
+        "native": {
+          "artifact": {
+            "bytes": 5109,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\70b931f60d6841cc8ea5a6889ce77f11\\images\\bfdadc3cb0734e5faa5a2e3431d1f0d5.png",
+            "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+            "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+            "timing_ns": {
+              "converted": 171495484000000,
+              "encoded": 171495500000000,
+              "hashed": 171495515000000,
+              "started": 171495484000000,
+              "written": 171495500000000
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 171495484000000,
+          "capture_started_ns": 171495484000000,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 20,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+          "target": "app",
+          "width": 1280
+        },
+        "observation_id": "0c4b2c6c79e443d2a2bf7400ae21a78e",
+        "pointer_binding": {
+          "focus": 20,
+          "geometry": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "process_generation": "8eaa5263ab843c796bd93bba40711ad6e4515569e5fcc2228c82cebdbf8e05e3",
+          "surface": 20,
+          "window_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "sequence": 2,
+        "timing_ns": {
+          "artifact_verified": 171495515000000,
+          "binding_checked": 171495515000000,
+          "decoded": 171495515000000,
+          "public_returned": 171495515000000,
+          "started": 171495484000000
+        }
+      },
+      "old_source": {
+        "binding_revision": 0,
+        "capture_ns": 171495203000000,
+        "image_source": "exact_capture_rgb_handoff",
+        "native": {
+          "artifact": {
+            "bytes": 5109,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\271a853ebed949a6b52d9ca5c0c7d6ca\\images\\786b0a0d03d44b1aa0a66df0034cf15e.png",
+            "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+            "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+            "timing_ns": {
+              "converted": 171495203000000,
+              "encoded": 171495234000000,
+              "hashed": 171495234000000,
+              "started": 171495203000000,
+              "written": 171495234000000
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 171495203000000,
+          "capture_started_ns": 171495203000000,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 20,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+          "target": "app",
+          "width": 1280
+        },
+        "observation_id": "4f39b9ea18344ae7ad56704d83f5b413",
+        "pointer_binding": {
+          "focus": 20,
+          "geometry": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "process_generation": "8eaa5263ab843c796bd93bba40711ad6e4515569e5fcc2228c82cebdbf8e05e3",
+          "surface": 20,
+          "window_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "sequence": 1,
+        "timing_ns": {
+          "artifact_verified": 171495250000000,
+          "binding_checked": 171495250000000,
+          "decoded": 171495250000000,
+          "public_returned": 171495234000000,
+          "started": 171495203000000
+        }
+      },
+      "old_source_mints": {
+        "local_entry": {
+          "alias": "local_entry",
+          "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\e04c3b1c87264a15a53e20857c1ba9dd",
+          "call_id": "e04c3b1c87264a15a53e20857c1ba9dd",
+          "input_dispatched": false,
+          "lifetime": {
+            "authority_granted": false,
+            "capture_freshness_ms": 5000,
+            "clock": "time.monotonic_ns",
+            "expires_ns": 171795328000000,
+            "minted_ns": 171495328000000,
+            "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+          },
+          "offset": [
+            12,
+            8
+          ],
+          "operation": "guarded_mint",
+          "replay_allowed": false,
+          "session": {
+            "authority_granted": false,
+            "binding_revision": 0,
+            "cleanup_status": null,
+            "compiled_scope": "native-x11:5390e150712e412ea52f3a180f722b3c",
+            "compiled_surface": "x11-window-20",
+            "error": null,
+            "interrupted_execution": null,
+            "mode": "guarded-x11-owned-process",
+            "observation_sequence": 1,
+            "observation_worker": false,
+            "observations": null,
+            "owner_client_disconnect": null,
+            "owner_input_obligations": {
+              "buttons": [],
+              "keys": {}
+            },
+            "owner_input_obligations_live_read": {
+              "status": "not_read"
+            },
+            "owner_input_obligations_source": "child_rpc_snapshot",
+            "owner_process": {
+              "alive": true,
+              "exitcode": null,
+              "liveness_observed_monotonic_ns": 171495375000000,
+              "pid": 44036,
+              "release_confirmed": null,
+              "retired": false,
+              "x_client_resource_base": 18874368
+            },
+            "owner_process_pid": 44036,
+            "owner_release_attempt": null,
+            "owner_x_client_resource_base": 18874368,
+            "process_identity": true,
+            "query_worker": true,
+            "recovery_required": false,
+            "restart_allowed": false,
+            "retention_mode": "files",
+            "review_required": false,
+            "session_id": "8b7cf98175164f9b9b2e87132486f669",
+            "state": "open",
+            "target": "app",
+            "target_queries": {
+              "close_error": null,
+              "pending": false,
+              "retired": false,
+              "thread_alive": true
+            },
+            "targets": {
+              "app": 20
+            },
+            "window_lifecycle": true
+          },
+          "source_sequence": 1,
+          "status": "minted",
+          "task_success": null
+        },
+        "local_save": {
+          "alias": "local_save",
+          "call_directory": "D:\\CodexData\\Temp\\tmpatkdvttc\\stale-alias-owner\\20746a950c7844d0bdf55d1f7a51e849",
+          "call_id": "20746a950c7844d0bdf55d1f7a51e849",
+          "input_dispatched": false,
+          "lifetime": {
+            "authority_granted": false,
+            "capture_freshness_ms": 5000,
+            "clock": "time.monotonic_ns",
+            "expires_ns": 171795421000000,
+            "minted_ns": 171495421000000,
+            "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+          },
+          "offset": [
+            8,
+            6
+          ],
+          "operation": "guarded_mint",
+          "replay_allowed": false,
+          "session": {
+            "authority_granted": false,
+            "binding_revision": 0,
+            "cleanup_status": null,
+            "compiled_scope": "native-x11:5390e150712e412ea52f3a180f722b3c",
+            "compiled_surface": "x11-window-20",
+            "error": null,
+            "interrupted_execution": null,
+            "mode": "guarded-x11-owned-process",
+            "observation_sequence": 1,
+            "observation_worker": false,
+            "observations": null,
+            "owner_client_disconnect": null,
+            "owner_input_obligations": {
+              "buttons": [],
+              "keys": {}
+            },
+            "owner_input_obligations_live_read": {
+              "status": "not_read"
+            },
+            "owner_input_obligations_source": "child_rpc_snapshot",
+            "owner_process": {
+              "alive": true,
+              "exitcode": null,
+              "liveness_observed_monotonic_ns": 171495437000000,
+              "pid": 44036,
+              "release_confirmed": null,
+              "retired": false,
+              "x_client_resource_base": 18874368
+            },
+            "owner_process_pid": 44036,
+            "owner_release_attempt": null,
+            "owner_x_client_resource_base": 18874368,
+            "process_identity": true,
+            "query_worker": true,
+            "recovery_required": false,
+            "restart_allowed": false,
+            "retention_mode": "files",
+            "review_required": false,
+            "session_id": "8b7cf98175164f9b9b2e87132486f669",
+            "state": "open",
+            "target": "app",
+            "target_queries": {
+              "close_error": null,
+              "pending": false,
+              "retired": false,
+              "thread_alive": true
+            },
+            "targets": {
+              "app": 20
+            },
+            "window_lifecycle": true
+          },
+          "source_sequence": 1,
+          "status": "minted",
+          "task_success": null
+        }
+      },
+      "result": {
+        "detail": "reviewed sequence is not the latest source observed through this MCP session",
+        "effect_status": "unknown",
+        "error": "CALC_REVIEW_SOURCE_STALE",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "release_confirmed": null,
+        "replay_allowed": false,
+        "status": "invalid_request",
+        "task_success": null
+      }
+    },
+    "stale_bindings": {
+      "entry": {
+        "alias": "entry_fresh",
+        "offset": [
+          12,
+          8
+        ]
+      },
+      "save": {
+        "alias": "save_fresh",
+        "offset": [
+          8,
+          6
+        ]
+      }
+    },
+    "task_score": "not_run; MCP preflight refused before owner runtime"
+  },
+  "stale_source": {
+    "binding_revision": 0,
+    "capture_ns": 171485265000000,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 5109,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "D:\\CodexData\\Temp\\tmpatkdvttc\\server\\82e76289598e4f919a61e0392d6f5b26\\images\\e87b55333e6d4830a467f61372dc96a0.png",
+        "sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+        "source_raw_sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+        "timing_ns": {
+          "converted": 171485265000000,
+          "encoded": 171485296000000,
+          "hashed": 171485296000000,
+          "started": 171485265000000,
+          "written": 171485296000000
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 171485265000000,
+      "capture_started_ns": 171485265000000,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 20,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b",
+      "target": "app",
+      "width": 1280
+    },
+    "observation_id": "a9cdcfce70a24888a7e99a301c69f200",
+    "pointer_binding": {
+      "focus": 20,
+      "geometry": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "surface": 20,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "sequence": 1,
+    "timing_ns": {
+      "artifact_verified": 171485296000000,
+      "binding_checked": 171485296000000,
+      "decoded": 171485296000000,
+      "public_returned": 171485296000000,
+      "started": 171485265000000
+    }
+  },
+  "synthetic_phase_durations_ns": {
+    "compiled_graph_runtime": 1703000000,
+    "fresh_mint": 531000000,
+    "fresh_observe": 282000000,
+    "fresh_provider_to_compiled_result": 2234000000,
+    "initial_mint": 500000000,
+    "initial_observe": 1063000000,
+    "neutral_close": 469000000,
+    "post_close_independent_score": 187000000,
+    "provider_authored_prepare": 500000000,
+    "provider_wait_including_stale_observation": 250000000,
+    "stale_generation_to_refusal": 468000000
+  },
+  "task_artifact_origin": "Fake X Calc wrote fixture FODS on Ctrl+S before interface_close",
+  "task_effect_from_calc_operation": true,
+  "task_verification": {
+    "attempt_id": "calc-wait-attempt-02",
+    "call_id": "7b1458db595947e0a481e8cf22df3543",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "guarded_x11_calc",
+    "status": "verified",
+    "task_effect": {
+      "artifact_bytes": 511,
+      "artifact_identity": [
+        2130424111,
+        2814749771032399,
+        511,
+        1793771884210867600,
+        1793771882459124100
+      ],
+      "artifact_sha256": "48163f1ffe7808bf18719c3d0085265fbf960de40b91c8dfbec3ac1a0fc4c450",
+      "attempt_id": "calc-wait-attempt-02",
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "expected_values": {
+        "A1": "731",
+        "A2": "864"
+      },
+      "parsed_effect": {
+        "artifact_bytes": 511,
+        "artifact_sha256": "48163f1ffe7808bf18719c3d0085265fbf960de40b91c8dfbec3ac1a0fc4c450",
+        "cells": {
+          "A1": "731",
+          "A2": "864"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "reason": "registered_calc_saved_artifact_verified",
+      "replay_allowed": false,
+      "save_controller": {
+        "attempt_id": "calc-wait-attempt-02",
+        "call_id": "3762d92b231541ec80643c69a4ee5706",
+        "method_receipt_sha256": "97ba93af547c122b12770b68a0ca4d8cee3e979244aa2f3444e8496f6cd007d8",
+        "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+        "profile_id": "calc-ocr-save-v1",
+        "save_action_id": "action-a8d7008bdd68440f9d97b0fcf98c77bd",
+        "save_request_id": "9274f9094d7504ef54c844bee78d0146",
+        "save_request_monotonic_ns": 171489781000000,
+        "schema": "agent-interface/calc-registered-save-controller-v1",
+        "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "save_request_id": "9274f9094d7504ef54c844bee78d0146",
+      "save_request_monotonic_ns": 171489781000000,
+      "status": "verified",
+      "task_success": true,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_success": true
+  },
+  "timing_scope": "Windows monotonic wall time, FakePlanner/FakeX; provider wait is injected and token/price values are synthetic; phase durations are not matched efficiency evidence"
+}

@@ -1,0 +1,145 @@
+{
+  "checks": [
+    {
+      "name": "source_commit",
+      "pass": true
+    },
+    {
+      "name": "controller_sha256",
+      "pass": true
+    },
+    {
+      "name": "guard_sha256",
+      "pass": true
+    },
+    {
+      "name": "controller_git_blob",
+      "pass": true
+    },
+    {
+      "name": "guard_git_blob",
+      "pass": true
+    },
+    {
+      "name": "normal_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "optimized_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "runner_pending_loop_control_flow",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_case_admitted",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_case_below_action_floor",
+      "pass": true
+    },
+    {
+      "name": "runner_cover_hard_floor_is_one",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_change_queued_no_invalidation",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_change_does_not_cancel_pending",
+      "pass": true
+    },
+    {
+      "name": "runner_hard_change_emits_invalidation",
+      "pass": true
+    },
+    {
+      "name": "runner_hard_change_triggers_cancel_condition",
+      "pass": true
+    },
+    {
+      "name": "soft_boundary_decision",
+      "pass": true
+    },
+    {
+      "name": "hard_boundary_decision",
+      "pass": true
+    },
+    {
+      "name": "schema_sha256",
+      "pass": true
+    },
+    {
+      "name": "schema_git_blob",
+      "pass": true
+    },
+    {
+      "name": "followup_probe_sha256",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_stdout_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "followup_source_commit",
+      "pass": true
+    },
+    {
+      "name": "compiled_fire_schedule",
+      "pass": true
+    },
+    {
+      "name": "schema_separates_cover_and_action_floors",
+      "pass": true
+    },
+    {
+      "name": "pending_loop_renews_cover",
+      "pass": true
+    },
+    {
+      "name": "soft_event_composes_with_cover_schedule",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_schema_allows_fire_in_next_cover",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_cover_validity_has_no_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_next_action_has_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_fire_pulse_compiles_eight_repetitions",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_bounded_cover_sums_to_ten_seconds",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_cover_fire_dwell_is_eight_hundred_ms",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_pending_planner_loop_contains_cover_renewal",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_soft_ammo_case_does_not_cancel",
+      "pass": true
+    }
+  ],
+  "passed": 34,
+  "schema": "issue59-pending-soft-boundary-independent-audit-v1",
+  "scope": "frozen source identity and synthetic control-flow replay only",
+  "status": "PASS_SYNTHETIC_BOUNDARY",
+  "total": 34
+}

@@ -1,0 +1,10 @@
+{
+  "experiment": "app-server late usage after timeout and score",
+  "baseline_commit": "78cef41de52911b47857d6a62326a0aeb2c91081",
+  "work_commit_before_changes": "7f900cd1b4deb9a21a888e9c051e27792c6e2819",
+  "platform": "Windows",
+  "python": "3.11.9",
+  "scope": "synthetic App Server protocol, standard caller, recorder, and rejecting public Relay",
+  "not_in_scope": ["live model/provider", "actual Fake X owner/task-effect trial", "file-spool late usage sidecar", "WSLc", "MAP01", "performance comparison"],
+  "core_invariants": ["timeout terminal status is immutable", "late answer cannot trigger public MCP", "late usage API requires task-score custody", "each cumulative late usage update is separately raw-custodied", "one attempt contributes final totals once", "turn/completed answer is not consumed"]
+}

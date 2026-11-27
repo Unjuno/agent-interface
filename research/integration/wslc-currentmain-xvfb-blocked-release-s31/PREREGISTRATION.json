@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/wslc-s31-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s31-0fc5b445d5c4",
+  "preregistered_utc": "2026-10-25T11:07:55.562Z",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "question": "With bounded session-readiness polling, does a new WSLc session run the same current-main 3935 ms standard-caller private-Xvfb release and task-effect condition?",
+  "session_name": "agent-interface-wslc-s31-0fc5b445d5c4",
+  "container_name": "ai-control-wslc-s31-0fc5b445d5c4",
+  "runtime": "WSLc 3.0.3 fresh named session; no shared session/container inventory",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "condition": "Same source, image, staged Python/dependency/XKB/runner assets, 3935 ms pause, 4000 ms transaction bound, 5000 ms independent readback bound, and 8500 ms delayed-event horizon as S29/S30.",
+  "preflight_change": "After session.Start, poll only the exact generated container name within the named session at 1 second intervals, at most 10 times. Continue only on exit 0 with empty stdout/stderr. Retry only ERROR_PATH_NOT_FOUND during readiness; any other nonempty/error result stops before task input.",
+  "execution": "One test-body run only; no test retry. Exact-session termination and exact container/image cleanup only.",
+  "host_authority": "User explicitly confirmed this Windows PC may be used for WSLc experiments in this turn.",
+  "decision_rule": "PASS_SCOPED only if both task oracles pass; old canceled call remains UNKNOWN/replay-denied/task_success=null; release <=4000 ms; independent all-up readback <=5000 ms; delayed horizon >=8500 ms remains all-up; test exits zero; and exact container, image and session cleanup are confirmed.",
+  "failure_rule": "A post-input bound miss is FAIL. If readiness does not pass within 10 exact-name polls, terminate this unique session and retain HOLD; do not start the test body. If cleanup or outcome is uncertain, retain UNKNOWN/HOLD and do not retry.",
+  "limitations": [
+    "one synthetic private-Xvfb replicate",
+    "not physical Windows input",
+    "not MAP01 or a live application",
+    "not a reliability estimate or stable threshold",
+    "not model/provider economics",
+    "does not resolve unrelated pre-existing WSLc ownership"
+  ]
+}

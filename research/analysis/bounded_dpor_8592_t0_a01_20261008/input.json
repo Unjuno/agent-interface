@@ -1,0 +1,31 @@
+{
+  "schema": "bounded-dpor-input-v1",
+  "allocation_id": "DPOR-8592-T0-WSLC-CPU-20261008-A01",
+  "cases": [
+    {
+      "case_id": "lifecycle_order_faults",
+      "events": [
+        {"id": "observe:g2", "kind": "observation_update", "reads": [], "writes": ["observation_generation"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "lease:revoke", "kind": "lease_revoke", "reads": [], "writes": ["lease_open", "authority_epoch"], "guards": [], "enables": [], "effects": [], "authority_epoch": ["authority_epoch"]},
+        {"id": "task:cancel", "kind": "cancel", "reads": [], "writes": ["cancelled"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "tool:dispatch", "kind": "dispatch", "reads": ["task_generation"], "writes": ["dispatch_accepted"], "guards": ["observation_generation", "lease_open", "cancelled"], "enables": [], "effects": ["dispatch_release"], "authority_epoch": ["authority_epoch"]},
+        {"id": "physical:release", "kind": "release", "reads": ["dispatch_accepted"], "writes": ["physical_release"], "guards": ["lease_open", "observation_generation"], "enables": [], "effects": ["dispatch_release", "effect_receipt"], "authority_epoch": ["authority_epoch"]},
+        {"id": "effect:receipt", "kind": "effect_receipt", "reads": ["physical_release"], "writes": ["effect_receipt"], "guards": [], "enables": ["physical_release"], "effects": ["effect_receipt", "ack_order"], "authority_epoch": []},
+        {"id": "caller:ack", "kind": "acknowledgement", "reads": ["effect_receipt"], "writes": ["acknowledged", "violations"], "guards": [], "enables": ["effect_receipt"], "effects": ["ack_order"], "authority_epoch": []}
+      ]
+    },
+    {
+      "case_id": "commuting_heavy_diagnostics",
+      "events": [
+        {"id": "diag:window-a", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-a"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-b", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-b"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-c", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-c"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-d", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-d"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-e", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-e"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-f", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-f"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-g", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-g"], "guards": [], "enables": [], "effects": [], "authority_epoch": []},
+        {"id": "diag:window-h", "kind": "diagnostic_marker", "reads": [], "writes": ["diag:window-h"], "guards": [], "enables": [], "effects": [], "authority_epoch": []}
+      ]
+    }
+  ]
+}

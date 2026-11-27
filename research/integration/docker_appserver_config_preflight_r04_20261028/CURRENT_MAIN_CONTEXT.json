@@ -1,0 +1,9 @@
+{
+  "main_sha": "166ed8b54613b3b9cf03e6ce0c4645d1a93b0ea7",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "controller_sha256": "2fbb6587852b0853011a733e3d7b88a01175907698e9403cfd819062d946bab8",
+  "related_test_path": "research/doom/test_map01_overlap_controller_v39_appserver_command.py",
+  "related_test_sha256": "1ddbde1d8c4d8fa3e0cb00b1c1452319d415291f4fbfa506cb032c211785a41b",
+  "observed_contract": "current main derives disabled MCP overrides from configured entries and emits no override for an empty profile; the related test asserts both behavior and CLI initialize/thread startup with the fake MCP disabled",
+  "scope": "source inspection only; the container probe executes pinned Codex CLI without current-main controller source"
+}

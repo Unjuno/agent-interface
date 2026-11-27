@@ -1,0 +1,76 @@
+{
+  "checks": {
+    "browser_appserver_fixture_closed": true,
+    "controlled_response_delay_at_least_1500ms": true,
+    "exactly_one_post_with_frozen_token": true,
+    "independent_scorer_passed": true,
+    "later_success_observation_follows_response_ready": true,
+    "no_replay_and_runtime_task_success_unset": true,
+    "owner_process_exited_cleanly": true,
+    "pending_effect_event_retained": true,
+    "pending_observation_precedes_response_ready": true,
+    "provider_usage_retained": true,
+    "public_compiled_method_succeeded": true,
+    "run_id_matches_frozen_conditions": true,
+    "screenshots_retained": true,
+    "session_close_release_verified": true,
+    "two_action_releases_verified": true,
+    "xvfb_reaped": true
+  },
+  "measurements": {
+    "actual_response_delay_ns": 1602359590,
+    "close_release_confirmed": true,
+    "controlled_delay_ms": 1600,
+    "first_pending_observation_ns": 127859084315,
+    "independent_score": {
+      "expected_token": "uictrl-20261021-9f3c",
+      "runtime_task_success": null,
+      "scorer": "independent test-harness parser over captured HTTP POST body",
+      "submission_count": 1,
+      "submitted_values": [
+        "uictrl-20261021-9f3c"
+      ],
+      "success": true
+    },
+    "later_success_observation_ns": 129516397571,
+    "model": {
+      "effort": "medium",
+      "requested": "gpt-6.1-sol"
+    },
+    "pending_submit_events": 19,
+    "post_received_ns": 127849913495,
+    "provider_attempt": {
+      "answer_eligible": true,
+      "requested_effort": "medium",
+      "requested_model": "gpt-6.1-sol",
+      "result_path": "provider-call-01/result.json",
+      "thread_id": "01a15b95-c361-7da0-8001-2b55ec17299f",
+      "turn_id": "01a15b95-c3ef-7ec3-a259-6954a906a2f7",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13336,
+        "output_tokens": 143,
+        "reasoning_output_tokens": 0
+      },
+      "visible_images_submitted": 1,
+      "wait_ns": 10287527234
+    },
+    "replay_allowed": false,
+    "response_ready_ns": 129452273085,
+    "runtime_task_success": null,
+    "task_outcome": "TASK_SUCCEEDED",
+    "total_critical_events": 49,
+    "transition_count": 2,
+    "xvfb_lifecycle": {
+      "cmdline": "Xvfb :102 -screen 0 1024x768x24 -ac -nolisten tcp ",
+      "display": ":102",
+      "exit_status": 0,
+      "pid": 400,
+      "reaped": true
+    }
+  },
+  "run_id": "chromium-public-compiled-standard-caller-live-r09-20261021",
+  "schema": "agent-interface/chromium-public-compiled-caller-audit-v1",
+  "status": "PASS_POLLING_BRANCH_SCOPED_SINGLE_TRIAL"
+}

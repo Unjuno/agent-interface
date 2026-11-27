@@ -1,0 +1,3 @@
+# WSLc repeat-off preflight
+
+The pinned local image has no `xset` executable. A separate disposable WSLc container started private Xvfb and used the image's Python Xlib to set `auto_repeat_mode=X.AutoRepeatModeOff`; `get_keyboard_control()` returned `global_auto_repeat=0`. This checks only that the diagnostic control is available. R08 runs in fresh containers and records this server-side readback before each test.

@@ -1,0 +1,32 @@
+test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes) ... FAIL
+
+======================================================================
+FAIL: test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\CodexData\Temp\agent-interface-calc-error-receipt-r01\runtime\cli_v1\test_mcp_relay.py", line 389, in test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes
+    self.assertEqual(client.calls,
+AssertionError: Lists differ: [('in[637 chars]face_cancel', {'call_id': 'aaaaaaaaaaaaaaaaaaa[122 chars]l'})] != [('in[637 chars]face_guarded_compiled', {'marker': 'queued-two[122 chars]l'})]
+
+First differing element 17:
+('interface_cancel', {'call_id': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'})
+('interface_guarded_compiled', {'marker': 'queued-two'})
+
+Diff is 936 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.149s
+
+FAILED (failures=1)

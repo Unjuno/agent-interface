@@ -1,0 +1,9 @@
+# V15 conservative feedback attribution, construction-only successor
+
+This additive research adapter joins scorer samples/events to V15 input records. It adapts the unmerged #7552 adapter at 71cbd2cd00a8c4da77e959ad96394d7b86ef7d25 to use the current main release projector and the existing A04/A05 possible-envelope scorer. The original T1/T2/T3 evidence and implementations are not replaced or rerun.
+
+The complete source-row set must pass the release projector before an individual synchronization time is treated as verified. If it does not, all source intervals remain unverified; SOURCE_ROWS_UNVERIFIED signals that conservative outcome. This is deliberately whole-set fail-closed and may reject usable subsets. Incomplete identity/batch evidence retains its original HOLD. Measured brackets remain possible intervals; a competitor remains ambiguous. The A04 scorer emits SINGLE_POSSIBLE_INTENT_ENVELOPE with a null intent and no causal attribution, not continuous key occupancy or proof of task effect. The A05 wrapper rejects unknown positive event kinds.
+
+v15_conservative_envelope_v3.py is an unchanged copy of the A04 scorer retained in main under scorer_feedback_attribution_59_t0_a05_20261004/parents/scorer_feedback_attribution_59_t0_a04_20261004/. v15_conservative_envelope_v4.py is the A05 wrapper from the neighboring A05 directory with only its import renamed. The new adapter depends on the current research/doom/project_v39_release_measurement_v1.py.
+
+Run from this directory: python -B -m unittest test_v15_feedback_adapter_v1 -q. The included producer cases use the actual V12/V4/batch code with fake Xlib; they do not operate a desktop. These construction tests do not establish real input, continuous occupancy, application consumption, causal effect, recovery, task success, or MAP01. No runtime entry point or production adapter selects this module.

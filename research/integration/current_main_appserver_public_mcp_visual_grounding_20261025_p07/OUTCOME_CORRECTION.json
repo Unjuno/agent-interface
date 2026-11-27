@@ -1,0 +1,46 @@
+{
+  "schema": "agent-interface/additive-outcome-correction-v1",
+  "trial": "P07",
+  "corrects": [
+    "run/RESULT.json:classification",
+    "run/RESULT.json:independent_task_success",
+    "run/RESULT.json:independent_final_pixel",
+    "run/RESULT.json:owner_click_point",
+    "run/RESULT.json:mint_created_sequence"
+  ],
+  "original_raw_preserved": true,
+  "corrected_classification": "PASS_MODEL_GROUNDED_PUBLIC_MCP_FAKE_X_ONLY",
+  "cause": "The runner searched only server_root/* for synthetic click/effect/state files. The Fake X owner wrote those retained files directly under server_root, so the independent scorer missed them and reused the initial framebuffer. The response envelope also did not expose created_sequence at its top level; the owner-side mint receipt carries created_sequence=1.",
+  "provider_turn": {
+    "status": "completed",
+    "model_point": [16, 8],
+    "usage": {
+      "input_tokens": 10185,
+      "output_tokens": 58,
+      "reasoning_output_tokens": 39
+    }
+  },
+  "public_observation": {
+    "sequence": 1,
+    "image_sha256": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+    "process_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "mint": {
+    "status": "minted",
+    "request_source_sequence": 1,
+    "owner_receipt_created_sequence": 1
+  },
+  "owner_effect": {
+    "click_point": [16, 8],
+    "button_press_count": 1,
+    "success_pixel": [1, 1],
+    "success_rgb": [255, 0, 0],
+    "compiled_terminal_outcome": "TASK_SUCCEEDED",
+    "compiled_release_verified": true,
+    "close_release_confirmed": true
+  },
+  "independent_task_score": true,
+  "runtime_task_success": null,
+  "retry_performed": false,
+  "scope": "synthetic Fake X only; no WSLc, physical input, MAP01, matched efficiency, or reliability result"
+}

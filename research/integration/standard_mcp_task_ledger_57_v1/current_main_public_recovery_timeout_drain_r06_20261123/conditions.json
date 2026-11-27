@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/public-observe-future-timeout-drain-r06",
+  "not_tested": [
+    "native GUI/input/MAP01",
+    "production recovery reliability",
+    "matched efficiency/provider/token accounting",
+    "WSLc/Docker",
+    "Research Preview",
+    "distributable runtime"
+  ],
+  "question": "When a fake observe worker is deliberately held beyond the caller future 8-second timeout, does the pending Future remain live, finish exactly once after release, write a complete exact-call report, and drain before interface_close/TemporaryDirectory teardown without dispatch or cleanup race?",
+  "pass_rule": "Both frozen attempts pass all lifecycle assertions and exit 0; any timeout, extra invocation, stale temp, cleanup exception, or nonzero exit fails. This proves only the deterministic local callback-drain path.",
+  "invariants": [
+    "caller receives a timeout at 8 seconds while the worker remains in-flight;",
+    "no cancellation/retry/replay/input dispatch occurs;",
+    "the same future completes after an explicit release within 30 seconds;",
+    "exact call report is finalized and has no temporary file;",
+    "all worker-side work completes before close and tempdir teardown;",
+    "the same assertions pass in normal and optimized mode."
+  ],
+  "baseline_packet": "R05 instrumented test harness on local experiment branch",
+  "attempt_count": {
+    "normal": 1,
+    "total": 2,
+    "optimized": 1
+  },
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_observation_callback_timeout_drains_before_teardown",
+  "scope": "Deterministic Fake/local test-harness lifetime check",
+  "environment": "CPython 3.11.9; Windows host",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "d9bb650e7f793f7f6b94b0bc7107b2483dcf54e29d48536c31cf3253af7078d3"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "experiment": "v39 typed-health capture-vs-emit availability timing",
+  "status": "candidate_and_independent_audit_pass_scoped",
+  "source": {
+    "raw_report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "raw_events_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "event_records": 634,
+    "typed_observations": 218,
+    "waits": 6
+  },
+  "preregistered_windows_seconds": [
+    0.5,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    4
+  ],
+  "method": "Compare fixed two-consecutive-numeric-downward-transition trigger, independently replayed on capture_ns and outer observation emit_ns. No threshold retuning.",
+  "candidate": {
+    "executions": 1,
+    "trigger_slots": 84,
+    "changed_trigger_slots": 0,
+    "availability_delay_ms": {
+      "min": 10.571,
+      "median": 13.342,
+      "p95": 17.808,
+      "max": 24.895
+    },
+    "notable": [
+      {
+        "wait": "d2 no-policy",
+        "window_min_s": 2,
+        "sequence": 81,
+        "capture_offset_ms": 3193.79,
+        "emit_offset_ms": 3206.176,
+        "capture_remaining_ms": 3113.084,
+        "emit_remaining_ms": 3100.698
+      },
+      {
+        "wait": "d3 no-policy",
+        "window_min_s": 2.5,
+        "sequence": 103,
+        "capture_offset_ms": 3405.43,
+        "emit_offset_ms": 3418.433,
+        "capture_remaining_ms": 3319.562,
+        "emit_remaining_ms": 3306.559
+      },
+      {
+        "wait": "d4 authored-policy",
+        "window_min_s": 2.5,
+        "sequence": 154,
+        "delta_ms": 13.371
+      },
+      {
+        "wait": "d5 authored-policy",
+        "window_min_s": 1.5,
+        "sequence": 200,
+        "delta_ms": 12.536
+      }
+    ],
+    "boundary": "d3 includes one typed row emitted after wait start although captured before wait start; trigger sequence did not change."
+  },
+  "audit": {
+    "independent_all_pairs_enumeration": true,
+    "clock_window_wait_slots": 84,
+    "mismatches": 0,
+    "source_hashes_match": true
+  },
+  "failures": [
+    "Availability A01 inline candidate runner syntax error before fetch/parse; retained as runner-stop.json; zero candidate values.",
+    "Typed-health window A01 JSONL parser STOP and audit v1 missing Web Crypto are retained in sibling experiment records; corrected A02 candidate and audit passed scoped checks."
+  ],
+  "limits": [
+    "One retrospective stochastic trace only.",
+    "No real-time monitor, interrupt, task-success measurement, or live allocation.",
+    "Capture timestamps are not actionable observation-availability timestamps.",
+    "Results do not establish utility or safety of an interrupt rule."
+  ]
+}

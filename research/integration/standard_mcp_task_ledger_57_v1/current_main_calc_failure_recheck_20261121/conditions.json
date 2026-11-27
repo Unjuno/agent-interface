@@ -1,0 +1,22 @@
+{
+  "base_revision": "897f4896d23dd127a4523dc4955e573dace7d674",
+  "scope": "Issue #57 offline Calc/Fake X wrapper diagnosis at current main; no model/provider call, GUI application, formal allocation, Docker operation, or integrated runtime change. A diagnostic-only message change was isolated to a candidate worktree.",
+  "interpreter": "Python 3.11.9",
+  "runtime_test": "OwnedProcessMCPTests.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown",
+  "wrapper_test": "PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+  "findings": [
+    "Full 107-test historical current-main discovery failed in two Calc/Fake X cases.",
+    "The standalone owner-process Calc cancellation test passed normally and under -O (one test each).",
+    "The wrapper fails to reach the Save boundary, then reports no terminal cancellation receipt; a wrapper-only environment propagation repair did not alter that failure.",
+    "A subsequent wrapper run with child test cleanup in finally exceeded 50 seconds and was stopped by exact PID/command-line ownership; optimization mode matched.",
+    "Concurrent CI evidence-gathering processes were visible during the long wrapper runs, so scheduling contribution is unquantified.",
+    "All original assertions remain; this diagnosis does not qualify the wrapper or prove a runtime defect.",
+    "After the first wrapper invocation failed at the Save boundary, normal and optimized wrapper retries with a finally/doCleanups repair were both stopped by exact PID/process-tree ownership after 50+ seconds of no progress; their raw task-timeout traces are retained as STOPPED, not scientific result retries.",
+    "The initial test invocations used invalid unittest class/import selectors and are recorded separately as startup errors, excluded from substantive outcome.",
+    "An isolated candidate with a pickleable Calc owner-generation factory, per-attempt OCR-mode marker, and explicit nested-test cleanup completed the composed provider-to-public-MCP wrapper in 75.001 seconds but failed at the reviewed stable-menu-anchor predicate; method_receipt remained absent, effect_status unknown, release_confirmed false, cleanup_status UNKNOWN. Candidate was not integrated; raw is retained in candidate-cleanup-normal.err/.out.",
+    "The same isolated candidate with diagnostic-only anchor error detail then passed the composed test once normally (1/1, 35.182 s) and once under -O (1/1, 30.359 s), but the earlier same-candidate failure remained unreconciled and a second normal confirmation stalled with no output for >100 s before exact PID/session stop. The candidate is nondeterministic/unresolved and not integrated.",
+    "A direct positive Calc owner test in normal mode failed in 14.850 s: prepare returned pending after the 10 s wait, close returned busy, and TemporaryDirectory cleanup raised WinError 32 for the still-open task FODS. Several unrelated CI/evidence Python processes were visible, but their effect is unknown. Remaining direct subcases were not run after this failure; raw is positive-normal-direct.err/.out.",
+    "An isolated Docker run using image agent-interface-xvfb-mcp:late-input-r19 (image ID bd191d30ea94), network disabled, 2 CPUs, 4 GiB memory, read-only candidate source mount, failed in 3.321 s at interface_verify_task: parsed FODS values matched, but the trusted save-controller receipt was unavailable, leaving task_success null. This differs from the Windows candidate passes and does not establish a source defect; cross-environment/source-image compatibility remains unresolved. Raw stderr and exact command are retained.",
+    "The cancellation-accounting test that failed during broad host discovery was rerun from exact current main in the isolated Docker image: normal passed 1/1 in 4.325 s and optimized passed 1/1 in 5.906 s. No assertions or timeout limits were changed; focused gate passes, while broad discovery remains a separate retained host/composition-sensitive failure."
+  ]
+}

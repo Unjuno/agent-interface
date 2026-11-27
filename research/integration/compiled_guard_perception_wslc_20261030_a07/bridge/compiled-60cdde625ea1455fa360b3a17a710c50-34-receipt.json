@@ -1,0 +1,60 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc_one_row",
+  "method": "one_row_save",
+  "method_version": "1",
+  "session_scope": "native-x11:a008c409041f453c86cf0b65a1976c1a",
+  "outcome": "SAFE_YIELD",
+  "reason": "execution_failed",
+  "completed_transitions": 0,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 4291785416,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "28dd65c2c0d839638014baddf650ca3060eb3d86a2c1d9a97523c9cc81575f58",
+      "predicates": {
+        "ready": true,
+        "row_visible": "unknown"
+      },
+      "observation_started_ns": 4291501303,
+      "observation_accepted_ns": 4489508174
+    }
+  ],
+  "transitions": [],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "start",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "ready": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "execution_failed",
+      "action_id": "action-5da650b4a7924022aab0354d725b5bf4",
+      "release_verified": true,
+      "execution_started_ns": 4493915049,
+      "execution_accepted_ns": 5808111012
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "execution_failed",
+      "completed_transitions": 0
+    }
+  ],
+  "latest_evidence_ref": "observation-2",
+  "pending_effect": null,
+  "started_ns": 4291498676,
+  "ended_ns": 5809563495,
+  "elapsed_ns": 1518064819,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

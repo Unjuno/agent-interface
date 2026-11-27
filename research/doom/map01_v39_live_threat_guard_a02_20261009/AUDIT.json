@@ -1,0 +1,97 @@
+{
+  "schema": "map01-v39-live-threat-guard-audit-v1",
+  "allocation": "map01-v39-live-threat-guard-a02-20261009",
+  "audit_code_sha256": "a9c711f95fdfc5560a44849b719a2b5953d72620da111071640daee9be65bf3b",
+  "status": "RETAINED_RUNTIME_FAILURE",
+  "formal_pass": false,
+  "checks": {
+    "source_hashes_match_freeze": true,
+    "fixture_hashes_match_freeze": true,
+    "wad_hash_match_expected": true,
+    "host_verified_all_forwarded_images": true,
+    "four_model_turns_started_and_completed": true,
+    "all_protocol_images_are_retained": true,
+    "observations_reconcile_to_pngs": true,
+    "accepted_programs_have_terminals": true,
+    "reported_cancel_releases_are_empty": true,
+    "runtime_failure_retained": true,
+    "score_is_nonterminal": true
+  },
+  "counts": {
+    "model_turns_started": 4,
+    "model_turns_completed": 4,
+    "accepted_programs": 7,
+    "terminals": 7,
+    "typed_observations": 125,
+    "exact_observations": 125,
+    "host_verified_image_requests": 4,
+    "verified_empty_release_events": 3
+  },
+  "model_turns": [
+    {
+      "status": "completed",
+      "duration_ms": 4494,
+      "agent_messages": 1
+    },
+    {
+      "status": "completed",
+      "duration_ms": 2565,
+      "agent_messages": 1
+    },
+    {
+      "status": "completed",
+      "duration_ms": 4170,
+      "agent_messages": 1
+    },
+    {
+      "status": "completed",
+      "duration_ms": 2888,
+      "agent_messages": 1
+    }
+  ],
+  "health_ammo": {
+    "health_min": 85,
+    "health_max": 97,
+    "ammo_min": 41,
+    "ammo_max": 48,
+    "health_values": [
+      85,
+      91,
+      97
+    ],
+    "ammo_values": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "authored_health_guard_hard_crossing": false,
+    "interpretation": "health fell in two soft-change intervals (97->91 and 91->85); the authored minimums were not crossed, so hard guard invalidation was not exposed"
+  },
+  "runtime_failure": {
+    "stage": "cover_terminal_validation",
+    "error": "up_batch requires the active input lease",
+    "cover_terminal_status": "failed",
+    "release_verified_empty": true
+  },
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 17650216229,
+    "death_count": 0,
+    "kill_count": 1,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1
+  },
+  "scope": "One live MAP01 episode on a dedicated OrbStack arm64 VM. It does not establish hard health-guard behavior because no authored health threshold was crossed; the controller stopped on a V15 release-batch runtime failure. No retry was made."
+}

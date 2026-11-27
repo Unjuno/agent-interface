@@ -245,6 +245,55 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.buttons_down, set())
             self.assertGreater(display_instance.button_release_attempts, 3)
 
+            recovered_failed_release = owner.call("release", failing_lease)
+            self.assertTrue(recovered_failed_release["verified"])
+
+            explicit_up_lease = Lease()
+            owner.call("down", explicit_up_lease, "W")
+            display_instance.fail_key_release_attempts = 3
+            with self.assertRaisesRegex(RuntimeError, "explicit key-up not observed"):
+                owner.call("up", explicit_up_lease, "W")
+            presses_before_rejected_down = display_instance.key_press_attempts
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", explicit_up_lease, "W")
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("button_down", explicit_up_lease, 1)
+            self.assertEqual(display_instance.key_press_attempts, presses_before_rejected_down)
+            self.assertEqual(display_instance.buttons_down, set())
+
+            recovered_explicit_up = owner.call("release", explicit_up_lease)
+            self.assertTrue(recovered_explicit_up["verified"])
+            owner.call("down", explicit_up_lease, "W")
+            owner.call("release", explicit_up_lease)
+
+            sync_failure_lease = Lease()
+            sync_failure_lease.expected_surface = 52
+            sync_failure_lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("down", sync_failure_lease, "W")
+            owner.call("down", sync_failure_lease, "A")
+            owner.call("button_down", sync_failure_lease, 1)
+            display_instance.fail_sync_attempts = 1
+            release_order_start = len(display_instance.key_release_order)
+            sync_failure_result = owner.call("release", sync_failure_lease)
+            self.assertTrue(sync_failure_result["verified"])
+            self.assertEqual(display_instance.down, set())
+            self.assertEqual(display_instance.buttons_down, set())
+            self.assertEqual(
+                display_instance.key_release_order[release_order_start:], [65, 66])
+            sync_failure_receipt = [
+                row for row in owner.records if row.get("event") == "owner_release"]
+            sync_failure_receipt = sync_failure_receipt[-1]
+            self.assertTrue(sync_failure_receipt["verified"])
+            self.assertEqual(
+                sync_failure_receipt["key_release_attempts"]["65"]["attempts"][0]
+                ["sync_error"]["type"], "RuntimeError")
+            self.assertIsNone(
+                sync_failure_receipt["key_release_attempts"]["65"]["attempts"][0]
+                ["sync_returned_ns"])
+            self.assertEqual(
+                sync_failure_receipt["key_release_attempts"]["66"]["attempts"][0]
+                ["sync_error"], None)
+
         finally:
             if owner is not None:
                 owner.close()

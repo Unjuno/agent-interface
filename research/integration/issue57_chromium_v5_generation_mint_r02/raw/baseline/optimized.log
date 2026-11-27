@@ -1,0 +1,52 @@
+E
+======================================================================
+ERROR: test_chromium_v5_generation_mint_guard_v1 (unittest.loader._FailedTest.test_chromium_v5_generation_mint_guard_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_chromium_v5_generation_mint_guard_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 10, in <module>
+    from research.live_control.session_v33 import Backend as PointMintBackend
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v33.py", line 9, in <module>
+    from session_v32 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v32.py", line 3, in <module>
+    from session_v31 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v31.py", line 3, in <module>
+    from session_v30 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v30.py", line 4, in <module>
+    from session_v29 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v29.py", line 5, in <module>
+    from session_v28 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v28.py", line 5, in <module>
+    from session_v26 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v26.py", line 3, in <module>
+    from session_v25 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v25.py", line 9, in <module>
+    from session_v24 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v24.py", line 9, in <module>
+    from session_v23 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v23.py", line 9, in <module>
+    from session_v22 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v22.py", line 3, in <module>
+    from session_v9 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v7.py", line 2, in <module>
+    from session_v6 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v6.py", line 4, in <module>
+    from session_v4 import Encoder,Decoder,Frame,ImageArtifactSink,suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v4.py", line 20, in <module>
+    from tile_transport import Encoder,Decoder,Frame
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\tile_transport.py", line 9, in <module>
+    from research.observation_tiles.tile_transport import Decoder, Encoder, Frame, packet
+ModuleNotFoundError: No module named 'research.observation_tiles'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

@@ -1,0 +1,189 @@
+{
+  "request": {
+    "action": "forward",
+    "operation": "move_forward_600ms",
+    "authorization": "78a9317dba4f4f6591e7a80fb60e8a30",
+    "expected_sequence": 3,
+    "valid_until_ns": 2985338149419
+  },
+  "action_id": "action-6592c72414144426b36cbf300fe8acf6",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 2983957925723,
+      "ended_ns": 2984661325170,
+      "emissions": 2,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 2984661323437
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 600,
+          "started_ns": 2984060226622,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2984660307114
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 4,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "forward_target",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "forward_target",
+        "point": [
+          364,
+          730
+        ],
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 4,
+        "valid_until_ns": 2985405581152,
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 5,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "forward_target",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "forward_target",
+        "point": [
+          364,
+          730
+        ],
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 5,
+        "valid_until_ns": 2985458106612,
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:w",
+        "observation_sequence": 6,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "forward_target",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "forward_target",
+        "point": [
+          364,
+          730
+        ],
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 6,
+        "valid_until_ns": 2985509681378,
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 4,
+        "scope": "native-x11:dd4b3ca0bd8e43a894e93e2070ad96b2",
+        "binding_revision": 0,
+        "started_ns": 2983950493466,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 2983955118571
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 5,
+        "scope": "native-x11:dd4b3ca0bd8e43a894e93e2070ad96b2",
+        "binding_revision": 0,
+        "started_ns": 2984004695983,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 2984009333086
+      },
+      {
+        "stage": "before_key_press:w",
+        "observation_sequence": 6,
+        "scope": "native-x11:dd4b3ca0bd8e43a894e93e2070ad96b2",
+        "binding_revision": 0,
+        "started_ns": 2984054099147,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 2984060027280
+      }
+    ]
+  }
+}

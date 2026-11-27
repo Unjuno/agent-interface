@@ -1,0 +1,273 @@
+test_fatal_verifier_stop_still_propagates_same_object (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_fatal_verifier_stop_still_propagates_same_object) ... ok
+test_journal_failure_after_effect_stops_before_next_input (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_journal_failure_after_effect_stops_before_next_input) ... FAIL
+test_mutating_successful_journal_keeps_original_evidence (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_mutating_successful_journal_keeps_original_evidence) ... ok
+test_terminal_journal_failure_cannot_leave_success_claim (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_journal_failure_cannot_leave_success_claim) ... FAIL
+test_terminal_mutation_then_failure_keeps_private_prefix (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_mutation_then_failure_keeps_private_prefix) ... FAIL
+test_verifier_and_terminal_journal_failures_both_survive (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_and_terminal_journal_failures_both_survive) ... FAIL
+test_verifier_exception_without_journal_failure_is_typed (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_exception_without_journal_failure_is_typed) ... FAIL
+test_successful_verifier_control_still_completes (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_successful_verifier_control_still_completes) ... ok
+test_verifier_exception_returns_typed_receipt_and_keeps_prefix (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_verifier_exception_returns_typed_receipt_and_keeps_prefix) ... ERROR
+test_terminal_journal_failure_returns_prefix_and_stops (runtime.core_v1.test_compiled_gui_journal_exception.CompiledJournalExceptionTests.test_terminal_journal_failure_returns_prefix_and_stops) ... ERROR
+test_guarded_adapter_retains_verifier_witness_before_core_receipt (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_guarded_adapter_retains_verifier_witness_before_core_receipt) ... ERROR
+test_native_caller_journal_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_journal_failure_keeps_prefix) ... FAIL
+test_native_caller_terminal_journal_and_verifier_failures_both_survive (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_terminal_journal_and_verifier_failures_both_survive) ... FAIL
+test_native_caller_verifier_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_verifier_failure_keeps_prefix) ... FAIL
+
+======================================================================
+ERROR: test_verifier_exception_returns_typed_receipt_and_keeps_prefix (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_verifier_exception_returns_typed_receipt_and_keeps_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_gui_effect_verifier_exception.py", line 107, in test_verifier_exception_returns_typed_receipt_and_keeps_prefix
+    receipt, counts, events = self.run_case(fail)
+                              ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_gui_effect_verifier_exception.py", line 93, in run_case
+    receipt = compiled_gui.run(interface(), {
+        "observe": observe,
+    ...<4 lines>...
+        "journal": events.append,
+    })
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 294, in run
+          "evidence_ref": observation["evidence_ref"]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        return finish("SAFE_YIELD", "budget_exhausted")
+        ^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_gui_effect_verifier_exception.py", line 105, in fail
+    raise RuntimeError("injected verifier failure")
+RuntimeError: injected verifier failure
+
+======================================================================
+ERROR: test_terminal_journal_failure_returns_prefix_and_stops (runtime.core_v1.test_compiled_gui_journal_exception.CompiledJournalExceptionTests.test_terminal_journal_failure_returns_prefix_and_stops)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_gui_journal_exception.py", line 103, in test_terminal_journal_failure_returns_prefix_and_stops
+    receipt = compiled_gui.run(make_interface(), {
+        "observe": observe,
+    ...<4 lines>...
+        "journal": journal,
+    })
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 432, in run
+        delivery["input_dispatched"] = terminal["input_dispatched"]
+    _exact(terminal, terminal_fields, "execution terminal")
+    terminal = terminal.copy()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 187, in emit
+    nonlocal journal_failure_type
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_gui_journal_exception.py", line 101, in journal
+    raise OSError("injected journal failure after input")
+OSError: injected journal failure after input
+
+======================================================================
+ERROR: test_guarded_adapter_retains_verifier_witness_before_core_receipt (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_guarded_adapter_retains_verifier_witness_before_core_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 18, in test_guarded_adapter_retains_verifier_witness_before_core_receipt
+    result=compiled.run(bridge,memory.spec(),memory.bindings(),perceive=memory.perceive,verify_effect=failed)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\compiled.py", line 259, in run
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\compiled.py", line 235, in execute_method
+    result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+        'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self.cancelled,
+        'journal':lambda event:self.retain('event',event)}, clock=time.monotonic_ns)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 294, in run
+          "evidence_ref": observation["evidence_ref"]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        return finish("SAFE_YIELD", "budget_exhausted")
+        ^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\compiled.py", line 214, in verify_effect
+    result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 17, in failed
+    def failed(*args):raise RuntimeError('owned verifier unavailable')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: owned verifier unavailable
+
+======================================================================
+FAIL: test_journal_failure_after_effect_stops_before_next_input (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_journal_failure_after_effect_stops_before_next_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 22, in cell
+    result=compiled_gui.run(fixtures.interface(),dict(observe=driver.observe,admit=driver.admit,
+        execute=driver.execute,verify_effect=verify,journal=journal,cancelled=lambda:False),clock=lambda:driver.now)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 306, in run
+    unknown = any(key not in observed or
+                  (observed[key] == "unknown" and
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 187, in emit
+    nonlocal journal_failure_type
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 16, in journal
+    if fault:raise OSError('owned journal failure')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: owned journal failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 64, in test_journal_failure_after_effect_stops_before_next_input
+    row=cell('effect_checked');r=row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 25, in cell
+    raise AssertionError('ordinary post-input callback escaped without a receipt') from error
+AssertionError: ordinary post-input callback escaped without a receipt
+
+======================================================================
+FAIL: test_terminal_journal_failure_cannot_leave_success_claim (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_journal_failure_cannot_leave_success_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 22, in cell
+    result=compiled_gui.run(fixtures.interface(),dict(observe=driver.observe,admit=driver.admit,
+        execute=driver.execute,verify_effect=verify,journal=journal,cancelled=lambda:False),clock=lambda:driver.now)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 333, in run
+    if effect["status"] == "succeeded":
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 218, in finish
+    "frontier_model_resumptions": 0,
+    ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 187, in emit
+    nonlocal journal_failure_type
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 16, in journal
+    if fault:raise OSError('owned journal failure')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: owned journal failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 44, in test_terminal_journal_failure_cannot_leave_success_claim
+    row=cell('runtime_finished');r=row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 25, in cell
+    raise AssertionError('ordinary post-input callback escaped without a receipt') from error
+AssertionError: ordinary post-input callback escaped without a receipt
+
+======================================================================
+FAIL: test_terminal_mutation_then_failure_keeps_private_prefix (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_mutation_then_failure_keeps_private_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 22, in cell
+    result=compiled_gui.run(fixtures.interface(),dict(observe=driver.observe,admit=driver.admit,
+        execute=driver.execute,verify_effect=verify,journal=journal,cancelled=lambda:False),clock=lambda:driver.now)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 432, in run
+        delivery["input_dispatched"] = terminal["input_dispatched"]
+    _exact(terminal, terminal_fields, "execution terminal")
+    terminal = terminal.copy()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 187, in emit
+    nonlocal journal_failure_type
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 16, in journal
+    if fault:raise OSError('owned journal failure')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: owned journal failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 50, in test_terminal_mutation_then_failure_keeps_private_prefix
+    row=cell('action_terminal',mutate=True);r=row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 25, in cell
+    raise AssertionError('ordinary post-input callback escaped without a receipt') from error
+AssertionError: ordinary post-input callback escaped without a receipt
+
+======================================================================
+FAIL: test_verifier_and_terminal_journal_failures_both_survive (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_and_terminal_journal_failures_both_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 22, in cell
+    result=compiled_gui.run(fixtures.interface(),dict(observe=driver.observe,admit=driver.admit,
+        execute=driver.execute,verify_effect=verify,journal=journal,cancelled=lambda:False),clock=lambda:driver.now)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 294, in run
+          "evidence_ref": observation["evidence_ref"]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        return finish("SAFE_YIELD", "budget_exhausted")
+        ^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 19, in verify
+    if verify_failure:raise RuntimeError('owned verifier failure')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: owned verifier failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 33, in test_verifier_and_terminal_journal_failures_both_survive
+    row=cell('runtime_finished',True);r=row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 25, in cell
+    raise AssertionError('ordinary post-input callback escaped without a receipt') from error
+AssertionError: ordinary post-input callback escaped without a receipt
+
+======================================================================
+FAIL: test_verifier_exception_without_journal_failure_is_typed (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_exception_without_journal_failure_is_typed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 22, in cell
+    result=compiled_gui.run(fixtures.interface(),dict(observe=driver.observe,admit=driver.admit,
+        execute=driver.execute,verify_effect=verify,journal=journal,cancelled=lambda:False),clock=lambda:driver.now)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\compiled_gui.py", line 294, in run
+          "evidence_ref": observation["evidence_ref"]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        return finish("SAFE_YIELD", "budget_exhausted")
+        ^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 19, in verify
+    if verify_failure:raise RuntimeError('owned verifier failure')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: owned verifier failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 70, in test_verifier_exception_without_journal_failure_is_typed
+    row=cell(verify_failure=True);r=row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 25, in cell
+    raise AssertionError('ordinary post-input callback escaped without a receipt') from error
+AssertionError: ordinary post-input callback escaped without a receipt
+
+======================================================================
+FAIL: test_native_caller_journal_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_journal_failure_keeps_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 60, in test_native_caller_journal_failure_keeps_prefix
+    def test_native_caller_journal_failure_keeps_prefix(self):self.cell(journal_at='action_terminal')
+                                                              ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 47, in cell
+    self.assertEqual(r['outcome'],'EXECUTION_INCOMPLETE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+======================================================================
+FAIL: test_native_caller_terminal_journal_and_verifier_failures_both_survive (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_terminal_journal_and_verifier_failures_both_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 62, in test_native_caller_terminal_journal_and_verifier_failures_both_survive
+    self.cell(verifier=True,journal_at='runtime_finished')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 47, in cell
+    self.assertEqual(r['outcome'],'EXECUTION_INCOMPLETE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+======================================================================
+FAIL: test_native_caller_verifier_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_verifier_failure_keeps_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 59, in test_native_caller_verifier_failure_keeps_prefix
+    def test_native_caller_verifier_failure_keeps_prefix(self):self.cell(verifier=True)
+                                                               ~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 47, in cell
+    self.assertEqual(r['outcome'],'EXECUTION_INCOMPLETE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.055s
+
+FAILED (failures=8, errors=3)

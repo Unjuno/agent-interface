@@ -1,0 +1,14 @@
+{
+  "captured_at": "2026-11-10T11:51:25.331254+00:00",
+  "fixture_pid": 39168,
+  "fixture_process_absent_after_close_main_window": true,
+  "outcome": "METHOD_FAIL_TIMING_WINDOW",
+  "reason": "fixture main-loop block expired about 47 seconds before public MCP dispatch began; WM_CHAR arrived before late-input horizon start, so no in-block queued-delivery claim is supported",
+  "char_event_monotonic_ns": 75998000000000,
+  "pump_resume_monotonic_ns": 75947203000000,
+  "horizon_start_monotonic_ns": 75998062000000,
+  "horizon_end_monotonic_ns": 76000062000000,
+  "char_before_horizon_start_ns": 62000000,
+  "task_success": null,
+  "replay_allowed": false
+}

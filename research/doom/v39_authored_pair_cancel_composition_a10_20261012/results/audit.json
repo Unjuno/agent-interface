@@ -1,0 +1,36 @@
+{
+  "audit_method": "Non-executing source identity, WSLc transcript, and structured receipt audit; test not rerun.",
+  "audit_status": "PASS_SCOPED",
+  "composition_order_and_terminal_assertions_match": true,
+  "containerfile_hash_matches": true,
+  "limits": [
+    "fake planner client",
+    "fake executor",
+    "synthetic typed observations and release receipt",
+    "no physical key release or live-game outcome"
+  ],
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "receipt_classification": "CONSTRUCTION_ONLY_SOURCE_COMPOSITION",
+  "source_checks": [
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "map01_overlap_controller_v39.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "observable_signal_guard_v2.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "persistent_planner_adapter_v2.py"
+    }
+  ],
+  "test_hash_matches": true,
+  "transcript_exit_zero_and_receipt_matches": true
+}

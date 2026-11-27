@@ -1,0 +1,13 @@
+{
+  "schema": "v39-v15-process-owner-integration-run-v1",
+  "test_command": "python -m unittest -q test_input_owner_process_v1 test_session_map01_v15 test_controller_failure_cleanup_v1 test_controller_failure_cleanup_v39 test_controller_failure_cleanup_portability_v1 test_controller_failure_cleanup_stage_v1 test_controller_failure_cleanup_finish_send_wait_v1 test_controller_failure_cleanup_owner_process test_doom_owner_thread_release_batch_backend_process_v1 test_map01_overlap_controller_v39",
+  "test_exit_code": 0,
+  "test_output": "unittest.stdout-stderr.txt",
+  "py_compile_command": "python -m py_compile session_map01_v15.py doom_owner_thread_release_batch_backend_process_v1.py doom_controller_failure_cleanup_v1.py map01_overlap_controller_v39.py test_controller_failure_cleanup_owner_process.py test_session_map01_v15.py test_doom_owner_thread_release_batch_backend_process_v1.py ../live_control/input_owner_process_v1.py ../live_control/test_input_owner_process_v1.py",
+  "py_compile_exit_code": 0,
+  "py_compile_output": "py_compile.stdout-stderr.txt",
+  "invocation_count": 1,
+  "new_game_or_model_invocation": false,
+  "physical_input": false,
+  "diff_check_exit_code": 0
+}

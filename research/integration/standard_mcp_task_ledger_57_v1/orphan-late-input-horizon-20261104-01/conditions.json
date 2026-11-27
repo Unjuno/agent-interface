@@ -1,0 +1,27 @@
+{
+  "source_revision": "80444fe3a407bfb7aa0aa724b7ace06c74933d5a",
+  "work_branch": "fix/orphan-late-request-recovery-20261104",
+  "date": "2026-11-04",
+  "host": "Windows",
+  "python": "3.11.9",
+  "test_modules": [
+    "runtime.cli_v1.test_owned_win32_session",
+    "runtime.cli_v1.test_win32_supervisor_helpers",
+    "runtime.cli_v1.test_mcp_supervised_win32",
+    "runtime.guarded_win32_v1.test_process_cancellation"
+  ],
+  "normal_result": "105 passed",
+  "optimized_result": "105 passed",
+  "normal_exit": 0,
+  "optimized_exit": 0,
+  "docker": false,
+  "live_gui_actions": 0,
+  "live_provider_calls": 0,
+  "evidence": [
+    "normal.log",
+    "normal.exit",
+    "optimized.log",
+    "optimized.exit"
+  ],
+  "scope": "synthetic owner/supervisor/helper/composition tests only"
+}

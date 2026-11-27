@@ -1,0 +1,90 @@
+{
+  "status": "cleanup_failed",
+  "error": "RuntimeError('owned guarded session unavailable: failed')",
+  "release_attempted": true,
+  "release_confirmed": false,
+  "cleanup_status": "UNKNOWN",
+  "task_success": null,
+  "replay_allowed": false,
+  "verified": false,
+  "owner_client_disconnect": {
+    "status": "unknown",
+    "reason": "resource_base_unavailable",
+    "worker_retired": null
+  },
+  "owner_input_obligations": {
+    "keys": {},
+    "buttons": []
+  },
+  "owner_input_obligations_source": "retired_child_shared_state",
+  "owner_input_obligations_live_read": {
+    "status": "snapshot",
+    "obligations": {
+      "keys": {},
+      "buttons": []
+    }
+  },
+  "owner_release_attempt": {
+    "status": "not_attempted",
+    "reason": "owner_disconnect_not_confirmed"
+  },
+  "owner_process_retired": true,
+  "owner_process_exitcode": 1,
+  "late_server_request_possible": true,
+  "session": {
+    "session_id": "b3f2c1e3028b4a2f89ddd72962469efd",
+    "mode": "guarded-x11-owned-process",
+    "state": "failed",
+    "binding_revision": 0,
+    "targets": {
+      "app": 20
+    },
+    "recovery_required": null,
+    "error": "owned close result unavailable",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "process_identity": true,
+    "query_worker": true,
+    "observation_worker": false,
+    "window_lifecycle": false,
+    "retention_mode": "files",
+    "observations": null,
+    "target_queries": null,
+    "target": "app",
+    "observation_sequence": null,
+    "review_required": true,
+    "owner_process": {
+      "pid": 42880,
+      "alive": false,
+      "liveness_observed_monotonic_ns": 522596687000000,
+      "exitcode": 1,
+      "retired": true,
+      "release_confirmed": false,
+      "x_client_resource_base": null
+    },
+    "owner_client_disconnect": {
+      "status": "unknown",
+      "reason": "resource_base_unavailable",
+      "worker_retired": null
+    },
+    "owner_input_obligations": {
+      "keys": {},
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {},
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "not_attempted",
+      "reason": "owner_disconnect_not_confirmed"
+    },
+    "cleanup_status": "UNKNOWN"
+  },
+  "call_directory": "D:\\CodexData\\Workspaces\\2026-11-15-agent-interface-followup\\pr10303-current-main-reconcile\\research\\integration\\calc_g10_mcp_profile_candidate_20261115\\raw\\standard-caller-files-mode-20261116\\bfccf653371e4206916e3719d01f4d33",
+  "call_id": "bfccf653371e4206916e3719d01f4d33"
+}

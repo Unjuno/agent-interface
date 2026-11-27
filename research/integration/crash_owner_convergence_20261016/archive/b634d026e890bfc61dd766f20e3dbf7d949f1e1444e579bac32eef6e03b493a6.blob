@@ -1,0 +1,21 @@
+{
+  "candidate_invocations": 1,
+  "finding": "After owner service SIGKILL, the process was zombie while session remained alive and no receipt existed. Over 4 seconds, neither keymap bit became up and Button1 remained down; one KeyRelease event for keycode 40 occurred without keymap-up. This is evidence against relying on X server disconnect to clear held state.",
+  "raw_sha256": "2ded89e6351762a6a800910c40b159609fdbd7604cfa3bd0848a522845cdab63",
+  "receipt_sha256": null,
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a14_audit-v1",
+  "source_and_evidence_sha256": {
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/FREEZE.json": "bcfd7f3b08d97b9dda43e8069bc0bf4068a9e32b6e391280233a456a96d19d90",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/PLAN.md": "b78d7e8a02b1262f89ac32793ea9751f1b6a2add244fd5408326642b72a779d2",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/__pycache__/candidate.cpython-311.pyc": "f6fd16897ffef4aca67096e3b20174c621445e32f898f184c86980c4a3fc94ab",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/candidate.py": "d8e0d30f0e450ca72ea8c5963c5b749d4ba80055630316524a73b6bc2c613559",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/results/A01/RAW.json": "2ded89e6351762a6a800910c40b159609fdbd7604cfa3bd0848a522845cdab63",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/results/A01/input-owner-process/input-owner-recovery-v1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/results/A01/session-events.jsonl": "561d4b0a584bf3e72410f9fddc543bfa69af52e7d5011d12dc5836c7c67634ef",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/results/A01/session.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/results/A01/session.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/run_candidate.sh": "a42fc5466a77149526743f2fcda0bb77a79ca63a6084db6cc7f05f653c6da3e1"
+  },
+  "status": "FAIL_STUCK_INPUT_ON_OWNER_SERVICE_DEATH"
+}

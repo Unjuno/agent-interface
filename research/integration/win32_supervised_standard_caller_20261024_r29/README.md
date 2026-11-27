@@ -1,0 +1,7 @@
+# Win32 supervised cancellation R29 — 1250 ms blocked-hook boundary
+
+R29 is a fresh one-shot attempt to answer the question left open by R14. While one injected Q-down remains inside the owned low-level hook callback, can the public supervisor retire the exact producer, report same-operation recovery with release confirmed, and independently observe Q-up during a 1250 ms hold? The documented Windows low-level-hook timeout maximum is 1000 ms on supported systems; this packet records the current-user registry value read-only and does not modify it.
+
+R15 preserved the same intended 1250 ms test but stopped before fixture creation because its tracked source was dirty. R29 uses current main (`c7c6fa06e84451e89eb3194b36bce9fe440dbce0) with fresh R29 IDs and sentinel. Its input-free preflight verifies runtime/probe hashes, R14's negative blocked-hook evidence and R15's no-dispatch prelaunch refusal. The frozen source then permits one dispatch and at most one cancellation after hook entry and an exact-call `running` readback. It holds the callback up to 1250 ms after cancel (1500 ms self-release cap), polls only the same call ID, and never retries.
+
+PASS requires exact producer retirement, recovery/all-up receipt and independent same-generation Q-up before callback return, then exact effect, bounded recovery, and complete owned cleanup. Otherwise preserve `FAIL_OR_UNKNOWN`; do not rerun. This is a local native Windows result, not WSLc, MAP01, efficiency, or broad reliability evidence.

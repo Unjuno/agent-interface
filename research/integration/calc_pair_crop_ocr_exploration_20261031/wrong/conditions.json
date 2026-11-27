@@ -1,0 +1,41 @@
+{
+  "scope": "single offline OCR negative case 731/863; same frozen crops and preprocessing",
+  "source_sha256": "e6c5a7f806cf9a367bc75a0598a92361657a9ad9e9129ddd7278f342de9f834c",
+  "runner_sha256": "0db5c449e990a75e8373752a2134de09fe07224e30e5e424c29a465c0b494fbf",
+  "expected_task": [
+    "731",
+    "864"
+  ],
+  "reject_success": "not both task values with confidence >=90",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "name": "calc-wrong-ocr-9b8f21026a7b4805ad2f4a3cc419a88f",
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "calc-wrong-ocr-9b8f21026a7b4805ad2f4a3cc419a88f",
+    "--cidfile",
+    "<experiment-directory>\\cid.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "-v",
+    "<experiment-directory>:/in:ro",
+    "-v",
+    "<experiment-directory>\\output:/out:rw",
+    "--entrypoint",
+    "timeout",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "--signal=TERM",
+    "--kill-after=3s",
+    "30s",
+    "python3",
+    "-B",
+    "/in/runner.py"
+  ],
+  "stop": "one pass retain all outputs"
+}

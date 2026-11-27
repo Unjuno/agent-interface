@@ -1,0 +1,68 @@
+{
+  "attempt_id": "issue57-r93-a01",
+  "effort": "medium",
+  "image": {
+    "relative_path": "input/calc-review.png",
+    "sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803"
+  },
+  "model": "gpt-6-luna",
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "cells_blank": {
+        "type": "boolean"
+      },
+      "confidence": {
+        "maximum": 1,
+        "minimum": 0,
+        "type": "number"
+      },
+      "proposed_actions": {
+        "items": {
+          "enum": [
+            "enter_731_in_A1",
+            "enter_864_in_A2",
+            "save",
+            "abstain"
+          ],
+          "type": "string"
+        },
+        "maxItems": 4,
+        "minItems": 1,
+        "type": "array"
+      },
+      "selected_cell": {
+        "enum": [
+          "A1",
+          "A2",
+          "other",
+          "unknown"
+        ],
+        "type": "string"
+      },
+      "visible_sheet": {
+        "enum": [
+          "Sheet1",
+          "unknown"
+        ],
+        "type": "string"
+      },
+      "visual_note": {
+        "maxLength": 220,
+        "type": "string"
+      }
+    },
+    "required": [
+      "visible_sheet",
+      "selected_cell",
+      "cells_blank",
+      "proposed_actions",
+      "confidence",
+      "visual_note"
+    ],
+    "type": "object"
+  },
+  "output_schema_sha256": "0600113ab4cab84e0bf5fe18a7376dda23c4b79a0313177cf48be643b480aeb0",
+  "prompt": "Inspect the attached Calc screenshot. It shows the state before any task input. The requested task is to enter 731 in A1, enter 864 in A2, and save the workbook. Return only the required structured plan: identify the visible sheet and selected cell, say whether cells are blank, and list the safe action order. Do not claim that any action has happened or that the task is complete. If uncertain, include abstain.",
+  "schema": "agent-interface/app-server-spool-request-v1"
+}

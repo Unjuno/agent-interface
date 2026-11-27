@@ -1,0 +1,20 @@
+# Issue discovery batch B07 — routing receipt (2026-10-19)
+
+B07 is rows 151–175 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). A live metadata read found all 25 Issues open with no assignees. Bodies and latest available comments were read for navigation. Several still record pre-formal reservations, source/custody holds, or interrupted allocations; empty assignee fields are not an assignment or ownership proof.
+
+The B07 Issues are #1464, #1510, #1565, #1587, #1591, #1621, #1628, #1631, #1635, #1637, #1769, #1798, #1839, #1868, #1873, #1881, #1907, #1911, #2369, #2519, #2522, #2526, #2527, #2531 and #2534. The [idea index](../IDEAS_AND_OUTCOMES.md) adds the missing result/custody summaries for #1628, #1769, #1839 and #2526, and clarifies that #2369 is an open, nonbinding policy proposal.
+
+| Routing family | Issues | State and boundary |
+|---|---|---|
+| Temporal observation and actuation | #1464, #1510, #1565, #1587, #1591, #1621, #1631 | #1464/#1510 retain preformal reservations; #1565 keeps actual model/provider cost accounting as a prerequisite, not an allocation; #1591 is preformal; #1621 stopped before durable results and #1631 is a separate source-frozen successor. No reservation is assigned by this intake. |
+| Source, projection, and capture custody | #1628, #1635, #1637, #1881 | #1628's exact source recovery failed and formal remains 0/0; #1635's merged preflight is not its 72-scenario transfer; #1637's read-only preflight explicitly preserves another lane's ownership; #1881 remains stopped on unavailable source. Preserve source identities and partials; do not reconstruct by rerunning. |
+| Readiness, caller, and task-effect identity | #1868, #1907 | #1868 retains a pre-existing branch and no PR at its last audit; #1907's R0 bridge contract is scoped, with owner-thread KeyRelease/XSync telemetry still a successor requirement. No live MAP01 effect is established. |
+| Guarded recovery and causal instrumentation | #1769, #1798, #1839, #1873 | #1769 reopened because its allocation produced zero durable scientific rows; #1798 has a scoped durable A2 PASS; #1839's 2026-10-03 schema audit found no cross-plane actuation/source/epoch join key at that recorded SHA; #1873 is analytical-first with no MAP01/model/X11 allocation. Recheck current source and ownership before acting. |
+| Calibration and measurement design | #1911, #2519, #2522, #2526, #2527, #2531, #2534 | Preserve unrun calibration/ablation proposals, exposed-family and source-custody limits, and #2526's STOP before training. No validation leakage, consumed fixture rerun, or model/GPU result is inferred. |
+| Worker check policy | #2369 | The issue is open and proposes reproducible local CI checks. The current [Quickstart](../WORKER_QUICKSTART.md) says to run relevant available checks, record hosted-only gaps, and avoid blanket full-CI-before-push gates. On the 2026-10-19 read, GitHub reported `main` unprotected (branch-protection endpoint 404) and zero repository rulesets. Recent PRs #9115–#9117 merged with no review requests or review decisions; the repository has no configured two-reviewer gate at this read. The proposal is not itself an enforcement mechanism. |
+
+## Linked PR freshness and worker boundary
+
+Eleven PR citations extracted from the sampled Issue bodies/latest comments were checked live: #1186, #1427, #1576, #1588, #1604, #1613, #1626, #1761, #2377, #3160 and #4227 are all **MERGED**. This is a citation spot-check, not a repository-wide PR/branch inventory. Do not infer that the cited merge completes a still-open parent Issue or supplies missing raw evidence.
+
+No Issue/PR status or scientific disposition changed in this intake. Before any worker takes a preformal lane, refresh the exact branch/head/base, registered worktree, owner, live allocation and raw/source custody. Multiple workers may work concurrently on disjoint Issues, families and additive paths; edits to the same shared index can still conflict, but no repository-wide single-worker or reviewer-count rule is in force.

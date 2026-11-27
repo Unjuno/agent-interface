@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/live-xres-bystander-audit-v1",
+  "status": "PASS_SCOPED",
+  "checks": {
+    "frozen_main_recorded": true,
+    "resource_base_reused_naturally": true,
+    "distinct_process_identities": true,
+    "key_down_before_retirement": true,
+    "key_down_before_worker": true,
+    "worker_saw_unrelated_client": true,
+    "no_cleanup_release_attempt": true,
+    "independent_connection_saw_key_unchanged": true,
+    "operation_remains_unknown_and_denies_replay": true,
+    "harness_restored_private_key": true,
+    "all_child_processes_exited": true,
+    "private_xvfb_cleanup_recorded": true,
+    "inner_runner_exit_zero": true
+  },
+  "failed": [],
+  "limits": [
+    "not public MCP composition",
+    "no global input exclusivity proof",
+    "no physical desktop/MAP01",
+    "no task effect",
+    "no hard OS bound",
+    "no WSLc",
+    "one live Xvfb sample only"
+  ]
+}

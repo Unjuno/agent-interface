@@ -1,0 +1,22 @@
+{
+  "policy": "Preserve behavioral fields, statuses, order, and measured timestamps; replace host-local identities and temp paths.",
+  "private_raw_sha256": "af37b510d3ff1e87e0e55d8af34fcbdcfe20b1400759d0871183d89f472fa60f",
+  "public_raw_sha256": "503a852e0e81dca39d8e1331bd0fabd5bf6c813de76d164add0a7d7097fb198f",
+  "replacements": {
+    "OS owner PID": "OWNER_PID_R02",
+    "random call ID": "CALL_R02",
+    "random session ID": "SESSION_R02",
+    "synthetic scope/surface/target labels": "stable synthetic placeholders",
+    "temporary call directory": "<TEMP>/CALL_R02"
+  },
+  "run_probe_sha256": "408ab2d76a7e4173d0f17be55d099ad96ec5a03b3690b82109a3f0273ab88e5f",
+  "source_revision": "e892485a003a2cce62bb6ee6c4ee5bf29949b058",
+  "unchanged": [
+    "cancel responses and statuses",
+    "cleanup uncertainty and replay flags",
+    "release-attempt count and receipt",
+    "monotonic timestamps",
+    "source revision and source digests",
+    "original action result fields"
+  ]
+}

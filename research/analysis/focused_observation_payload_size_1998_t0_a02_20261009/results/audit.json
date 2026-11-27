@@ -1,0 +1,64 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A02-20261009",
+  "case_count": 14,
+  "decision": "SUPPORT_FOR_FOCUSED_PAYLOAD_REDUCTION_SCOPED",
+  "errors": [],
+  "focused_payload_smaller_cases": [
+    "valid_roi_08_00",
+    "valid_roi_16_01",
+    "valid_roi_24_02",
+    "valid_roi_32_03",
+    "valid_roi_48_04",
+    "valid_roi_56_05",
+    "valid_roi_62_06",
+    "valid_roi_63_08"
+  ],
+  "full_frame_fallback_no_gain_cases": [
+    "valid_roi_64_07"
+  ],
+  "full_frame_total_bytes": 78890,
+  "invalid_requests": 5,
+  "invocations": {
+    "auditor": 1,
+    "candidate": 1,
+    "retries": 0
+  },
+  "max_single_case_bytes_saved": 5313,
+  "method_status": "PASS_METHOD_SCOPED",
+  "mutation_controls": {
+    "rejected": 6,
+    "results": [
+      {
+        "name": "focus_pixel_corruption",
+        "rejected": true
+      },
+      {
+        "name": "stale_epoch_focus_admitted",
+        "rejected": true
+      },
+      {
+        "name": "region_identity_swapped",
+        "rejected": true
+      },
+      {
+        "name": "out_of_bounds_focus_admitted",
+        "rejected": true
+      },
+      {
+        "name": "no_gain_focus_selected",
+        "rejected": true
+      },
+      {
+        "name": "byte_count_tampered",
+        "rejected": true
+      }
+    ],
+    "total": 6
+  },
+  "schema": "1998-a02-payload-audit-v1",
+  "scope": "Synthetic serialized-byte accounting only; no token, latency, GUI, model, or task effect claim.",
+  "selected_total_bytes": 55957,
+  "selected_total_bytes_saved": 22933,
+  "status": "PASS_FOCUSED_PAYLOAD_REDUCTION_SCOPED",
+  "valid_requests": 9
+}

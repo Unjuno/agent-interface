@@ -1,0 +1,16 @@
+{"case": "closed-executor-replacement-while-release-send-held", "replacement_refused": false, "replacement_accepted": true, "original_closed": true, "original_obligation": {"id": "original", "intent_token": "712b69d2734746a0890283f5e2bb1bdc", "valid_until_ns": 321972238487100, "expected_sequence": 1, "target_process_identity": [1, 41, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 321972238487100], "release": {"verified": false, "error": "RuntimeError('input owner unavailable')", "release_batch_delivery": {"schema": "release-batch-delivery-v1", "identifier": "original", "step": 0, "size": 1, "positions": [{"position": 0, "step": 0, "key": "a", "state": "confirmed_incomplete"}]}}, "grants_input_authority": false}, "backend_lease_changed": true, "fake_keys_down": [38], "native_resumed": false}
+test_closed_unverified_executor_cannot_be_replaced_on_same_backend (research.doom.test_map01_backend_executor_custody.BackendCustodyTests.test_closed_unverified_executor_cannot_be_replaced_on_same_backend) ... FAIL
+
+======================================================================
+FAIL: test_closed_unverified_executor_cannot_be_replaced_on_same_backend (research.doom.test_map01_backend_executor_custody.BackendCustodyTests.test_closed_unverified_executor_cannot_be_replaced_on_same_backend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_backend_executor_custody.py", line 59, in test_closed_unverified_executor_cannot_be_replaced_on_same_backend
+    self.assertTrue(refused, snapshot)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'case': 'closed-executor-replacement-while-release-send-held', 'replacement_refused': False, 'replacement_accepted': True, 'original_closed': True, 'original_obligation': {'id': 'original', 'intent_token': '712b69d2734746a0890283f5e2bb1bdc', 'valid_until_ns': 321972238487100, 'expected_sequence': 1, 'target_process_identity': (1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 321972238487100), 'release': {'verified': False, 'error': "RuntimeError('input owner unavailable')", 'release_batch_delivery': {'schema': 'release-batch-delivery-v1', 'identifier': 'original', 'step': 0, 'size': 1, 'positions': [{'position': 0, 'step': 0, 'key': 'a', 'state': 'confirmed_incomplete'}]}}, 'grants_input_authority': False}, 'backend_lease_changed': True, 'fake_keys_down': [38], 'native_resumed': False}
+
+----------------------------------------------------------------------
+Ran 1 test in 2.128s
+
+FAILED (failures=1)

@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/public-observe-future-timeout-drain-r07",
+  "scope": "Fake/local deterministic callback lifetime and atomic report custody",
+  "pass_rule": "Both fresh attempts exit 0 and satisfy all listed invariants. No product reliability claim.",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_observation_callback_timeout_drains_before_teardown",
+  "not_tested": [
+    "native GUI or MAP01",
+    "production reliability",
+    "matched efficiency/provider/token accounting",
+    "WSLc/Docker",
+    "Research Preview",
+    "distributable runtime"
+  ],
+  "environment": "CPython 3.11.9; Windows host",
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "46878449fbb1a7773bdc6ac9f8f0e672b54f5b92321188f42555e8bf643496c3"
+  },
+  "prior_attempt": "R06 ran normal and optimized once each but failed its test assertions because it incorrectly expected call_id in the successful observation report and called unsupported interface_close on the one-shot server. It did observe the caller timeout and later Future response; R06 remains failed and is not pooled.",
+  "attempt_count": {
+    "normal": 1,
+    "total": 2,
+    "optimized": 1
+  },
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "invariants": [
+    "wait until exact callback Future returns TimeoutError at 8 seconds and verify it remains pending;",
+    "read its exact call ID from the read-only interface_results call list before release;",
+    "release callback once, then await the same future <=30s;",
+    "require one observer invocation, exact finalized report, no .tmp file, and exact result readback;",
+    "no dispatch, task effect, input, replay, retries, or replacements;",
+    "fixture teardown only after future completion."
+  ],
+  "question": "In the same controlled 8s callback timeout experiment, does exact call-list lookup (the returned observation report omits call_id) allow verification that the single pending observation finishes, its same-call raw report is atomically finalized, and teardown occurs only after the Future drains?"
+}

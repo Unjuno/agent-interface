@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/live-xres-bystander-freeze-v1",
+  "run_id": "LIVE-XRES-BYSTANDER-REUSE-20261022-R01",
+  "frozen_at": "2026-10-22",
+  "source_revision": "cbd163342c2e8157a64d59f3f0a6c1e479c98bb4",
+  "source_blobs": {
+    "runtime/guarded_x11_v1/cancel_supervisor.py": "d817369d57abdd37ecb17a0afcf5b51531699174",
+    "runtime/guarded_x11_v1/xres_client_fence.py": "87f277cb62d01fe91425e636272b297af66ed4e8",
+    "runtime/backends/x11_v1/backend.py": "6fc5b338d98b882f0eff9db15a50b0cba0520eb8"
+  },
+  "environment": {
+    "host": "Windows 10 with local Ubuntu WSL2 distribution",
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8",
+    "display": ":177",
+    "display_preflight": "No /tmp/.X177-lock and no /tmp/.X11-unix/X177; no exact Xvfb :177 process observed",
+    "container_or_wslc": "none"
+  },
+  "procedure": [
+    "Start one private Xvfb :177 at 800x600x24 with TCP disabled.",
+    "Open an observer connection and start the cleanup supervisor process before the input owner.",
+    "A disposable owner process emits one XTEST KeyPress(a), syncs, and remains alive until the parent retires it.",
+    "Require independent keymap readback to show the key down before retirement and still down after owner exit.",
+    "The first post-retirement client connection is the bystander; record whether it naturally reuses the exact XRes resource base.",
+    "If and only if the same resource base is naturally reused and key state is still down, send one request to the already-started supervisor running the unchanged current-main x11_cancel_worker.",
+    "Pass only if XRes identifies an unrelated client, worker returns stale_owner_identity/resource_base_reused_by_unrelated_client, release_attempt is not_attempted, and observer key state remains down.",
+    "Neutralize the isolated test key after the measured readback and retain that cleanup separately."
+  ],
+  "one_shot": {
+    "formal_cases": 1,
+    "resource_base_reuse_retries": 0,
+    "test_retries": 0,
+    "if_resource_base_not_reused": "HOLD; do not force XID allocation or rerun",
+    "if_key_not_down_before_cleanup": "HOLD; no replacement or retry",
+    "if_worker_or_observer_fails": "retain first result as UNKNOWN/HOLD; no replacement"
+  },
+  "claim_boundary": "One private-Xvfb live XRes worker-path discriminator only. Does not compose through public MCP, establish physical desktop behavior, owner-exclusive input authority, bounded OS scheduling, MAP01, task success, matched efficiency, reliability, or WSLc portability."
+}

@@ -1,0 +1,58 @@
+test_failure_preempts_predicate_and_observation_monitor (__main__.ControllerRetirementTests.test_failure_preempts_predicate_and_observation_monitor) ... FAIL
+test_failure_preempts_score_and_copies_original_obligation (__main__.ControllerRetirementTests.test_failure_preempts_score_and_copies_original_obligation) ... FAIL
+test_incomplete_failure_payload_still_stops (__main__.ControllerRetirementTests.test_incomplete_failure_payload_still_stops) ... FAIL
+test_ordinary_score_path_unchanged (__main__.ControllerRetirementTests.test_ordinary_score_path_unchanged) ... ok
+test_real_stdio_failure_survives_later_score_and_cleanup (__main__.ControllerRetirementTests.test_real_stdio_failure_survives_later_score_and_cleanup) ... ERROR
+test_retained_failure_vetoes_otherwise_complete_cleanup (__main__.ControllerRetirementTests.test_retained_failure_vetoes_otherwise_complete_cleanup) ... FAIL
+
+======================================================================
+ERROR: test_real_stdio_failure_survives_later_score_and_cleanup (__main__.ControllerRetirementTests.test_real_stdio_failure_survives_later_score_and_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\test_controller_retirement_failure.py", line 130, in test_real_stdio_failure_survives_later_score_and_cleanup
+    wait(lambda r:r['event']=='post_control_score',timeout=2)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\map01_overlap_controller_v39.py", line 1374, in wait
+    raise TimeoutError()
+TimeoutError
+
+======================================================================
+FAIL: test_failure_preempts_predicate_and_observation_monitor (__main__.ControllerRetirementTests.test_failure_preempts_predicate_and_observation_monitor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\test_controller_retirement_failure.py", line 69, in test_failure_preempts_predicate_and_observation_monitor
+    with self.assertRaisesRegex(RuntimeError,'input retirement'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_failure_preempts_score_and_copies_original_obligation (__main__.ControllerRetirementTests.test_failure_preempts_score_and_copies_original_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\test_controller_retirement_failure.py", line 56, in test_failure_preempts_score_and_copies_original_obligation
+    with self.assertRaisesRegex(RuntimeError,'input retirement') as caught:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_incomplete_failure_payload_still_stops (__main__.ControllerRetirementTests.test_incomplete_failure_payload_still_stops)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\test_controller_retirement_failure.py", line 78, in test_incomplete_failure_payload_still_stops
+    with self.assertRaisesRegex(RuntimeError,'input retirement'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_retained_failure_vetoes_otherwise_complete_cleanup (__main__.ControllerRetirementTests.test_retained_failure_vetoes_otherwise_complete_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\controller-retirement-red-control\test_controller_retirement_failure.py", line 103, in test_retained_failure_vetoes_otherwise_complete_cleanup
+    self.assertFalse(receipt['cleanup_complete'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.118s
+
+FAILED (failures=4, errors=1)

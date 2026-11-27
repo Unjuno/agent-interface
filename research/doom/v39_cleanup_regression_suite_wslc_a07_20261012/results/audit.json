@@ -1,0 +1,23 @@
+{
+  "basis": "independent raw-output classification; runner summary status is retained as originally emitted",
+  "candidate_failures": 0,
+  "candidate_tests_per_mode": 5,
+  "environment_deviation": "WSLc attempts never exposed /runner from the D: bind mount and exited before suite execution; actual focused tests ran under native Ubuntu WSL CPython 3.12.3. No CPU/memory container limits are claimed.",
+  "errors": [],
+  "main_expected_failed_test_names": [
+    "test_conflicting_duplicate_terminals_are_order_independent",
+    "test_duplicate_acceptance_identity_is_ambiguous"
+  ],
+  "main_failed_assertions_per_mode": 3,
+  "modes": [
+    "normal",
+    "optimized (-O)"
+  ],
+  "raw_runner_classifier_issue": "The runner emitted FAIL_SCOPED because it compared test names with trailing whitespace and did not deduplicate unittest subtest failures. Raw output shows the intended two main test methods fail and all candidate tests pass.",
+  "status": "PASS_SCOPED_WITH_ENVIRONMENT_DEVIATION",
+  "verified_git_blobs": {
+    "candidate/controller.py": "576d481a3503e8be4d8ceded8a6371b3fe8850fc",
+    "candidate/test_controller_failure_cleanup_v39.py": "0bad8e47bb1a78798ad982fbd6be63c09d834742",
+    "main/controller.py": "50c63fa83969ed518a91e39c08d1ee52064eb636"
+  }
+}

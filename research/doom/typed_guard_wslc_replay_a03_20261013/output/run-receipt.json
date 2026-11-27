@@ -1,0 +1,53 @@
+{
+  "allocation": "WSLC-TYPED-POLICY-REPLAY-A03-20261013-01",
+  "candidate_and_audit_outputs_present": true,
+  "cid": "6a70d0de613ee39e06d105d732f9b4fd04a8384f105cffd4c1a4a7fff25e9fa7",
+  "cleanup": {
+    "id_query": {
+      "exit": 0,
+      "rows": [],
+      "text": "",
+      "verified": true
+    }
+  },
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "wslc-typed-replay-a03-20261013",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\wslc-typed-guard-replay-portability-a03-20261013\\output\\container.cid",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--memory",
+    "512M",
+    "--cpus",
+    "1",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\wslc-typed-guard-replay-portability-a03-20261013\\input:/input:ro",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\wslc-typed-guard-replay-portability-a03-20261013\\output:/out:rw",
+    "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+    "python",
+    "-B",
+    "/input/runner.py",
+    "/input/report.json",
+    "/input/events.jsonl",
+    "/input/observable_signal_guard_v2.py",
+    "/input/candidate.py",
+    "/input/auditor.py",
+    "/out"
+  ],
+  "container_name": "wslc-typed-replay-a03-20261013",
+  "error": null,
+  "finished_ns": 1791817387924534200,
+  "overall_scoped_pass": true,
+  "phase": "run",
+  "process_exit": 0,
+  "schema": "wslc-typed-policy-replay-run-receipt-v1",
+  "scoped_container_absent": true,
+  "started_ns": 1791817387424822700
+}

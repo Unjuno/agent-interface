@@ -1,0 +1,67 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s31-0fc5b445d5c4",
+  "audited_without_runtime_import": true,
+  "checks": {
+    "all_polls_same_path_error": true,
+    "attempt_binding": true,
+    "bounded_preflight_in_source": true,
+    "cleanup_receipt_has_no_pending_container_or_image": true,
+    "exact_name_scoped_polls": true,
+    "fresh_unique_session": true,
+    "input_reuse_audit": true,
+    "no_container_or_image_pull": true,
+    "no_global_inventory_or_docker_in_source": true,
+    "no_task_retry": true,
+    "one_session_start_and_termination": true,
+    "preflight_timed_out_as_preregistered": true,
+    "source_still_current_main": true,
+    "storage_directory_empty": true,
+    "task_body_not_started": true
+  },
+  "classification": "HOLD_PRETRIAL_SESSION_READINESS_PATH_NOT_FOUND",
+  "failed": [],
+  "observations": {
+    "container_created": false,
+    "formal_invocation_exit_code": 1,
+    "image_pulled": false,
+    "readiness_failures": [
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ],
+      [
+        "\u30a8\u30e9\u30fc \u30b3\u30fc\u30c9: ERROR_PATH_NOT_FOUND\r"
+      ]
+    ],
+    "readiness_polls": 10,
+    "session_storage_empty": true,
+    "session_terminated": true,
+    "task_input_started": false
+  },
+  "passed": 15,
+  "schema": "agent-interface/wslc-s31-independent-audit-v1",
+  "total": 15
+}

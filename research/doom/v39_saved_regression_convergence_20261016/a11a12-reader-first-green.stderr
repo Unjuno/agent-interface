@@ -1,0 +1,27 @@
+test_boolean_exit_is_not_a_zero_receipt (test_audit_saved.SavedRegressionAuditTests.test_boolean_exit_is_not_a_zero_receipt) ... ok
+test_count_change_rejected (test_audit_saved.SavedRegressionAuditTests.test_count_change_rejected) ... ok
+test_failed_log_cannot_keep_successful_summary (test_audit_saved.SavedRegressionAuditTests.test_failed_log_cannot_keep_successful_summary) ... ok
+test_first_failure_cannot_be_promoted (test_audit_saved.SavedRegressionAuditTests.test_first_failure_cannot_be_promoted) ... ok
+test_missing_carry_source_rejected (test_audit_saved.SavedRegressionAuditTests.test_missing_carry_source_rejected) ... ok
+test_missing_or_duplicate_test_identity_rejected (test_audit_saved.SavedRegressionAuditTests.test_missing_or_duplicate_test_identity_rejected) ... ok
+test_mode_identity_disagreement_rejected (test_audit_saved.SavedRegressionAuditTests.test_mode_identity_disagreement_rejected) ... ok
+test_retains_first_failure_and_corrected_saved_success (test_audit_saved.SavedRegressionAuditTests.test_retains_first_failure_and_corrected_saved_success) ... ERROR
+test_source_digest_rejected (test_audit_saved.SavedRegressionAuditTests.test_source_digest_rejected) ... ok
+
+======================================================================
+ERROR: test_retains_first_failure_and_corrected_saved_success (test_audit_saved.SavedRegressionAuditTests.test_retains_first_failure_and_corrected_saved_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\v39_saved_regression_convergence_20261016\test_audit_saved.py", line 28, in test_retains_first_failure_and_corrected_saved_success
+    result = validate_records(self.evidence)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\v39_saved_regression_convergence_20261016\audit_saved.py", line 94, in validate_records
+    require(counts == [str(ACTUAL[key])] and log.rstrip().endswith('\nOK'), 'raw outcome/count')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\v39_saved_regression_convergence_20261016\audit_saved.py", line 24, in require
+    raise EvidenceError(message)
+audit_saved.EvidenceError: raw outcome/count
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.292s
+
+FAILED (errors=1)

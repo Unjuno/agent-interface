@@ -1,0 +1,13 @@
+{
+  "run_id": "win32-live-fixture-20261110-r01",
+  "source_commit": "cecb81c5819815fd8a13ebfee460914286d22765",
+  "purpose": "Bounded live Win32 standard MCP route probe against a fresh repository-owned fixture window; inspect, dispatch one harmless key, require release custody and exact fixture event, then monitor beyond a configured finite horizon.",
+  "target": "fresh Agent Interface Win32 fixture only",
+  "route": "supervised-win32",
+  "late_input_horizon_ms": 2000,
+  "max_actions": 1,
+  "input": "single A key chord; no files outside this run directory",
+  "task_effect_oracle": "independent fixture events.jsonl exact single WM_CHAR A event",
+  "stop_conditions": ["wrong target generation", "preflight mismatch", "input dispatch unknown", "release not verified", "unexpected event", "foreground restoration failure"],
+  "note": "No GZDoom/production application available. This is a fixture qualification sample only; it does not satisfy MAP01 or broad reliability."
+}

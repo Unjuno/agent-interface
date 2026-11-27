@@ -1,0 +1,38 @@
+{
+  "schema": "redacted-experiment-publication-custody-v1",
+  "publication": "R54-R55 scoped native-Windows result summary",
+  "source_commit": "0f6464adbb4d2c7331b8aae71ee148a638c0ae79",
+  "current_main_at_publication": "291b8c8c5880c8de4d8deaeee1ab0d5125c45c29",
+  "private_originals": [
+    {
+      "attempt": "R54",
+      "manifest_sha256": "7257de44ad89f298d44f99cc125e394e810dde7dc3d16e04dd95adf77ffeba43",
+      "manifest_entries_verified": 71,
+      "conditions_sha256_verified": true,
+      "audit_status": "PASS_SCOPED",
+      "audit_checks": "14/14"
+    },
+    {
+      "attempt": "R55",
+      "manifest_sha256": "35f8028903e1231656011a41db642f0db45de9bf19113d7390dcd6fbcc3bdcc3",
+      "manifest_entries_verified": 71,
+      "conditions_sha256_verified": true,
+      "audit_status": "PASS_SCOPED",
+      "audit_checks": "14/14"
+    }
+  ],
+  "redactions": [
+    "Absolute machine paths omitted.",
+    "Host identifiers omitted.",
+    "Process IDs, window handles, and local session/call identifiers omitted."
+  ],
+  "raw_publication": {
+    "included": false,
+    "reason": "Original raw contains local path and host/process/window/session metadata.",
+    "public_reviewer_access": "The summary and custody hashes are public; the original raw remains in the local experiment workspace and is not represented as publicly independently auditable."
+  },
+  "limitations": [
+    "Hashes preserve a custody reference to the local source packet but do not expose its contents for public re-audit.",
+    "This publication does not alter the original conditions, raw output, or audit files."
+  ]
+}

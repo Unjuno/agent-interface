@@ -1,0 +1,16 @@
+{
+  "audit_status": "PASS_CLASSIFICATION_AND_CLEANUP_ONLY",
+  "experiment_status": "FAIL",
+  "checks": {
+    "predeclared_source_digest_matches": true,
+    "failed_before_schedule_entry": true,
+    "outer_exit_is_failure": true,
+    "reason_is_readiness": true,
+    "owned_child_cleanup_confirmed": true,
+    "cleanup_has_only_cont_term": true,
+    "postrun_child_absent": true,
+    "postrun_lock_socket_absent": true,
+    "no_wslc_or_docker_operations": true
+  },
+  "qualification": "No declared STOP/CONT schedule completed; not a live-control PASS."
+}

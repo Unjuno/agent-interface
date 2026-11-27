@@ -1,0 +1,33 @@
+{
+  "status": "audited",
+  "offline": [
+    "filled",
+    "wrong",
+    "unknown"
+  ],
+  "results": [
+    {
+      "allocation": "e02",
+      "mode": "blocked",
+      "cue": "unknown",
+      "new_save": false,
+      "ocr_calls": 2,
+      "ocr_ms": 167.874388,
+      "recovery_ms": 309.973288,
+      "input_tokens": 12197,
+      "output_tokens": 78
+    },
+    {
+      "allocation": "e03",
+      "mode": "clear",
+      "cue": "filled",
+      "new_save": true,
+      "ocr_calls": 2,
+      "ocr_ms": 122.277342,
+      "recovery_ms": 398.645204,
+      "input_tokens": 12197,
+      "output_tokens": 78
+    }
+  ],
+  "metadata_discrepancy": "record.command says psm11; crop-mode source constructs psm7"
+}

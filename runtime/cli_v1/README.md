@@ -75,6 +75,26 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+For guarded-X11 deployments that already satisfy the owned-process prerequisites,
+`--guarded-prestarted-cancel-supervisor` opts the stdio server into the
+experimental prestarted cancellation worker. It requires
+`--session-mode guarded-x11`, `--guarded-process-identity`,
+`--guarded-query-worker`, and `--guarded-owned-process`. The option defaults
+off; it does not change release, replay, or task-success claims. See the
+[supervisor design and evidence limits](../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+
+In an owned-process session snapshot, `owner_process.retired` is `false` when
+no retirement record exists, `true` only when retirement was confirmed, and
+`null` when a retirement record exists but confirmation is unavailable. This
+field does not confirm input release, task success, or future server-side effects.
+
+For one explicitly configured Windows HWND, the stdio server also provides the
+opt-in `--session-mode supervised-win32` standard MCP route. It binds the
+generation returned by public observation through admission and a gated native
+producer, then retains producer exit, release receipt and independent neutral
+readback. `task_success` remains unknown without a separate task-effect
+certificate. See [MCP mode details and limits](MCP.md#opt-in-supervised-win32-mode).
+
 ### Retain a CLI attempt before delivering stdout
 
 For `observe` or `dispatch`, optionally specify `--run-directory /absolute/new-run`.
@@ -234,11 +254,14 @@ These changes replace v1's conflated success booleans; callers inspecting the
 schema must accept v2 explicitly. This adapter still does not perform visual
 target revalidation, compile guarded methods or obtain an application score.
 
-Usage is forwarded separately from dispatch outcome. `usage_status` is `reported`
-only when a nonempty usage mapping is present from the explicit adapter argument
-or the raw dispatch response; otherwise it is `unavailable`. An empty `usage`
-object is a compatibility placeholder, not a zero-token report. Accounting code
-must check `usage_status` before aggregating numeric fields.
+Usage is forwarded separately from dispatch outcome. For the provider token
+schema, `usage_status` is `reported` only when both `input_tokens` and
+`output_tokens` are present and every supplied token count is a nonnegative
+integer. A nonempty subset is `partial`; malformed counts are `malformed`.
+Explicit zero counts are reported values. Missing or empty usage is
+`unavailable`. Legacy opaque usage maps retain their historical reported
+behavior. Raw usage fields are preserved in every case; accounting code must
+check `usage_status` before aggregating token totals.
 
 
 Read a retained prepared-exchange receipt together with its referenced PNG:

@@ -1,10 +1,19 @@
-import asyncio,io,json,os,sys,tempfile,unittest
+import asyncio,io,json,os,sys,tempfile,threading,time,unittest
 from pathlib import Path
 from unittest.mock import AsyncMock,patch
 from mcp.types import CallToolResult,ImageContent,TextContent
 from runtime.cli_v1.mcp_relay import Relay,PUBLIC_TOOLS
 
 class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_guarded_recovery_is_an_explicitly_forwardable_public_tool(self):
+        client = AsyncMock(); relay = Relay(client)
+        client.call_tool.return_value = CallToolResult(content=[])
+        arguments = {'current_binding_revision': 7}
+        row = await relay.request(json.dumps({'id':1,'tool':'interface_guarded_recover_input',
+                                              'arguments':arguments}))
+        self.assertEqual(row['status'], 'returned')
+        client.call_tool.assert_awaited_once_with('interface_guarded_recover_input', arguments)
+
     async def test_unpaired_surrogates_refuse_before_sdk_and_keep_same_id(self):
         invalid = [
             {'text': chr(0xd800)}, {'text': chr(0xdfff)},
@@ -130,6 +139,332 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         row = json.loads(stdout.getvalue())
         self.assertEqual((row['status'],row['next_id']), ('returned',2))
         client.call_tool.assert_awaited_once_with('interface_validate',arguments)
+
+    async def test_cancel_is_dispatched_while_prior_stdout_write_is_blocked(self):
+        from runtime.cli_v1 import mcp_relay as module
+
+        output_entered=threading.Event();release_output=threading.Event()
+        cancel_dispatched=threading.Event();read_lock=threading.Lock()
+        lines=(b'{"id":1,"tool":"interface_guarded_compiled","arguments":{"wait_for_result_ms":10}}\n'
+               b'{"id":2,"tool":"interface_cancel","arguments":{"call_id":"' + b'a'*32 + b'"}}\n')
+        class TrackingInput:
+            def __init__(self):
+                self.stream=io.BytesIO(lines);self.read_count=0
+            def readline(self):
+                row=self.stream.readline()
+                with read_lock:self.read_count+=1
+                return row
+            @property
+            def buffer(self):return self
+        class BlockingOutput:
+            def __init__(self):self.writes=0
+            @property
+            def buffer(self):return self
+            def write(self,row):
+                self.writes+=1
+                if self.writes==1:
+                    output_entered.set()
+                    if not release_output.wait(3):raise OSError('test output gate was not released')
+                return len(row)
+            def flush(self):pass
+        class AsyncContext:
+            def __init__(self,value):self.value=value
+            async def __aenter__(self):return self.value
+            async def __aexit__(self,*_args):return False
+        class Client:
+            def __init__(self):self.calls=[]
+            async def initialize(self):pass
+            async def call_tool(self,name,arguments):
+                self.calls.append(name)
+                if name=='interface_cancel':cancel_dispatched.set()
+                return CallToolResult(content=[TextContent(type='text',text=name)])
+
+        client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
+        transport=AsyncContext((object(),object()))
+        client_context=AsyncContext(client)
+        def run_server():
+            try:asyncio.run(module.serve(['--mocked-server']))
+            except BaseException as error:errors.append(error)
+        server_thread=threading.Thread(target=run_server,daemon=True)
+        with patch.object(module,'stdio_client',return_value=transport), \
+             patch.object(module,'ClientSession',return_value=client_context), \
+             patch.object(module.sys,'stdin',stdin),patch.object(module.sys,'stdout',stdout):
+            server_thread.start()
+            try:
+                self.assertTrue(await asyncio.to_thread(output_entered.wait,2),
+                                f'first response never reached blocked stdout; errors={errors!r}')
+                self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,1),
+                                'queued cancellation did not reach the MCP server while stdout was blocked')
+            finally:
+                release_output.set()
+                await asyncio.to_thread(server_thread.join,2)
+        self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
+        self.assertEqual(errors,[])
+        self.assertEqual(client.calls,['interface_guarded_compiled','interface_cancel'])
+
+    async def test_pending_stdout_limit_reads_past_one_queued_ordinary_for_cancel(self):
+        from runtime.cli_v1 import mcp_relay as module
+
+        output_entered=threading.Event();release_output=threading.Event()
+        cancel_dispatched=threading.Event();queued_ordinary_dispatched=threading.Event()
+        cancel_calls=[]
+        tail_dispatched=threading.Event();read_lock=threading.Lock()
+        ordinary=[json.dumps({'id':i,'tool':'interface_guarded_compiled','arguments':{}}).encode()+b'\n'
+                  for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
+        queued_ordinary=(json.dumps({'id':len(ordinary)+1,'tool':'interface_guarded_compiled',
+                                     'arguments':{'marker':'queued-before-cancel'}}).encode()+b'\n')
+        cancel=(json.dumps({'id':len(ordinary)+2,'tool':'interface_cancel',
+                            'arguments':{'call_id':'a'*32}}).encode()+b'\n')
+        second_cancel=(json.dumps({'id':len(ordinary)+3,'tool':'interface_cancel',
+                                   'arguments':{'call_id':'b'*32}}).encode()+b'\n')
+        tail=(json.dumps({'id':len(ordinary)+4,'tool':'interface_guarded_compiled',
+                          'arguments':{'marker':'tail'}}).encode()+b'\n')
+        class TrackingInput:
+            def __init__(self):
+                self.stream=io.BytesIO(
+                    b''.join(ordinary)+queued_ordinary+cancel+second_cancel+tail)
+                self.read_count=0
+            def readline(self):
+                row=self.stream.readline()
+                with read_lock:self.read_count+=1
+                return row
+            @property
+            def buffer(self):return self
+        class BlockingOutput:
+            def __init__(self):self.writes=0
+            @property
+            def buffer(self):return self
+            def write(self,row):
+                self.writes+=1
+                if self.writes==1:
+                    output_entered.set()
+                    if not release_output.wait(3):raise OSError('test output gate was not released')
+                return len(row)
+            def flush(self):pass
+        class AsyncContext:
+            def __init__(self,value):self.value=value
+            async def __aenter__(self):return self.value
+            async def __aexit__(self,*_args):return False
+        class Client:
+            def __init__(self):self.calls=[]
+            async def initialize(self):pass
+            async def call_tool(self,name,arguments):
+                self.calls.append((name,arguments))
+                if name=='interface_cancel':
+                    cancel_calls.append(arguments['call_id'])
+                    cancel_dispatched.set()
+                if arguments.get('marker')=='queued-before-cancel':queued_ordinary_dispatched.set()
+                if arguments.get('marker')=='tail':tail_dispatched.set()
+                return CallToolResult(content=[TextContent(type='text',text=name)])
+
+        client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
+        transport=AsyncContext((object(),object()));client_context=AsyncContext(client)
+        def run_server():
+            try:asyncio.run(module.serve(['--mocked-server']))
+            except BaseException as error:errors.append(error)
+        server_thread=threading.Thread(target=run_server,daemon=True)
+        with patch.object(module,'stdio_client',return_value=transport), \
+             patch.object(module,'ClientSession',return_value=client_context), \
+             patch.object(module.sys,'stdin',stdin),patch.object(module.sys,'stdout',stdout):
+            server_thread.start()
+            try:
+                self.assertTrue(await asyncio.to_thread(output_entered.wait,2),
+                                'first response never reached the blocked stdout writer')
+                deadline=asyncio.get_running_loop().time()+2
+                while stdin.read_count<module.MAX_PENDING_STDOUT_RESPONSES and \
+                        asyncio.get_running_loop().time()<deadline:
+                    await asyncio.sleep(0.005)
+                self.assertGreaterEqual(stdin.read_count,module.MAX_PENDING_STDOUT_RESPONSES,
+                                        'relay did not reach its bounded pending-response limit')
+                self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,1),
+                                'cancellation behind one queued ordinary request was not dispatched')
+                self.assertFalse(queued_ordinary_dispatched.is_set(),
+                                 'ordinary request ahead of cancellation was dispatched first')
+                self.assertEqual(stdin.read_count,
+                                 module.MAX_PENDING_STDOUT_RESPONSES+2)
+                self.assertEqual(cancel_calls,['a'*32],
+                                 'more than one cancellation consumed the reserved slot')
+                self.assertFalse(tail_dispatched.is_set(),
+                                 'ordinary work consumed the reserved cancellation response slot')
+            finally:
+                release_output.set()
+                await asyncio.to_thread(server_thread.join,2)
+        self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
+        self.assertEqual(errors,[])
+        self.assertEqual(client.calls,
+                         [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES+
+                         [('interface_cancel',{'call_id':'a'*32}),
+                          ('interface_guarded_compiled',{'marker':'queued-before-cancel'}),
+                          ('interface_cancel',{'call_id':'b'*32}),
+                          ('interface_guarded_compiled',{'marker':'tail'})])
+        self.assertTrue(tail_dispatched.is_set())
+
+    async def test_cancel_waits_when_ordinary_queue_exceeds_bounded_lookahead(self):
+        from runtime.cli_v1 import mcp_relay as module
+
+        output_entered=threading.Event();release_output=threading.Event()
+        cancel_dispatched=threading.Event();first_queued_dispatched=threading.Event()
+        read_lock=threading.Lock()
+        ordinary=[json.dumps({'id':i,'tool':'interface_guarded_compiled','arguments':{}}).encode()+b'\n'
+                  for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
+        queued = [(json.dumps({'id':len(ordinary)+index+1,
+                               'tool':'interface_guarded_compiled',
+                               'arguments':{'marker':f'queued-{index+1}'}}).encode()+b'\n')
+                  for index in range(module.MAX_CANCEL_READAHEAD_LINES+1)]
+        cancel=(json.dumps({'id':len(ordinary)+len(queued)+1,'tool':'interface_guarded_cancel',
+                            'arguments':{'call_id':'a'*32}}).encode()+b'\n')
+        tail=(json.dumps({'id':len(ordinary)+len(queued)+2,'tool':'interface_guarded_compiled',
+                          'arguments':{'marker':'tail'}}).encode()+b'\n')
+
+        class TrackingInput:
+            def __init__(self):
+                self.stream=io.BytesIO(b''.join(ordinary)+b''.join(queued)+cancel+tail)
+                self.read_count=0
+            def readline(self):
+                row=self.stream.readline()
+                with read_lock:self.read_count+=1
+                return row
+            @property
+            def buffer(self):return self
+        class BlockingOutput:
+            def __init__(self):self.writes=0
+            @property
+            def buffer(self):return self
+            def write(self,row):
+                self.writes+=1
+                if self.writes==1:
+                    output_entered.set()
+                    if not release_output.wait(3):raise OSError('test output gate was not released')
+                return len(row)
+            def flush(self):pass
+        class AsyncContext:
+            def __init__(self,value):self.value=value
+            async def __aenter__(self):return self.value
+            async def __aexit__(self,*_args):return False
+        class Client:
+            def __init__(self):self.calls=[]
+            async def initialize(self):pass
+            async def call_tool(self,name,arguments):
+                self.calls.append((name,arguments))
+                if name=='interface_guarded_cancel':cancel_dispatched.set()
+                if arguments.get('marker')=='queued-1':first_queued_dispatched.set()
+                return CallToolResult(content=[TextContent(type='text',text=name)])
+
+        client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
+        transport=AsyncContext((object(),object()));client_context=AsyncContext(client)
+        def run_server():
+            try:asyncio.run(module.serve(['--mocked-server']))
+            except BaseException as error:errors.append(error)
+        server_thread=threading.Thread(target=run_server,daemon=True)
+        with patch.object(module,'stdio_client',return_value=transport), \
+             patch.object(module,'ClientSession',return_value=client_context), \
+             patch.object(module.sys,'stdin',stdin),patch.object(module.sys,'stdout',stdout):
+            server_thread.start()
+            try:
+                self.assertTrue(await asyncio.to_thread(output_entered.wait,2),
+                                'first response never reached the blocked stdout writer')
+                deadline=asyncio.get_running_loop().time()+2
+                expected_reads=(module.MAX_PENDING_STDOUT_RESPONSES+
+                                module.MAX_CANCEL_READAHEAD_LINES+1)
+                while stdin.read_count<expected_reads and asyncio.get_running_loop().time()<deadline:
+                    await asyncio.sleep(0.005)
+                self.assertEqual(stdin.read_count,expected_reads,
+                                 'relay did not stop after its bounded lookahead was occupied')
+                await asyncio.sleep(0.1)
+                self.assertFalse(cancel_dispatched.is_set(),
+                                 'cancel unexpectedly bypassed requests beyond the bounded lookahead')
+                self.assertFalse(first_queued_dispatched.is_set())
+                release_started_ns=time.perf_counter_ns()
+                release_output.set()
+                self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,2),
+                                'cancel was not dispatched after stdout resumed')
+                cancel_dispatched_ns=time.perf_counter_ns()
+            finally:
+                release_output.set()
+                await asyncio.to_thread(server_thread.join,2)
+        self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
+        self.assertEqual(errors,[])
+        self.assertGreaterEqual(cancel_dispatched_ns,release_started_ns)
+        prefix = [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES
+        self.assertEqual(client.calls[:len(prefix)], prefix)
+        post_prefix=client.calls[len(prefix):]
+        self.assertEqual([arguments['marker'] for name,arguments in post_prefix
+                          if name=='interface_guarded_compiled' and 'marker' in arguments],
+                         [f'queued-{index}'
+                          for index in range(1,module.MAX_CANCEL_READAHEAD_LINES+2)]+
+                         ['tail'])
+        cancel_index=post_prefix.index(('interface_guarded_cancel',{'call_id':'a'*32}))
+        self.assertGreater(cancel_index,0)
+
+    async def test_cancel_response_writer_failure_stops_later_tool_dispatch(self):
+        from runtime.cli_v1 import mcp_relay as module
+
+        output_entered=threading.Event();release_output=threading.Event()
+        cancel_dispatched=threading.Event();tail_dispatched=threading.Event()
+        ordinary=[json.dumps({'id':i,'tool':'interface_guarded_compiled','arguments':{}}).encode()+b'\n'
+                  for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
+        cancel_id=len(ordinary)+1
+        cancel=(json.dumps({'id':cancel_id,'tool':'interface_guarded_cancel',
+                            'arguments':{'call_id':'a'*32}}).encode()+b'\n')
+        tail=(json.dumps({'id':cancel_id+1,'tool':'interface_guarded_compiled',
+                          'arguments':{'marker':'tail'}}).encode()+b'\n')
+
+        class TrackingInput:
+            def __init__(self):self.stream=io.BytesIO(b''.join(ordinary)+cancel+tail)
+            def readline(self):return self.stream.readline()
+            @property
+            def buffer(self):return self
+        class FailingOutput:
+            def __init__(self):self.writes=0
+            @property
+            def buffer(self):return self
+            def write(self,row):
+                self.writes+=1
+                response=json.loads(row)
+                if self.writes==1:
+                    output_entered.set()
+                    if not release_output.wait(3):
+                        raise OSError('test output gate was not released')
+                if response.get('id')==cancel_id:
+                    raise OSError('injected cancellation response write failure')
+                return len(row)
+            def flush(self):pass
+        class AsyncContext:
+            def __init__(self,value):self.value=value
+            async def __aenter__(self):return self.value
+            async def __aexit__(self,*_args):return False
+        class Client:
+            def __init__(self):self.calls=[]
+            async def initialize(self):pass
+            async def call_tool(self,name,arguments):
+                self.calls.append((name,arguments))
+                if name=='interface_guarded_cancel':cancel_dispatched.set()
+                if arguments.get('marker')=='tail':tail_dispatched.set()
+                return CallToolResult(content=[TextContent(type='text',text=name)])
+
+        client=Client();stdin=TrackingInput();stdout=FailingOutput();errors=[]
+        transport=AsyncContext((object(),object()));client_context=AsyncContext(client)
+        def run_server():
+            try:asyncio.run(module.serve(['--mocked-server']))
+            except BaseException as error:errors.append(error)
+        server_thread=threading.Thread(target=run_server,daemon=True)
+        with patch.object(module,'stdio_client',return_value=transport), \
+             patch.object(module,'ClientSession',return_value=client_context), \
+             patch.object(module.sys,'stdin',stdin),patch.object(module.sys,'stdout',stdout):
+            server_thread.start()
+            try:
+                self.assertTrue(await asyncio.to_thread(output_entered.wait,2))
+                self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,1),
+                                'saturated relay did not dispatch cancellation')
+            finally:
+                release_output.set()
+                await asyncio.to_thread(server_thread.join,2)
+        self.assertFalse(server_thread.is_alive(),'relay did not stop after writer failure')
+        self.assertEqual(len(errors),1,errors)
+        self.assertIsInstance(errors[0],OSError)
+        self.assertIn('injected cancellation response write failure',str(errors[0]))
+        self.assertFalse(tail_dispatched.is_set(),client.calls)
+        self.assertNotIn(('interface_guarded_compiled',{'marker':'tail'}),client.calls)
 
     async def test_exact_content_duplicate_and_ambiguous_failure(self):
         client=AsyncMock()
@@ -273,7 +608,10 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_legacy_public_protocol_parity_without_changing_research(self):
         from research.live_control.native_mcp_relay_v1 import Relay as Legacy,PUBLIC_TOOLS as LEGACY_TOOLS
-        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {'interface_clock', 'interface_guarded_activate_window'}),LEGACY_TOOLS)
+        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {
+            'interface_clock', 'interface_cancel', 'interface_guarded_activate_window', 'interface_guarded_recover_input',
+            'interface_guarded_cancel','interface_guarded_compiled'}),
+            LEGACY_TOOLS)
         result=CallToolResult(content=[TextContent(type='text',text='{"status":"pending"}')])
         a,b=AsyncMock(),AsyncMock();a.call_tool.return_value=b.call_tool.return_value=result
         public,legacy=Relay(a),Legacy(b,tools=LEGACY_TOOLS)

@@ -1,0 +1,32 @@
+{
+  "attempt_id": "win32-native-sendinput-r14-20261122",
+  "checks": {
+    "exact_live_activation_and_neutral_preflight": true,
+    "fixture_cleanup_and_foreground_restore": true,
+    "no_phase1_effect": true,
+    "no_wslc_or_docker": true,
+    "phase2_not_run_after_strict_phase1_gate": true,
+    "post_expiry_public_cancel_started": true,
+    "pre_expiry_cancel_refused": true,
+    "pretrial_and_raw_manifests_valid": true,
+    "producer_stopped_and_late_input_horizon_clean": true,
+    "terminal_release_receipt_exact_and_bounded": true,
+    "valid_frozen_condition_json": true
+  },
+  "classification": "PHASE1_RECOVERY_OBSERVED_ASYNC_RESULT_PHASE2_NOT_RUN",
+  "full_experiment_acceptance_pass": false,
+  "note": "A subsequent public interface_results read returned the terminal verified recovery receipt, but this does not satisfy the frozen direct-cancel response predicate.",
+  "phase1_physical_recovery_observed": true,
+  "phase2_task_tested": false,
+  "pretrial_hash_audit": {
+    "entries": 19,
+    "errors": []
+  },
+  "raw_hash_audit": {
+    "entries": 15,
+    "errors": []
+  },
+  "strict_gate_failure": "first interface_cancel response was pending; the frozen acceptance gate requires recovered on that response",
+  "strict_phase1_gate_pass": false,
+  "terminal_interface_results_recovery": "recovered; release_confirmed=true; cleanup_latency_ns=31000000"
+}

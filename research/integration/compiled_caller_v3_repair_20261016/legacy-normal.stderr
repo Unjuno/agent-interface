@@ -1,0 +1,242 @@
+test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect) ... FAIL
+test_explicit_no_input_refusal_and_admission_refusal (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_explicit_no_input_refusal_and_admission_refusal) ... 
+  test_explicit_no_input_refusal_and_admission_refusal (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_explicit_no_input_refusal_and_admission_refusal) (case='preinput_refusal') ... FAIL
+  test_explicit_no_input_refusal_and_admission_refusal (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_explicit_no_input_refusal_and_admission_refusal) (case='admission_refused') ... FAIL
+test_final_selected_target_drives_interface_and_core_admission (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_final_selected_target_drives_interface_and_core_admission) ... FAIL
+test_journal_failures_do_not_erase_sink_failure_progress (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_journal_failures_do_not_erase_sink_failure_progress) ... 
+  test_journal_failures_do_not_erase_sink_failure_progress (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_journal_failures_do_not_erase_sink_failure_progress) (fault='stage_failed') ... FAIL
+  test_journal_failures_do_not_erase_sink_failure_progress (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_journal_failures_do_not_erase_sink_failure_progress) (fault='adaptive_route_finished') ... FAIL
+test_non_exception_sink_stop_propagates_original (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_non_exception_sink_stop_propagates_original) ... ok
+test_receipt_exception_is_accepted_only_at_execute_and_ordinary_attributes_are_ignored (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_receipt_exception_is_accepted_only_at_execute_and_ordinary_attributes_are_ignored) ... ok
+test_sink_cannot_mutate_retained_receipt_or_decision (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_cannot_mutate_retained_receipt_or_decision) ... FAIL
+test_sink_failure_after_unknown_release_keeps_both_facts (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_failure_after_unknown_release_keeps_both_facts) ... FAIL
+test_sink_failure_retains_known_completion_and_original_failure (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_failure_retains_known_completion_and_original_failure) ... FAIL
+test_typed_execution_receipt_is_detached_and_validated (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_typed_execution_receipt_is_detached_and_validated) ... ok
+test_unknown_delivery_does_not_invent_no_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_delivery_does_not_invent_no_input) ... FAIL
+test_unknown_release_retains_prefix_and_uncertain_current_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_release_retains_prefix_and_uncertain_current_input) ... 
+  test_unknown_release_retains_prefix_and_uncertain_current_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_release_retains_prefix_and_uncertain_current_input) (case='release_first') ... FAIL
+  test_unknown_release_retains_prefix_and_uncertain_current_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_release_retains_prefix_and_uncertain_current_input) (case='release_second') ... FAIL
+test_unreturned_core_receipt_stays_uncertain_without_prefix_invention (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unreturned_core_receipt_stays_uncertain_without_prefix_invention) ... FAIL
+test_unverified_outer_effect_retains_completed_execution_and_evidence (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unverified_outer_effect_retains_completed_execution_and_evidence) ... 
+  test_unverified_outer_effect_retains_completed_execution_and_evidence (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unverified_outer_effect_retains_completed_execution_and_evidence) (effect='failed') ... FAIL
+  test_unverified_outer_effect_retains_completed_execution_and_evidence (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unverified_outer_effect_retains_completed_execution_and_evidence) (effect='unavailable') ... FAIL
+
+======================================================================
+FAIL: test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 151, in test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect
+    self.assertEqual(r['outcome'], 'TASK_NOT_VERIFIED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CALLER_FAILED' != 'TASK_NOT_VERIFIED'
+- CALLER_FAILED
++ TASK_NOT_VERIFIED
+
+
+======================================================================
+FAIL: test_explicit_no_input_refusal_and_admission_refusal (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_explicit_no_input_refusal_and_admission_refusal) (case='preinput_refusal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 218, in test_explicit_no_input_refusal_and_admission_refusal
+    self.assertIs(r['execution_progress'].get('input_dispatched'), False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not False
+
+======================================================================
+FAIL: test_explicit_no_input_refusal_and_admission_refusal (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_explicit_no_input_refusal_and_admission_refusal) (case='admission_refused')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 218, in test_explicit_no_input_refusal_and_admission_refusal
+    self.assertIs(r['execution_progress'].get('input_dispatched'), False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not False
+
+======================================================================
+FAIL: test_final_selected_target_drives_interface_and_core_admission (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_final_selected_target_drives_interface_and_core_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 164, in test_final_selected_target_drives_interface_and_core_admission
+    self.assertEqual(row['state']['admitted_references'], ['new-field', 'new-submit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['field', 'submit'] != ['new-field', 'new-submit']
+
+First differing element 0:
+'field'
+'new-field'
+
+- ['field', 'submit']
++ ['new-field', 'new-submit']
+?   ++++         ++++
+
+
+======================================================================
+FAIL: test_journal_failures_do_not_erase_sink_failure_progress (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_journal_failures_do_not_erase_sink_failure_progress) (fault='stage_failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 233, in test_journal_failures_do_not_erase_sink_failure_progress
+    self.assertEqual(r['execution_progress'], {'status': 'completed'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'status': 'completed'}
+
+======================================================================
+FAIL: test_journal_failures_do_not_erase_sink_failure_progress (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_journal_failures_do_not_erase_sink_failure_progress) (fault='adaptive_route_finished')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\adaptive_acquisition_caller_v2.py", line 326, in run
+    execution = _execution_decision(local("execute", {"target": selected,
+                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                        "check": revalidation}))
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\adaptive_acquisition_caller_v2.py", line 163, in local
+    value = _require_callable(adapters, name)(copy.deepcopy(payload))
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_compiled_execution_v1.py", line 50, in execute
+    on_receipt(receipt)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 76, in sink
+    raise OSError('inert receipt sink failure')
+OSError: inert receipt sink failure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 112, in cell
+    result = module.run_compiled_interface_in_caller(spec, caller_adapters,
+        interface if legacy else interface_for_target,
+        dict(observe=observe, admit=admit, execute=execute,
+            verify_effect=lambda _: {'status': 'succeeded', 'evidence_ref': 'inert-core-effect'},
+            cancelled=lambda: False), on_receipt=sink)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_compiled_execution_v1.py", line 54, in run_compiled_interface_in_caller
+    return run_caller(spec, adapters, **caller_options)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\adaptive_acquisition_caller_v2.py", line 346, in run
+    return finish("CALLER_FAILED", repr(error))
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\adaptive_acquisition_caller_v2.py", line 269, in finish
+    emit({"event": "adaptive_route_finished", "outcome": outcome,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "reason": reason, "attempted_calls": len(attempts)})
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\adaptive_acquisition_caller_v2.py", line 156, in emit
+    journal(copy.deepcopy(event))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 87, in journal
+    raise OSError('inert caller journal failure')
+OSError: inert caller journal failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 232, in test_journal_failures_do_not_erase_sink_failure_progress
+    row = cell('sink_failure', journal_fault=fault); r = row['result']
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 118, in cell
+    raise AssertionError('ordinary handoff failure escaped instead of returning a receipt') from error
+AssertionError: ordinary handoff failure escaped instead of returning a receipt
+
+======================================================================
+FAIL: test_sink_cannot_mutate_retained_receipt_or_decision (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_cannot_mutate_retained_receipt_or_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 203, in test_sink_cannot_mutate_retained_receipt_or_decision
+    self.assertEqual(r.get('compiled_execution_receipt'), row['raw'][0])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'format': 'compiled-gui-runtime-receipt-[3391 chars]ied'}
+
+======================================================================
+FAIL: test_sink_failure_after_unknown_release_keeps_both_facts (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_failure_after_unknown_release_keeps_both_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 209, in test_sink_failure_after_unknown_release_keeps_both_facts
+    self.assertEqual((r['execution_progress'] or {}).get('completed_actions'), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 1
+
+======================================================================
+FAIL: test_sink_failure_retains_known_completion_and_original_failure (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_sink_failure_retains_known_completion_and_original_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 179, in test_sink_failure_retains_known_completion_and_original_failure
+    self.assertEqual(r['execution_progress'], {'status': 'completed'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'status': 'completed'}
+
+======================================================================
+FAIL: test_unknown_delivery_does_not_invent_no_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_delivery_does_not_invent_no_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 225, in test_unknown_delivery_does_not_invent_no_input
+    self.assertEqual(r['delivery'], 'delivery_uncertain')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'not_attempted' != 'delivery_uncertain'
+- not_attempted
++ delivery_uncertain
+
+
+======================================================================
+FAIL: test_unknown_release_retains_prefix_and_uncertain_current_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_release_retains_prefix_and_uncertain_current_input) (case='release_first')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 192, in test_unknown_release_retains_prefix_and_uncertain_current_input
+    self.assertEqual(r['execution_progress'], {'status': 'safe_yield',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'reason': 'execution_failed', 'completed_actions': prefix, 'input_dispatched': True})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'status': 'failed'} != {'status': 'safe_yield', 'reason': 'execution_failed'[46 chars]True}
++ {'completed_actions': 0,
++  'input_dispatched': True,
++  'reason': 'execution_failed',
+- {'status': 'failed'}
+? ^            ^  -
+
++  'status': 'safe_yield'}
+? ^           ++ ^^^ +
+
+
+======================================================================
+FAIL: test_unknown_release_retains_prefix_and_uncertain_current_input (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unknown_release_retains_prefix_and_uncertain_current_input) (case='release_second')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 192, in test_unknown_release_retains_prefix_and_uncertain_current_input
+    self.assertEqual(r['execution_progress'], {'status': 'safe_yield',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'reason': 'execution_failed', 'completed_actions': prefix, 'input_dispatched': True})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'status': 'failed'} != {'status': 'safe_yield', 'reason': 'execution_failed'[46 chars]True}
++ {'completed_actions': 1,
++  'input_dispatched': True,
++  'reason': 'execution_failed',
+- {'status': 'failed'}
+? ^            ^  -
+
++  'status': 'safe_yield'}
+? ^           ++ ^^^ +
+
+
+======================================================================
+FAIL: test_unreturned_core_receipt_stays_uncertain_without_prefix_invention (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unreturned_core_receipt_stays_uncertain_without_prefix_invention)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 242, in test_unreturned_core_receipt_stays_uncertain_without_prefix_invention
+    self.assertEqual(r['delivery'], 'delivery_uncertain')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'delivery_uncertain'
+
+======================================================================
+FAIL: test_unverified_outer_effect_retains_completed_execution_and_evidence (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unverified_outer_effect_retains_completed_execution_and_evidence) (effect='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 172, in test_unverified_outer_effect_retains_completed_execution_and_evidence
+    self.assertEqual(r['execution_progress'], {'status': 'completed'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'status': 'completed'}
+
+======================================================================
+FAIL: test_unverified_outer_effect_retains_completed_execution_and_evidence (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_unverified_outer_effect_retains_completed_execution_and_evidence) (effect='unavailable')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 172, in test_unverified_outer_effect_retains_completed_execution_and_evidence
+    self.assertEqual(r['execution_progress'], {'status': 'completed'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'status': 'completed'}
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.032s
+
+FAILED (failures=15)

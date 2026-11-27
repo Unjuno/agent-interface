@@ -1,0 +1,55 @@
+{
+  "schema": "agent-interface/wslc-s34-independent-audit-v1",
+  "attempt_id": "wslc-standard-caller-generation-xvfb-20261025-s34-6da84c1efb73",
+  "audited_utc": "2026-10-25T11:21:48.4323374+00:00",
+  "checks": {
+    "formal_test_exit_zero": true,
+    "generation_evidence_reaches_public_observation": true,
+    "observation_has_no_input_authority": true,
+    "observe_returns_after_capture": true,
+    "mint_uses_fresh_observation": true,
+    "initial_exact_effect_seen_independently": true,
+    "initial_release_receipt_verified": false,
+    "fault_left_physical_key_down": true,
+    "fault_classified_unknown_and_recovery_required": true,
+    "automatic_release_failure_preserved": true,
+    "recovery_release_verified": true,
+    "recovery_release_independent_readback": true,
+    "recovery_remains_no_replay_and_task_unknown": true,
+    "recovery_effect_independent_exact": true,
+    "post_recovery_task_effect_exact": true,
+    "post_recovery_event_to_effect_under_100ms": true,
+    "stale_window_generation_refused_before_input": true,
+    "old_alias_refused_before_input": true,
+    "public_close_verified": true,
+    "raw_source_preserved_and_mirrored": true,
+    "container_deleted": true,
+    "image_deleted": true,
+    "session_terminated": true,
+    "runner_exit_zero": true
+  },
+  "metrics": {
+    "observe_call_ms": 1059.373,
+    "capture_span_ms": 5.853,
+    "capture_end_to_public_return_ms": 26.103,
+    "mint_call_ms": 23.153,
+    "input_call_ms": 52.516,
+    "initial_event_to_app_effect_ms": 0.082,
+    "faulted_input_call_ms": 47.84,
+    "recovery_call_ms": 11.279,
+    "recovery_independent_release_ms": 11.378,
+    "recovery_event_to_app_effect_ms": 0.117,
+    "post_recovery_event_to_app_effect_ms": 0.092,
+    "post_recovery_call_to_effect_ms": 37.167,
+    "stale_refusal_call_ms": 33.346
+  },
+  "decision": "FAIL_OR_UNKNOWN",
+  "failed": [
+    "initial_release_receipt_verified"
+  ],
+  "limitations": [
+    "synthetic private Xvfb only",
+    "not physical Windows input, MAP01 or live application",
+    "not matched efficiency or a reliability estimate"
+  ]
+}

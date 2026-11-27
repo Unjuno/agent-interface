@@ -1,0 +1,43 @@
+{
+  "packet_id": "win32-public-mcp-synthetic-cancellation-r03",
+  "date": "2026-10-23",
+  "source_commit": "90f756bf1de2ce5cf2d5f43bfae700b1d45f2a31",
+  "branch": "codex/win32-supervisor-implementation-plan",
+  "host_os": "Microsoft Windows 11 Pro",
+  "python_version": "Python 3.11.9",
+  "modes": [
+    "python",
+    "python -O"
+  ],
+  "commands": [
+    "python -m unittest runtime.cli_v1.test_owned_win32_session runtime.cli_v1.test_mcp_win32_composition runtime.guarded_win32_v1.test_process_cancellation -v",
+    "python -O -m unittest runtime.cli_v1.test_owned_win32_session runtime.cli_v1.test_mcp_win32_composition runtime.guarded_win32_v1.test_process_cancellation -v"
+  ],
+  "results": [
+    {
+      "tests": 24,
+      "exit_code": 0
+    },
+    {
+      "tests": 24,
+      "exit_code": 0
+    }
+  ],
+  "process_roles": [
+    "gated producer requests synthetic action",
+    "separate application simulator updates completion state",
+    "separate task oracle reads application state",
+    "separate recovery worker",
+    "separate neutral-state observer"
+  ],
+  "native_input_used": false,
+  "wslc_used": false,
+  "docker_used": false,
+  "source_sha256": {
+    "runtime/cli_v1/mcp_win32.py": "e765587d03ed30ce51f8531d31c68e726c6b7f7491eedb52a22bd84e3c20d624",
+    "runtime/cli_v1/mcp_server.py": "f89cc06fd865af300b45437abcee67a21a72363de395723aa5af0d1b2193a941",
+    "runtime/cli_v1/test_mcp_win32_composition.py": "d4d492687e0469a0d01421bd8c7bb7b7bce0fa7b4a711a0d92325f249b4a00e8",
+    "runtime/cli_v1/owned_win32_session.py": "09426d1c1d87b30777f64d5fff55d8a4f5f8531e4105b7b98e9403536278cbca",
+    "runtime/cli_v1/test_owned_win32_session.py": "98d30222e1c4a92e041ab0519f524a79bc5f7ca2d5c99b5177c5ce0f9dff26cb"
+  }
+}

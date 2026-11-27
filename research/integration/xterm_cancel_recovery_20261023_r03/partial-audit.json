@@ -1,0 +1,148 @@
+{
+  "checks": {
+    "cancel_was_not_called_and_owner_close_remained_busy": true,
+    "formal_attempt_failed_without_relabel": true,
+    "old_task_effect_is_unknown_not_zero_claim": true,
+    "one_public_input_left_pending_unknown": true,
+    "owned_terminal_and_server_cleanup_completed": true,
+    "real_fault_and_UP_queue_were_recorded": true,
+    "runner_watched_wrong_marker_directory": true
+  },
+  "cleanup": {
+    "all_tracked_processes_absent": {
+      "437": true,
+      "447": true,
+      "448": true,
+      "451": true
+    },
+    "display_lock_absent": true,
+    "display_socket_absent": true,
+    "failed_run_pid": 437,
+    "group_members_observed_before_signal": [
+      437,
+      447,
+      448,
+      451
+    ],
+    "matching_process_rows": [],
+    "signal": "SIGTERM to the dedicated trial process group after the runner had saved result.json and exited its async scenario",
+    "status": "PASS_ISOLATED_FAILURE_CLEANUP_AUDIT",
+    "terminated_process_group": 437,
+    "timestamp_local": "2026-10-23T21:03:49.026847+09:00",
+    "xvfb_exit_code": 0
+  },
+  "fault_marker": {
+    "blocked_boundary": "real python-xlib Display.sync response wait",
+    "delay_ms": 8000,
+    "delayed_event": "KeyPress",
+    "delayed_keycode": 56,
+    "flushed_ns": 16653536640,
+    "immediate_event": "KeyPress",
+    "immediate_keycode": 27,
+    "owner_pid": 448,
+    "resource_base": 6291456
+  },
+  "input_request": {
+    "path": "attempt/old-owner/5f363f2de151464ca3adc5f723bfba0e/request.json",
+    "row": {
+      "arguments": {
+        "alias": "prompt",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          12,
+          12
+        ],
+        "tail": [
+          {
+            "op": "text",
+            "text": "record old03"
+          },
+          {
+            "keys": [
+              "Return"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "display_name": ":188",
+      "operation": "guarded_input",
+      "response_wait_ms": 0,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "cleanup_status": null,
+        "compiled_scope": "native-x11:65ff51c570c345c98bbb9e7cb5676f1d",
+        "compiled_surface": "x11-window-4194316",
+        "error": null,
+        "interrupted_execution": null,
+        "mode": "guarded-x11-owned-process",
+        "observation_sequence": 1,
+        "observation_worker": false,
+        "observations": null,
+        "owner_client_disconnect": null,
+        "owner_input_obligations": {
+          "buttons": [],
+          "keys": {}
+        },
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_process": {
+          "alive": true,
+          "exitcode": null,
+          "liveness_observed_monotonic_ns": 16581306311,
+          "pid": 448,
+          "release_confirmed": null,
+          "retired": false,
+          "x_client_resource_base": 6291456
+        },
+        "owner_process_pid": 448,
+        "owner_release_attempt": null,
+        "owner_x_client_resource_base": 6291456,
+        "process_identity": true,
+        "query_worker": true,
+        "recovery_required": false,
+        "restart_allowed": false,
+        "review_required": false,
+        "session_id": "2d64c1d427544a5782dcc26b020a22b8",
+        "state": "open",
+        "target": "terminal",
+        "target_queries": {
+          "close_error": null,
+          "pending": false,
+          "retired": false,
+          "thread_alive": true
+        },
+        "targets": {
+          "terminal": 4194316
+        },
+        "window_lifecycle": true
+      },
+      "targets": {
+        "terminal": 4194316
+      }
+    }
+  },
+  "old_runtime_task_result": "UNKNOWN; no task-success conclusion was obtained",
+  "old_task_effect_rows": null,
+  "public_cancel_called": false,
+  "status": "PASS_R03_FAILURE_RAW_AND_CLEANUP_AUDIT",
+  "sync_entry": {
+    "call": "python-xlib Display.sync",
+    "entered_ns": 16672965520,
+    "owner_pid": 448,
+    "resource_base": 6291456
+  },
+  "target_release_queue": {
+    "keycode": 27,
+    "owner_pid": 448,
+    "queued_ns": 16657430773,
+    "resource_base": 6291456,
+    "scope": "Xlib request call returned; no server acknowledgement",
+    "server_release_confirmed": false
+  },
+  "timestamp_local": "2026-10-23T21:03:49.026865+09:00"
+}

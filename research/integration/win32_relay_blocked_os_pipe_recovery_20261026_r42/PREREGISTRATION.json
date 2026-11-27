@@ -1,0 +1,17 @@
+{
+  "attempt_id": "win32-public-relay-os-pipe-r42-20261026",
+  "checkout_head_at_preregistration": "bc50f10998bb96a31d14e6a8f0fcba01255bf1d2",
+  "conditions": {
+    "action": "Public interface_dispatch: focus exact fixture, SHIFT down, wait_update 8000ms, SHIFT up, release_all.",
+    "failure": "Retain first failure/unknown and never replay this ID. Emergency release only for owned fixture and record it.",
+    "gate": "Before any stdout drain require actual pipe available bytes >= GetNamedPipeInfo outbound capacity; one underlying OS stdout write started and remains incomplete; server-side cancel returned; independent same-generation SHIFT-up observed.",
+    "pressure": "After setup, stop parent stdout reads. Send sixteen ordinary interface_observe requests, one ordinary interface_clock request, then standard interface_cancel for the exact call.",
+    "setup": "Open only the fresh fixture foreground through Computer Use before dispatch; exact fixture PID/HWND and target generation must match the independent Win32 preflight.",
+    "success": "All blocked-pipe gate conditions precede drain, retained exact-call result says cancellation recovered and release_confirmed=true, final same-generation SHIFT-up; fixture and original foreground cleanup pass."
+  },
+  "operator_boundary": "Do not launch, focus, or send input to existing GZDoom windows or any pre-existing application. Do not use WSLc or Docker.",
+  "preflight": "Run syntax-only compilation and freeze hashes before launching the fixture.",
+  "question": "Can the public stdio relay route cancellation and supervised Win32 release while its actual child-process stdout OS pipe is full and a write is blocked?",
+  "scope": "One newly owned synthetic Win32 fixture. Real child stdin/stdout OS pipes; the in-process MCP adapter calls a real supervised-Win32 MCP server with paired native owner/producer factories. No GZDoom/MAP01, WSLc, Docker, provider/model, task effect, efficiency or reliability claim.",
+  "source_commit": "51f4652e59acdfcf3709916340f584ab083a7a82"
+}

@@ -1,0 +1,59 @@
+"""Saved key/custody/PNG oracle; imports no backend/owner/Executor code."""
+import base64,copy,hashlib,io,json
+from pathlib import Path
+from PIL import Image
+OUT=Path(__file__).parent/'map01-backend-pipe-final-r2-20261016'
+def check(rows):
+ if len(rows)!=3 or {r['case'] for r in rows}!={'cancel','generation','blocked-release'}:raise ValueError('coverage')
+ for r in rows:
+  if r['exit_code']!=0 or r['forced_cleanup'] or r['reader_alive']:raise ValueError('process cleanup')
+  wire=r['wire'];ready=next(w for w in wire if w['event']=='fixture_ready')
+  if ready['pid']!=r['pid'] and ready['parent_pid']!=r['pid']:raise ValueError('process identity')
+  commands=[w['command'] for w in wire if w['event']=='fixture_command']
+  if sum(c['op']=='submit' for c in commands)!=1 or sum(w['event']=='accepted' for w in wire)!=1:raise ValueError('input replay')
+  source=next(w for w in ready['source_events'] if w['event']=='observation')
+  typed=next(w for w in ready['source_events'] if w['event']=='typed_observation')
+  if source['target_process_identity']['digest']!='a'*64 or source['sequence']!=ready['sequence']:raise ValueError('source binding')
+  if typed['target_process_identity']!=source['target_process_identity'] or typed['sequence']!=source['sequence']:raise ValueError('typed/full identity join')
+  if typed['frame_rgb_sha256']!=source['frame_rgb_sha256'] or not source['typed_ready_ns']<=source['typed_emit_return_ns']<=source['artifact_ready_ns']:raise ValueError('capture timing')
+  terminal=r['terminal']
+  if r['case']=='blocked-release':
+   before,after=r['before_resume'],r['after_resume']
+   if terminal['release']['verified'] is not False or terminal['input_recovery_required'] is not True:raise ValueError('uncertain release')
+   if before['fake_down']!=[38] or after['fake_down']!=[]:raise ValueError('late key return')
+   if before['custody']!=after['custody'] or after['custody']['release_obligation'] is None:raise ValueError('lost custody')
+   if before['replacement_refused'] is not True or after['replacement_refused'] is not True:raise ValueError('new authority')
+   if after['owner_stopped'] is not True:raise ValueError('late owner worker')
+   final=after
+  else:
+   final=r['after']
+   if terminal['release']['verified'] is not True or final['fake_down']!=[]:raise ValueError('neutral release')
+   if r['case']=='generation':
+    if any(c['op']=='cancel' for c in commands) or terminal['status']!='needs_decision' or terminal['decision_reason']!='target_generation_invalidated':raise ValueError('generation invalidation')
+   elif terminal['status']!='cancelled':raise ValueError('cancel terminal')
+  edges=final['edges']
+  if [(e['native_event'],e['code']) for e in edges]!=[(2,38),(3,38)] or len({e['thread'] for e in edges})!=1:raise ValueError('single owner edges')
+  artifact=next(a for a in final['artifacts'] if a['name']==Path(source['image']).name)
+  b=base64.b64decode(artifact['bytes_b64'],validate=True)
+  if hashlib.sha256(b).hexdigest()!=artifact['sha256']:raise ValueError('PNG byte join')
+  with Image.open(io.BytesIO(b)) as image:
+   image.load()
+   if image.size!=(32,32) or image.mode!='RGB' or hashlib.sha256(image.tobytes()).hexdigest()!=source['frame_rgb_sha256']:raise ValueError('decoded source join')
+report={}
+for mode in ('normal','optimized'):
+ raw=json.loads((OUT/mode/'RAW.json').read_text());check(raw['rows'])
+ if (raw['tests'],raw['failures'],raw['errors'],raw['skips'])!=(17,0,0,0) or len(set(raw['method_ids']))!=17 or raw['optimize']!=(mode=='optimized'):raise ValueError('suite')
+ rejected=[]
+ for name in ('lost_custody','late_authority','stale_source','two_writers','bad_png','repeat_submit'):
+  bad=copy.deepcopy(raw['rows']);blocked=next(r for r in bad if r['case']=='blocked-release');r=next(r for r in bad if r['case']=='cancel')
+  if name=='lost_custody':blocked['after_resume']['custody']['release_obligation']=None
+  elif name=='late_authority':blocked['after_resume']['replacement_refused']=False
+  elif name=='stale_source':next(w for w in r['wire'] if w['event']=='fixture_ready')['source_events'][0]['target_process_identity']['digest']='b'*64
+  elif name=='two_writers':r['after']['edges'][1]['thread']+=1
+  elif name=='bad_png':r['after']['artifacts'][0]['bytes_b64']=base64.b64encode(b'bad').decode()
+  else:r['wire'].append(next(w for w in r['wire'] if w['event']=='fixture_command' and w['command']['op']=='submit'))
+  try:check(bad)
+  except (ValueError,KeyError) as error:rejected.append(dict(name=name,reason=str(error)))
+  else:raise ValueError('contradiction accepted: '+name)
+ report[mode]=dict(tests=17,backend_pipe_cells=3,prior_pipe_cells=len(raw['prior_rows']),contradictions=rejected)
+print(json.dumps(report,indent=2))

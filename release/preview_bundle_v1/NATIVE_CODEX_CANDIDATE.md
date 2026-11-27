@@ -1,0 +1,36 @@
+# Windows Codex executable candidate
+
+Golden Desktop v3 runs inside WSLg with the Linux/X11 Chromium backend. This candidate adds an explicit alternative for the Windows Codex bridge while keeping the same GUI host, launchers, schema gate and release acceptance requirements.
+
+The default bridge uses Windows Node to run `codex.js`. The setting `AGENT_INTERFACE_WINDOWS_CODEX_EXE` selects an absolute WSL path to an existing Windows `.exe`. Set `CODEX_HOME` to the corresponding existing WSL directory visible to the Windows process. The bridge forwards that directory through `WSLENV` to both the Windows Python preflight and the native App Server. Windows Python is still needed for schema preflight. Native selection requires the built-in preflight runner. The configuration examples below name local files and perform no installation.
+
+```bash
+export AGENT_INTERFACE_WINDOWS_CODEX_EXE='/mnt/c/path/to/codex.exe'
+export CODEX_HOME='/mnt/c/path/to/Windows/Codex/home'
+./runtime/golden-demo-v3.sh doctor
+```
+
+Doctor runs the selected Codex binary with `--version`. It also checks the Linux browser launcher with a bounded `--version` call before schema preflight can run. A Linux wrapper such as `/usr/bin/google-chrome` is supported. A Windows `.exe` is outside this Linux/X11 browser path. Fresh execution sends the native path to the existing persistent App Server launcher and invokes the same Windows schema runner with a native `codex exec` prefix. The latter keeps its read-only sandbox, output schema, instructions, feature restrictions and no-retry boundary. Native schema cache entries bind the executable SHA-256, version and runner SHA-256. The older Node+JS identity keeps its existing fields, and the runner source change invalidates any previous cache key using that file.
+
+An offline Ubuntu WSL2 probe used the installed Windows binary `codex-cli 0.171.0-alpha.13.2` (SHA-256 `2a1ec3f1dd463fd30224be4c0c67d3fe83d3d863a3d7539ccad366952436d2aa`). A temporary Windows-visible `CODEX_HOME` with a loopback model endpoint and analytics disabled isolated the App Server. `initialize` returned the Windows platform and the expected temporary home. The only outbound methods were `initialize` and `initialized`. Closing stdin produced exit code 0. The installed binary's generated schema includes local-image inputs, output schemas and the turn usage notification, with `cacheWriteInputTokens` declared optional. The native bridge retains an omitted cache-write field as unreported when the four other fields are available and valid. It treats an explicit zero as a reported count. Invalid counters, explicit nulls, and missing required fields still stop the schema gate or grounding call.
+
+The historical RC1 freeze, frozen source archive and prior evidence remain separate. A future supported-host acceptance must use the selected native configuration, retain fresh evidence and complete its own audit. No model, application input or dependency download was used for this offline check.
+
+
+The same offline run confirmed that the installed Windows Python received both the converted executable path, including spaces, and the same temporary `CODEX_HOME`. Golden runtime and acceptance tests passed 30/30 on Python 3.13 in both normal and `-O` modes. Release archive tests passed 6 with 1 Windows-specific skip in each mode. The retained audit matched all 29 archived sources.
+
+## Optional cache-write accounting
+
+The installed App Server schema marks `cacheWriteInputTokens` as an optional integer with a schema default of zero. The runtime retains missing provider observations without applying that default. A read-only survey of stored provider output found 34 explicit zero rows and 24 positive rows among the selected Golden v3, Win32, P10, retained three-arm, and Calc plan replay packets. None of these sampled rows omitted the counter. These are usage notifications or terminal rows and may include more than one notification per provider turn.
+
+Golden retains the known aggregates, the number of calls reporting each field, and the functional result. The aggregate for an unreported field is unavailable until every expected call reports it. The audit checks the standalone doctor and preflight launch receipts against the persisted compatibility cache. Native accounting then reopens the Exec terminal events and App Server JSONL, checks both prepared sends and their acknowledgements, and matches typed usage counts. Same-turn usage after completion remains eligible for this audit. The audit also checks the submitted model and effort in the Exec argv, thread request and acknowledgement, and both grounding requests. The audit reconstructs the full Windows image paths from the original WSL run root and its translated Windows root. It checks the root against the Exec preflight workspace and binds the submitted paths to the retained task-1 and task-4 source records and the image hashes recorded before both sends. The raw usage snapshot taken when each grounding call returned must agree with the normalized result, the protocol journal and the task ledger. It requires one successful Exec preflight, two serial grounding turns, and a normal completion whose answer matches the saved grounding result. A functionally completed run with partial accounting still produces a non-passing audit and a `HOLD_SUPPORTED_HOST_ACCOUNTING` acceptance result. The frozen three-arm comparison retains its complete five-field requirement.
+
+The public evidence for [allocation 991031](../../runtime/results/golden-preview-wslg-991031/README.md) is a reduced export for the reader at source revision `fc38624476aa1f30c381e5932f383224451a7d63`. Its published audit retains that scope. The current reader reports this export as unverified because the standalone doctor, preflight launch, and cache receipts are absent.
+
+## Windows process ownership
+
+On the native WSL bridge, the schema-runner child and the persistent App Server each enter a dedicated anonymous Windows Job at creation. The Windows owner watches a separately renewed WSL lease and enforces a Windows-side deadline. On shutdown it checks the owned process handles and confirms that the job is empty before a successful receipt can qualify. The schema receipt binds the launch nonce and owner digest. The persistent-session receipt also binds the original collector marker and thread in the Golden report. Windows control and runner diagnostics remain in the allocation evidence.
+
+The focused process tests use finite dummy Windows processes. They cover normal exit, timeout, descendant retirement, loss of the Windows owner, a proof obtained after its deadline, and transport cleanup after a retirement error.
+
+The separate [native supported-host acceptance for allocation 991029](../../runtime/results/golden-preview-native-991029/README.md) passed the live audit on a private WSL2 X11 display. It records six exact task outcomes and complete provider usage for that allocation.

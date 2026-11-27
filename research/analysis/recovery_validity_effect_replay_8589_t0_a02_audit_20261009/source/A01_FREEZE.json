@@ -1,0 +1,40 @@
+{
+  "allocation": "8589-SELECTIVE-RECOVERY-T0-A01-20261008",
+  "frozen_at_utc": "2026-10-08T10:18:51Z",
+  "issue": 8589,
+  "base_commit": "28b6f0fc0dd3cf6d798d97ee608a409ce773e409",
+  "branch": "research/8589-selective-recovery-a01-20261008",
+  "package": "research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008",
+  "hypothesis": "For the two-branch finite DAG, selective dependency-valid reuse preserves more computation than earliest-conflict suffix in at least one exhaustive two-input revision schedule while never dispatching effects; incomplete provenance forces HOLD and zero reuse.",
+  "decision_gate": "PASS_METHOD_SCOPED iff all eight candidate cases reconstruct, strict selective advantage occurs, incomplete-provenance paired case returns HOLD with zero selective reuse, ambiguous effect is held/reconciled, dispatch attempts are zero, and all five frozen mutation controls are rejected.",
+  "candidate_formal_invocations": 0,
+  "auditor_formal_invocations": 0,
+  "retry_budget": 0,
+  "runtime": {
+    "container_cli": "WSLc 3.0.1.0",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "image_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "python": "3.12.14",
+    "platform": "linux/amd64",
+    "network": "none",
+    "packages": "none",
+    "gpu": "none",
+    "formal_candidate_mounts": ["candidate.py", "run_candidate.py", "input.json", "results/"],
+    "formal_auditor_mounts": ["auditor.py", "run_audit.py", "input.json", "truth.json", "results/"],
+    "resource_enforcement_claim": false
+  },
+  "frozen_sha256": {
+    "candidate.py": "2EDA6E10C495AFFDD5E450AFA2004E5487C3A3B07355E0D542817E69BF79740C",
+    "auditor.py": "F7CE80A309F9E1151F6B2D87233A0088DEA620B740618C87B4AC4FF305CAAB52",
+    "run_candidate.py": "9F1F7C6E5770C97678D6A0F0498025045057C9EB2448D6A947B0AA43D43078C2",
+    "run_audit.py": "985746B43875DD281B6EFB04C201B04649C7D0C09427CE5889B0A53AA9BD7795",
+    "test_candidate.py": "58180B99B9A0D0EECBC3BC929C0ED1BDB81B5C196B056E8724B48B869D5393E2",
+    "test_audit.py": "F87095A31C6B40D5525BF33CFCC3B61C9F31A2CDECF6A2888130F3F85956B9BC",
+    "input.json": "32873910B3C189B9291121AC73179C5BC8C8561B87EA2AD87B36BB276930B707",
+    "truth.json": "42EF6C7FBC1DB541C0A4CEF40249C0AE4A41CC269F4C461CF1B7049ACAA8391E",
+    "PROTOCOL.md": "5A6600E9F1BF904EB944053B5A70131C22CB8C7EE73D004110527642935F16D1",
+    "README.md": "77ED16912C6D22DC0CD78418F639EA18F1AD67F1B656420C1020618B3CAE1F9D",
+    "CONSTRUCTION_LOG.md": "A8562253ED34DFA8F8898BA86EB2AC07F1742A8FBDAA30CDF6E468F7392FD22C"
+  }
+}

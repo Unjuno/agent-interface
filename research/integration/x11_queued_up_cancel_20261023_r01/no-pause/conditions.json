@@ -1,0 +1,37 @@
+{
+  "comparison_id": "AI-LOCAL-WSL2-QUEUED-UP-CANCEL-20261023-R01",
+  "source_commit": "7081710526434f910f6e14805a6d611dc2c13242",
+  "base_main": "d0d623ad2fe9e5dc7cc11aa184525a60055bf7d9",
+  "frozen_at_utc": "2026-10-23T11:15:09.496609+00:00",
+  "order": [
+    "no-pause",
+    "pause-1000"
+  ],
+  "H": "Repaired initial key_chord queues target UP before real sync, but injected delayed XTEST b press precedes UP on the same client. Independent supervisor cancellation/release and task counts may differ when the server is or is not additionally stopped. Queue acceptance is not server release.",
+  "T": "Two fresh owned authenticated Xvfb domains, same current complete counted public owned-process/prestarted-supervisor test; real delayed XTEST b request8000ms, target-UP queue marker, acknowledgement hold0, trace1. Run once per case sequentially, no retry.",
+  "D": "Qualify the queued-UP path only if exactly one actual test/case with no skip and inner/host exit0, target-UP producer/client matches, delayed request flush <= UP queue return <= real sync entry <= cancel invocation, original300ms cancel response/3000ms composite/5000ms terminal bounds and neutral/horizon checks hold, strict counted task outcomes recorded independently, conservative UNKNOWN/no replay retained, raw audit and owned cleanup pass. Preserve failed task outcomes; neither task success nor repeat count is assumed.",
+  "stop": "Stop on first execution/cleanup error; otherwise retain both planned observations. Never rerun a case.",
+  "C": "One no-pause then one pause case is not counterbalanced or a reliability/efficiency estimate. Same synthetic source/2CPU/nice+10; scheduling and X repeat phase vary. Actual earlier request differs from prior post-reply completion gate.",
+  "U": "No universal release/queue-empty/physical/MAP01/provider economics result. UP queue return is not proof of server acceptance or effect. User-selected PC; native WSL2 only, no WSLc/Docker/Windows desktop input.",
+  "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+  "limits": {
+    "test_timeout_seconds": 210,
+    "host_timeout_seconds_per_case": 240,
+    "jobs": 1,
+    "cpu_affinity_count": 2,
+    "nice_increment": 10
+  },
+  "run_id": "AI-LOCAL-WSL2-QUEUED-UP-CANCEL-20261023-R01-no-pause",
+  "pause_ms": 0,
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--",
+    "/home/user/.cache/agent-interface/xvfb-observation-20261023-r01-venv/bin/python",
+    "-B",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_queued_up_cancel_20261023_r01/run_trial.py",
+    "--case",
+    "no-pause"
+  ]
+}

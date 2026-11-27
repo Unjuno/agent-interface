@@ -1,0 +1,144 @@
+{
+  "alias": "calc_exit",
+  "call_directory": "/evidence/r81-b6/server-output/54bf563470b748f1bddd11167c0c5606",
+  "call_id": "54bf563470b748f1bddd11167c0c5606",
+  "input_dispatched": false,
+  "lifetime": {
+    "authority_granted": false,
+    "capture_freshness_ms": 5000,
+    "clock": "time.monotonic_ns",
+    "expires_ns": 5436131769979,
+    "minted_ns": 5136131769979,
+    "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+  },
+  "offset": [
+    16,
+    12
+  ],
+  "operation": "guarded_mint",
+  "replay_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 1,
+    "calc_process_group_cleanup": null,
+    "calc_process_group_custody": {
+      "expected_members": {
+        "2241": 512981,
+        "2256": 513074
+      },
+      "launcher": {
+        "pid": 2241,
+        "start_ticks": 512981
+      },
+      "pgid": 2241,
+      "schema": "agent-interface/calc-process-group-custody-v1",
+      "session_id": 2241,
+      "target": {
+        "pid": 2256,
+        "start_ticks": 513074
+      }
+    },
+    "calc_process_group_custody_history": [
+      {
+        "custody": {
+          "expected_members": {
+            "2241": 512981,
+            "2251": 512981
+          },
+          "launcher": {
+            "pid": 2241,
+            "start_ticks": 512981
+          },
+          "pgid": 2241,
+          "schema": "agent-interface/calc-process-group-custody-v1",
+          "session_id": 2241,
+          "target": {
+            "pid": 2251,
+            "start_ticks": 512981
+          }
+        },
+        "observed_monotonic_ns": 5129824069475,
+        "transition": "initial"
+      },
+      {
+        "argv": [
+          "/usr/lib/libreoffice/program/soffice.bin",
+          "-env:UserInstallation=file:///evidence/r81-b6/server-output/ed4cc1771fcc49269798c51a63f30978/calc-launch-profile",
+          "--calc",
+          "/evidence/r81-b6/server-output/ed4cc1771fcc49269798c51a63f30978/task-artifact.fods",
+          "--nologo",
+          "--nodefault",
+          "--nofirststartwizard",
+          "--norestore"
+        ],
+        "authority_granted": false,
+        "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+        "input_dispatched": false,
+        "observed_monotonic_ns": 5130752814295,
+        "previous_target": {
+          "pid": 2251,
+          "start_ticks": 512981
+        },
+        "replay_allowed": false,
+        "target": {
+          "pid": 2256,
+          "start_ticks": 513074
+        },
+        "task_success": null,
+        "transition": "pre_review_gui_child_replacement"
+      }
+    ],
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:4d63121a006f46baaf6712f668dbd5cf",
+    "compiled_surface": "x11-window-8389410",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 20,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 5136139277504,
+      "pid": 2237,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 4194304
+    },
+    "owner_process_pid": 2237,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 4194304,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "retention_mode": "files",
+    "review_required": false,
+    "session_id": "52ea31b865b94bce8dbc93f41cb2ed7e",
+    "state": "open",
+    "target": "calc",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": true
+    },
+    "targets": {
+      "calc": 8389410
+    },
+    "window_lifecycle": true
+  },
+  "source_sequence": 20,
+  "status": "minted",
+  "task_success": null
+}

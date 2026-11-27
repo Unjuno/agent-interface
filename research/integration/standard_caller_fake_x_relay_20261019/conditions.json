@@ -1,0 +1,63 @@
+{
+  "experiment": "standard_caller_fake_x_relay_local_composition_r01",
+  "captured_at_utc": "2026-10-19T04:56:50.781Z",
+  "status": "FROZEN_BEFORE_RUN",
+  "source_checkout_commit": "3cf520498beb886750b9de8499890dfebb0ea209",
+  "current_origin_main": "eebc469880d4f6b9bf224e7a0cbdd704a4c4d538",
+  "code_delta": "The only intervening main commit is documentation PR #9152; runtime/test inputs remain at the source checkout commit, with local uncommitted experimental files.",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "packages": {
+    "python_xlib": "0.33",
+    "mcp": "1.30.0",
+    "Pillow": "10.2.0"
+  },
+  "sha256": {
+    "fake_relay": "9e3c3cc8349d28d87da20bcfa8870ebcc3eeb120deedcd64e3a43bba15beb464",
+    "offline_proxy_candidate": "53f548b6437abcde281b13d3f094e90e319717bf326b725965bdebb7560e38aa",
+    "composition_test": "bf5f9d3fb7690b90c5656a9f33b4fe710b5b33940a9c85493877105f7357023e"
+  },
+  "transport": "process-local socketpair Fake X relay and fake upstream; independent synthetic event/effect observer; no X server or external endpoint",
+  "factors": {
+    "disconnect_fence": "fixed UNKNOWN/worker-retired fake result; no disconnect inference",
+    "cancel_return_bound_ms": 3000,
+    "owner_io": "block owner child while synchronously waiting for the selected 32-byte GetPointerControl reply",
+    "reply_timeout_seconds": 8.0,
+    "terminal_result_bound_ms": 5000,
+    "target_generation": "separate negative control changes process generation after alias mint and must refuse before relay input"
+  },
+  "expected": {
+    "release_state": "UNKNOWN",
+    "late_server_request_possible": true,
+    "task_success": null,
+    "replay_allowed": false,
+    "owner_release_attempt": "not_attempted",
+    "generation_change": "refused with input_dispatched=false",
+    "held_reply_bytes": 32,
+    "cancelled_owner_process_retired": true,
+    "normal_and_optimized": "2 tests pass each; cancel response <3000ms; terminal result <5000ms",
+    "input_obligations": {
+      "keys": {
+        "a": 2
+      },
+      "buttons": []
+    }
+  },
+  "commands": [
+    "python -B -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
+    "python -B -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition"
+  ],
+  "raw_dirs": [
+    "raw/normal",
+    "raw/optimized"
+  ],
+  "not_used": [
+    "WSLc",
+    "Docker",
+    "external network",
+    "X server",
+    "GUI",
+    "OS input",
+    "model",
+    "formal allocation"
+  ]
+}

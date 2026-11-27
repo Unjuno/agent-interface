@@ -1,0 +1,1650 @@
+{
+  "action": {
+    "completion_custody": {
+      "cleanup_deadline_ns": null,
+      "completion_readback": {
+        "neutral": true,
+        "observed_monotonic_ns": 500499828000000,
+        "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+        "producer_exit_confirmed_ns": 500499812000000,
+        "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+      },
+      "completion_release_receipt": {
+        "buttons_down": [],
+        "buttons_unknown": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "monotonic_ns": 500499765000000,
+        "state_query_witnesses": {
+          "1": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 55117672,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 35132,
+              "probe_integrity_rid": 8192,
+              "target": "calculator",
+              "target_integrity_rid": 8192,
+              "thread_id": 49212
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 55117672,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 35132,
+              "probe_integrity_rid": 8192,
+              "target": "calculator",
+              "target_integrity_rid": 8192,
+              "thread_id": 49212
+            }
+          ]
+        },
+        "verified": true
+      },
+      "deadline_ns": 500533843000000,
+      "obligations": [
+        "button:calculator:left"
+      ],
+      "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+      "phase": "completed",
+      "producer_exit_code": 0,
+      "producer_gate_state": "authorization_attempted",
+      "producer_identity": {
+        "creation_time_100ns": 134372827815545728,
+        "pid": 48924
+      },
+      "recovery_id": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "completed",
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+      "task_success": null,
+      "uncertainty": null
+    },
+    "metadata": {
+      "program_id": "win32-calculator-r01-314-plus-728",
+      "source": "interface_dispatch"
+    },
+    "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "emissions": 25,
+        "ended_ns": 500499765000000,
+        "observations": [],
+        "releases": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 500499765000000,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 55117672,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 35132,
+                  "probe_integrity_rid": 8192,
+                  "target": "calculator",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 49212
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 55117672,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 35132,
+                  "probe_integrity_rid": 8192,
+                  "target": "calculator",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 49212
+                }
+              ]
+            },
+            "verified": true
+          }
+        ],
+        "started_ns": 500499625000000
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "status": "completed",
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "task_success": null
+  },
+  "attempt_id": "win32-public-mcp-calculator-20261024-r03-9950ba9bfed148f6866ae8c3872ea8e9",
+  "call_id": "228cbc0a86444f349f85ba7e2141db56",
+  "conditions_sha256": "c95a1c64c5e80afc4958efb7ab8036728d17f21a47886c591f69a80b6c682136",
+  "observation": {
+    "height": 541,
+    "image_file": "observe-0-1.png",
+    "native_window_id": 55117672,
+    "observation_id": "cc0787bbf4d54d86b1fcdb5614ee8ab6",
+    "region": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "width": 336
+  },
+  "operation_id": null,
+  "schema": "win32-public-mcp-calculator-run-v1",
+  "source_commit": "35bbc613e6a6b70aeadcd3f9db86ac3fc5182d12",
+  "status": "FAIL_OR_UNKNOWN",
+  "steps": [
+    {
+      "blocks": [
+        {
+          "sha256": "092e3913ba9acf1e4645a99b1532a54d52ce44b91e0a88cb2b5b4c538fd611da",
+          "type": "text"
+        },
+        {
+          "bytes": 25587,
+          "mimeType": "image/png",
+          "path": "observe-0-1.png",
+          "sha256": "ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22",
+          "type": "image"
+        }
+      ],
+      "isError": false,
+      "name": "observation",
+      "parsed": {
+        "authority": "none",
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r03\\run\\server-receipts\\b5ac7cdb38834fcb808898108d4a925c",
+        "call_id": "b5ac7cdb38834fcb808898108d4a925c",
+        "image_reference": {
+          "authority": "none",
+          "capture_ns": 500471781000000,
+          "freshness": "historical referenced capture; no new observation",
+          "observation_id": "cc0787bbf4d54d86b1fcdb5614ee8ab6",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r03\\run\\server-receipts\\b5ac7cdb38834fcb808898108d4a925c\\images\\d74368f3bd5f40558db5b2de8a20490f.png",
+          "recorded_capture": {
+            "capture_ended_ns": 500471796000000,
+            "capture_started_ns": 500471781000000,
+            "frame": "screen_physical_px",
+            "height": 541,
+            "native_window_id": 55117672,
+            "region": [
+              40,
+              32,
+              336,
+              541
+            ],
+            "target": "calculator",
+            "width": 336
+          },
+          "relative_path": "images\\d74368f3bd5f40558db5b2de8a20490f.png",
+          "sha256": "ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22",
+          "status": "image"
+        },
+        "image_status": "image",
+        "outcome_summary": {
+          "cleanup_error": null,
+          "error": null,
+          "failure_phase": null,
+          "reported_status": "returned"
+        },
+        "receipt": {
+          "authority": "none",
+          "events": [],
+          "latest_observations": [],
+          "motor_state_validation": {
+            "accepted": false,
+            "present": false,
+            "reason": "missing"
+          },
+          "omitted_from_view": 0,
+          "record_counts": {},
+          "report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 25587,
+                "height": 541,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r03\\run\\server-receipts\\b5ac7cdb38834fcb808898108d4a925c\\images\\d74368f3bd5f40558db5b2de8a20490f.png",
+                "sha256": "ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22",
+                "source_raw_sha256": "7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e",
+                "timing_ns": {
+                  "converted": 500471812000000,
+                  "encoded": 500471828000000,
+                  "started": 500471796000000,
+                  "written": 500471828000000
+                },
+                "width": 336
+              },
+              "bytes": 727104,
+              "capture_ended_ns": 500471796000000,
+              "capture_started_ns": 500471781000000,
+              "frame": "screen_physical_px",
+              "height": 541,
+              "native_window_id": 55117672,
+              "region": [
+                40,
+                32,
+                336,
+                541
+              ],
+              "sha256": "7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e",
+              "target": "calculator",
+              "width": 336
+            },
+            "observation_id": "cc0787bbf4d54d86b1fcdb5614ee8ab6",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "794ab114071b44799d92ab872fe10d2b",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+            "target_generation_consistency": "matched"
+          },
+          "schema": "agent-interface/receipt-view-v1",
+          "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+          "source": {
+            "bytes": 1495,
+            "kind": "received_bytes",
+            "path": null,
+            "raw_report": {
+              "input_dispatched": false,
+              "observation": {
+                "artifact": {
+                  "bytes": 25587,
+                  "height": 541,
+                  "mime_type": "image/png",
+                  "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r03\\run\\server-receipts\\b5ac7cdb38834fcb808898108d4a925c\\images\\d74368f3bd5f40558db5b2de8a20490f.png",
+                  "sha256": "ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22",
+                  "source_raw_sha256": "7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e",
+                  "timing_ns": {
+                    "converted": 500471812000000,
+                    "encoded": 500471828000000,
+                    "started": 500471796000000,
+                    "written": 500471828000000
+                  },
+                  "width": 336
+                },
+                "bytes": 727104,
+                "capture_ended_ns": 500471796000000,
+                "capture_started_ns": 500471781000000,
+                "frame": "screen_physical_px",
+                "height": 541,
+                "native_window_id": 55117672,
+                "region": [
+                  40,
+                  32,
+                  336,
+                  541
+                ],
+                "sha256": "7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e",
+                "target": "calculator",
+                "width": 336
+              },
+              "observation_id": "cc0787bbf4d54d86b1fcdb5614ee8ab6",
+              "schema": "agent-interface/runtime-observation-v1",
+              "session": {
+                "call_count": 0,
+                "mode": "supervised-win32",
+                "session_id": "794ab114071b44799d92ab872fe10d2b",
+                "state": "open",
+                "synthetic_only": false,
+                "unresolved_call_ids": []
+              },
+              "side_effect_authority": false,
+              "status": "returned",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+              "target_generation_consistency": "matched"
+            },
+            "sha256": "53553f8eccb1fcfd66cbaa2372339585b7995e5d1200abbd326e7d91c9586447"
+          }
+        },
+        "schema": "agent-interface/review-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "794ab114071b44799d92ab872fe10d2b",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        }
+      },
+      "raw_text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"53553f8eccb1fcfd66cbaa2372339585b7995e5d1200abbd326e7d91c9586447\", \"bytes\": 1495, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"cc0787bbf4d54d86b1fcdb5614ee8ab6\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 727104, \"sha256\": \"7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e\", \"width\": 336, \"height\": 541, \"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"capture_started_ns\": 500471781000000, \"capture_ended_ns\": 500471796000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r03\\\\run\\\\server-receipts\\\\b5ac7cdb38834fcb808898108d4a925c\\\\images\\\\d74368f3bd5f40558db5b2de8a20490f.png\", \"sha256\": \"ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22\", \"bytes\": 25587, \"width\": 336, \"height\": 541, \"source_raw_sha256\": \"7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e\", \"timing_ns\": {\"started\": 500471796000000, \"converted\": 500471812000000, \"encoded\": 500471828000000, \"written\": 500471828000000}}}, \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"794ab114071b44799d92ab872fe10d2b\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"cc0787bbf4d54d86b1fcdb5614ee8ab6\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 727104, \"sha256\": \"7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e\", \"width\": 336, \"height\": 541, \"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"capture_started_ns\": 500471781000000, \"capture_ended_ns\": 500471796000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r03\\\\run\\\\server-receipts\\\\b5ac7cdb38834fcb808898108d4a925c\\\\images\\\\d74368f3bd5f40558db5b2de8a20490f.png\", \"sha256\": \"ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22\", \"bytes\": 25587, \"width\": 336, \"height\": 541, \"source_raw_sha256\": \"7419f83b87954cdf47b0c8095b1caa2ba83f30b6a5ff75193dfc7a4c7bbddb5e\", \"timing_ns\": {\"started\": 500471796000000, \"converted\": 500471812000000, \"encoded\": 500471828000000, \"written\": 500471828000000}}}, \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"794ab114071b44799d92ab872fe10d2b\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 500471781000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r03\\\\run\\\\server-receipts\\\\b5ac7cdb38834fcb808898108d4a925c\\\\images\\\\d74368f3bd5f40558db5b2de8a20490f.png\", \"relative_path\": \"images\\\\d74368f3bd5f40558db5b2de8a20490f.png\", \"sha256\": \"ba737a85f306cab22c4483cdc270c019d2ece1182809090076804362e1744a22\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"cc0787bbf4d54d86b1fcdb5614ee8ab6\", \"recorded_capture\": {\"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"width\": 336, \"height\": 541, \"capture_started_ns\": 500471781000000, \"capture_ended_ns\": 500471796000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"794ab114071b44799d92ab872fe10d2b\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r03\\\\run\\\\server-receipts\\\\b5ac7cdb38834fcb808898108d4a925c\", \"call_id\": \"b5ac7cdb38834fcb808898108d4a925c\"}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "23888d1983a062627a62e856b3fe4ddd85d808af25cc071888c424131c281502",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "clock",
+      "parsed": {
+        "authority_granted": false,
+        "clock": "time.monotonic_ns",
+        "input_dispatched": false,
+        "lease_issued": false,
+        "monotonic_ns": 500488843000000,
+        "schema": "agent-interface/execution-clock-v1",
+        "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+        "server_instance_id": "1e71a99610bc42feb652f6efaceea5e6"
+      },
+      "raw_text": "{\"schema\": \"agent-interface/execution-clock-v1\", \"monotonic_ns\": 500488843000000, \"clock\": \"time.monotonic_ns\", \"server_instance_id\": \"1e71a99610bc42feb652f6efaceea5e6\", \"input_dispatched\": false, \"authority_granted\": false, \"lease_issued\": false, \"scope\": \"Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.\"}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "0434356a80146eb9dbe8af3f94adc6f04aaacaa1cc268f245636c1230d99924f",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "validation",
+      "parsed": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 26,
+        "required_capabilities": [
+          "display.geometry",
+          "input.pointer",
+          "input.release_all",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 26,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "raw_text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 26, \"expanded_operation_count\": 26, \"required_capabilities\": [\"display.geometry\", \"input.pointer\", \"input.release_all\", \"window.focus\"], \"compilation\": null}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "33d1bef214c2393f6bc3537ba68e7f1ef499aadcd31bda75e52af07f6e9bb285",
+          "type": "text"
+        }
+      ],
+      "client_timing_ns": {
+        "returned": 500498859000000,
+        "started": 500488859000000
+      },
+      "isError": false,
+      "name": "dispatch",
+      "parsed": {
+        "call": {
+          "arguments": {
+            "current_binding_revision": 1,
+            "current_observation_seq": 1,
+            "program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            }
+          },
+          "backend_attempted": true,
+          "call_id": "228cbc0a86444f349f85ba7e2141db56",
+          "operation": "dispatch",
+          "persistence_failure": null,
+          "response_wait_ms": 10000,
+          "state": "running"
+        },
+        "call_id": "228cbc0a86444f349f85ba7e2141db56",
+        "effect_status": "unknown",
+        "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result_available": false,
+        "scope": "current_server",
+        "status": "pending",
+        "task_success": null
+      },
+      "raw_text": "{\"status\": \"pending\", \"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"call\": {\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"operation\": \"dispatch\", \"state\": \"running\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": true, \"persistence_failure\": null, \"response_wait_ms\": 10000}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}"
+    },
+    {
+      "name": "read_only_results",
+      "polls": [
+        {
+          "blocks": [
+            {
+              "sha256": "33f82458813e58969caaa0aef223dd6c5e99c94eb78c70413e9bc32b316e15cc",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-calculator-r01-314-plus-728",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+              "result": null,
+              "status": "starting",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            },
+            "call_id": "228cbc0a86444f349f85ba7e2141db56",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          },
+          "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"starting\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+        },
+        {
+          "blocks": [
+            {
+              "sha256": "1472390b2638c7f1f3e01a4c1f1c0c08de192e6d738bda0947c92b184f2f9a18",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-calculator-r01-314-plus-728",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+              "result": null,
+              "status": "running",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            },
+            "call_id": "228cbc0a86444f349f85ba7e2141db56",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          },
+          "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"running\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+        },
+        {
+          "blocks": [
+            {
+              "sha256": "1472390b2638c7f1f3e01a4c1f1c0c08de192e6d738bda0947c92b184f2f9a18",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-calculator-r01-314-plus-728",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+              "result": null,
+              "status": "running",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            },
+            "call_id": "228cbc0a86444f349f85ba7e2141db56",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          },
+          "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"running\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+        },
+        {
+          "blocks": [
+            {
+              "sha256": "1472390b2638c7f1f3e01a4c1f1c0c08de192e6d738bda0947c92b184f2f9a18",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-calculator-r01-314-plus-728",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+              "result": null,
+              "status": "running",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            },
+            "call_id": "228cbc0a86444f349f85ba7e2141db56",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          },
+          "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"running\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+        },
+        {
+          "blocks": [
+            {
+              "sha256": "42734c3d297fa95bfdb7fc9c780de181b1b69b13cd9a399f38581aa5ca1f05d5",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "completion_custody": {
+                "cleanup_deadline_ns": null,
+                "completion_readback": {
+                  "neutral": true,
+                  "observed_monotonic_ns": 500499828000000,
+                  "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+                  "producer_exit_confirmed_ns": 500499812000000,
+                  "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                },
+                "completion_release_receipt": {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 500499765000000,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 55117672,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 35132,
+                        "probe_integrity_rid": 8192,
+                        "target": "calculator",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 49212
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 55117672,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 35132,
+                        "probe_integrity_rid": 8192,
+                        "target": "calculator",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 49212
+                      }
+                    ]
+                  },
+                  "verified": true
+                },
+                "deadline_ns": 500533843000000,
+                "obligations": [
+                  "button:calculator:left"
+                ],
+                "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+                "phase": "completed",
+                "producer_exit_code": 0,
+                "producer_gate_state": "authorization_attempted",
+                "producer_identity": {
+                  "creation_time_100ns": 134372827815545728,
+                  "pid": 48924
+                },
+                "recovery_id": null,
+                "release_confirmed": true,
+                "replay_allowed": false,
+                "status": "completed",
+                "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+                "task_success": null,
+                "uncertainty": null
+              },
+              "metadata": {
+                "program_id": "win32-calculator-r01-314-plus-728",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "result": {
+                "admission": "accepted",
+                "execution": {
+                  "emissions": 25,
+                  "ended_ns": 500499765000000,
+                  "observations": [],
+                  "releases": [
+                    {
+                      "buttons_down": [],
+                      "buttons_unknown": [],
+                      "keys_down": [],
+                      "keys_unknown": [],
+                      "monotonic_ns": 500499765000000,
+                      "state_query_witnesses": {
+                        "1": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 55117672,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 35132,
+                            "probe_integrity_rid": 8192,
+                            "target": "calculator",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 49212
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 55117672,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 35132,
+                            "probe_integrity_rid": 8192,
+                            "target": "calculator",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 49212
+                          }
+                        ]
+                      },
+                      "verified": true
+                    }
+                  ],
+                  "started_ns": 500499625000000
+                },
+                "recovery_required": false,
+                "required_capabilities": [
+                  "display.geometry",
+                  "input.pointer",
+                  "input.release_all",
+                  "window.focus"
+                ],
+                "status": "completed"
+              },
+              "status": "completed",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+              "task_success": null
+            },
+            "call_id": "228cbc0a86444f349f85ba7e2141db56",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 500533843000000,
+                "lease_id": "5741b24fe53740918580c38d6ccfc963"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "calculator"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 248,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 429
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 90,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 484
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 168,
+                  "y": 375
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "frame": "screen_physical_px",
+                  "op": "pointer_move",
+                  "x": 328,
+                  "y": 536
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-calculator-r01-314-plus-728",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          },
+          "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"completed\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"display.geometry\", \"input.pointer\", \"input.release_all\", \"window.focus\"], \"execution\": {\"started_ns\": 500499625000000, \"ended_ns\": 500499765000000, \"emissions\": 25, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"1\": [{\"target\": \"calculator\", \"hwnd\": 55117672, \"pid\": 35132, \"thread_id\": 49212, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"calculator\", \"hwnd\": 55117672, \"pid\": 35132, \"thread_id\": 49212, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 500499765000000}]}, \"recovery_required\": false}, \"release_confirmed\": true, \"task_success\": null, \"replay_allowed\": false, \"completion_custody\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"deadline_ns\": 500533843000000, \"obligations\": [\"button:calculator:left\"], \"status\": \"completed\", \"producer_identity\": {\"pid\": 48924, \"creation_time_100ns\": 134372827815545728}, \"producer_exit_code\": 0, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": null, \"recovery_id\": null, \"release_confirmed\": true, \"completion_release_receipt\": {\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"1\": [{\"target\": \"calculator\", \"hwnd\": 55117672, \"pid\": 35132, \"thread_id\": 49212, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"calculator\", \"hwnd\": 55117672, \"pid\": 35132, \"thread_id\": 49212, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 500499765000000}, \"completion_readback\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"producer_exit_confirmed_ns\": 500499812000000, \"observed_monotonic_ns\": 500499828000000, \"neutral\": true}, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"completed\"}}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+        }
+      ]
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "845703883b3d4ff67d95c0892b0933e9c253beee64fb9dc5f901782b6b2f80d9",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "server_close",
+      "parsed": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r03\\run\\server-receipts\\5bb6eb31f6e24442a226d9fde2c895c3",
+        "call_id": "5bb6eb31f6e24442a226d9fde2c895c3",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "794ab114071b44799d92ab872fe10d2b",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      },
+      "raw_text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"794ab114071b44799d92ab872fe10d2b\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r03\\\\run\\\\server-receipts\\\\5bb6eb31f6e24442a226d9fde2c895c3\", \"call_id\": \"5bb6eb31f6e24442a226d9fde2c895c3\"}"
+    }
+  ],
+  "stop_reason": "completion, generation, or release evidence incomplete; no replay",
+  "target_generation": null
+}

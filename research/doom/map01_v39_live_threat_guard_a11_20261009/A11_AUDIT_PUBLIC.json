@@ -1,0 +1,70 @@
+{
+  "schema": "map01-v39-live-threat-guard-audit-public-summary-v1",
+  "allocation": "map01-v39-live-threat-guard-a11-20261009",
+  "status": "FAIL",
+  "original_audit_sha256": "2967020e5ab596d305b03c91ad2f4217a2bcaf52c60c5d367ac981ceb8c46e9a",
+  "checks": {
+    "allocation_identity": true,
+    "source_commit_is_verified_prelaunch_main": true,
+    "runtime_source_closure_is_complete_and_frozen": true,
+    "all_runtime_sources_match_local_and_frozen_main": true,
+    "guest_host_source_mapping_is_frozen": true,
+    "known_startup_dependencies_are_frozen": true,
+    "no_preexisting_game_or_display_process": true,
+    "runner_and_auditor_hashes_match_freeze": true,
+    "fixture_hashes_match_freeze": true,
+    "qualified_wad_hash_matches": true,
+    "forwarded_images_host_receipts_valid": true,
+    "all_accepted_programs_have_terminals": true,
+    "cancelled_cover_has_matching_release_event": false,
+    "per_key_release_rows_accounted": true,
+    "terminal_releases_verified_empty": true,
+    "hard_health_guard_exposed": false,
+    "useful_feedback_during_pending_model": false,
+    "bounded_fresh_recovery_after_guard": false,
+    "no_stale_admission_after_guard": true
+  },
+  "counts": {
+    "model_turns_started": 32,
+    "model_turns_completed": 32,
+    "accepted_programs": 68,
+    "terminals": 68,
+    "typed_observations": 841,
+    "retained_pngs": 644,
+    "input_release_transitions": 100,
+    "owner_explicit_keyups": 100,
+    "owner_release_records": 75,
+    "verified_empty_cancel_releases": 6,
+    "host_verified_image_requests": 32,
+    "host_verified_images": 32,
+    "requested_local_images": 32,
+    "hard_health_guard_exposures": 0,
+    "useful_scorer_events": 1,
+    "useful_events_during_model_wait": 0
+  },
+  "health_range": [
+    64,
+    100
+  ],
+  "ammo_range": [
+    32,
+    52
+  ],
+  "hard_health_guard_count": 0,
+  "useful_events_during_pending_count": 0,
+  "bounded_recovery_count": 0,
+  "score": {
+    "kill_count": 2,
+    "death_count": 0,
+    "player_dead": false,
+    "map_exit": false,
+    "episode_finished": false
+  },
+  "scope": "One fresh live MAP01 episode on the dedicated OrbStack arm64 VM. X11 server receipts do not prove hardware key state or game consumption; a single episode does not establish generality or causal survival benefit.",
+  "omissions": [
+    "raw intent tokens",
+    "per-key identities",
+    "session and turn identifiers",
+    "host-local paths"
+  ]
+}

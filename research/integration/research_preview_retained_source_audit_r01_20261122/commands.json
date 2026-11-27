@@ -1,0 +1,64 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.test_golden_desktop_demo_v3"
+    ],
+    "exit_code": 0,
+    "tests_run": 5,
+    "elapsed_ns": 163770300,
+    "stdout_bytes": 0,
+    "stderr_bytes": 108
+  },
+  {
+    "command": [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.test_golden_desktop_demo_v3"
+    ],
+    "exit_code": 0,
+    "tests_run": 5,
+    "elapsed_ns": 162942200,
+    "stdout_bytes": 0,
+    "stderr_bytes": 108
+  },
+  {
+    "command": [
+      "python",
+      "release/preview_bundle_v1/test_build_preview.py"
+    ],
+    "exit_code": 0,
+    "tests_run": 5,
+    "elapsed_ns": 7756338200,
+    "stdout_bytes": 0,
+    "stderr_bytes": 108
+  },
+  {
+    "command": [
+      "python",
+      "-O",
+      "release/preview_bundle_v1/test_build_preview.py"
+    ],
+    "exit_code": 0,
+    "tests_run": 5,
+    "elapsed_ns": 7642960700,
+    "stdout_bytes": 0,
+    "stderr_bytes": 108
+  },
+  {
+    "command": [
+      "python",
+      "runtime/golden_desktop_demo.py",
+      "audit-retained"
+    ],
+    "exit_code": 0,
+    "tests_run": null,
+    "elapsed_ns": 95214700,
+    "stdout_bytes": 1178,
+    "stderr_bytes": 0
+  }
+]

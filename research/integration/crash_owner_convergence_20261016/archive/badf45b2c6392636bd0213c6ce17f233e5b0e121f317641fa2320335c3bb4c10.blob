@@ -1,0 +1,18 @@
+{
+  "candidate_harness_status": "STOP",
+  "checks": {
+    "candidate_harness_assertion_failed_as_reported": true,
+    "candidate_hash_match": true,
+    "child_sigkill_and_active_key": true,
+    "eof_and_owner_close": true,
+    "independent_release_event_observed": false,
+    "owner_keyup_and_xstate_recorded": false,
+    "raw_preserved_and_xvfb_clean": true,
+    "source_hashes_match": true
+  },
+  "decision": "STOP",
+  "errors": [
+    "AttributeError: 'InputOwner' object has no attribute '_inner'"
+  ],
+  "schema": "v39-executor-hardkill-supervised-a02-audit-v1"
+}

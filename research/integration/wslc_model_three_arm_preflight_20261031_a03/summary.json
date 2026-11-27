@@ -1,0 +1,73 @@
+{
+  "ephemeral": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "task_model_calls": 6,
+    "preflight_calls": 1,
+    "total_input_tokens": 105505,
+    "cached_input_tokens_subset": 59904,
+    "total_output_tokens": 873,
+    "reasoning_output_subset": 14,
+    "task_elapsed_ns": 35738160719,
+    "preflight_total_ns": 5603856046,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "plain": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "task_model_calls": 6,
+    "preflight_calls": 1,
+    "total_input_tokens": 103955,
+    "cached_input_tokens_subset": 73728,
+    "total_output_tokens": 450,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 24260377423,
+    "preflight_total_ns": 5062033299,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "persistent": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "task_model_calls": 2,
+    "preflight_calls": 1,
+    "total_input_tokens": 36841,
+    "cached_input_tokens_subset": 12288,
+    "total_output_tokens": 393,
+    "reasoning_output_subset": 14,
+    "task_elapsed_ns": 24147525030,
+    "preflight_total_ns": 6813516519,
+    "routes": [
+      "cold",
+      "reuse",
+      "reuse",
+      "repair",
+      "reuse",
+      "reuse"
+    ]
+  },
+  "limits": {
+    "schema_preflight": "fresh actual no-image turn per arm",
+    "arm_order": "fixed ephemeral, plain, persistent",
+    "sample": "one six-task sequence per arm",
+    "provider_cost": "unknown",
+    "ipc": "exploratory shared volume, not hardened",
+    "cached_input": "subset of input, not additive"
+  }
+}

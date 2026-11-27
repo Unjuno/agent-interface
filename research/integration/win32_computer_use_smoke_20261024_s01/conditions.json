@@ -1,0 +1,42 @@
+{
+  "scope": "One exploratory native-Windows live UI smoke only; do not generalize beyond this target and action.",
+  "schema": "win32-computer-use-live-smoke-v1",
+  "attempt_id": "win32-calc-s01-4d9bd4a83e7b41a09182a681311db000",
+  "unknowns": [
+    "OS key-up state is not exposed by this API",
+    "input release is not independently verified",
+    "no forced block/recovery injected",
+    "no independent task scorer beyond displayed calculator result",
+    "not WSLc, MAP01, efficiency, or reliability evidence"
+  ],
+  "target": {
+    "window_id": 76874832,
+    "app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+    "mode": "標準",
+    "title": "電卓",
+    "initial_display": "0"
+  },
+  "question": "Can the supported Windows Computer Use route deliver one exact harmless calculator operation and expose the resulting application state?",
+  "status_before_input": "FROZEN_NOT_YET_RUN",
+  "frozen_at_utc": "2026-10-24T00:55:50Z",
+  "action": {
+    "semantic_expression": "12+30",
+    "expected_display": "42",
+    "maximum_submissions": 1,
+    "retries": 0,
+    "sequence": [
+      "1",
+      "2",
+      "plus",
+      "3",
+      "0",
+      "Return"
+    ],
+    "route": "node_repl @oai/sky press_key"
+  },
+  "pass": [
+    "one targeted sequence returns without tool error",
+    "fresh target-window screenshot shows exact result 42",
+    "no retry or second submission"
+  ]
+}

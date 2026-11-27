@@ -1,0 +1,402 @@
+{
+  "browser_version": "Google Chrome for Testing 156.0.8078.4",
+  "cleanup": {
+    "appserver_closed": true,
+    "browser_exitcode": 0,
+    "fixture_server_closed": true
+  },
+  "close": {
+    "release_confirmed": true,
+    "returned_ns": 263644283499,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cancellation_supervisor": {
+        "status": "not_started"
+      },
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:b2d9d3dff2c14fc1892ad990f635a1ff",
+      "compiled_surface": "x11-window-4194306",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 33,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 263642293069,
+        "pid": 567,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 12582912
+      },
+      "owner_process_pid": 567,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 12582912,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "188eaca91562414ca12da6264a3edd08",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": false
+      },
+      "targets": {
+        "app": 4194306
+      },
+      "window_lifecycle": true
+    },
+    "started_ns": 263530986996,
+    "status": "closed"
+  },
+  "display": ":98",
+  "error": "RuntimeError('compiled method did not reach TASK_SUCCEEDED')",
+  "error_type": "RuntimeError",
+  "grounded_points": {
+    "field": [
+      340,
+      327
+    ],
+    "source_sequence": 1,
+    "stable_anchor": [
+      340,
+      307
+    ],
+    "submit": [
+      684,
+      327
+    ]
+  },
+  "independent_score": {
+    "expected_token": "uictrl-20261021-e9a5",
+    "runtime_task_success": null,
+    "scorer": "independent test-harness parser over captured HTTP POST body",
+    "submission_count": 1,
+    "submitted_values": [
+      "uictrl-20261021-e9a5"
+    ],
+    "success": true
+  },
+  "input_attempted": true,
+  "local_fixture_origin": "http://127.0.0.1:42487/form",
+  "model": {
+    "effort": "medium",
+    "requested": "gpt-6.1-sol"
+  },
+  "page_render_readiness": {
+    "receipt": {
+      "body_bytes": 0,
+      "client_address": "127.0.0.1",
+      "event": "render_ready",
+      "path": "/ready",
+      "received_monotonic_ns": 252368262179
+    },
+    "signal": "local page POST after two requestAnimationFrame callbacks",
+    "wait_returned_ns": 252371984546,
+    "wait_started_ns": 252251714179
+  },
+  "post_model_recheck": {
+    "compiled_scope_same": true,
+    "compiled_surface_same": true,
+    "field_probe_rgb": [
+      224,
+      232,
+      255
+    ],
+    "fill_cue_rgb": [
+      244,
+      0,
+      255
+    ],
+    "returned_ns": 262036217591,
+    "saved_cue_rgb": [
+      255,
+      255,
+      255
+    ],
+    "source_sequence": 2,
+    "started_ns": 261981629114,
+    "submit_probe_rgb": [
+      53,
+      89,
+      213
+    ]
+  },
+  "provider_attempt": {
+    "answer_eligible": true,
+    "requested_effort": "medium",
+    "requested_model": "gpt-6.1-sol",
+    "result_path": "provider-call-01/result.json",
+    "thread_id": "01a15b76-cd57-7961-85be-4e7fb6f47440",
+    "turn_id": "01a15b76-cdea-7872-8709-eea3d1c9ff02",
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 13335,
+      "output_tokens": 113,
+      "reasoning_output_tokens": 0
+    },
+    "visible_images_submitted": 1,
+    "wait_ns": 7987209161
+  },
+  "public_call": {
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/repository-cleanup-plan-r01-20261020/research/integration/chromium_public_compiled_caller_20261021/raw/r05/mcp/31ca1070ce2c47c08da63dc9c956da76",
+    "call_id": "31ca1070ce2c47c08da63dc9c956da76",
+    "method_receipt": {
+      "completed_transitions": 2,
+      "critical_events": [
+        {
+          "action": "enter_token",
+          "event": "branch_selected",
+          "evidence_ref": "observation-3",
+          "matched_conditions": {
+            "field_pixels_changed": false,
+            "field_target_present": true
+          },
+          "outcome": "action",
+          "state": "empty"
+        },
+        {
+          "action": "enter_token",
+          "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+          "event": "action_terminal",
+          "execution_accepted_ns": 263269250835,
+          "execution_started_ns": 262154947115,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "enter_token",
+          "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+          "effect_observation_accepted_ns": 263298674900,
+          "effect_observation_captured_ns": 263272146756,
+          "effect_verification_accepted_ns": 263302710960,
+          "effect_verification_started_ns": 263300456726,
+          "event": "effect_checked",
+          "evidence_ref": "observation-28",
+          "execution_accepted_ns": 263269250835,
+          "status": "succeeded"
+        },
+        {
+          "action": "submit_form",
+          "event": "branch_selected",
+          "evidence_ref": "observation-28",
+          "matched_conditions": {
+            "field_pixels_changed": true,
+            "submit_target_present": true
+          },
+          "outcome": "action",
+          "state": "filled"
+        },
+        {
+          "action": "submit_form",
+          "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+          "event": "action_terminal",
+          "execution_accepted_ns": 263446584089,
+          "execution_started_ns": 263311131257,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "submit_form",
+          "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+          "effect_observation_accepted_ns": 263481516082,
+          "effect_observation_captured_ns": 263450990221,
+          "effect_verification_accepted_ns": null,
+          "effect_verification_started_ns": null,
+          "event": "effect_checked",
+          "evidence_ref": "observation-33",
+          "execution_accepted_ns": 263446584089,
+          "status": "failed",
+          "verifier": "compiled_predicate_condition"
+        },
+        {
+          "completed_transitions": 2,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_failed"
+        }
+      ],
+      "elapsed_ns": 1372466273,
+      "ended_ns": 263486360485,
+      "format": "compiled-gui-runtime-receipt-v1",
+      "frontier_model_resumptions": 0,
+      "input_authority": "admission_per_action_only",
+      "interface_id": "chromium-public-caller-live-r05",
+      "latest_evidence_ref": "observation-33",
+      "method": "enter_then_submit",
+      "method_version": "1",
+      "observations": [
+        {
+          "captured_ns": 262114747816,
+          "evidence_digest": "34459b77f6114a1063a5d8b51b398bcf6d238647d8460c409be0c7fb3890aafc",
+          "evidence_ref": "observation-3",
+          "observation_accepted_ns": 262143951369,
+          "observation_started_ns": 262113904395,
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 3
+        },
+        {
+          "captured_ns": 263272146756,
+          "evidence_digest": "d64013da38c4313fafff440b6a47c9a26a62538873e5c30b45e51d9273be3fc6",
+          "evidence_ref": "observation-28",
+          "observation_accepted_ns": 263298674900,
+          "observation_started_ns": 263271204642,
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 28
+        },
+        {
+          "captured_ns": 263450990221,
+          "evidence_digest": "e6338cc6febae1c7a8b07401b4b6f4bd4b684be8d145a47e579b8b0e74c6d4ed",
+          "evidence_ref": "observation-33",
+          "observation_accepted_ns": 263481516082,
+          "observation_started_ns": 263449668527,
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 33
+        }
+      ],
+      "outcome": "SAFE_YIELD",
+      "pending_effect": {
+        "action": "submit_form",
+        "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-45-execution",
+        "expected_effect": {
+          "submission_pixels_changed": true
+        }
+      },
+      "raw_evidence_retention": "adapter_responsibility_unverified",
+      "reason": "effect_failed",
+      "session_scope": "native-x11:b2d9d3dff2c14fc1892ad990f635a1ff",
+      "started_ns": 262113894212,
+      "transitions": [
+        {
+          "action": "enter_token",
+          "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+          "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-31-execution",
+          "evidence_ref": "observation-3",
+          "execution_accepted_ns": 263269250835,
+          "execution_started_ns": 262154947115,
+          "from_state": "empty",
+          "matched_conditions": {
+            "field_pixels_changed": false,
+            "field_target_present": true
+          },
+          "observation_sequence": 3,
+          "release_verified": true,
+          "to_state": "filled"
+        },
+        {
+          "action": "submit_form",
+          "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+          "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-45-execution",
+          "evidence_ref": "observation-28",
+          "execution_accepted_ns": 263446584089,
+          "execution_started_ns": 263311131257,
+          "from_state": "filled",
+          "matched_conditions": {
+            "field_pixels_changed": true,
+            "submit_target_present": true
+          },
+          "observation_sequence": 28,
+          "release_verified": true,
+          "to_state": "submitted"
+        }
+      ]
+    },
+    "owner_timing": {
+      "clock": "time.monotonic_ns",
+      "completed_ns": 263510365425,
+      "effect_status": null,
+      "elapsed_ns": 1405348151,
+      "error_type": null,
+      "method_outcome": "SAFE_YIELD",
+      "replay_allowed": false,
+      "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+      "scope": "run_compiled method entry through graph, feedback and session snapshot",
+      "started_ns": 262105017274,
+      "status": "returned"
+    },
+    "replay_allowed": false,
+    "returned_ns": 263523161770,
+    "started_ns": 262090631313,
+    "status": null,
+    "task_success": null
+  },
+  "run_id": "chromium-public-compiled-standard-caller-live-r05-20261021",
+  "schema": "agent-interface/chromium-public-compiled-caller-live-v1",
+  "source_observation": {
+    "call_returned_ns": 253628547081,
+    "call_started_ns": 252449241607,
+    "compiled_scope": "native-x11:b2d9d3dff2c14fc1892ad990f635a1ff",
+    "compiled_surface": "x11-window-4194306",
+    "image_sha256": "34459b77f6114a1063a5d8b51b398bcf6d238647d8460c409be0c7fb3890aafc",
+    "image_size": [
+      1024,
+      768
+    ],
+    "source_sequence": 1
+  },
+  "status": "FAIL_PRESERVED_NO_RETRY",
+  "target_window": {
+    "candidate_windows": [
+      {
+        "height": 767,
+        "id": 4194306,
+        "pid": 400,
+        "title": "",
+        "width": 1023,
+        "xres_local_client_pids": [
+          400
+        ]
+      }
+    ],
+    "height": 767,
+    "id": 4194306,
+    "pid": 400,
+    "title": "",
+    "width": 1023,
+    "xres_local_client_pids": [
+      400
+    ]
+  },
+  "timeline_ns": {
+    "browser_window_ready": 252251713799,
+    "failed_ns": 263530985830,
+    "model_returned": 261981609716,
+    "model_started": 253984275960,
+    "public_call_returned": 263523161770,
+    "public_call_started": 262090631313
+  },
+  "token": "uictrl-20261021-e9a5"
+}

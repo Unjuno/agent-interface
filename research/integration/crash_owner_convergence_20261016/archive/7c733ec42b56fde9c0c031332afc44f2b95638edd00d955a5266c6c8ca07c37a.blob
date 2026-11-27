@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "all_frozen_sources_match": true,
+    "candidate_hash_matches_freeze": true,
+    "candidate_run_completed_without_harness_errors": true,
+    "keymap_remained_down_through_one_second": true,
+    "samples_cover_registered_one_second_window": true,
+    "worker_exited_by_sigkill": true,
+    "worker_had_active_x_key_before_kill": true,
+    "xvfb_shutdown_clean": true
+  },
+  "decision": "FAIL_STUCK_KEY",
+  "interpretation": "The worker was SIGKILLed during an independently confirmed hold. Keymap remained down at samples spanning the registered one-second deadline; observed KeyRelease events were followed by KeyPress events and did not coincide with any keymap-up sample.",
+  "keymap_samples_in_first_second": 33,
+  "keymap_up_samples_in_first_second": 0,
+  "schema": "v39-executor-hardkill-xvfb-a01-audit-v1",
+  "timing_ns": {
+    "first_keymap_sample": 178708723745,
+    "first_sample_after_1s": 179051869938,
+    "kill_requested": 178043979470,
+    "last_sample": 179706726108,
+    "last_sample_before_1s": 179041421579
+  }
+}

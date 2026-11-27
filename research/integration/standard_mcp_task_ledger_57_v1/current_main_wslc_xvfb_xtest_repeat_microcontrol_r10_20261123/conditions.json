@@ -1,0 +1,17 @@
+{
+ "attempt_id":"ISSUE57-WSLC-XVFB-XTEST-REPEAT-MICROCONTROL-R10-20261123",
+ "frozen_at_utc":"2026-11-23T14:11:00Z",
+ "source_revision":"36da81e3fb97dca875e4dc5b1d13d5385574b400",
+ "source_tree":"5ee7dcc7751fa7e7d12800eae855f5e65902c4be",
+ "runtime_tree":"a8101de9d6bc868a523e412ec3a98d40d6a8649e",
+ "container_image":"agent-interface-xvfb-mcp:late-input-r19",
+ "container_image_id":"sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+ "runtime":"WSLc 3.0.5.0; no pull; network none; ephemeral; source read-only bind; evidence writable bind; private tmpfs /tmp; memory cap warning retained.",
+ "purpose":"Isolate X server XTEST auto-repeat behavior from the standard MCP caller and delayed-request harness.",
+ "probe":"Create a focused X window; apply baseline/global-off/per-key-A-off mode; issue exactly one synthetic A KeyPress; hold for 1200 ms; issue one KeyRelease; record all received A events and independent post-release keymap.",
+ "conditions":["baseline","global_off","key_off"],
+ "interpreters":["python3","python3 -O"],
+ "attempts":"one fresh WSLc container per condition and interpreter; six total; no retry",
+ "decision_rule":"Record actual KeyPress/KeyRelease counts, event timestamps, keyboard-control readback and post-release independent keymap. Compare repeat settings directly. This is a synthetic server control only; no caller/product acceptance.",
+ "limits":"No MCP/runtime caller, no delayed XTEST request, no application task effect, no live GUI, no provider/model call."
+}

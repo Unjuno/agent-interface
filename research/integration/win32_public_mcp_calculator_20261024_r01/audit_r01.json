@@ -1,0 +1,101 @@
+{
+  "action_boundary": {
+    "close_release_confirmed": false,
+    "close_release_interpretation": "No action input was issued; interface_close did not release this call.",
+    "dispatch_calls": 0,
+    "input_sent": false,
+    "observation_calls": 1,
+    "release_confirmed": null,
+    "task_success": null,
+    "validation_calls": 0
+  },
+  "attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73",
+  "checks": [
+    {
+      "name": "MCP observation returned without tool error",
+      "passed": true
+    },
+    {
+      "name": "reported native HWND matches frozen target",
+      "passed": true
+    },
+    {
+      "name": "reported generation is internally matched",
+      "passed": true
+    },
+    {
+      "name": "runtime reported input_dispatched=false",
+      "passed": true
+    },
+    {
+      "name": "screenshot size matches frozen region",
+      "passed": true
+    },
+    {
+      "name": "screenshot is a uniform black image",
+      "passed": true
+    },
+    {
+      "name": "validation was not called",
+      "passed": true
+    },
+    {
+      "name": "dispatch was not called",
+      "passed": true
+    },
+    {
+      "name": "close shows zero input calls",
+      "passed": true
+    },
+    {
+      "name": "close has no unresolved calls",
+      "passed": true
+    },
+    {
+      "name": "close release=false is consistent with no input attempt",
+      "passed": true
+    },
+    {
+      "name": "prelaunch checker error occurred before runtime start",
+      "passed": true
+    }
+  ],
+  "classification": "integrated_entry_path_observation_failure",
+  "disposition": "HOLD_BEFORE_INPUT",
+  "evidence": {
+    "call_id": "ea19bafbb1a748cea365e1b4728e9207",
+    "capture_frame": "window_client",
+    "native_window_id": 55117672,
+    "observation_id": "9ebc703b8c614f8b9c2ce8db7ce3c67b",
+    "source_commit": "e3b6293b4be42c54739936160e524b92ba706178",
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+  },
+  "limitations": [
+    "One app, one observation, and no input dispatch; no task effect or release result.",
+    "Uniform black output does not prove why the capture was black.",
+    "The exact source routes window_client capture through GDI PrintWindow(PW_CLIENTONLY); API branch outcomes were not separately instrumented.",
+    "Not a model-efficiency or reliability measurement, MAP01 result, or WSLc result."
+  ],
+  "passed": 12,
+  "schema": "win32-public-mcp-calculator-r01-audit-v1",
+  "screenshot": {
+    "nonblack_pixels": 0,
+    "only_rgb_color": [
+      0,
+      0,
+      0
+    ],
+    "path": "observe-0-1.png",
+    "pixels": 170560,
+    "raw_capture_bytes": 682240,
+    "raw_capture_sha256": "46a8e370432e84e4c73518d33b4084900b7a1388f2ad879f08492808e0353456",
+    "sha256": "a0f2ac5ee8c6fda353c961511a02473b297fa5a16a50d5080df027eb830434d4",
+    "size": [
+      320,
+      533
+    ],
+    "unique_rgb_colors": 1
+  },
+  "status": "PASS_AUDIT",
+  "total": 12
+}

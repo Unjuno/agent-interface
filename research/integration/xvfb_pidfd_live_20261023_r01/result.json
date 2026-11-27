@@ -1,0 +1,38 @@
+{
+  "status": "FAIL",
+  "scope": "local WSL2 Linux process signalling only",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cases": [],
+  "declared_input_emission_calls": 0,
+  "wslc_operations": 0,
+  "docker_operations": 0,
+  "xvfb": {
+    "path": "/usr/bin/Xvfb",
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "pid": 386,
+    "argv": [
+      "/usr/bin/Xvfb",
+      ":88",
+      "-screen",
+      "0",
+      "320x240x24",
+      "-nolisten",
+      "tcp"
+    ]
+  },
+  "source": {
+    "path": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py",
+    "normalized_sha256": "f13fa32bd40f266383ba0c61feaedaff7c5d8f6f40649aaddd7030a601000fec",
+    "function_ast_sha256": "779dc92de46690440e9ddee192641bd4db5250f377d91f1820b31494be12ed34"
+  },
+  "error": "Traceback (most recent call last):\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xvfb_pidfd_live_20261023_r01/run_probe.py\", line 87, in run\n    raise RuntimeError(\"owned Xvfb startup failed or timed out\")\nRuntimeError: owned Xvfb startup failed or timed out\n",
+  "cleanup": {
+    "signals": [
+      18,
+      15
+    ],
+    "exit_code": 0,
+    "confirmed_exited": true
+  }
+}

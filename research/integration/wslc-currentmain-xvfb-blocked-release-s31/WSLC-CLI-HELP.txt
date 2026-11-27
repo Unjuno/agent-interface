@@ -1,0 +1,137 @@
+=== root exit=0 ===
+Copyright (c) Microsoft Corporation.All rights reserved.
+この製品に関するプライバシー情報については、https://aka.ms/privacy にアクセスしてください。
+
+WSLC はLinux 用 Windows サブシステム Container CLI ツールです。これにより、コマンド ラインから WSL コンテナーの管理と対話が可能になります。
+
+使用: wslc [global-options] [<コマンド>] [オプション]
+
+コマンド:
+  container  コンテナーを管理します。
+  image      イメージを管理します。
+  network    ネットワークを管理します。
+  registry   レジストリ資格情報を管理します。
+  settings   既定のエディターで設定ファイルを開きます。
+  system     システムレベルのコマンド
+  volume     ボリュームを管理します。
+  attach     コンテナーにアタッチします。
+  build      Dockerfile からイメージをビルドします。
+  create     コンテナーを作成します。
+  exec       実行中のコンテナーでコマンドを実行します。
+  events     コンテナー イベントを監視します。
+  export     コンテナーのファイルシステムを tar アーカイブとしてエクスポートします。
+  images     イメージを一覧表示します。
+  import     tarball から画像をインポートします。
+  info       システム情報を表示します。
+  inspect    オブジェクトを検査します。
+  kill       1 つ以上の実行中のコンテナーを強制終了します。
+  list       コンテナーを一覧表示します。
+  load       イメージを読み込みます。
+  login      レジストリにログインします。
+  logout     レジストリからログアウトします。
+  logs       コンテナー ログを表示します。
+  pull       イメージをプルします。
+  push       イメージをレジストリにアップロードします。
+  remove     コンテナーを削除します。
+  restart    コンテナーを再起動します。
+  rmi        イメージを削除します。
+  run        コンテナーを実行します。
+  save       イメージを保存します。
+  start      コンテナーを開始します。
+  stats      コンテナーのリソース使用状況の統計を表示します。
+  stop       コンテナーを停止します。
+  tag        イメージにタグを付けます。
+  version    バージョン情報を表示します。
+
+特定のコマンドの詳細については、それにヘルプ オプションを渡します。 [-?]
+
+オプション :
+  -v  --version  このツールのバージョン情報を表示します
+  -?  --help     選択したコマンドに関するヘルプを表示
+
+'wslc' のグローバル オプション:
+      --session  使用するセッションを指定する
+=== run exit=0 ===
+Copyright (c) Microsoft Corporation.All rights reserved.
+この製品に関するプライバシー情報については、https://aka.ms/privacy にアクセスしてください。
+
+コンテナーを実行します。デフォルトでは、コンテナーはフォアグラウンドで開始されます。--detach を使用してバックグラウンドで実行します。
+
+使用: wslc run [オプション] <image> [<command>] [<arguments>...]
+
+エイリアス:
+  wslc container run, wslc run
+
+引数:
+  image      イメージ名
+  command    実行するコマンド
+  arguments  コンテナーの初期化プロセスに渡す引数
+
+オプション :
+      --cidfile              指定されたパスにコンテナー ID を書き込みます
+      --cpus                 CPU の数 (例: 0.5、1、2.5)
+  -d  --detach               コンテナーをデタッチ モードで実行します
+      --dns                  resolv.conf 内の DNS ネームサーバーの IP アドレス
+      --dns-option           DNS オプションを設定します
+      --dns-search           DNS 検索ドメインを設定します
+      --domainname           コンテナー ドメイン名
+      --entrypoint           コンテナー初期化プロセスの実行可能ファイルを指定します
+  -e  --env                  環境変数の Key=Value のペア
+      --env-file             環境変数の key=value のペアを含むファイル
+      --gpus                 Add GPU devices to the container ('all' to pass all GPUs)
+      --health-cmd           コンテナーの正常性をチェックするために実行するコマンド
+      --health-interval      正常性チェックの実行間隔 (例: 30s, 1m30s)
+      --health-retries       コンテナーを異常として報告するために必要な連続失敗回数
+      --health-start-period  正常性チェックのカウントダウンを開始する前にコンテナーを初期化するための開始期間 (例: 30s、1m30s)
+      --health-timeout       1 回の正常性チェックを実行するために許可される最大時間 (例: 30s、1m30s)
+  -h  --hostname             コンテナー ホスト名
+  -i  --interactive          stdin にアタッチして開いたままにする
+      --ip                   コンテナーにネットワーク上の IPv4 アドレスを割り当てます
+  -l  --label                オブジェクトにメタデータを設定します
+  -m  --memory               メモリ制限 (例: 512M, 1G)
+      --mount                ファイルシステム マウントをコンテナーにアタッチします
+      --name                 コンテナーの名前
+      --network              コンテナーをネットワークに接続する
+      --network-alias        コンテナーにネットワーク スコープのエイリアスを追加する
+      --no-healthcheck       コンテナーで指定された正常性チェックを無効にする
+  -p  --publish              コンテナーからホストへのポートを公開します
+  -P  --publish-all          公開されているすべてのポートをランダム ホスト ポートに発行する
+      --pull                 イメージのプル ポリシー (always|missing|never) (既定値: missing)
+      --rm                   コンテナーを停止後に削除します
+      --shm-size             /dev/shm のサイズ (例: 64M、1G)
+      --stop-signal          コンテナーを停止するシグナル
+      --stop-timeout         コンテナーを強制終了する前に停止するタイムアウトです (秒単位、タイムアウトなしの場合は -1)
+      --tmpfs                tmpfs を指定されたパスにあるコンテナーにマウントします
+  -t  --tty                  コンテナー プロセスで TTY を開きます。
+      --ulimit               Ulimit オプション (形式: <name>=<soft>[:<hard>]、無制限の場合は -1 を使用)
+  -u  --user                 プロセスのユーザー ID (name|uid|uid:gid)
+  -v  --volume               ボリュームをコンテナーにバインド マウントします
+  -w  --workdir              コンテナー内の作業ディレクトリ
+  -?  --help                 選択したコマンドに関するヘルプを表示
+
+'wslc' のグローバル オプション:
+      --session              使用するセッションを指定する
+=== container-list exit=0 ===
+Copyright (c) Microsoft Corporation.All rights reserved.
+この製品に関するプライバシー情報については、https://aka.ms/privacy にアクセスしてください。
+
+コンテナーを一覧表示します。既定では、実行中のコンテナーのみが表示されます。すべてのコンテナーを含めるには --all を使用します。
+
+使用: wslc container list [オプション]
+
+エイリアス:
+  wslc container list, wslc container ls, wslc container ps, wslc list, wslc ls, wslc ps
+
+オプション :
+  -a  --all       状態に関係なくすべてを表示します。
+  -f  --filter    指定された条件に基づいて出力をフィルター処理する
+      --format    出力の書式設定 (json または table) (既定値: table)
+  -n  --last      最後に作成された n 個のコンテナーを表示する (すべての状態を含む)
+  -l  --latest    最後に作成されたコンテナーを表示する (すべての状態を含む)
+      --no-trunc  出力を切り捨てないでください
+  -q  --quiet     コンテナー ID のみを出力します
+  -s  --size      合計ファイル サイズを表示する
+  -?  --help      選択したコマンドに関するヘルプを表示
+
+'wslc' のグローバル オプション:
+      --session   使用するセッションを指定する

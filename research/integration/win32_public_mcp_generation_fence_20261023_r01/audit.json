@@ -1,0 +1,134 @@
+{
+  "attempt_id": "win32-public-mcp-generation-fence-20261023-r01",
+  "checks": [
+    {
+      "evidence": "win32-public-mcp-generation-fence-20261023-r01",
+      "name": "schema_and_attempt",
+      "passed": true
+    },
+    {
+      "evidence": "251f118222987c5e3072e694dd1b7a74d4bc51d3",
+      "name": "source_commit",
+      "passed": true
+    },
+    {
+      "evidence": "mcp_stdio",
+      "name": "actual_public_stdio_caller",
+      "passed": true
+    },
+    {
+      "evidence": [
+        36600,
+        15732
+      ],
+      "name": "two_owned_processes",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "ef18c0b020d17e6cd1539c360151415211fba6f2e6d4e0b9200cec2fc9a8183f",
+        "28c594d18663aed3b7e82f018bc6a8df42474e5e4a2a0a275f03db13143d6d09"
+      ],
+      "name": "generation_digests_valid",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "new": "28c594d18663aed3b7e82f018bc6a8df42474e5e4a2a0a275f03db13143d6d09",
+        "old": "ef18c0b020d17e6cd1539c360151415211fba6f2e6d4e0b9200cec2fc9a8183f"
+      },
+      "name": "generation_changed",
+      "passed": true
+    },
+    {
+      "evidence": false,
+      "name": "public_observation_returned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "expected": "ef18c0b020d17e6cd1539c360151415211fba6f2e6d4e0b9200cec2fc9a8183f",
+        "report_generation": "ef18c0b020d17e6cd1539c360151415211fba6f2e6d4e0b9200cec2fc9a8183f"
+      },
+      "name": "observation_generation_exposed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 3,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 3,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "public_validation_accepts_program",
+      "passed": true
+    },
+    {
+      "evidence": 1,
+      "name": "one_dispatch_attempt",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "error": "TARGET_GENERATION_CHANGED",
+        "status": "refused"
+      },
+      "name": "stale_generation_refusal",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "error": "TARGET_GENERATION_CHANGED",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "status": "refused",
+        "task_success": null
+      },
+      "name": "no_input_claimed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect_exists": false,
+        "event_kinds": [
+          "ready"
+        ]
+      },
+      "name": "no_fixture_input_effect",
+      "passed": true
+    },
+    {
+      "evidence": [
+        {
+          "close_posted": true,
+          "exit_code": 0,
+          "window_exists_after_exit": false
+        },
+        {
+          "close_posted": true,
+          "exit_code": 0,
+          "window_exists_after_exit": false
+        }
+      ],
+      "name": "both_owned_fixtures_cleaned",
+      "passed": true
+    }
+  ],
+  "passed": 14,
+  "schema": "win32-public-mcp-generation-fence-audit-v1",
+  "source_commit": "251f118222987c5e3072e694dd1b7a74d4bc51d3",
+  "status": "PASS",
+  "total": 14
+}

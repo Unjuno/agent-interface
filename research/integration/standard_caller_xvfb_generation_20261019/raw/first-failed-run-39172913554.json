@@ -1,0 +1,27 @@
+{
+  "conditions": {
+    "owned_process": true,
+    "process_identity": true,
+    "query_worker": true,
+    "session_mode": "guarded-x11",
+    "task_model": "synthetic app toggles X property on a KeyPress",
+    "window_lifecycle": true
+  },
+  "error": "release",
+  "error_type": "AttributeError",
+  "monotonic_ns": {
+    "finished": 68763395636
+  },
+  "schema": "agent-interface/standard-mcp-xvfb-generation-v1",
+  "status": "FAIL",
+  "synthetic_app_events": [],
+  "xvfb": {
+    "package_returncode": 0,
+    "package_stderr": "",
+    "package_stdout": "xvfb=2:21.1.12-1ubuntu1.8",
+    "path": "/usr/bin/Xvfb",
+    "pid": 2532,
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "status": "captured"
+  }
+}

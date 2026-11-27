@@ -1,0 +1,41 @@
+{
+  "allocation": "no WSLc allocation requested or consumed",
+  "conditions": {
+    "display": ":96 private local Xvfb",
+    "features": [
+      "guarded X11 session",
+      "process identity",
+      "query worker",
+      "window lifecycle",
+      "owned process"
+    ],
+    "listen_tcp": false,
+    "screen": "1024x768x24",
+    "synthetic_task": "application property changes on keypress; recovery and fresh-generation continuation independently read",
+    "trials": 1
+  },
+  "environment": {
+    "distribution": "Ubuntu 24.04.3 native WSL",
+    "mcp": "1.30.0",
+    "numpy": "1.26.4",
+    "pillow": "10.2.0",
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "fail_rule": "assertion failure, timeout, missing/inconsistent report, release/effect oracle failure, stale dispatch, or Xvfb cleanup failure; preserve raw and do not retry r01",
+  "pass_rule": "one unittest pass; independent audit checks generation binding, bounded recovery and release readback, stale refusal, fresh-generation task effect/key sequence, clean close; runtime task_success remains null",
+  "qualification": "one native WSL/Xvfb synthetic caller integration only; not WSLc, physical input, MAP01, population reliability, or matched efficiency; no Docker or model",
+  "run_id": "native-wsl-xvfb-current-main-e7-generation-recovery-r01-20261021",
+  "source_revision": "e7d79d04de46202622873bf116adb909abb0dee2",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "191913c48207a80a5475a75e6edf36a3e64bd52a799b348c20ca4137d4aab41e",
+    "runtime/cli_v1/mcp_server.py": "39e3d63b7eb25510ed5fadfc015f2bbc9614a0f2b32eaabbf07c57d4390a683b",
+    "runtime/cli_v1/owned_guarded_session.py": "acc9c378ddd88d75572071acfd612c76eaf282da9a918d52cb9da829b3890a1a",
+    "runtime/cli_v1/test_mcp_xvfb_generation_integration.py": "5c45cc42826cdb2637ad070e63e21d3b3d89b69b4e72151b81a569ad61465bb7",
+    "runtime/guarded_x11_v1/bridge.py": "f5617d5a4bdc053b2c4731bdaf14bcd73c0da38924df382dbb76bc728243930c",
+    "runtime/guarded_x11_v1/xres_client_fence.py": "fb1267892a23d2b68424c7bc8cea927812a24b7ec701352e6a3f102b87c2bbd8"
+  },
+  "test": "runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp",
+  "test_git_blob": "31cba573f41fef7b9ca77921a742e00cfea1b3d1"
+}

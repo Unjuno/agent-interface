@@ -1,0 +1,152 @@
+test_confirmed_up_and_empty_controls_verify_without_unrelated_scan (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_confirmed_up_and_empty_controls_verify_without_unrelated_scan) ... FAIL
+test_later_neutral_confirmation_retires_retained_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_later_neutral_confirmation_retires_retained_obligations) ... FAIL
+test_mixed_up_down_retires_only_confirmed_up_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_mixed_up_down_retires_only_confirmed_up_obligations) ... FAIL
+test_persistent_down_does_not_become_neutral_on_second_call (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_persistent_down_does_not_become_neutral_on_second_call) ... ok
+test_query_exception_preserves_precheck_ledger (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_query_exception_preserves_precheck_ledger) ... ok
+test_send_exception_preserves_precheck_ledger (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_send_exception_preserves_precheck_ledger) ... ok
+test_session_does_not_complete_after_previous_unverified_release (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_session_does_not_complete_after_previous_unverified_release) ... ok
+test_button_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input) ... 
+  test_button_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input) (stubborn=False) ... ERROR
+test_caller_later_neutral_read_retires_explicit_up_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_caller_later_neutral_read_retires_explicit_up_obligation) ... FAIL
+test_chord_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input) ... 
+  test_chord_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input) (stubborn=False) ... ERROR
+test_explicit_up_failure_quarantines_until_recovery (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_explicit_up_failure_quarantines_until_recovery) ... FAIL
+test_explicit_up_send_failure_preserves_existing_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_explicit_up_send_failure_preserves_existing_obligation) ... ok
+test_key_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input) ... 
+  test_key_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input) (stubborn=False) ... ERROR
+test_state_read_failure_after_explicit_up_preserves_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_state_read_failure_after_explicit_up_preserves_obligation) ... ok
+test_untracked_up_does_not_claim_unowned_inputs (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_untracked_up_does_not_claim_unowned_inputs) ... ok
+test_aliases_share_one_physical_query_and_unknown_result (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_aliases_share_one_physical_query_and_unknown_result) ... ok
+test_explicit_unknown_up_refuses_following_input (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_explicit_unknown_up_refuses_following_input) ... ok
+test_nonzero_up_sample_can_retire_tracking (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_nonzero_up_sample_can_retire_tracking) ... ok
+test_session_recovery_requires_nonzero_confirmation_and_never_replays (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_session_recovery_requires_nonzero_confirmation_and_never_replays) ... ok
+test_zero_never_retires_tracked_key_or_button (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_zero_never_retires_tracked_key_or_button) ... ok
+test_capture_deselects_before_readout (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_deselects_before_readout) ... ok
+test_capture_failed_deselection_prevents_readout (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_failed_deselection_prevents_readout) ... ok
+test_capture_failures_release_resources (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_failures_release_resources) ... ok
+test_capture_initial_selection_failure_prevents_drawing (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_initial_selection_failure_prevents_drawing) ... ok
+test_unicode_delivery_compensation_failure_retains (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_compensation_failure_retains) ... ok
+test_unicode_delivery_down_failure (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_down_failure) ... ok
+test_unicode_delivery_failure_still_releases_regular_key (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_failure_still_releases_regular_key) ... ok
+test_unicode_delivery_healthy (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_healthy) ... ok
+test_unicode_delivery_pending_refuses_new_text (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_pending_refuses_new_text) ... ok
+test_unicode_delivery_surrogate_first_unit_failure_stops (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_surrogate_first_unit_failure_stops) ... ok
+test_unicode_delivery_up_failure_and_compensation (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_up_failure_and_compensation) ... ok
+test_unverified_explicit_up_stops_following_operations (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unverified_explicit_up_stops_following_operations) ... ERROR
+test_utf16_units (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_utf16_units) ... ok
+test_virtual_keys_fail_closed (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_virtual_keys_fail_closed) ... ok
+test_repeated_preflight_refusal_without_emission_does_not_quarantine (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_repeated_preflight_refusal_without_emission_does_not_quarantine) ... ok
+test_unverified_failure_cleanup_still_quarantines (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_unverified_failure_cleanup_still_quarantines) ... ok
+test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch) ... ok
+
+======================================================================
+ERROR: test_button_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input) (stubborn=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_explicit_up_ledger.py", line 104, in family
+    self.assertEqual(reply['admission'], 'accepted')
+                     ~~~~~^^^^^^^^^^^^^
+KeyError: 'admission'
+
+======================================================================
+ERROR: test_chord_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input) (stubborn=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_explicit_up_ledger.py", line 104, in family
+    self.assertEqual(reply['admission'], 'accepted')
+                     ~~~~~^^^^^^^^^^^^^
+KeyError: 'admission'
+
+======================================================================
+ERROR: test_key_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input) (stubborn=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_explicit_up_ledger.py", line 104, in family
+    self.assertEqual(reply['admission'], 'accepted')
+                     ~~~~~^^^^^^^^^^^^^
+KeyError: 'admission'
+
+======================================================================
+ERROR: test_unverified_explicit_up_stops_following_operations (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unverified_explicit_up_stops_following_operations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 556, in execute
+    self.key_state(op["key"], op["down"])
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 310, in key_state
+    elif self._key_is_down(vk):
+         ~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 296, in _key_is_down
+    raise Win32BackendError(f"key state is unknown for {vk}")
+runtime.backends.win32_v1.backend.Win32BackendError: key state is unknown for 16
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_integration.py", line 262, in test_unverified_explicit_up_stops_following_operations
+    result = backend.execute({"ops": [
+        {"op": "key_state", "key": "SHIFT", "down": True},
+        {"op": "key_state", "key": "SHIFT", "down": False},
+        {"op": "text", "text": "x"},
+    ]})
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 594, in execute
+    raise Win32ExecutionError(error, release, None) from error
+runtime.backends.win32_v1.backend.Win32ExecutionError: key state is unknown for 16
+
+======================================================================
+FAIL: test_confirmed_up_and_empty_controls_verify_without_unrelated_scan (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_confirmed_up_and_empty_controls_verify_without_unrelated_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_release_ledger.py", line 150, in test_confirmed_up_and_empty_controls_verify_without_unrelated_scan
+    self.assertTrue(first["verified"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_later_neutral_confirmation_retires_retained_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_later_neutral_confirmation_retires_retained_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_release_ledger.py", line 108, in test_later_neutral_confirmation_retires_retained_obligations
+    self.assertTrue(second["verified"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_mixed_up_down_retires_only_confirmed_up_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_mixed_up_down_retires_only_confirmed_up_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_release_ledger.py", line 97, in test_mixed_up_down_retires_only_confirmed_up_obligations
+    self.assertEqual(obj.held_keys, {"Q": 81})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'Q': 81, 'R': 82} != {'Q': 81}
+- {'Q': 81, 'R': 82}
++ {'Q': 81}
+
+======================================================================
+FAIL: test_caller_later_neutral_read_retires_explicit_up_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_caller_later_neutral_read_retires_explicit_up_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_explicit_up_ledger.py", line 209, in test_caller_later_neutral_read_retires_explicit_up_obligation
+    self.assertEqual(second['status'], 'completed')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'completed'
+- release_unverified
++ completed
+
+
+======================================================================
+FAIL: test_explicit_up_failure_quarantines_until_recovery (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_explicit_up_failure_quarantines_until_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_explicit_up_ledger.py", line 193, in test_explicit_up_failure_quarantines_until_recovery
+    self.assertEqual(recovered['status'], 'input_recovered')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'recovery_failed' != 'input_recovered'
+- recovery_failed
++ input_recovered
+
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.152s
+
+FAILED (failures=5, errors=4)

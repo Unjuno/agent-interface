@@ -1,0 +1,30 @@
+F
+======================================================================
+FAIL: test_timeout_preserves_partial_protocol_usage_and_skips_public_relay (test_app_server_provider_to_public_mcp_v1.AppServerProviderToPublicMcpTests.test_timeout_preserves_partial_protocol_usage_and_skips_public_relay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<USERPROFILE>\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<USERPROFILE>\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<USERPROFILE>\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<USERPROFILE>\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<TEMP>\issue57-timeout-baseline-control-r01\test_app_server_provider_to_public_mcp_v1.py", line 241, in test_timeout_preserves_partial_protocol_usage_and_skips_public_relay
+    self.assertEqual(generation["usage"], {
+AssertionError: {'status': 'unavailable', 'input_tokens': None, 'output_tokens': None} != {'status': 'partial', 'input_tokens': 19, 'output_tok[29 chars]': 7}
+- {'input_tokens': None, 'output_tokens': None, 'status': 'unavailable'}
++ {'cached_input_tokens': 7,
++  'input_tokens': 19,
++  'output_tokens': 3,
++  'status': 'partial'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.211s
+
+FAILED (failures=1)

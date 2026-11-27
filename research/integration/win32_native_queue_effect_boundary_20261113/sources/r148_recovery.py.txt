@@ -1,0 +1,193 @@
+"""One public, bounded, UP-only recovery of R147. Never dispatches a program."""
+from __future__ import annotations
+import asyncio
+import base64
+import ctypes
+from ctypes import wintypes as W
+from datetime import datetime, timezone, timedelta
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import threading
+import time
+from mcp import ClientSession
+from mcp.client.stdio import StdioServerParameters, stdio_client
+from protocol import public_body, walk
+
+P=Path(__file__).resolve().parent
+R=P.parents[1]/'worktrees/win32-clock-custody-integration-20261112'
+sys.path.insert(0,str(R))
+from runtime.cli_v1.win32_custody_fence import _win32_logon_namespace_digest
+SOURCE_OP='8d2e706d6c2847c697f8b9f0bed3f0ff'
+SOURCE_GEN='e0806dfc522c3e665e75897d292f85b02751e25e92314c9284d983971e73087d'
+SOURCE_ID={'pid':53044,'creation_time_100ns':134389709804303758}
+OBLIGATIONS=['key:fixture:A:virtual_key']
+U=ctypes.WinDLL('user32',use_last_error=True)
+K=ctypes.WinDLL('kernel32',use_last_error=True)
+U.GetAsyncKeyState.argtypes=[ctypes.c_int];U.GetAsyncKeyState.restype=W.SHORT
+U.GetForegroundWindow.argtypes=[];U.GetForegroundWindow.restype=W.HWND
+U.GetWindowThreadProcessId.argtypes=[W.HWND,ctypes.POINTER(W.DWORD)];U.GetWindowThreadProcessId.restype=W.DWORD
+U.IsWindow.argtypes=[W.HWND];U.IsWindow.restype=W.BOOL
+K.OpenProcess.argtypes=[W.DWORD,W.BOOL,W.DWORD];K.OpenProcess.restype=W.HANDLE
+K.CloseHandle.argtypes=[W.HANDLE];K.CloseHandle.restype=W.BOOL
+K.GetProcessTimes.argtypes=[W.HANDLE]+[ctypes.POINTER(W.FILETIME)]*4;K.GetProcessTimes.restype=W.BOOL
+K.WaitForSingleObject.argtypes=[W.HANDLE,W.DWORD];K.WaitForSingleObject.restype=W.DWORD
+
+def save(name,value):
+    with (P/name).open('x',encoding='utf-8') as f:
+        json.dump(value,f,indent=2,sort_keys=True,allow_nan=False);f.write('\n');f.flush();os.fsync(f.fileno())
+
+def custody():
+    ns=_win32_logon_namespace_digest()
+    path=Path(os.environ['LOCALAPPDATA'])/'Unjuno/AgentInterface/custody-v1'/(ns+'.json')
+    with path.open('rb') as f: raw=f.read(65537);st=os.fstat(f.fileno())
+    if len(raw)>65536:raise RuntimeError('custody exceeds bound')
+    return {'namespace':ns,'logical_path':str(path),'physical_path':str(path.resolve()),
+      'inode':st.st_ino,'device':st.st_dev,'sha256':hashlib.sha256(raw).hexdigest(),
+      'raw_utf8':raw.decode('utf-8'),'state':json.loads(raw)}
+
+def process_state(pid):
+    handle=K.OpenProcess(0x1000|0x100000,False,pid)
+    if not handle:
+        error=ctypes.get_last_error()
+        if error!=87:raise OSError(error,'cannot verify process')
+        return {'pid':pid,'absent':True,'winerror':error,'observed_ns':time.monotonic_ns()}
+    try:
+        times=[W.FILETIME() for _ in range(4)]
+        if not K.GetProcessTimes(handle,*[ctypes.byref(t) for t in times]):raise ctypes.WinError(ctypes.get_last_error())
+        waited=K.WaitForSingleObject(handle,0)
+        if waited not in (0,258):raise RuntimeError('process wait failed')
+        return {'pid':pid,'absent':False,'exited':waited==0,
+          'creation_time_100ns':(times[0].dwHighDateTime<<32)|times[0].dwLowDateTime,
+          'observed_ns':time.monotonic_ns()}
+    finally:K.CloseHandle(handle)
+
+def source_absent():
+    row=process_state(SOURCE_ID['pid'])
+    absent=row.get('absent') or row.get('exited') or row.get('creation_time_100ns')!=SOURCE_ID['creation_time_100ns']
+    if not absent:raise RuntimeError('exact source producer remains live')
+    return row
+
+def target_gate(meta):
+    pid=W.DWORD();hwnd=meta['hwnd']
+    if not U.IsWindow(hwnd) or not U.GetWindowThreadProcessId(hwnd,ctypes.byref(pid)) or pid.value!=meta['pid']:
+        raise RuntimeError('owned window identity failed')
+    identity=process_state(pid.value)
+    if identity.get('creation_time_100ns')!=meta['created_filetime_100ns'] or identity.get('exited'):
+        raise RuntimeError('owned process identity failed')
+    if int(U.GetForegroundWindow() or 0)!=hwnd:raise RuntimeError('owned fixture is not foreground')
+    if any(U.GetAsyncKeyState(k)&0x8000 for k in (0x10,0x11,0x12,0x01)):
+        raise RuntimeError('modifier/mouse neutral gate failed')
+    return identity
+
+def report_in(body):
+    rows=[r for r in walk(body) if r.get('source_operation_id')==SOURCE_OP
+          and 'recovery_status' in r and 'source_action_status' in r]
+    if not rows:return None
+    if any(row!=rows[0] for row in rows):raise RuntimeError('conflicting public recovery reports')
+    return rows[0]
+
+async def main():
+    C=json.loads((P/'conditions.json').read_text())
+    if subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip()!=C['source_commit']:
+        raise RuntimeError('runtime changed')
+    if subprocess.check_output(['git','status','--porcelain'],cwd=R).strip():raise RuntimeError('runtime checkout dirty')
+    if sys.executable!=C['python_executable'] or sys.version!=C['python_version']:raise RuntimeError('interpreter changed')
+    for relative,sha in C['file_hashes'].items():
+        if hashlib.sha256((P/relative).read_bytes()).hexdigest()!=sha:raise RuntimeError('frozen file changed: '+relative)
+    before=custody()
+    if before!=C['custody_before']:raise RuntimeError('source custody changed')
+    absent=source_absent()
+    meta=json.loads((P/'fixture-meta.json').read_text())
+    if meta['source_sha256']!=C['file_hashes']['fixture_app.py'] or meta['nonce']!=C['nonce']:
+        raise RuntimeError('fixture provenance mismatch')
+    target_gate(meta)
+    if not (P/'CUA_READY.json').is_file():raise RuntimeError('visual gate absent')
+    save('runner-start.json',{'utc':datetime.now(timezone.utc).isoformat(),'source_producer':absent,'target':meta,'custody':before})
+    save('targets.json',{'fixture':meta['hwnd']})
+    record={'classification':'UNKNOWN_RELEASE_UNCONFIRMED_STOPPED','operation_id':SOURCE_OP,
+      'target_generation':SOURCE_GEN,'obligations':OBLIGATIONS,'do_not_replay':True,
+      'observed_producer_live':False,'late_server_request_possible':True,
+      'dispatch':{'input_dispatched':True,'release_confirmed':False,'task_success':None,'replay_allowed':False}}
+    save('source-custody-record.json',record)
+    params=StdioServerParameters(command=sys.executable,args=['-m','runtime.cli_v1.mcp_server',
+      '--targets',str(P/'targets.json'),'--output-directory',str(P/'mcp'),'--session-mode','supervised-win32',
+      '--supervised-win32-late-input-horizon-ms','2000'],cwd=str(R))
+    timeline=[];samples=[];stop=threading.Event();confirmed=False
+    def sample():
+        while not stop.is_set() and len(samples)<20000:
+            samples.append({'ns':time.monotonic_ns(),'a_down':bool(U.GetAsyncKeyState(65)&0x8000),
+                            'foreground':int(U.GetForegroundWindow() or 0)})
+            stop.wait(.002)
+    sampler=threading.Thread(target=sample,daemon=True);sampler.start()
+    async def request(session,label,tool,args):
+        begin=time.monotonic_ns();save(label+'-request.json',{'tool':tool,'arguments':args,'requested_ns':begin})
+        reply=await session.call_tool(tool,args)
+        save(label+'-raw.json',reply.model_dump(mode='json',exclude_none=True))
+        for i,block in enumerate(reply.content):
+            if getattr(block,'type',None)=='image':
+                with (P/(label+'-'+str(i)+'.png')).open('xb') as f:f.write(base64.b64decode(block.data,validate=True))
+        body=public_body(reply)
+        timeline.append({'label':label,'tool':tool,'requested_ns':begin,'received_ns':time.monotonic_ns(),
+                         'status':body.get('status'),'call_id':body.get('call_id')})
+        return body
+    try:
+        with (P/'mcp-stderr.log').open('x',encoding='utf-8') as errors:
+            async with stdio_client(params,errlog=errors) as (reader,writer):
+                async with ClientSession(reader,writer,read_timeout_seconds=timedelta(seconds=20)) as session:
+                    await session.initialize()
+                    rect=meta['rect'];region=[rect[0],rect[1],rect[2]-rect[0],rect[3]-rect[1]]
+                    body=await request(session,'observe','interface_observe',{'target':'fixture','frame':'screen_physical_px','region':region})
+                    raw=body.get('receipt',{}).get('source',{}).get('raw_report')
+                    if not isinstance(raw,dict) or raw.get('status')!='returned' or raw.get('target_generation_consistency')!='matched':
+                        raise RuntimeError('observed recovery generation unavailable')
+                    generation=raw['target_generation']
+                    if generation==SOURCE_GEN:raise RuntimeError('fresh target generation required')
+                    save('pre-recovery-gates.json',{'source_producer':source_absent(),'target':target_gate(meta),
+                        'recovery_target_generation':generation,'source_target_generation':SOURCE_GEN})
+                    args={'source_operation_id':SOURCE_OP,'source_target_generation':SOURCE_GEN,
+                      'recovery_target_generation':generation,'obligations':OBLIGATIONS,'source_custody_record':record}
+                    # Exactly one mutating public request. Any missing response remains UNKNOWN.
+                    body=await request(session,'recovery','interface_recover_orphaned_input',args)
+                    call_id=body.get('call_id');report=report_in(body);end=time.monotonic()+12;index=0
+                    while report is None and body.get('status')=='pending' and time.monotonic()<end:
+                        if not isinstance(call_id,str) or len(call_id)!=32:raise RuntimeError('recovery call identity missing')
+                        await asyncio.sleep(.1);index+=1
+                        body=await request(session,f'result-{index:03d}','interface_results',{'call_id':call_id,'include_image':False})
+                        if body.get('call_id')!=call_id:raise RuntimeError('result belongs to another call')
+                        report=report_in(body)
+                    save('recovery-report.json',{'call_id':call_id,'report':report,'last_response':body})
+                    after=custody();save('custody-terminal.json',after)
+                    rr=(report or {}).get('recovery_receipt') or {}
+                    checks={'recovered':(report or {}).get('recovery_status')=='recovered',
+                      'source_generation':(report or {}).get('source_target_generation')==SOURCE_GEN,
+                      'recovery_generation':(report or {}).get('recovery_target_generation')==generation,
+                      'source_unknown':(report or {}).get('source_action_status')=='unknown',
+                      'release_confirmed':(report or {}).get('release_confirmed') is True,
+                      'task_success_null':report is not None and report.get('task_success') is None,
+                      'replay_denied':(report or {}).get('replay_allowed') is False,
+                      'horizon_2s':rr.get('late_input_horizon_ns')==2_000_000_000 and rr.get('late_input_horizon_verified') is True,
+                      'horizon_gap_le_100ms':0<=rr.get('late_input_max_observed_gap_ns',10**30)<=100_000_000,
+                      'clear_journal':after['state']['status']=='clear' and after['state']['pending'] is None,
+                      'both_generations_fenced':all(g in after['state']['fenced_generations'] for g in (SOURCE_GEN,generation)),
+                      'A_sample_neutral':not bool(U.GetAsyncKeyState(65)&0x8000)}
+                    confirmed=all(checks.values())
+                    save('adjudication.json',{'classification':'PASS_BOUNDED_ORPHAN_RECOVERY' if confirmed else 'UNKNOWN_OR_FAIL',
+                      'checks':checks,'scope':'UP-only recovery; R147 task/action remains UNKNOWN; no task success or performance claim'})
+                    if not confirmed:raise RuntimeError('recovery not confirmed; no replay')
+                    await request(session,'close','interface_close',{})
+        save('runner-result.json',{'status':'finished','recovery_confirmed':confirmed,'ordinary_dispatches':0,'recovery_requests':1})
+    except BaseException as error:
+        save('runner-error.json',{'error':repr(error),'replay_allowed':False});raise
+    finally:
+        stop.set();sampler.join(2)
+        save('key-state-samples.json',{'samples':samples,'sample_limit_reached':len(samples)>=20000})
+        save('timeline.json',timeline)
+        after=custody();save('custody-after.json',after)
+        if confirmed and after['state']['status']=='clear' and not bool(U.GetAsyncKeyState(65)&0x8000):
+            save('stop.flag',{'requested_ns':time.monotonic_ns(),'owned_pid':meta['pid']})
+
+if __name__=='__main__':asyncio.run(main())

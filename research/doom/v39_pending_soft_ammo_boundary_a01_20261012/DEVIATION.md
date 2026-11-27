@@ -1,0 +1,1 @@
+No live planner turn or game was started. The phrase “pending turn” is a controlled condition used to interpret the exact controller's pending-loop behavior; the test exercises the actual monitor functions and verifies the actual source control-flow branch, but does not instantiate an app-server request or Executor process.

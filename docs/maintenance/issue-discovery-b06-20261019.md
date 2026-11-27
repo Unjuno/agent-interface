@@ -1,0 +1,20 @@
+# Issue discovery batch B06 — routing receipt (2026-10-19)
+
+B06 is rows 126–150 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). A live metadata read at 2026-10-19 00:49 UTC found all 25 Issues open with no assignees. Bodies and latest available comments were read for routing. This is not a complete historical-comment, experiment-packet, PR-queue, branch, or worker/worktree ownership audit; several Issues explicitly retain reservations, collisions, stopped cases, or publication/custody holds. An empty assignee field is not a work grant.
+
+The B06 Issues are #747, #780, #788, #802, #815, #826, #853, #862, #891, #902, #999, #1053, #1074, #1155, #1229, #1241, #1244, #1246, #1265, #1306, #1347, #1376, #1438, #1459 and #1460. The [idea index](../IDEAS_AND_OUTCOMES.md) adds primary summaries for #788, #853, #891, #902, #999, #1074 and #1241; the other items already had an outcome or family route.
+
+| Routing family | Issues | What the record distinguishes |
+|---|---|---|
+| MAP01 sensing and admission | #747, #891, #1306, #1347 | #747 A2 is audited but remains a cross-scene HOLD; #891's formal gate failed despite three valid macro exposures; #1306 is preformal; #1347 was deferred before formal execution. None establishes general MAP01 completion or a promoted controller. |
+| Time, sampling and planner gaps | #780, #788, #1053, #1074 | #780 relinquished a duplicate claim after finding a pre-existing exact branch; #788 measured no selector gain on its static Xvfb cadence; #1053's A2 lacks a formal result; #1074's separate synthetic fresh-reversal successor passed, without model/task-effect evidence. |
+| Socket readiness, focus and server identity | #802, #815, #826, #862, #902, #1265 | #802's explicit producer-ready successor passed narrowly; #815/#826 remain formal0; #862 passed an integrated real-app focus-recovery fixture; #902's X-server-lifetime contract passed in deterministic Xvfb; #1265 remains formal0 with an unresolved construction/target-readiness gap. |
+| Local reasoning and model architecture | #853, #1155, #1376 | Preserve the Kumo idea split and CPU STOP, analytical guard/cache limits, and the separate fast-lane architecture question. None authorizes provider use, a runtime default, or a live task-effect claim. |
+| Mutation lineage and ownership | #999, #1229, #1241, #1244, #1246 | #999 released a duplicate ownership claim with formal0; #1229/#1246 retain reservation records at formal0; #1241 stopped at 17/54 without a result file; #1244's 512-row scoped result retains a raw-chunk/corruption-control gap. Do not duplicate, pool partials, or rerun consumed IDs. |
+| Integrity and evidence delivery | #1438, #1459, #1460 | Preserve #1438's post-hoc integrity failure, #1459's unreconstructible archive gap despite the recorded numeric scoped result, and #1460's delivery HOLD for missing raw. A merged source/summary is not a substitute for absent raw. |
+
+## PR and concurrency observations
+
+Twenty-three PR citations extracted from the sampled Issue bodies/latest comments were checked live: #740, #762, #779, #812, #825, #859, #860, #1213, #1221, #1226, #1231, #1232, #1235, #1242, #1305, #1330, #1439, #3585 and #4214 are **MERGED**; #789, #797, #1348 and #1452 are **CLOSED without merge**. This is a citation spot-check, not an exhaustive PR or ownership audit.
+
+The batch's own records include a pre-existing branch in #780, an explicit collision stop in #999, and reservation branches or consumed results in #1229/#1241/#1244/#1246/#1306. Before any implementation, refresh each exact branch/ref and PR head/base, identify the live owner/worktree, and verify unique raw custody. For #1376, its cited child Issue #1449 and Draft PR #1452 are now closed; refresh the current child frontier rather than treating the old comment as an assignment. #1460 remains open after merged PR #4214 because its formal raw archive is unavailable. No Issue/PR status or experiment disposition changed in this intake.

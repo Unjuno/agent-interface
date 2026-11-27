@@ -1,0 +1,146 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r26",
+  "caller": "one fresh runtime.cli_v1.mcp_server stdio process in supervised-win32 mode, with the supported 10,000 ms result-wait maximum",
+  "cleanup": "one interface_close; close only the exact owned fixture HWND/process; restore only the foreground window that preceded this run; preserve raw on every outcome",
+  "decision": {
+    "fail_or_unknown": "Preserve FAIL_OR_UNKNOWN for any stale/mismatched generation, refusal, timeout or pending response, missing release/effect report, non-closed public close, cleanup uncertainty, or any need to retry. Do not replay R24 or R25.",
+    "pass": "One new owned fixture and a new public supervised stdio session return a distinct generation; exactly one validated dispatch returns its terminal completed report within the supported 10,000 ms wait; the report records verified all-up release; the independent fixture effect and exact events match; public close returns closed; fixture exit and foreground restore pass; task_success remains null."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "the user-authorized local Windows PC",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_files": {
+    "README.md": "a55763ce17fe08f2e85d6e72de7c476ae49668621dbaf0556dce41f2918bed94",
+    "audit.py": "e3538effdd3c2de24577e16e058e5371107d883befe93b6ae4e90b7911bf6e31",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "a9e2c90ee1addae35daa416b7ab952787cf786cb56b7e0ecbd062486410cccae",
+    "probe.py": "ffa4f0d6eab195fc7988dd08953fe55920dcc80751f5abc6ca34356d6398bbc2"
+  },
+  "hypothesis": "At the caller-supported 10,000 ms response-wait maximum, a fresh supervised Win32 session returns the completed terminal report, verified release, exact independently checked fixture effect, and closes after one action.",
+  "nonclaims": [
+    "this is a new action after R24 and the R25 pre-input refusal, not a retry or continuous transaction",
+    "runtime-integrated task_success",
+    "release under blocked Win32 I/O",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+    "followup_audit_path": "research/integration/win32_supervised_standard_caller_20261024_r24/audit_followup.json",
+    "followup_audit_sha256": "0676f6cbfb34f7813374a4d93c17b8b2311cc05685bcf61773bf71bedfced8f7",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r24/raw.json",
+    "raw_sha256": "7b82856cb85a36f4fae5951a403e584756d9847e1ecaf4695db877f43dde6b87",
+    "report_path": "research/integration/win32_supervised_standard_caller_20261024_r24/run/mcp-calls/9293864843a34415ae8f3ed5dec070ae/report.json",
+    "report_sha256": "85fca10628897fadd37a4455a946fb37e4c7a5f543ec1507051bf7b203059023",
+    "target_generation": "4dfde70c60ac2d706642aaad099984a6448999c3bbc78e39e259d97dfb4bb100"
+  },
+  "previous_no_input_attempt": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r25",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r25/audit.json",
+    "audit_sha256": "4569782d3a93b9a6a88357475dcec5ea67f949a62031bc31cdc30fe708d07e6e",
+    "error": "INVALID_RESPONSE_WAIT",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r25/raw.json",
+    "raw_sha256": "925d71c7f552a1b59b4eef46d5f46194af4d4f2886b544486cb375b049206ce4",
+    "target_generation": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888"
+  },
+  "resource_boundary": "One fresh fixture process/window, one fresh supervised MCP session, one observation, one validation, at most one dispatch, one public close. No WSLc/Docker, external window, replay, retry, cancellation, fallback input, or registry change.",
+  "retry_policy": "One input-free preflight and one public dispatch at most. Any timeout/UNKNOWN is retained and never retried.",
+  "schema": "win32-supervised-standard-caller-r26-conditions-v1",
+  "source_commit": "fdc5e7abfaf0de23b483dd321500dfb36e5022d1",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 45,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "public_close": 5,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe and independently matched to the new fixture"
+    },
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "R26-10S-MAX-WAIT-TERMINAL-RETURN"
+    },
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-r26-max-wait-lease",
+    "observation_region": "the exact GetClientRect width and height of this new owned fixture",
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "R26-10S-MAX-WAIT-TERMINAL-RETURN"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": "measured client height",
+        "op": "observe",
+        "w": "measured client width",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-r26-max-wait-effect",
+    "task_effect_oracle": "independently read effect.json and exact fixture events.jsonl after public dispatch; require one click, exact UTF-16 character sequence, and one save",
+    "wait_for_result_ms": 10000
+  }
+}

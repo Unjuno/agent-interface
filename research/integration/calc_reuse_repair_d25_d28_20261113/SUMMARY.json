@@ -1,0 +1,83 @@
+{
+  "rows": [
+    {
+      "id": "D25",
+      "packet": "calc_two_phase_20261113_d25",
+      "outcome": "FAIL_TWO_PHASE_QUALIFICATION",
+      "model_calls": 2,
+      "usage": {
+        "input_tokens": 25760,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 124,
+        "reasoning_output_tokens": 0
+      },
+      "outer_seconds": 15.4157082,
+      "container_exit": 1,
+      "host_exit": 0,
+      "terminal_release_verified": true,
+      "manifest_sha256": "41a29d76b7cd5c0f090d08309c1abae66d14766fb0534f642cb2df347fbd1718",
+      "all_retained_hashes_match": true
+    },
+    {
+      "id": "D26",
+      "packet": "calc_settled_two_phase_20261113_d26",
+      "outcome": "PASS_SCOPED",
+      "model_calls": 2,
+      "usage": {
+        "input_tokens": 25797,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 156,
+        "reasoning_output_tokens": 0
+      },
+      "outer_seconds": 15.9463816,
+      "container_exit": 0,
+      "host_exit": 0,
+      "terminal_release_verified": true,
+      "manifest_sha256": "74be1b0e3dca1c7780df71f56f95124ac04767ee2f5bd6893236d5b6f7be2fba",
+      "all_retained_hashes_match": true
+    },
+    {
+      "id": "D27",
+      "packet": "calc_grounding_reuse_20261113_d27",
+      "outcome": "PASS_SCOPED",
+      "model_calls": 1,
+      "usage": {
+        "input_tokens": 12203,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "outer_seconds": 12.5840522,
+      "container_exit": 0,
+      "host_exit": 0,
+      "terminal_release_verified": true,
+      "manifest_sha256": "9d2eb1d09207ef0130809a97b6aad9ecaaa4dfb2e324a10996c77333d6bf7191",
+      "all_retained_hashes_match": true
+    },
+    {
+      "id": "D28",
+      "packet": "calc_invalidation_repair_20261113_d28",
+      "outcome": "PASS_SCOPED",
+      "model_calls": 2,
+      "usage": {
+        "input_tokens": 25775,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 124,
+        "reasoning_output_tokens": 0
+      },
+      "outer_seconds": 17.0929067,
+      "container_exit": 0,
+      "host_exit": 0,
+      "terminal_release_verified": true,
+      "manifest_sha256": "dfa33bda442814fd405175dd824bc7fed47330e20d88da9fc2e741bc0e500fdb",
+      "all_retained_hashes_match": true
+    }
+  ],
+  "comparison_status": "NOT_MATCHED; sequential development conditions differ, do not derive speedup",
+  "preparation_cost_included": false,
+  "source_runtime": "1bd8a3998fc6f1595b21455dc5fce3c10d76ff8d"
+}

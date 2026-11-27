@@ -1,0 +1,16 @@
+{
+  "schema": "win32-public-mcp-calculator-r01-decision-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73",
+  "disposition": "HOLD_BEFORE_INPUT",
+  "classification": "integrated_entry_path_observation_failure",
+  "reason": "The public Win32 MCP observation matched the configured Calculator HWND and returned a consistent target generation, but its full 320x533 window_client image was uniformly black. The frozen protocol required a visible Standard-mode baseline before input, so no program was validated or dispatched.",
+  "input_sent": false,
+  "validation_called": false,
+  "dispatch_called": false,
+  "task_success": null,
+  "release_confirmed": null,
+  "close_release_confirmed": false,
+  "close_release_interpretation": "No task input was dispatched; interface_close reports that close itself performed no release.",
+  "correction_to_raw_stop_text": "result.json records the generic STOP response as an operator authorization decision. The actual stop reason was the black observation; this additive decision preserves the raw response and supplies the rationale.",
+  "next_discriminator": "A separately frozen screen_physical_px observation of the same visible Calculator window, using the same standard MCP route, to distinguish an unusable window_client capture from a broader observation problem. No input is permitted unless that new observation visibly matches the target and its baseline."
+}

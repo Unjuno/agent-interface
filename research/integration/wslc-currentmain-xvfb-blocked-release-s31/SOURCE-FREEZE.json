@@ -1,0 +1,32 @@
+{
+  "schema": "agent-interface/wslc-s31-source-freeze-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s31-0fc5b445d5c4",
+  "frozen_utc": "2026-10-25T11:09:33.4451314Z",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "local_head": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "github_main": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "source_test_git_blob": "ed59733cbaa64c8a818bcbe25171c19291d10a8f",
+  "source_server_git_blob": "40cd0c50ef3af59d606884ee238ef08f7261a1ae",
+  "wslc_version": "3.0.3.0",
+  "wslc_process_count_at_freeze": 0,
+  "session_name": "agent-interface-wslc-s31-0fc5b445d5c4",
+  "container_name": "ai-control-wslc-s31-0fc5b445d5c4",
+  "output_directory_empty": true,
+  "session_storage_path_absent": true,
+  "input_audit_passed": true,
+  "readiness_rule": "up to 10 session-scoped exact-name polls; each command bounded at 2 seconds; 1-second wait only after ERROR_PATH_NOT_FOUND; proceed only on exit 0 and empty stdout/stderr",
+  "external_side_effects": "one fresh named WSLc session; fixed digest image pull inside new session; one test body; no Docker/global inventory",
+  "prior_s30_finding": "S30 ended at pretrial exact-name ERROR_PATH_NOT_FOUND; no task input; its unique session terminated; S31 is a new attempt and session",
+  "native_wsl_manifest_helper": "Used only for S29 asset manifest hashing; WSLc run uses the WSLc 3.0.3 SDK and unique session.",
+  "file_sha256": {
+    "harness_dll": "6d860a51e19b0f1e2dcb8bcc6d98298e7d28d6d2480cca20da61797b12e40cc4",
+    "preregistration": "469b60d34e3571a0a18bb00eef8862b2c9e8dddab87ab912920793874a53c35e",
+    "runner_init": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+    "harness_source": "1a3fd14755e86f939049906e05bff6fac5bbc7d404966efe76699fa3d03ced14",
+    "harness_project": "fbb54b1a3a3d2d4c73746793866ea78d76c7bcd00b9c5be61962c13613ea5988",
+    "runner": "356157871ea8051da4dd3760c64aaf2be09b18a5150929a8b0ba9b7c2a50b7b4",
+    "input_reuse_audit": "761fb4aeeea9ae8705937968c5ceb4639819bd5e8d73544410b6bdabccc4b746",
+    "inputs_summary": "fcb0ee88e1136e3496511dd6a1e1b01148a8688f359c73c1d5b3a14afbb5d5d5",
+    "conditions": "1a7d3eaaea78dd0a2004ff35ed0eb61623af0cce69ce5ee57fe4b713e2fe74d5"
+  }
+}

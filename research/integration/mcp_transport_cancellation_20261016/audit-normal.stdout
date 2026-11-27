@@ -1,0 +1,65 @@
+{
+  "scope": "saved-only public MCP transport/custody/event consistency; no candidate import or native timing/app oracle",
+  "modes": {
+    "normal": {
+      "methods": 449,
+      "new_rows": 5,
+      "mutations": [
+        {
+          "name": "cancel_equals_release",
+          "reason": "cancel is not release"
+        },
+        {
+          "name": "hidden_late_press",
+          "reason": "suffix/replay"
+        },
+        {
+          "name": "empty_equals_verified",
+          "reason": "lookup false confirmation"
+        },
+        {
+          "name": "second_writer",
+          "reason": "second writer"
+        },
+        {
+          "name": "lost_ledger",
+          "reason": "blocked handle/ledger"
+        },
+        {
+          "name": "false_terminal_release",
+          "reason": "release"
+        }
+      ]
+    },
+    "optimized": {
+      "methods": 449,
+      "new_rows": 5,
+      "mutations": [
+        {
+          "name": "cancel_equals_release",
+          "reason": "cancel is not release"
+        },
+        {
+          "name": "hidden_late_press",
+          "reason": "suffix/replay"
+        },
+        {
+          "name": "empty_equals_verified",
+          "reason": "lookup false confirmation"
+        },
+        {
+          "name": "second_writer",
+          "reason": "second writer"
+        },
+        {
+          "name": "lost_ledger",
+          "reason": "blocked handle/ledger"
+        },
+        {
+          "name": "false_terminal_release",
+          "reason": "release"
+        }
+      ]
+    }
+  }
+}

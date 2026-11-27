@@ -1,0 +1,50 @@
+{
+  "kind": "read-only-source-and-dependency-crosswalk",
+  "date": "2026-10-19",
+  "a03_dependency_pin": "python-xlib==0.33",
+  "source_facts": [
+    {
+      "path": "runtime/guarded_x11_v1/bridge.py",
+      "symbol": "_GuardedBackend._before_input_press",
+      "finding": "process identity is revalidated before input press dispatch"
+    },
+    {
+      "path": "runtime/guarded_x11_v1/bridge.py",
+      "symbol": "NativeHandleBridge._read_process_identity",
+      "finding": "active guarded operation routes identity read through TargetQueryWorker"
+    },
+    {
+      "path": "runtime/guarded_x11_v1/target_queries.py",
+      "symbol": "TargetQueryWorker._run / X11TargetQueries.__init__",
+      "finding": "query reader runs on a thread in the owner process and opens a distinct X display connection"
+    },
+    {
+      "path": "runtime/backends/x11_v1/backend.py",
+      "symbol": "X11Backend.key_state",
+      "finding": "XTEST FakeInput KeyPress is followed by Display.sync on the input connection"
+    },
+    {
+      "path": "python-xlib 0.33 Xlib/display.py",
+      "symbol": "Display.sync",
+      "finding": "sync waits on get_pointer_control"
+    },
+    {
+      "path": "python-xlib 0.33 Xlib/protocol/request.py",
+      "symbol": "GetPointerControl",
+      "finding": "core request opcode is 106"
+    },
+    {
+      "path": "python-xlib 0.33 Xlib/ext/xtest.py",
+      "symbol": "FakeInput",
+      "finding": "extension minor opcode is 2; event type and keycode occupy bytes 4 and 5"
+    },
+    {
+      "path": "research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py",
+      "symbol": "_relay_client_to_server / _relay_server_to_owner",
+      "finding": "client requests are forwarded as opaque bytes; every type-1 reply for owner PID is gated after input_started"
+    }
+  ],
+  "causal_status": "source-supported likely circular gate; A03 raw lacks per-connection reply sequence, so the exact reply was not observed",
+  "live_effect": "not tested",
+  "allocation_used": false
+}

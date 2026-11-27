@@ -1,0 +1,21 @@
+{
+  "base_sha": "cf3ddf2f8ef44f78fac3cfed78df2904aa596691",
+  "branch": "research/issue57-calc-integration-20261104",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "cpus": 2,
+  "memory": "4g",
+  "memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "init": true,
+  "source_mount": "read-only",
+  "task_scope": "offline synthetic Fake X and provider ledger fixtures",
+  "provider_generations": 0,
+  "tests": 214,
+  "modes": [
+    "normal",
+    "-O"
+  ],
+  "supersedes": "same-source candidate from initial 2026-11-04 packet, after fixture repair; first attempt remains preserved there"
+}

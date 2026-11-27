@@ -1,0 +1,8 @@
+source=working-tree on branch feat/prestarted-cancel-supervisor-r01
+test=python -B -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration
+display=:88; Xvfb 1024x768x24 -ac
+cancel_ack_withhold_s=0
+trace_owner_process_methods=1
+prestarted_supervisor=1
+injected delayed KeyPress(b)=8000ms after KeyPress(a); real Display.sync wait
+no WSLc or Docker

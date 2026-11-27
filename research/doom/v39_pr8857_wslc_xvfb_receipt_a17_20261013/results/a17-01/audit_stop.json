@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "admission_observed": true,
+    "candidate_harness_error": true,
+    "container_exit_zero": true,
+    "failure_before_release": true,
+    "schema": true,
+    "xvfb_exited": true
+  },
+  "decision": "STOP_HARNESS_EVENT_FIELD",
+  "finding": "The only candidate attempt obtained an input_admission for w, then the test harness raised before event observation or explicit up because the Python-Xlib event object has no event.id attribute. Candidate was not retried. No physical release measurement can be inferred.",
+  "raw_sha256": "6ce21c07ba1615f535d9b6dfebc696d670954c9faa3da9066ebb362078538d3d",
+  "schema": "pr8857-wslc-xvfb-receipt-a17-stop-audit-v1",
+  "source_checks": {
+    "INPUT/research/doom/analyze_map01_direct_retained_input_v2.py": true,
+    "INPUT/research/doom/analyze_map01_direct_retained_input_v2.py:git_blob": true,
+    "INPUT/research/doom/experiment_candidate.py": true,
+    "INPUT/research/live_control/executor_v3.py": true,
+    "INPUT/research/live_control/executor_v3.py:git_blob": true,
+    "INPUT/research/live_control/input_owner_v10.py": true,
+    "INPUT/research/live_control/input_owner_v10.py:git_blob": true,
+    "INPUT/research/live_control/input_transition_owner_v3.py": true,
+    "INPUT/research/live_control/input_transition_owner_v3.py:git_blob": true,
+    "INPUT/research/live_control/lease.py": true,
+    "INPUT/research/live_control/lease.py:git_blob": true
+  }
+}

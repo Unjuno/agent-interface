@@ -1,0 +1,121 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "schema": "map01-direct-retained-input-v1",
+  "measurement_ready": true,
+  "hold_count": 10,
+  "unmatched_admission_count": 0,
+  "invalid_release_count": 0,
+  "holds": [
+    {
+      "intent_token": "a0956c8190724511a993f6152a27333a",
+      "key": "Down",
+      "retained_lower_ms": 317.784015,
+      "retained_upper_ms": 318.506831,
+      "censor_width_ms": 0.722816,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "a0956c8190724511a993f6152a27333a",
+      "key": "space",
+      "retained_lower_ms": 312.338629,
+      "retained_upper_ms": 312.952468,
+      "censor_width_ms": 0.613839,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "a0956c8190724511a993f6152a27333a",
+      "key": "space",
+      "retained_lower_ms": 309.045924,
+      "retained_upper_ms": 310.032054,
+      "censor_width_ms": 0.98613,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "25b72748b5e94feeb8d1c08e4acfc443",
+      "key": "a",
+      "retained_lower_ms": 395.922175,
+      "retained_upper_ms": 396.568234,
+      "censor_width_ms": 0.646059,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "25b72748b5e94feeb8d1c08e4acfc443",
+      "key": "space",
+      "retained_lower_ms": 192.231058,
+      "retained_upper_ms": 192.725797,
+      "censor_width_ms": 0.494739,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "89608436f1dd4656903892a3cb66469d",
+      "key": "Down",
+      "retained_lower_ms": 533.314692,
+      "retained_upper_ms": 533.905465,
+      "censor_width_ms": 0.590773,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "89608436f1dd4656903892a3cb66469d",
+      "key": "space",
+      "retained_lower_ms": 525.881868,
+      "retained_upper_ms": 526.490988,
+      "censor_width_ms": 0.60912,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "36623c79f44a4da8996c909159950b37",
+      "key": "Down",
+      "retained_lower_ms": 343.235425,
+      "retained_upper_ms": 343.887912,
+      "censor_width_ms": 0.652487,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "36623c79f44a4da8996c909159950b37",
+      "key": "space",
+      "retained_lower_ms": 336.874587,
+      "retained_upper_ms": 337.514309,
+      "censor_width_ms": 0.639722,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    },
+    {
+      "intent_token": "36623c79f44a4da8996c909159950b37",
+      "key": "a",
+      "retained_lower_ms": 400.645761,
+      "retained_upper_ms": 401.20743,
+      "censor_width_ms": 0.561669,
+      "source_events": [
+        "input_admission",
+        "input_release_transition"
+      ]
+    }
+  ],
+  "decision": "PASS: direct bounded release evidence available"
+}

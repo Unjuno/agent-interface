@@ -1,0 +1,1139 @@
+{
+  "appserver_closed": true,
+  "appserver_latency_ns": 3935426800,
+  "arm": "compiled",
+  "arm_action_receipts": [
+    {
+      "call_id": "3346a63abfa64fee929661a196578cf3",
+      "kind": "dispatch",
+      "label": "compiled-enter-text",
+      "operation_id": "70305d642b2c4f6bae6251339d9c7c5e",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668091585526800,
+          "lease_id": "compiled-7719cad6163a41cfb7023a3df07c76d3"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 150,
+            "y": 100
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-e2f17eb1d1ab44428b36d016ad2cdf4e",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668082381459100,
+      "started_monotonic_ns": 668081608698100,
+      "status": "returned",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+      "kind": "dispatch",
+      "label": "compiled-save",
+      "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668091585526800,
+          "lease_id": "compiled-aef73b1194f340b6beef2e63fa70d5ec"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-c6cc20fe4a3b467baf6e3bd2be2ef707",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 2,
+          "target_generations": {
+            "fixture": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668083048930400,
+      "started_monotonic_ns": 668082408462100,
+      "status": "returned",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    }
+  ],
+  "cell_id": "pair1-compiled",
+  "checks": {
+    "appserver_generation_continuity": true,
+    "exact_task_effect_and_events": true,
+    "fresh_post_dispatch_observation": true,
+    "independent_task_oracle_exact_binding": true,
+    "model_usage_fields_reconciled_to_protocol": true,
+    "native_neutral_readback": true,
+    "two_actions_confirmed_release": true
+  },
+  "cleanup": {
+    "appserver_closed": true,
+    "fixture_exit_code": 0,
+    "foreground_after_restore": 10486926,
+    "foreground_before": 10486926,
+    "foreground_before_restore": 10486926
+  },
+  "compiled_observations": [
+    {
+      "call_id": "5f9bd2038f2e4fe08382dc869f7b239b",
+      "capture_started_ns": 668081588472000,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "d8fa4abf20b9460482a8a8f628d462ce",
+      "capture_started_ns": 668082386959400,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "4c7bd82813e346169130e2e5c5b8bf18",
+      "capture_started_ns": 668083053693200,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    }
+  ],
+  "compiled_receipt": {
+    "completed_transitions": 2,
+    "critical_events": [
+      {
+        "action": "enter_text",
+        "event": "branch_selected",
+        "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+        "matched_conditions": {
+          "clicked": false,
+          "ready": true,
+          "typed": false
+        },
+        "outcome": "action",
+        "state": "before"
+      },
+      {
+        "action": "enter_text",
+        "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+        "event": "action_terminal",
+        "execution_accepted_ns": 668082384111400,
+        "execution_started_ns": 668081608640200,
+        "input_dispatched": true,
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "enter_text",
+        "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+        "effect_observation_accepted_ns": 668082407556000,
+        "effect_observation_captured_ns": 668082386959400,
+        "effect_verification_accepted_ns": 668082408320800,
+        "effect_verification_started_ns": 668082407573500,
+        "event": "effect_checked",
+        "evidence_ref": "ee23ee9c3b9a7ecf806f15a0ea35e828a08bbea162ad8f985b404736eeb5c112",
+        "execution_accepted_ns": 668082384111400,
+        "status": "succeeded"
+      },
+      {
+        "action": "save",
+        "event": "branch_selected",
+        "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+        "matched_conditions": {
+          "clicked": true,
+          "saved": false,
+          "typed": true
+        },
+        "outcome": "action",
+        "state": "after_entry"
+      },
+      {
+        "action": "save",
+        "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "event": "action_terminal",
+        "execution_accepted_ns": 668083051396300,
+        "execution_started_ns": 668082408389700,
+        "input_dispatched": true,
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "save",
+        "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "effect_observation_accepted_ns": 668083075132200,
+        "effect_observation_captured_ns": 668083053693200,
+        "effect_verification_accepted_ns": 668083075895500,
+        "effect_verification_started_ns": 668083075147100,
+        "event": "effect_checked",
+        "evidence_ref": "5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+        "execution_accepted_ns": 668083051396300,
+        "status": "succeeded"
+      },
+      {
+        "action": null,
+        "event": "branch_selected",
+        "evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+        "matched_conditions": {
+          "saved": true
+        },
+        "outcome": "complete",
+        "state": "after_save"
+      },
+      {
+        "completed_transitions": 2,
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    ],
+    "elapsed_ns": 1490394200,
+    "ended_ns": 668083075921000,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "win32-r12-two-stage-save",
+    "latest_evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+    "method": "model-grounded-two-stage-save",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 668081588472000,
+        "evidence_digest": "d5651df4c242dc24bf440d2ecde156c8b1e318ed9be368d5bbecd0e07cc8f57e",
+        "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+        "observation_accepted_ns": 668081608574100,
+        "observation_started_ns": 668081585529800,
+        "predicates": {
+          "clicked": false,
+          "ready": true,
+          "saved": false,
+          "typed": false
+        },
+        "sequence": 1
+      },
+      {
+        "captured_ns": 668082386959400,
+        "evidence_digest": "c5649e977143b8f9370a964c675fde3e706e9cd9f3d77f77bbd95ff0a5b169cb",
+        "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+        "observation_accepted_ns": 668082407556000,
+        "observation_started_ns": 668082384130000,
+        "predicates": {
+          "clicked": true,
+          "ready": true,
+          "saved": false,
+          "typed": true
+        },
+        "sequence": 2
+      },
+      {
+        "captured_ns": 668083053693200,
+        "evidence_digest": "8239fc5aa91ec6db1df9b9a826d679c4fdf63b1256affd8206af6b3b66c26eb5",
+        "evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+        "observation_accepted_ns": 668083075132200,
+        "observation_started_ns": 668083051414500,
+        "predicates": {
+          "clicked": true,
+          "ready": true,
+          "saved": true,
+          "typed": true
+        },
+        "sequence": 3
+      }
+    ],
+    "outcome": "TASK_SUCCEEDED",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "method_complete",
+    "session_scope": "one-owned-fixture-process",
+    "standard_action_call_ids": [
+      "3346a63abfa64fee929661a196578cf3",
+      "eba3817c9cfd4a38bf4f2a14920f40d6"
+    ],
+    "standard_observation_call_ids": [
+      "5f9bd2038f2e4fe08382dc869f7b239b",
+      "d8fa4abf20b9460482a8a8f628d462ce",
+      "4c7bd82813e346169130e2e5c5b8bf18"
+    ],
+    "started_ns": 668081585526800,
+    "task_success": null,
+    "transitions": [
+      {
+        "action": "enter_text",
+        "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+        "effect_ref": "standard-win32-enter_text",
+        "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+        "execution_accepted_ns": 668082384111400,
+        "execution_started_ns": 668081608640200,
+        "from_state": "before",
+        "matched_conditions": {
+          "clicked": false,
+          "ready": true,
+          "typed": false
+        },
+        "observation_sequence": 1,
+        "release_verified": true,
+        "to_state": "after_entry"
+      },
+      {
+        "action": "save",
+        "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "effect_ref": "standard-win32-save",
+        "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+        "execution_accepted_ns": 668083051396300,
+        "execution_started_ns": 668082408389700,
+        "from_state": "after_entry",
+        "matched_conditions": {
+          "clicked": true,
+          "saved": false,
+          "typed": true
+        },
+        "observation_sequence": 2,
+        "release_verified": true,
+        "to_state": "after_save"
+      }
+    ]
+  },
+  "docker_used": false,
+  "effect": {
+    "clicked": true,
+    "saved": true,
+    "text": "office"
+  },
+  "elapsed_ns": 5451712800,
+  "events": [
+    {
+      "hwnd": 42601256,
+      "kind": "ready"
+    },
+    {
+      "kind": "click"
+    },
+    {
+      "code": 111,
+      "kind": "char"
+    },
+    {
+      "code": 102,
+      "kind": "char"
+    },
+    {
+      "code": 102,
+      "kind": "char"
+    },
+    {
+      "code": 105,
+      "kind": "char"
+    },
+    {
+      "code": 99,
+      "kind": "char"
+    },
+    {
+      "code": 101,
+      "kind": "char"
+    },
+    {
+      "clicked": true,
+      "kind": "save",
+      "saved": true,
+      "text": "office"
+    }
+  ],
+  "finished_monotonic_ns": 668083227201900,
+  "first_stage_observation": {},
+  "fixture_pid": 56700,
+  "grounding_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c",
+  "hwnd": 42601256,
+  "model_coordinate": {
+    "x": 150,
+    "y": 100
+  },
+  "native_after": {
+    "observed_monotonic_ns": 668083079111800,
+    "state_query_witnesses": {
+      "CTRL": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "S": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "SHIFT": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "left_button": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ]
+    },
+    "states": {
+      "CTRL": false,
+      "S": false,
+      "SHIFT": false,
+      "left_button": false
+    },
+    "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+  },
+  "native_preflight": {
+    "observed_monotonic_ns": 668075229192000,
+    "state_query_witnesses": {
+      "CTRL": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "S": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "SHIFT": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ],
+      "left_button": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 42601256,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 56700,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 31160
+        }
+      ]
+    },
+    "states": {
+      "CTRL": false,
+      "S": false,
+      "SHIFT": false,
+      "left_button": false
+    },
+    "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+  },
+  "pair": 1,
+  "post_action_observation": {
+    "capture_started_ns": 668083053693200
+  },
+  "provider_turn_count": 1,
+  "provider_turns": [
+    {
+      "answer": {
+        "x": 150,
+        "y": 100
+      },
+      "backend_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "contract": "win32-r12-pair1-compiled-turn1-coordinate",
+      "latency_ns": 3935426800,
+      "requested_effort": "low",
+      "requested_model": "gpt-6.1-sol",
+      "returned_monotonic_ns": 668081583443400,
+      "started_monotonic_ns": 668077648016600,
+      "status": "completed",
+      "thread_id": "01a175be-62ee-7353-9de3-dd8e93242ff7",
+      "turn_id": "01a175be-6339-74d0-8669-c627195a470a",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0,
+        "status": "reported"
+      },
+      "usage_matches_journal_fields": true
+    }
+  ],
+  "public_call_counts": {
+    "dispatch": 2,
+    "observation": 4,
+    "oracle": 1,
+    "results": 2
+  },
+  "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "reported_tokens": {
+    "input_tokens": 10255,
+    "output_tokens": 19,
+    "reasoning_output_tokens": 0
+  },
+  "server_close": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_appserver_matched_efficiency_20261026_r12e\\run\\cells\\pair1-compiled\\server\\999e07e85f02477da3fc88de66398e19",
+    "call_id": "999e07e85f02477da3fc88de66398e19",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 2,
+      "mode": "supervised-win32",
+      "session_id": "8295fa801ab24adca066c0f9a330c00c",
+      "state": "closed",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "closed",
+    "task_success": null
+  },
+  "standard_tool_calls": [
+    {
+      "call_id": "7dff0ae8203f49d389c2e4bac1b33d52",
+      "capture_started_ns": 668077628186100,
+      "image_dimensions": [
+        400,
+        180
+      ],
+      "image_path": "observations/initial-grounding.png",
+      "image_sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+      "kind": "observation",
+      "note": "initial-grounding",
+      "returned_monotonic_ns": 668077644888000,
+      "sequence": 1,
+      "started_monotonic_ns": 668077625553500,
+      "status": "returned",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "kind": "provider",
+      "latency_ns": 3935426800,
+      "returned_monotonic_ns": 668081583443400,
+      "started_monotonic_ns": 668077648016600,
+      "turn": "turn1-coordinate"
+    },
+    {
+      "call_id": "5f9bd2038f2e4fe08382dc869f7b239b",
+      "capture_started_ns": 668081588472000,
+      "kind": "observation",
+      "note": "compiled-core",
+      "returned_monotonic_ns": 668081603913500,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "3346a63abfa64fee929661a196578cf3",
+      "kind": "dispatch",
+      "label": "compiled-enter-text",
+      "operation_id": "70305d642b2c4f6bae6251339d9c7c5e",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668091585526800,
+          "lease_id": "compiled-7719cad6163a41cfb7023a3df07c76d3"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 150,
+            "y": 100
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-e2f17eb1d1ab44428b36d016ad2cdf4e",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668082381459100,
+      "started_monotonic_ns": 668081608698100,
+      "status": "returned",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "3346a63abfa64fee929661a196578cf3",
+      "kind": "results",
+      "label": "compiled-enter-text",
+      "returned_monotonic_ns": 668082382649400
+    },
+    {
+      "call_id": "d8fa4abf20b9460482a8a8f628d462ce",
+      "capture_started_ns": 668082386959400,
+      "kind": "observation",
+      "note": "compiled-core",
+      "returned_monotonic_ns": 668082402795900,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+      "kind": "dispatch",
+      "label": "compiled-save",
+      "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668091585526800,
+          "lease_id": "compiled-aef73b1194f340b6beef2e63fa70d5ec"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-c6cc20fe4a3b467baf6e3bd2be2ef707",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 2,
+          "target_generations": {
+            "fixture": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668083048930400,
+      "started_monotonic_ns": 668082408462100,
+      "status": "returned",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+      "kind": "results",
+      "label": "compiled-save",
+      "returned_monotonic_ns": 668083050246400
+    },
+    {
+      "call_id": "4c7bd82813e346169130e2e5c5b8bf18",
+      "capture_started_ns": 668083053693200,
+      "kind": "observation",
+      "note": "compiled-core",
+      "returned_monotonic_ns": 668083069102600,
+      "sequence": null,
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+    },
+    {
+      "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+      "kind": "oracle",
+      "returned_monotonic_ns": 668083077266300,
+      "started_monotonic_ns": 668083076575500
+    }
+  ],
+  "status": "PASS",
+  "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c",
+  "task_oracle": {
+    "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "supervised_win32",
+    "status": "verified",
+    "task_effect": {
+      "receipt": {
+        "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+        "evidence_ref": "fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+        "observed_monotonic_ns": 668083077035500,
+        "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "oracle_id": "af9392c568144751967df92f7d5ce774",
+        "outcome": "success",
+        "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+      },
+      "receipt_received_monotonic_ns": 668083077137300,
+      "requested_monotonic_ns": 668083076787300,
+      "status": "verified",
+      "task_success": true
+    },
+    "task_success": true
+  },
+  "terminal_call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+  "terminal_retained_result": {
+    "action": {
+      "completion_custody": {
+        "cleanup_deadline_ns": null,
+        "cleanup_latency_ns": null,
+        "cleanup_latency_perf_counter_ns": null,
+        "cleanup_requested_monotonic_ns": null,
+        "cleanup_requested_perf_counter_ns": null,
+        "completion_readback": {
+          "neutral": true,
+          "observed_monotonic_ns": 668083046806600,
+          "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+          "producer_exit_confirmed_ns": 668083037067100,
+          "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+        },
+        "completion_readback_attempt": null,
+        "completion_readback_outcome": "verified",
+        "completion_release_receipt": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 668082980608600,
+          "state_query_witnesses": {
+            "17": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 42601256,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 56700,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 31160
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 42601256,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 56700,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 31160
+              }
+            ],
+            "83": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 42601256,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 56700,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 31160
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 42601256,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 56700,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 31160
+              }
+            ]
+          },
+          "verified": true
+        },
+        "deadline_ns": 668091585526800,
+        "obligations": [
+          "key:fixture:CTRL",
+          "key:fixture:S"
+        ],
+        "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "phase": "completed",
+        "producer_exit_code": 0,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134374503787134875,
+          "pid": 56584
+        },
+        "recovery_completed_monotonic_ns": null,
+        "recovery_completed_perf_counter_ns": null,
+        "recovery_id": null,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "completed",
+        "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "metadata": {
+        "program_id": "compiled-c6cc20fe4a3b467baf6e3bd2be2ef707",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "producer_timing": {
+        "child_ready_monotonic_ns": 668082967242100,
+        "clock": "time.monotonic_ns",
+        "factory_requested_monotonic_ns": 668082410694000,
+        "factory_returned_monotonic_ns": 668082410989600,
+        "identity_verified_monotonic_ns": 668082422693400,
+        "process_start_called_monotonic_ns": 668082411005700,
+        "process_start_returned_monotonic_ns": 668082422634500,
+        "start_gate_authorized_monotonic_ns": 668082422930600
+      },
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 6,
+          "ended_ns": 668082980610000,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 668082980608600,
+              "state_query_witnesses": {
+                "17": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 42601256,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 56700,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 31160
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 42601256,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 56700,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 31160
+                  }
+                ],
+                "83": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 42601256,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 56700,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 31160
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 42601256,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 56700,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 31160
+                  }
+                ]
+              },
+              "verified": true
+            }
+          ],
+          "started_ns": 668082967832300
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "status": "completed",
+      "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c",
+      "task_success": null
+    },
+    "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 668091585526800,
+        "lease_id": "compiled-aef73b1194f340b6beef2e63fa70d5ec"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "compiled-c6cc20fe4a3b467baf6e3bd2be2ef707",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 2,
+        "target_generations": {
+          "fixture": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": {
+      "receipt": {
+        "call_id": "eba3817c9cfd4a38bf4f2a14920f40d6",
+        "evidence_ref": "fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+        "observed_monotonic_ns": 668083077035500,
+        "operation_id": "ddf2c1c856fa446aa707a341c55edcbd",
+        "oracle_id": "af9392c568144751967df92f7d5ce774",
+        "outcome": "success",
+        "target_generation": "42df0c7a8f81c7626a52834f15ce53c5feb6be024a59cd463742369ecf534a1c"
+      },
+      "receipt_received_monotonic_ns": 668083077137300,
+      "requested_monotonic_ns": 668083076787300,
+      "status": "verified",
+      "task_success": true
+    },
+    "task_success": true
+  },
+  "wslc_used": false
+}

@@ -44,7 +44,13 @@ LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 
 
 def tracked_paths() -> set[str]:
-    raw = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
+    # Inspect the committed tree rather than the sparse checkout index. This
+    # workflow intentionally materializes only public navigation files, while
+    # their links may point elsewhere in the repository.
+    raw = subprocess.check_output(
+        ["git", "ls-tree", "-r", "-z", "--name-only", "--full-tree", "HEAD"],
+        cwd=ROOT,
+    )
     return {item.decode("utf-8") for item in raw.split(b"\0") if item}
 
 

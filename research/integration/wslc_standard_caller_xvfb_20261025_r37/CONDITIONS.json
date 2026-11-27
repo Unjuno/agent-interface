@@ -1,0 +1,26 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r37",
+  "source_commit": "e4e34a163e1f288d8841d300ae719abcf9e58223",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "network": "none",
+  "cpu": 2,
+  "memory_mb": 2048,
+  "gpu": false,
+  "pause_ms": 3500,
+  "transaction_deadline_ms": 4000,
+  "tmpfs": "/tmp rw,exec,nosuid,nodev,mode=1777,size=512m",
+  "read_only_mounts": [
+    "repo",
+    "deps",
+    "stage",
+    "xkb"
+  ],
+  "write_mount": "output",
+  "retry_count": 0,
+  "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673"
+}

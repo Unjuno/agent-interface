@@ -1,0 +1,121 @@
+{
+  "name": "preflight",
+  "command": [
+    "/usr/bin/python3",
+    "release/first_run_smoke_v1/preflight.py",
+    "--root",
+    "."
+  ],
+  "returncode": 0,
+  "started_ns": 1795352320901644723,
+  "ended_ns": 1795352320940615483,
+  "elapsed_ns": 38970760,
+  "parsed_json": {
+    "schema": "agent_interface_first_run_preflight_v1",
+    "status": "PASS_LAUNCHER_BOUNDARY",
+    "passed": true,
+    "root": "/home/user/agent-interface-preview-build-r03",
+    "revision": "10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51",
+    "mode_source": "committed_git_and_filesystem",
+    "checks": [
+      {
+        "name": "committed_tree",
+        "passed": true,
+        "detail": "10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51"
+      },
+      {
+        "name": "posix_execution",
+        "passed": true,
+        "detail": "Native Windows execution is outside this check."
+      },
+      {
+        "name": "bash_available",
+        "passed": true,
+        "detail": "Required by the existing launchers."
+      },
+      {
+        "name": "runtime/setup-golden-demo-v3.sh:readable",
+        "passed": true,
+        "detail": "sha256:37c60abbfa6031bf1d9f06826b263c58f4361abd04cf574be66f02be8201e0e5"
+      },
+      {
+        "name": "runtime/setup-golden-demo-v3.sh:committed_bytes",
+        "passed": true,
+        "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+      },
+      {
+        "name": "runtime/setup-golden-demo-v3.sh:committed_executable",
+        "passed": true,
+        "detail": "Expected committed Git mode 100755; local chmod alone is insufficient."
+      },
+      {
+        "name": "runtime/setup-golden-demo-v3.sh:filesystem_executable",
+        "passed": true,
+        "detail": "Direct ./ invocation must be executable in this checkout."
+      },
+      {
+        "name": "runtime/setup-golden-demo-v3.sh:bash_lf",
+        "passed": true,
+        "detail": "Expected LF bash shebang and no CR bytes."
+      },
+      {
+        "name": "runtime/golden-demo-v3.sh:readable",
+        "passed": true,
+        "detail": "sha256:75e9dd318853b60e27f49c3d3c0f8da4bd8ad4d30b0c18350f82f951b7d92003"
+      },
+      {
+        "name": "runtime/golden-demo-v3.sh:committed_bytes",
+        "passed": true,
+        "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+      },
+      {
+        "name": "runtime/golden-demo-v3.sh:committed_executable",
+        "passed": true,
+        "detail": "Expected committed Git mode 100755; local chmod alone is insufficient."
+      },
+      {
+        "name": "runtime/golden-demo-v3.sh:filesystem_executable",
+        "passed": true,
+        "detail": "Direct ./ invocation must be executable in this checkout."
+      },
+      {
+        "name": "runtime/golden-demo-v3.sh:bash_lf",
+        "passed": true,
+        "detail": "Expected LF bash shebang and no CR bytes."
+      },
+      {
+        "name": "runtime/golden_desktop_demo_v3.py:readable",
+        "passed": true,
+        "detail": "sha256:e921432d0f98695bb2586c1b66a1a88c3f2bca81dc8241a57a1830c2d72a39a8"
+      },
+      {
+        "name": "runtime/golden_desktop_demo_v3.py:committed_bytes",
+        "passed": true,
+        "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+      },
+      {
+        "name": "runtime/golden_desktop_demo_v3.py:syntax",
+        "passed": true,
+        "detail": "Parsed only, never imported."
+      },
+      {
+        "name": "runtime/requirements-golden.txt:readable",
+        "passed": true,
+        "detail": "sha256:1065afbce7e148dfb1a736cba251b81620898adc274761e411262ca4742341d3"
+      },
+      {
+        "name": "runtime/requirements-golden.txt:committed_bytes",
+        "passed": true,
+        "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+      },
+      {
+        "name": "runtime/requirements-golden.txt:exact_pins",
+        "passed": true,
+        "detail": "Nonempty, unique exact version pins; wheel availability and transitive closure are not checked."
+      }
+    ],
+    "limitations": [
+      "Launcher boundary only: not dependency installation, doctor, GUI, model, or full source-closure validation."
+    ]
+  }
+}

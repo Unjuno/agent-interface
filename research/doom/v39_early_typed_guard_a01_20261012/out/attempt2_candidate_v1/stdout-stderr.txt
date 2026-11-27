@@ -1,0 +1,31 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_duplicate_typed_epoch_with_changed_content_fails_closed (test_typed_observation_guard.TypedObservationGuardTests.test_duplicate_typed_epoch_with_changed_content_fails_closed) ... FAIL
+test_typed_hard_health_change_invalidates_without_artifact_reader (test_typed_observation_guard.TypedObservationGuardTests.test_typed_hard_health_change_invalidates_without_artifact_reader) ... FAIL
+test_typed_soft_change_preserves_policy (test_typed_observation_guard.TypedObservationGuardTests.test_typed_soft_change_preserves_policy) ... ok
+test_unpaired_epoch_fails_closed (test_typed_observation_guard.TypedObservationGuardTests.test_unpaired_epoch_fails_closed) ... ok
+
+======================================================================
+FAIL: test_duplicate_typed_epoch_with_changed_content_fails_closed (test_typed_observation_guard.TypedObservationGuardTests.test_duplicate_typed_epoch_with_changed_content_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_typed_observation_guard.py", line 105, in test_duplicate_typed_epoch_with_changed_content_fails_closed
+    self.assertEqual(result["reason"], "signal_pair_duplicate_epoch_mismatch")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'signal_pair_nonadvancing_sequence' != 'signal_pair_duplicate_epoch_mismatch'
+- signal_pair_nonadvancing_sequence
++ signal_pair_duplicate_epoch_mismatch
+
+
+======================================================================
+FAIL: test_typed_hard_health_change_invalidates_without_artifact_reader (test_typed_observation_guard.TypedObservationGuardTests.test_typed_hard_health_change_invalidates_without_artifact_reader)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_typed_observation_guard.py", line 82, in test_typed_hard_health_change_invalidates_without_artifact_reader
+    self.assertEqual(monitor.last_pair_sequence, 11)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 10 != 11
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=2)

@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/portable-runtime-current-main-r01-v1",
+  "source_revision": "acbdfc0f9db00358cbb755baebe7c7641867aeda",
+  "build_host": "Windows 11 host; Windows Git worktree",
+  "interpreters": {
+    "windows": "CPython 3.13.14",
+    "wsl": "CPython 3.12.3 Ubuntu WSL2"
+  },
+  "build_command": "py -3.13 -m runtime.distribution_v2.build --out .../agent-interface-runtime.pyz --manifest .../manifest.json --sums .../sha256.txt",
+  "package_test_command": "python -m unittest -v runtime.distribution_v2.test_distribution runtime.distribution_v2.test_validator_zipapp runtime.distribution_v2.test_compiled_archive",
+  "package_test_modes": ["normal", "python -O"],
+  "environment": {
+    "test_temp_directory": "C drive, outside all Git worktrees",
+    "package_downloads": 0,
+    "provider_calls": 0,
+    "model_calls": 0,
+    "gui_or_os_input": 0,
+    "docker_actions": 0,
+    "wslc_allocations": 0,
+    "permissions_changed": false
+  },
+  "external_smoke": [
+    "Windows py -3.13 <zipapp> doctor",
+    "Windows py -3.13 <zipapp> validate --help",
+    "Ubuntu WSL python3 <zipapp> doctor",
+    "Ubuntu WSL python3 <zipapp> validate --help"
+  ],
+  "scope_limit": "Distribution bytes, manifest/source identity, tests and basic checkout-external CLI startup only; no live target, application task, native effect/recovery, provider behavior, or preview acceptance."
+}

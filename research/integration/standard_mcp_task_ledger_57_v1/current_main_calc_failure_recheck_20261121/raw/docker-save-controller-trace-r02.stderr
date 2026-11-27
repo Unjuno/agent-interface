@@ -1,0 +1,34 @@
+test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score. ... Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1935> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.141 seconds
+FAIL
+
+======================================================================
+FAIL: test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py", line 1935, in test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+    await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 1684, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertEqual(verified['status'],'verified',verified)
+AssertionError: 'unknown' != 'verified'
+- unknown
++ verified
+ : {'status': 'unknown', 'call_id': '949fefc7e9d047fdb27be31058753c6e', 'attempt_id': 'calc-offline-e2e-01', 'task_effect': {'status': 'unknown', 'task_success': None, 'replay_allowed': False, 'call_id': 'a99b49d55cdd4c559c0ccf05ab8bc04f', 'reason': 'trusted_save_controller_unavailable', 'attempt_id': 'calc-offline-e2e-01', 'profile_id': 'calc-ocr-save-v1', 'expected_values': {'A1': '24680', 'A2': '13579'}, 'process_generation': 'ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe', 'window_generation': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', 'save_request_id': 'd2b410b835d7698f3d953ab7dac1da04', 'save_request_monotonic_ns': 250643070895201, 'blank_sha256': 'b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f', 'artifact_sha256': 'ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4', 'artifact_bytes': 515, 'artifact_identity': [87, 193276, 515, 1795214448654680459, 1795214448654680459], 'parsed_effect': {'status': 'verified', 'task_success': True, 'cells': {'A1': '24680', 'A2': '13579'}, 'artifact_sha256': 'ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4', 'artifact_bytes': 515}}, 'task_success': None, 'operation_invoked': False, 'input_dispatched': False, 'replay_allowed': False, 'scope': 'guarded_x11_calc'}
+
+----------------------------------------------------------------------
+Ran 1 test in 3.458s
+
+FAILED (failures=1)

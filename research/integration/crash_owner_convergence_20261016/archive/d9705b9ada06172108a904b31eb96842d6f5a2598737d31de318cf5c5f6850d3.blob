@@ -1,0 +1,201 @@
+{
+  "allocation_id": "V39-X11-SHARED-KEY-SOURCE-A35-20261012-01",
+  "candidate_invocations": 1,
+  "display": ":77",
+  "external_client_keypress_issued": true,
+  "external_client_logical_hold_during_owner_release": true,
+  "external_client_source_state_is_test_side_only": true,
+  "external_press_events": [
+    {
+      "keycode": 38,
+      "time": 7000986,
+      "type": "KeyPress"
+    }
+  ],
+  "focus_id": 2097152,
+  "game_or_model": false,
+  "initial_keymap_down": false,
+  "interpretation": "Core X11 keymap and KeyRelease are global for this keycode: the process owner verified release while the separate client's test-side logical hold flag remained true. The server exposed no independent per-client held state in this core-XTest path.",
+  "key_release_events_after_owner_up": [
+    {
+      "keycode": 38,
+      "time": 7001000,
+      "type": "KeyRelease"
+    }
+  ],
+  "keycode": 38,
+  "keymap_down_after_external_press": true,
+  "keymap_down_after_owner_press": true,
+  "keymap_down_after_owner_release": false,
+  "owner_down": {
+    "admitted_ns": 7000991115298,
+    "event": "input_admission",
+    "input_ack_ns": 7000991210173,
+    "intent_token": "a35-owner-lease",
+    "key": "a",
+    "keycode": 38,
+    "valid_until_ns": 7008986217591
+  },
+  "owner_press_events": [],
+  "owner_receipt": {
+    "close_error": null,
+    "closed_ns": 7001014834076,
+    "display": ":77",
+    "event_publisher_errors": [],
+    "owner_id": "4d186d11ec854dd3a05745bfc2d0368a",
+    "owner_records": [
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a35-owner-lease",
+        "key": "a",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 38,
+        "operation": "up",
+        "owner_id": "4d186d11ec854dd3a05745bfc2d0368a",
+        "owner_keymap_sampled_ns": 7001000804356,
+        "owner_keyrelease_started_ns": 7001000638997,
+        "owner_sync_returned_ns": 7001000738318,
+        "physical_verification_authoritative": false,
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 7001000804356,
+            "keyrelease_error": null,
+            "keyrelease_started_ns": 7001000638997,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_error": null,
+            "sync_returned_ns": 7001000738318
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 7008986217591
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "a35-owner-lease",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 7008986217591,
+        "verified": true,
+        "verified_ns": 7001010723660
+      }
+    ],
+    "owner_thread_stopped": true,
+    "receipt_fsynced": true,
+    "recovery_verified": true,
+    "release_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "a35-owner-lease",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 7008986217591,
+        "verified": true,
+        "verified_ns": 7001010723660
+      }
+    ],
+    "schema": "input-owner-recovery-v1",
+    "service_pid": 4475,
+    "service_start_ticks": 700084,
+    "trigger": "requested_close"
+  },
+  "owner_receipt_sha256": "c5082fbfd687cf03bb003137de6ad32f8fac1bf651531e868f4249fe0b39ce86",
+  "owner_receipt_verified_empty": true,
+  "owner_return_code": 0,
+  "owner_up": {
+    "cancel_requested_after_sync": false,
+    "cancel_requested_at_request": false,
+    "event": "input_release_transition",
+    "focus_invalid_at_request": false,
+    "grants_input_authority": false,
+    "intent_token": "a35-owner-lease",
+    "key": "a",
+    "lease_time_valid_at_request": true,
+    "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+    "operation": "up",
+    "ordinary_release_candidate": true,
+    "owner_cleanup_intervened": false,
+    "owner_explicit_keyup_failure": null,
+    "owner_id": "4d186d11ec854dd3a05745bfc2d0368a",
+    "owner_release_history_complete": true,
+    "owner_thread_keyup_history_complete": true,
+    "owner_thread_keyup_receipt": {
+      "cancel_requested_after_sync": false,
+      "event": "owner_explicit_keyup",
+      "intent_token": "a35-owner-lease",
+      "key": "a",
+      "key_state_source": "x11_query_keymap",
+      "keycode": 38,
+      "operation": "up",
+      "owner_id": "4d186d11ec854dd3a05745bfc2d0368a",
+      "owner_keymap_sampled_ns": 7001000804356,
+      "owner_keyrelease_started_ns": 7001000638997,
+      "owner_sync_returned_ns": 7001000738318,
+      "physical_verification_authoritative": false,
+      "server_key_down_after_keyup": false,
+      "server_keyup_attempt_count": 1,
+      "server_keyup_attempts": [
+        {
+          "attempt": 1,
+          "keymap_after_error": null,
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 7001000804356,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 7001000638997,
+          "server_key_down_after": false,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 7001000738318
+        }
+      ],
+      "server_keyup_verified": true,
+      "server_sync_completed": true,
+      "valid_until_ns": 7008986217591
+    },
+    "owner_thread_keyup_receipt_count": 1,
+    "owner_thread_keyup_verified": true,
+    "owner_transition_verified": null,
+    "release_call_bracket_ns": 348527,
+    "release_call_returned_ns": 7001000848075,
+    "release_call_started_ns": 7001000499548,
+    "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; bounded X11 keymap samples verify server key state only and do not prove physical keyboard state or application use",
+    "transition_schema": "input-release-transition-v3",
+    "valid_until_ns": 7008986217591
+  },
+  "pass": true,
+  "physical_input": false,
+  "retries": 0,
+  "schema": "v39-x11-shared-key-source-a35-raw-v1",
+  "xvfb_return_code": 0,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_tcp_enabled": false
+}

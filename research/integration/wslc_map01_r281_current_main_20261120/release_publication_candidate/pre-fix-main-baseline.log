@@ -1,0 +1,22 @@
+COMMAND: C:\Users\user\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe -m unittest -v test_cancel_release_publication.CancelReleasePublicationTest.test_expiry_while_key_held_publishes_release_before_terminal
+BASE: 381a21ace42891c2cd1e9cff3e231bec763ec2ba
+EXIT: 1
+
+STDOUT:
+
+STDERR:
+test_expiry_while_key_held_publishes_release_before_terminal (test_cancel_release_publication.CancelReleasePublicationTest.test_expiry_while_key_held_publishes_release_before_terminal) ... FAIL
+
+======================================================================
+FAIL: test_expiry_while_key_held_publishes_release_before_terminal (test_cancel_release_publication.CancelReleasePublicationTest.test_expiry_while_key_held_publishes_release_before_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\outputs\r281_expiry_baseline_repro_20261121\research\live_control\cancel_release_publication_59\test_cancel_release_publication.py", line 142, in test_expiry_while_key_held_publishes_release_before_terminal
+    self.assertEqual(len(release_events), 1, events)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [{'event': 'accepted', 'id': 'expiry-release-test', 'steps': 1, 'program_sha256': '3bfaa1db8b3340682a06e6d854d886f0d13e6fa8d1074fee822e308888343cfa', 'intent_token': '51e49c61dbd14d9aafaabfa940554bf6', 'valid_until_ns': 233875776898500, 'accepted_ns': 233875276989200}, {'event': 'step_started', 'id': 'expiry-release-test', 'step': 0, 'operation': 'hold_w_until_cancel', 'issued_ns': 233875277099700}, {'event': 'terminal', 'id': 'expiry-release-test', 'status': 'expired', 'error': None, 'steps_completed': 0, 'release': {'event': 'owner_release', 'reason': 'release', 'verified': True, 'buttons_down': [], 'keys_down': [], 'verified_ns': 233875783262600, 'valid_until_ns': None}, 'interruption': {'intent_token': '51e49c61dbd14d9aafaabfa940554bf6', 'record': {'event': 'owner_release', 'reason': 'expired', 'verified': True, 'buttons_down': [], 'keys_down': [], 'verified_ns': 233875783126700, 'valid_until_ns': 233875776898500}}, 'decision_reason': None, 'terminal_ns': 233875783297000, 'semantic_completion': 'program status only; task scoring is separate'}]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.576s
+
+FAILED (failures=1)

@@ -1,0 +1,32 @@
+{
+  "schema": "win32-r51-publication-custody-v1",
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r51-9f749e40-42c7-41ef-a5ed-cf2969d93bc4",
+  "source_commit": "47d5e9b6c45ecabd682f71731244dbc085ffa88f",
+  "private_originals": {
+    "manifest": "LOCAL_ONLY/win32-r51-originals-20261024/SHA256SUMS",
+    "manifest_entries": 70,
+    "verified_before_redaction": true,
+    "private_copy_custody": "PRIVATE_COPY_CUSTODY.json",
+    "path_publicly_redacted": true
+  },
+  "public_derivative": {
+    "manifest": "SHA256SUMS_PUBLIC_R01",
+    "redactions": {
+      "absolute_windows_path_occurrences_replaced": 62,
+      "host_name_occurrences_replaced": 2,
+      "previous_foreground_title_occurrences_replaced": 0,
+      "residual_path_or_host_matches": 0,
+      "raw_outcome_changed": false,
+      "fixture_png_changed": false
+    },
+    "manifest_files": 72
+  },
+  "validation": {
+    "preflight": "PASS 14/14",
+    "phase1_release": "STRICT_RELEASE_PASS 11/11",
+    "combined_audit": "PASS_SCOPED 13/13",
+    "external_task_oracle_success": true,
+    "runtime_task_success": null,
+    "wslc_used": false
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "win32-standard-calculator-r15-audit-v1",
+  "attempt_id": "win32-standard-calculator-task-20261024-r15-6dd1e43e",
+  "frozen_manifest_matches": true,
+  "manifest_entries": 4,
+  "runner_sha256": "b3db78e1f3888236715bc19c1be4ac3f11f2aa7bf438e6506421ccfd98bcc4d1",
+  "target_generation_observation": {
+    "status": "returned",
+    "input_dispatched": false,
+    "generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "generation_matches_dispatch": true
+  },
+  "capture": {
+    "frame": "window_client",
+    "region": [
+      0,
+      0,
+      320,
+      533
+    ],
+    "size": [
+      320,
+      533
+    ],
+    "png_sha256": "a0f2ac5ee8c6fda353c961511a02473b297fa5a16a50d5080df027eb830434d4",
+    "rgb_extrema": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "all_black": true,
+    "usable_visual_observation": false
+  },
+  "dispatch": {
+    "wrapper_top_level_status": null,
+    "nested_report_status": "returned",
+    "call_id": "936af3dc904444918b7500470e9b9d61",
+    "operation_id": "14d5d99fd53b4a31960fe11814453264",
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "input_dispatched": true,
+    "action_status": "completed",
+    "release_confirmed": true,
+    "release_receipt": {
+      "keys_down": [],
+      "buttons_down": [],
+      "keys_unknown": [],
+      "buttons_unknown": [],
+      "state_query_witnesses": {},
+      "verified": true,
+      "monotonic_ns": 522279671000000
+    },
+    "completion_readback": {
+      "operation_id": "14d5d99fd53b4a31960fe11814453264",
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+      "producer_exit_confirmed_ns": 522279734000000,
+      "observed_monotonic_ns": 522279734000000,
+      "neutral": true
+    },
+    "replay_allowed": false
+  },
+  "effect": {
+    "uia_before": "1042",
+    "uia_after": "1043",
+    "uia_after_expression": "式は 1042 + 1= です",
+    "expected_after": "1043",
+    "exact_postcondition": true
+  },
+  "task_oracle": {
+    "verification_file_present": false,
+    "oracle_receipts_present": false,
+    "runtime_task_success": null,
+    "runner_checked_top_level_status": null,
+    "runner_would_enter_verify_branch": false,
+    "correct_nested_status_would_enter_verify_branch": true
+  },
+  "close": {
+    "status": "closed",
+    "release_confirmed_by_close_operation": false,
+    "session_state": "closed",
+    "unresolved_call_ids": [],
+    "interpretation": "close.release_confirmed reports release performed by close itself; the completed action separately has verified release and neutral readback"
+  },
+  "strict_disposition": "HOLD_NOT_PASS: public window-client image is uniformly black and the runner skipped interface_verify_task by reading status at the wrong response nesting level; no replay is permitted",
+  "scope": "One native Windows Calculator action only; no WSLc, MAP01, bounded recovery, efficiency, or reliability claim."
+}

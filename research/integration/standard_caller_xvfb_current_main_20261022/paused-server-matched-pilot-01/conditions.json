@@ -1,0 +1,61 @@
+{
+  "pairs": [
+    [
+      "C01",
+      "P01"
+    ],
+    [
+      "C02",
+      "P02"
+    ],
+    [
+      "C03",
+      "P03"
+    ]
+  ],
+  "schema": "agent-interface/paused-server-matched-pilot-v1",
+  "allocation": {
+    "wslc": "not used",
+    "docker": "not used",
+    "network_downloads": 0,
+    "installations": 0
+  },
+  "sequence": [
+    "C01",
+    "P01",
+    "P02",
+    "C02",
+    "C03",
+    "P03"
+  ],
+  "dependency_cache": "/home/user/.cache/agent-interface-codex-deps-20261022-r02",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "python_xlib": "0.33",
+    "Pillow": "10.2.0",
+    "mcp": "1.30.0"
+  },
+  "baseline_main": "cc5ef16c560cc985ee0951d3d53d659e892f5167",
+  "run_id": "AI-XVFB-PAUSED-SERVER-MATCHED-PILOT-20261022-01",
+  "common": {
+    "caller_response_target_ms": 300,
+    "owner_ack_withheld_s": 1.0,
+    "retries": 0,
+    "outer_timeout_s": 45,
+    "delayed_keypress_ms": 8000,
+    "terminal_bound_ms": 5000
+  },
+  "environment": {
+    "display": ":88",
+    "distro": "Ubuntu 24.04",
+    "python": "3.12.3",
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "kernel": "WSL2",
+    "socket_dir": "per-run private mount namespace tmpfs mode 1777"
+  },
+  "arms": {
+    "paused_pause_ms": 1500,
+    "control_pause_ms": 0
+  },
+  "runner_script_sha256": "4b1bff8bb31f75e6ef99f2c6406c38531fc18a0dd875de6f59748d7138acd379"
+}

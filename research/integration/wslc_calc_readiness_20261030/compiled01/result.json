@@ -1,0 +1,83 @@
+{
+  "status": "FAIL",
+  "events": {},
+  "window": [
+    6292258,
+    "study.fods - LibreOffice Calc",
+    2
+  ],
+  "initial_observation": {
+    "sequence": 1,
+    "observation_id": "ffc0ce275e86478b8d86fc694f92ac5b",
+    "binding_revision": 0,
+    "capture_ns": 4958686708,
+    "image_source": "exact_capture_rgb_handoff",
+    "pointer_binding": {
+      "focus": 6292258,
+      "surface": 6292258,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "native": {
+      "bytes": 4096000,
+      "sha256": "785d1233011acdb57e66b79ad9d600d96ddd346bd0f97bc7fc986c93cd86cb92",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 6292258,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 4958686708,
+      "capture_ended_ns": 4963456041,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/out/bridge/images/55d797ea7ecf4308a60f2e12c7514508.png",
+        "sha256": "3ac5d4614f2c6655c355bd33b5f66630289b4e1d05f9490e8c91f11ae3f087de",
+        "bytes": 9183,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "785d1233011acdb57e66b79ad9d600d96ddd346bd0f97bc7fc986c93cd86cb92",
+        "timing_ns": {
+          "started": 4965287711,
+          "converted": 4966485711,
+          "encoded": 4992875707,
+          "written": 4993865183,
+          "hashed": 4995664525
+        }
+      }
+    },
+    "timing_ns": {
+      "started": 4958451176,
+      "public_returned": 4995756699,
+      "binding_checked": 4997571778,
+      "artifact_verified": 4998480643,
+      "decoded": 4998485499
+    }
+  },
+  "error_type": "FlatTargetRefused",
+  "error": "visually flat target region refused",
+  "traceback": "Traceback (most recent call last):\n  File \"/out/runner.py\", line 44, in run\n    ref=bridge.mint_reference('cell',obs['sequence'],point,region_size=(24,24));result['mint']=ref\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/runtime/guarded_x11_v1/bridge.py\", line 470, in mint_reference\n    result = self.store.mint(alias, \"window_content\", box, observation, image,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/runtime/guarded_x11_v1/handles.py\", line 24, in mint\n    result = super().mint(\n             ^^^^^^^^^^^^^\n  File \"/src/runtime/guarded_x11_v1/handles_texture.py\", line 23, in mint\n    raise FlatTargetRefused(\"visually flat target region refused\")\nruntime.guarded_x11_v1.handles_texture.FlatTargetRefused: visually flat target region refused\n",
+  "actor_exit": [
+    {
+      "name": "calc",
+      "exitcode": 255
+    },
+    {
+      "name": "openbox",
+      "exitcode": 0
+    },
+    {
+      "name": "xvfb",
+      "exitcode": 0
+    }
+  ]
+}

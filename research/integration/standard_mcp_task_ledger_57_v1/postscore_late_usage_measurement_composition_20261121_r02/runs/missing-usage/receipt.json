@@ -1,0 +1,55 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "attempt_id": "attempt-no-usage",
+      "ended_ns": 280118296000000,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/attempt-no-usage.request.bin",
+          "sha256": "dc9aa9ae9265de5ce4608a152f7db14e3840edca18e6cc70181833af15d31174"
+        }
+      ],
+      "response_status": "unavailable",
+      "seq": 1,
+      "session_id": "6a67802949194887bad923ac1f220b94",
+      "started_ns": 280118281000000,
+      "status": "timeout",
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "status": "unavailable"
+      }
+    },
+    {
+      "ended_ns": 280118296000000,
+      "independent": true,
+      "kind": "task_score",
+      "raw_refs": [
+        {
+          "path": "raw/task-score.state.bin",
+          "sha256": "585f82636a59b9c079add0370ed23c07a3a289154e1763e7ce988181f8f09d41"
+        }
+      ],
+      "scorer_id": "synthetic-no-effect-oracle-v1",
+      "seq": 2,
+      "session_id": "6a67802949194887bad923ac1f220b94",
+      "started_ns": 280118296000000,
+      "state_sha256": "585f82636a59b9c079add0370ed23c07a3a289154e1763e7ce988181f8f09d41",
+      "task_success": null
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/attempt-no-usage.request.bin",
+      "sha256": "dc9aa9ae9265de5ce4608a152f7db14e3840edca18e6cc70181833af15d31174"
+    },
+    {
+      "path": "raw/task-score.state.bin",
+      "sha256": "585f82636a59b9c079add0370ed23c07a3a289154e1763e7ce988181f8f09d41"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "issue-8581-controlled-feedback-access-t0-v1",
+  "allocation": "UNJUNO-8581-CONTROLLED-FEEDBACK-ARTIFACT-BYPASS-T0-A01-20261009",
+  "seeds": [0,1,2,3,4,5,6,7,8,9,10,11],
+  "feedback_modes": ["FULL", "CONTROLLED"],
+  "artifact_access_modes": ["SEALED", "RAW_BYPASS"],
+  "candidates": {
+    "stable": {"complexity":1},
+    "memorizer": {"complexity":9},
+    "unsafe": {"complexity":10}
+  },
+  "dev_opportunities_per_seed": 10,
+  "fresh_opportunities_per_seed": 10,
+  "incumbent_dev_correct_per_seed": 6,
+  "stable_dev_correct_per_seed": 7,
+  "memorizer_dev_correct_per_seed": 10,
+  "stable_fresh_correct_per_seed": 7,
+  "memorizer_fresh_correct_per_seed": 4,
+  "coarse_signal": "IMPROVED_OVER_INCUMBENT",
+  "hard_safety_veto": {"candidate":"unsafe","case_id":"dev-{seed}-0","reason":"NONCOMPENSABLE_SCOPE_VIOLATION","disclosure":"IMMEDIATE_ALL_ARMS","exact_event_count_per_seed":1},
+  "artifact_graph": {
+    "benign_document": {"id":"task-contract-doc","permission":"ALLOW_PRELOCK","content":"Public task contract: synthetic routes only; no real evaluation data or held-out answers.","sha256":"be9e26ec3ab915b5e847871dbba177384e58f194ba26bdcec440a3c53a5a6d58"},
+    "development_store": {"id":"dev-score-store","sealed_permission":"DENY_PRELOCK","bypass_permission":"ALLOW_PRELOCK","canary_prefix":"DEV-ORACLE-CANARY"},
+    "fresh_store": {"id":"fresh-score-store","permission":"DENY_PRELOCK","publication_permission":"ALLOW_POSTLOCK"},
+    "candidate_author": "synthetic-candidate-author",
+    "unmonitored_route": "unregistered-snapshot-cache"
+  },
+  "diagnostic_controls": {
+    "unmonitored_route_disposition": "UNKNOWN_UNMONITORED_ROUTE",
+    "no_attempt_disposition": "NO_ATTEMPT_OBSERVED_NOT_NO_ACCESS",
+    "post_lock_publication_disposition": "AUTHORIZED_AFTER_LOCK",
+    "benign_document_disposition": "ALLOW_TASK_DOCUMENTATION"
+  },
+  "gates": {
+    "paired_seed_count":12,
+    "four_factorial_cells":4,
+    "fresh_hidden_until_lock":true,
+    "safety_disclosed_in_every_arm":true,
+    "mutation_controls":8,
+    "authority":"NONE"
+  },
+  "authority":"NONE",
+  "execution_scope":"deterministic stdlib finite simulation; CPU only; no real private data, held-out answers, model, GUI, network, or shared runtime"
+}

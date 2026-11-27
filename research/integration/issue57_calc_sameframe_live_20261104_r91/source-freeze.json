@@ -1,0 +1,66 @@
+{
+  "schema": "agent-interface/issue57-r91-source-freeze-v1",
+  "main_base_commit": "a923ab04d50a52a9f1c8e9e049c10497dca7bafa",
+  "candidate_implementation_commit": "8c4de6f73789230d20c1400cb0c97ff8497d303a",
+  "checkout_commit_at_freeze": "9bfbeba558ea68b3e27b800ca041c451faa6d951",
+  "checkout_tree_at_freeze": "acc1edc04db47e7f9b657b49f5d2ffc6d250f219",
+  "docker_engine": "29.8.1",
+  "docker_desktop": "4.93.0",
+  "wsl_config": "24GB memory, 12 processors, 8GB swap, gradual reclaim",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "attempt_id": "issue57-r91-a01",
+  "files_sha256": {
+    "audit-invocation.txt": "aae0a8728aab91811cdbe4462cfc1c8b83ee80c23338ce6508007d5bf879e5f0",
+    "source_sha256": [
+      {
+        "path": "runtime/core_v1/compiled_gui.py",
+        "sha256": "6e47c1bf28ac3d3fdae7b195456f22441ea5e352ab3053925fb5d48bbebe3cda"
+      },
+      {
+        "path": "runtime/guarded_x11_v1/compiled.py",
+        "sha256": "a02e7cccc8b4ee693154d09c3ef0c75fcd12f416c40922c0dd2ed5a1173b33bf"
+      },
+      {
+        "path": "runtime/guarded_x11_v1/calc_profile_v1.py",
+        "sha256": "8f3b7cdd14620837aaa444916662a09201693965dae61115abc2ab5a0eba9aa9"
+      },
+      {
+        "path": "runtime/guarded_x11_v1/calc_task_artifact_v1.py",
+        "sha256": "e330e99a9180a7c9eb791b162524b9929f32d217c3c0007c26c0d1e986a94b78"
+      },
+      {
+        "path": "runtime/guarded_x11_v1/calc_launcher_v1.py",
+        "sha256": "75db62d3716f41bbe7af639c2e422cd625bab98a0f0dd3bf21b2ea1a97f8f305"
+      },
+      {
+        "path": "runtime/guarded_x11_v1/calc_process_group_v1.py",
+        "sha256": "16c6b6b86ba1b760c0343091389310f44573390b206ec00c07376764e3be8fc1"
+      },
+      {
+        "path": "runtime/cli_v1/mcp_server.py",
+        "sha256": "d3015ba5d8935eefc85f077ae14aa0221336ff934c81464c43877f1408ffd74c"
+      },
+      {
+        "path": "runtime/cli_v1/owned_guarded_session.py",
+        "sha256": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc"
+      },
+      {
+        "path": "runtime/cli_v1/mcp_guarded.py",
+        "sha256": "0d57ea6b5eb3babad5586d7e39b74d5096f91e28cc62888ee83115e238fadeeb"
+      },
+      {
+        "path": "runtime/cli_v1/test_mcp_guarded.py",
+        "sha256": "c98f2150af3e55f046bd28a4df21e5f8284ca5887e58286f66875a7ff17bac99"
+      }
+    ],
+    "runner.sh": "5475b887d18ac188ec1ca605f997b11a32897bb1c8f2cd3c65aa99e300e5024b",
+    "experiment.py": "b6ddc87e7e170f4ae71d2cd4575a3d2a69bea9661beb930c8e3b0d5381c244b3",
+    "docker-invocation.txt": "7c7035a16fc8ac70f623cd9f501323013b138b070dc89fec1b77fc99c307cd3d",
+    "preflight.json": "4b4719d5d5202153d282d3e2cbb5d444eb49c84b858e4ef3ca635daa368f4cc4",
+    "audit.py": "f08b5fc71ceaeb4ae937d9027737755553d8705a2980a6e548f029ddee2458d6",
+    "run-live.ps1": "7ca0b9c9dc16c099258d41821c17e2fe9a4c92a6fdf3a8723bab3a2c7ab1f8f3",
+    "run-audit.ps1": "4cbca7bbea2b08142e5a14671689e686ff086d6cddd5bf87a83495009ed44ba9",
+    "conditions.json": "1e45acd9e7ded353d46a9adb5ffb7efb439f624d425bb90f09b1471d1fddec18",
+    "preregistration.md": "db49bf197dce72fe58cf7d14b1cf7e117b04a4faa519af612161660ce04fdd4a"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "cleanup_status": "key_release_sync_completed",
+  "delay_ms": 8000,
+  "disconnect_receipt": {
+    "elapsed_ms": 67.15658599999585,
+    "expected_pid": 2740,
+    "observed_pid": 2742,
+    "observer_pid": 2742,
+    "observer_resource_base": 4194304,
+    "resource_base": 4194304,
+    "status": "disconnected",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "final_cleanup_status": "key_release_sync_completed",
+  "final_key_down": {
+    "a": false,
+    "b": false
+  },
+  "independent_release_effect_observed": true,
+  "initial_held_readback": {
+    "connection": "independent X client",
+    "keys_down": {
+      "a": true,
+      "b": false
+    },
+    "observed_ns": 91221832387
+  },
+  "interpretation": "independent_release_transition_observed_no_late_keypress",
+  "keycodes": {
+    "a": 38,
+    "b": 56
+  },
+  "late_keypress_observed": false,
+  "late_keypress_readback": {
+    "connection": "independent X client",
+    "keys_down": {
+      "a": false,
+      "b": false
+    },
+    "ms_after_owner_termination": 8500.483791,
+    "observed_ns": 99722330604
+  },
+  "owner": {
+    "flushed_ns": 91216376437,
+    "keycodes": {
+      "a": 38,
+      "b": 56
+    },
+    "pid": 2740,
+    "resource_base": 4194304
+  },
+  "owner_returncode": -15,
+  "owner_stderr": "",
+  "release_readback_before_delay_horizon": {
+    "connection": "independent X client",
+    "keys_down": {
+      "a": false,
+      "b": false
+    },
+    "observed_ns": 91292739280
+  },
+  "schema": "agent-interface/xvfb-held-key-disconnect-queue-v2",
+  "scope": "private X.Org Xvfb server; direct XTEST owner; no standard MCP caller",
+  "server_build_provenance": {
+    "packages": {
+      "xserver-xorg-core": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xserver-xorg-core="
+      },
+      "xvfb": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xvfb=2:21.1.22-1ubuntu1.3"
+      }
+    },
+    "path": "/usr/bin/Xvfb",
+    "resolved_path": "/usr/bin/Xvfb",
+    "sha256": "97623d8c3972051fa29db5a91f64439b418a1ebc63ce449193556fc33900048e"
+  },
+  "server_display": ":88",
+  "server_release_number": 12101022,
+  "server_vendor": "The X.Org Foundation",
+  "state_after_disconnect_before_release": {
+    "connection": "independent X client",
+    "keys_down": {
+      "a": true,
+      "b": false
+    },
+    "observed_ns": 91290290441
+  },
+  "status": "PASS_SCOPED_XVFB_HELD_KEY_ORDER",
+  "xres_version": [
+    1,
+    2
+  ],
+  "xtest_version": [
+    2,
+    2
+  ]
+}

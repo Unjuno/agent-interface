@@ -1,0 +1,10 @@
+# Chance-bounded task progress under stochastic delays
+
+- **Status:** Unverified beyond the finite synthetic method result
+- **Source:** [#8596](https://github.com/Unjuno/agent-interface/issues/8596), successor to [#7822](https://github.com/Unjuno/agent-interface/issues/7822); evidence package in open [PR #8721](https://github.com/Unjuno/agent-interface/pull/8721)
+- **Idea:** Bound the probability of reaching an independently observed task-progress marker by a finite opportunity horizon under explicitly modeled stochastic delays, while checking hard safety separately over every modeled or adversarial transition.
+- **Outcome:** A01 was invalidated before formal execution because its issue/protocol text disagreed with the frozen provenance and horizon; formal candidate/auditor invocations were 0/0. A02 is a separate `PASS_METHOD_SCOPED` exact-rational fixture: candidate and independent auditor each ran once, matched exactly over 32 endpoint vectors and the N=4 histories, and rejected 7/7 mutations. For the authored model, the wide interval's horizon-four bounds are `[175/256, 15/16]`; an equal-mean delay control completes by deadline four with probability 1 versus 9/10. A reachable unsafe consequence fails the hard-safety gate, and an unknown delay distribution returns `NOT_IDENTIFIABLE`.
+- **Limits:** The fixture does not synthesize or optimize a controller-choice MDP, calibrate delay distributions, observe a real GUI marker, measure wall-clock progress, or establish task effect, safety, reliability, or product behavior. Its probabilities and threshold are synthetic.
+- **Next test:** Any further work should address the full controller-choice question and empirical delay/marker validity in a distinct authorized allocation, retaining the all-transition safety requirement. Do not retry or rewrite A01; it remains an invalidated pre-formal record.
+
+The exact model, run artifacts, audit, and scope limits are preserved in [PR #8721](https://github.com/Unjuno/agent-interface/pull/8721). A01 and A02 are separate; A02 does not repair or replace A01.

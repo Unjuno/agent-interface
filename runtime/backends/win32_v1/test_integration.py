@@ -7,6 +7,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
@@ -103,6 +104,175 @@ class CaptureContractDLL:
 
 
 class PureWin32HelperTests(unittest.TestCase):
+    def test_arrow_key_events_use_extended_scan_codes(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        emitted = []
+        backend._send = lambda item: emitted.append(
+            (int(item.ki.wVk), int(item.ki.wScan), int(item.ki.dwFlags))
+        )
+
+        backend._send_key(virtual_key("Up"), True)
+        backend._send_key(virtual_key("Up"), False)
+
+        self.assertEqual(emitted, [(0, 0x48, 0x0009), (0, 0x48, 0x000B)])
+
+    def test_scan_code_mode_emits_tab_make_and_break_codes(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.user32 = type("MapApi", (), {
+            "MapVirtualKeyW": staticmethod(lambda vk, mode: 0x0F)
+        })()
+        emitted = []
+        backend._send = lambda item: emitted.append(
+            (int(item.ki.wVk), int(item.ki.wScan), int(item.ki.dwFlags))
+        )
+
+        backend._send_key(virtual_key("TAB"), True, encoding="scan_code")
+        backend._send_key(virtual_key("TAB"), False, encoding="scan_code")
+
+        self.assertEqual(emitted, [(0, 0x0F, 0x0008), (0, 0x0F, 0x000A)])
+
+    def test_scan_code_mode_refuses_a_virtual_key_without_a_scan_code(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.user32 = type("MapApi", (), {
+            "MapVirtualKeyW": staticmethod(lambda vk, mode: 0)
+        })()
+        emitted = []
+        backend._send = lambda item: emitted.append(item)
+
+        with self.assertRaisesRegex(Win32BackendError, "no scan code"):
+            backend._send_key(virtual_key("TAB"), True, encoding="scan_code")
+
+        self.assertEqual(emitted, [])
+
+    def test_release_all_reuses_the_held_key_encoding(self):
+        backend, events = self._release_backend({9: False, 1: False})
+        backend.held_keys = {"TAB": 9}
+        backend.held_key_encodings = {"TAB": "scan_code"}
+        backend.held_key_targets = {"TAB": None}
+        backend._last_state_query_witness = []
+        backend._send_key = lambda vk, down, encoding=None: events.append(
+            ("key", vk, down, encoding)
+        )
+
+        receipt = backend.release_all()
+
+        self.assertEqual(events[0], ("key", 9, False, "scan_code"))
+        self.assertEqual(backend.held_key_encodings, {})
+        self.assertTrue(receipt["verified"])
+
+    def _release_backend(self, states):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.held_keys = {"CTRL": 17, "LEFT_CTRL": 17}
+        backend.held_buttons = {"left"}
+        backend.pending_unicode_ups = set()
+        events = []
+
+        class State:
+            def __init__(self):
+                self.sampled = []
+
+            def GetAsyncKeyState(self, vk):
+                self.sampled.append(vk)
+                value = states[vk]
+                return 0 if value is None else (0x8000 if value else 1)
+
+        backend.user32 = State()
+        backend._send_key = lambda vk, down: events.append(("key", vk, down))
+        backend._send = lambda item: events.append(("mouse", int(item.mi.dwFlags)))
+        return backend, events
+
+    def test_release_all_samples_alias_once_and_retires_verified_obligations(self):
+        backend, events = self._release_backend({17: False, 1: False})
+        result = backend.release_all()
+        self.assertEqual(backend.user32.sampled.count(17), 1)
+        self.assertEqual(backend.user32.sampled.count(1), 1)
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["keys_unknown"], [])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(events.count(("key", 17, False)), 1)
+
+    def test_release_all_unknown_state_retains_all_obligations(self):
+        backend, _ = self._release_backend({17: None, 1: False})
+        result = backend.release_all()
+        self.assertFalse(result["verified"])
+        self.assertEqual(result["keys_unknown"], ["CTRL", "LEFT_CTRL"])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        self.assertEqual(backend.held_buttons, set())
+
+    def test_zero_state_with_stable_active_desktop_witness_retires_owned_inputs(self):
+        backend, _ = self._release_backend({17: None, 1: None})
+        backend.targets = {"fixture": 42}
+        backend.held_key_targets = {"CTRL": "fixture", "LEFT_CTRL": "fixture"}
+        backend.held_button_targets = {"left": "fixture"}
+        evidence = {"target": "fixture", "input_desktop_active": True,
+                    "desktop_hookcontrol_opened": True, "probe_integrity_rid": 8192,
+                    "target_integrity_rid": 8192}
+        backend._async_key_state_query_witness = lambda target: evidence
+
+        result = backend.release_all()
+
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["keys_unknown"], [])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(result["state_query_witnesses"], {"17": [evidence, evidence],
+                                                              "1": [evidence, evidence]})
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+
+    def test_zero_state_without_stable_witness_remains_unknown(self):
+        backend, _ = self._release_backend({17: None, 1: False})
+        backend.targets = {"fixture": 42}
+        backend.held_key_targets = {"CTRL": "fixture", "LEFT_CTRL": "fixture"}
+        backend.held_button_targets = {"left": "fixture"}
+        evidence = {"target": "fixture", "input_desktop_active": True}
+        witnesses = iter((evidence, None))
+        backend._async_key_state_query_witness = lambda _target: next(witnesses)
+
+        result = backend.release_all()
+
+        self.assertFalse(result["verified"])
+        self.assertEqual(result["keys_unknown"], ["CTRL", "LEFT_CTRL"])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+
+    def test_release_all_persistent_hold_then_later_clear(self):
+        backend, _ = self._release_backend({17: True, 1: False})
+        result = backend.release_all()
+        self.assertEqual(result["keys_down"], ["CTRL", "LEFT_CTRL"])
+        self.assertFalse(result["verified"])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        backend.user32.GetAsyncKeyState = lambda vk: 1
+        result = backend.release_all()
+        self.assertTrue(result["verified"])
+        self.assertEqual(backend.held_keys, {})
+
+    def test_release_all_state_query_exception_preserves_only_unknown_obligations(self):
+        backend, events = self._release_backend({17: False, 1: False})
+        def fail_second_query(vk):
+            if vk == 1:
+                raise OSError("injected query failure")
+            return 1
+
+        backend.user32.GetAsyncKeyState = fail_second_query
+        with self.assertRaisesRegex(Win32BackendError, "key state query failed"):
+            backend.release_all()
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, {"left"})
+
+    def test_release_all_send_failure_continues_attempts_and_readback(self):
+        backend, events = self._release_backend({17: False, 1: False})
+        backend._send_key = lambda vk, down: (_ for _ in ()).throw(OSError("injected send failure"))
+        with self.assertRaisesRegex(OSError, "injected send failure"):
+            backend.release_all()
+        self.assertEqual(backend.user32.sampled, [17, 1])
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+        events_after_first_attempt = list(events)
+        self.assertTrue(backend.release_all()["verified"])
+        self.assertEqual(events, events_after_first_attempt)
+
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))
         self.assertEqual(utf16_units("😀"), (0xD83D, 0xDE00))
@@ -214,7 +384,7 @@ class PureWin32HelperTests(unittest.TestCase):
             def GetAsyncKeyState(self, vk):
                 if self.raises:
                     raise OSError("inert state query failure")
-                return 0x8000 if vk in self.stuck else 0
+                return 0x8000 if vk in self.stuck else 1
 
         cases = (
             ([{"op": "key_state", "key": "SHIFT", "down": True},
@@ -251,6 +421,7 @@ class PureWin32HelperTests(unittest.TestCase):
         backend.held_buttons = set()
         backend.pending_unicode_ups = set()
         backend.emissions = 0
+        backend._program_emission_counter = None
         backend.user32 = State(set())
         events = []
         backend.preflight = lambda program: None
@@ -272,6 +443,8 @@ class Win32SessionRecoveryTests(unittest.TestCase):
     def backend(self):
         backend = Win32Backend.__new__(Win32Backend)
         backend.emissions = 0
+        backend._program_emission_counter = None
+        backend._program_operation_receipts = None
         backend.held_keys = {}
         backend.held_buttons = set()
         backend.pending_unicode_ups = set()
@@ -287,10 +460,170 @@ class Win32SessionRecoveryTests(unittest.TestCase):
             current_binding_revision=3,
         )
 
+    def text_program(self, program_id):
+        program = make_program(program_id)
+        program["ops"] = [{"op": "text", "text": "AB"}, {"op": "release_all"}]
+        return program
+
+    def test_completed_program_emissions_exclude_terminal_release_emission(self):
+        backend = self.backend()
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        def send(_event):
+            backend._record_emission()
+
+        def release_with_one_emission():
+            backend._record_emission()
+            return receipt
+
+        backend._send = send
+        backend._release_all_unchecked = release_with_one_emission
+        backend.release_all = Win32Backend.release_all.__get__(backend, Win32Backend)
+        result = backend.execute(self.text_program("completed-text"))
+
+        self.assertEqual(result["program_emissions"], 4)
+        self.assertEqual(result["emissions"], 5)
+
+    def test_shared_program_action_counter_is_lower_bound_and_excludes_cleanup(self):
+        import ctypes
+        from runtime.backends.win32_v1.backend import (
+            _cleanup_active, _program_emissions,
+        )
+
+        backend = self.backend()
+        counter = ctypes.c_long(0)
+        backend._program_emission_counter = counter
+        token = _program_emissions.set(0)
+        try:
+            backend._record_emission()
+            self.assertEqual(counter.value, 1)
+            backend._record_action()
+            self.assertEqual(counter.value, 2)
+            backend.user32 = type("Cursor", (), {
+                "SetCursorPos": staticmethod(lambda _x, _y: True),
+                "IsWindow": staticmethod(lambda hwnd: hwnd == 101),
+                "GetForegroundWindow": staticmethod(lambda: 101),
+                "GetAncestor": staticmethod(lambda hwnd, _flag: hwnd),
+            })()
+            backend._root_point = lambda *_args: (17, 23)
+            backend.targets = {"fixture": 101}
+            backend.pointer_move("fixture", "window_client", 7, 9)
+            self.assertEqual(counter.value, 3)
+            cleanup_token = _cleanup_active.set(True)
+            try:
+                backend._record_emission()
+                backend._record_action()
+            finally:
+                _cleanup_active.reset(cleanup_token)
+            self.assertEqual(counter.value, 3)
+            self.assertEqual(_program_emissions.get(), 3)
+        finally:
+            _program_emissions.reset(token)
+
+    def test_partial_program_emissions_survive_cleanup_and_ignore_prior_emissions(self):
+        from runtime.cli_v1.owned_win32_session import _input_dispatched_from_result
+
+        backend = self.backend()
+        backend.emissions = 9
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        send_count = 0
+
+        def fail_after_two_program_emissions(_event):
+            nonlocal send_count
+            send_count += 1
+            if send_count == 3:
+                raise Win32BackendError("injected partial text failure")
+            backend._record_emission()
+
+        def cleanup_emits_one_release():
+            backend.emissions += 1
+            return receipt
+
+        backend._send = fail_after_two_program_emissions
+        backend.release_all = cleanup_emits_one_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("partial-text"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertEqual(failed["backend_emissions"], 12)
+        self.assertEqual(failed["program_emissions"], 2)
+        self.assertIs(failed["input_dispatched"], True)
+        self.assertIs(_input_dispatched_from_result(failed), True)
+        self.assertFalse(failed["recovery_required"])
+
+    def test_zero_program_emissions_do_not_count_cleanup_as_task_input(self):
+        from runtime.cli_v1.owned_win32_session import _input_dispatched_from_result
+
+        backend = self.backend()
+        backend.emissions = 4
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        def fail_before_program_emission(_event):
+            raise Win32BackendError("injected first-unit failure")
+
+        def cleanup_emits_release():
+            backend.emissions += 1
+            return receipt
+
+        backend._send = fail_before_program_emission
+        backend.release_all = cleanup_emits_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("no-program-input"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["backend_emissions"], 5)
+        self.assertEqual(failed["program_emissions"], 0)
+        self.assertNotIn("input_dispatched", failed)
+        self.assertIs(_input_dispatched_from_result(failed), False)
+        self.assertFalse(failed["recovery_required"])
+
+    def test_partial_program_emissions_survive_cleanup_failure(self):
+        backend = self.backend()
+        receipt = {"verified": False, "keys_down": ["A"], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        send_count = 0
+
+        def fail_after_program_emission(_event):
+            nonlocal send_count
+            send_count += 1
+            if send_count == 2:
+                raise ValueError("injected partial text failure")
+            backend._record_emission()
+
+        def cleanup_fails_after_emitting_release():
+            backend.emissions += 1
+            raise RuntimeError("injected release failure")
+
+        backend._send = fail_after_program_emission
+        backend.release_all = cleanup_fails_after_emitting_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("partial-with-release-failure"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertEqual(failed["detail"], "injected partial text failure")
+        self.assertEqual(failed["program_emissions"], 1)
+        self.assertIs(failed["input_dispatched"], True)
+        self.assertEqual(failed["cleanup_error"]["detail"], "injected release failure")
+        self.assertTrue(failed["recovery_required"])
+        self.assertTrue(session.recovery_required)
+
     def test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch(self):
         backend = self.backend()
         session = Win32RuntimeSession(backend)
-        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}
 
         def fail_after_verified_cleanup(program):
             raise Win32ExecutionError(Win32BackendError("injected operation failure"), receipt, None)
@@ -326,10 +659,179 @@ class Win32SessionRecoveryTests(unittest.TestCase):
         self.assertFalse(refused["recovery_required"])
         self.assertFalse(session.recovery_required)
 
-        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}
         backend.preflight = lambda program: None
         backend.execute = lambda program: {"releases": [receipt]}
         self.assertEqual(self.dispatch(session, "dispatch-after-preflight-refusal")["status"], "completed")
+
+    def test_lease_expiring_during_wait_blocks_next_task_input_but_allows_release(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        events = []
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        backend.focus = lambda target: events.append(("focus", target))
+        backend.key_state = lambda *args, **kwargs: events.append(("input", args))
+        backend.release_all = lambda: (events.append(("release_all",)), receipt)[1]
+        program = make_program("expire-after-wait",
+            expires=time.monotonic_ns() + 100_000_000)
+        program["ops"] = [
+            {"op": "focus", "target": "fixture"},
+            {"op": "wait_update", "timeout_ms": 250},
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "release_all"},
+        ]
+
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3)
+
+        self.assertEqual(result["status"], "execution_failed")
+        self.assertIn("LEASE_EXPIRED_DURING_EXECUTION", result["detail"])
+        self.assertEqual(events, [("focus", "fixture"), ("release_all",)])
+        self.assertEqual(result["program_emissions"], 0)
+        self.assertTrue(result["release"]["verified"])
+        self.assertFalse(session.recovery_required)
+
+    def test_lease_expiring_after_input_releases_held_key_and_blocks_next_down(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        events = []
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        backend.focus = lambda target: events.append(("focus", target))
+        def send_key(key, down, **_kwargs):
+            if down:
+                events.append(("task_down", key))
+                backend._record_emission()
+                backend.held_keys[key] = 0x10
+            else:
+                events.append(("cleanup_up", key))
+                backend.held_keys.pop(key, None)
+        backend.key_state = send_key
+        def release_all():
+            events.append(("release_all", tuple(sorted(backend.held_keys))))
+            for key in list(backend.held_keys):
+                send_key(key, False)
+            return receipt
+        backend.release_all = release_all
+        program = make_program("expire-after-held-input",
+            expires=time.monotonic_ns() + 100_000_000)
+        program["ops"] = [
+            {"op": "focus", "target": "fixture"},
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "wait_update", "timeout_ms": 250},
+            {"op": "key_state", "key": "CTRL", "down": True},
+            {"op": "release_all"},
+        ]
+
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3)
+
+        self.assertEqual(result["status"], "execution_failed")
+        self.assertIn("LEASE_EXPIRED_DURING_EXECUTION", result["detail"])
+        self.assertEqual(events, [("focus", "fixture"),
+            ("task_down", "SHIFT"), ("release_all", ("SHIFT",)),
+            ("cleanup_up", "SHIFT")])
+        self.assertEqual(result["program_emissions"], 1)
+        self.assertEqual(backend.held_keys, {})
+        self.assertTrue(result["release"]["verified"])
+        self.assertFalse(session.recovery_required)
+
+    def test_expired_task_deadline_blocks_later_down_but_cleanup_up_is_allowed(self):
+        from runtime.backends.win32_v1.backend import (
+            _cleanup_active, _task_authority_deadline, VK_SHIFT,
+        )
+
+        backend = self.backend()
+        sent_flags = []
+        class User32:
+            @staticmethod
+            def SendInput(_count, inputs, _size):
+                sent_flags.append(int(inputs[0].ki.dwFlags))
+                return 1
+        backend.user32 = User32()
+        deadline = time.monotonic_ns() - 1
+        deadline_token = _task_authority_deadline.set(deadline)
+        try:
+            with self.assertRaisesRegex(Win32BackendError,
+                    "LEASE_EXPIRED_DURING_EXECUTION"):
+                backend._send_key(VK_SHIFT, True)
+            cleanup_token = _cleanup_active.set(True)
+            try:
+                backend._send_key(VK_SHIFT, False)
+            finally:
+                _cleanup_active.reset(cleanup_token)
+        finally:
+            _task_authority_deadline.reset(deadline_token)
+        self.assertEqual(sent_flags, [2])
+
+    def test_expired_operation_receipt_identifies_late_down_refusal(self):
+        backend = self.backend()
+        receipts = (ctypes.c_long * 8)()
+        backend._program_operation_receipts = receipts
+        backend.preflight = lambda _program: None
+        backend.release_all = lambda: {"verified": True}
+        program = {"authority": {"expires_at_ns":
+                time.monotonic_ns() + 20_000_000},
+            "ops": [{"op": "wait_update", "timeout_ms": 50},
+                {"op": "pointer_button", "button": "left", "down": True}]}
+
+        with self.assertRaisesRegex(Win32ExecutionError,
+                "LEASE_EXPIRED_DURING_EXECUTION"):
+            backend.execute(program)
+
+        self.assertEqual(list(receipts[0:4]), [5, 0, 0, 0])
+        self.assertEqual(list(receipts[4:8]), [6, 0, 0, 0])
+
+    def test_operation_receipt_distinguishes_sendinput_return_from_inflight(self):
+        from runtime.backends.win32_v1.backend import (
+            INPUT, _program_operation_receipt,
+        )
+
+        class User32:
+            def __init__(self, result):
+                self.result = result
+
+            def SendInput(self, _count, _inputs, _size):
+                return self.result
+
+        for returned, expected_phase, expected_count in (
+                (1, 4, 1), (0, 7, 0)):
+            with self.subTest(returned=returned):
+                backend = self.backend()
+                backend.user32 = User32(returned)
+                receipts = (ctypes.c_long * 4)()
+                token = _program_operation_receipt.set((receipts, 0))
+                try:
+                    if returned:
+                        backend._send(INPUT())
+                    else:
+                        with self.assertRaises(Win32BackendError):
+                            backend._send(INPUT())
+                finally:
+                    _program_operation_receipt.reset(token)
+                self.assertEqual(list(receipts),
+                    [expected_phase, 1, expected_count, 0])
+
+    def test_prestarted_max_capacity_operation_receipt_buffer_is_accepted(self):
+        from runtime.backends.win32_v1.backend import Win32Backend
+
+        backend = Win32Backend.__new__(Win32Backend)
+        backend._program_operation_receipts = (ctypes.c_long * (2048 * 4))()
+        backend.preflight = lambda _program: None
+        backend.release_all = lambda: {"verified": True}
+        backend.emissions = 0
+        program = {"authority": {"expires_at_ns":
+                time.monotonic_ns() + 1_000_000_000},
+            "ops": [{"op": "verify"}, {"op": "verify"}]}
+
+        with patch("runtime.backends.win32_v1.backend.sys.platform", "win32"):
+            result = backend.execute(program)
+
+        self.assertEqual(result["program_emissions"], 0)
+        self.assertEqual(list(backend._program_operation_receipts[:8]),
+            [5, 0, 0, 0, 5, 0, 0, 0])
+        self.assertEqual(backend._program_operation_receipts[8], 0)
 
     def test_unverified_failure_cleanup_still_quarantines(self):
         backend = self.backend()
@@ -409,8 +911,7 @@ class Win32IntegrationTests(unittest.TestCase):
     def test_valid_program_has_independent_effect_capture_and_release(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("valid"), current_observation_seq=7, current_binding_revision=3)
-        self.assertEqual(row["status"], "completed", row)
-        self.assertGreater(self.backend.emissions, before)
+        self.assertGreater(self.backend.emissions, before, row)
         deadline = time.time() + 2
         while time.time() < deadline and not self.effect.exists():
             time.sleep(0.02)
@@ -418,9 +919,20 @@ class Win32IntegrationTests(unittest.TestCase):
         effect = json.loads(self.effect.read_text())
         self.assertEqual(effect, {"saved": True, "text": "office", "clicked": True})
         releases = row["execution"]["releases"]
-        self.assertTrue(releases and releases[-1]["verified"])
-        self.assertEqual(releases[-1]["keys_down"], [])
-        self.assertEqual(releases[-1]["buttons_down"], [])
+        self.assertTrue(releases)
+        release = releases[-1]
+        self.assertEqual(release["keys_down"], [])
+        self.assertEqual(release["buttons_down"], [])
+        if release["verified"]:
+            self.assertEqual(row["status"], "completed", row)
+            self.assertEqual(release["keys_unknown"], [])
+            self.assertEqual(release["buttons_unknown"], [])
+        else:
+            # GetAsyncKeyState zero is ambiguous between up and inaccessible.
+            # Preserve task-effect evidence while refusing to claim completion.
+            self.assertEqual(row["status"], "release_unverified", row)
+            self.assertTrue(row["recovery_required"])
+            self.assertTrue(release["keys_unknown"] or release["buttons_unknown"], release)
         self.assertEqual(len(row["execution"]["observations"]), 1)
         obs = row["execution"]["observations"][0]
         self.assertEqual(obs["bytes"], 300 * 140 * 4)

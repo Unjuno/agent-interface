@@ -1,0 +1,12 @@
+{
+  "classification": "harness failure after one source dispatch and before recovery; source action was preserved and separately recovered once; the trial remains in the frozen cohort denominator",
+  "failed_runner_sha256": "0668ce7643f5745662a45017db9bdca7195391a4a2be7e815265b1375e7f8274",
+  "failure": {
+    "message": "module 'importlib' has no attribute 'module_from_spec'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r25_20261123\\run_cohort.py\", line 129, in run_trial\n    spec=spec_from_file_location(f'r25_scorer_{cfg[\"ordinal\"]}',ROOT/'research/integration/win32_expired_authority_delayed_effect_r24_20261123/source/scorer.py'); scorer=__import__('importlib.util').module_from_spec(spec);spec.loader.exec_module(scorer)\n                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'importlib' has no attribute 'module_from_spec'\n",
+    "type": "AttributeError"
+  },
+  "recovery_calls_by_failed_runner": 0,
+  "replayed_action": false,
+  "schema": "agent-interface/r25-runner-failure-v1"
+}

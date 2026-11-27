@@ -1,0 +1,73 @@
+{
+  "audit_current_main": "15030544befcb378d798da1c9c4ba847189d8f67",
+  "checks": {
+    "all_17_raw_hashes_match": true,
+    "all_5_runtime_source_hashes_match_current_checkout": true,
+    "caller_response_within_300ms": true,
+    "caller_returned_pending": true,
+    "fresh_session_oracle_pass": true,
+    "fresh_target_session_and_generation_are_distinct": true,
+    "independent_release_readback_all_up": true,
+    "late_request_horizon_all_up_and_no_delayed_press": true,
+    "no_relevant_runtime_diff_since_run_source": true,
+    "old_cancel_stays_unknown_and_replay_denied": true,
+    "old_fence_unchanged": true,
+    "owner_blocked_in_real_display_sync": true,
+    "process_exit_zero": true,
+    "run_source_is_current_main_ancestor": true,
+    "xvfb_exit_zero": true
+  },
+  "fresh_session": {
+    "after_input": [
+      3
+    ],
+    "at_horizon": [
+      3
+    ],
+    "before": [
+      0
+    ],
+    "old_fence_unchanged": true,
+    "oracle_status": "pass",
+    "runtime_task_success": null,
+    "synthetic_task_success": true
+  },
+  "identities": {
+    "new_process_generation": "2828d997d9bd9a403ff1543bb7157f9ed4abdb98c9f41a831fabaad384d9075a",
+    "new_session_id": "4ef0e995c5914473bcb67502831592ca",
+    "new_target_xid": 2097154,
+    "old_process_generation": "5b1c41d18f3e5862803bc1e3bdefc88859b8ebea182ad2a3ff622c2f122641fa",
+    "old_session_id": "1c6aea4a14c54c91a697934ad1f8f0b6",
+    "old_target_xid": 2097152
+  },
+  "limitations": [
+    "one private-Xvfb sample only",
+    "owner blocked in Display.sync while the X server remained responsive to supervisor",
+    "does not prove whole-X-server-unavailable release",
+    "synthetic task oracle; not physical GUI or MAP01",
+    "not a reliability or matched-efficiency estimate",
+    "no WSLc allocation"
+  ],
+  "old_cancel": {
+    "cleanup_status": "UNKNOWN",
+    "late_server_request_possible": true,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "task_success": null
+  },
+  "overall": "PASS_SCOPED_RAW_AND_SOURCE_AUDIT",
+  "raw_file_count": 17,
+  "raw_hashes_match": true,
+  "run_id": "AI-XVFB-PRESTARTED-FRESH-RECOVERY-20261022-R02",
+  "run_source": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+  "runtime_source_file_count": 5,
+  "schema": "agent-interface/r02-raw-evidence-audit-v1",
+  "source_hashes_match_current_checkout": true,
+  "timings_ms": {
+    "caller_admission_to_parent_keymap_readback": 379.339025,
+    "caller_admission_to_response": 252.92396,
+    "caller_admission_to_supervisor_release_readback": 324.790867,
+    "caller_admission_to_terminal": 331.456171,
+    "cancel_start_to_late_request_horizon": 8501.475079
+  }
+}

@@ -1,0 +1,1 @@
+docker run --rm --network none --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --mount type=bind,source=D:/ai57,target=/workspace,readonly --mount type=bind,source=D:/ai57/research/integration/issue57_calc_public_profile_plan_20261103/calc-g10-adapter-audit-20261104-01,target=/evidence --workdir /workspace agent-interface-xvfb-mcp:late-input-r19 sh /evidence/run.sh

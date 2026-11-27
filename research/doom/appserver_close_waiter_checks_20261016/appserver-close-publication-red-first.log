@@ -1,0 +1,25 @@
+test_close_fence_cannot_become_visible_during_cached_publication (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_close_fence_cannot_become_visible_during_cached_publication) ... FAIL
+test_reentrant_close_in_predicate_cannot_consume_notification (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_reentrant_close_in_predicate_cannot_consume_notification) ... FAIL
+
+======================================================================
+FAIL: test_close_fence_cannot_become_visible_during_cached_publication (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_close_fence_cannot_become_visible_during_cached_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 45, in test_close_fence_cannot_become_visible_during_cached_publication
+    self.assertFalse(client._closing, 'close flag escaped the publication lock')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : close flag escaped the publication lock
+
+======================================================================
+FAIL: test_reentrant_close_in_predicate_cannot_consume_notification (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_reentrant_close_in_predicate_cannot_consume_notification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 64, in test_reentrant_close_in_predicate_cannot_consume_notification
+    with self.assertRaises(AppServerError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AppServerError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.018s
+
+FAILED (failures=2)

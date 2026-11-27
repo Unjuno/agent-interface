@@ -1,0 +1,66 @@
+{
+  "experiment_id": "v39_pending_ammo_recovery_a17_20261013",
+  "classification": "CONSTRUCTION_ONLY_PENDING_TURN_RECOVERED_AMMO_ADMISSION",
+  "main_commit": "964c9197d5083ab55ea7fdc9105427623e89e677",
+  "base_image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "test_sha256": "dfc0f2902c550430d6c96639babb8025d8d9792a533adad4e1372f0876c7c5b8",
+  "containerfile_sha256": "a5ffd2bbaca7cbab129cfe9a9fee35f99af75d3c92aeba3fae4b487e824af73b",
+  "requested_container_constraints": {
+    "cpus": "1",
+    "memory": "512m",
+    "network": "none"
+  },
+  "candidate_invocations": 1,
+  "sources": {
+    "observable_signal_guard_v2.py": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+      "bytes": 7404
+    },
+    "doom_signal_value_domain_v1.py": {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+      "bytes": 483
+    },
+    "map01_overlap_controller_v39.py": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+      "bytes": 112524
+    },
+    "doom_action_validity_contract_v1.py": {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+      "bytes": 4146
+    },
+    "final_action_admission_v1.py": {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+      "bytes": 6160
+    },
+    "final_action_admission_v2.py": {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "git_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+      "bytes": 9505
+    },
+    "action_validity_admission_v1.py": {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "git_blob": "db37e92c75d04dcd3f725e8507314f6fb64b6b8c",
+      "sha256": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+      "bytes": 8845
+    },
+    "persistent_planner_adapter_v2.py": {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+      "bytes": 11709
+    }
+  },
+  "repository": "Unjuno/agent-interface",
+  "image_id": "sha256:340c4d6affc2c6ff258b188deaadc755c759591142d7b0a1839ccc82fd98b22c"
+}

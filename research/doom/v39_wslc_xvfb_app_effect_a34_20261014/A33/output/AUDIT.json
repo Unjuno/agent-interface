@@ -1,0 +1,176 @@
+{
+  "checks": [
+    {
+      "name": "frozen_input_manifest",
+      "observed": [
+        {
+          "actual": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+          "expected": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+          "pass": true,
+          "path": "input_owner_v10.py"
+        },
+        {
+          "actual": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+          "expected": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+          "pass": true,
+          "path": "input_owner_v12.py"
+        },
+        {
+          "actual": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "expected": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "pass": true,
+          "path": "input_transition_owner_v3.py"
+        },
+        {
+          "actual": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+          "expected": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+          "pass": true,
+          "path": "input_transition_owner_v4.py"
+        },
+        {
+          "actual": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7",
+          "expected": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7",
+          "pass": true,
+          "path": "map01_overlap_controller_v39.py"
+        },
+        {
+          "actual": "6abbaf73f4cd26c1bca8120f332c204642df830015ce235763748058b573a34c",
+          "expected": "6abbaf73f4cd26c1bca8120f332c204642df830015ce235763748058b573a34c",
+          "pass": true,
+          "path": "candidate.py"
+        },
+        {
+          "actual": "245b5f852b5240ca1ef33af937d37a3a19245a62886f31d4a817796494295933",
+          "expected": "245b5f852b5240ca1ef33af937d37a3a19245a62886f31d4a817796494295933",
+          "pass": true,
+          "path": "auditor.py"
+        },
+        {
+          "actual": "e229b660da9d1fe913c1141b468e0efd166ccdb9929391f5134599fde114b676",
+          "expected": "e229b660da9d1fe913c1141b468e0efd166ccdb9929391f5134599fde114b676",
+          "pass": true,
+          "path": "run-a33.sh"
+        },
+        {
+          "actual": "1e5ff0b1ed97c8faa71d86682379321713b0c37ed93736812984dfade5decbd5",
+          "expected": "1e5ff0b1ed97c8faa71d86682379321713b0c37ed93736812984dfade5decbd5",
+          "pass": true,
+          "path": "FREEZE.json"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "experiment_identity",
+      "observed": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A33-20261014-01",
+      "pass": true
+    },
+    {
+      "name": "candidate_complete",
+      "observed": {
+        "errors": [
+          "RuntimeError: admission identity did not match owner/key"
+        ],
+        "status": "STOP"
+      },
+      "pass": false
+    },
+    {
+      "name": "V4_admission_identity",
+      "observed": {
+        "event": "input_admission",
+        "input_ack_ns": 32604616478,
+        "intent_token": "MAP01-V39-WSLC-A33-20261014-01",
+        "key": "a",
+        "operation": null,
+        "owner_id": null
+      },
+      "pass": false
+    },
+    {
+      "name": "application_received_matching_keypress",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "application_received_matching_keyrelease",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "application_task_effect",
+      "observed": {
+        "after_press": null,
+        "after_release": null,
+        "initial": 0
+      },
+      "pass": false
+    },
+    {
+      "name": "bounded_application_feedback",
+      "observed": {
+        "bound_ns": 200000000,
+        "response_latency_ns": -32604616478
+      },
+      "pass": false
+    },
+    {
+      "name": "server_keymap_reports_up",
+      "observed": {},
+      "pass": false
+    },
+    {
+      "name": "application_release_after_deadline_within_bound",
+      "observed": {
+        "bound_ns": 1000000000,
+        "release_overshoot_ns": null
+      },
+      "pass": false
+    },
+    {
+      "name": "current_V39_strict_terminal_release_accepts_receipt",
+      "observed": {
+        "replayed_terminal": null,
+        "saved_matches_replay": true,
+        "saved_terminal": null
+      },
+      "pass": false
+    },
+    {
+      "name": "owner_expiry_recovery_is_bounded",
+      "observed": {
+        "bound_ns": 1000000000,
+        "reason": null,
+        "verified_overshoot_ns": null
+      },
+      "pass": false
+    },
+    {
+      "name": "owner_stopped_and_closed",
+      "observed": {
+        "finished_ns": 32618124924,
+        "owner_close_error": "RuntimeError: input owner stopped before reply",
+        "xvfb_exit": 0,
+        "xvfb_runtime_ns": 281687942
+      },
+      "pass": false
+    },
+    {
+      "name": "xvfb_exited_cleanly",
+      "observed": {
+        "finished_ns": 32618124924,
+        "owner_close_error": "RuntimeError: input owner stopped before reply",
+        "xvfb_exit": 0,
+        "xvfb_runtime_ns": 281687942
+      },
+      "pass": true
+    }
+  ],
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A33-20261014-01",
+  "independent_audit": true,
+  "interpretation": "A synthetic X11 application consumed one V4-owner keypress, changed its server-visible task counter, then received the bounded lease-expiry release. This does not establish Doom/MAP01 behavior, physical input, a live model, or general response latency.",
+  "schema": "map01-v39-wslc-xvfb-app-effect-audit-a30-v1",
+  "scope": "synthetic X11 application effect and lease-expiry release; no game, model, physical input, or desktop control",
+  "source": "saved RAW.json plus frozen input bytes; did not import candidate.py",
+  "status": "FAIL"
+}

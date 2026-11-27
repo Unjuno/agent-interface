@@ -2,12 +2,13 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from research.live_control.codex_app_server_command_v1 import (
-    DISABLED_FEATURES, DISABLED_MCPS, command,
+    DISABLED_FEATURES, command,
 )
 from research.live_control.integrated_efficiency_app_server_model_v1 import (
-    PersistentGroundingModel, per_turn_usage,
+    GroundingCallError, PersistentGroundingModel, per_turn_usage,
 )
 
 
@@ -64,12 +65,26 @@ def usage(input_tokens, cached):
 
 
 class PersistentIntegratedModelTests(unittest.TestCase):
-    def test_minimal_command_is_explicit(self):
-        value = command("node", "cli.js")
+    def test_direct_executable_starts_restricted_server(self):
+        class Client(FakeClient):
+            def initialize(self): pass
+        client=Client([],[])
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); workspace=root/'workspace'; workspace.mkdir()
+            with patch('research.live_control.integrated_efficiency_app_server_model_v1.CodexAppServerClient',return_value=client) as factory:
+                PersistentGroundingModel(root/'session',workspace,node=None,cli=None,
+                                         executable='codex.exe',path_converter=str)
+            argv=factory.call_args.args[0]
+            self.assertEqual(argv[:3],['codex.exe','app-server','--stdio'])
+            self.assertTrue(all(x in argv for x in DISABLED_FEATURES))
+
+    def test_minimal_command_disables_features_without_unknown_mcp_rows(self):
+        with tempfile.TemporaryDirectory() as directory:
+            value = command("node", "cli.js", codex_home=directory)
         self.assertEqual(value[:4], ["node", "cli.js", "app-server", "--stdio"])
         self.assertTrue(all(feature in value for feature in DISABLED_FEATURES))
-        self.assertTrue(all(f"mcp_servers.{name}.enabled=false" in value
-                            for name in DISABLED_MCPS))
+        self.assertFalse(any(item.startswith("mcp_servers.") for item in value))
+
         self.assertNotIn("mcp_servers={}", value)
 
     def test_two_calls_keep_thread_and_return_distinct_call_ids_and_last_usage(self):
@@ -102,6 +117,29 @@ class PersistentIntegratedModelTests(unittest.TestCase):
             per_turn_usage({"total": {}})
         with self.assertRaises(ValueError):
             per_turn_usage(usage(-1, 0))
+
+    def test_cached_input_cannot_exceed_total_input(self):
+        self.assertEqual(per_turn_usage(usage(10, 10))["cached_input_tokens"], 10)
+        with self.assertRaisesRegex(ValueError, "cached input exceeds total input"):
+            per_turn_usage(usage(10, 11))
+
+    def test_inconsistent_usage_fails_call_without_retry_or_false_total(self):
+        client = FakeClient([raw(100, 500)], [usage(10, 11)])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "image.png"
+            image.write_bytes(b"fixture")
+            model = PersistentGroundingModel(root / "session", workspace,
+                                             client=client, path_converter=str)
+            with self.assertRaises(GroundingCallError) as caught:
+                model.call(root / "call-1", "prompt", image, "compiled", workspace)
+            self.assertFalse((root / "call-1" / "result.json").exists())
+        self.assertEqual(client.turn, 1)
+        self.assertEqual(caught.exception.call_id, "turn-1")
+        self.assertIsNone(caught.exception.usage)
+        self.assertEqual(caught.exception.usage_error, "cached input exceeds total input")
 
     def test_contract_or_workspace_change_is_rejected_before_turn(self):
         client = FakeClient([raw(100, 500)], [usage(1, 0)])

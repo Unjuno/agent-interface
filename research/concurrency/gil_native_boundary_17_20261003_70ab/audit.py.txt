@@ -1,0 +1,36 @@
+"""Saved-only independent order oracle. Never imports or reexecutes producer."""
+import copy,hashlib,json,pathlib
+p=pathlib.Path(__file__).resolve().parent
+f=json.loads((p/'FREEZE.json').read_bytes());raw=json.loads((p/'RAW.json').read_bytes())
+for n,h in f['hashes'].items():assert hashlib.sha256((p/n).read_bytes()).hexdigest()==h
+assert raw['freeze']==f
+
+def check(rows):
+    assert len(rows)==4
+    contrast=True;measurements=[]
+    for i,r in enumerate(rows):
+        assert r['case']==i and r['mode']==f['modes'][i] and r['exit']==0 and r['stderr_bytes']==0
+        s=r['raw'];assert s['fd_closed'] is True and s['cancel_byte']=='43' and s['return_code']==0
+        lo=s['native_start_ns'];hi=s['native_end_ns'];a=r['send_before_ns'];b=r['send_after_ns'];recv=s['received_ns'];closed=s['closed_ns']
+        assert all(type(x) is int and x>0 for x in [lo,hi,a,b,recv,closed])
+        assert hi-lo>=300000000 and lo<=a<=b<hi and a<=recv<=closed and hi<=s['python_after_ns']
+        contrast &= (closed<hi if r['mode']=='released' else closed>=hi)
+        measurements.append({'case':i,'mode':r['mode'],'cancel_after_to_close_ns':closed-b,'closed_before_native_end':closed<hi})
+    return 'PASS_FINITE_NATIVE_BOUNDARY' if contrast else 'HOLD_ORDER_OR_CONTRAST',measurements
+verdict,measurements=check(raw['rows'])
+for i,r in enumerate(raw['rows']):
+    lines=(p/f'case-{i}.stdout').read_bytes().splitlines();assert len(lines)==2
+    assert json.loads(lines[0])==r['ready'] and json.loads(lines[1])==r['raw'] and (p/f'case-{i}.stderr').read_bytes()==b''
+rejects=[]
+for kind in ['missing','wrong_mode','outside','unclosed','bad_return']:
+    rows=copy.deepcopy(raw['rows'])
+    if kind=='missing':rows.pop()
+    elif kind=='wrong_mode':rows[0]['mode']='held'
+    elif kind=='outside':rows[0]['send_before_ns']=rows[0]['raw']['native_end_ns']+1
+    elif kind=='unclosed':rows[0]['raw']['fd_closed']=False
+    else:rows[0]['raw']['return_code']=-1
+    try:check(rows)
+    except AssertionError:rejects.append(kind)
+    else:raise AssertionError(kind)
+result={'verdict':verdict,'cases':4,'measurements':measurements,'corruption_rejections':rejects,'producer_replays':0,'scope':'finite Linux dummy-FD stress fixture; no physical release/GUI/hard deadline/reliability rate'}
+(p/'AUDIT.json').open('x').write(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

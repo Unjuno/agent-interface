@@ -1,0 +1,3 @@
+Current-main API preflight, before either registered task arm. Ran one disposable container from the frozen image with `--network none`, 1 CPU, 512 MiB RAM, 1 GiB swap and 64 PID limit. Result: imports for `create_server`, `CalcPrimaryProfile`, and `CalcLaunchSupervisor` passed; `_read_current(..., run_ocr=True)` and `wait_for_verified_exit(*, timeout_s)` are present. No X server, Calc process, MCP task, or task input was started. Exit status 0.
+
+Lineage boundary: r75's frozen `calc_profile_v1.py`, `calc_launcher_v1.py`, and `calc_process_group_v1.py` hashes differ from current main 673f3584. r75 remains a local-source one-attempt validation and is not pooled. This new pair runs only current-main source hashes in the clean detached worktree.

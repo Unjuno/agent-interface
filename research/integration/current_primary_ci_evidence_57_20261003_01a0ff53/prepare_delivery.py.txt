@@ -1,0 +1,98 @@
+"""Additive V3 CI entry repair, isolated index; no ref or main writes."""
+import datetime
+import hashlib
+import json
+import os
+import pathlib
+import subprocess
+
+W=pathlib.Path(__file__).parent
+R=W.parent/'agent-interface'
+OLD='2523fc996fa44d88d40aef79f1d757f569fca387'
+BASE='bd1697d99d5db1d1b3040de2614992776b8f81a6'
+LEAF='research/integration/current_primary_ci_evidence_57_20261003_01a0ff53'
+BRANCH='repair/primary-current-01a0ff53-20261003'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def git(*args,stdin=None,env=None):
+    return subprocess.run(['git',*args],cwd=R,input=stdin,env=env,capture_output=True,check=True).stdout
+read=lambda n:json.loads((W/n).read_bytes())
+assert read('RESULT.json')['actual_selected_runner_exit']==0 and read('SAVED_READER_RECEIPT.json')['actual_exit']==0
+assert read('ENTRY_OUTER_RECEIPT.json')['actual_exit']==1
+assert read('SOURCE_PINS.before.json')==read('SOURCE_PINS.after.json')
+assert git('rev-parse','refs/heads/'+BRANCH).decode().strip()==OLD
+workflow=W/'source/.github/workflows/native-mcp-v1.yml'
+assert sha(workflow.read_bytes())==read('PLAN.json')['workflow_after_sha256']
+for path,item in read('SOURCE_PINS.after.json').items():
+    if path!='.github/workflows/native-mcp-v1.yml':
+        assert (W/'source'/path).read_bytes()==git('show',OLD+':'+path)
+report='''# Primary CI evidence-root repair
+Source owner0975, FINAL-v5, PR6979/parent57. Genuine nonauthor f520 finding5968442437 identified a real entry defect in V2: registered test_primary_stdio_failure_order requires PRIMARY_FAILURE_EVIDENCE, while native-mcp-v1 supplied none. Author HOLD5968490755 preserves V2 and prevents its adoption; V2's runtime/raw and first red2/green41 outcomes remain immutable.
+
+V3 changes ONLY the workflow beyond V2 and adds this inert custody leaf. The existing full Node module catalogue is unchanged. Literal Bash prefix requires RUNNER_TEMP/GITHUB_ENV, atomically allocates a fresh mktemp child, exports PRIMARY_FAILURE_EVIDENCE and persists its exact row via GITHUB_ENV. The existing always-upload artifact now also references that same persisted directory. Each original test keeps its exclusive wx fixture/witness files; no runtime/test/README/input/threshold change occurs relative to V2.
+
+New ordinary CI-admission unit primary-ci-evidence-entry-57-0975-20261003-a01 frozen11:02:59.488519UTC. Three missing/empty runner/env configurations each stop before allocation/Node. One actual literal allocation/persistence prefix plus ONLY selected unchanged2-method module runs11:05:09.990819–11:05:10.233249UTC/exit0, tests2/pass2/fail0/skip0/cancel0/todo0. This is a changed-entry ordinary regression, not replay of consumed original red2/green41 captures or a new independent scientific first-error result. The full workflow command is inspected/preserved, NOT executed here.
+
+Actual own macOSNode26.7.0 SHA1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040 and Bash;28 source pins unchanged before/after. Both new root's input/output fixtures keep the one original72B request/result, same pending until release, first backlog diagnosis, original host/fixture exit0, owned error listeners0 and actual same fixture PIDs8147/8151 absent. Complete original input/host/fixture/exchange/reply/presentation/5-event histories and full source/scripts/command streams remain.
+
+The first outer capture driver exits1 AFTER selected runner0 because its saved-output parser expected TAP # summaries while Node actually produced spec checkmarks/Unicode summaries. The original driver, full243B actual stdout, empty runner stderr, outer314B stderr and times are retained. A SEPARATE data-only reader corrects reporter interpretation, no producer/product/raw/threshold change or runtime rerun; actual11:07:54.204061–11:07:54.248372UTC/exit0. First negative configurations and allocated root remain original observations. This reader success is not a retrospective outer-driver0.
+
+Public derivatives replace only own workspace prefix and this unit's exact recorded inherited PATH value with a declared private-path token. The pinned Node executable/digest and first PATH entry are separately retained; private original PATH/receipts remain local unchanged. Each original/public byte size/hash is separate. Secret/nonpublic ambient paths are not published, no other author's/private data is reconstructed from hashes. Snapshots are .txt; archive attrs are local; original V1/V2 leaves and every V2 active source except the repaired workflow remain exact.
+
+StrictUTF86961 is excluded from this source. Owned45e9 private56-method/three-error composition remains separately qualified and is not installed or approved by V3. Full hostedUbuntu/Node22/workflow/CI, original/native/formal/peer producer/auditor, CLI/device/backend/task/physicalrelease/deadline/bytecap/efficiency/general-goal remain unexecuted or unproved. Optional skipped CI is not PASS. Fresh V3 descriptor/epoch and genuine new acceptances/decisions are required; old V2 vote/CHANGES do not transfer. No application tuple or main authority; main sends0.
+'''
+(W/'REPORT.md').write_text(report,encoding='utf-8')
+archive=W/'public-leaf';archive.mkdir(exist_ok=False)
+private_path=read('selected-entry-first/RECEIPT.json')['environment_delta']['PATH'].encode()
+root=str(W.parent.parent).encode()
+targets=[p for p in sorted(W.rglob('*')) if p.is_file() and 'public-leaf' not in p.relative_to(W).parts and not p.name.endswith('.index')]
+provenance=[]
+for p in targets:
+    rel=str(p.relative_to(W))
+    if p.suffix in ['.py','.mjs','.yml']:rel+='.txt'
+    if 'source' in p.relative_to(W).parts and not rel.endswith('.txt'):rel+='.txt'
+    b=p.read_bytes();pub=b.replace(private_path,b'<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>').replace(root,b'<OWN_WORKSPACE>')
+    dest=archive/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(pub)
+    provenance.append({'path':rel,'original_bytes':len(b),'original_sha256':sha(b),'public_bytes':len(pub),'public_sha256':sha(pub),'workspace_prefix_projected':root in b,'whole_recorded_PATH_projected':private_path in b,'original_retained':True})
+(archive/'PROVENANCE.json').write_text(json.dumps({'files':provenance,'projection':'Exact own workspace prefix and this unit original inherited PATH only; separately pin first Node entry. Private original/public identity remains separate.'},indent=2)+'\n')
+exceptions=[]
+for p in sorted(archive.rglob('*')):
+    if p.is_file():
+        b=p.read_bytes()
+        if b.endswith(b'\n\n') or any(line.endswith((b' ',b'\t')) for line in b.splitlines()):exceptions.append(str(p.relative_to(archive)))
+(archive/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n'+''.join(x+' -whitespace\n' for x in exceptions))
+manifest=[]
+for p in sorted(archive.rglob('*')):
+    if p.is_file():
+        b=p.read_bytes();manifest.append({'path':str(p.relative_to(archive)),'bytes':len(b),'sha256':sha(b)})
+(archive/'MANIFEST.json').write_text(json.dumps({'files':manifest,'historical_byte_whitespace_exceptions':exceptions},indent=2)+'\n')
+env=dict(os.environ,GIT_INDEX_FILE=str(W/'source.index'))
+git('read-tree',OLD,env=env)
+updates=[('.github/workflows/native-mcp-v1.yml',workflow)]+[(LEAF+'/'+str(p.relative_to(archive)),p) for p in sorted(archive.rglob('*')) if p.is_file()]
+for path,p in updates:
+    oid=git('hash-object','-w','--no-filters','--stdin',stdin=p.read_bytes()).decode().strip()
+    git('update-index','--add','--cacheinfo','100644,'+oid+','+path,env=env)
+tree=git('write-tree',env=env).decode().strip()
+check=subprocess.run(['git','--attr-source='+tree,'diff','--check',OLD,tree],cwd=R,env=env,capture_output=True)
+(W/'delivery-diff-check.stdout.txt').write_bytes(check.stdout);(W/'delivery-diff-check.stderr.txt').write_bytes(check.stderr)
+assert check.returncode==0
+head=git('commit-tree',tree,'-p',OLD,stdin=b'fix(ci): allocate evidence for primary failure regression [skip ci]\n').decode().strip()
+raw=git('cat-file','commit',head);(W/'candidate-commit.raw.txt').write_bytes(raw)
+assert raw.splitlines()[0]==('tree '+tree).encode() and [x for x in raw.splitlines() if x.startswith(b'parent ')]==[('parent '+OLD).encode()]
+changed=git('diff','--name-only','--no-renames',OLD,head).decode().splitlines()
+assert changed==sorted(path for path,p in updates)
+for oldleaf in ['research/integration/current_primary_57_20261003_01a0ff53','research/integration/current_primary_first_error_57_20261003_01a0ff53']:
+    assert not git('diff','--name-only',OLD,head,'--',oldleaf).strip()
+rows=[]
+for path in git('diff','--name-only','--no-renames',BASE,head).decode().splitlines():
+    row={'path':path}
+    for side,revision in [('before',BASE),('after',head)]:
+        item=git('ls-tree',revision,'--',path).decode().strip()
+        if not item:row[side]=None;continue
+        mode,kind,oid=item.split('\t')[0].split();b=git('cat-file','blob',oid)
+        row[side]={'mode':mode,'kind':kind,'blob':oid,'bytes':len(b),'sha256':sha(b)}
+    rows.append(row)
+(W/'CHANGED_IMAGES.json').write_text(json.dumps(rows,indent=2)+'\n')
+delta=git('diff','--binary','--full-index',BASE,head);(W/'actual.diff').write_bytes(delta)
+delivery={'head':head,'tree':tree,'first_parent':OLD,'review_base':BASE,'branch':BRANCH,'leaf':LEAF,'leaf_files':len(manifest)+1,'manifest_targets':len(manifest),'provenance_rows':len(provenance),'workspace_derivatives':sum(x['workspace_prefix_projected'] for x in provenance),'PATH_derivatives':sum(x['whole_recorded_PATH_projected'] for x in provenance),'changed_paths':len(rows),'image_map_sha256':sha(json.dumps(rows,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()),'full_diff_bytes':len(delta),'full_diff_sha256':sha(delta),'manifest_bytes':(archive/'MANIFEST.json').stat().st_size,'manifest_sha256':sha((archive/'MANIFEST.json').read_bytes()),'only_active_V2_change':'.github/workflows/native-mcp-v1.yml','old_leaves_unchanged':True,'diff_check_exit':0,'main_sends':0,'source_ref_sent':False}
+(W/'DELIVERY.json').write_text(json.dumps(delivery,indent=2)+'\n')
+print(json.dumps(delivery))

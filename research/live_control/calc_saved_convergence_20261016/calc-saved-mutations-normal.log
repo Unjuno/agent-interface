@@ -1,0 +1,87 @@
+test_bad_saved_value_is_rejected_even_with_consistent_hashes (test_verify.RetainedAuditTests.test_bad_saved_value_is_rejected_even_with_consistent_hashes) ... ok
+test_cleanup_cannot_hide_remaining_process (test_verify.RetainedAuditTests.test_cleanup_cannot_hide_remaining_process) ... ok
+test_cumulative_counters_cannot_replace_program_counts (test_verify.RetainedAuditTests.test_cumulative_counters_cannot_replace_program_counts) ... ok
+test_expired_program_lease_is_rejected (test_verify.RetainedAuditTests.test_expired_program_lease_is_rejected) ... FAIL
+test_guard_checked_changed_cell_pixels_is_rejected (test_verify.RetainedAuditTests.test_guard_checked_changed_cell_pixels_is_rejected) ... FAIL
+test_input_neutral_release_is_required (test_verify.RetainedAuditTests.test_input_neutral_release_is_required) ... ok
+test_lost_completed_prefix_is_rejected (test_verify.RetainedAuditTests.test_lost_completed_prefix_is_rejected) ... ok
+test_mismatched_final_observation_cannot_deliver_feedback (test_verify.RetainedAuditTests.test_mismatched_final_observation_cannot_deliver_feedback) ... ok
+test_missing_pre_s_key_guard_is_rejected (test_verify.RetainedAuditTests.test_missing_pre_s_key_guard_is_rejected) ... ok
+test_ocr_from_other_sequence_is_rejected (test_verify.RetainedAuditTests.test_ocr_from_other_sequence_is_rejected) ... ok
+test_ocr_glyphs_must_match_claimed_values (test_verify.RetainedAuditTests.test_ocr_glyphs_must_match_claimed_values) ... ok
+test_post_terminal_score_must_follow_original_owner (test_verify.RetainedAuditTests.test_post_terminal_score_must_follow_original_owner) ... ok
+test_presented_base64_must_be_exact_source (test_verify.RetainedAuditTests.test_presented_base64_must_be_exact_source) ... FAIL
+test_program_scope_cannot_be_rebound (test_verify.RetainedAuditTests.test_program_scope_cannot_be_rebound) ... FAIL
+test_same_owner_close_release_is_required (test_verify.RetainedAuditTests.test_same_owner_close_release_is_required) ... ok
+test_true_task_verdict_cannot_replace_modal_yield (test_verify.RetainedAuditTests.test_true_task_verdict_cannot_replace_modal_yield) ... ok
+test_unmodified_complete_bundle_passes (test_verify.RetainedAuditTests.test_unmodified_complete_bundle_passes) ... ok
+test_wrong_control_claiming_save_is_rejected (test_verify.RetainedAuditTests.test_wrong_control_claiming_save_is_rejected) ... FAIL
+
+======================================================================
+FAIL: test_expired_program_lease_is_rejected (test_verify.RetainedAuditTests.test_expired_program_lease_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 58, in test_expired_program_lease_is_rejected
+    bridge=self.bridge();f=next((ROOT/bridge).glob('program-*.json')).relative_to(ROOT).as_posix();self.mutate(f,lambda d:d['authority'].update(expires_at_ns=1));self.rejected('recorded lease')
+                                                                                                                                                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 14, in rejected
+    with self.assertRaisesRegex(ValueError,message):audit(ROOT,read=self.read,verify_manifest=False)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_guard_checked_changed_cell_pixels_is_rejected (test_verify.RetainedAuditTests.test_guard_checked_changed_cell_pixels_is_rejected)
+----------------------------------------------------------------------
+ValueError: capture artifact identity mismatch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 34, in test_guard_checked_changed_cell_pixels_is_rejected
+    self.rejected('Save cell dependency pixels changed')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 14, in rejected
+    with self.assertRaisesRegex(ValueError,message):audit(ROOT,read=self.read,verify_manifest=False)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Save cell dependency pixels changed" does not match "capture artifact identity mismatch"
+
+======================================================================
+FAIL: test_presented_base64_must_be_exact_source (test_verify.RetainedAuditTests.test_presented_base64_must_be_exact_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 36, in test_presented_base64_must_be_exact_source
+    self.mutate('compiled-normal/replies/009.json',lambda d:d['feedback']['image'].update(data=base64.b64encode(b'not original PNG').decode()));self.rejected('presented image bytes')
+                                                                                                                                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 14, in rejected
+    with self.assertRaisesRegex(ValueError,message):audit(ROOT,read=self.read,verify_manifest=False)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_program_scope_cannot_be_rebound (test_verify.RetainedAuditTests.test_program_scope_cannot_be_rebound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 60, in test_program_scope_cannot_be_rebound
+    bridge=self.bridge();f=next((ROOT/bridge).glob('program-*.json')).relative_to(ROOT).as_posix();self.mutate(f,lambda d:d['authority'].update(lease_id='different-scope'));self.rejected('program scope changed')
+                                                                                                                                                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 14, in rejected
+    with self.assertRaisesRegex(ValueError,message):audit(ROOT,read=self.read,verify_manifest=False)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_control_claiming_save_is_rejected (test_verify.RetainedAuditTests.test_wrong_control_claiming_save_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 19, in test_wrong_control_claiming_save_is_rejected
+    self.mutate(f,lambda d:d['ops'].insert(1,{'op':'key_chord','keys':['CTRL','s']}));self.rejected('Save request count changed')
+                                                                                      ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\calc-saved-source-07349554\runtime\results\calc-owner-transfer-live-01\test_verify.py", line 14, in rejected
+    with self.assertRaisesRegex(ValueError,message):audit(ROOT,read=self.read,verify_manifest=False)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 18 tests in 4.043s
+
+FAILED (failures=5)

@@ -1,6 +1,39 @@
 # Analytical research
 
-- [Issue #8587 T0 A01 multi-source event reconciliation](multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 8 identifiable boundary faults localized; 2 cases remain UNKNOWN; zero false localizations on 5 benign controls; 5/5 mutations rejected. Authored finite trace fixture only, no real-source completeness or action-authority claim.
+- [Issue #8587 T0 A01 multi-source event reconciliation](multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 8 identifiable boundary faults localized; 2 cases remain UNKNOWN; no false localizations on 5 benign controls. Authored trace fixture only.
+
+- [Issue #8527 singleton-control construction audit gap](belief_recovery_8527_singleton_diagnostic_20261027/REPORT.md) — post-result diagnostic: duplicated singleton control was accepted, so distinct-control coverage was not established; A02 formal candidate/auditor remain 0/0.
+
+- [Issue #8527 T0 A02 belief-space recovery construction](belief_recovery_margin_8527_t0_a02_20261008/README.md) — construction tests pass; formal candidate and auditor remain 0/0. This is not a scientific PASS or live recovery result; original frozen execution conditions remain historical.
+
+- [Issue #8630 T0 A01 failed policy-selection gate](joint_opportunity_budget_8630_t0_a01_20261009/REPORT.md) — `FAIL_METHOD`: weak-signal observation plus recovery scored 0.755 versus 0.750 without observation; one candidate and one auditor invocation, no retries. Synthetic only; preserve raw outputs rather than overwriting them with the historical commands.
+
+- [Issue #8630 reserve-binding construction diagnostic](joint_opportunity_budget_8630_reserve_diagnostic_20261009/REPORT.md) — `PASS_DIAGNOSTIC` for an authored exact-arithmetic construction only; A01 remains `FAIL_METHOD`. Preserve existing `run-01` outputs; do not overwrite them when reproducing.
+
+- [Issue #8668 A04 request-bound ACK transitions](phase_dependent_controllability_8668_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`, `SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED`: 18/18 schedules, 8/8 mutations; host-only finite model, no real backend/GUI claim.
+- [Issue #8668 T0 A05 emitted-frontier hidden-effect boundary](phase_dependent_controllability_8668_t0_a05_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: six frozen schedules distinguish phase-refined `UNKNOWN`/no-retry from one phase-blind false-cancel/unsafe-retry witness; 3/3 mutations rejected. Host-only finite model; no GUI/backend claim.
+
+- [Issue #1998 A03 focused PNG payload — formal HOLD](focused_png_payload_size_1998_t0_a03_20261009/REPORT.md) — `HOLD_RUNNER_EXIT_UNCAPTURED`: one frozen candidate emitted 23 structurally parseable rows, but zsh failed after the subprocess while capturing its exit code; auditor invocation count 0, retries 0, no scientific result.
+
+- [Issue #1998 A02 focused payload byte comparison](focused_observation_payload_size_1998_t0_a02_20261009/REPORT.md) — `PASS_FOCUSED_PAYLOAD_REDUCTION_SCOPED`: 14/14 cases, 6/6 mutations, 22,933 serialized bytes saved across the frozen fixture; no token/latency/GUI claim.
+
+- [Issue #8675 T0 A01 cross-revision target correspondence](cross_revision_target_transport_8675_t0_20261009/REPORT.md) — `PASS_RELATIONAL_REIDENTIFICATION_SCOPED`: relational soft assignment recovered 100/300 held-out positives (+33.3 pp over both exact baselines), with 0/500 false rebinds and 0.5974% one-sided 95% upper bound; all automorphism/semantic-change controls abstained. Recovery was limited to sibling reorder; duplicate-target and wrapper cases abstained. Synthetic assignment-space proxy only, not a canonical entropic FGW or live GUI result.
+
+- [Issue #8620 T0 A01 execution-information frontier](execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories; `HOLD_FORMAL_FREEZE_INCOMPLETE`; original auditor FAIL retained, post-result diagnostic only, no rerun.
+
+- [Issue #8641 T0 A01 uncertainty-source intervention choice](uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED / H_FAIL_NO_ADDED_DECISION_VALUE`; all 4,800 rows were audited, but the decomposition missed its matched-cost gate. No real-interface claim; candidate rerun prohibited.
+
+- [Issue #8636 oracle-boundary construction patch](relative_view_rotation_oracle_boundary_construction_20261012/README.md) — prospective runner/auditor arm-isolation patch; four focused regressions and 13 applicable A04 construction tests pass in normal and optimized Python. No formal candidate/auditor run; A04 remains `HOLD_UNCERTAIN`.
+- [Issue #8636 T0 A04 audit hold](relative_view_rotation_features_8636_t0_a04_20261012/A04-RESULT.md) — 360 synthetic trials; first auditor mismatch preserved, no hypothesis conclusion or rerun. The additive custody recheck verified the raw archive and records the CRLF/LF manifest hash distinction.
+
+- [Issue #8574 T0 A01 perspective-guided review](perspective_guided_review_8574_t0_a01_20261009/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: all three arms found the same cross-view identity omission in Q11 (2/2 per arm); no incremental PBR rescue. Synthetic source-contract review only; no human or GUI inference.
+
+- [Issue #1998 A04 Pillow PNG focused-payload economics](pillow_focused_observation_payload_1998_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: main ImageArtifactSink/Pillow 12.3.0 exact-pixel audit on 21 retained GUI frames and 441 requests; 420 crops saved 9,617,403 serialized bytes, 21 full-bounds controls fell back, and 6/6 mutations were rejected. Finite byte accounting only; ROI quality, model, latency, GUI/task effect, and product benefit remain untested.
+
+- [Issue #1998 A05 Inkscape task-marker crop OCR](inkscape_task_marker_crop_1998_t0_a05_20261009/REPORT.md) — `HOLD_RUNNER_ERROR`: frozen candidate exited before Tesseract because of an unbound local variable; auditor was not invoked, retries 0, and no scientific crop result is claimed.
+
+- [Issue #1998 A06 Chromium token-cue crop OCR](chromium_task_token_crop_1998_t0_a06_20261009/REPORT.md) — `HOLD_RUNNER_ERROR`: frozen wrapper stopped before candidate startup because the results directory already existed; candidate/auditor/OCR 0/0/0, retries 0, and no scientific crop result is claimed.
+
 
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
@@ -16,14 +49,16 @@
 
 - [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
 
-- [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
+- [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — 12 finite cases reconstructed; the recorded 6/6 mutation count was hardcoded, so A01 aggregate PASS is unsupported. [A02](resume_plan_suggestions_8576_t0_a02_20261009/REPORT.md) separately executed the six controls; synthetic method evidence only, no human-benefit claim.
 
-- [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
+- [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — original `PASS_METHOD_SCOPED` retained, but its auditor did not enforce the frozen left-only decision gate; the overall pass is not established by that audit ([correction](https://github.com/Unjuno/agent-interface/issues/8589#issuecomment-6057995875)). The later [A02 audit](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/REPORT.md) checks only the left-only case and has a [post-run invocation deviation](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/EXECUTION_DEVIATION.md). Synthetic DAG only; no GUI or replay-safety claim.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
 
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
 
 - [Issue #8553 T0 A01 counterexample-guided recovery refinement](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 5/5 finite cases independently reconstructed; safe separator refined with `p_color` (one predicate vs fixed-fine's three); planted optimistic false recovery returned `UNKNOWN`; 5/5 mutations rejected. Hand-authored CPU-only model; no GUI/runtime/product claim.
+
+- [Issue #8553 A03 recovery-policy branch binding audit](cegar_policy_branch_binding_8553_a03_20261009/REPORT.md) — `CONFIRMED_AUDIT_GAP`: the A01 checker accepted unsupported observation signatures and swapped routes; the independent finite replay accepted the original policy and rejected both mutations. Preserve A01 raw outputs and historical label; its branch-safety gate is not established. Synthetic finite policy only.
 
 - [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
 
@@ -71,7 +106,7 @@
 
 - [Issue #7799 T0 A01 pairwise eligibility](pairwise_interaction_7799_t0_a01_20261005/REPORT.md) — `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR`; selected #57 protocol exposes only `(0,0)` and `(1,1)` for the two co-selected factors; independent raw audit 11/11, design rank 2/4. Source-bound eligibility only; no interaction estimate or live/model run.
 
-- [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
+- [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — original `PASS_METHOD_SCOPED_T0_ONLY` label is superseded: 31 rows and three machine-only states remain scoped model evidence, but four formal output mutations were not passed through the audit function, so the frozen decision rule is not established. See the [post-publication erratum](machine_crash_recovery_7802_t0_20261005/ERRATUM-20261122.md). No host power-loss or T1 result.
 
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8135 cross-episode counterparty T0 A02](persistent_counterparty_8135_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED`: persistent learner changed later variants conditional on public history while frequency-matched sham remained history-independent; 64 authorized effects, zero unauthorized effects, 5/5 mutations rejected. A01 auditor-schema failure preserved; no real-service adaptation claim.
@@ -124,7 +159,7 @@
 - [Issue #7470 A04](inference_disturbance_coupling_7470_t0_a04_20261004/README.md) — eight trajectories include the seam, but the frozen centered-correlation formula has an extra 1/n normalization; not an Issue-level PASS.
 - [Issue #7470 A05](inference_disturbance_coupling_7470_t0_a05_20261004/README.md) — standard Pearson fixture, four intact circular shifts, and two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
-- [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — synthetic independent-heavy-tail p95 improved 86.52% under the frozen threshold/work/deadline gates; correlated and shared-queue controls showed no gain. Independent audit passed 1,000 rows and rejected four mutations. Host CPU only; real capture critical-path evidence remains absent.
+- [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — two distinct synthetic results: host CPU p95 improved 86.52% on the independent-heavy-tail condition; WSLc improved 82.5% under its separate freeze. Both audits passed their row/mutation gates; correlated controls show no gain, and WSLc's shared queue worsened p95. No real capture critical-path evidence or adoption.
 - [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
 - [`circuit_rejection_cost_5375_a01_20261004/REPORT.md`](circuit_rejection_cost_5375_a01_20261004/REPORT.md) — #5375 A01 exact 480-row record rescued; candidate violates frozen capacity on row 1 and the one auditor invocation STOPped on a read-only output destination. No rerun or hypothesis result.
 
@@ -362,6 +397,10 @@ The table below summarizes major analytical chains and representative retained o
 
 - [singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md](singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md) — #6501 finite cancellation/delivery boundary: unchanged192 assignments/384 decisions,48 strict-clock wrong admissions,48 conservative wrong refusals,0 explicit-order discrepancies; frozen v1 audit accepted six typed/schema corruptions, separately retained v2 audit rejects all14 effective controls. Original source/raw/first results preserved; no formal replay or runtime promotion.
 
+The retained #8665 A01 record has a [simultaneous-order qualification](observation_load_cue_information_8665_t0_a01_20261009/ORDERING_QUALIFICATION.md).
+
+The #8589 A02 audit has a [post-run execution deviation](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/EXECUTION_DEVIATION.md); its original one-shot record remains unchanged.
+
 ## Complete retained result directory index
 
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
@@ -399,6 +438,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`alert_actionability_5435_t4/`](alert_actionability_5435_t4/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`amendment_effect_6219_publication_recovery_20261003/`](amendment_effect_6219_publication_recovery_20261003/)
+- [`analogy_rejection_8500_t0_a02_20261009/`](analogy_rejection_8500_t0_a02_20261009/)
 - [`answer_surface_audit_6173_factored_axes_t0_20261002/`](answer_surface_audit_6173_factored_axes_t0_20261002/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)
@@ -434,6 +474,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_external_drift_5368_t0_20261003/`](belief_external_drift_5368_t0_20261003/)
 - [`belief_external_drift_wslc_portability_20261003/`](belief_external_drift_wslc_portability_20261003/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
+- [`belief_recovery_8527_singleton_diagnostic_20261027/`](belief_recovery_8527_singleton_diagnostic_20261027/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
 - [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)
@@ -466,6 +507,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`braess_route_verifier_5855_horizon_ledger_a02_20261004/`](braess_route_verifier_5855_horizon_ledger_a02_20261004/)
 - [`breakdown_t7/`](breakdown_t7/)
+- [`budgeted_failure_discovery_8914_t0_a01_20261016/`](budgeted_failure_discovery_8914_t0_a01_20261016/)
+- [`budgeted_failure_discovery_8914_t0_a02_20261016/`](budgeted_failure_discovery_8914_t0_a02_20261016/)
 - [`cache_epoch_completeness_2928_v1/`](cache_epoch_completeness_2928_v1/)
 - [`cache_epoch_monitor_execution_2928_v1/`](cache_epoch_monitor_execution_2928_v1/)
 - [`cache_partial_effect_replay_boundary_2928_v1/`](cache_partial_effect_replay_boundary_2928_v1/)
@@ -480,6 +523,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`causal_elasticity_5851_branch_intervention_successor_20261001/`](causal_elasticity_5851_branch_intervention_successor_20261001/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
+- [`cegar_policy_branch_binding_8553_a03_20261009/`](cegar_policy_branch_binding_8553_a03_20261009/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
 - [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
@@ -487,6 +531,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`chromium_postsubmit_task_cue_1998_t0_a09_20261009/`](chromium_postsubmit_task_cue_1998_t0_a09_20261009/)
+- [`chromium_task_token_crop_1998_t0_a06_20261009/`](chromium_task_token_crop_1998_t0_a06_20261009/)
 - [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
@@ -524,9 +570,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a10_20261005/`](confusion_adaptive_practice_8084_t0_a10_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`consolidation_schedule_7418_t0_a01_20261008/`](consolidation_schedule_7418_t0_a01_20261008/)
+- [`consolidation_schedule_7418_t1_a02_gemma4_20261008/`](consolidation_schedule_7418_t1_a02_gemma4_20261008/)
+- [`consolidation_schedule_7418_t1_a03_gemma4_20261008/`](consolidation_schedule_7418_t1_a03_gemma4_20261008/)
 - [`consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/`](consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/)
 - [`consolidation_schedule_7418_t1_a12_private_preflight_20261008/`](consolidation_schedule_7418_t1_a12_private_preflight_20261008/)
 - [`consolidation_schedule_7418_t1_a13_schema_constrained_20261008/`](consolidation_schedule_7418_t1_a13_schema_constrained_20261008/)
+- [`consolidation_schedule_7418_t1_gemma4_20261008/`](consolidation_schedule_7418_t1_gemma4_20261008/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constrained_sequence_coverage_6206_t0_v1/`](constrained_sequence_coverage_6206_t0_v1/)
@@ -549,11 +598,14 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`counterexample_guided_recovery_refinement_8553_t0_a01_20261008/`](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/)
 - [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
+- [`cross_revision_target_transport_8675_t0_20261009/`](cross_revision_target_transport_8675_t0_20261009/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
 - [`crosslingual_visual_injection_7650_t0_a02_20261008/`](crosslingual_visual_injection_7650_t0_a02_20261008/)
+- [`crowding_target_flanker_8544_t0_a02_20261009/`](crowding_target_flanker_8544_t0_a02_20261009/)
+- [`cue_reliability_8654_c06_20261009/`](cue_reliability_8654_c06_20261009/)
 - [`cue_reliability_8654_c07_20261009/`](cue_reliability_8654_c07_20261009/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
 - [`cutoff_local_guard_audit_6451_t0_v1/`](cutoff_local_guard_audit_6451_t0_v1/)
@@ -632,6 +684,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/)
 - [`exception_envelope_6021_t0_20261002/`](exception_envelope_6021_t0_20261002/)
 - [`exception_preserving_skill_7418_t0_20261004/`](exception_preserving_skill_7418_t0_20261004/)
+- [`execution_information_8620_t0_a01_20261009/`](execution_information_8620_t0_a01_20261009/)
 - [`exogenous_opportunity_5694_first_failed_boundary_a03_20261002/`](exogenous_opportunity_5694_first_failed_boundary_a03_20261002/)
 - [`exogenous_opportunity_5694_matched_phase_a04_20261002/`](exogenous_opportunity_5694_matched_phase_a04_20261002/)
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
@@ -646,8 +699,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`feedback_necessity_5927_output_custody_a01_20261004/`](feedback_necessity_5927_output_custody_a01_20261004/)
+- [`focused_observation_payload_size_1998_t0_a02_20261009/`](focused_observation_payload_size_1998_t0_a02_20261009/)
+- [`focused_observation_request_1998_t0_a07_20261009/`](focused_observation_request_1998_t0_a07_20261009/)
+- [`focused_observation_request_1998_t0_a08_20261009/`](focused_observation_request_1998_t0_a08_20261009/)
 - [`focused_observation_request_container_successor_2046_v1/`](focused_observation_request_container_successor_2046_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
+- [`focused_png_payload_size_1998_t0_a03_20261009/`](focused_png_payload_size_1998_t0_a03_20261009/)
 - [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
@@ -706,6 +763,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`image_jacobian_adaptation_7765_t0b_20261005/`](image_jacobian_adaptation_7765_t0b_20261005/)
 - [`image_jacobian_adaptation_7765_t0b_cal_a02_20261005/`](image_jacobian_adaptation_7765_t0b_cal_a02_20261005/)
 - [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
+- [`importance_sampling_6018_t0_a01_20261009/`](importance_sampling_6018_t0_a01_20261009/)
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incorrect_belief_exposure_7986_t0_a01_20261005/`](incorrect_belief_exposure_7986_t0_a01_20261005/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
@@ -716,6 +774,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
+- [`inkscape_task_marker_crop_1998_t0_a05_20261009/`](inkscape_task_marker_crop_1998_t0_a05_20261009/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
 - [`interface_mutation_adequacy_5541_t0_20261001_v1/`](interface_mutation_adequacy_5541_t0_20261001_v1/)
@@ -737,7 +796,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
+- [`issue_8909_cover_diagnosability_a01_20261012/`](issue_8909_cover_diagnosability_a01_20261012/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
+- [`joint_opportunity_budget_8630_reserve_diagnostic_20261009/`](joint_opportunity_budget_8630_reserve_diagnostic_20261009/)
+- [`joint_opportunity_budget_8630_t0_a01_20261009/`](joint_opportunity_budget_8630_t0_a01_20261009/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
@@ -842,6 +904,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
+- [`network_adoption_shared_verifier_7741_t0d_20261005/`](network_adoption_shared_verifier_7741_t0d_20261005/)
 - [`notification_sampling_reactivity_6657_t0_20261002/`](notification_sampling_reactivity_6657_t0_20261002/)
 - [`object_bound_context_capsules_7160_t0_20261004/`](object_bound_context_capsules_7160_t0_20261004/)
 - [`obligation_capacity_6121_t0_20261002/`](obligation_capacity_6121_t0_20261002/)
@@ -855,6 +918,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_intervention_6526_a02_orbstack_20261003/`](observation_intervention_6526_a02_orbstack_20261003/)
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/`](observation_intervention_6526_a03_deadline_audit_only_20261003/)
 - [`observation_intervention_6526_t0_20261002/`](observation_intervention_6526_t0_20261002/)
+- [`observation_load_cue_information_8665_t0_a01_20261009/`](observation_load_cue_information_8665_t0_a01_20261009/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
 - [`observation_manipulate_support_union_v1/`](observation_manipulate_support_union_v1/)
@@ -902,11 +966,15 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
 - [`persistent_counterparty_8135_t0_a01_20261005/`](persistent_counterparty_8135_t0_a01_20261005/)
 - [`persistent_counterparty_8135_t0_a02_20261005/`](persistent_counterparty_8135_t0_a02_20261005/)
+- [`perspective_guided_review_8574_t0_a01_20261009/`](perspective_guided_review_8574_t0_a01_20261009/)
+- [`phase_dependent_controllability_8668_t0_a04_20261009/`](phase_dependent_controllability_8668_t0_a04_20261009/)
+- [`phase_dependent_controllability_8668_t0_a05_20261009/`](phase_dependent_controllability_8668_t0_a05_20261009/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
 - [`phase_overlap_resource_footprint_r0_v1/`](phase_overlap_resource_footprint_r0_v1/)
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
+- [`pillow_focused_observation_payload_1998_t0_a04_20261009/`](pillow_focused_observation_payload_1998_t0_a04_20261009/)
 - [`planner_blind_credential_entry_6515_t0_v1/`](planner_blind_credential_entry_6515_t0_v1/)
 - [`planner_hysteresis_5352_t10_20261001/`](planner_hysteresis_5352_t10_20261001/)
 - [`portfolio_multiplicity_5890_intake_a02_20261003/`](portfolio_multiplicity_5890_intake_a02_20261003/)
@@ -920,6 +988,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_order_audit_typehash_successor_r5_v1/`](predicate_order_audit_typehash_successor_r5_v1/)
 - [`predicate_order_drift_audit_integrity_4733_successor_v1/`](predicate_order_drift_audit_integrity_4733_successor_v1/)
 - [`predicate_order_drift_audit_integrity_4733_v1/`](predicate_order_drift_audit_integrity_4733_v1/)
+- [`predicate_phantom_8613_a01_20261008/`](predicate_phantom_8613_a01_20261008/)
 - [`predicate_readset_audit_revalidation_4766_v1/`](predicate_readset_audit_revalidation_4766_v1/)
 - [`predicate_readset_runtime_proxy_4233_v1/`](predicate_readset_runtime_proxy_4233_v1/)
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
@@ -956,6 +1025,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`processor_demand_witness_7748_duplicate_id_a01_20261005/`](processor_demand_witness_7748_duplicate_id_a01_20261005/)
 - [`processor_demand_witness_7748_duplicate_id_a02_20261005/`](processor_demand_witness_7748_duplicate_id_a02_20261005/)
 - [`processor_demand_witness_7748_t0_20261005/`](processor_demand_witness_7748_t0_20261005/)
+- [`proof_carrying_action_5311_t0_a01_20261009/`](proof_carrying_action_5311_t0_a01_20261009/)
 - [`protective_local_adaptation_6367_reaudit_v1/`](protective_local_adaptation_6367_reaudit_v1/)
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
 - [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
@@ -983,10 +1053,15 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
 - [`recovery_validity_effect_replay_8589_t0_a01_20261008/`](recovery_validity_effect_replay_8589_t0_a01_20261008/)
+- [`recovery_validity_effect_replay_8589_t0_a02_audit_20261009/`](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
+- [`relative_view_rotation_features_8636_t0_a01_20261009/`](relative_view_rotation_features_8636_t0_a01_20261009/)
+- [`relative_view_rotation_features_8636_t0_a02_20261009/`](relative_view_rotation_features_8636_t0_a02_20261009/)
+- [`relative_view_rotation_features_8636_t0_a02_audit_20261009/`](relative_view_rotation_features_8636_t0_a02_audit_20261009/)
+- [`relative_view_rotation_features_8636_t0_a03_20261012/`](relative_view_rotation_features_8636_t0_a03_20261012/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
@@ -1001,6 +1076,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`resume_plan_suggestions_8576_t0_a01_20261008/`](resume_plan_suggestions_8576_t0_a01_20261008/)
+- [`resume_plan_suggestions_8576_t0_a02_20261009/`](resume_plan_suggestions_8576_t0_a02_20261009/)
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
@@ -1018,6 +1094,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_selector_label_consistency_5911_t0/`](route_selector_label_consistency_5911_t0/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
+- [`route_task_hysteresis_8648_c02_20261009/`](route_task_hysteresis_8648_c02_20261009/)
 - [`safe_discriminating_observation_6680_t0_20261002/`](safe_discriminating_observation_6680_t0_20261002/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
@@ -1101,6 +1178,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
 - [`stochastic_trace_reducer_8152_t0_20261005/`](stochastic_trace_reducer_8152_t0_20261005/)
+- [`stochastic_trace_reducer_8493_t0_a01_20261009/`](stochastic_trace_reducer_8493_t0_a01_20261009/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)
@@ -1111,8 +1189,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
 - [`tail_regret_censoring_8598_t0_a01_20261008/`](tail_regret_censoring_8598_t0_a01_20261008/)
+- [`tail_regret_ranking_8597_t0_a01_20261009/`](tail_regret_ranking_8597_t0_a01_20261009/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
+- [`target_relation_alias_counterexample_45_a01_20261027/`](target_relation_alias_counterexample_45_a01_20261027/)
+- [`target_relation_signature_45_t0_prototype_20261009/`](target_relation_signature_45_t0_prototype_20261009/)
 - [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)
 - [`task_memory_retrieval_7166_t0_host_a04_20261004/`](task_memory_retrieval_7166_t0_host_a04_20261004/)
 - [`task_memory_retrieval_7166_t0_host_a05_20261004/`](task_memory_retrieval_7166_t0_host_a05_20261004/)
@@ -1159,6 +1240,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_readout_corpus_eol_audit_4871_v1/`](typed_readout_corpus_eol_audit_4871_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
+- [`uncertainty_intervention_8641_t0_a01_20261009/`](uncertainty_intervention_8641_t0_a01_20261009/)
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
@@ -1214,12 +1296,14 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.
+- [Issue #7794 A01 analytical construction](carbon_window_7794_a01/README.md) — `PASS_METHOD_SCOPED` for the finite three-job synthetic scheduler model; no realistic workload or emissions result.
+- [Issue #7794 A02 finite replay](carbon_window_7794_a02/README.md) — `PASS_METHOD_SCOPED` for the nine-case synthetic mechanics; A04/A05 later identify and diagnose the untested serial-ASAP versus global-lexicographic comparator distinction.
+- [Issue #7794 A01/A02 custody audit](carbon_window_7794_a01_a02_import_20261122/CUSTODY_AUDIT.md) — exact unique evidence imported from Draft PR #7968; parent #7794 remains `HOLD_ACCOUNTING`.
 
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
@@ -1299,3 +1383,8 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
+
+- [Issue #8636 A02 first outcome](relative_view_rotation_features_8636_t0_a02_20261009/README.md) — synthetic candidate and original failed auditor; HOLD_UNCERTAIN.
+- [Issue #8636 A02 audit-only follow-up](relative_view_rotation_features_8636_t0_a02_audit_20261009/README.md) — first audit mismatch; original hold unchanged.
+
+- [Issue #8636 A01 first-outcome custody](relative_view_rotation_features_8636_t0_a01_20261009/CUSTODY.md) — scoped HOLD; 13 original blobs retained, three files excluded with hashes and custody notes.

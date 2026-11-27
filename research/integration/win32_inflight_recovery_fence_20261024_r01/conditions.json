@@ -1,0 +1,25 @@
+{
+  "packet": "win32_inflight_recovery_fence_20261024_r01",
+  "date": "2026-10-24",
+  "base_commit": "68256fc9e5909e3cace436aad59502005c64474e",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (64-bit, MSC v.1938)",
+  "test_commands": [
+    "python -m unittest runtime.backends.win32_v1.test_inflight_recovery runtime.backends.win32_v1.test_supervised_session runtime.backends.win32_v1.test_integration runtime.cli_v1.test_mcp_session",
+    "python -O -m unittest runtime.backends.win32_v1.test_inflight_recovery runtime.backends.win32_v1.test_supervised_session runtime.backends.win32_v1.test_integration runtime.cli_v1.test_mcp_session"
+  ],
+  "result": "76 tests passed in each mode",
+  "schedules": [
+    "fake SendInput accepts DOWN before blocking",
+    "fake SendInput blocks before accepting DOWN"
+  ],
+  "native_input": false,
+  "wslc": false,
+  "docker": false,
+  "task_effect_oracle": false,
+  "limitations": [
+    "fake API only; no native SendInput behavior established",
+    "no hard deadline or blocked-call interruption",
+    "no physical release, task effect, MAP01, efficiency, or reliability claim"
+  ]
+}

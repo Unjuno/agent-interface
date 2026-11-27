@@ -1,0 +1,188 @@
+{
+  "audit_pass": true,
+  "cells": [
+    {
+      "appserver_latency_ns": 7073219300,
+      "arm": "direct",
+      "audit_pass": true,
+      "cell_id": "pair1-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "second_model_decision_authorized_save": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 8589198300,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 61,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 4627939800,
+      "arm": "compiled",
+      "audit_pass": true,
+      "cell_id": "pair1-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 6144494500,
+      "provider_turn_count": 1,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 4,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 49,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 3916698300,
+      "arm": "compiled",
+      "audit_pass": true,
+      "cell_id": "pair2-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 5436790600,
+      "provider_turn_count": 1,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 4,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 49,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 10255,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": 7964360600,
+      "arm": "direct",
+      "audit_pass": true,
+      "cell_id": "pair2-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "second_model_decision_authorized_save": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 9511497800,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 61,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "checks": {
+    "all_four_cells_in_counterbalanced_order": true,
+    "both_matched_pairs_complete": true,
+    "every_cell_passes_independent_gates": true,
+    "no_wslc_or_docker": true,
+    "paired_differences_reconcile": true,
+    "pretrial_hashes": true,
+    "run_raw_hashes": true
+  },
+  "classification": "PASS_SCOPED_COUNTERBALANCED_WIN32_MATCHED_STUDY",
+  "pairs": [
+    {
+      "both_cells_pass": true,
+      "both_cells_present": true,
+      "pair": 1
+    },
+    {
+      "both_cells_pass": true,
+      "both_cells_present": true,
+      "pair": 2
+    }
+  ],
+  "pretrial_hash_audit": {
+    "entries": 5,
+    "failures": []
+  },
+  "run_raw_hash_audit": {
+    "entries": 221,
+    "failures": []
+  },
+  "study_id": "win32-appserver-matched-efficiency-r12f-20261026"
+}

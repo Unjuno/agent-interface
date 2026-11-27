@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/issue57-calc-public-composition-current-main-v1",
+  "source_revision": "3b941f8963a2c7ab739aec9c0d76740cb44cb6ec",
+  "source_file": "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+  "source_sha256": "446bb7baba9b2bf9e44a913d72bdc911cf6427fb6f20d9bb46cccb3615e519d5",
+  "environment": {
+    "os": "Windows",
+    "python": "CPython 3.11.9",
+    "test": "test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+    "modes": {
+      "normal": {"exit": 0, "passed": 1, "failed": 0, "seconds": 25.043},
+      "optimized": {"exit": 0, "passed": 1, "failed": 0, "seconds": 23.778}
+    }
+  },
+  "raw_sha256": {
+    "normal.stderr": "e2e0ece6385507a24e16e922470f7cdab43f9debf08f65d49bced629b79a8c21",
+    "normal.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "optimized.stderr": "6d66232cf25bb75ec9d8ba6c1e819afb43f93c97d67cf1d98fe23166ef5abe81",
+    "optimized.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "claim_boundary": {
+    "classification": "synthetic Fake X / provider-planner / public-MCP composition regression",
+    "live_gui": false,
+    "external_provider_or_model": false,
+    "map01": false,
+    "recovery_reliability": false,
+    "integrated_efficiency": false,
+    "issue57_closed": false
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r07",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-supervised-standard-caller-20261024-r07",
+        "source_commit": "ac4527a8deff3465ad39a8d633725498c1148d12",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_and_source_identity",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_pid": 51556,
+        "generation": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc",
+        "owner": {
+          "creation_time_100ns": 134372586853686617,
+          "pid": 51556,
+          "window_thread_id": 26988
+        }
+      },
+      "name": "one_owned_fixture_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observed": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc",
+        "owned": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc"
+      },
+      "name": "public_observation_generation_matches_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 8,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 8,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "static_validation_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "operations": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R07"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-effect-r07"
+      },
+      "name": "one_exact_dispatch_program",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_started_ns": null,
+        "hook": {
+          "callback_entry_ns": 476441803524800,
+          "callback_return_ns": 476441803535400,
+          "error": null,
+          "events": [
+            {
+              "callback_entry_ns": 476441803524800,
+              "callback_return_ns": 476441803535400,
+              "flags": 16,
+              "message": 256,
+              "vk": 81
+            },
+            {
+              "callback_entry_ns": 476441803784600,
+              "flags": 144,
+              "message": 257,
+              "vk": 81
+            },
+            {
+              "callback_entry_ns": 476441804208900,
+              "flags": 144,
+              "message": 257,
+              "vk": 81
+            }
+          ],
+          "flags": 16,
+          "hook_handle": 53478177,
+          "q_up_callback_ns": 476441804208900,
+          "ready_ns": 476393366889200,
+          "thread_id": 44608,
+          "vk": 81
+        }
+      },
+      "name": "hook_observed_injected_q_down_before_cancel",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_status": null,
+        "call_id": null
+      },
+      "name": "dispatch_still_running_at_hook_barrier",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "blocked_call_id": "8f75eff9d51a4f8c9db47a068239ac9f",
+        "cancel": {}
+      },
+      "name": "call_id_custody_and_single_cancel",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "elapsed_ms": null,
+        "limit_ms": 1000
+      },
+      "name": "bounded_public_cancel_response",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "identity": null,
+        "witness": {}
+      },
+      "name": "exact_producer_process_retired",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "hook_events": [
+          {
+            "callback_entry_ns": 476441803524800,
+            "callback_return_ns": 476441803535400,
+            "flags": 16,
+            "message": 256,
+            "vk": 81
+          },
+          {
+            "callback_entry_ns": 476441803784600,
+            "flags": 144,
+            "message": 257,
+            "vk": 81
+          },
+          {
+            "callback_entry_ns": 476441804208900,
+            "flags": 144,
+            "message": 257,
+            "vk": 81
+          }
+        ],
+        "injected_q_up_callback_ns": 476441804208900,
+        "producer_exit_observed_ns": null
+      },
+      "name": "recovery_up_hook_event_follows_exact_exit",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_operation_id": "80c01c01511345e0a26e1c4bcb8a6523",
+        "action_status": "completed",
+        "cancellation": {}
+      },
+      "name": "same_operation_generation_recovered",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "exit_code": 0,
+        "expected_generation": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc",
+        "generation_after": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc",
+        "generation_before": "5628432221705b13b1da449b07af79a6115de08b39b182b1c15341a907cc6afc",
+        "pid": 1008,
+        "process_retired": true,
+        "q_down": false,
+        "returned_monotonic_ns": 476442108592300,
+        "started_monotonic_ns": 476442108060200,
+        "state_witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 134154596,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 51556,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 26988
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 134154596,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 51556,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 26988
+          }
+        ],
+        "status": "observed"
+      },
+      "name": "separate_process_independent_neutral_readback",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_started_ns": null,
+        "limit_ms": 2500,
+        "readback_returned_ns": 476442108592300
+      },
+      "name": "bounded_recovery_window",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R07"
+        },
+        "event_count": 34,
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R07"
+        },
+        "journal_prefix_matches": true
+      },
+      "name": "independent_saved_task_effect_and_journal_prefix",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close": {
+          "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r07\\run\\calls\\314eb570f8eb4362a3539a090832aee5",
+          "call_id": "314eb570f8eb4362a3539a090832aee5",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "ab8e5dda99364f22a3bf5ccd69b34643",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        },
+        "fixture_exit_code": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_stopped": {
+          "callback_entry_ns": 476441803524800,
+          "callback_return_ns": 476441803535400,
+          "error": null,
+          "events": [
+            {
+              "callback_entry_ns": 476441803524800,
+              "callback_return_ns": 476441803535400,
+              "flags": 16,
+              "message": 256,
+              "vk": 81
+            },
+            {
+              "callback_entry_ns": 476441803784600,
+              "flags": 144,
+              "message": 257,
+              "vk": 81
+            },
+            {
+              "callback_entry_ns": 476441804208900,
+              "flags": 144,
+              "message": 257,
+              "vk": 81
+            }
+          ],
+          "flags": 16,
+          "hook_handle": 53478177,
+          "q_up_callback_ns": 476441804208900,
+          "ready_ns": 476393366889200,
+          "thread_exited": true,
+          "thread_id": 44608,
+          "vk": 81
+        }
+      },
+      "name": "fixture_session_hook_and_foreground_cleanup",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_task_success": null,
+        "cancellation_task_success": null
+      },
+      "name": "runtime_task_success_remains_unclaimed",
+      "passed": true
+    }
+  ],
+  "passed": 9,
+  "schema": "win32-supervised-standard-caller-cancel-audit-v1",
+  "source_commit": "ac4527a8deff3465ad39a8d633725498c1148d12",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 17
+}

@@ -1,0 +1,76 @@
+{
+  "R29_semantics": {
+    "blocked_hold_release_unconfirmed": true,
+    "callback_return_after_hold": true,
+    "later_recovery_and_cleanup": true,
+    "strict_19_of_20": true
+  },
+  "checks": {
+    "R29_hashes_match": true,
+    "R29_semantics_match": true,
+    "frozen_commit_and_conditions_hash": true,
+    "frozen_packet_hashes_match": true,
+    "native_windows": true,
+    "registry_value_unchanged_absent": true,
+    "sitecustomize_loaded_and_wrapper_installed": false,
+    "source_hashes_match": true,
+    "sources_compile": true,
+    "tracked_tree_clean": true
+  },
+  "conditions_sha256": "e6273ff1017293bacd02749e10439f4602333b1a5c10701afdf13a7557d8164e",
+  "frozen_packet_hashes": {
+    "README.md": "83f759a02811c744249f39492f184c1a1e2a44292152d2e613e150f0a8b3be06",
+    "audit.py": "23e9e10f213d1292e108efedd73da28228a7f74f2a1a6815432dd70bcecd363d",
+    "instrumentation/sitecustomize.py": "e7da5f7a5ecb85830a5d64d1087a4eefad810fe325c8c5ee4b00c9300ad614e9",
+    "preflight.py": "4970e6bc4cb6dfa60cf54a34bc565544587907ec3e733a286136db1c70635f7c",
+    "probe.py": "f9a4d108d4d22b8d641b44b5ed60693a60896793912814582f5572abd4b2b511"
+  },
+  "instrumentation_smoke": {
+    "events": [
+      {
+        "event": "sitecustomize_loaded",
+        "monotonic_ns": 487026826486300,
+        "pid": 9224
+      },
+      {
+        "error": "No module named 'runtime'",
+        "error_type": "ModuleNotFoundError",
+        "event": "instrumentation_import_error",
+        "monotonic_ns": 487026827792300,
+        "pid": 9224
+      }
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r30\\instrumentation_preflight.jsonl\n",
+    "trace_exists": true
+  },
+  "native_input_sent": false,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "predecessor_hashes": {
+    "audit": "549dfc61d880feb17470809ada1c5c19f1cf7c58545e8e1a9842a1055f475084",
+    "raw": "269f24d89fc6bc4024c573427d94ca5bfe3b434af53ddda4a67608dddc39dd15"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "registry_read_only": {
+    "present": false,
+    "type": null,
+    "value": null
+  },
+  "schema": "win32-supervised-standard-caller-r30-preflight-v1",
+  "source_commit": "8dca97c0ce4998a85fdcc66e6b76ff2a1f34b20f",
+  "source_sha256": {
+    "audit.py": "23e9e10f213d1292e108efedd73da28228a7f74f2a1a6815432dd70bcecd363d",
+    "probe.py": "f9a4d108d4d22b8d641b44b5ed60693a60896793912814582f5572abd4b2b511",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "4816339b1cd0afdbe61e79929c53d735d6a7078a74f55e7b4e280d1d48cfdaa1",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "status": "FAIL_OR_UNKNOWN",
+  "utc": "2026-10-23T22:48:38.570812+00:00"
+}

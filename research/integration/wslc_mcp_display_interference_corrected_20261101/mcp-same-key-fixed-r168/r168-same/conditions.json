@@ -1,0 +1,10 @@
+{
+  "allocation": "mcp-same-key-fixed-r168",
+  "mode": "same-display",
+  "source_scope": "r150 local r132 candidate with idempotent fixture and per-injection log from r162; exact manifest",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "manifest_sha256": "f33ad2bcc26727eeb4d1ad258ebb2c5cfed62263b66742f43ac27c960e738208",
+  "protocol": "Repeat r150: two in-process MCP server objects with distinct real guarded owners on one private display. Test releases old a, second guarded a held, cancel first and poll terminal before second cancel. Corrected fixture logs one delayed b per owner; independently observe keymap, target events and 8.5s post-flush horizon.",
+  "criteria": "Exactly one logged injection per owner, second keymap before/after first terminal cancellation, retained terminal and close results; one attempt.",
+  "limits": "Forced ordering, fixture release and delayed sync, synthetic display and direct in-process MCP call_tool; no natural frequency, stdio, physical desktop, MAP01 or broad queue fence claim."
+}

@@ -1,0 +1,33 @@
+{
+  "runs": [
+    {
+      "mode": "first",
+      "exit_code": 0,
+      "exit_evidence": "completed tool invocation; not inferred from stdout",
+      "raw": "cross-backend-first.jsonl",
+      "stderr": "cross-backend-first.stderr",
+      "stderr_bytes": 0,
+      "scientific_disposition": "FAIL_SHARED_INPUT_CUSTODY",
+      "cases": 3
+    },
+    {
+      "mode": "optimized",
+      "exit_code": 0,
+      "exit_evidence": "completed tool invocation; not inferred from stdout",
+      "raw": "cross-backend-optimized.jsonl",
+      "stderr": "cross-backend-optimized.stderr",
+      "stderr_bytes": 0,
+      "scientific_disposition": "FAIL_SHARED_INPUT_CUSTODY",
+      "cases": 3
+    }
+  ],
+  "source": "026ce5e8ab0b466fbfb0dd2c0ec03e6c17f94169",
+  "probe_sha256": "00910ec50590fd007983fa3a3d2130cd26138df65532a46570230fe7dfe168d0",
+  "commands": [
+    "python research/doom/map01_cross_backend_custody_20261016/probe.py",
+    "python -O research/doom/map01_cross_backend_custody_20261016/probe.py"
+  ],
+  "python": "3.13.14",
+  "timing": "No independent wall-clock command-start/end receipt; retained program/intent monotonic clocks are local only; no latency claim.",
+  "new_live_allocations": 0
+}

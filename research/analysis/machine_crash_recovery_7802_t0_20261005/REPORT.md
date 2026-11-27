@@ -1,5 +1,11 @@
 # Issue #7802 T0 result — machine-crash recovery model
 
+> **Post-publication correction:** The original T0 method-pass label is
+> superseded. The four formal mutation outputs were not passed through the
+> auditor decision function, so the preregistered conjunctive decision rule is
+> not established. See [`ERRATUM-20261122.md`](ERRATUM-20261122.md); frozen raw
+> records remain unchanged.
+
 ## H / T / D / C / U
 
 **H.** In a finite declared persistence model, a machine-crash cut may produce a recovery image absent from the corresponding process-crash control; inconsistent effect/receipt states must remain `UNKNOWN_RECONCILE`, not be inferred from the local receipt. The separate Issue-level host-stack hypothesis is not tested here.

@@ -1,0 +1,46 @@
+{
+  "experiment": "v39-executor-cancel-active-key-xvfb-a01-20261012",
+  "question": "Does current-main V39 hard health invalidation cancel the actual Executor V3 worker, which releases an active Xvfb key through the current V4/V12 owner before stale planner completion becomes eligible?",
+  "base_sha": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "environment": {
+    "host": "WSL2 Ubuntu 24.04.3",
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "python": "CPython 3.12.3 system",
+    "python_xlib": "0.33-2 Ubuntu package",
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "docker": "unavailable",
+    "network": "not isolated; candidate code makes no network calls",
+    "display": ":135",
+    "resource_limits": "no hard CPU or memory cap"
+  },
+  "hypothesis": "H: Current Executor V3 emits accepted before starting its worker, and on V39 paired-signal hard invalidation, the existing cancel_invalidated_cover helper sends cancel to that executor, whose worker stops and releases the actual active Xvfb key through InputOwner V4/V12; the planner answer completed afterward remains ineligible.",
+  "test": "T: One hard-health arm: retained source sequence2 health/ammo=97/48 and current sequence3 synthetic health=80/ammo=48, shared sample epoch and binding rebound to focused Xvfb target. Current-main Executor V3 runs a bounded hold program through a thin Xvfb backend that delegates all key effects/releases to current-main InputOwner. The actual accepted event and X KeyPress are timestamped; during the pending PersistentPlannerAdapter turn, the current V39 monitor sees the hard invalidation and current cancel helper speaks through an in-process protocol bridge to Executor.cancel and waits for its actual terminal/release receipt. One candidate invocation; no game/model/physical input.",
+  "decision": "D: PASS_METHOD_SCOPED only if Executor accepted_ns precedes observed X KeyPress; key remains down when observation arrives; paired health guard invalidates; helper matches cancel; Executor terminal is cancelled with verified empty release; independent Xvfb KeyRelease/keymap confirms up before planner wait returns; planner marks completed answer ineligible/cancelled; final admission rejects policy invalidation; worker and owner terminate; Xvfb exits 0. Any mismatch is STOP.",
+  "confounds": "C: Health=80 is synthetic. Executor V3 class and cancellation/release lifecycle are current-main, but its backend is a test adapter to the real Xvfb InputOwner rather than the production controller subprocess. Planner answer is deterministic mock output. No game or physical device.",
+  "unknowns": "U: No semantic visual threat, task success/feedback, live MAP01 allocation, subprocess/pipe failure, hard-kill recovery, scheduling stress, network isolation, or hard CPU/memory cap. This tests a guard event, not perception.",
+  "source_sha256": {
+    "action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "candidate.py": "281208b7c1c51c256fb681e776e692997f3efab1a3c6885092b7a014da1f23c8",
+    "final_action_admission_v2.py": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "doom_action_validity_contract_v1.py": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+    "map01_stagnation_v1.py": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "map01_overlap_controller_v39.py": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "persistent_planner_adapter_v2.py": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+  },
+  "input_sha256": {
+    "003.png": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+    "events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "002.png": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1"
+  },
+  "candidate_sha256": "281208b7c1c51c256fb681e776e692997f3efab1a3c6885092b7a014da1f23c8"
+}

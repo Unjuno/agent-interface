@@ -1,0 +1,24 @@
+{
+  "schema": "agent-interface/completed-owner-handoff-experiment-v1",
+  "run_id": "completed-owner-handoff-r01-20261122",
+  "source_main": "0b97018dd09302c22167ea61759351f24ad3b396",
+  "purpose": "Test the research effect-receipt adapter's normal-completion owner lifecycle path while retaining the existing recovered-action path.",
+  "hypothesis": "A normal completed action may qualify for effect-timing attribution only when its exact public result lookup binds the dispatch, verified release, and neutral late-input horizon; missing custody must fail closed.",
+  "treatment": "Synthetic recorded dispatch + interface_results + independent task-score ledger + before/after captures; effect interval after completion horizon.",
+  "negative_control": "Same completed-action fixture with late_input_horizon_verified=false.",
+  "acceptance": {
+    "positive_control": "post-expiry/post-horizon factual success preserved but ineligible",
+    "negative_control": "reject unverified neutral horizon",
+    "timing_order": "release may precede lease expiry on normal completion; success eligibility still ends at expiry",
+    "regression": "existing recovered-action tests continue to pass"
+  },
+  "runtime_or_provider": "none",
+  "not_claimed": [
+    "live GUI or native input behavior",
+    "application task success for R05",
+    "recovery reliability",
+    "provider/model efficiency",
+    "MAP01",
+    "Research Preview graduation"
+  ]
+}

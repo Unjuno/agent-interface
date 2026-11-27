@@ -1,0 +1,21 @@
+import pathlib,json,hashlib,subprocess,gzip
+O=pathlib.Path(__file__).resolve().parent;root=O.parents[1];W=root/'work'/'primary-request-snapshot-01a0ff32';L=W/'research'/'integration'/'primary_typed_release_57_20261003_01a0ff32';L.mkdir(parents=True,exist_ok=False);sha=lambda b:hashlib.sha256(b).hexdigest();records=[]
+def put(name,b):
+ original=b
+ if name.endswith('.json.gz'):
+  s=gzip.decompress(b).decode('utf8');binary=True
+ else:s=b.decode('utf8');binary=False
+ t=s.replace(str(root).replace(chr(92),chr(92)*2),'<OWN_WORKSPACE>').replace(str(root),'<OWN_WORKSPACE>').replace('C:'+chr(92)*2+'Users'+chr(92)*2+'junny','<OWN_HOME>').replace('C:'+chr(92)+'Users'+chr(92)+'junny','<OWN_HOME>').replace(root.as_posix(),'<OWN_WORKSPACE>')
+ b=gzip.compress(t.encode(),mtime=0) if binary else t.encode();q=L/name;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(b);records.append({'path':name,'bytes':len(b),'sha256':sha(b),'original_bytes':len(original),'original_sha256':sha(original),'projection':s!=t})
+selected=[p for p in O.iterdir() if p.is_file() and p.name!='build-archive.py']
+for d in ['RED_A01','GREEN_A01','REGISTERED_A01','AUDIT_SAVED_A01','semantic-controls']:
+ selected.extend(p for p in (O/d).rglob('*') if p.is_file())
+for p in sorted(selected):
+ name=p.relative_to(O).as_posix();name=name+'.txt' if p.suffix in {'.py','.mjs'} else name;put(name,p.read_bytes())
+for p in sorted((W/'runtime'/'host_v1').glob('*')):
+ if p.is_file() and p.suffix in {'.mjs','.py'}:put('candidate/'+p.name+'.txt',p.read_bytes())
+old=subprocess.run(['git','-C',str(W),'cat-file','blob','HEAD:runtime/host_v1/primary_caller.mjs'],capture_output=True,check=True).stdout;put('comparison/V1-primary_caller.mjs.txt',old)
+reads=json.loads((O/'ACTUAL-NAMED-MAIN-READS.json').read_bytes());joins=[]
+for x in reads:
+ b=x['content'].encode('utf8');actual=subprocess.run(['git','-C',str(root/'work'/'effect-boundary'),'ls-tree',x['ref'],'--',x['path']],capture_output=True,check=True).stdout.decode().split()[2];oid=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest();assert actual==oid;joins.append({'path':x['path'],'ref':x['ref'],'bytes':len(b),'sha256':sha(b),'git_blob':oid});put('named-main-exact/'+x['path']+'.txt',b)
+put('NAMED-MAIN-JOINS.json',json.dumps(joins,indent=2).encode());put('build-archive.py.txt',pathlib.Path(__file__).read_bytes());manifest={'files':sorted(records,key=lambda x:x['path']),'scope':'inert ordinary repair evidence; original/public prefixes distinct; old archive preserved; no original producer execution'};(L/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8');result={'leaf':str(L.relative_to(W)).replace(chr(92),'/'),'files':len(records)+1,'manifest_targets':len(records),'projected':sum(x['projection'] for x in records),'bytes':sum(x['bytes'] for x in records),'old_primary_bytes':len(old),'old_primary_sha256':sha(old),'named_main_joins':joins,'original_producer_replays':0,'main_sends':0};(O/'ARCHIVE-RESULT.json').write_text(json.dumps(result,indent=2),encoding='utf8');print(json.dumps(result,sort_keys=True))

@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/r193-source-vs-query-dispatch-reinterpretation-v1",
+  "source_packet": "map01_native_win32_operation_boundary_r193_20261116/trials/r193-operation-boundary-grace/dispatch-terminal.json",
+  "source_packet_sha256": "a0671f25d03901fd1a856a8355ed2b0f0684e3d18ab2ab54c7e0f36362225590",
+  "interpretation": {
+    "query_response_input_dispatched": false,
+    "query_input_dispatched": false,
+    "source_action_status": "unknown",
+    "source_action_input_dispatched": true,
+    "source_result_input_dispatched": true,
+    "program_emissions": 4,
+    "operation_receipt_count": 11,
+    "late_operation": {
+      "operation_index": 7,
+      "phase": "lease_refused_before_sendinput",
+      "sendinput_attempts": 0,
+      "sendinput_returned_count": 0,
+      "local_action_count": 0
+    },
+    "separate_same_generation_hud_effect": "50_to_49",
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "scope": "Read-only projection of one retained native raw result. The source UNKNOWN status and no-replay gate are unchanged; the HUD observation does not upgrade task success."
+}

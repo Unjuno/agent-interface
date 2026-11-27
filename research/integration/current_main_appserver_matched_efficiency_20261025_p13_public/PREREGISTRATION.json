@@ -1,0 +1,48 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p13-prereg-v1",
+  "attempt": "current-main-appserver-matched-efficiency-20261025-p13",
+  "preregistered_utc": "2026-10-25T12:30:24.837440+00:00",
+  "status": "FROZEN_BEFORE_PROVIDER_CALL",
+  "base_commit": "d50c35097aa0f5ec8ebacf34778ee050c15c47c6",
+  "python": "3.13.14",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "pair_count": 1,
+  "trial_count": 2,
+  "pair_order": [
+    [
+      "compiled_public_caller",
+      "direct_public_input"
+    ]
+  ],
+  "provider_turn_limit": 1,
+  "timeout_seconds": 90,
+  "retry_count": 0,
+  "recovery_count": 0,
+  "source_sha256": {
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_public_mcp_caller_v1.py": "73cd96d2d9c8a15ae78799b8c2e22747615c8106d5a087e000fbbeec19f2e800",
+    "research/integration/standard_mcp_task_ledger_57_v1/ledger.py": "fd35a86b148eb7415f53f0da564d8c5e0ccbb2589ded7bce1edb7bf3b112b714",
+    "runtime/cli_v1/test_mcp_owned_process.py": "c1c676648a77d7361293f18f739ccbb5be4b82864d183079359de08c5fc82720",
+    "research/integration/standard_mcp_task_ledger_57_v1/app_server_provider_to_public_mcp_v1.py": "d0cd5ba2729476db67544fe030cd922443c05b4fec5e57f1a6ae7cb733e8b948",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "research/live_control/persistent_planner_adapter_v2.py": "2a416b23744a3d9b0c0917d4b70cecd5b4c2e868de1260547e4e9507fa8fe117",
+    "runtime/cli_v1/mcp_relay.py": "53237fc22f7b3ce036818432349bebd309cf263181fd8be354025ae7cc260ddf",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py": "ceeba770ddd155e1ae615475314fe0d2df9e6e1ddbca8f232724b952a3e5522e",
+    "research/live_control/codex_app_server_client_v2.py": "ae1e4806e43793fab8f2cd0eddc10464104e7d5d43b93f6f1bd450c7a218ddda",
+    "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py": "ab05d8b0a9a7bbac6a539c18aea585f7ba53c3349d034e5b257b3225a8ce0944"
+  },
+  "runner_sha256": {
+    "run_arm.py": "10ac9c51222dbd099670137a80229519717d5058248f512a012fe0e54f162dae",
+    "fake_factory.py": "3b2f9e9800c9ebf799907393998ef4416921819f833bfd78db3bd20819391543",
+    "privacy_redact.py": "e31137dfbd800b7344d3890ad41bfa3296a99f4d8d42f7d2b571df3515c51933",
+    "test_fake_factory.py": "1d5cc7bfd5133dfb55d00ebb04ab4c50b07205f525dc7a10f88155347b2bb5de",
+    "test_privacy_redact.py": "28e2808fd57caece1fb7cf97488416a98205ee8eaae45082f656311a3d158e3a",
+    "test_standard_caller.py": "083db9e293e8248cb495caafe3e703efe4b8c7475f348ad032ce51d8ad216ed0",
+    "preflight_appserver.py": "fad6dba22282b6d10a1eea2236bf9336f08b7abf2b0b86de25e739fb3734323b"
+  },
+  "first_outcomes": "Each of two P13 cells is immutable. No retry/replacement; any failure or unknown counts against its arm.",
+  "raw_custody": "privacy_redact skips ledger/raw and all .bin files byte-for-byte. Independently reconcile raw hashes before deciding pass. Do not run post-hoc path sanitizer.",
+  "execution": "Fresh child-owned deterministic Fake X session per arm; one public observation, one model turn, one mint, one route-specific action; no WSLc/Docker/physical input.",
+  "limits": "Synthetic Fake X only; no live GUI/MAP01/blocked-I/O recovery/broad reliability claim.",
+  "predecessor": "P13 is a distinct new attempt and reversed-order pair replication; no P12 raw/result reused or changed."
+}

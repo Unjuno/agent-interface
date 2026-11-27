@@ -1,0 +1,56 @@
+{
+  "route": "direct-post",
+  "fault": "partial-effect",
+  "request": {
+    "id": 1,
+    "method": "call",
+    "args": [
+      "interface_dispatch",
+      {
+        "target": "fixture",
+        "program": "save"
+      }
+    ]
+  },
+  "calls": [
+    {
+      "tool": "interface_dispatch",
+      "args": {
+        "target": "fixture",
+        "program": "save"
+      }
+    }
+  ],
+  "failure": "Error: synthetic host lost reply after file effect",
+  "refused": "Error: trial stopped: transport or presentation failure",
+  "afterFailure": {
+    "next_id": 2,
+    "busy": false,
+    "stopped": null,
+    "caller_state": {
+      "stopped": "transport or presentation failure"
+    }
+  },
+  "afterRefusal": {
+    "next_id": 3,
+    "busy": false,
+    "stopped": null,
+    "caller_state": {
+      "stopped": "transport or presentation failure"
+    }
+  },
+  "closeError": "TypeError: next command id must be 3; exact id/method/args envelope required",
+  "final": {
+    "next_id": 3,
+    "busy": false,
+    "stopped": null,
+    "caller_state": {
+      "stopped": "transport or presentation failure"
+    }
+  },
+  "savedEffect": "A",
+  "files": {
+    "request-1.json": "{\"id\":1,\"method\":\"call\",\"args\":[\"interface_dispatch\",{\"target\":\"fixture\",\"program\":\"save\"}]}\n",
+    "request-2.json": "{\"id\":2,\"method\":\"call\",\"args\":[\"interface_dispatch\",{\"target\":\"fixture\",\"program\":\"save\"}]}\n"
+  }
+}

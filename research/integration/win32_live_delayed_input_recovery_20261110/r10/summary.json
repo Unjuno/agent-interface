@@ -1,0 +1,89 @@
+{
+  "initial_status": "pending",
+  "call_id": "6a40007f52314c1e9baccb7670724f64",
+  "terminal_action_status": "completed",
+  "public_terminal_status": null,
+  "release_confirmed": true,
+  "task_success": null,
+  "replay_allowed": false,
+  "event_rows": [
+    {
+      "hwnd": 213452398,
+      "kind": "ready",
+      "monotonic_ns": 77649062000000
+    },
+    {
+      "kind": "pump_blocked",
+      "monotonic_ns": 77658890000000
+    },
+    {
+      "kind": "keyboard_message_deferred",
+      "message": 256,
+      "monotonic_ns": 77660937000000,
+      "queued_monotonic_ns": 77660937000000,
+      "wparam": 65
+    },
+    {
+      "kind": "keyboard_message_deferred",
+      "message": 257,
+      "monotonic_ns": 77660937000000,
+      "queued_monotonic_ns": 77660937000000,
+      "wparam": 65
+    },
+    {
+      "kind": "keyboard_message_deferred",
+      "message": 257,
+      "monotonic_ns": 77660953000000,
+      "queued_monotonic_ns": 77660953000000,
+      "wparam": 65
+    },
+    {
+      "blocked_ms": 4188.0,
+      "deferred_count": 3,
+      "kind": "pump_resumed",
+      "monotonic_ns": 77663078000000,
+      "timeout": false
+    },
+    {
+      "dispatch_monotonic_ns": 77663078000000,
+      "kind": "keyboard_message_dispatched",
+      "message": 256,
+      "monotonic_ns": 77663078000000,
+      "queued_monotonic_ns": 77660937000000,
+      "wparam": 65
+    },
+    {
+      "dispatch_monotonic_ns": 77663078000000,
+      "kind": "keyboard_message_dispatched",
+      "message": 257,
+      "monotonic_ns": 77663078000000,
+      "queued_monotonic_ns": 77660937000000,
+      "wparam": 65
+    },
+    {
+      "dispatch_monotonic_ns": 77663078000000,
+      "kind": "keyboard_message_dispatched",
+      "message": 257,
+      "monotonic_ns": 77663078000000,
+      "queued_monotonic_ns": 77660953000000,
+      "wparam": 65
+    }
+  ],
+  "timeline_count": 14,
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "44ec8eaa48034c1e90e2e44a618fee2b",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 1,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\win32-live-fixture-20261110-r10\\mcp\\7355200af3434605bfc089aed9d63d92",
+    "call_id": "7355200af3434605bfc089aed9d63d92"
+  }
+}

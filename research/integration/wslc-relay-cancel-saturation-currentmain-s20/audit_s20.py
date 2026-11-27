@@ -1,0 +1,28 @@
+import hashlib,json,pathlib,sys
+root=pathlib.Path(__file__).parent; run=root/'run'
+def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+pre=read(root/'PREREGISTRATION.json'); inp=read(root/'INPUT-PREFLIGHT.json'); result=read(run/'result.json'); raw=read(run/'raw/result.json'); cleanup=read(run/'resource-cleanup.json'); storage=read(root/'STORAGE-CLEANUP-STATUS.json'); raw_manifest=read(run/'raw-manifest.json')
+events=[json.loads(x) for x in (run/'host-harness.log').read_text(encoding='utf-8-sig').splitlines() if x.strip()]; stages={x['stage']:x.get('details',{}) for x in events}
+t=raw['timestamps_monotonic_ns']; checks=[]
+def check(name,ok):checks.append({'name':name,'passed':bool(ok)})
+check('current_main_source_commit_and_critical_blobs',pre['source_commit']=='7b9383077f8f98873eab5eac70b13005c8d2138f' and all(x['matches_origin_main'] for x in pre['critical_sources']) and result['test_selector']==pre['test_selector'])
+check('all_31_wheels_hash_verified_before_run',inp['status']=='PASS_INPUT_PREFLIGHT' and inp['wheel_count']==31 and all(x['matches_manifest'] for x in inp['wheel_files']) and result['wheel_count']==31)
+check('WSLc_3_0_3_and_new_session_closed',stages.get('version',{}).get('Major')==3 and stages.get('version',{}).get('Minor')==0 and stages.get('version',{}).get('Revision')==3 and cleanup['sessionName']==pre['session_name'] and cleanup['started'] and cleanup['terminated'])
+check('exact_generated_name_query_only',stages.get('exact_name_preflight',{}).get('filter')=='name='+pre['container_name'] and stages['exact_name_preflight'].get('exit')==0 and stages['exact_name_preflight'].get('stdout')=='' and stages['exact_name_preflight'].get('stderr')=='')
+check('one_pinned_network_disabled_container_and_cleanup',cleanup['image']==pre['image'] and cleanup['pulled'] and cleanup['imageDeleted'] and cleanup['cid'] and cleanup['deleted'] and cleanup['exit']==0 and cleanup['failure'] is None)
+check('exact_single_unittest_pass',result['status']=='PASS_FAKE_X_RELAY_COMPOSITION_ONLY' and result['exit_code']==0 and result['raw_file_count']==1 and result['test_selector']==pre['test_selector'] and 'Ran 1 test' in (run/'test.stderr.txt').read_text(encoding='utf-8') and 'OK' in (run/'test.stderr.txt').read_text(encoding='utf-8'))
+check('saturated_public_relay_cancel_order',raw['disposition']=='PASS_FAKE_X_RELAY_COMPOSITION_ONLY' and raw['ordinary_requests_before_cancel']==16 and raw['cancel_dispatched_while_stdout_blocked'] is True and raw['cancel_response_written_after_stdout_resumed'] is True and t['first_stdout_write_started_ns']<t['cancel_admission_ns']<t['first_stdout_write_resumed_ns']<t['cancel_response_write_ns'])
+check('caller_release_readback_precedes_stdout_resume',raw['fake_key_down_before_release']==['a'] and raw['fake_key_down_after_release']==[] and raw['owner_release_attempt']['status']=='readback_verified' and raw['owner_release_attempt']['release']['verified'] is True and raw['owner_release_attempt']['release']['keys_down']==[] and raw['owner_release_attempt']['release']['buttons_down']==[] and t['cancel_admission_ns']<t['release_readback_ns']<t['cancel_return_ns']<t['first_stdout_write_resumed_ns'])
+check('bounded_cancel_and_readback_timing',0<=t['cancel_return_ns']-t['cancel_admission_ns']<2_000_000_000 and 0<=t['release_readback_ns']-t['cancel_admission_ns']<2_000_000_000)
+check('unknown_no_replay_and_no_task_success',raw['cleanup_status']=='UNKNOWN' and raw['release_confirmed'] is False and raw['task_success'] is None and raw['replay_allowed'] is False and raw['late_server_request_possible'] is True and result['task_success'] is None and result['replay']=='denied')
+rawdir=run/'raw'; actual=[]
+for f in sorted(x for x in rawdir.iterdir() if x.is_file()):actual.append({'name':f.name,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+check('raw_manifest_matches_raw_bytes',actual==raw_manifest and len(actual)==1 and actual[0]['name']=='result.json' and result['raw_manifest_sha256']==hashlib.sha256(json.dumps(actual,sort_keys=True).encode()).hexdigest())
+check('isolated_session_storage_hash_matches',pathlib.Path(storage['path']).is_file() and pathlib.Path(storage['path']).stat().st_size==storage['bytes'] and hashlib.sha256(pathlib.Path(storage['path']).read_bytes()).hexdigest()==storage['sha256'] and storage['session_terminated'] and storage['container_deleted'] and storage['image_deleted'])
+rows=[]
+for f in sorted(x for x in run.rglob('*') if x.is_file() and x.name!='PRESERVED-RUN-MANIFEST.json'):rows.append({'path':f.relative_to(run).as_posix(),'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+(run/'PRESERVED-RUN-MANIFEST.json').write_text(json.dumps(rows,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+ms=(t['cancel_return_ns']-t['cancel_admission_ns'])/1e6; rs=(t['release_readback_ns']-t['cancel_admission_ns'])/1e6; margin=(t['first_stdout_write_resumed_ns']-t['release_readback_ns'])/1e6
+obj={'status':'PASS_SCOPED' if all(x['passed'] for x in checks) else 'FAIL_AUDIT','checks_passed':sum(x['passed'] for x in checks),'checks_total':len(checks),'checks':checks,'scope':'one WSLc synthetic Fake X public relay/caller composition test; no real OS or GUI input','timing_ms':{'cancel_admission_to_cancel_return':round(ms,3),'cancel_admission_to_fake_release_readback':round(rs,3),'readback_before_stdout_resume':round(margin,3)},'raw_files':len(actual),'preserved_run_files':len(rows)}
+(root/'AUDIT.json').write_text(json.dumps(obj,indent=2,sort_keys=True)+'\n',encoding='utf-8');print(json.dumps(obj,indent=2));sys.exit(0 if all(x['passed'] for x in checks) else 1)
+

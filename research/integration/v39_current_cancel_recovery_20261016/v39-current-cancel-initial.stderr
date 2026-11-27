@@ -1,0 +1,92 @@
+test_clean_new_planner_result_only_reaches_action_validation (__main__.CancelRecoveryCompositionTests.test_clean_new_planner_result_only_reaches_action_validation) ... ok
+test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) ... 
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='cancelled') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='completed') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='expired') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='cancelled') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='completed') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='expired') ... FAIL
+test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (__main__.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) ... 
+  test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (__main__.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='cancel-write') ... ERROR
+
+======================================================================
+ERROR: test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (__main__.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='cancel-write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 121, in test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence
+    r=self.drive(fault=fault)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 83, in drive
+    try:returned=controller.cancel_invalidated_cover(planner,handle,process,wait,'cover-0')
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 462, in cancel_invalidated_cover
+    fail(cancel_error)
+    ~~~~^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 441, in fail
+    raise error
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 443, in cancel_invalidated_cover
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 40, in write
+    if self.fail_write:raise OSError('synthetic cancel write unknown')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: synthetic cancel write unknown
+invalidated cover did not verify empty release
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='cancelled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'cancelled', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='completed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'completed', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='expired')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'expired', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='cancelled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'cancelled', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='completed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'completed', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (__main__.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='expired')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_cancel_recovery_composition.py", line 103, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertIsNone(r['error'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'type': 'RuntimeError', 'receipt': {'schema': 'cover-cancel-failure-v1', 'id': 'cover-0', 'terminal': {'event': 'terminal', 'id': 'cover-0', 'status': 'expired', 'release': {'verified': True, 'keys_down': [], 'buttons_down': []}}, 'local_invalidation': {'status': 'invalidated', 'answer_eligible': False}, 'failure': {'type': 'RuntimeError', 'message': 'invalidated cover did not verify empty release'}, 'physical_input_state': 'unverified', 'grants_input_authority': False, 'task_effect': 'unknown', 'input_recovery_required': True}} is not None
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.186s
+
+FAILED (failures=6, errors=1)

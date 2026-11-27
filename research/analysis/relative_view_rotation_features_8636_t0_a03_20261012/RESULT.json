@@ -1,0 +1,26 @@
+{
+  "schema": "issue-8636-t0-a03-result-v1",
+  "allocation": "UNJUNO-8636-ROTATION-FEATURES-T0-A03-20261012",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 0,
+  "planned_arm_trials": 360,
+  "auditor_invocations": 1,
+  "auditor_exit_code": 1,
+  "auditor_first_failure": "ValueError: focal stress yield reason mismatch",
+  "audit_summary_written": false,
+  "retry_count": 0,
+  "method_gate": "HOLD_UNCERTAIN",
+  "hypothesis_status": "UNASSESSED",
+  "candidate_output_file_count": 2231,
+  "candidate_output_bytes": 63489719,
+  "candidate_archive": {
+    "path": "A03-first-outcome.tar.gz",
+    "bytes": 398308,
+    "sha256": "60d6d0ae0b04ef58c006fef14b053dfda0c8077350510ac7e36f7c6541a1f229"
+  },
+  "limits": [
+    "The auditor stopped before complete replay and mutation checks.",
+    "No feature-method or H result is supported.",
+    "Synthetic analytic fixture only; no GUI/game/runtime/control conclusion."
+  ]
+}

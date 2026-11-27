@@ -1,0 +1,35 @@
+{
+  "attempts": [
+    {
+      "delayed_source_effect": "a observed after source authority expiry; not task-success attribution",
+      "durable_fence_status": "clear",
+      "fixture_windows_closed": false,
+      "followup_dispatches": 0,
+      "followup_generation_created": true,
+      "followup_observations": 0,
+      "followup_public_server_initialize": "failed: supervised-win32 requires exactly one explicitly configured target",
+      "followup_task_verifications": 0,
+      "ordinal": 1,
+      "outcome": "STOP_FOLLOWUP_MCP_TARGET_COUNT_REJECTED_BEFORE_OBSERVE",
+      "recovery_horizon_ns": 2000000000,
+      "recovery_horizon_verified": true,
+      "recovery_neutral": true,
+      "recovery_release_confirmed": true,
+      "recovery_status": "recovered",
+      "source_action_status": "unknown",
+      "source_generation": "fea7a34d6b4e504e36a53b0c2dd0ef23e7c0bb336e5113abc509bcc6c3d0774c",
+      "source_operation_id": "f9bf33f9c8ac4df6afb3ef66e67fdc11",
+      "source_release_confirmed": false,
+      "source_replay_allowed": false,
+      "source_task_success": null,
+      "stop_reason": "Follow-up harness rewrote target registry with source and fresh targets, but current supervised-win32 create_server rejects configurations with more than one target. New task server failed initialization before an observation or dispatch. Preserve both fixtures and do not retry this allocation.",
+      "trial_allocation_consumed": true,
+      "trial_id": "r38 one frozen attempt"
+    }
+  ],
+  "cohort_outcome": "STOP_FOLLOWUP_MCP_TARGET_COUNT_REJECTED_BEFORE_OBSERVE",
+  "frozen_trials": 1,
+  "schema": "agent-interface/r38-summary-v1",
+  "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+  "stopped_early": true
+}

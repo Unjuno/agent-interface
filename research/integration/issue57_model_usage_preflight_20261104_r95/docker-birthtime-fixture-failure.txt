@@ -1,0 +1,24 @@
+..F......................
+======================================================================
+FAIL: test_same_descriptor_ctime_change_is_not_hidden_by_birthtime (runtime.guarded_x11_v1.test_calc_effect_v1.CalcEffectGateTests.test_same_descriptor_ctime_change_is_not_hidden_by_birthtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/runtime/guarded_x11_v1/test_calc_effect_v1.py", line 61, in test_same_descriptor_ctime_change_is_not_hidden_by_birthtime
+    self.assertEqual(_identity(opened), _identity(changed))
+AssertionError: Tuples differ: (87, 193252, 536, 1793767687048965953, 1793767687048965953) != (87, 193252, 536, 1793767687048965953, 1793767687048965954)
+
+First differing element 4:
+1793767687048965953
+1793767687048965954
+
+- (87, 193252, 536, 1793767687048965953, 1793767687048965953)
+?                                                          ^
+
++ (87, 193252, 536, 1793767687048965953, 1793767687048965954)
+?                                                          ^
+
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.040s
+
+FAILED (failures=1)

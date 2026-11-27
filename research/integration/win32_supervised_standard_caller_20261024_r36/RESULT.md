@@ -1,0 +1,11 @@
+# R36 — strict public-cancel release gate
+
+**Result: STRICT_RELEASE_PASS for this one bounded Win32 fixture attempt.** The input-free preflight passed all 12 checks. One fresh fixture and one public dispatch were used; the same-generation independent baseline confirmed `Q=true`, and the exact call was still running before one recorded `interface_cancel`.
+
+The public cancel returned `pending` in 1.266 ms with `release_confirmed=false` and replay denied. Its terminal action and cancellation receipts later matched the same operation and generation and reached `recovered / release_confirmed=true`. The held Q-up callback returned 1,252.120 ms after the cancel response. The caller maintained the 1,251.953 ms post-cancel window and recorded 78 successful `interface_results` polls for the exact call ID, exceeding the frozen 21-poll minimum.
+
+The recovery Q-up `SendInput` returned 627.600 ms after the cancel response. A separate pre-armed process then recorded 59 same-generation `Q=false` samples after that return and before the held callback returned. The observer exited cleanly before fixture close (602 samples, exit code 0); the exact producer exited; and a final independent same-generation readback observed `Q=false`. Fixture/session/hook cleanup and foreground restoration completed.
+
+Two runtime boundaries remain visible. `interface_close` returned `closed` but reported `release_confirmed=false`, while the terminal cancellation receipt and independent neutral readback both confirmed release. The hook trace contains no second distinct Q-up callback after the held callback. The fixture click/save oracle occurred before cancellation, and a later `q` character event was recorded; runtime `task_success` remains null. These do not undo the specific bounded release gate result, but no post-cancel task success is claimed.
+
+The frozen R36 audit is 10/10 and the additive raw-schema evidence review is 13/13. The frozen trace helper was executed once but expected the R35 audit filename; that `FileNotFoundError` is recorded, and a separate R36 trace analysis preserves the timings. Raw and pre-run custody are unchanged. This is not a reliability estimate, MAP01, WSLc, Docker, or matched-efficiency result.

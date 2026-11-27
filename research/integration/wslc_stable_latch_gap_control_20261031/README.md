@@ -1,0 +1,16 @@
+# WSLc stable X11 sampled-latch gap control
+
+This synthetic private-Xvfb experiment isolates the sampling gap left ambiguous by the MAP01 between-sample probe. An explicitly created X11 target has a stable background; an 8x8 magenta overlay is shown either during the middle guard capture or entirely between guard captures. A direct X11 witness image records the overlay separately from the guard's own screenshots. The sampled latch remembers a patch RGB mean absolute difference above 32 or a changed binding. If eligible, an existing guarded X11 keyboard path emits a 100 ms `f` key hold; the target's X11 event queue records received press/release events. No model, game or network is involved.
+
+| Allocation | Target / overlay timing | Guard differences: before, middle, endpoint | Outcome |
+|---|---|---|---|
+| m01 | flat / overlaps middle | 0, 159.333, 0 | latched; withheld |
+| m02 | flat / between captures | 0, 0, 0 | reference creation refused flat target; no action |
+| m03 | textured / overlaps middle | 0, 127.333, 0 | latched; withheld |
+| m04 | textured / between captures | 0, 0, 0 | latch allowed; target received F press and release |
+
+m01/m02 were frozen together. m02 exposed an existing flat-target refusal before dispatch. m03/m04 were then separately frozen with the same fixed high-contrast texture drawn and restored after overlay removal; this allowed the existing reference-creation path. All four runs are retained. In m04, the witness image contains 64 magenta pixels and its capture timestamp lies between overlay mapping and removal. All three guard image captures lie outside that interval, and their patch differences are zero. The guard therefore admitted an action after a real, independently captured intermediate visual change. The target saw one matching key press and release; the action receipt and final owner close report neutral release and the X keymap reports F up.
+
+This establishes a sampled-observation blind spot under controlled conditions. It does not establish that this overlay made the subsequent key action unsafe, that a MAP01 action would have the same effect, or that denser sampling provides continuous coverage. The witness and target events are separate X11 observations but originate within the same test process and X server, not an external sensor. The fixed order, two post-adjustment trials, manually restored stable background and known synthetic overlay limit generalization. An observed change may also be irrelevant, so latching every pixel change can reduce useful work.
+
+WSLc used pinned image `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25`, one CPU and 1 GiB, no network, private Xvfb and the read-only Python runtime subset checked in the earlier MAP01 fixed-patch probe; intervening main changes were research only. The four specifically named containers were confirmed exited and removed. Each ZIP retains runner, frozen conditions, images, observations, action/close receipts and logs. `python audit.py` (Pillow required, normal Python mode) reconstructs image hashes, differences, overlay/capture ordering, latch result, target events, input release and the failed flat-target case. Exit code alone is insufficient: m02's Python process recorded the error and exited zero.

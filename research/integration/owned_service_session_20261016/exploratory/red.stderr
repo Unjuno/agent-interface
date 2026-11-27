@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_owned_session_backend_available (test_owned_service_session_selection.OwnedSessionTests.test_owned_session_backend_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_service_session_selection.py", line 12, in test_owned_session_backend_available
+    self.assertIsNotNone(importlib.util.find_spec('session_owned_owner_backend'),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         'selected session owner custody wrapper absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : selected session owner custody wrapper absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

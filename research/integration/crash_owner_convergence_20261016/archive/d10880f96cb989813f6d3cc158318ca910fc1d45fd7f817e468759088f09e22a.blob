@@ -1,0 +1,88 @@
+{
+  "close_error": {
+    "attrs": {},
+    "message": "owner release not verified: []",
+    "type": "RuntimeError"
+  },
+  "closed_ns": 3126004929324,
+  "display": ":0",
+  "event_publisher_errors": [],
+  "owner_id": "9b2cd8dd087d445ba8264ca5c9cc7128",
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "pointer_before",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "button_release_sync",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "pointer_after",
+          "type": "ConnectionClosedError"
+        }
+      ],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": false,
+      "verified_ns": 3126004812219
+    },
+    {
+      "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+      "event": "owner_failed",
+      "verified": false
+    }
+  ],
+  "owner_thread_stopped": true,
+  "receipt_fsynced": true,
+  "recovery_verified": false,
+  "release_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "pointer_before",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "button_release_sync",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 104] Connection reset by peer",
+          "source": "pointer_after",
+          "type": "ConnectionClosedError"
+        }
+      ],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": false,
+      "verified_ns": 3126004812219
+    }
+  ],
+  "schema": "input-owner-recovery-v1",
+  "service_pid": 1709,
+  "trigger": "rpc_eof"
+}

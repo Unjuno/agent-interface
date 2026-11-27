@@ -1,0 +1,49 @@
+{
+  "schema": "wslc-fakex-standard-caller-currentmain-s12-v1",
+  "revision": 1,
+  "amends": "CONDITIONS.json",
+  "revision_reason": "No test started. The first two CPython 3.14 wheel acquisition attempts exposed a cffi pin unavailable for selected platform tags and Windows marker evaluation. A broad platform tag set supplied the exact 30 Linux wheels; source and wheel hashes are frozen before the WSLc run.",
+  "attempt_id": "wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "frozen_at_utc": "2026-10-24T17:11:22.4099928Z",
+  "source_commit": "0024d763a106753eb8059cf6828417dca4467a58",
+  "source_archive": "inputs/source.zip",
+  "source_subset": "source-py: tracked runtime/*.py plus tracked offline_proxy_reply_framing_20261019/*.py only",
+  "source_manifest": "inputs/SOURCE-PY-SHA256.json",
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+  "session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "ai-control-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "runtime": "CPython 3.14 in digest-pinned python image",
+  "wheelhouse": "inputs/wheelhouse-pypi-cp314",
+  "wheel_manifest": "inputs/WHEELHOUSE-SHA256.json",
+  "wheel_count": 30,
+  "dependency_lock": "inputs/requirements-s12-cp314.lock",
+  "dependency_install": "pip install --no-index --no-deps using local wheelhouse into ephemeral container path",
+  "network": "none in formal container",
+  "mounts": [
+    "source-py read-only at /src",
+    "wheelhouse read-only at /wheels",
+    "run.py read-only at /runner",
+    "attempt output write-only at /out"
+  ],
+  "container_count": 1,
+  "requested_cpu": 1,
+  "requested_memory_mb": 1536,
+  "run_timeout_seconds": 120,
+  "retries": 0,
+  "pass": [
+    "one exact unittest exits 0",
+    "raw stdout/stderr, result JSON and resource cleanup are present",
+    "target-generation/cancel assertions pass; release remains UNKNOWN, task_success null, replay denied"
+  ],
+  "fail": "Any dependency installation failure, missing output, timeout, test failure, or cleanup uncertainty remains FAIL_OR_UNKNOWN; no rerun",
+  "nonclaims": [
+    "real X or physical input",
+    "GUI/application or MAP01 effect",
+    "actual provider/model",
+    "matched efficiency or broad reliability"
+  ]
+}

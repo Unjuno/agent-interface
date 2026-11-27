@@ -1,0 +1,21 @@
+COMMAND: C:\Users\user\AppData\Local\Programs\Python\Python311\python.exe -m unittest -v cancel_release_publication_59.test_cancel_release_publication
+CWD: C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\research\live_control
+EXIT: 0
+
+STDOUT:
+
+STDERR:
+test_accept_then_raise_release_delivery_is_not_retried (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_accept_then_raise_release_delivery_is_not_retried) ... ok
+test_accepted_event_emitter_failure_keeps_submission_fail_closed_and_closes (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_accepted_event_emitter_failure_keeps_submission_fail_closed_and_closes) ... ok
+test_cancel_during_release_sync_is_preserved_as_release_cause (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_cancel_during_release_sync_is_preserved_as_release_cause) ... ok
+test_cancel_while_key_held_publishes_receipt_before_terminal (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_cancel_while_key_held_publishes_receipt_before_terminal) ... ok
+test_cancelled_lease_without_active_ownership_is_not_cancel_cause (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_cancelled_lease_without_active_ownership_is_not_cancel_cause) ... ok
+test_expiry_while_key_held_publishes_release_before_terminal (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_expiry_while_key_held_publishes_release_before_terminal) ... ok
+test_persistent_release_emitter_failure_is_reported_on_terminal (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_persistent_release_emitter_failure_is_reported_on_terminal) ... ok
+test_release_emitter_failure_is_not_retried_before_terminal (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_release_emitter_failure_is_not_retried_before_terminal) ... ok
+test_terminal_emitter_failure_is_locally_reported_and_fails_closed (cancel_release_publication_59.test_cancel_release_publication.CancelReleasePublicationTest.test_terminal_emitter_failure_is_locally_reported_and_fails_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.532s
+
+OK

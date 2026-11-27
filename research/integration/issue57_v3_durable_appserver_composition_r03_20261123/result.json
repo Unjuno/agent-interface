@@ -1,0 +1,63 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r03",
+  "disposition": "PASS_SYNTHETIC_SUCCESS_USAGE_DURABLE_PROSPECTIVE_JOIN",
+  "current_main_sha": "2cf4230f918f1b05990a4491779805cc18658e12",
+  "host": "Windows CPython 3.13.14, Pillow 12.2.0",
+  "qualified_runs": [
+    {
+      "name": "focused-normal",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 1.772
+    },
+    {
+      "name": "module-normal",
+      "exit_code": 0,
+      "tests": 7,
+      "unittest_seconds": 20.652
+    },
+    {
+      "name": "focused-optimized",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 1.895
+    },
+    {
+      "name": "module-optimized",
+      "exit_code": 0,
+      "tests": 7,
+      "unittest_seconds": 20.434
+    }
+  ],
+  "expected": {
+    "one_attempt": true,
+    "status": "completed",
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "usage": {
+      "input_tokens": 1234,
+      "cached_input_tokens": 234,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 56,
+      "reasoning_output_tokens": 12
+    },
+    "durable_custody": "audited",
+    "effect_receipt_persisted": true,
+    "projected_task": "projected",
+    "missing_assignments_after_one_task": 17,
+    "dispatch_enabled": false
+  },
+  "harness_argument_errors_preserved": [
+    "First optimized harness invocation passed -O to unittest after -m; unittest rejected the option before running tests.",
+    "Second optimized harness invocation supplied -O both as interpreter option and unittest argument; unittest rejected it before running tests."
+  ],
+  "provider_live": false,
+  "gui_or_native_input": false,
+  "external_allocation": false,
+  "limitations": [
+    "Synthetic JSONL peer only; provider completeness remains unverified.",
+    "Compiled execution callback was stubbed; task effect is synthetic.",
+    "The allocation attestor was a test callback; no trusted external custody.",
+    "One task only; no three-arm efficiency, reliability, product runtime, MAP01, or Research Preview claim."
+  ]
+}

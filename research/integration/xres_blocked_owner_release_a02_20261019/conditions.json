@@ -1,0 +1,48 @@
+{
+  "experiment": "xres-blocked-owner-release-a02",
+  "started_local": "2026-10-19T00:50:36.9694740+09:00",
+  "started_utc": "2026-10-18T15:50:36.969Z",
+  "source_commit": "4cd5c7fada6577208d678903423d7250198225cf",
+  "source_branch": "runtime/guarded-mcp-owned-process-20261018",
+  "probe_sha256": "21ee3dab4d91f42280f66ecb44a38abd9e201398a7c88fbbaadc4f4646f18e1a",
+  "production_helper": "runtime/guarded_x11_v1/xres_client_fence.py",
+  "production_helper_sha256": "f6c9bad600bc0575400a937ab98336f9c5ef57b29dfbd5a3943089d75c19c6d2",
+  "wslc_version": "3.0.3.0",
+  "wslc_sessions": [
+    {
+      "CreatorPid": 36732,
+      "ID": 1,
+      "Name": "wslc-cli-user"
+    }
+  ],
+  "running_container_count": 0,
+  "image_ref": "python@sha256:fd3817f3a855f6c2ada16ac9468e5ee93e361005bd226fd5a5ee1a504e038c84",
+  "image_id": "sha256:cf001c2f8af7214144935ae5b37c9e626ccf789117c10c1f691766d4658f1b1e",
+  "python": "3.12.3",
+  "image_os": "linux",
+  "image_architecture": "amd64",
+  "pull_policy": "never",
+  "container_name": "agent-interface-xres-a02-20261019-c9ea9a10",
+  "network": "bridge (apt/pip dependency installation; not isolated)",
+  "source_mount": "read-only at /repo",
+  "cpu_limit_request": "1",
+  "memory_limit_request": "1G (not qualified as hard cap)",
+  "trials": 8,
+  "xvfb": ":91; 800x600x24; -nolisten tcp; -noreset",
+  "owner_display": ":92 via Unix reply-gating proxy",
+  "keycode": 250,
+  "proxy": "pass setup replies, then withhold server-to-owner bytes while forwarding owner requests",
+  "target_effect": "independent X11 recipient window records KeyPress and KeyRelease",
+  "query_wait_cooperative_seconds": 3,
+  "xlib_watchdog_seconds": 15,
+  "required_per_trial": [
+    "task recipient sees matching KeyPress at exact window",
+    "keymap is down while owner XSync remains blocked",
+    "owner killed and reaped within 2 seconds",
+    "exact owner base absent from XRes before release",
+    "independent KeyRelease reaches recipient",
+    "keymap is up after release and after 50ms"
+  ],
+  "scope": "Xvfb only; responsive server with owner reply path blocked; no physical desktop or permanent server-nonresponse claim",
+  "command": "C:\\Program Files\\WSL\\wslc.exe run --rm --name agent-interface-xres-a02-20261019-c9ea9a10 --cidfile C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\release-expiry-queued-press-mcp-20261018\\research\\integration\\xres_blocked_owner_release_a02_20261019\\raw\\container.cid --pull never --cpus 1 --memory 1G --network bridge --volume \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\release-expiry-queued-press-mcp-20261018:/repo:ro\" --workdir /repo python@sha256:fd3817f3a855f6c2ada16ac9468e5ee93e361005bd226fd5a5ee1a504e038c84 python -B /repo/research/integration/xres_blocked_owner_release_a02_20261019/probe.py --trials 8"
+}

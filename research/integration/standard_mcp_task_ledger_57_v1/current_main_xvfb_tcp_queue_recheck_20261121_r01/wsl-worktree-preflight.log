@@ -1,0 +1,21 @@
+xauth:  file /tmp/issue57-xvfb-tcp-88-normal.wIydpH/Xauthority does not exist
+test_later_delayed_keypress_after_disconnect_and_independent_release (runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResHeldKeyDisconnectIntegrationTests.test_later_delayed_keypress_after_disconnect_and_independent_release) ... ERROR
+
+======================================================================
+ERROR: test_later_delayed_keypress_after_disconnect_and_independent_release (runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResHeldKeyDisconnectIntegrationTests.test_later_delayed_keypress_after_disconnect_and_independent_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/portable-runtime-current-main-acbdfc0f9-r01/runtime/guarded_x11_v1/test_xres_disconnect_fence_integration.py", line 626, in test_later_delayed_keypress_after_disconnect_and_independent_release
+    self.assertTrue(client_is_connected(
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/portable-runtime-current-main-acbdfc0f9-r01/runtime/guarded_x11_v1/xres_client_fence.py", line 285, in client_is_connected
+    return client_pid_at_base(connection, resource_base) == expected_pid
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120/.worktrees/portable-runtime-current-main-acbdfc0f9-r01/runtime/guarded_x11_v1/xres_client_fence.py", line 256, in client_pid_at_base
+    raise RuntimeError('missing or ambiguous X-Resource process identity')
+RuntimeError: missing or ambiguous X-Resource process identity
+
+----------------------------------------------------------------------
+Ran 1 test in 8.579s
+
+FAILED (errors=1)

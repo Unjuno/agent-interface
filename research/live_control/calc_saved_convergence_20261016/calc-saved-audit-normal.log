@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "ordinary-normal",
+      "normal_task_verified": true,
+      "wrong_refusal_verified": false,
+      "captures": 20,
+      "program_emissions": 27
+    },
+    {
+      "case": "compiled-normal",
+      "normal_task_verified": true,
+      "wrong_refusal_verified": false,
+      "captures": 20,
+      "program_emissions": 27
+    },
+    {
+      "case": "compiled-wrong",
+      "normal_task_verified": false,
+      "wrong_refusal_verified": true,
+      "captures": 11,
+      "program_emissions": 21
+    },
+    {
+      "case": "ordinary-wrong",
+      "normal_task_verified": false,
+      "wrong_refusal_verified": true,
+      "captures": 11,
+      "program_emissions": 21
+    }
+  ],
+  "scope": "retained artifact consistency and task/control scoring; no new GUI qualification or model latency/cost claim"
+}

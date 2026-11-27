@@ -1,0 +1,51 @@
+import base64,copy,hashlib,io,json
+from pathlib import Path
+from PIL import Image
+OUT=Path(__file__).parent/'v39-selected-backend-final-20261016'
+def check(rows):
+ if len(rows)!=4 or {(r['signal'],r['blocked'],r['drop']) for r in rows}!={('health',False,False),('ammo',False,False),('health',True,False),('health',False,True)}:raise ValueError('coverage')
+ for r in rows:
+  if r['exit_code']!=0 or r['forced_cleanup'] or r['reader_alive'] or r['cancel_thread_alive']:raise ValueError('cleanup')
+  if r['barrier']!=dict(worker_alive=True,planner_events=['invalidate'],terminal_seen=False):raise ValueError('early terminal/interrupt')
+  wire=r['wire'];ready=next(w for w in wire if w['event']=='fixture_ready')
+  if ready['pid']!=r['pid'] and ready['parent_pid']!=r['pid']:raise ValueError('process identity')
+  if r['latest']!=r['recovered'] or r['latest']['sequence']<=r['low']['sequence']:raise ValueError('fresh recovered full frame')
+  if r['fresh_source']['source_sequence']!=r['recovered']['sequence'] or r['fresh_source']['source_value']!=96 or r['fresh']['status']!='admitted':raise ValueError('fresh monitor')
+  if r['final']['status']!=('READY_FOR_ACTION_VALIDITY' if r['drop'] else 'REJECTED_POLICY_INVALIDATED') or r['final']['input_authority_admitted'] is not False or r['final']['executor_admission'] is not None:raise ValueError('old answer authority')
+  if not r['drop'] and r['final']['policy_invalidation']!=r['invalidation']:raise ValueError('invalidation custody')
+  if r['blocked']:
+   if r['planner_events']!=['invalidate','abort'] or r['inspection']['custody']['release_obligation'] is None or r['inspection']['fake_down']!=[38] or r['result']['failure']['receipt']['input_recovery_required'] is not True:raise ValueError('unknown cleanup quarantine')
+  elif r['planner_events']!=['invalidate','interrupt'] or 'failure' in r['result']:raise ValueError('known closure')
+  if sum(w['event']=='accepted' for w in wire)!=1 or sum(w['event']=='fixture_command' and w['command']['op']=='submit' for w in wire)!=1:raise ValueError('program replay')
+  edges=[w for w in wire if w['event']=='fixture_key_edge']
+  if [(w['native_event'],w['code']) for w in edges]!=[(2,38),(3,38)] or len({w['thread'] for w in edges})!=1:raise ValueError('single input owner')
+  artifacts={a['name']:a for a in r['inspection']['artifacts']}
+  for full in (r['source'],r['recovered']):
+   typed=next(w for w in wire if w['event']=='typed_observation' and w['sequence']==full['sequence'])
+   if typed['target_process_identity']!=full['target_process_identity'] or typed['frame_rgb_sha256']!=full['frame_rgb_sha256']:raise ValueError('typed/full identity')
+   if not full['typed_ready_ns']<=full['typed_emit_return_ns']<=full['artifact_ready_ns']:raise ValueError('capture timing')
+   artifact=artifacts[Path(full['image']).name];b=base64.b64decode(artifact['bytes_b64'],validate=True)
+   if hashlib.sha256(b).hexdigest()!=artifact['sha256']:raise ValueError('PNG bytes')
+   with Image.open(io.BytesIO(b)) as image:
+    image.load()
+    if image.size!=(32,32) or hashlib.sha256(image.convert('RGB').tobytes()).hexdigest()!=full['frame_rgb_sha256']:raise ValueError('decoded source')
+  recovered_typed=next(w for w in wire if w['event']=='typed_observation' and w['sequence']==r['recovered']['sequence'])
+  if recovered_typed['signals']['health']['value']!=96 or recovered_typed['signals']['ammo']['value']!=4:raise ValueError('recovery fixture value')
+report={}
+for mode in ('normal','optimized'):
+ raw=json.loads((OUT/mode/'RAW.json').read_text());check(raw['rows'])
+ if (raw['tests'],raw['failures'],raw['errors'],raw['skips'])!=(15,0,0,0) or len(set(raw['method_ids']))!=15 or raw['optimize']!=(mode=='optimized'):raise ValueError('suite')
+ rejected=[]
+ for name in ('old_answer_ready','stale_latest','early_terminal','lost_custody','typed_identity','bad_png'):
+  bad=copy.deepcopy(raw['rows']);r=next(r for r in bad if not r['blocked'] and not r['drop'] and r['signal']=='health')
+  if name=='old_answer_ready':r['final']['status']='READY_FOR_ACTION_VALIDITY'
+  elif name=='stale_latest':r['latest']=r['source']
+  elif name=='early_terminal':r['barrier']['terminal_seen']=True
+  elif name=='lost_custody':next(r for r in bad if r['blocked'])['inspection']['custody']['release_obligation']=None
+  elif name=='typed_identity':next(w for w in r['wire'] if w['event']=='typed_observation')['target_process_identity']['digest']='b'*64
+  else:r['inspection']['artifacts'][0]['bytes_b64']=base64.b64encode(b'bad').decode()
+  try:check(bad)
+  except (ValueError,KeyError) as error:rejected.append(dict(name=name,reason=str(error)))
+  else:raise ValueError('contradiction accepted: '+name)
+ report[mode]=dict(tests=15,joined_cells=4,prior_backend_pipe_cells=len(raw['prior_rows']),contradictions=rejected)
+print(json.dumps(report,indent=2))

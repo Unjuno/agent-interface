@@ -1,0 +1,35 @@
+{
+  "experiment_id": "v39_authored_pair_guard_a09_20261012",
+  "repository": "Unjuno/agent-interface",
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "scope": "CONSTRUCTION_ONLY_SOURCE_MONITOR_BOUNDARY",
+  "wslc_version": "3.0.1.0",
+  "base_image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "built_image_id": "sha256:647eb2c46f1ef9fbb6b9a2f6d5872e06d3a8d140d7da7579e816d732190e9684",
+  "python": "3.14.8",
+  "sources": {
+    "map01_overlap_controller_v39.py": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+      "bytes": 112524
+    },
+    "observable_signal_guard_v2.py": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+      "bytes": 7404
+    }
+  },
+  "test_sha256": "80e099a15bf89e4c50c74ba5d2a1e269878945c1925889d82fee1129aac614bd",
+  "requested_constraints": {
+    "network": "none",
+    "cpus": "1",
+    "memory": "512m"
+  },
+  "command": "wslc run --rm --network none --cpus 1 --memory 512m a09-authored-pair-guard:20261012",
+  "preflight": {
+    "local_windows_invocations": 1,
+    "wslc_container_invocations": 1
+  }
+}

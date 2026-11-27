@@ -1,2215 +1,1559 @@
-# Worker governing invariant — 2026-09-18
-
-## Explicit operating direction — validate Issue ideas by experiment (2026-09-21)
-
-The primary task is to test concrete ideas already posted in repository Issues.
-Do not substitute branch/PR cleanup, roadmap restatement, documentation-only
-work, or merging for an experiment. For each selected idea, state H/T/D/C/U,
-freeze the source and decision gates, and run the smallest meaningful first
-experimental rung in WSLc for eligible local single-container CPU work. Use Docker/OrbStack only when a frozen protocol requires Engine API, Compose, unsupported isolation/resource controls, or GUI-specific behavior. Keep GitHub-hosted Actions unchanged, record host cgroup/swap warnings, and do not infer resource enforcement from configuration alone. Keep
-construction checks distinct from formal allocations; preserve raw PASS, FAIL,
-HOLD, STOP, and infrastructure evidence without retries or silent relabeling.
-If the exact experiment has already been performed, do not duplicate it: pick a
-genuinely different unresolved Issue hypothesis or a new successor allocation.
-
-Publish the executed experiment, raw artifacts, hashes, independent audit, and
-scope limits to `main` through a reviewable PR so an integration worker can
-inspect and independently revalidate it. The PR/merge is the evidence-delivery
-mechanism, not the research objective. A component or readiness PASS must not
-be promoted to integrated runtime, model, task-effect, or product success.
-
-**Resource-contention override (2026-10-02):** The cadence below does not require filler experiments while a needed resource or authority is unavailable. Keep at most one pending need per scientific question in [#5085](https://github.com/Unjuno/agent-interface/issues/5085), updating only meaningful readiness, ownership, assignment/release or outcome changes; do not roll GPU bookings or create new Issues merely for window, runtime, launcher or auditor repairs. Resource HOLD is valid while useful, nonconflicting work proceeds within existing authorization. Genuinely new hypotheses or integration decisions remain valid under [failure-classification rules](ISSUE_FAILURE_CLASSIFICATION.md). Preserve explicitly assigned/running finite allocations, their original safe stopping boundaries and all original outcomes; no grant or consumed-allocation retry is implied. Microsoft WSLc (`wslc.exe`) shares the host's physical GPU and does not prove memory-limit enforcement.
-
-**User-confirmed macOS execution and delivery direction (2026-10-03):** When the active workstation is macOS, do not assume Microsoft WSLc/`wslc.exe` exists or select it as the default. Use OrbStack Docker for eligible, isolated container experiments, with fresh source/image/freeze provenance and the same collision/resource checks; this does not bypass a study-specific live-allocation or shared-resource gate. GitHub MCP is optional: `gh`/Git and other available local interfaces are acceptable. The research unit remains an actually executed test of a concrete Issue hypothesis. Run applicable CI locally where practical, retain candidate/raw/auditor/STOP evidence, then batch-push and deliver through a reviewable PR; do not substitute housekeeping or a merge for the experiment.
-
-### Required work cadence for autonomous agents
-
-The unit of progress is an executed experiment against one concrete Issue
-hypothesis—not a branch, PR, issue comment, plan, or document update. In each
-work segment, proceed from intake and H/T/D/C/U to a frozen, smallest useful
-eligible WSLc experiment for local CPU/single-container work (or a required Docker/OrbStack experiment) and actually run it. A proposed command or a green
-test remembered from an earlier run is not a current result. If a formal/live
-allocation is separately gated or already consumed, do not spend it again;
-for recurring workflows, compare the same frozen workload under its established runtime and WSLc before changing the default. Run a distinct construction or boundary experiment that advances the same
-Issue question, or select another unresolved Issue hypothesis.
-
-Before calling a segment complete, retain the executed command, source/image
-identities, raw outcome, an independent audit, and explicit scope limits in an
-additive research path; record the result on the corresponding GitHub Issue;
-run the applicable local CI; then deliver the evidence through a reviewable PR
-and merge when its checks and review gates permit. Do not stop at a staged
-worktree, an Issue comment, a list of next steps, or a PR/merge with no new
-experiment. When blocked, state the exact missing authority/resource or failed
-gate and keep the research goal open. This cadence is experiment-first; it does
-not authorize retries of consumed allocations or broad runtime/product claims.
-
-### Issue-scoped experiment chain — #6576 (2026-10-02)
-
-This user's active direction is to execute the hypotheses inside the Issue,
-retain each first outcome, and use PR/main as the evidence handoff so an
-integration worker can independently revalidate it. Do not treat the merge as
-the research result or substitute issue/branch bookkeeping for a run. The
-timer-quantization chain has now run three distinct, fresh-input OrbStack Docker
-experiments in the dedicated #6576 VM/private Engine (never the shared
-`unjuno-native-ci-6092`): A01 found a q=1.0 finite synthetic eligibility
-counterexample; A02 tested a 20-distinct-tail-value rule on 30 seeds/resolution;
-A03 swept cutoffs 8/12/16/20/24 on 50 fresh seeds/resolution and found 8 was
-the smallest tested cutoff meeting its synthetic detection/false-hold criteria.
-All three records are merged in PRs #6726/#6728/#6731. These are
-construction/method results only—not validation
-of an operational resolution cutoff, EVT tail calibration, physical release,
-safety, or worst-case claim. The separately gated formal six-case T0 remains
-uninvoked. See the additive packages under
-`research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a0{1,2,3}_20261002/`
-and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
+> Project-wide orientation and current work order: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md). The detailed status dashboard remains in [PROJECT_STATE.md](PROJECT_STATE.md).
+
+> Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
+
+## Current-main follow-up — 2026-11-24
+
+On base main `22aba58c276141401a7688be335be5191ec661b9` (PR #10540), a public
+Win32 runtime packaging omission was isolated by a frozen Notepad CLI attempt.
+The fix and zipapp import regression test merged in [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541)
+as main `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d`; PR #10542 refreshed the
+status documentation at main `164650754bce28fc849f630f0b744decb4034f87`.
+R04 then completed one fresh Notepad task after explicit Computer Control
+foreground activation: exact independent file effect, same target generation,
+and verified terminal release. R01–R03 failures remain separately retained.
+This is basic one-attempt public CLI evidence and does not satisfy #57's
+integrated lifecycle efficiency, provider accounting, repeated recovery, or
+general reliability requirements. #58 and #59 also remain open. Full status
+and routing: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md),
+[PROJECT_STATE.md](PROJECT_STATE.md), and the repository-root [ROADMAP](../ROADMAP.md).
+
+PR #10544 added a scoped offline join from synthetic App Server usage through
+caller v3, compiled GUI execution, and durable effect custody; PR #10545
+refreshed the project status. PR #10546 records current-main Docker/Linux
+contract R02, which passed all 87 public-MCP and guarded tests normally and
+under `-O` in the
+cached network-disabled image. This resolves the prior combined optimized
+test-harness HOLD after the worker-entry event coordination changed. It is
+not live task, provider-efficiency, recovery-reliability, MAP01, or distribution
+evidence. See the [R02 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/RESULT.md)
+and its [conditions](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/CONDITIONS-r08.json).
+The r181 Issue/PR census at stable current main reports 1,640 open Issues and
+403 open PRs, with exact membership unchanged from r180; semantic family triage
+and the older local worktree custody snapshot remain outstanding.
+
+## Issue #57 WSLc XTEST repeat boundary R08–R11 — 2026-11-23
+
+Frozen source main: `36da81e3fb97dca875e4dc5b1d13d5385574b400`. Standard-caller R08/R09 still showed excess old-task A effects while the global or per-key repeat setting was read back off: effect counts 1→5 and 1→28; normal runs reached neutral physical release but the old-task oracle failed, while optimized runs timed out at the 1.5 s release budget and retained UNKNOWN until final cleanup. The counts are separate single-run observations and are not a controlled comparison. Direct WSLc Xvfb controls R10 showed 15 A press/release pairs for a 1.2 s hold at defaults and only 1/1 with global-off or A-key-off, both normal and `-O`. R11 queued a 2 s delayed B request with A repeat disabled and observed exactly one A press/release, one B press/release, and a neutral final keymap. Ordinary server autorepeat controls work in isolation; the extra repetitions in the standard caller/harness path remain unexplained. No runtime setting changed. R08–R11 audit scripts and packet manifests pass normal/`-O`; this remains synthetic Xvfb diagnosis, not #57 task acceptance. See [R08](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_repeat_off_diagnostic_r08_20261123/RESULT.md), [R09](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_key_repeat_keyoff_diagnostic_r09_20261123/RESULT.md), [R10](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_xtest_repeat_microcontrol_r10_20261123/RESULT.md), and [R11](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_delayed_request_repeat_microcontrol_r11_20261123/RESULT.md). #57 remains open.
+
+## Issue #57 current-main WSLc recovery diagnostics R05–R07 — 2026-11-23
+
+Frozen source main was `26152e5aaebf678d19f2e7431f57b7012a0064b1`; all runs used the pinned local WSLc/Xvfb image with pull disabled and network off. R05 normal observed disconnect and neutral release readback but the old task effect count grew 1→9 and failed its independent oracle; optimized mode timed out at the 0.5 s XRes bound (504 ms). R06's in-memory 1 s XRes diagnostic reached disconnect at 448 ms but its 1.5 s release worker timed out, with A still down at readback. R07's in-memory 1 s/3 s diagnostic verified release/readback at 1,188 ms, but the old task effect count grew 1→25 and its oracle failed. The separate fresh-generation task passed with no old input contamination, while the old fence remained UNKNOWN. R05–R07 audits pass in normal and `-O`; they classify evidence, not product acceptance. No production timeout changed. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r05_20261123/RESULT.md), [R06](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r06_timeout1s_diag_20261123/RESULT.md), and [R07](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r07_release3s_diag_20261123/RESULT.md). #57 remains open for live task completion, repeated recovery reliability, and matched provider/token/latency/correctness comparison.
+
+## Issue #57 current-main native recovered-task cohort R43 — 2026-11-23
+
+On frozen baseline `612b857d7c1c6a951d3f055862a5141dbc9c7637`, all five
+prospectively ordered public Win32 fixture attempts passed with no retries.
+Every expired source action remained UNKNOWN, release-unconfirmed,
+task-success-null, and replay-denied despite its separately observed delayed
+`a` effect. Public orphan recovery verified input release, neutral readback,
+and the complete 2 s late-input horizon; each fresh process/window/generation
+then completed a distinct public `B` task verified by an independent oracle
+inside the exact dispatch interval. Both fixtures closed and the persistent
+custody fence cleared after each attempt. The corrected independent audit
+passes normally and under `-O`, including all 451 packet-manifest entries.
+This is a controlled single-host repeated fixture result, not a population
+reliability estimate or arbitrary-app, same-window, provider-efficiency,
+MAP01, Research Preview, or distribution qualification. See [R43](../research/integration/win32_post_recovery_public_task_r43_20261123/RESULT.md).
+Keep #57 open; continue matched current-main economics, live provider
+accounting, broader recovery transfer, and product/distribution gates.
+
+## Issue #59 block-motion screen R02 — 2026-11-23
+
+Frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`; retained on current
+main `967a4aaa947dd21c7964ea4d0cb653cbc5518c64` by PR #10529. Fixed local
+block matching was screened on the same 52 retained V39 pairs and four typed
+health-loss labels as A01. Normal and `-O` outputs match; independent audits
+pass in both modes. Blockwise AUC is 0.427 vs raw 0.417 (gain 0.010); only
+1/4 losses exceed the no-loss median, so the frozen criterion fails. This is
+not an independent episode or live-control result. See [R02](../research/doom/camera_block_motion_r02_20261123/RESULT.md).
+Keep #59 open; no game target or physical input was used.
+
+## Research Preview current-main doctor R07 — 2026-11-23
+
+After PR #10522, the current WSL/WSLg host re-ran the doctor from the retained
+R06 current-main runtime source using its already-installed pinned WSL venv.
+The runtime and RC source are unchanged between the R06 evidence base and
+current main `095d92b1696e03c266287b530cbb38f5b9d5e7f6`. Thirteen of 15 checks
+passed; `windows_cli` and dependent `codex_cli` failed because the expected
+Windows Codex CLI JavaScript entrypoint remains absent. The doctor exited 1.
+No package was installed, Chrome was not launched, and no Golden task or
+`audit-live` ran. Do not substitute the desktop `codex.exe`. See [R07
+conditions/result](../research/integration/research_preview_current_main_supported_host_doctor_r07_20261123/RESULT.md).
+
+## Issue #57 native Edge composition attempts R10–R14 — 2026-11-23
+
+On current `origin/main` `6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3`, five
+separately frozen Edge/Win32 attempts narrowed setup boundaries; none sent a
+task input or made a provider call. R10 could not find the visible window by
+the launcher PID. R11 fixed ownership discovery, then stopped because CDP
+capture was 756×457 while the Win32 client was 756×488. R12 used the matching
+Win32 `PrintWindow` dimensions, but the captured frame was black and the V5
+mint correctly refused it as flat. R13's normal and `-O` runs found the HWND
+but Windows denied `SetForegroundWindow`; no focus-policy bypass was attempted.
+R14's normal run paused for explicit CUA activation, but the CUA tool stopped
+at its browser-URL confidence guard before any click; both cases timed out and
+cleaned up. R14 `-O` was not run. Per-attempt protocols, raw, conditions, and
+hashes are retained in [R10](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r10_20261123/RESULT.md),
+[R11](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r11_20261123/RESULT.md),
+[R12](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r12_20261123/RESULT.md),
+[R13](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r13_20261123/RESULT.md),
+and [R14](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r14_20261123/RESULT.md).
 
-The separate #6530 temporal-effect identity proposal also completed a new
-OrbStack-only synthetic A01 after its original WSLc environment STOP; the STOP
-was preserved, while the new eight-case candidate/auditor pair passed its
-scoped method gate. No GUI/calendar application was tested. See
-`research/analysis/temporal_effect_identity_6530_orbstack_a01_20261002/`.
+These attempts do not establish OS-level task input, release after task action,
+task effect, provider accounting, matched efficiency, reliability, MAP01, or
+runtime readiness. Keep #57 open. Continue with non-UI gates while a compliant
+foreground-activation route is unavailable; do not retry these run identities.
 
-This user direction takes precedence over the narrower integration-only
-wording immediately below for the current autonomous research task; the
-existing desktop integration and human-tempo objectives remain valid backlog.
+## Issue #57 local Edge composition R09 — 2026-11-23
 
-**Current task priority — user direction, 2026-09-19:** concentrate on integration
-while other contributors continue benchmark/research work. Complete one usable
-desktop path from setup and observation through guarded action, result and
-bounded recovery, starting with the existing golden desktop v3 route and #57.
-Adopt proven components where they resolve a gap in that path; use new experiments
-for concrete integration/correctness blockers or end-to-end evaluation.
-See [the integration plan](INTEGRATION_PLAN.md). Earlier evidence and the broader
-human-tempo objective remain valid; Product Hunt publication is not proof of
-runtime completion.
+PR #10520 merged the current-main-source headless Edge R09 packet. Real Edge
+screenshots and Windows OCR passed an exact local form task through V5 point
+mint, caller v3, compiled GUI, and a loopback POST scorer; the caller returned
+`TASK_SUCCEEDED` in normal and `-O`. A same-target page reload changed loader
+generation; the actual handle store refused the second action as
+`SCOPE_MISMATCH/window_generation_changed_or_missing`, with one completed
+action, no POST, and `EXECUTION_INCOMPLETE` in both modes. Per-case cleanup
+passed. R01–R08 setup/OCR/predicate/cleanup failures remain separately
+preserved and are not counted as passes. See [R09](../research/integration/issue57_chromium_v5_edge_caller_composition_r09_20261123/RESULT.md).
 
-## Public integration state — 2026-09-19
+This is headless Edge/CDP fixture evidence with fixed points and zero
+provider/model calls. It does not establish physical OS input/release, a live
+app/provider task, matched economics, or reliability. Continue the current
+gate by joining real provider attempt/usage accounting to standard-caller
+task/effect/release evidence, then freeze the matched comparison when resource
+conditions are valid. Keep #57 open.
 
-The public `main` branch now retains and integrates the native result boundary,
-optional X11 image artifacts, read-only observation continuation, partial native
-execution/recovery evidence, and the release-telemetry audit successor. The
-portable runtime archive includes the public read-only observation module, and
-the cross-platform build, CLI, contract, and X11 integration checks pass. The
-analytical index is verified against 121 retained result/failure directories.
+## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
 
-This is a usable and auditable integration baseline, not a finished product
-release: visual-target admission, source identity at native input admission,
-general application-effect detection, the full six-task live acceptance gate,
-and matched end-to-end benefit measurements remain open. Research branches and
-Draft PRs remain available for provenance and continued work.
+On frozen current main `d27e76398b5c094d5785c154ccf8a6fe70acf0c3`, the exact V5
+point-mint method and real TargetHandleStore now compose through adaptive
+caller v3 and compiled GUI in a Fake-only two-case bundle. The positive path
+performs two guarded actions with verified release and a separate task score.
+The changed-window-generation negative preserves the first released action and
+refuses Submit before execution, yielding `EXECUTION_INCOMPLETE` /
+`confirmed_partial` with no outer success verdict. The suite passes 25/25
+normally and under `-O`. See [R01](../research/integration/issue57_chromium_v5_caller_v3_composition_r01_20261123/RESULT.md).
+No live provider, GUI, or efficiency evidence follows; #57 remains open.
 
-**Successor acceptance update — 2026-09-20:** Issue #2737's fresh, no-retry
-Docker allocation passed the scoped six-task persistent route through the
-host-local `codex.exe` model IPC boundary. All six independent effects were
-exact, releases were verified, task-4 layout invalidation/repair succeeded, and
-the model remained non-authoritative. Compact evidence is retained in
-`research/analysis/full_golden_ipc_2737_v1/`. This closes the scoped assembled
-route gate for that allocation only; it does not establish broad GUI reliability,
-human-tempo benefit, or a general efficiency claim.
+## Issue #57 Chromium V5 generation guard current-main recheck R07 — 2026-11-23
 
-Local model-boundary update (Issue #2558, 2026-09-20): the Docker X11/native
-route now has a retained host-local `codex.exe` bridge. In six fresh fixture
-allocations, five schema/geometry-admitted actions independently produced the
-exact saved effect and one model output was rejected fail-closed because field
-and submit coordinates collided; all focus-reuse probes refused with zero
-additional emissions. This is scoped fixture evidence only: it does not close
-the full six-task live acceptance gate, establish broad GUI reliability, or
-claim an end-to-end efficiency benefit.
+PR #10516 merged at `561fe044a2023fc419ed4bc35942272bcbb3c279`. The exact-main
+post-merge Fake-only guard + handle/caller/core bundle passed 23/23 normally
+and under `-O`. Changed process/window generations refuse before mint; the
+same-generation private-alias positive passes. No live provider, GUI, task
+effect, efficiency, or recovery result follows. See [R07](../research/integration/issue57_chromium_v5_generation_mint_r07/RESULT.md).
+Keep #57 open; the V5-to-v3 evidence path and the broader research gates remain.
 
-> **Preserve rich-model intent; localize the high-frequency refinement loop.**
+## Issue #57 Chromium V5 point-mint generation guard R06 — 2026-11-23
 
-The project is not trying to replace Astra/a rich frontier model with a weaker local agent. The target is to let the rich model decide semantics/strategy, then let Agent Interface continue, refine, verify, and invalidate that intent locally while the rich model is reasoning elsewhere. Direct rich-model computer operation remains a first-class route.
+R05 reproduced a stale-generation mint defect in the exact V5
+`session_v33.Backend.execute` method: when process or window generation
+changed between the retained model observation and fresh mint observation,
+the method still minted if focus, surface, geometry, and exact pixels matched.
+The guard now refuses each generation change before registry creation. The
+same-generation alias/private-ID positive remains valid. The Fake-only R06
+suite passes 23/23 normally and under `-O` on Windows CPython 3.11.9. Setup
+stops and the baseline failures are retained in R01–R05 packets; see [R05
+baseline](../research/integration/issue57_chromium_v5_generation_mint_r05/RESULT.md)
+and [R06 recheck](../research/integration/issue57_chromium_v5_generation_mint_r06/RESULT.md).
+This narrows only point-mint generation correctness. The real Chromium V5
+target-handle/evidence path is still not bridged through caller v3; no live
+provider, GUI task, efficiency, recovery, MAP01, or preview graduation result
+follows. Keep #57 open.
 
-For new work: prefer deterministic macro/servo/watcher/graph when sufficient; use a tiny learned supervisor only for a demonstrated residual; never make a local model a mandatory intermediary merely to complete an architecture diagram. Every local path needs current-evidence invalidation and YIELD. Cached decisions, history, predictions, and speculation are not authority. Component PASS != integrated PASS.
+## MAP01 target availability preflight R01 — 2026-11-23
 
-Canonical detail: `docs/principles.md#governing-intent-principle--preserve-rich-model-intent-localize-refinement` and `docs/architecture.md#rich-model-intent-and-local-refinement`.
+On current-main baseline `e67ca18c`, a bounded read-only check found no GZDoom in six standard install paths, command lookup, running processes, or Windows uninstall registry. It did not search the full disk or establish WAD availability. No application was launched and no runtime/assets were installed. Live #59 threat exposure remains pending a supplied/preinstalled executable path and intended IWAD/map. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md).
 
-Current direction (r139): the retained Astra triage establishes the requirement, and exact current main `c1074c4d` already contains renewable cover waits, visible-HUD health/optional ammo validity guards, pending-model interruption, cover cancellation, and verified empty release. It does not classify enemy appearance from the full scene; the next experiment must test whether threat-linked HUD changes cross its authored guard before a slow answer returns, then preserve per-key release, independently useful feedback, bounded recovery, ammo/progress, and terminal outcome. See `research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md` for the hash-bound post hoc analysis and source identities. No code repair is justified before this mechanism is tested under fresh live threat exposure. Issue #59 is open and unassigned; the private game lane is unassigned, so no live execution is authorized. Current directions r138/r137 remain below.
+## MAP01 expanded target search R02 — 2026-11-23
 
-Current direction (r138): the retained Astra hero failure is now triaged against the full labelled video, decision HUD, report, and 852-row event stream. The first threat is visible across the lower area near 36 s; the only active fire/strafe cover overlaps an 11.741 s model wait and spends 11 rounds as sampled health falls 100→84 across the surrounding window. Damage timing cannot be localized within that window. Seven of 13 fixed ten-second covers expire before model return (9.771 s total uncovered, 3.765 s max); eight contingencies were authored and none fired. Later answers use fresh sequences and distinct images but repeat weak route-finding as health falls to zero; despite an approaching on-screen enemy, ammo stays at 37 and no later primary fires. This is delayed local reaction, not stale model-answer replay. Adjacent decision windows include the following primary action, so no causal damage attribution is claimed. The triage is `research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md`; one kill, one death, no MAP01 exit remains the terminal result. Current direction r137's A02 trace audit remains as recorded below. The next required block is still a newly frozen current-main V39 threat exposure that measures whether visible current evidence can stop/switch an inappropriate cover before model return, with per-key release, independently useful feedback, bounded recovery, ammo/progress, and terminal outcome. The private live-game lane is unassigned; this analysis does not grant it. Issue #59 remains open.
+On frozen current-main baseline `fd3f0f58`, a one-shot read-only scan covered five existing AppData/desktop/saved-games roots and returned no `gzdoom.exe`, `doom2.wad`, or `freedoom*.wad` filenames in 6.047 s. Six other configured roots did not exist. The scan did not inspect file contents or search the full disk; nothing was launched, installed, or downloaded. No live MAP01 exposure can proceed until an owned target and IWAD are located. See [R02](../research/integration/map01_expanded_target_search_current_main_r02_20261123/RESULT.md).
 
-Current direction (r137): the A02 inter-release `query_keymap` trace is attributable to its injected historical V12 fake-display owner: each explicit key-up takes a per-key pre-sample, emits KeyRelease/XSync, then takes a post-sample. A02 did not load the V39 V15 startup closure. In the current V15 path, V4 wraps V3 and current `live_control/input_owner_v12.py`; explicit up records KeyRelease/XSync without an inter-release keymap sample, and the batch takes one owner-state sample afterward. The only current V12 `query_keymap` site is terminal release cleanup. This resolves A02's apparent contract conflict, not the missing production per-key physical-state measurement: XSync does not prove physical key state or application consumption. The source-attribution audit is `research/doom/map01_v39_perkey_bridge_source_audit_a01_20261005/`, frozen at main `69dd261430cb1ed875f5a76411c4a2a54777c114`; A05 candidate passes 12/12 and independent source/raw auditor v2 passes with zero errors. A02's false-negative audit assertion and A05 auditor v1 failure remain preserved alongside earlier construction stops. Next, use the exact V39 startup closure to qualify an instrumentation path that preserves release ordering, then measure bounded latency and independently useful feedback/recovery under matched exposure. No live allocation is implied; #59 remains open.
+## Whole-repository membership recheck r175 — 2026-11-23
 
-Current direction (r136): A02 tested the retained V4 backend `execute/raw` methods with the actual V12 transition adapter and fake X display. Two keys produced matched confirmed down/up identities, V4 post-batch verification, empty final hold state, and no authority grant; the independent audit passed. The operation trace also found two `query_keymap` calls between the two key-up injections and one 6,917 ns release-call gap. This single fake-display sample exposes a conflict with the V3 no-between-release-query premise; it is not a latency bound, production-startup composition, live physical-input result, useful feedback, recovery, or task-effect evidence. The additive evidence is `research/doom/map01_v39_perkey_bridge_a02_20261005/`. Next reconcile per-key physical measurement with the release-order/query contract on the exact V39 startup closure, then establish bounded latency and independently useful feedback/recovery under matched exposure. No live allocation is implied; continue #59's threat-control gate and keep the full goal open.
+Complete GitHub REST pagination on stable main `acce16071b604fa8c06287d0b71d27addeccf481` found 1,640 open Issues and 404 open PRs. Compared with exact r173 ID arrays, no Issues changed and PR #7760 was the only removal; its 43-file trace/HOLD evidence is now preserved byte-for-byte by merged #10511. Membership only: semantic triage and custody reconciliation remain open. See [r175](maintenance/repository-inventory-recheck-20261123-r175.md).
 
-Current direction (r135): retain the posthoc admission-inventory join as a useful prerequisite for the next per-key release study. On the pinned 634-row V39 stream, 28/28 aggregate `keys_held` receipts match the reconstructed admitted-key sets for their step; the cancellation-racing `Down` at `cover-4` step 10 remains unmatched. Candidate and independent backward-context audit agree. Event rows lack intrinsic `id`/`step`, so scope is reconstructed from ordering; this is not per-key key-up, physical occupancy, useful-feedback, recovery, task-effect, MAP01, safety, latency, or human-tempo evidence. The evidence package is `research/doom/map01_admission_inventory_join_a01_20261005/`. Next, any prospective instrumentation must emit an explicit per-admission identity/context and per-key up/release outcome, then measure independently useful feedback and bounded recovery under a matched condition; no live allocation is implied by this posthoc result. Continue #59's threat-control gate; full goal remains open.
+## Issue #57 public recovery writer-drain R05 - 2026-11-23
 
-Current direction (r134): add a SHA-bound conservative reconstruction to the retained v38/v39 occupancy record (#6175/#6198) without altering those prior results. Candidate v4 plus independent raw-stream auditor v5 pass. V38 11/11 hold starts bound planner-wait overlap to3.049–4.040s; v39 29/29 include the previously unrepresented Down-only in-flight cancel/ack start and bound overlap to6.301–8.453s; that row is [0,13.209ms]. This is descriptive across different trajectories: it does not identify exact normal key-up duration, semantic useful feedback, recovery efficacy, causal v38/v39 effect, matched human tempo, or MAP01 completion. No new model/GUI allocation or container run occurred because no exclusive container lane was available. Next instrument per-key admission/up/release and independently useful feedback plus bounded recovery under matched conditions; continue #59 real-time threat-control gate. See `research/doom/results/map01-held-input-occupancy-fulltrace-v4/README.md` and `research/doom/MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md`. Full goal remains open.
+On frozen current main `d5a378ec`, the exact public Fake Win32 recovery test passed 1/1 normally and 1/1 under `-O` on Windows CPython 3.11.9. The later `1bf4d236` test change drained the dispatch report temp file and server close before teardown; neither the old 8.016 s observation failure nor `.report.json.tmp` cleanup collision reproduced in this single focused case. R04 remains a mixed 7/10 result; this is not reliability evidence. The initial wrapper setup error is only transcribed because its raw stderr was overwritten; the target test outputs and 18-entry hash manifest are retained. No real GUI/input ran. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).
 
-> **Document role:** The governing invariant and newest direction stay visible. Earlier retained directions remain verbatim below for provenance.
+## Calc artifact receipt-window recheck R02 — 2026-11-23
 
-<details>
-<summary><strong>Earlier retained direction history (r132 and earlier) — expand</strong></summary>
+On exact current main `5156ec0e`, `test_calc_task_artifact_v1` passed 20/20 in Windows CPython 3.11.9 in both normal and `-O` modes. The synthetic checks accept a Save request inside the effect-verification interval and reject timestamps outside it. This is artifact/receipt contract evidence only: no Calc GUI, live task, provider, or efficiency comparison ran. Keep #57 open. See [`R02`](../research/integration/standard_mcp_task_ledger_57_v1/calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).
 
-Current direction (r133): SHA-bound posthoc reconstruction of retained v38/v39 raw MAP01 traces, no new model/GUI calls. V39 completed5/6 answers and admitted3/6 plans, but its43.318s model wait contained21.484s input-free coast-program envelope,21.821s motor-capable cover envelope and0.013s no-program tail. During two post-rejection coast waits, typed health fell85→73 and73→68 despite answers completing; decision2 action still failed fresh admission. One active typed revocation reached verified empty physical input26.090ms after typed event emission and52.961ms before terminal. Earliest exact plan frames arrived51-78ms after acceptance but viewport-change receipts do not establish independently useful task feedback. Windows/WSL analysis audit agrees SHA7b754117...; no causal v38/v39 speed, actual held-key duration, matched human tempo or MAP01-clear claim. Next instrument true held-input occupancy, independent first useful feedback and bounded recovery cover under a matched condition; transfer coverage semantics to non-DOOM domains. See research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md. Full goal remains open.
+## Issue #57 caller v3 + compiled GUI composition R01 - 2026-11-23
 
-Current direction (r132): V38 raw attribution corrected: after decision1 failed fresh action validity, reusable_cover dropped authored policy and unauthored empty coast defaulted to zero tolerated health loss, interrupting decisions2-5 on any damage. V39 makes only that unauthored coast have no policy guard while retaining exact observations and fresh returned-action admission. Frozen same-fixture six-turn live run completed three coast-mode decisions, at least one through damage; 3/6 model plans admitted. One running plan naturally revoked from typed health73→65 against authored six-point limit, with matched early verified physical release before cancelled empty terminal. Nine accepted programs all empty-release;218 typed/exact observations,217 PNG plus one exact unchanged AIT reuse. Original audit failed its PNG-count assumption; retained v2 pixel/hash audit and Windows/WSL manifest pass464 files/63,880,177 bytes. Independent score1 kill/0 deaths/no MAP01 exit after50.371s control/43.318s model-wall. Next measure useful-control gaps, renewal and survival under a separately frozen condition and cross-domain coverage; no causal v38/v39 speed or human-tempo claim. See research/doom/MAP01_V39_COAST_LIVENESS_LIVE_V1.md. Full goal remains open.
+On current main c4065d011e1297ebd589bcd5b85da3beb269e037, the shared adaptive caller v3 now has a composed synthetic path through runtime.core_v1.compiled_gui. The positive path records two complete-cold model attempts, executes two local evidence-selected transitions with zero internal frontier resumptions, and sends program completion to a distinct synthetic task scorer. The changed-intermediate path keeps the first action/release, refuses the second admission/input, and returns EXECUTION_INCOMPLETE / unknown_state / confirmed_partial. Focused composition tests pass 2/2; the caller v3 suite plus 17 compiled-runtime suites pass 132/132 normal and 132/132 under -O on Windows CPython 3.13.14. The first bundle's legacy top-level import setup failure is retained and excluded. This is synthetic composition only; live app/provider/accounting/economics remain open. See [R01 result](../research/integration/issue57_adaptive_caller_compiled_gui_composition_r01_20261123/RESULT.md) and [composition plan/crosswalk](maintenance/issue57-composition-plan-and-requirement-crosswalk-20261123.md).
 
-Current direction (r131): Frozen v38 schema-v6 integrated live MAP01 allocation ran once/no retry. Six Luna-low decisions in an advancing enemy-visible episode admitted one active plan with exact running-action-v3 program/lease binding; one eligible active answer failed fresh action validity, and four turns interrupted as health crossed runtime zero-loss empty-cover floors after the rejected answer dropped authored cover. Seven cover/plan programs all verified empty release;119 typed observations reconciled with exact frames; no natural mid-action revocation/early physical release was exposed. Independent result0 kills/0 deaths/no map exit after31.731s control/27.489s model-wall. Raw first outcome retained265 files/41,480,362 bytes; Windows/WSL audit passes. Integration works, but policy renewal/useful control remains1/6 admissions. Next separately freeze a changed unauthored empty-cover guard condition and a running-action revocation exposure; preserve authored lease semantics and cross-domain coverage. See research/doom/MAP01_V38_INTEGRATED_LIVE_V1.md. Full human-tempo goal remains open.
+## Issue #57 interrupted-terminal usage custody R07   -  2026-11-23
 
-Current direction (r130): two previously frozen MAP01 allocations ran once. Luna-low schema-v6 no-image endpoint preflight is compatible (8,125 input/43 output) and independently audited; this proves request format only. Six-decision v32 live final-admission path in continuously advancing enemy-visible MAP01 produced 5 policy-invalidated no-input answers and 1 accepted plan. Decision4 completed/eligible but a12,214.235ms expired cover source evaluated before controller admission; interrupt already_terminal, plan-4 accepted0. Ten cover/plan programs all verified empty release;229 exact observations; one kill, zero deaths, no map exit after59.752s control/57.150s model-wall. Windows/WSL raw retention audit passes13+484 source files. The safety race gate is exposed, but liveness is weak:0 soft events,1/6 plan admissions. Next separately freeze and execute the already-built schema-v6/v38 planner plus immediate/running validity, early typed health/ammo and two-phase release path under live threat; do not extend an authored lease from unchanged health alone. See research/doom/MAP01_V32_FINAL_ADMISSION_LIVE_V1.md. Full goal remains open.
+On current main f64c58179524db4be64b116a265182c9facc1736, one synthetic JSONL turn emitted observed usage then terminated with status interrupted. Exact turn/thread identity and all five usage counters survived the real parser/model/v3/durable allocation/ProspectiveRun path; the failed attempt produced no task receipts, task/run stayed HOLD, and dispatch stayed disabled. Focused 1/1 and full module 11/11 passed normal and -O on Windows CPython 3.13.14. A broken optimized runner invocation is preserved but excluded; corrected optimized runs pass. This is synthetic custody coverage only. See research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md. Keep #57 open; live provider, efficiency, caller recovery and runtime gates remain open.
 
-Current direction (r129): archived OpenTTD effect transfer completed one frozen seven-call Luna-low allocation without retry over two independently engine-verified road transitions. Current-only/full were2/2 observed and safe advance; bounded action crop1/2, falsely contradicting A-to-B. Actual input18,736/23,748/19,424 tokens and images2/6/4. Crop saves4,324 tokens versus full but loses correctness and adds688 versus current-only. Frozen DO_NOT_TRANSFER_CROP; raw-call audits pass. The changed-crop revisit stays in the ledger. Primary next block follows Issue #59: unresolved continuously advancing DOOM threat-control and reaction while the frontier model is pending; examine retained evidence, freeze the next exposure/guard test, and assess live correctness and latency before presentation work. Human-tempo and live transfer remain open. See research/live_control/OPENTTD_EFFECT_MEMORY_ABLATION_V1.md.
+## Issue #57 App Server timeout with observed usage R06 — 2026-11-23
 
-Current direction (r128): the first frozen crop/full/no-prior-memory live allocation completed all10 Luna-low calls (1 schema preflight +9 comparison) with zero retry. Across shifted, duplicate-label and restyled-target/old-looking-decoy Chromium states, each scenario's current frames were byte-identical across arms; all9 model points executed through fresh observation/Executor admission, all9 independent server records were exact, wrong-target/no-effect were0 and every release emptied. No-memory/full/crop were3/3 each, with input28,035/31,791/28,188 and images3/6/6. Crop saved3,603 input tokens (11.33%) versus full frame at equal correctness, but cost153 more than no-memory with no accuracy gain; in the trap it explicitly rejected stale/misleading memory. Frozen rule yields CROP_ELIGIBLE_FOR_TRANSFER as a replacement for full history, not a default. Original audit exposed a missing `requested_model` prereg field and remains failed; hash-frozen runner plus all10 raw plans record Luna-low, and retained v2 audit passes Windows/WSL without rerun. Next transfer conditionally to OpenTTD or Mindustry where history is needed, retaining no-memory as default when current evidence suffices.
+On frozen source main 54bad709d8ab4cf496512ab60a66e3f6ba09d3bd, a
+synthetic JSONL peer emitted usage and then timed out without a terminal turn.
+The actual parser/model/v3 caller/durable allocation/registered ProspectiveRun
+path retained exact turn/thread identity and all five observed usage counters;
+no execution/effect receipt was fabricated and both task projection and run
+stayed HOLD (17 assignments missing, dispatch disabled). Focused 1/1 and full
+module 10/10 passed in normal and -O on Windows CPython 3.13.14. This is
+offline fake-peer custody evidence, not a provider, GUI, live allocation,
+efficiency, or reliability result. See [R06 result](../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
+Continue with current-main caller/provider completeness and matched comparison
+prerequisites; keep #57 open.
 
-Current direction (r127): the first action-grounded crop/full-frame/no-prior-memory live comparison is now implemented and hash-frozen before allocation. It uses one flat-schema no-GUI/no-input preflight, then nine fresh actual Chromium sessions in a three-scenario Latin schedule with Luna-low and zero retry. Each arm sees the same exact current frame and identical task/provenance prompt; only Image2 is absent, a prior full1280x800 frame, or the retained42x18 crop. Scenarios include shifted target, duplicate Save labels and a restyled-target/old-looking-decoy trap. Model points go through a fresh coherent post-model observation and Executor v13; the private server independently records correct Submit, decoy Submit or no effect, and every admission must empty-release. Crop transfer requires3/3 correct, zero wrong target, no worse correctness than both controls and fewer actual input tokens than full-frame. Five construction tests pass Windows/WSL; formal output is absent. Next commit the preregistration, run exactly once and retain any preflight/comparison result.
 
-Current direction (r126): action-grounded visual memory v1 now makes prior successes and failures reproducibly revisitable without promoting old pixels to current authority. A strict receipt binds task/environment/session/surface and exact source frame, the42x18 target crop/hash, admitted Submit program and empty verified release, first successful exact semantic reconciliation and independent output, plus the complete local/model repair trace and model wait. Matching retrieval still requires a current exact observation, target revalidation and fresh input admission; all context mismatches fail closed. Two receipts were derived from frozen seed217 evidence, preserving distinct local/hover patch hashes. Ten tests and retained audit pass Windows/WSL. No new model/GUI call or memory gain is claimed. Next freeze the same-model/task/environment action-crop versus prior-full-frame versus no-prior-memory comparison, including wrong-target, real tokens/images, fallback and recovery time, then transfer the winning safe mechanism to OpenTTD or Mindustry.
+## Current-main public recovered-task repeats R41–R42 — 2026-11-23
 
-Current direction (r125): shared adaptive semantic repair now passes a real two-case Linux/X11 integration on its first frozen v2 allocation. Seed217 resize followed reuse association_changed→local repaired with0 repair calls; total1 call/9,348 input, mutation capture→caller return651.634ms and Submit admission→useful248.037ms. Save hover changed the actual patch and followed association_changed→local missing→model target→current patch match; total2 calls/18,696 input, repair wait7,197.203ms, caller7,871.585ms and useful249.006ms. Both independently saved `t000217`, reconciled semantics and released every program.100 files/1,792,829 bytes pass formal/retained Windows/WSL audits. Unequal mutations forbid causal token/latency comparison. Next attach action/effect/recovery provenance to patches and freeze held-out action-crop versus full-frame versus no-memory controls before cross-domain transfer.
+R41 passed one prospectively frozen public standard-caller trial on main 87b5b459a56c636934947a2fc7616f26150e8b9a. R42 independently repeated the same one-shot question on merged main dc1f119bcb4094d0b58e70ffa273596f206c6c7a. In both, source A stayed UNKNOWN, release-unconfirmed, task_success null, and replay-denied; one public orphan recovery confirmed release, neutral readback, and the 2 s late-input horizon; then a separate fresh HWND/PID generation completed and released a public B task. The independent event oracle found exactly one B inside the exact dispatch interval, and the public verifier returned task_success=true. Both source/follow-up fixture pairs closed and the durable fence cleared.
 
-Current direction (r124): adaptive semantic repair live v1 ran once and is retained failed without retry. The local width-resize path correctly repaired with zero fallback calls, but final revalidation stopped before Submit because the harness required the post-action completion crop to be true pre-action. The exact current crop existed, binding was `CURRENT_EXACT`, and reason was the required `expected_crop_missing`; no task Submit began, independent output stayed empty and all releases verified.40 files/742,028 bytes pass12 retained checks Windows/WSL; model case never started. V2 changes only this gate: accept exact/evaluable `expected_crop_missing` as the pre-Submit state while preserving current target resolution and ordinary admission. Fresh seed217, local/model, no retry is preregistered and hash-frozen. Next commit, run once, audit and retain.
+R42 preserves the client-area fixture's inherited R34 label as a visual-identity caveat; its OS window title, foreground probe, HWND/PID and allocation registry match R42. The raw screenshots record it.
 
-Current direction (r123): live shared-caller integration is now frozen before allocation. Composition exposed and fixed two caller gaps: successful final revalidation can atomically promote the refreshed target/cache instead of using an adapter side channel, and typed upstream capacity becomes `TASK_DEFERRED` with the failed attempt's image/wait coverage rather than generic failure. The finite seed216 Linux/X11 block is local/model order, no retry: width resize must use zero-call local repair; real Save-button hover patch change must yield missing/ambiguous/changed locally, invoke one Luna-low fallback, take a later call-bound exact observation, submit exactly once and release every program. The mutations differ, so no latency/token comparison is allowed. Twelve caller tests, nine-scenario retained audit and three prereg tests pass Windows/WSL. Next commit the frozen hashes, run once, audit and retain the first outcome.
+These are two controlled same-host fixture passes, not a reliability estimate, same-window reuse, arbitrary-app/MAP01/Calc evidence, matched provider efficiency, or Research Preview graduation. Keep #57 and #58 open; next close the current-source all-attempt provider/accounting path and then freeze a finite matched comparison. See [R41 result](../research/integration/win32_post_recovery_public_task_r41_20261123/RESULT.md) and [R42 result](../research/integration/win32_post_recovery_public_task_r42_20261123/RESULT.md).
 
-Current direction (r122): current primary literature supports the next sequence but does not validate it locally. MementoGUI favors selected ROI evidence, AGMem reports failure shifts from naive full-frame memory and proposes action-grounded crops, adaptive VLM routing supports conditional escalation, Mirage-1 supports updated hierarchical skills, and OSWorld preserves execution-based evaluation. Map these to the existing interface by attaching action/effect/recovery provenance to target patches, using typed evidence rather than scalar confidence, keeping the model fixed in the next comparison, and testing selective invalidation before learned memory or multi-model routing. Immediate work remains the finite natural shared-caller local-repair plus missing/ambiguous/changed fallback block; then compare action-crop, full-frame and no-memory controls on a frozen transition set. External benchmark gains are not local evidence.
+## Research Preview and #57 current-main follow-up R06 — 2026-11-23
 
-Current direction (r121): local-first semantic repair is now expressed in shared adaptive caller v3 rather than only in the matched experiment. Warm reuse can try one exact no-authority local repair, then configured `missing`/`ambiguous`/`association_changed` outcomes use one accounted model fallback. After that call, a passive exact observation and receipt must bind the call ID, later sequence, capture clock and pointer binding before ordinary final revalidation/input. Unconfigured, changed or malformed evidence stops without input. Attempt ledgers now cover model-visible images and model wait, including failed attempts when available. Ten tests and a separately audited seven-scenario retained report pass Windows/WSL with zero fresh model/GUI calls. Next compose this exact caller into a finite live natural local-repair plus changed-evidence fallback block; no new efficacy, general savings or human-tempo claim follows from offline mechanics.
+PR #10490 merged the launcher fixture correction at main 7e9caab2; the exact-main WSL post-merge checks passed preflight 19/19, launcher tests 21/21 in both modes, and preview builder/supported-host helper tests 11/11 in both modes. The merged R06 packet also records an isolated WSL-launched Windows Chrome blank-page/window-identity observation; it does not claim GUI input or product task effect. PR #10491 merged the reused-pinned-venv diagnosis at main 8554b2bf: doctor passed 13/15, with only the missing Windows Codex CLI JS entrypoint and dependent codex_cli check failing; current-main audit-retained passed RETAIN. No runtime/package install, browser launch in the doctor trial, model, fresh Golden run, or audit-live occurred. #58 remains open. See [R06 launcher gate](../research/integration/research_preview_current_main_launcher_r06_20261123/RESULT.md) and [R06 host diagnostic](../research/integration/research_preview_reused_pinned_venv_doctor_r06_20261123/RESULT.md).
 
-Current direction (r120): matched semantic-repair v3 passed its first frozen allocation. Four fresh seed215 local/model/model/local Chromium arms all independently saved `t000215`, reconciled exact semantics and released input. Local repair tokens9,351/9,351 and recovery106.618/113.315ms; model reacquisition18,702/18,702 and8,015.380/8,215.156ms. Median differences are9,351 input tokens and8,005.302ms. Model arms each added one passive post-model exact observation (75.592/66.802ms) and current-patch receipt (0.071/0.066ms) before contract/input. Six unique Luna calls, no retry;189 files/3,622,385 bytes pass formal/retained Windows/WSL audits. Retain local-first repair for this calibrated unchanged-target resize. Next integrate local-first then typed reacquisition fallback into the shared caller and measure missing/ambiguous/changed branches. General token savings, rate, human tempo, portability and freeze remain open.
-
-Current direction (r119): capacity-aware matched v2 ran once and is retained failed. Arm1 completed local repair and independent `t000214`: one9,351-input-token call, resized capture→repair122.670ms, useful feedback263.130ms, probe3.460ms, exact reconciliation/release. Arm2 completed initial and reacquisition Luna calls; reacquisition returned the correct same Save point `[270,243]` after8,262.886ms, beyond the source observation's3,000ms freshness. Handle resolution refused `STALE` before contract/Submit. Retained-image control holds point/pixels/binding fixed and resolves at capture+1ms but refuses after model-wait. Arms3-4 did not start;3 calls/28,053 input; comparison unobserved.90 files/1,415,626 bytes audit Windows/WSL. Next v3 adds one passive exact observation after completed reacquisition and requires patch revalidation there. Token/recovery advantage, rate, human tempo, portability and freeze remain open.
-
-Current direction (r118): typed semantic grounding admission now separates validated completion, upstream capacity deferral, other process failure and invalid output. Only validated completion yields `TASK_MUTATION_ELIGIBLE`, while still granting no semantic/input authority and requiring ordinary Executor admission. The retained v1 capacity trace becomes `TASK_DEFERRED` with no result/reference/usage; malformed success and authority escalation are rejected. Seven focused tests pass Windows/WSL with no new model/GUI call. Next version the matched runner so initial grounding happens before token entry, closes cleanly on deferral and excludes any later capacity loss from comparison samples; freeze a distinct allocation only after this integration. General token/recovery advantage, rate, human tempo, portability and freeze remain unobserved.
-
-Current direction (r117): the frozen local-repair versus Luna-low reacquisition comparison ran once and stopped in arm1's required initial grounding call because the selected model was at capacity. One thread started; completed model turns, messages and usage records were0. The private Chromium form had been navigated and filled, but no handle, resize, semantic probe or Submit began. Both completed GUI prefix programs and owner close verified empty input.34 files/469,683 bytes pass11-check Windows/WSL retained-failure audits. The comparison and its token/recovery metrics remain unobserved. Next add a typed model invocation outcome and a frozen service-admission/defer boundary before acquiring task input; a capacity loss after admission must remain a no-authority deferral. Then use a distinct allocation rather than retrying v1. General token savings, rate, human tempo, portability and freeze remain open.
-
-Current direction (r116): a verified Save-button target handle now anchors and locally repairs the Chromium completion predicate after resize. Fresh seed212 resized width1050→930. Old contract refused before crop hashing; current exact handle revalidation took0.091ms and contract regeneration0.145ms, with resized capture→repair-ready110.866ms and frontier resumptions0. Repaired Submit completed independently as `t000212`; first/useful feedback157.359/271.178ms, probe4.101ms,24.195ms before PNG and139.613ms before terminal; exact reconciliation/release pass.31 files/751,360 bytes audit Windows/WSL. The relation remains fixture-calibrated. Next run a matched same-model/same-task comparison of cached local repair versus model reacquisition under changed geometry, charging all calls/images/tokens. Automatic relation discovery, rate, token saving, human tempo, portability and freeze remain open.
-
-Current direction (r115): target-relative pre-artifact semantics now compose with real same-surface translation and resize refusal. Seed208 v1 moved Chromium `[21,28]` but correctly stopped before pointer input because no post-move coherent observation had refreshed Executor binding;0 steps/probes/submission, empty release,22 files/492,712 bytes retained. V2 changed only one condition: one passive exact observation after movement. Fresh seed211 passed all16 checks: relative predicate followed `[21,28]`, fixed-screen control failed on the same frame, useful feedback275.781ms, probe2.743ms,23.828ms before PNG and134.919ms before terminal; independent token and release pass. A later -120px resize refused `surface_size_changed` before crop hashing.33 files/857,946 bytes audit Windows/WSL. Next derive/cache the semantic region from a verified target handle and test local repair after resize without frontier-model restart. Unknown layouts, rate, tokens, portability, human tempo and freeze remain open.
-
-Current direction (r114): the no-authority pre-artifact semantic probe has transferred from Inkscape selection to one deterministic Chromium completion predicate. Frozen v1 performed the GUI task correctly but remains formally failed because its gate equated four generated reconciliations with three client-consumed probes. The client had correctly stopped at first success. V2 changed only that cardinality rule, used fresh seed207, and passed once: blank rejection42.098ms, first submit feedback146.995ms, useful exact feedback286.471ms,2.608ms probe compute,24.767ms before PNG readiness and156.657ms before terminal. Independent saved token and empty release pass;29 files/675,988 bytes audit on Windows/WSL. This proves one cross-domain predicate transfer only. Next bind semantic predicates to current target/surface geometry and test translation/resize invalidation; do not add another fixed-layout fast path. Human-tempo, general reliability, model/token benefit, cross-platform support and research freeze remain open.
-
-Current direction (r113): repaired matched v2 ran once and passed. Same-seed
-path semantic-ready samples316.836/275.926/283.566/291.948ms; frame237.654/
-234.144/259.626/238.422ms. Medians287.757 vs238.038ms:49.718ms reduction,
-0.8272 ratio. All8 arms share exact candidate/program, false→true in2 client
-exchanges, independent selection,2-step completion and empty release; all frame
-digests reconcile. Mode-specific health bounds pass.99 files/3,130,105 bytes
-retained/audited both OSes. This proves one scripted Inkscape boundary only.
-Next transfer the no-authority probe contract to a distinct GUI/dynamic predicate;
-no model/token/general/human-tempo claim or subagent/context handoff; goal open.
-
-Current direction (r112): matched v2 changes only v1's incompatible health bound.
-Frame first-feedback stays≤200ms; path baseline gets≤260ms versus v1 observed
-216.580–222.920ms and separate semantic≤400ms. Same-seed identity/program,
-false→true,2 exchanges, independent selection, frame reconciliation,2-step empty
-release, frame/path semantic medians≤260/400ms and advantage≥25ms remain. Seed202,
-same balanced8-arm order, one allocation/no retry/model/cancel,40 hashes/output
-absent. Tests/freeze pass WSL and Windows (one expected Unix skip). Commit then
-run/audit once and retain any outcome; v1 stays failed; no broader claim/handoff.
-
-Current direction (r111): matched live v1 ran once and is retained failed. All4
-frame arms passed. All4 path arms passed identity/program/false→true/independent
-selection/2 exchanges/2-step empty release but missed a common candidate-oriented
-first-feedback≤200ms bound at216.580–222.920ms. Aggregate medians still passed:
-path280.536ms vs frame239.230ms,41.306ms advantage/0.8528 ratio. Formal class
-`baseline_first_feedback_bound_incompatible_with_comparison`;99 files/3,129,166
-bytes retained/audited both OSes. V2 must use distinct baseline/candidate health
-bounds while preserving aggregate≥25ms and all mechanics. No rerun/promotion/
-model/token/general claim; no subagent/context handoff; full goal open.
-
-Current direction (r110): freeze the matched live causal comparison. Eight fresh
-seed203 Inkscape sessions run fixed path/frame/frame/path/frame/path/path/frame.
-Every arm uses identical candidate and click+observe, pre-registers its scoped
-client, retains false→true in2 exchanges, independently verifies selection and
-completes2 steps with empty release. Path waits exact PNG then scores; frame waits
-pre-artifact probe and reconciles PNG. Aggregate limits: frame median≤260ms,
-path≤400ms, advantage≥25ms; probe≤5ms/first≤200ms. One allocation/no retry/model/
-cancel,40 hashes/output absent;12 WSL tests,11+Unix skip Windows and freeze checks
-pass. Commit, run/audit once, retain any result; no broader claim/handoff.
-
-Current direction (r109): live pre-artifact semantic v5 ran once and passed.
-False/useful probe compute3.171/2.623ms; first reached client+122.424ms after
-admission, useful completed+223.959ms and reached client+224.724ms. Durable PNG
-became ready29.623ms after useful probe completion, so client led it≈28.858ms;
-completed2-step empty-release terminal followed client by68.647ms. Useful capture
-was slower than v4 (195.293 vs162.540ms) but recognized earlier (v4 score279.520ms)
-and before terminal. Cross-seed only, no causal speedup claim.18 files/577,889
-bytes retained; audits pass both OSes. Next freeze matched live control to isolate
-boundary gain; no model/token/general claim or subagent/context handoff.
-
-Current direction (r108): freeze live pre-artifact semantic feedback v5. A
-backend-independent no-authority registry scores each losslessly reconstructed
-RGB frame; the versioned backend emits an action-scoped provisional probe before
-PNG preparation, then emits exact digest reconciliation and normal observation.
-A socket client registers before submit and cursor-resumes false→true probes.
-Seed204 keeps coherent prepared click+observe, completed2-step empty release,
-one run/no retry/model/cancel,43 hashes/output absent. Bounds: probe≤5ms,
-client first≤200ms/useful≤250ms, internal300/600ms.12 WSL tests;11 Windows plus
-one expected Unix-socket skip; freeze checks pass both. Commit then run/audit once
-and retain any result. No model/token/general claim or subagent/context handoff.
-
-Current direction (r107): exact-frame semantic probe comparison ran once and
-passed.64 samples/mode: old path scorer median34.696ms/p95 42.365ms; reconstructed-
-frame probe median2.320ms/p95 2.630ms,32.376ms median advantage and0.0669 ratio.
-False004/true005 semantic fields match and both frame digests reconcile to exact
-PNG artifacts.3 files/197,729 bytes retained; independent audits pass Windows/
-WSL. Next integrate the no-authority probe before PNG publication in one distinct
-live allocation and reconcile afterward. No event-detection/live/model/token/
-general gain yet; no subagent/context handoff; full goal open.
-
-Current direction (r106): freeze an exact-frame semantic probe comparison. The
-candidate scores the already reconstructed RGB frame with bounded NumPy ROI
-slices, emits a frame digest/no authority, then separately reconciles the durable
-PNG to that digest. Retained v4 false004/true005 frames run16 ABBA cycles,64
-samples/mode against the old path/Pillow loop. All semantic fields and both exact
-frames must reconcile; frame median≤5ms and≤25% of path median. One run/no retry/
-model, exact hashes/output absent;6 tests and freeze checks pass Windows/WSL.
-Next commit, run/audit once and retain any result. This is scorer compute only,
-not yet live latency/model/token/general performance; no subagent/context handoff.
-
-Current direction (r105): prepared-selection v4 ran exactly once and passed.
-Early client3.115ms vs terminal83.150ms; early useful readiness105.835ms vs
-terminal-first133.249ms, a27.413ms advantage. The new selection was accepted at
-252.015ms after focus. First feedback capture89.364ms after acceptance was
-semantically false; first useful capture was162.540ms and live score completed
-at279.520ms. The completed2-step/empty-release terminal preceded recognition by
-37.876ms. Exact program SHA/count, coherent binding and independent selected-
-handle score all audit.18 files/540,548 bytes retained. Next isolate and reduce
-semantic recognition latency with exact-frame reconciliation; no model/token/
-general claim, no subagent/context handoff; full goal open.
-
-Current direction (r104): v4 repairs v3 evidence. Acceptance binds steps count2
-and canonical SHA of exact click+observe. Each exact observation retains capture,
-detection, score and score-complete clocks; first false feedback remains explicit,
-then bounded consumption stops on first semantic true or terminal. Seed205 keeps
-neutral fault/coherent binding/scorer v2 and600/200/300ms bounds. One run/no retry/
-model/cancel,37 hashes/output absent;12 tests/freeze checks pass Windows/WSL.
-Next commit, run/audit once, retain any result. V3 stays failed; no model/token/
-general claim or subagent/context handoff; full goal open.
-
-Current direction (r103): v3 ran once and is retained failed at report check.
-Coherent readiness succeeded;2 pointer admissions,2 observations,2-step completed
-terminal and empty release occurred. Runner misread accepted.steps integer2 as
-program list; exact program is attested by SHA. Posthoc: first frame unselected,
-second frame selected, so first feedback≠first useful feedback. Live semantic
-clock/report were lost and cannot pass.18 files/496,823 bytes audit Windows/WSL.
-Next v4 bind canonical program SHA+count and consume each observation until first
-semantic success or terminal, retaining both clocks. No rerun/model/token/general
-claim; no subagent/context handoff; full goal open.
-
-Current direction (r102): v3 combines two shared repairs. Pointer readiness
-requires before==after==published non-null focus/surface/geometry; up to3 passive
-captures10ms apart, no submit before READY. First-action boundary resolves
-observation|terminal, eliminating v2's3s observation-only miss on early rejection.
-Seed206 keeps neutral fault, scorer v2, exact click+observe and empty release;
-600/200/300ms bounds, one run/no retry/model/cancel,37 hashes/output absent.
-Twelve tests/freeze checks pass Windows/WSL. Next commit, run/audit once, retain
-any result. No model/token/general claim; no subagent/context handoff; goal open.
-
-Current direction (r101): prepared-selection v2 ran once and is retained failed.
-Neutral fault and exact unselected visual precondition passed, but restored-focus
-snapshot straddled WM activation: before surface null, after valid, coherent
-pointer_binding null. Visual-only admission accepted then safely needs-decision
-before pointer input (0 admissions,0 steps, empty release). Client ignored terminal
-while waiting observation and wasted3s.14 files/326,224 bytes pass Windows/WSL
-failure audit. Next gate admission on coherent binding and wait observation|terminal
-first; keep neutral fault/scorer v2 in distinct v3. No rerun/model/token/general
-claim; no subagent/context handoff; full goal open.
-
-Current direction (r100): v2 changes only invalid v1 conditions. Fault point
-[730,500] is neutral/outside target. Scorer v2 preserves identity with≤1px edge
-shift and≥80% red support, separately requiring≥10 dark handle pixels each side;
-it passes both retained Inkscape selection styles and rejects unselected. Seed207
-keeps exact prepared click+observe, fresh validation,2-step empty release and
-500/200/300ms bounds. One run/no retry/model/cancel,35 hashes/output absent and
-12 tests verify Windows/WSL. Next commit then run/audit once and retain any result;
-v1 stays failed. No model/token/general claim; no subagent/context handoff; goal open.
-
-Current direction (r99): executed prepared-selection v1 ran once and is retained
-failed. The fault click itself selected the target, so restored-focus003.png was
-already semantically selected before candidate admission. Candidate click still
-completed, but selection overlay changed red support1645→1439 and frozen strict
-scorer raised solid-rectangle ValueError; cleanup cancelled observe, terminal
-1-step cancelled with empty release.18 files/503,386 bytes pass Windows/WSL
-failure audit. Next use neutral-canvas fault and versioned tolerant identity:
-bounded red-support shift/coverage plus selection handles; freeze distinct seed.
-No rerun/model/token/general claim; no subagent/context handoff; full goal open.
-
-Current direction (r98): freeze executed prepared selection. Seed208 restores
-focus after interruption, captures/revalidates exact candidate, binds click+
-observe to one new Executor acceptance, client-detects first feedback, and
-independently requires the same red target plus four-sided visible selection
-handles. Pre-click score must fail; terminal completes2 steps with empty release.
-Bounds are fault→score≤500ms, accept→feedback≤200ms, accept→score≤300ms. One run,
-zero retry/model/cancel,35 hashes and absent output are fixed;12 tests/freeze
-checks pass Windows/WSL. Next commit, run once, audit and retain any result. No
-model/token/general human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r97): the first actual planner-overlap allocation ran once and
-passed. Same Inkscape PNG yielded exact bbox[596,373,643,408]/center[619,390].
-Early candidate completed77.638ms before terminal-first139.137ms. After terminal
-reconciliation and identical fresh-PNG validation, useful-ready was136.273ms vs
-164.592ms, a28.319ms advantage; prepared candidate input stayed zero. Release was
-17.787ms, early client26.378ms, terminal client111.557ms. Twelve files/266,171
-bytes are retained; Windows/WSL audits pass. Next bind one freshly revalidated
-candidate to a new Executor acceptance and independently score visible selection
-effect/release, then compare end-to-end semantic completion. No model/token/
-general human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r96): freeze the first actual planner-overlap comparison.
-Same-stream early-release and terminal-first clients scan the identical Inkscape
-initial PNG for one exact red rectangle, prepare the same click candidate, then
-fresh-validate it on the real post-release PNG. Candidate authority/input remain
-zero. Seed209, one run/no retry/model/cancel,34 hashes and absent output are fixed.
-Bounds: early useful-ready≤200ms, advantage≥5ms, baseline≤300ms; expected bbox
-[596,373,643,408],1645 pixels, center[619,390]. Freeze checks and10 tests pass
-Windows/WSL. Next commit, run once, audit and retain any result. No model/token/
-task/general human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r95): release-aware preparation v1 consumes the newly proven
-gap without granting authority. After exact token-bound empty release, it may
-prepare/copy/hash one candidate while terminal remains pending. A matching
-terminal yields PREPARED_REQUIRES_FRESH_ACTION_VALIDITY; only the existing fresh
-validity+Executor boundary may later admit input. Wrong terminal fails closed.
-Seven related tests pass Windows/WSL. The first test invocation exposed a package
-import defect before logic ran; dual import was added. Next measure an actual
-planner preparation against a sequential terminal-first arm on the same stream,
-including useful-action readiness, terminal reconciliation and round-trip cost.
-No actual planner/model/token/task/human-tempo gain yet; no subagent/context
-handoff; full goal open.
-
-Current direction (r94): client-wait v2 ran exactly once and passed frozen audit.
-Physical release was20.519ms after focus; early client returned22.369ms versus
-terminal-only102.693ms, an80.324ms same-stream advantage. Exact early-release and
-terminal-only server receipts were fsynced before fault and independently bind
-to report/artifact SHA. Early terminal reconciliation completed103.641ms, making
-the cost explicit:2 exchanges vs1. Twelve files/259,118 bytes are retained and
-Windows/WSL audits pass. A posthoc retention checker first used wrong threshold
-key names, was corrected, and live was not rerun. Next integrate this state into
-one actual planner decision/resume path and measure useful-action latency and
-round trips; preserve terminal reconciliation. No model/token/task/general
-human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r93): v2 repairs only the missing registration evidence. It
-copies exact server-side request ID/request/received_ns records after both handlers
-register, writes/fsyncs a schema artifact, retains its SHA, then requests focus.
-Audit requires exactly early-release+terminal-only receipts before snapshot and
-snapshot before fault; client clocks/boolean cannot substitute. Distinct seed210
-keeps same-stream clients, real passive artifact,2-vs-1 exchanges,40ms early,
-≥40ms advantage,≤300ms terminal and zero model/cancel/retry. All32 hashes and
-output absence verify Windows/WSL. Next commit, run once, retain first result;
-v1 remains failed. No token/task/general human-tempo claim; no subagent/context
-handoff; full goal open.
-
-Current direction (r92): first same-stream client allocation is retained failed
-without retry. Runtime showed early client2.672ms versus terminal-only113.116ms
-(110.444ms descriptive wait difference), one passive artifact, exact release/
-terminal, smaller early reply and2-vs-1 exchanges. But the both-reads-before-focus
-condition used an in-memory server list and serialized only a boolean; frozen
-audit crashed on missing received_ns. Client starts cannot prove server receipt.
-14 files/253,759 bytes and audit failure are manifest-retained; Windows/WSL
-failure audit passes. Next version persist exact server request receipts before
-focus, bind both request IDs and freeze a distinct allocation. Do not rerun or
-promote the observed difference. No model/token/task/general human-tempo claim;
-no subagent/context handoff; full goal open.
-
-Current direction (r91): test client-visible benefit of two-phase release. A
-bounded Unix cursor exposes input_released/terminal with action identity; a client
-tracker binds accepted token, verified empty release and later exact terminal,
-failing closed on conflicts. One actual passive screenshot/encode/PNG runs after
-release and before terminal. A frozen same-stream pair registers early-release
-and terminal-only clients before one Inkscape held-click focus fault; early uses
-two exchanges, terminal-only one. Bounds are40ms early return, at least40ms wait
-advantage and300ms terminal; response bytes and round trips retained. All31 hashes
-and absent output verify Windows/WSL. Next commit then run once/no retry. No model,
-token/task/general human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r90): the first pointer transfer ran once and passed. Actual
-Inkscape Button1 down followed by private focus transfer produced physical release
-at1.961ms, input_released publication2.095ms and needs-decision terminal2.634ms.
-The accepted lease token and exact focus_changed owner cause match across release/
-terminal; only initial point admitted, drag tail zero, explicit cancel/model/retry
-zero. Nine files/151,311 bytes manifest-retained; Windows/WSL audits pass. Thus
-the two-phase release meaning transfers from explicit-cancel DOOM keyboard input
-to autonomous desktop pointer invalidation. Next integrate the event into the
-planner/client delivery boundary and measure whether it reduces agent wait or
-recovery round trips; retain terminal separately. No task success, matched speedup,
-non-X11/general human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r89): transfer two-phase release beyond DOOM keyboard input.
-Executor v13 watches every accepted lease and publishes owner-verified focus,
-surface or expiry release with the accepted token; normal completion emits none.
-The worker enforces release-event-before-terminal ordering under watcher races.
-Synthetic focus/surface/expiry/normal controls pass Windows/WSL. One actual
-private-Xvfb Inkscape Button1 drag/focus-transfer allocation is frozen: seed212,
-one run, no retry/model/cancel,50ms physical release,75ms publication,150ms
-terminal bounds, exact token/cause/empty-release and no-tail requirements. All25
-hashes and output absence verify. Next commit then run once and retain first
-outcome. No task success/cross-platform/general speed or human-tempo claim; no
-subagent/context handoff; full goal open.
-
-Current direction (r88): the first frozen two-phase release allocation ran once
-and passed all conditions. Visible ammo48→47 caused typed decision31.857ms,
-cancel54.578ms, independent empty X11 release57.660ms and release publication
-66.980ms after capture; publication preceded artifact and terminal. Guard v3
-exposed no authority/physical release true/terminal pending, then cancelled
-terminal closed at133.698ms. All3 typed/full pairs reconcile, no later input,
-process zero.22 files/1,251,326 bytes are manifest-retained; Windows/WSL audits
-pass. This proves one real keyboard cancellation publication path only. Next
-transfer the two-phase event to pointer/desktop interruption or one bounded
-planner integration; do not repeat this fixture or switch to packaging. No
-gameplay/cross-domain/general human-tempo claim; no subagent/context handoff;
-full goal open.
-
-Current direction (r87): Executor v12 reuses InputOwner v10's per-lease cause and
-publishes an exact intent-token-bound empty physical release asynchronously while
-artifact/finalization remains active. Guard v3 exposes
-REVOKED_INPUT_RELEASED_AWAITING_TERMINAL with authority false, physical release
-true and lifecycle pending; later cancelled terminal is still mandatory. Wrong
-token/unverified/early/duplicate/time-reversed evidence fails closed.37 focused
-tests plus v38 controller integration pass on Windows/WSL. A distinct same-fixture,
-same-seed, no-model/no-retry live allocation is frozen at60ms decision,75ms cancel,
-90ms physical release and200ms terminal closure; all32 hashes and output absence
-verify. Run once and retain first outcome. No task/game/cross-domain/general
-human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r86): the distinct early-typed v2 allocation ran once and is
-retained failed without retry. Decision36.248ms and cancel60.373ms pass the
-frozen60/75ms bounds; program attestation, cancelled terminal, no later input,
-three typed/full reconciliations and process exit all pass. The frozen terminal
-release metric is131.094ms, missing125ms by6.094ms. The independent X11 owner
-had already verified empty input at63.484ms, exposing a state-publication gap:
-physical authority ended before artifact-bound program finalization could report
-it. Windows/WSL retention audits pass. Next version an identifier-bound early
-owner-release receipt and a two-phase guard state; keep later terminal closure
-mandatory and do not reinterpret this failure. No model/planner/task/general
-human-tempo claim; no subagent/context handoff; full goal open.
-
-Current direction (r85): Executor v11 now inherits v3 execution/cancellation and
-exception identities, overriding only admission to add validated-program SHA.
-The exact v1 backend exception reaches cancelled rather than failed in a direct
-control. Controller v37 persists typed invalidation, including capture and
-decision clocks, before cancel/terminal validation. A distinct v2 live allocation
-keeps fixture/action/no-model and60/75/125ms thresholds;22 source hashes verify
-and output is absent. Windows13/WSL18 focused tests pass. Next commit the frozen
-repair, run exactly once, and retain pass or failure without changing v1/v10.
-No planner/task/game/general human-tempo claim; no subagent/context handoff; full
-goal open.
-
-Current direction (r84): the only frozen early-typed allocation is retained
-failed without retry. Typed HUD was ready15.844ms after capture; cancel request
-at47.529ms preceded exact artifact readiness119.167ms by71.637ms. All3 typed/full
-pairs reconcile, Executor attestation matches, and owner empty release occurred
-at50.100ms. But the backend raises executor_v3.Cancelled while copied Executor
-v10 catches a distinct local class, so terminal is failed/Cancelled() and its
-release at128.856ms misses the125ms bound. Wrapper exit1; exact guard-decision
-and child exit were not serialized. Independent failure audit matches across OS
-SHA fa0fec16…. Next version must reuse established exception identities and
-persist the decision receipt before terminal validation, then freeze a distinct
-allocation. No retry/model/planner/task/general claim; no subagent/context
-handoff; full goal open.
-
-Current direction (r83): v36 moves typed health/ammo feedback ahead of transport
-and PNG publication while retaining the same exact frame. Reader v3 matches the
-retained PNG path on all247 v31 frames for both signals. The early event binds
-epoch, focus/surface/geometry and RGB SHA-256, grants no authority, and its action
-snapshot path never reopens PNG; later audit must reconcile every artifact and
-signal. One no-model/no-retry live allocation is frozen against the retained v2
-128.488/136.780/138.694ms capture→decision/cancel/release baseline, with60/75/
-125ms thresholds and Executor attestation. Output is absent and21 source hashes
-verify. Next commit the frozen construction, then run exactly once and retain
-pass or failure. No planner/task/game/general human-tempo claim; no subagent or
-context handoff; full goal open.
-
-Current direction (r82): v35 composes semantic planner commands, deterministic
-compiled steps, exact submit bytes and matching Executor v10 program attestation under one
-root current-authority receipt. Fallback admission additionally binds the latest
-completed primary ID/terminal, command index, semantic command and full retained
-no-visible-effect receipt. Deterministic replay covers5 paths/7 program bindings;
-all close with current authority false and verified release, with byte-identical
-Windows/Linux output. A research revisit ledger now separates failed conditions
-from mechanisms and requires one justified changed condition before reallocation.
-Next reconcile early in-memory HUD extraction to the exact retained frame, then
-measure the 128.488ms capture-to-decision portion without weakening v35. No
-endpoint/model/game/task/human-tempo claim; no subagent/context handoff; full
-goal open.
-
-Current direction (r81): v34 wires the running action guard into active primary
-and fallback programs, with fresh passive recheck between segments. The first
-frozen live probe correctly failed pre-input: post-capture WAD-reader setup made
-the source926.873ms old against500ms; no command/input, incomplete cleanup
-evidence retained. Separately frozen v2 moves setup before capture. Real X11
-held fire changes screen ammo48→47, then one matching cancel and verified empty
-release; no later input. Capture→cancel136.780ms and →release138.694ms pass
-predeclared150/200ms thresholds; decision→release is10.206ms. The remaining
-128.488ms before decision is image publish/reopen overhead. Before planner live,
-v35 must bind each primary/fallback program payload and compose historical final
-admission with one current running-authority state; then move typed HUD extraction
-ahead of full artifact publication and reconcile it to the exact frame. One
-probe, controller-authored contract, zero model calls; no task/game/
-general human-speed claim; no subagent/context handoff; full goal open.
-
-Current direction (r80): existing Executor hold observations expose an unfilled
-runtime boundary after v33's one-time pre-admission check. A no-input running
-action guard now re-evaluates the exact planner contract during active input and
-between program segments. Health/ammo/binding/order failure requires cancellation
-while active; only a matching cancel plus verified empty key/button terminal
-closes revocation. Retained v31 replay checks22/22 exact primary frames across5
-programs without false invalidation; injected health/ammo breaches reach verified
-revocation. Windows/Linux15-test sets and replay bytes match SHA c9f102b6…. This
-is counterfactual/model-free; next integrate into a separately versioned v34
-controller and measure actual cancel latency after schema-v6 preflight. No live
-efficacy/model/game claim; no subagent/context handoff; full goal open.
-
-Current direction (r79): freeze one separately labelled schema-v6 endpoint
-preflight before any v33 live allocation. Six source hashes bind the exact
-schema, generic preflight, Luna-low no-image runner, instructions, one-shot
-wrapper and audit. The output must be absent; the allocation allows1 fresh
-request and0 retries, and retains compatible, refused or failed outcomes. The
-non-consuming verifier passes and no output/model call exists. Weekly capacity
-was94% used with6% remaining and no reset credits at freeze time, so preserve
-headroom and run only when capacity permits. No GUI/input/model/game/performance
-claim; no subagent/context handoff; full goal open.
-
-Current direction (r78): v33 deterministic composition now covers8 receipt
-paths. Policy/planner/controller/terminal plus failed-health and unknown-ammo
-paths have6/6 zero primary Executor acceptances. The valid path binds exactly1;
-later revocation retains that historical acceptance while current authority is
-false. Audit bytes match Windows/Linux SHA910ee6…. All12 frozen v32 source hashes
-still match. Next actual-endpoint schema-v6 preflight only when model capacity
-permits, then freeze a separately labelled v33 allocation; do not repurpose or
-run v32 as v33. No live/model/game/performance claim; no subagent/context
-handoff; full goal open.
-
-Current direction (r77): model-free v33 wires schema-v6 planner-authored
-immediate validity through exact source/current health+ammo and final-admission
-v2. The action source is now the exact observation placed in the newest temporal
-sheet, removing a v32 cover-source/prompt-image timing ambiguity. Active answers
-require action_validity; fire cannot omit ammo, movement cannot add it. Failed or
-unknown current evidence discards action+next cover with zero primary admission;
-only a deterministically recomputed VALID_CURRENT reaches Executor readiness.
-Focused controller/adapter/final tests pass15 per OS. No endpoint/model/game run.
-Next add deterministic v33 all-path cardinality replay and schema preflight;
-keep frozen v32 untouched/unrun. No subagent/context handoff; full goal open.
-
-Current direction (r76): add the first action-specific non-health predicate
-without hidden game state. A hash-bound WAD-glyph ammo reader matches all8
-independent v31 decision transcriptions and reads247/247 exact frames with0
-unknown; transitions are48→47→46→45. The semantic adapter requires fire-bearing
-commands to bind positive ammo from the same observation epoch and forbids an
-unrelated ammo dependency on movement-only commands. Exact-frame replay gives3
-fire health+ammo and2 movement health-only VALID_CURRENT paths; a zero-ammo fire
-control rejects. Values remain synthetic and target presence/aim remain unknown.
-Next add planner-authored schema semantics and model-free v33 wiring through
-final-admission v2; keep frozen v32 unchanged/unrun. No subagent/context handoff;
-full goal open.
-
-Current direction (r75): add a mandatory fresh action-validity stage between
-clean planner completion and final Executor admission. The generic no-authority
-contract binds exact action, source, focus/surface/geometry, age and observable
-predicates. Retained v31 replay shows strict unchanged-state rejection would
-stop4/5 historical plans; an initial250ms age bound also rejects the333.611ms
-row. A500ms bounded-health construction passes5/5, rejects an injected ninth
-health point and rejects a required-but-unknown enemy signal. Contracts are
-synthetic, so this is discrimination evidence only. Final-admission v2 requires
-VALID_CURRENT before Executor acceptance. Next define planner authorship and a
-deterministic non-health predicate before v33 integration; keep hash-frozen v32
-unchanged/unrun. No subagent/context handoff; full goal open.
-
-Current direction (r74): recover missing tempo metrics from retained v31 without
-a model call. Five admitted plans have acceptance→first exact capture median
-62.594ms and viewport-effect endpoint median415.972ms; neither proves semantic
-completion. Model-image→plan acceptance median is6,994.578ms and model wait
-6,572.037ms. Freshest local observation at admission is only123.288ms old but
-was not model-visible, exposing the next gap: fast local feedback versus ~7s-old
-planner image except typed invalidation.22 commands/13 accepts/247 observations,
-5 plan programs; nonmodel wall5.581s includes execution/setup. Keep v32 frozen
-and unrun at94% weekly use. No broad claim; no subagent/context handoff.
-
-Current direction (r73): preregister but do not yet execute one v32 Luna-low
-allocation on fixture v2. Six decisions/no retry;12 source hashes freeze exact
-receipt↔accepted-plan cardinality, boundary-clock ordering, aggregate counts and
-completed-terminal hard-race exposure. Current shared Codex weekly use is94%
-with6% remaining and no reset credits, so preserve the last allocation rather
-than consume it without headroom. Construction, replay and main are clean; run
-the frozen command when capacity permits. No performance claim; no subagent/
-context handoff; full goal open.
-
-Current direction (r72): the deterministic v32 all-path replay passes identically
-on Windows/Linux (SHA256 6c6bb0…). Four rejection/no-input cases have zero
-Executor acceptances; INPUT_ADMITTED has exactly one first acceptance; later
-revocation preserves that historical acceptance while current authority becomes
-false. Combined v32/shared tests cover18 cases per OS. Next preregister at most
-one v32 live allocation with exact receipt↔program cardinality, race disposition,
-release and usage rules; retain first result. No performance claim; no subagent/
-context handoff; full goal open.
-
-Current direction (r71): v32 integrates typed final admission after cover
-monitor/release resolution. Policy, planner-ineligible, controller-invalid,
-terminal-no-input and active paths all retain distinct receipts; clean active
-answers remain READY until the first actual primary Executor acceptance binds
-INPUT_ADMITTED. Planner-ineligible/semantic-invalid output now safely records
-zero-plan refusal and continues fresh instead of aborting. Report status counts
-stay separate from planner eligibility. Windows51/WSL34 tests pass. Next add an
-offline full-path replay proving receipt↔program cardinality before a live run.
-No performance claim; no subagent/context handoff; full goal open.
-
-Current direction (r70): add a shared typed final-action admission state machine
-for the v31 race. Any hard invalidation observed before controller admission
-wins regardless of planner-terminal order; completed/eligible only becomes READY
-with no authority, actual Executor acceptance records INPUT_ADMITTED, and later
-hard evidence records REVOKED without erasing historical acceptance. Windows/
-WSL6 tests cover three orderings, malformed evidence and exact retained decision0
-as REJECTED_POLICY_INVALIDATED. Next integrate receipts into every v32 plan/no-
-plan path and bind actual first acceptance before live work. No performance claim;
-no subagent/context handoff; full goal open.
-
-Current direction (r69): retain the only v31/v2 allocation as a typed soft-
-context transfer pass. Four consecutive next turns receive exact240–241-byte
-summaries of1,313–1,315-byte preceding events through the existing prompt/image
-boundary;3 complete and the4th is later hard-interrupted. All247 health signals
-are exact,5 soft/3 hard events occur, and13/13 programs release empty. Usage is
-complete for all8 turns. A new race appears: decision0 planner-completes just
-before hard handling, but controller safely discards it. Next add a typed final-
-admission receipt and test terminal/invalidation ordering model-free before a
-long clear. No causal speed/token/gameplay claim; no subagent/context handoff.
-
-Current direction (r68): preregister one v31 Luna-low transfer allocation on
-distinct fixture v2: one process/thread,8 decisions, no retry. Exposure requires
-a completed decision's validated soft event to reconcile exactly with the next
-decision record and saved compact prompt; null history, no-authority, release,
-hard interruption, monitor clocks, images/calls and usage remain explicit.
-V30 is historical evidence only because fixture and length differ. All11 source
-hashes match before commit. Next run once and retain failure/unexposed/pass
-without falling back to v1. No subagent/context handoff; full goal open.
-
-Current direction (r67): promote the only frozen derived fixture as
-map01-threat-contact-v2. Model-free X11 setup advances parent tic1263→1366 with
-two programs/2 verified releases/0 model calls; source hash differs. Manual and
-exact HUD review shows a visible enemy, source health100/ammo48. Fresh process
-restores tic1366; its first continuously advancing frame still shows the enemy
-at exact health97/ammo48. Audit passes and retains the100→97 timing difference.
-Next commit the fixture, then preregister one v31 transfer allocation on v2; no
-performance claim. No subagent/context handoff; full goal open.
-
-Current direction (r66): freeze one model-free derived MAP01 fixture before the
-first v31 transfer test. Session v8 can load a hash-bound parent and save one
-setup-only child while retaining parent hashes/tics; v7 and frozen runs remain
-unchanged. The one-run prereg chains strafe-left, retreat-fire, strafe-right and
-750ms coast from v1, requires a different tic/frame, exact health, visible threat,
-verified releases and fresh-process reload, and retains failure without retry.
-Linux14 construction tests pass. Next commit, run once and audit before any
-planner allocation. No subagent/context handoff; full goal open.
-
-Current direction (r65): v31 closes the v30 state-transfer gap model-free. It
-validates the immediately preceding typed soft event and compresses retained
-decision4 evidence from1,312 JSON bytes to240 before adding it to the already-
-required next planner prompt. It adds no image, call, resumption, mid-turn
-boundary or input authority; missing evidence is null and inconsistent or
-authority-granting records fail closed. Windows/WSL9 tests pass. No live claim.
-Next freeze transfer criteria on a different reproducible threat state or a
-bounded normal-MAP01 continuation rather than retrying the fixed v30 fixture.
-No subagent/context handoff; full goal open.
-
-Current direction (r64): retain the only preregistered v30 live allocation as
-a split-validity soft-exposure pass. All154 exact observations yield health.
-One admitted nonempty cover treats health84→78 against effective floor74 as
-soft, continues nine later steps including seven input holds, and the same Luna
-turn completes. Three hard events still interrupt matching turns; all9 programs
-verify empty release. Three of six turns complete, but the v28/v29/v30 1/2/3
-counts are descriptive single allocations, not a causal speed or gameplay gain.
-Next pass the newest typed soft-event summary into the next planner turn without
-another image/model boundary, then test transfer outside the fixed fixture. No
-subagent/context handoff; full goal open.
-
-Current direction (r63): v30 splits the v29 overloaded floor into absolute
-critical_health_minimum plus schema-bounded0–20 maximum_health_loss; effective
-floor=max(critical, fresh source-loss). Retained v29 health84→78 is soft under
-critical30/loss20, while v28 health93→87→81→79 is soft/soft/hard under critical30/
-loss13. These losses are model-free construction inputs, not model outputs.
-Monitor v2 retains receive, extraction-complete and outcome clocks without
-mutating hash-frozen v1. Windows43 and WSL/Linux15 tests pass. Next commit this
-construction, then preregister at most one new fixed-threat allocation with
-exact soft/hard exposure and timing rules; no gain is claimed yet. No subagent/
-context handoff; full goal open.
-
-Current direction (r62): retain the only v29 live allocation as threat-exposed
-but soft-unexposed. All109 exact observations read health, four turns hard-
-invalidate, two complete and all8 programs release cleanly. Luna twice authors
-absolute floor30; at source health84 it would permit54 loss, so the frozen20-
-loss cap correctly rejects all3 prior cover commands and runs input-free coast.
-Soft events are0, so2/6 completion versus v28's1/6 is not an envelope gain.
-Next split critical_health_minimum from schema-bounded maximum_health_loss,
-derive effective floor=max(critical, source-loss), and retain monitor receive/
-extraction/detection clocks before another allocation. Interrupted usage remains
-partly unknown. No subagent/context handoff; full goal open.
-
-Current direction (r61): v29 integrates typed health validity into each authored
-next_cover. Schema v4 requires one health floor/lease for active answers; the
-runtime binds it to fresh exact evidence, rejects already-breached or >20-health
-loss envelopes before admitting prior cover commands, coalesces soft values and
-routes hard/unknown/expired evidence through matching turn interrupt, cover
-cancel, verified empty release and stale-answer discard. Checked health is sent
-as compact prompt state. Relevant Windows32 and WSL/Linux15 tests pass. This is
-model-free construction: the20 cap is not calibrated, no v29 model/game run
-exists, and useful floors, completion, survival, latency, tokens and progress
-remain open. Next freeze one bounded fixed-threat allocation only after auditing
-the construction diff and exact acceptance rules. No subagent/context handoff;
-full goal open.
-
-Current direction (r60): deterministic typed cover validity passes development
-replay. A hash-bound Freedoom WAD-glyph reader extracts health from all70 exact
-v28 observations with zero unknowns and matches19 manual review points across
-v28 plus an independent12-frame v23 trace. It distinguishes the hidden97→100
-pickup from damage. With a posthoc development floor80, health87 and81 are two
-coalesced soft transitions and79 is a hard invalidation, 17 exact samples and
-5,240.235886ms after the old first-change stop. The generic guard never grants
-input and fails closed on unknown, expiry, sequence and binding faults. Next
-integrate this envelope into the controller model-free and prove soft preserve,
-hard cancel/release and stale-plan refusal before freezing a live allocation.
-The floor is not preregistered and no planner, survival, token, speed or clear
-gain is established. No subagent/context handoff; full goal open.
-
-Current direction (r59): treat the v28 result as a safety pass and liveness
-failure. Revisit renewable local cover under an explicit typed validity
-envelope: locally verified soft transitions may preserve existing bounded
-authority; hard predicate failure, expiry or binding uncertainty can only cancel
-and interrupt. Do not use fixed debounce or raw changed-pixel counts as semantic
-severity. First replay retained v28 evidence model-free, require fail-closed
-malformed/expired/mismatched cases and newest-event coalescing, then freeze a new
-allocation only if safety invariants hold. Brooks layered control, incremental
-repair and clock-aware/event-filtered planning support the separation, but do
-not prove this implementation. No subagent/context handoff; full goal open.
-
-Current direction (r58): the first fixed-threat v28 allocation naturally
-invalidates5/6 matching planner turns while exact reviewed health falls
-100→97→93→87→81→79→73 and enemies remain visible. All5 typed interrupts end
-ineligible, admit zero dependent plans, and all7 programs release cleanly.
-Decision1 recovers on the same thread, authors nonempty threat cover, and
-decision2's next natural change cancels that stale cover; decision3 inherits
-none. Detection→interrupt-send is0.026–0.324ms and detection→cover-release
-20.435–25.048ms. This closes natural stale-cover safety exposure but discovers
-replan starvation: repeated damage cancels5/6 high-level turns. Next separate
-locally absorbable expected threat evolution from changes that invalidate the
-high-level policy; interrupted usage remains unknown. No subagent/context
-handoff; full goal open.
-
-Current direction (r57): replace model-dependent navigation luck with the
-promoted `map01-threat-contact-v1` real Freedoom MAP01 start fixture. Seven
-recorded X11/OS-input setup programs and 7/7 verified releases reach exact tic
-1263 with a visible enemy, health 100/ammo 50 and zero model calls. A fresh
-process restores tic 1263 and its first exact frame independently shows the
-enemy. Hash, engine, IWAD, map and skill checks run before load; save is
-setup-only and grants no input authority. ViZDoom silently failed on the
-workspace path containing a space, while a no-space temporary bridge worked in
-all four probed modes. V28 adds only this checked load boundary to v26. Commit
-construction before one bounded natural-invalidation allocation; retain its
-first result. No subagent/context handoff; full goal open.
-
-Current direction (r56): the only natural v26 threat allocation at known v23
-seed990619 is retained unexposed.  Luna authored a different route and stalled
-at the first door: all12 exact decision frames show no enemy, manual health stays
-100/ammo50, and score is alive/unfinished with0 kills/deaths/exit after66.636s.
-Natural invalidations, interrupts, cover renewals and nonempty covers are0.  The
-normal path has12/12 typed completions,29/29 releases,0 MCP startups,53.864s
-model time and117,225 input/77,184 cached.  Seed alone cannot fix a model-reached
-threat state.  Official ViZDoom save/load supports a hash-bound real-MAP01 start
-fixture.  Next build it through recorded OS-input setup, load before measured
-control, and require the initial exact frame itself to show a real enemy.  Do
-not retry the unexposed allocation.  No subagent/context handoff; full goal open.
-
-Current direction (r55): return from desktop packaging to Issue #59's unresolved
-natural threat-control gate.  V23 seed990619 retained visible enemies, damage and
-unsafe stale-cover repetition; v24 proved stop-only natural invalidation, v25
-moved detection into exact dequeue order, and v26/v27 proved persistent typed
-interrupt composition normally and under injection.  Thirteen boundary tests,
-ViZDoom1.3.0 and a zero-turn app-server initialize pass.  Freeze one12-decision
-Luna-low v26 run at seed990619.  Count threat exposure only from a retained exact
-frame, and retain no-threat/no-invalidation/death/failure honestly.  A natural
-trigger must interrupt the matching turn, release cover, admit zero discarded
-action/next-cover input and recover on a fresh decision.  No subagent/context
-handoff; full goal open.
-
-Current direction (r54): the only frozen golden desktop v3 run passes6/6 exact
-with the required cold/reuse/reuse/repair/reuse/reuse route, zero old-target
-pointer admission and57/57 verified releases.  Two distinct grounding turns
-share one minimized app-server thread; with preflight there are3 unique model
-calls and0 MCP startups.  Usage is27,892 input/7,936 cached/477 output/132
-reasoning.  Six tasks take37.715s, whole command52.181s, median feedback99.562ms.
-Versus retained v1 this is descriptively +1,361 input, +3,072 cached, -9.745s
-task and -6.698s whole-command, from sequential single observations only.  The
-persistent typed boundary has now transferred beyond DOOM.  Next isolate the
-remaining preflight/process overhead and extend natural invalidation/repair
-evidence across the domain matrix; do not rerun this allocation.  No subagent/
-context handoff; full goal open.
-
-Current direction (r53): golden desktop v3 closes the exact environment hole
-exposed by the retained v2 allocation without changing task/control semantics.
-Before rebuilding, all13 inherited doctor checks pass while new openpyxl and
-et_xmlfile imports fail; after installing the pinned3.1.2/1.1.0 pair, all15 pass.
-Seven offline tests pass.  Commit this construction first, then freeze exactly
-one new seed991030 allocation with the same6/6 correctness, repair, zero stale
-pointer, release, one-thread/two-turn and usage/timing observations.  Preserve
-v2 failure and never retry its ID.  No subagent/context handoff; full goal open.
-
-Current direction (r52): the first frozen desktop v2 allocation is retained as
-a pre-GUI dependency failure.  Schema preflight completes and one minimized app-
-server thread starts, but grounding turns remain0: the pinned runtime venv lacks
-`openpyxl`, imported by the GUI suite.  Existing doctor omits it and falsely
-passes; runtime then exits before ready and surfaces StopIteration.  No task,
-latency or token comparison exists.  Next pin the observed system version3.1.2,
-add an actual doctor import/version check in v3, rebuild/check the venv, then use
-a separately frozen allocation.  Preserve v2 output and do not retry its ID.
-No subagent/context handoff; full goal open.
-
-Current direction (r51): the shared desktop v2 candidate replaces the two task-
-grounding process launches with one capability-minimized app-server thread while
-preserving the frozen golden GUI runtime, adaptive repair and independent scorer.
-Turn IDs remain unique call IDs; usage maps from each app-server `last` record;
-schema and semantic validators both run.  Five tests and all13 model-free doctor
-checks pass.  Preflight intentionally remains a separate compatibility call.
-Next freeze seed991030 once and require the same6/6 tasks/routes, zero old-layout
-input, verified releases, one thread/two turns; compare to retained v1's26,531
-input/4,864 cached,47.460s tasks,58.879s command and101.276ms feedback without a
-population claim.  No subagent/context handoff; full goal open.
-
-Current direction (r50): the frozen v27 composition passes in a real advancing
-game.  Decision0 injects once at exact sequence5; detection-to-turn-interrupt is
-0.025ms, send-to-ack2.192ms, send-to-interrupted-completion3.279ms, and detection-
-to-cover-release24.057ms.  It admits zero plan and supplies zero next cover.
-Decision1 reuses the same thread, starts with empty/no-source cover, completes a
-fresh typed action, and all3 programs verify empty release.  This closes the
-controller composition gate but is injected, not natural/gameplay/token evidence.
-Stop injection work.  Next transfer the persistent typed boundary to the shared
-desktop acquisition/golden path and compare the same retained tasks for exact
-correctness, model wait, input/cache, round trips and repair.  This tests shared
-interface value beyond FPS control.  No subagent/context handoff; full goal open.
-
-Current direction (r49): v27 adds an opt-in one-shot invalidation after a fixed
-number of exact real-game observations.  Natural visual invalidation always has
-priority; injection is explicitly labelled, claims no semantic change/success,
-grants no input, and uses the same typed planner-interrupt plus cover-cancel path.
-A discarded null action cannot supply the next cover.  Five injector/v27 and
-existing adapter/controller tests pass.  Next freeze exactly two live decisions:
-inject decision0 after four observations, require its interrupt+release+zero
-plan admission, then require a fresh decision1 on the same thread with empty
-inherited cover.  Return to hook-free natural conditions after that one result.
-No subagent/context handoff; full goal open.
-
-Current direction (r48): the first frozen v26 live integration retains one
-app-server/thread across four distinct Luna-low turns; all4 complete and pass
-schema admission, with zero MCP startup notifications.  Four cover plus five
-plan programs all verify empty release; one local contingency fires in78.597ms.
-Model intervals total20.655s and cumulative usage is39,154 input/26,112 cached/
-707 output/373 reasoning.  The run is alive/unfinished with no kills, and its
-health ROI never invalidates, so controller-level planner cancellation remains
-live-unexposed and there is no gameplay/token/speed claim.  Next add exactly one
-deterministic one-way invalidation trigger during a real running game+planner,
-verify interrupt/terminal/release/zero-plan/zero-inheritance, then return to
-natural benchmark conditions.  No subagent/context handoff; full goal open.
-
-Current direction (r47): controller v26 now composes v25 exact-observation
-invalidation with one persistent capability-minimized app-server process and
-typed per-decision turns.  Invalidation marks the matching turn stale, sends one
-interrupt, independently cancels/releases cover, awaits planner terminal, and
-admits neither action nor next_cover.  Adapter v2 adds MAP01-required const,
-length, count, uniqueness and numeric-bound checks without mutating frozen v1.
-Nineteen adapter plus three integration and four retained monitor/guard tests
-pass; WSL reaches the Windows0.153.4 app-server command-free.  Retain two WSL
-diagnostic harness failures.  Next freeze one four-decision integration run;
-judge typed lifecycle/release/discard mechanics, not gameplay.  No subagent/
-context handoff; full goal open.
-
-Current direction (r46): a frozen Luna-low turn is interrupted after its first
-matching agent-message delta (`{"`).  Delta observation to interrupt send is
-0.137ms, send-to-ack3.035ms and send-to-interrupted-completion3.181ms.  No agent
-message completes and the persistent adapter admits no answer.  Usage remains
-absent/unknown despite started generation, so there is no token-savings claim.
-This closes the standalone cancellation-mechanics gate.  Next create controller
-v26 by coupling v25's exact event-driven observation invalidation to this typed
-turn boundary; keep input release, stale action/cover discard, and model-turn
-completion as independently audited obligations before a live DOOM allocation.
-No subagent/context handoff; full goal open.
-
-Current direction (r45): the first frozen capability-minimized live session
-passes two structured Luna-low turns on one thread with distinct turn IDs.  The
-first turn carries a local image and stores a nonce; the second recovers it
-without restatement.  Both answers pass local schema admission, startup emits
-zero MCP notifications, and cumulative usage is15,531 input/6,912 cached/52
-output/18 reasoning tokens.  Turns take2,655.464/2,643.947ms.  Thread creation
-is441.617ms, outside the earlier three-sample minimal range, so startup variance
-remains open and persistence amortizes rather than assumes the 94ms median.
-Next freeze one genuinely in-generation interrupt after an agent-message delta,
-require answer ineligibility and account partial usage, then connect that typed
-boundary to v25.  No subagent/context handoff; full goal open.
-
-Current direction (r44): a preregistered six-process command-free comparison
-finds capability-minimized thread creation at94.368ms median with zero startup
-notifications, versus211.395ms and nine notifications for baseline; the
-117.027ms same-host difference is startup-only, with zero model turns and no
-inference/token claim.  Persistent planner adapter v1 now keeps one thread
-identity across turns and fail-closes cancellation races, duplicate interrupt,
-missing usage, multiple/malformed/schema-invalid answers, overlapping turns and
-implicit reset; nine protocol-double tests pass after retaining one test-import
-harness failure.  Next freeze one two-turn live continuity probe through this
-minimal command, then integrate only the verified boundary with v25.  Revisit
-failed ideas by changing one named condition while retaining their original
-failure envelope.  No subagent/context handoff; full goal open.
-
-Current direction (r43): the frozen app-server interruption allocation returns
-an explicit interrupted turn37ms after start, with20.772ms interrupt ack and
-21.039ms completion latency, zero agent messages and no answer eligibility.
-No usage notification appeared, which is unknown rather than numeric zero and
-likely means interruption preceded generation; no token-savings claim.  The
-journal also exposes10 unnecessary MCP startup notifications and about1.8s
-thread setup.  Next build the persistent planner adapter with strict absent-
-usage accounting, test completion/interruption races, suppress unused startup
-capabilities, then integrate it with v25 exact-observation invalidation in a new
-controller.  Interrupted items can never become an action or cover.  No
-subagent/context handoff; full goal open.
-
-Current direction (r37): retained MAP01 failure analysis separates the cover-
-expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of
-uncovered model tails (3,765.441 ms max), but 84 health points were also lost
-across decision windows whose inference cover was coast; each window includes
-the following primary program, so this is association rather than causal
-attribution.  Revisit the previously rejected single-ROI changed-pixel idea only
-as one-way invalidation: it may stop an existing policy but never prove success
-or grant input.  A tight health HUD ROI separates all 7 changed and 5 unchanged
-adjacent retained decision frames; an animated face ROI invalidates 12/12,
-showing the selection risk.  Next freeze exactly one v23/schema-v3 threat-
-exposure run before integrating this guard.  Retain no-exposure/failure as-is;
-use live evidence to decide whether a separately admitted stop/switch/escalate
-mechanism is justified.  No subagent/context handoff; full goal open.
-
-Current direction (r36): Issue #59 ends the current packaging allocation after
-the runnable golden desktop path and its evidence page are published.  Make the
-unresolved real-time control path primary again: diagnose the retained MAP01
-failure across inference latency, cover/renewal boundaries, stale-policy reuse,
-threat changes, damage, ammunition, progress and terminal outcome; then
-preregister one bounded v23/schema-v3 live threat-exposure test.  Retain the
-first result even if it fails or never encounters a threat.  The decisive
-question is whether fresh local evidence can stop, alter or escalate a renewed
-policy when it becomes inappropriate before the model returns.  Implement only
-the smallest general guard exposed by retained evidence, then use a separately
-labelled continuously advancing MAP01 attempt.  Repository presentation,
-native-adapter work and second-workflow transfer are secondary unless they
-directly block that experiment.  No subagent/context handoff; full goal open.
-
-Current direction (r35): the golden entry now also has a tested pinned setup.
-`setup-golden-demo.sh` creates an isolated venv with the pinned WSL dependency
-versions and exits through the same doctor; the clean setup passes.  Both site
-videos reach browser readyState4 with their declared durations and dimensions.
-Next replace the WSL-to-Windows model bridge with a native configurable Codex
-adapter while preserving the same output/accounting contract, then transfer the
-promoted CLI to a second desktop workflow.  No subagent/context handoff; the
-full human-tempo, generality, packaging and cross-platform goal remains open.
-
-Current direction (r34): the first construction entry point is now live.  One
-WSLg command runs doctor, fresh schema preflight, and the persistent six-task
-path with a unique output directory and no retry.  Fresh seed991030 completes
-6/6 exact tasks through cold/reuse/reuse/repair/reuse/reuse, admits zero old-
-layout pointer input, verifies 57/57 terminal releases, and independently audits
-3 unique generations, 2 images, 26,531 input tokens and 101.276 ms median input-
-to-next-observation feedback.  A labelled H.264 evidence playback fills the
-desktop site slot.  Preserve the pre-GUI import failure and renderer portability
-failures.  Next remove the WSL-to-Windows Codex path dependency or package it in
-a deterministic setup, then exercise the same promoted CLI on a second desktop
-workflow before expanding DOOM.  No subagent/context handoff; full goal open.
-
-Current direction (r33): move from isolated mechanism discovery to a construction
-and convergence phase.  Treat v23/schema v3, renewable cover, guarded admission,
-release verification, and the persistent compiled desktop path as the selected
-integration baseline.  Do not spend the next allocation on another MAP01 threat
-exposure.  First produce one documented entry point and pinned setup that can run
-the six-task desktop workflow end to end, retain its telemetry, and record the
-golden desktop showcase for Issue #58.  The failed Astra MAP01 run is now the
-honest real-time site artifact; MAP01 clear remains open and is not a launch gate.
-Resume narrow experiments only when this integration exposes a concrete blocker,
-then return the fix to the shared runtime.  No subagent or context handoff is
-used; the full human-tempo and generality goal remains open.
-
-Current direction (r32): the first frozen corrected-threat exposure is retained
-as a compiler-contract failure after one completed Astra plan and one completed
-primary input: `coast pulse` expands to 20 steps and the executor safely rejects
-cover before input.  V21 bounds coast chunks; schema v2 then fails pre-message
-because the response endpoint disallows `oneOf`.  V23/schema v3 removes explicit
-coast items: empty `next_cover` means coast and every item is an active cover
-action.  A two-decision endpoint run passes with zero rejection.  Exhaustive
-property testing passes all 168,421 schema-permitted policies at exactly 10 s,
-at most 16 steps and coast termination.  The earlier eight-turn pilot remains a no-
-threat-exposure result, though two local contingencies branch at 128.303 ms and
-110.676 ms.  Next freeze one v23 threat-exposure allocation; accept no-exposure
-or failure without rerun.  No subagent or context handoff is used; full goal
-open.
-
-Current direction (r31): Astra now authors a compact `next_cover` policy that
-the shared runtime executes and renews during the following inference interval.
-In v19 it chooses coast for clear views and, only after a visible enemy plus
-ammunition, authors strafe-left/fire/strafe-right; the next turn executes that
-exact policy.  Self-use exposes a 16-step compiler defect: the threat sequence
-ends on a hold at 9.640 s.  V20 retains that failure and compiles complete cycles
-to exactly 10 s ending on coast.  A corrected four-turn live run renews twice with
-20.990/21.512 ms gaps and remains alive/unfinished.  Same-seed input is 49,360
-versus 48,661 for renewal-only (+699, +1.436%) in unmatched sequential samples.
-Next require corrected threat-policy execution in a new bounded run and inspect
-ammo/evasion effects before freezing hero v2.  No gameplay or causal token gain
-is established.  No subagent or context handoff is used; full goal open.
-
-Current direction (r30): controller v18 repairs the concrete Astra cover-lifetime
-gap with bounded renewal from fresh sequence evidence while the model future is
-still pending.  A four-decision development probe renews 2 expired cover programs;
-release-to-readmit is 20.710/21.436 ms, total uncovered model time 54.187 ms and
-maximum 21.436 ms, versus the failed hero run's 9.771 s total/3.765 s maximum tails.
-Every cover terminal verifies release.  This is mechanism evidence, not gameplay
-gain.  Next replace the repeated heuristic with a compact model-authored cover
-policy that is safe to renew and resource-aware, validate its local contract,
-then freeze a separately versioned hero attempt.  Continue the desktop golden
-demo and launch packaging independently.  No subagent or context handoff is
-used; full goal open.
-
-Current direction (r29): the first frozen Issue #58 Astra hero allocation is a
-retained failure, not a rerun target.  It enters later MAP01 rooms, kills one
-enemy, then dies after 13 decisions/149.911 s without exit.  The game clock stays
-live at 35.016 tics/s, but the fixed ten-second cover expires before 7/13 model
-calls, leaving 9.771 s total and 3.765 s maximum inference tails without an active
-local program.  This invalidates the stronger continuous-local-control claim
-for the run and identifies the next concrete blocker: renewable bounded cover
-that survives variable frontier latency, then a compact model-authored cover
-policy with resource-aware fire/evasion.  Preserve the full labelled 2x video,
-telemetry, death and no-rerun disposition.  Repair this shared lifetime/renewal
-contract before another frozen hero attempt; keep the desktop golden demo and
-launch cleanup moving independently.  No subagent or context handoff is used;
-full goal open.
-
-Current direction (r28): Issue #58 makes the near-term Research Preview a
-two-track launch package.  Keep the retained integrated desktop workflow as the
-reproducible correctness/efficiency demo, and use continuously advancing MAP01
-as the hero evidence that local control keeps reacting while frontier inference
-runs.  The new 95.331 ms local contingency branch is retained as the first direct
-mechanism for that story, with no clear or broad speed claim.  Next preserve its
-telemetry/video path, measure longer branch precision and recovery, and run a
-separately labelled frozen Astra attempt if the launch environment supports it.
-An honest unfinished real-time clip must not block the Research Preview; DOOM
-does not define the product and remains one Domain Coverage Matrix axis.  Avoid
-unrelated research branches until the golden demo, scoped benchmark table,
-installation path and launch presentation are reconstructable.  No subagent or
-context handoff is used; full goal open.
-
-Current direction (r27): normal continuously advancing Freedoom 2 MAP01 now
-executes bounded model-authored contingencies locally.  In a 12-decision
-Luna-low run, a `use` command's `no_visible_effect` receipt triggered a
-preplanned backward/strafe fallback in 95.331 ms without another model call.  This
-removes the measured 8.683 s median model-mediated recovery path for that event.
-Grouping primary commands only at contingency boundaries reduces admissions
-18 to 13; the only admission above one bundle per active decision is the fallback
-that actually runs.  Both feasibility runs remain unfinished with zero deaths
-and kills, so completion and false-branch quality are open.  Next run longer
-MAP01 task evidence that measures branch precision/recovery and advances toward
-an independently scored clear while game time never pauses.  DOOM remains one
-Domain Coverage Matrix axis.  No subagent or context handoff is used; full goal
-open.
-
-Current direction (r26): one shared checked-input client now expresses all three
-planned arms.  Its first run preserves an ephemeral task-derived alias grammar
-mismatch after plain succeeds6/6.  Prefix normalization repairs only the adapter;
-fresh human-point v2 independently completes18/18 tasks.  Plain/ephemeral/
-persistent use0/12/4 mints,18/48/41 programs and36/96/82 durable calls; each arm
-has12 intended button downs and every terminal releases cleanly.  A dedicated
-plain two-point schema avoids charging the baseline for an unused compiled method,
-while the compiled schema remains B/C-only.  The shared Luna-low adapter parses
-retained model evidence and both schemas have strict validators.  This remains a
-zero-model engineering result.  Next integrate these paths through adaptive caller
-v2, add task timing/usage reconciliation, then freeze source hashes and run the
-formal allocation.  No efficiency or human-tempo claim; full goal open.
-
-Current direction (r25): the selected Issue #57 path now has a real six-task
-persistent mechanics pass before formal model allocation.  Human-inspected points
-submit all six tokens exactly once, reuse layout-A and layout-B handles, refuse the
-old A handle as `MISSING` at task 4 with zero stale pointer admission, repair B,
-record 12 intended button-down admissions and verify all 41 releases.  Four prior
-failures remain: source-frame point scaling, nullable missing-handle packaging,
-flat restyled-field patch size and wrong pointer event accounting.  Together with
-the earlier URL mismatch and protocol duplicate-ID gap, Issue #57's new bounded
-integration-gap rule is now enforced as two interface mismatches and four
-benchmark/setup/accounting defects with measured non-additive overhead.  A
-formal-invalidating discovery forces HOLD and a new preregistration.  Next finish
-the same-model three-arm live controller and freeze its manifest; no efficiency,
-break-even, full DOOM map clear or human-tempo claim exists yet.  Full goal open.
-
-Current direction (r24): Issue #57's start condition is satisfied because the
-compiled GUI mechanics block ended at live v5.  Stop isolated primitive studies
-and build the finite plain/current-optimized/integrated persistence comparison
-specified in `research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md`.  The
-selected integrated path combines schema preflight, Luna-low cold grounding,
-compiled local continuation, scoped target handles, adaptive caller v2 accounting
-and an append-only independent scorer.  Freeze the six-task cold/warm/layout-
-invalidation/repair allocation before any live call and publish a
-RETAIN/HOLD/REJECT result without reruns.  After that report, run a continuously
-advancing Freedoom `MAP01` clear attempt as the DOOM motor/reaction gate: visible
-screen/audio decisions, OS input, no pause or save-state stepping, and independent
-exit/death/timeout scoring.  DOOM remains one Domain Coverage Matrix axis.  No
-integrated efficiency or full-map-clear result exists yet; the full goal stays
-open.
-
-Latest compiled-interface result: a preregistered private Chromium pair now
-performs two fresh-evidence-dependent GUI actions with zero frontier-model
-resumptions. Positive independently submits `t991025`; action-to-feedback is
-773.005/568.488ms and first-action-to-semantic-completion is1.855s. The changed
-case completes only entry, observes missing Submit and safely stops. New adaptive
-caller v2 carries `unknown_state`, completed_actions=1 and confirmed_partial
-through the outer boundary. Two model calls report18,792 input tokens. V1-v3
-failures and v4's reason-collapse defect remain preserved; Windows/WSL audits and
-manual frames pass. Next run a preregistered matched plain/current-optimized/
-compiled efficiency block before any speed, token, break-even or human-tempo
-claim. See research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md. Full goal
-stays open.
-
-Latest target-grounding result: bounded persistent hover labels raise the known
-OpenTTD Road Construction selection from the direct full-frame baseline's0/2 to
-3/3 across two preregistered hover studies. The first study is preserved: model
-semantics are correct, but minting a hover-conditioned patch makes the later
-handle disappear and safely stops before target input. The corrected pair clears
-hover, requires the retained pre-hover patch to return exactly, then mints. Its
-rehover negative returns `MISSING` before target click; stable follows actual
-surface delta `[21,28]`, resolves `[841,79]`, completes the guarded L and passes
-all four independent engine checks. Corrected input is9,936/9,935 versus9,296
-for the failed direct stable baseline; active hover adds about3.6s. This is not a
-speedup. Next allocate uncertainty-triggered probing to a held-out target or
-changed candidate layout. Automatic discovery, broad compression, cost and human
-tempo remain open. See research/live_control/OPENTTD_HOVER_TARGET_REBASE_V1.md.
-Full goal stays open.
-
-- 2026-09-14 r24: Issue #57を確認し、v5で現mechanics blockが終了したため、孤立した
-  primitive追加を停止して統合効率評価へ移行。`INTEGRATED_EFFICIENCY_PLAN_V1.md`に
-  plain visual program / current optimized ephemeral / integrated persistentの3 arm、同一の
-  cold/warm/layout invalidation/repair 6 task、全call/token/image/latency/accounting、
-  independent append-only scorer、事前固定するRETAIN/HOLD/REJECT基準を選定。plain armの
-  実バッチ能力は保持し、今回の主検証をpersistence amortizationとして限定。live allocationは
-  未実行。統合report後に、ゲーム時間を止めないFreedoom `MAP01`通常map clear attemptを
-  実施するgateも固定。DOOMはDomain Coverage Matrixの一軸で、clear能力は未主張。
-
-- 2026-09-14 r25: 統合fixtureをsame runtimeで自己利用。query URL文字制約、source-frame
-  手動point誤り、MISSING recordのnullable field、restyled B fieldのflat patch、pointer
-  event名集計、cross-task call-ID検査の6 gapを保存・修正。#57追記に従い2 interface
-  mismatch / 4 benchmark-setup-accounting defectとしてprovenance・repair・regression・
-  非加算overheadを記録。最終human-point mechanicsは6/6 exact-once、A/B reuse、task4
-  old handle MISSING、stale pointer 0、target button-down 12、release 41/41でWindows/WSL
-  audit合格。これはmodel/token比較ではない。formal中のinvalidating discoveryはHOLDと
-  新規preregを要求するprotocol 8 controlsも合格。次は3 arm live controllerとmanifest。
-
-Prior coordinate-contract repair: `point_target_contract_v2` separates absolute
-source-observation pixels from later target motion. In a preregistered seed991015
-pair, identical Luna-low calls author point `[270,243]` plus
-`surface_origin_translation`2/2 at9,264/9,265 input tokens. Stable follows binding
-delta `[20,8]` and independently saves `t991015`; changed-target refuses a new
-patch before handle creation with zero target pointer input. All36 frames and
-source/prompt/schema/patch/output hashes audit Windows/WSL. Stable decision start
-to independent return is8.343s including7.446s model time; no speed claim. Advance
-the explicit contract to a different domain with an independent oracle and a
-similar/transient negative. Fixed24x14 region size, automatic identity, cost and
-human tempo remain open. See research/live_control/POINT_TARGET_CONTRACT_V2.md.
-Full goal stays open.
-
-Prior cross-domain contract result: the preregistered seed991004 OpenTTD pair
-correctly authors `source_observation_pixels` and
-`surface_origin_translation`2/2, but direct semantic point grounding is0/2.
-Luna-low selects `[650,51]` and `[432,51]` instead of the independently known
-Road Construction point `[820,51]`. Stable follows the actual `[21,28]` surface
-move, then the local first-road condition stops safely at step4 with12 target/0
-guard changed pixels. The paired negative mints the unchanged unrelated icon
-instead of refusing. Independent success is0/2;62 exact frames audit Windows/WSL.
-Preserve this baseline. Its bounded hover-label follow-up is reported above.
-Fixed region size, unseen targets, cost and human tempo remain open. See
-research/live_control/OPENTTD_POINT_CONTRACT_V1.md. Full goal stays open.
-
-Latest target-authorship evidence: preregistered `target_handle_mint_from_point`
-derives a24x14 region from Luna-low's Save point `[270,243]` instead of receiving
-an absolute caller box. Stable exact-patch mint follows surface move `[20,8]`, a
-no-image alias action independently saves `t991014`, and the paired post-model
-`about:blank` change refuses before handle creation with zero target pointer input.
-Reported inputs are9,285/9,284 for coordinate calls and8,012 for the stable handle
-call; cost is unavailable. All35 frames, source hashes and patch digests audit on
-Windows/WSL. Post-hoc review finds screenshot-absolute x/y in the prompt but a
-caller-assigned `window_content` transformation frame. Hold promotion. Next make
-frame authorship explicit or independently derived, then test a different domain
-with independent scoring and a transient/similar-target negative; fixed region
-size, exact-pixel limitations, efficiency and human tempo remain open. See
-research/live_control/MODEL_POINT_TARGET_V1.md. Full goal stays open.
-
-Latest OpenTTD live replication: after normalizing only self/study names, v10 is an unchanged preregistered replication of bounded effect-memory v9. It repeats the same semantic route: A-to-B turn5, observation-only uncertain turn6, observed and distinct B-to-C turn7, observation-only uncertain turn8, observed verify turn9. Independent target/connection/forbidden/surrounding gates pass. Observer transitions103/143 change only977..979 then1043/1107; final37/180 stable. All17 terminals release input. V10 uses9 turns,151,842 input tokens,139.465s model wait,19.491s proposal-to-feedback and160.837s completion. V9/v10 are2/2 hard success and2/2 zero completed-segment repeats, but both are slower than v7. Windows/WSL audits pass. Advance to changed geometry; do not promote. No rate, causal speed/token, geometry, cross-domain or human-tempo claim. See research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md. Full goal stays open.
-
-Prior first live memory: preregistered v9 connects one bounded unresolved-drag memory and explicit finish-kind v2 to the seed991003 five-tile L task. It independently succeeds on turn9 with zero repeated completed-segment drags,34 durable calls,44 frames and17 released terminals. It uses151,853 input tokens and153.027s. See research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md.
-
-Prior fixed-context candidate: inspection of the v8 failure proves its original drag panels are discarded after an observation-only turn. Bounded effect-memory v1 retains one unresolved drag as original before/after, latest inspection and action difference without accumulating history. Frozen v8 turns5..7 replay with stable source turn/crop and inspection counts0/1/2; three malformed memories reject. In two preregistered archived contexts with exact original prompts, frozen outputs are uncertain2/2 while new Astra-medium memory samples are observed2/2 and both select the same B-to-C continuation. Input33,655->34,419 (+764); cache differs. See research/live_control/OPENTTD_EFFECT_MEMORY_V1.md.
-
-Prior OpenTTD effect replication: preregistered v8 keeps the v7 candidate unchanged. It builds A-to-B once, marks the effect uncertain under sign/cost/highlight occlusion, uses two observation-only inspections, then safely stops on turn8 without repeating A-to-B or mutating B-to-C. Independent score is false; forbidden/surrounding state remains valid. It uses133,041 input tokens,30 durable calls,32 frames,116.213s model wait and13.185s proposal-to-feedback. Across v7/v8 the candidate has1/2 same-task hard success and2/2 zero repeated completed-segment drag. HOLD: retain action-effect evidence across inspection turns and improve bounded occlusion recovery before changed geometry. V8 also exposes that finish-outcome-v1 mislabels any abort file as `bounded_turn_limit`; explicit finish-kind v2 separates typed safe stop, limit, cleanup and visual verify in12 valid/4 invalid controls, preserving raw v8. Windows/WSL audits pass. See research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md.
-
-Prior OpenTTD live effect evidence: a preregistered v7 allocation keeps the v6 seed991003 task, fixed Astra-medium route, initial state, checkpoint semantics,12-turn limit and independent scorer, while appending bounded path-local before/after/difference panels after each drag. The first run recognizes A-to-B on turn6, builds B-to-C instead of repeating A-to-B, and independently passes all target/connection/forbidden/surrounding gates on turn7. It uses116,879 input tokens,26 durable calls,32 exact frames,94.221s model wait,12.439s proposal-to-feedback and109.034s initial-observation-to-semantic-completion. Descriptively versus retained v6:12->7 turns,199,613->116,879 tokens,2->0 repeated completed-segment drags, hard false->true. Windows/WSL audits pass. See research/live_control/OPENTTD_EFFECT_LIVE_V1.md.
-
-Prior OpenTTD effect diagnosis: the frozen v6 formal finish result remains unavailable, but263 continuous source-pinned observer records independently prove a stable partial result. At record91 A-to-B tiles977..979 become owned road and remain so for the final172 records; B-to-C tiles1043/1107 remain empty, forbidden/surrounding checks pass and hard success is false. The model repeats the same A-to-B drag on turns5,9,11 and never attempts B-to-C. New bounded path evidence measures3,628 changed crop pixels on the first drag versus250/451 on repeats; pixel delta is not semantic scoring. Windows/WSL audits pass. See research/live_control/OPENTTD_EFFECT_POSTHOC_V1.md.
-
-Prior OpenTTD grounding evidence: the paused held-out seed991002 pair has an exact zero-change stability frame, then Ctrl+1 changes1,151/1,024,000 pixels with no task/save mutation. Fixed Astra A/B/B/A endpoint targeting passes2/2 with opaque signs and2/2 transparent, using30,572 input tokens per condition. No grounding/token benefit is detected; do not promote the sign transform. Driver v5 separately fixes the bounded-limit finish race:12 observe-only proposals yield independent `bounded_turn_limit` through50 durable calls/39 observations, zero pointer/model calls and exit0.
-
-Prior OpenTTD allocation: a tracked pre-action tree-transparency transition costs428.854ms, adds zero model boundaries and reduces the fixed Astra episode from12 turns/198,746 input tokens to7/115,045. Independent correctness still fails: A-to-B is one row high and the model falsely verifies. Adding only the official general sign-to-map-square relation regresses to12 turns/199,613 tokens without verify or safe stop. Its retained limit-path evidence gap motivated the repaired driver above.
-
-Latest fixed-context compression evidence: planner_evidence_v2 retains checkpoint status/contract/request identity, scoped actual/digest, UNKNOWN reason, execution terminals, authority, no-retry and raw-evidence availability while omitting duplicated durable continuation. In16 predeclared fixed-image Luna/low calls across Chromium and Calc UNKNOWN/VERIFIED states, full and compact views both make8/8 expected decisions; no extra Save. Input80564->77880 tokens (-2684, -3.33%;335.5/call), with Calc dialog -704/call (-6.60%). Two samples/mode/case, no live latency claim. Measured v1 had a missing-contract UNKNOWN validation hole; frozen. V2 rejects malformed contracts and is byte-identical on all4 valid views. Two cross-OS audit path failures retained; final raw-call audit passes. See research/live_control/COMPACT_PLANNER_EVIDENCE.md. Next use v2 in a fresh live episode and adversarial omitted/conflicting evidence; full goal open.
-
-Latest recovery/domain evidence: one actual Chromium form decision saves t000240 through shared phased_submit_v2 (explicit task validator). Both artifact queries deliberately lose their replies; recover_query_once_v1 uses one command-free original-ID read each, with no resend. UNKNOWN permits continued GUI work; VERIFIED ends via declared policy and independent score. Recovery reads12.768/30.032ms; close-to-reconciled34.869/62.942ms; whole12.966s, model9.812s, 9690 input/128 output tokens. Audit119 events/14 frames/31 journal records and controls pass; first harness guard-precedence failure retained. See research/live_control/QUERY_RECOVERY_FORM.md. Opt-in; not organic outage, pixel-only baseline, speed guarantee or full domain coverage. Next measure compact planner evidence on fixed contexts. Full goal stays open.
-
-Latest artifact-enabled candidate: current cause-servo/Executor9 plus durable_submit_v5 supports scoped non-final saved-effect queries. Actual Calc uses 2 model decisions, one Save and 22.155s to independent success480/192. UNKNOWN leaves input open; after confirmation VERIFIED ends via an explicit caller policy with zero additional input/model calls. Query round trips86.874/117.662ms; 20085 input/406 output tokens. Ten protocol controls, 31 legacy replays and the95-event/16-frame live audit pass. This declared file-evidence profile is not a pixel-only baseline or paired speedup. See research/live_control/DURABLE_EFFECT_CHECKPOINT.md. Opt-in and v5 journal format; next actual query-loss recovery, then a different effect task. Full live-tempo/domain goal remains open.
-
-Latest fixed-case evidence: expanded typed phase feedback did not reduce re-save proposals. In12 predeclared A/B model calls, post-confirmation A verifies2/2, B verifies1/2 and re-saves1/2; visible-dialog/pre-input controls remain equivalent. B adds125-296 input tokens/call. Keep live default unchanged. Optional phased_outcome_v3 passes12 classification/protocol controls; model inputs match tested v2 on the three cases. See research/live_control/PHASED_OUTCOME_DECISIONS.md. Next inspect integration of existing non-final saved-effect checkpoints with the current cause-servo/durable path, preserving explicit scope and UNKNOWN; full goal stays open.
-
-Latest measured candidate: decision_pair_v1 adds bounded passive full-frame samples before model decisions. New Calc runs save480/192 with3-4 calls, but first-action grouping/cache/instrumentation differ, so no causal speedup claim. Corrected audit-only workbook copies prove480/192 already persisted after a zero-completed-step confirmation before the model issued another Save. The first diagnostic used the teardown export path and yielded unavailable evidence; it is retained. See research/live_control/DECISION_SAMPLING.md. Sampling remains opt-in; next distinguish pre-input refusal from admitted interrupted input in planner presentation, then compare fixed contexts and fresh tasks. Full live-tempo/domain goal remains open.
-
-Latest cross-application evidence: shared_phased_calc_v1 independently saves480/192, but needs6 model calls and60.808s, including a target-patch refusal and two expected dialog focus transitions. Shared phases remain opt-in; correctness does not establish efficiency. See research/live_control/SHARED_PHASED_CALC.md. Next inspect refusal and post-dialog evidence before choosing an overhead reduction.
-
-Latest boundary evidence: phased-focus-01 changes actual private X11 focus after successful activation. Unchanged phased_submit_v1 refuses the keyboard tail; saved SVG remains50/50/40/30. Audit58 events/8 frames passes; no model calls. See research/live_control/PHASED_FOCUS.md. Next use the shared caller on a different desktop interaction; same-window semantic identity and post-check races remain unproven.
-
-Latest shared caller: phased_submit_v1 extracts checked activation/keyboard execution and refuses unresolved or interrupted intermediate observations. Eleven archived-response fault controls pass; shared_phased_ink_v1 live integration completes both phases and saves X104/50/40/30, with 323.999ms handoff. See research/live_control/PHASED_SUBMIT.md. Real inter-phase fault injection and different-domain validation remain open.
-
-Latest measured candidate: phased_replan_ink_v1 separates fresh target activation from a checked keyboard-only tail. One live episode completes both phases and independently saves X104/50/40/30; handoff adds 315.835ms, whole episode 42.083s. No general speed claim. See research/live_control/PHASED_REPLAN_INK.md (or PHASED_REPLAN_INK.md from this directory). Next test inter-phase failure and extract a reusable caller; broad live-control goal remains open.
-
-
-</details>
-
-## Legacy retained goal document
-
-The material below predates the current governing-invariant presentation and remains verbatim for provenance. It is collapsed by default so the active direction stays readable.
-
-<details>
-<summary><strong>Expand legacy retained goal body</strong></summary>
-
-## Expired execution now has opt-in post-release observations, status remains expired
-
-executor_v9 / interactive_v6 / socket_v8 extend existing passive release sampling to expiry without lease renewal. Actual Inkscape Shift hold expires under500ms deadline; trailing text never starts, Shift released, two captures after release arrive before expired terminal. Latest capture+205.250ms, terminal+228.801ms. Audit20 events/8 exact frames/one pre-deadline Shift admission/unchangedSVG50/50/40/30/exit0/sockets removed. Fake release-failure/explicit-stop/expiry controls pass after retained harness-race repair. See research/live_control/EXPIRY_OBSERVATION.md and results/expiry-observation-01. Fixes stale post-expiry observation gap, not first-click versus full-program duration; next checked phase separation, no blanket deadline extension/tail replay. Previous frozen entries/default unchanged; full goal open.
-
-## Passive readiness avoids extra patch refusal but final edit expires: mixed outcome
-
-New passive_pair_v1 uses max3 extra samples; transition/exhaustion/invalid-bound/disabled-target controls pass. Live replan readiness takes0.594s/two samples; model calls4 instead of prior5, no extra post-selection patch refusal, independent SVG104/50/40/30. However final program expires after4 steps, Save admitted just before deadline, appended observe not started. Initial audit failure retained; diagnostic audit verifies expiry/all admissions before deadlines/released inputs, not clean completion.152 events/23 exact frames/47 journal records,45102 input/717 output, whole40.960s vs prior47.110s separate episodes, no causal speedup. See research/live_control/READY_REPLAN_INK.md and results/ready-replan-ink-01. Candidate not promoted; next separate first-click freshness from multi-step input lifetime and ensure post-expiry observation before semantic decisions. Full goal open.
-
-## Passive post-selection samples show early patch transition, then observed stability
-
-Fresh Inkscape seed239 scripted deselect/reselect, zero model calls: returned selection patch differs; first extra sample returns0.289s later and next seven through8.233s share exact hash/binding. Stable hash matches prior extra-refusal fresh image; early hash differs from prior source, no identical-trajectory claim. Audit142 events/22 exact frames/49 journal records/twelve released programs/one Save/unchangedSVG88/50/40/30/exit0/sockets removed. See research/live_control/SELECTION_READINESS_INK.md and results/selection-readiness-ink-01. Next bounded passive matching-sample readiness before model, retain exhaustion and true disabled-target controls; no fixed universal wait, semantic-readiness or speedup claim. Full goal unchanged.
-
-## Refusal now replans through selection/edit to final saved success
-
-Fresh Inkscape response recovery + same-focus deselection refuses initial edit; model reselects rectangle, an extra X-field patch change refuses its next proposal, a new model decision/fresh patch passes, then independent SVG104/50/40/30. Five calls52456 input/889 output, runners41.629s, whole capture→evaluation47.110s; no speed claim. Extra refusal: both images showX88 but625/625 patch pixels change, cause unestablished, threshold not weakened. Audit147 events/24 exact frames/41 journal records, only admitted final proposal changesX104, two distinct Saves, exit0/sockets removed. See research/live_control/RECOVERY_REPLAN_INK.md and results/recovery-replan-ink-01. Next characterize post-selection observation readiness with passive frames and retain true disabled-field change control before changing matching; full goal unchanged.
-
-## Same-focus deselection changes target patch; old model edit is refused
-
-Fresh recovered Inkscape X88, model proposes finalX104; scripted two-Escape fault clears selection but focus/surface/geometry binding stays equal. Existing sampled target contract on X-field patch returns target_patch_changed; old model edit not submitted, exact SVG remains88/50/40/30 and final goal false. Audit75 events/13 exact transported frames/19 journal records/four released programs/one Save/no replay/exit0/sockets removed. One model call10545 input/236 output/9.293s, recovery0.941s; no speed claim. See research/live_control/RECOVERY_TARGET_INK.md and results/recovery-target-ink-01. Harness-declared patch, first click only, no semantic/atomic proof. Next feed refusal/current deselected image to model for new selection and observed edit, rather than stop at refusal; full goal unchanged.
-
-## Changed focus refuses the post-recovery model proposal before input
-
-Fresh Inkscape seed239, recovered X88, actual model proposes X104; private descendant-Xvfb focus fault after model return/before fresh admission changes binding. Gate refuses before submit; exact saved SVG stays88/50/40/30, final goal explicitly not achieved. Audit57 events/10 exact frames/13 journal records/three released programs/one Save/no replay/exit0/sockets removed. One model call10545 input/274 output/12.015s; no speed claim. See research/live_control/RECOVERY_FOCUS_INK.md and results/recovery-focus-ink-01. This verifies changed focus only, not same-focus semantic target drift or autonomous replan. Next test sampled-target semantics and feed refusal/current observation into replanning; full goal unchanged.
-
-## Model-selected new edit after recovery succeeds with fresh admission
-
-Fresh Inkscape seed239 intermediate scripted X88/save with response abandonment, one recovery read0.959s. Final goalX104: model selects X field/text104/Tab/Save, executed unchanged after fresh observation/binding and new clock/deadline; second model verifies, independent SVG104/50/40/30. Original and continued edits have distinct IDs; two Saves are distinct edits. Audit90 events/16 exact frames/17 journal records/four released programs/exit0/sockets removed. Runners10.552/7.150s, model return→fresh checks/action result1.178s, whole capture→evaluation21.250s;21104 input/355 output, no causal speedup. See research/live_control/RECOVERY_CONTINUE_INK.md and results/recovery-continue-ink-01. Next deliberately change target/focus between model observation and execution in this path to verify refusal without replay; avoid more identical successful coordinate cases. Full goal remains open.
-
-## Recovery response separates resolved/unresolved, channel and new-input constraints
-
-recover_once_v2 attaches recovery_view_v1 to original raw evidence; matching read action required for resolved, old unrelated resolution stays historical, closed channel does not imply runtime death. Six transport controls plus four presentation checks pass. Fresh actual Inkscape uses the returned view directly as model evidence: read resolution0.806s, one verification call10405 input/141 output/7.579s, independent SVG88/50/40/30. This is889 more input tokens than previous handwritten summary; no compression/latency gain claimed. Audit49 events/9 exact frames/9 journal records/one Save/no replay/exit0/sockets removed. See research/live_control/RECOVERY_VIEW.md and results/recovery-view-ink-01. Transport exceptions still propagate without a view; arbitrary unvalidated input is unsupported. Next exercise a genuinely new model-selected action after recovery with fresh admission, rather than more status variants; full goal/default unchanged.
-
-## One bounded recovery read removes an avoidable model call
-
-Opt-in recover_once_v1 uses existing locked durable reconciliation, one command-free read, no retry/resend. Six offline cases retain pending on timeout/closed/read error/conflicting echo, refuse new commands and no-pending transport; matched reply clears. Fresh Inkscape seed239 actual response abandonment: caller read resolves in0.939s versus prior model-choice9.124s; one verification model call9516 input/129 output, independently SVG88/50/40/30. Single separate episodes, no population latency claim. Audit49 events/9 exact frames/9 journal records/two programs/one Save/no replay/exit0/sockets removed. See research/live_control/AUTO_RECOVER_INK.md and results/auto-recover-ink-01. Next make resolved/pending/closed recovery status directly usable in the shared caller response, preserving current observation and semantic-completion limits; broader goal remains open.
-
-## Live Inkscape model-selected reconciliation succeeds; mechanical read is next latency target
-
-Fresh seed239, real response abandonment after scripted edit/save, append pending state and pre-transport new-command refusal. Responder chooses exact command-free read, receives original completed/released result, then visually requests independent SVG verification88/50/40/30. One read, no replay, two model calls19104 input/258 output; runners8.747/6.422s, Linux loss→read resolution9.124s. Audit49 events/9 exact frames/9 journal records, two programs/one save, exit0/sockets removed. See research/live_control/LIVE_RESPONDER_INK.md and results/live-responder-ink-01. Initial edit remains scripted; not general autonomous recovery. Next opt-in one bounded command-free recovery read after uncertainty, retain pending on timeout/conflict and never resend input; remove inference from the mechanically constrained read choice while preserving model interpretation of recovered state. Full goal/default unchanged.
-
-## Inkscape archived recovery screen preserves uncertain-read versus resolved-verify choice
-
-Same responder instructions outside Calc: pre-send X50 image plus lost-reply evidence produces read(move-save) in both modes; received X88/Y50/W40/H30 plus original completion produces independent-verification request in both. Input12814→9424 and12920→9530(-3390 each); one sample/case/mode, responder resolved call slower9.547 versus6.648s, no latency claim. No new GUI input or model-selected live reconciliation. Sources/images/prompts/raw proposals audited in research/live_control/RESPONDER_INK_RECOVERY.md and results/responder-ink-recovery-01. Next integrate actual model-selected command-free recovery with the durable caller on a newly running Inkscape session, current observation and independent artifact score; do not substitute more archived positive cases. Default stays unchanged; full goal active.
-
-## Constrained responder live Calc comparison succeeds; cross-domain adoption remains open
-
-Builtin/responder/responder/builtin, identical first task prompts/seed238/Luna-low/Fast disabled: all independently save480/192. First-call input12859→9469(-3390,26.36%); total input52580/38997/29282/52573 reflects calls4/4/3/4 and saves2/2/1/2. Capture-to-evaluation35.193/32.647/24.810/31.055s is descriptive, no causal latency claim. All eight real dialog focus interruptions released inputs; zero-completed dismissal did not trigger cell-entry replay, but redundant Save persists. Audit313 events/58 exact frames/92 append records/52 exchanges/all exits0. See research/live_control/RESPONDER_CALC_ABBA.md and results/responder-abba-01. Candidate stays opt-in: next use a different desktop domain with genuine interruption/stale-target evidence and inspect remaining input, rather than repeat identical Calc trials. General default and full objective unchanged.
-
-## Constrained responder fixed-image screen reduces input26.78%; live quality still open
-
-Supported per-call model_instructions_file replacement, same archived image/task/Luna-low, builtin/responder/responder/builtin, Fast disabled both: input12659/9269/9269/12659, all four correct confirmation-click proposals. Mean proposal arrival6.032 versus5.909s does not establish latency gain. Source/instructions/arguments/image/prompt/raw output audit passes; no new GUI execution. Remaining9269 input tokens are not decomposed. See research/live_control/MODEL_CONTEXT_SCREEN.md and results/model-context-01. Builtin default retained; next test responder in the unchanged live typed Calc loop and an interruption/recovery case before reusable adoption. Instruction replacement is not lossless compression or broad quality equivalence.
-
-## Live requested-tier ABBA completes all four tasks; default unchanged
-
-Same Calc seed238, Luna-low, schema/full last outcome and identical first prompts; default/fast/fast/default all independently save480/192. Calls4/4/3/4, saves2/2/1/2; capture-to-evaluation39.857/28.728/22.625/31.392s. Mean35.625 default versus25.677 fast-requested is descriptive only: two episodes each, unequal actions/cache/output, effective tier unreported. Audit312 events/59 exact frames/92 append records/52 exchanges/all exits0. Sources and full results retained in research/live_control/TIER_CALC_ABBA.md and results/tier-abba-01. Default remains unchanged; Fast does not reliably remove redundant saves. Next inspect supported caller/context configuration behind roughly13k input per image decision and evaluate a constrained responder with task/recovery/schema evidence preserved, rather than repeat tiny metadata or tier variants. No reduced-context performance claim yet.
-
-## Fixed-image model tier screen supports a live-loop follow-up
-
-Same archived Calc image/prompt, requested Luna-low, default/fast/fast/default: four correct confirmation proposals, no GUI execution. Mean proposal arrival6.852s versus5.098s; runner7.481s versus5.728s. Only two calls per arm, unequal cache/output, actual service tier unreported: no verified causal speedup or interface improvement. Source/argument/prompt/image/raw-event audit passes. Default stays unchanged; next matched live full-task comparison must retain independent correctness, action count, waiting and usage. See research/live_control/MODEL_TIER_SCREEN.md and results/model-tier-01. Local Spark metadata lacks image modality, so no direct-image Spark call was attempted.
-
-## Terminal presentation ABBA gives only0.66% input reduction, no speed/turn gain
-
-Optional known-schema view omits historical timing/opaque IDs, preserves decision/release/error/held-input fields; unknown fields fallback full, original history archived. Same full/view/view/full Calc seed238/Luna-low; all independently480/192,4 model calls/2 saves. Mean input52677.5→52331.5(-346), capture-to-evaluation30.984→33.053s descriptive, no latency benefit. Audit342 events/61 exact frames/100 append records/56 exchanges/all exits0; full trials/controls retained. See research/live_control/TERMINAL_CONTEXT_ABBA.md. Lossy view not promoted; full prior outcome stays default. Next isolate model-call latency with fixed-task capability-validated settings, separate from interface claims; avoid more tiny metadata-only variants.
-
-## Matched history ABBA finds no turn reduction; all-history not promoted
-
-Same requested Luna-low/Calc seed238/supervisor schema, last/all/all/last; identical first prompts. All four independently480/192 with3 model calls/one save, so prior redundant-save anecdote did not recur in last-only condition. Mean input39438.5 last vs39904.5 all(+466); capture-to-evaluation23.058 vs24.822s descriptive only, cache/sampling/action differences and two sessions per mode. Audit244 events/48 exact frames/68 append records/40 exchanges, all exits0; full trials retained. See research/live_control/HISTORY_CALC_ABBA.md. Keep last-only default; no history/latency/compression improvement claimed. Next bounded presentation of necessary per-turn fields with retrievable evidence, fixed real-task token/success/wait comparison; avoid more identical history trials.
-
-## Automatic typed Calc loop removes manual handoff; redundant model save retained
-
-New bounded UTF-8 supervisor/schema automatically executes actual Luna screenshot proposals via append caller: enter/save, format confirm, redundant second save, visual verification. Same Calc seed238 independently480/192; audit86 events/16 exact frames/25 append records/14 socket exchanges/six released programs/exit0. Four model calls52586 input(31744 cached),487 output; runner28.806s. Full supervisor39.249s incl startup, initial capture-to-evaluation32.570s; model-return-to-publish12-16ms. Eight schema refusal controls pass. See research/live_control/AUTO_APPEND_CALC.md. No manual interventions; changed prompts/action count prevent causal ratio vs manual205s or compression gain. Next fixed comparison of bounded factual action history vs last-outcome-only context to reduce unnecessary save/model turns; semantic targeting and long-session limits remain.
-
-## Actual Luna screenshot proposals complete Calc via append caller; manual handoff dominates
-
-Calc seed238: model enter480/192+save, actual format dialog, model click785463, final model visual verdict; no replay after two needs_decision/focus_changed outcomes. Independent XLSX480/192/runtime success; audit63 events/12 exact frames/17 append records/eight journal calls/exit0. Three requested Luna-low calls37971 input(13568 cached),371 output, runner22.563s. Full capture-to-evaluation205.516s; proposal receipt-to-result1.101/0.817s. UTF-8 parsing and unspecified numeric/string verdict needed manual handoff fixes before input; no model reruns. See research/live_control/LIVE_APPEND_CALC.md. Actual proposals with assistant review, not autonomous/speedup. Next typed UTF-8 automated handoff and full-loop timing; retain independent effect checks and semantic-revalidation limits.
-
-## Append checkpoint cuts measured short-session caller cost while retaining tested recovery
-
-Append_checkpoint_v1/durable v4: hash-chained full-state frames, file fsync each pre/post commit, directory fsync on creation only,256-record/16MiB bounds. Damage/sync-failure/capacity controls refuse without transport or rollback. Actual Inkscape process-loss→rejection→fresh observe→distinct edit passes11 journal frames/62 events/10 exact images/SVG104,50,40,30/exit0. Native ABBA replace/append32 calls: outside-transport medians31.005→17.444ms clock and31.134→18.176ms observe; session totals646–704→541–544ms. See research/live_control/APPEND_CHECKPOINT.md. Short static workload17-record logs, no power-loss/long-session/model speed/default promotion. Next actual model-facing use on a new task/domain, carrying log growth and capacity limitations.
-
-## Fixed-task profiling finds material journal cost; location alone insufficient
-
-Actual Inkscape ABBA received/durable,32 calls: outside-transport median0.165/0.255ms for received clock/observe vs33.605/35.812ms durable. Same durable API ABBA mounted/native adds32 calls; native residual31.246/31.204ms, session totals overlap mounted, location-only improvement not established. Both audits64 calls/eight clean runtimes/40 exact frames/unchanged SVG pass. Static store cProfile shows native fsync about92% of store time; mounted cost spread over filesystem operations. See research/live_control/CALLER_COST.md. Static observe task, no model/equal crash guarantee/general speed claim. Next reduce repeated directory persistence via bounded journal candidate while retaining pre-send uncertainty; verify recovery before performance promotion and model-facing use.
-
-## Journal-owned clock closes rejection-to-new-action path on actual GUI
-
-Durable v3 persists clock uncertainty and correlates exact echo/clock while retaining image evidence. Inkscape seed235: expired X96 request/process exit, rejection read-only recovery, then journal clock→fresh observe→clock→distinct X104/save. Audit62 events/10 exact frames/three accepted released programs/one rejected with zero started steps, own-clock sequences/deadlines and SVG104,50,40,30/no transform; same bridge live/final exit0/socket cleanup. Five injected clock replies verify orphan/echo/timeout/malformed remain unresolved and two new commands blocked, own valid clock resolves. See research/live_control/DURABLE_REPLAN.md. Scripted plan, no new model/human speed claim. Next fixed-task caller overhead measurement and real model-facing use, not more isolated recovery variants.
-
-## Identified rejection now reconciles real expired request after caller exit
-
-Runtime candidate tags submit rejection with action/request identity and not_admitted only before executor used-ID admission. Journal v2 matches exact echo/identity and refuses resolution after acceptance. First actual attempt retained: legacy scope labeled rejection unattributed and recovery exited1/pending retained. Scope/cursor/socket v2 fixes explicit identity matching; second actual Inkscape attempt recovers in one command-free read, three workers17/0/0, same bridge live, final exit0. Audit21 events/three exact frames, no expired edit admission/steps, SVG unchanged50,50,40,30. Nine control groups/previous terminal compatibility pass. See research/live_control/ATTRIBUTED_REJECTION.md. Next journal-owned clock/observation and fresh distinct action after rejection; no speed/default promotion.
-
-## Durable journal now recovers actual GUI command across caller process exit
-
-Inkscape seed233: worker sends real AF_UNIX edit/save then os._exit17 before recv; another worker is refused before transport; third worker performs one command-free read and reconciles exact echo/admission/released terminal on same live bridge. Audit49 events, nine exact frames, three worker PIDs, unique edit/save, SVG96,50,40,30/no transform; finish/bridge exit0, sockets removed. Send-to-recovery-worker exit852.547ms, single scripted case including startup and application work, no model/human-speed claim. See research/live_control/DURABLE_INKSCAPE.md. Next attributable rejected outcomes; no automatic resend or timeout-based uncertainty reset.
-
-## Pending submit identity survives caller process loss
-
-Linux durable_submit_v1 commits uncertainty before transport and serializes cooperating callers with flock. Five separate worker invocations verify crash exit17, two new-submit refusals before transport, admission remaining pending and correlated released terminal resolution. Four attribution/release controls and cross-process lock contention pass. Recovery uses injected archived Inkscape replies with rebound identities; no new live GUI/network or power-loss claim. See research/live_control/DURABLE_SUBMIT.md. Next real write/crash/resume on the same live runtime; rejected events currently lack identity and conservatively remain pending.
-
-## Checkpoint caller recovers actual Inkscape lost response without resending edit
-
-Real socket sendall then deliberate client close before recv for one move-save request. Caller checkpoint unchanged, bridge checked live; command-free read recovers original admission/terminal and image9. Audit49 events/6 returned replies/one abandoned request, exactly one edit submission and Ctrl+S step, nine exact frames, SVG88,50,40,30/no transform. Processes exit0/socket paths removed. See research/live_control/INKSCAPE_LOST_REPLY.md. Scripted GUI/receiver abandonment, no natural outage or model timing. Next persistent unresolved-command/write-uncertainty guard across recovery; caller currently chooses read-only policy but does not enforce pending lock.
-
-## Received continuation now verified over real private socket with split clock
-
-Unchanged stopped socket plus synthetic subprocess gate: first response old clock, next read times out after own echo, same pending request later matches via command-free read. Five real AF_UNIX calls/seven events, one new clock command and two read-only followups; image sequence1 retained while cursor advances7. Process checked live during timeout, final exit0, sockets removed. Audit/source/event slices pass. See research/live_control/SPLIT_CLOCK_SOCKET.md. No GUI/model timing; client socket exceptions and dropped responses remain untested. Next actual caller migration/lost-response recovery, not repeated split-clock passes.
-
-## Received continuation separates latest cursor from retained image evidence
-
-New session-scoped checkpoint replays actual Inkscape stale-clock failure: cursor25 retains image4/event21; own clock absent, then command-free read obtains correlated current clock instead of old one. Full79-event/JSON/overlap replay and six refusal controls pass. Received exchange v2 injects recorded replies through caller function: one command/one read; cross-session rejected before transport. V1 pre-send identity gap retained/unpromoted. See research/live_control/RECEIVED_CONTINUATION.md. Offline/injected-transport only; next real private socket split-clock/exception verification and caller migration. No live speed claim.
-
-## Shared contract completes actual Inkscape edit; caller bugs retained and corrected
-
-Assistant seed231 self-use guarded X-field click then separately entered92/saved; SVG independently92,50,40,30 without transform. Audit79 events/12 exact frames/five completed programs/one expired rejection passes; bridge exit0. First exact patch refused228 differing pixels despite visual50.000. Next helper consumed old clock from stale cursor; runtime rejected before admission. V2 separates image source/continuation cursor and correlates own clock echo; same session recovered. See research/live_control/INKSCAPE_GUARDED_CLICK.md. Guarded button ack235.240ms after fresh capture, whole manual episode193.518s; no human-tempo claim. Next reusable image/cursor continuation result, not another repeated edit.
-
-## Shared sampled-target contract separates app coordinates from guard logic
-
-New application-independent evaluator takes trusted name/box/point/age contract, returns sampled evidence only and relies on existing owner/unique command admission. Replay preserves Mindustry positive point/deadline and both actual mutation refusals. Archived Inkscape frame12→15 X-field stays eligible despite tooltip outside patch, retaining child focus/top-level surface distinction. Nine malformed/change controls refuse. See research/live_control/SAMPLED_TARGET_CONTRACT.md. No new live input/model call or default promotion. Next wire one actual desktop caller and independent effect verification; do not accumulate further offline guard variants.
-
-## Live bounded intent rejects changed menu pixels and focus
-
-Two actual X11 mutation cases between prompt preparation/revalidation return target_patch_changed/binding_changed with zero input admissions. Each26 events/8 calls/3 exact frames; audit/cleanup pass, processes exit0. New strict intent gate rejects numeric1 instead of true and preserves archived valid result. First patch attempt retained: consumer JSONDecodeError closed cursor while runtime alive; one cleanup finish, bridge exit1. Fixture display setup moved into diagnostic redirection; later cases pass. See research/benchmark_discovery/LIVE_MENU_MUTATION.md. Fixed guided intent/fixture restoration, not autonomous recovery/general identity. Next reusable contract or cross-domain validation, not more identical menu tests.
-
-## Bounded live menu intent advances after fresh local validation
-
-One explicit Luna proposal retained while old observation aged6969.839ms. Driver acquired new frame, matched known menu patch/binding and issued one fresh-sequence click with capture+1s deadline. Fresh capture to button ack358.056ms; terminal927.254ms. Assistant viewed selected Conveyor. Audit35 events/9 calls/5 frames and five offline refusals passes; process exit0. See research/benchmark_discovery/LIVE_MENU_INTENT.md. Fixed guided intent, sampled fixture-specific pixels, no autonomous planning/general identity or causal speed claim. Next live changed-target refusal and strict intent-type validation; do not repeat unchanged menu. Old source remains frozen; known bool/int equality limitation documented.
-
-## Real live model call exceeds experimental observation age budget
-
-Live Mindustry observation age115.655ms at prompt preparation became12603.096ms after actual Luna/low call. Guided model proposed target action; post-answer1000ms test guard vetoed input and dispatched observe-only. Capture to new image-ready12753.084ms. Runner11374.012ms separately measured on Windows; usage12048 input/1792 cached/73 output. Audit22 events/7 calls/3 frames, no input admissions, cleanup passes; processes exit0. See research/benchmark_discovery/LIVE_FOCUS_BOUNDARY.md. Paused game and arbitrary experimental age cutoff do not prove semantic invalidity; repeated reasking could starve progress. Next bounded intent plus local fresh target revalidation/progress test, not another static prompt comparison. Full goal active.
-
-## Equal-policy focus model pair passes explicit rule checks, not live recovery
-
-New view v2 keeps full latest observation/terminal and rejects ambiguous sequence/action order. Three archived cases with synthetic freshness; six Luna/low calls all eight fields exact. Input reduces388/1386/1386 tokens (3.07%/10.22%/10.22%); stale view slower locally. Audit/source/prompt/args/usage passes; no reruns or v1 result replacement. See research/benchmark_discovery/FOCUS_MODEL_PAIR_V2.md. Explicit rule adherence only; target-needs_decision case remains uncovered here. Next live scoped decision boundary with real age and model-output timing, not more static passing cases. Issue #40–51 timestamps rechecked unchanged.
-
-## Actual model focus pair reduces input but fails decision acceptance
-
-Four Luna/low text-only calls on recorded lost/restored Mindustry focus: view input reduces869/1830 tokens (6.91%/13.50%), but only1/4 answers matches all eight predeclared fields. Both restored answers see target binding yet choose restore again; both full answers mark replay true. Retain all outputs; no reruns. Audit source/prompt/args/arrival hashes and usage passes, model acceptance fails. See research/benchmark_discovery/FOCUS_MODEL_PAIR.md. Rubric next-step/replay wording is ambiguous and view adds a cue absent from full, so no isolated reasoning/safety or compression benefit claim. Next clarify policy versus evidence, match cues and use new cases; no default promotion/live speed claim.
-
-## Assistant recovered Mindustry focus through existing keyboard API
-
-Actual socket self-use: injected drag focus loss, same-action terminal read, assistant Alt+Tab, visual/binding revalidation, fresh successful conveyor-menu click. Both fault and intentional switch return needs_decision and suppress tails; game focus restored before fixture cleanup. Audit45 events/9 exchanges/9 exact frames; empty-route score correctly false, bridge exit0. See research/benchmark_discovery/MINDUSTRY_FOCUS_SELF_USE.md.45.789 seconds to refocus terminal and72.282 seconds to next pointer terminal show recovery overhead; no human-tempo/model-boundary claim. New one-request console helper persists full replies but prints lossy selected fields; not lossless compression. Next planner-facing recovery/model-boundary comparison, not repeated known focus switches.
-
-## Mindustry socket focus interruption: retained failure, corrected integration pass
-
-Actual private-socket/X11 focus transfer produced input_stopped plus two passive observations and same-action needs_decision terminal. First run evaluation timed out while sink retained focus; driver erroneously attempted a second finish in cleanup, retained. V2 fixture restores focus after observe-only recovery and driver uses command-free wait/poll. Second run exit0; audit verifies7 calls/25 events/4 exact frames, one submission/finish, suppressed tail and cleanup. Empty-route game score correctly false. See research/benchmark_discovery/MINDUSTRY_SOCKET_FOCUS.md. Fixture refocus is not agent recovery; model-boundary timing remains next.
-
-## Actual Mindustry construction verified on newer shared runtime
-
-Assistant self-use of unchanged bend interactive v2 built eight directional conveyors with cause-servo/executor8. Four programs/18 exact frames; separate600.024-tick window delivered49 copper,112-tile guard and all directions pass. Pre-finish GUI commitment, eight score controls, source pins and cleanup audited; process exit0. See research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md.84.967 seconds to final input terminal;18–23-second between-program gaps remain. Runtime first-image-ready235–574ms excludes model receipt/usefulness. Known task, no controlled speed claim. Basic gameplay compatibility now demonstrated; next private socket focus-interruption/same-handle recovery and model-boundary timing, not another identical route repetition.
-
-## Shared newer runtime now runs in Mindustry; explicit cancellation verified
-
-New mindustry_bend_interactive_v2 uses cause-servo/executor8 and corrects copied six-conveyor prose without touching v1. Actual GUI scripted drag cancellation: acknowledged button down, verified release2.540ms after request, terminal14.199ms, tail click suppressed; fresh observe-only recovery image ready68.472ms after acceptance. Audit passes22 events/two exact frames/source pins/cleanup. Empty-route independent game score correctly false; exit0. See research/benchmark_discovery/MINDUSTRY_RUNTIME_CANCEL.md. Not assistant gameplay, focus-loss or socket-recovery validation; those remain next. No model-boundary speed/cost claim.
-
-## Mindustry bent route built by the assistant and independently scored
-
-Actual screenshot-guided construction completed eight direction-specific conveyors using four shared-pointer programs. Separate post-control window delivered46 copper over600.674 ticks; all directions and112-tile guard pass. Audit verifies18 exact frames, pre-finish GUI commitment, eight score controls and both launch cleanups. First launch ended on stdin EOF without actions; retained. Actual successful process exit0. See research/benchmark_discovery/MINDUSTRY_BEND_SELF_USE.md. About300 seconds to last input terminal, including a220-second gap: no human-tempo or held-out claim. Known route uses older session9/executor3; next address cross-domain stopped-input runtime/recovery rather than repeat this case. Copied six-conveyor manifest prose defect retained and documented; pinned plan/ready event specify eight. Issue list checked again; #40–51 timestamps unchanged; hourly monitor ACTIVE.
-
-## Mindustry changed-geometry route calibrated in actual engine
-
-New eight-tile bent route requires north/south direction changes. Three fresh Linux GUI engine-authored cases: complete delivers33 copper, wrong-turn/empty deliver0; local guard unchanged. Audit passes sources/screenshots, three outcomes and four malformed/direction controls; all processes exited without SIGKILL. See research/benchmark_discovery/MINDUSTRY_BEND.md. Not assistant construction or deterministic timing evidence. Next player-ready empty route plus combined per-direction/three-phase score and actual shared-pointer self-use; no adoption claim.
-
-## Domain review exposes Mindustry delivery measurement validation gap
-
-Issue list rechecked; #49 read. Matrix corrected to include completed Mindustry build/delivery and OpenTTD guard pilots. New Mindustry score v2 rejects nine invalid measurement controls; old v1 falsely verified eight. Archived actual 48-copper result exactly unchanged and four existing negative outcomes retained. See research/benchmark_discovery/MINDUSTRY_WINDOW_VALIDATION.md. Offline scorer candidate only; existing frozen interactive v1 unchanged. Next fresh route/interruption with validated phase scoring; no domain-performance or benchmark-adoption claim.
-
-## Actual Inkscape fallback received and continued without replay
-
-Test-only fallback client injected composer failure after one completed move-save. Assistant received full original result/error, viewed X74/Y50/W40/H30, then issued observe only and independently verified saved SVG. Audit passes 66 events/9 exchanges/15 frames, five output choices and exactly one save input; process exit0. See research/live_control/INKSCAPE_FALLBACK_LIVE.md. No live token/speed claim. Stop repeating this scenario; next address pre-result recovery from saved events or cross-domain runtime gaps. Defaults remain experimental.
-
-## Fallback retains pending and terminal state across real socket action
-
-New probe injects optional composition failures after input_stopped and terminal receipt using actual private AF_UNIX/subprocess with synthetic blocked capture. Both full original results retained; one submit/accept only, tail never starts, cancel/read continue same action, exit0. Independent audit reconstructs all 11 events/6 replies and both fallback payloads. See research/live_control/STOPPED_PRESENTATION.md. BytesIO output and synthetic backend do not prove actual GUI/model delivery. Inkscape v2 live fallback remains next; no default promotion.
-
-## Presentation preparation failures retain original results
-
-presentation_choice_v1 falls back before emission with full original data and explicit formatting error; no-benefit cases emit original JSON. Linux controls pass composition, overhead avoidance, exception/mismatch preservation, partial-write propagation and invalid-source rejection. New explicit Inkscape v2 wiring is syntax-checked, not live-tested. See research/live_control/PRESENTATION_CHOICE.md. Output failure never appends a second frame or resends input. Earlier receipt construction/storage failures remain outside this fallback. Next runtime-negative live validation; no default promotion.
-
-## Composed output used in actual invalid-input correction
-
-Inkscape seed228: not-a-number in X changed visible 50 to 0 despite completed program. Assistant read composed output/screenshots, corrected X86 and saved; independent SVG success preserves Y50/W40/H30. Audit passes 111 events/11 exchanges/26 frames and six exact composed payloads; runtime exit0. See research/live_control/INKSCAPE_COMPOSED_LIVE.md. No live model-token/speed claim. Initial/finish wrappers add overhead; presentation formatting failure currently raises after operation, so next validate fail-safe delivery before adoption. Nonempty held-input/runtime-negative coverage still open.
-
-## Composed result read correctly on actual interrupted-state records
-
-Four preregistered text-only Luna/low turns compare full/composed actual Calc pending and terminal records. All ten fields match in every answer, including null versus zero, focus cause and historical input authority. Actual input differences 267 (2.02%) and 491 (3.43%); cache/output vary, so no cost/speed claim. Binary stdin bytes and all event arrivals audited; processes exit 0. See research/live_control/MODEL_STATE_PAIR.md. Next explicit live candidate on changed transition and consequential negative state, not repeated easy extraction; no default promotion.
-
-## Known-field composition retains negative data and round-trips
-
-composed_result_v1 removes only equal known image/terminal duplicates and state values reconstructible from a unique state-table row. Ten archived results round-trip; five changed-evidence controls preserve mismatches/unknown errors and four corrupt encodings reject. Total canonical bytes 95814 -> 79496 (~17%). See research/live_control/COMPOSED_RESULT.md. Offline byte result only, no model-token/accuracy/speed claim or default promotion. Next compare on a task requiring negative state rather than an obvious image; keep full goal active.
-
-## Actual full/shared presentation token pairs measured
-
-Four preregistered Luna/low turns on two known browser screenshots all answered correctly. Shared-result v1 lowers reported total input by 135 and 131 tokens (~0.87% each); cache differs on one pair. See research/live_control/MODEL_PRESENTATION_PAIR.md. Audit v1 newline-hash assumption failed and is retained; v2 distinguishes CRLF files from normalized stdin intent and passes, no model reruns. Keep sharing experimental: easy static scenes do not prove reference reasoning, live recovery or cost/speed gains. Next prioritize simpler nonduplicated composition and less obvious evidence, not threshold tuning.
-
-## Explicit Luna probe suppresses observed MCP startup diagnostics
-
-model_probe_runner_v1 records fixed requested Luna/low arguments, exact stdin and JSONL bytes, local line-arrival timestamps and exit state. Per-run plugin/snapshot/shell feature switches yielded only the stdin notice on stderr. Known unsaved screenshot decision correct; actual usage 12567 input (1792 cached) / 43 output, exit 0 and audit pass. See research/live_control/MODEL_PROBE_RUNNER.md. Different settings from probe-01 forbid a causal comparison. Served model identity and complete instruction/tool isolation remain unproved; next inspect prompt inventory and preregister paired arms.
-
-## Actual CLI turn usage obtained; comparison isolation unresolved
-
-A bounded screenshot-only CLI probe returned the correct unsaved decision and actual turn usage: 17477 input / 49 output tokens. Audit of four emitted events passes; exit 0. See research/live_control/MODEL_BOUNDARY_PROBE.md. These are CLI turn totals, not image-only or parent-task tokens. Model identity and receipt/cost remain absent, and MCP startup warnings despite ignore-user-config invalidate an isolation claim. Next fix reproducible model/tool/instruction configuration before paired presentation experiments. No matched speed/token-saving claim.
-
-## Browser confirmation recovery with measured local output
-
-New explicit emission client was used on the known confirmation fixture with seed 227. Program completion accompanied a visible unsaved warning; the assistant reviewed it, confirmed replacement and independently saved t000227. Audit passes 108 events, nine exchanges, 17 frames and five exact local output payloads; process exit 0. See research/live_control/BROWSER_EMISSION_LIVE.md. Local write/flush is measured; downstream model receipt/tokens/cost and matched speed remain missing. Next prioritize authoritative downstream measurement or a controlled comparison harness, not more similar wall-clock episodes. No default change.
-
-## Local presentation output boundary measured
-
-presentation_emission_v1 retains exact intended bytes and local serialization/write/flush timestamps, propagating failures with receipts. Linux controls cover short writes, broken pipe, flush failure, real subprocess byte equality and attempt overwrite rejection. See research/live_control/PRESENTATION_EMISSION.md and results/presentation-emission-01. Model receipt/tokens/cost remain explicitly unavailable; this does not measure model-facing latency or token savings. Next integrate into a new client on a changed task with negative evidence. Existing defaults unchanged.
-
-## Exact duplicate-result sharing measured; not selected as default
-
-shared_result_v1 preserves full JSON values via self-contained definitions and explicit reference paths. Nine archived live results round-trip exactly; six value controls and five invalid-input/encoding checks pass. Seven completed results shrink modestly, two pending results grow; aggregate reduction ~5%. See research/live_control/SHARED_RESULT.md. No token/usability benefit measured, so defer adoption and avoid tuning against the same corpus. Next prioritize actual model-facing measurement and simpler result composition retaining negative evidence. No runtime/default changes.
-
-## Chromium direct-completion self-use verified with v5 receipt
-
-New explicit browser combined client used screenshot-guided local form navigation/submission, token t000226 independently saved. Both normal programs skip optional followup and have verified receipt bindings. Audit checks 84 events/7 exchanges/13 frames and POST data; bridge/runtime exit 0. See research/live_control/BROWSER_COMBINED_LIVE.md. Issues #46/#48 re-read: model-boundary timestamps and readiness classifier experiments remain open. Next deduplicate model-facing payload with references/negative evidence retained, then changed transition/failure validation. No matched speed/token/default-promotion claim.
-
-## Lifecycle receipt binding now validates completed early/combined histories
-
-Receipt v5 validates contiguous clock/submit/read history and reconstructed lifecycle before verifying terminal_received. Eight archived live reports: six completed bindings verified, two pending remain unbound. Twelve controls detect eleven inconsistencies and preserve an unknown nested error while retaining valid binding. Only obsolete root-level unresolved/binding warnings removed; interruption/focus/errors/unknown fields remain visible. See research/live_control/RECEIPT_LIFECYCLE.md. Next explicit client on different desktop task using v5; payload duplication/schema still open. No default promotion or new GUI/speed/token claim.
-
-## Combined bounded followup verified in actual Calc self-use
-
-Same runtime/seed/input sequence as prior early-return run; one outer operation now collects promptly arriving terminal/images after early stop. Save/confirm bounded reads took 254/279ms; terminal-to-reply gaps ~11/13ms instead of prior manual followups ~10s. Separate followup stage calls 2 to 0; socket exchanges remain 11. Independent saved [816,345] pass; audit checks 60 events/14 frames and bindings. See research/live_control/CALC_COMBINED_LIVE.md. No causal speed/default promotion. Next fix receipt compatibility/presentation duplication, then test a different desktop transition; avoid further identical Calc wall-time trials.
-
-## Bounded followup read tested against delayed capture and silent socket
-
-bounded_followup_v2 performs one command-free terminal read (400ms server wait/650ms socket deadline), keeping early evidence and cursor on I/O failure. Preserved v1 failure: missing synthetic image reference crashed post-terminal report construction; v2 returns image unavailable separately. Actual socket probes return pending at ~401ms and prompt terminal at ~291ms; silent peer exits read at ~668ms including overhead. No new Calc run/default promotion/hard whole-function bound. See research/live_control/BOUNDED_FOLLOWUP.md. Next combine with early exchange in one outer client operation and self-use on Calc; receipt compatibility remains open.
-
-## Actual early-return Calc self-use completed; keep optional
-
-Image-facing early_exchange/resume candidates used on Calc seed 225. Save/confirm early replies arrived 281/339ms before runtime terminal; independent saved values [816,345] pass. Separate manual followups added ~10s each after terminal availability; 11 socket exchanges versus prior passive terminal-wait run's 9. Audit verifies 59 events/13 frames, lifecycle, command/history/owner evidence and workbook. Receipt v4 does not support new state names and keeps binding null; warnings retained. See research/live_control/CALC_EARLY_LIVE.md. Next: bounded client wait to combine prompt terminal/images while returning pending for slow capture; fix report compatibility before promotion. No causal speed/token claim.
-
-## Early-stop client lifecycle verified with real socket fixture
-
-PendingAction now distinguishes input_stopped_capture_pending from terminal_received, tracks contiguous history/exact replay, and keeps timeout/cancel replies pending. Twelve controls and archived evidence pass; a fresh AF_UNIX fixture produces pending/pending/pending/terminal_received across early stop, timeout, cancellation and released capture. Six exchanges/11 events match raw history; exit 0. See research/live_control/STOPPED_CLIENT.md. Next: GUI-facing early-return helper and actual Calc self-use. No new GUI trial, input authority, default promotion or speed claim.
-
-## Early input-stopped boundary verified through actual private socket
-
-Added explicit stopped_scope/cursor/socket candidates: action-scoped input_stopped is now a valid boundary. A real AF_UNIX/subprocess probe with synthetic blocked capture receives early focus_changed, then verifies terminal timeout without restart, busy rejection of new input, and cancellation reply while capture remains blocked. After releasing the gate, one capture completes, terminal retains original cause, and processes exit 0. Seven exchanges/13 events checked against raw history. See research/live_control/STOPPED_TRANSPORT.md. Next: live client representation of input-stopped/capture-pending versus terminal, then actual Calc comparison. No hard capture timeout or default promotion.
-
-## Optional post-release observation now honors explicit cancellation
-
-Executor v8 skips remaining optional captures after cancel/close. Ten controlled thread-gate runs compare v7/v8: both still wait for blocked capture/output, but v8 does not take another sample after that call returns (or any sample when stopped before collection). A persistent unrelated-focus X11 run also passes physical release, no tail input, passive-only capture and fresh-intent isolation; audit verifies 11 frames. See research/live_control/POST_RELEASE_STOP.md. Next: immediate interruption delivery with a separately represented passive-observation lifecycle and transport backpressure. No hard capture timeout/default promotion claimed.
-
-## Passive post-release candidate reduces explicit recovery observations in one Calc run
-
-Executor v7 emits input_stopped after verified release, then two passive captures before the unchanged needs_decision terminal. Six synthetic tests and actual Calc seed 225 passed. Same initial image/input steps as prior run; no extra observe program needed (2 to 0), socket exchanges 13 to 9, saved values correct. Collection adds about 336–339ms per interrupted terminal; no hard capture deadline or causal speed/token claim. See research/live_control/POST_RELEASE_OBSERVATION.md and results/calc-table-live-02. Next: unrelated focus, blocked capture/output and cancellation boundaries; consider immediate interruption delivery separately. Defaults unchanged.
-
-## Calc live modal recovery through the candidate socket
-
-Actual seed-225 Calc self-use with executor v6 and full receipt/state table saved A1=816 and A2=345 successfully. Natural dialog open/close each yielded needs_decision/focus_changed with zero completed steps despite useful application effects. Fresh observations recovered without old causes; two partially painted images required extra observe programs. Audit verified 72 events, 13 exchanges, 14 frames and workbook. See research/live_control/CALC_TABLE_LIVE.md. Next candidate: bounded observation-only continuation after interruption, preserving release and requiring a new input decision. No default promotion or speed/token claim.
-
-## Terminal reason fallback verified on X11 keyboard interruption
-
-Executor v6 fills only empty needs_decision reasons from the same lease focus/surface interruption snapshot. Eight synthetic cases and bundle-focus-03 pass: actual Control_L release while output is blocked, no tail input, explicit focus_changed terminal, and fresh same-deadline observation without stale cause. Separate audit verifies nine frames and source/owner evidence. Earlier failed cohorts remain frozen; no default promotion or model-speed claim. See research/live_control/TERMINAL_REASON_FALLBACK.md. Next: live transport and non-Inkscape recovery coverage.
-
-Latest bundled faults: [physical release/tail stop and reason gap](../research/live_control/BUNDLE_FOCUS_FAULTS.md).
-Three actual injections (select/field buttons, Ctrl modifier) release during blocked
-output and stop tail at prefix0/2/3.38 frames audited. Preserve v1 key non-injection
-and v2 key assertion failure: per-intent focus_changed exists but decision_reason
-null. Button fresh-observe isolation passes; key branch aborted before that check.
-Next preserve first-cause explanation for parameterless DecisionRequired with new
-candidate, then another desktop domain/conditional boundary. No default promotion.
-Latest executed pair: [separate vs bundled GUI](../research/live_control/BUNDLE_PAIR_LIVE.md).
-Registered AB seed223/X69.5 executed once each: identical9steps/initialPNG/finalSVG,
-both strict pass. Programs3->1/socket9->5; GUI decision57.178s->42.748s, exploratory
-not causal speed. Frames16->18, all retained.132 events/34 frames audited, exits0,
-no recovery/fault in pair. Next real focus fault verifies bundled tail stop/release,
-then another domain/layout/conditional boundary; no normal-pair timing fishing.
-Latest attribution: [observation cost and registered bundling pair](../research/live_control/OBSERVATION_COST_PROFILE.md).
-48 existing frames across Inkscape/Calc checked. Field task68.49s includes1.91s in
-completed steps and1.15s observation brackets; most elapsed time is outside those
-steps, not proven all model inference. Prioritize existing nine-step execution vs
-three outer programs before capture skipping. Registered one AB pair seed223/X69.5,
-identical steps/full captures, GUI decisions before score, retain failures. Not yet
-executed; no causal speed or freeze claim, intermediate intervention tradeoff explicit.
-Latest companion self-use: [fresh changed-value field task](../research/live_control/INPUT_STATE_TABLE_LIVE.md).
-Seed222 X73.25 task passes strict saved geometry. Full receipts + nonempty tables
-used without extra raw-state dumps; GUI decision committed before independent
-evaluation.73 events/nine exchanges/18 exact frames audited, exit0. Edit selected
-state7139B -> companion3160B; no token/capture/speed claim. Normal familiar layout
-only. Next larger repeated-capture cost using existing observation policies and
-another domain/layout; retain critical evidence, avoid more table microvariants.
-Latest state presentation: [lossless input-state companion](../research/live_control/INPUT_STATE_TABLE.md).
-Six preserved reports/eleven preservation controls round-trip selected state fields.
-Field-edit selected JSON7142B -> full companion3163B, no observations dropped or
-attention cleared. Empty case grows; omit empty companions in future caller. Offline
-table read only, not new live self-use/token/speed evidence. Next optional replacement
-for extra raw-state dump in fresh changed-value/layout field task, retain full receipt
-and image; separately reduce capture cost only with evidence.
-Latest GUI recovery: [readback and repair before oracle](../research/live_control/GUI_EFFECT_RECOVERY.md).
-Fresh seed221 replacement: model reads X50 from GUI, commits repair decision, edits
-X via normal click/chord/text/Return, saves, then commits GUI success before first
-independent score. Saved x66.949997 passes. 91 events/13 exchanges/19 exact frames
-audited; normal exit. Familiar fixture, not blinded/general policy. Next existing
-observation/presentation reuse to reduce routine field-edit feedback cost with
-changed target/layout validation; no more identical injection cohorts or speed claim.
-Latest recovery decision: [tracking loss after achieved geometry](../research/live_control/EFFECT_LOSS_LIVE.md).
-Fresh seed220: fixed second-feedback occlusion after one correction yields lost /
-needs_decision; save/effect proves x66.94915 task pass. Model finishes without another
-move; zero pointer admissions after lost. Forty events/seven exchanges/eight exact
-frames audited, normal process exit. Decision was benchmark-oracle-assisted. Next
-GUI-visible geometry readback and recorded decision BEFORE independent scoring;
-avoid more near-identical fault passes. No general recovery/speed/freeze claim.
-Latest live checkpoint: [actual caller false-goal/effect separation](../research/live_control/EFFECT_CHECKPOINT_LIVE.md).
-Two fresh replacement trials both return compact completed/local-goal with saved
-x=50 failure. First effect command rejected by transport whitelist; preserved and
-closed. Explicit socket v2 adds effect forwarding; second returns saved-effect
-failure before finish. Fourteen exact frames/raw responses/pins audited, five guard
-negatives and offline positive checked. No automatic retry or live recovery. Next
-fresh inverse post-goal tracking-loss case and recovery; no identity fix/promotion.
-Latest effect review: [preserved servo contradictions](../research/live_control/SERVO_EFFECT_REVIEW.md).
-Eight historical cases/59 exact frames audited, saved geometry independently
-recomputed. Replacement reports completed/local goal but effect fails; blue
-distractor stops with tracking lost after scored geometry already passes. Keep
-program, visual goal and task effect separate; no automatic retry from terminal
-status. Backend-only records do not test current socket-card fallback. Next actual
-caller effect review with these two opposite failures; no identity fix or promotion.
-Latest compact self-use: [typed successful-servo card](../research/live_control/SERVO_REVIEW_CARD.md).
-Selected consistency checks permit 1385-byte historical/1388-byte fresh servo card;
-16 consistent-copy negative controls and actual interruption fall back to full receipt.
-Fresh model review + save reaches x=66.94915; 39 events/six exchanges/eight frames
-verified. Servo details needed no separate fetch, but save remains detailed; whole
-capture→score 67.793 s, no speed/token claim. Not complete schema validation. Next
-existing failure/occlusion/distractor corpus and clearer unsupported-program fallback;
-no default runtime changes or Research Freeze.
-Latest presentation candidate: [tracking metric classification](../research/live_control/RECEIPT_TRACKING_METRICS.md).
-Receipt v4 distinguishes finite matched servo tracking.error from exceptions and
-includes full feedback records. Saved success attention 15→9; ten negative controls
-pass with duplicate copies synchronized (v2 probe). Actual interruption stays flagged.
-JSON grows 5517→7323 bytes; no compression/token/performance claim. Nine schema-review
-entries remain. Next typed concise servo/input-state presentation and fresh self-use;
-no live entrypoint switched yet and no Research Freeze.
-Latest integration/self-use: [existing servo with cause/wake](../research/live_control/CAUSE_SERVO_INTEGRATION.md).
-Reused session21/patch_servo5 and guided continuation with owner10/executor5. Model-chosen
-patch reaches saved x=66.94915 via one local correction; six socket exchanges/39 events/
-eight frames. Separate real focus fault at blocked yield releases before resume and
-returns focus_changed with no correction; fresh observation has no old cause.
-Receipt over-flags new servo schemas and mislabels numeric tracking.error as exception.
-Next typed compact servo presentation plus preserved failure cases; reuse existing
-robustness cohorts, no new servo policy, speed/token/freeze claim.
-Latest diagnosis: [drag anchor and visual correction](../research/live_control/DRAG_ANCHOR_DIAGNOSIS.md).
-Release-source review and held-phase images support first qualifying motion as anchor:
-physical pointer reaches endpoint but object displacement excludes initial coarse motion.
-Two diagnostic paths fail; one bounded screenshot-based residual correction saves
-x=66.94915 with y/size preserved. 46 frames audited. Scripted red-sensor diagnostic,
-not model in-flight control or a public primitive. Existing SERVO_INTERFACE/SERVO_TRIM
-already implement broader patch control: next connect cause/wake candidates to that
-work instead of creating another servo. No speed/token/freeze promotion.
-Latest task-accuracy evidence: [selected-object drag failures](../research/live_control/DRAG_TASK_ACCURACY.md).
-Two reviewed drag/save episodes both saved x=58.474575 against predeclared x=66.95 +/-1.
-Legacy rightward-only evaluator says success; stricter saved-SVG displacement scorer
-correctly fails both. Endpoint dwell candidate did not help and is not adopted.
-Identical initial/selected images and saved SVGs; 89 events/22 exact frames audited.
-Next inspect actual motion/application response before another primitive change.
-Input completion is not displacement success; no speed/token/freeze promotion.
-Latest finite comparison: [actual pointer wake](../research/live_control/POINTER_WAKE_COMPARISON.md).
-Six scripted Inkscape arms, same backend/owner and matching within-pair initial pixels.
-Old interrupted click reproduces completed-with-cause; new returns needs_decision
-with zero completed steps. Release-to-terminal: click 341.32/1.61 ms, drag 997.30/0.87 ms
-(old/new), one pair each, not model latency or population performance. Normal drag
-inputs complete and release, but reviewed image does not establish rectangle movement.
-Next independently score selected-object drag/save and recovery; no task-success
-promotion from admission-only controls or Research Freeze.
-Latest implementation/self-use: [cooperative interruption wake](../research/live_control/INTERRUPT_WAKE.md).
-lease_cause_v2/executor_v5 wake waits and check step/final completion. Nine controlled
-cases pass. Actual single-hold Inkscape interruption: needs_decision, zero completed
-steps, release-to-terminal 22.968832 ms, no new image. Explicit observation then
-reviewed recovery saves correct SVG; 47 events/9 frames/eight exchanges audited.
-Whole episode 87.9347 s is not a speedup claim. Receipt v3 separately flags causes
-on completed terminals. Next actual pointer waits and finite matched old/new tests;
-no automatic image authority, model-token claim, or Research Freeze.
-Latest self-use: [live application cause delivery](../research/live_control/CAUSE_LIVE.md).
-Candidate owner10/executor4 interruption survives actual Inkscape, socket, and compact
-receipt; explicit reviewed recovery saves the correct SVG. Audit verifies 52 events,
-19 frames, six exchanges. New issue: hold continues 11 captures after release and
-reports that step completed; terminal arrives 1121.361052 ms after release. Next wake
-cooperative waits on interruption, check completion, and test single-step holds plus
-receipt attention for completed-with-cause. No speed/token promotion or freeze.
-# Current goal — 2026-09-13 revision 3
-
-Latest verification: [actual X11 interruption cause](../research/live_control/LEASE_CAUSE_X11.md).
-Control_L physically released on focus transfer; terminal carries per-lease cause
-before shutdown. Focus return cannot revive old lease. Fresh same-deadline intent
-completes without inherited cause; close calls returned. Scripted foundation test,
-not full app/model performance. Next explicit app-fixture/transport/index integration
-with candidate owner/executor; old measured defaults unchanged.
-
-Latest candidate: [per-intent interruption evidence](../research/live_control/LEASE_CAUSE.md).
-New lease_cause_v1/executor_v4/input_owner_v10 retain first owner interruption and
-DecisionRequired text without replacing final release. Synthetic threaded probe
-checks same-deadline intent isolation and no stale cause inheritance. Existing
-fixtures unchanged. Next actual private Xvfb focus-transfer/held-input verification;
-owner v10 has only been compiled, not live-qualified. No speed/model claim.
-
-Latest actual use: [compact live interruption/recovery audited](../research/live_control/COMPACT_LIVE.md).
-Nine exact frames, 42 unique/69 received events, six socket exchanges; final SVG
-passes. Initial index surfaced needs_decision; explicit inspected recovery passed.
-91.422 s total, 50.595 s interruption-to-recovery admission includes diagnostics.
-Next inspect newer runtimes for intent-attributed interruption cause before adding
-a version. Tested executor_v3 drops DecisionRequired detail and emits final release.
-
-Latest prototype: [compact report binding v2](../research/live_control/DECISION_RECEIPT_V2.md).
-Own clock/submit/admission/terminal consistency checked; contradictory top-level
-receipts rejected and nested error paths surfaced. Three recorded cases/eight
-identity/state mutations plus nested error pass. Internal consistency only, not
-provenance, full schema validation or input authority. Next fresh known-fixture
-self-use with original image and explicit escalation to details on attention.
-
-Latest actual-use decision: [paged live result audited](../research/live_control/PAGED_LIVE.md).
-Eight exact frames, 31 events, four socket exchanges; saved SVG task passes.
-Seven pages add six CLI calls: 25.582 s capture-to-terminal, 95.544 s to evaluation;
-review/commentary included. Keep full paging for detail/recovery, not normal flow.
-Next compact decision receipt with source identity, explicit coverage, exceptional
-records and unknown-event escalation; validate on retained failures before live use.
-
-Latest implementation: [line-aware pages v2](../research/live_control/REPORT_PAGES_V2.md).
-Observed split-coordinate issue addressed with LF-preferred boundaries and verified
-partial-line flags. At 4096-byte limit the actual report remains six pages, zero
-partial lines, 21,332 wire bytes (v1 21,056). Twelve cases and ten negative controls
-pass; frozen v1 preserved. Next fresh private-task integration with explicit page
-coverage/image inspection, rather than further offline formatting variants.
-
-Latest implementation: [resumable saved-evidence pages](../research/live_control/REPORT_PAGES.md).
-Offline reader preserves UTF-8 source bytes with digest-bound offsets and bounded
-complete JSON lines. Real 17,624-byte overflow report round-trips in 28 pages at
-1024 bytes; 13 negative controls pass. No compression/token/latency or image fix
-claim. Next actual resumed saved-report inspection, then new live allocation.
-
-Latest decision: [eight-episode recovery results](../research/live_control/RECOVERY_RESULTS.md).
-Allocation finished; no reruns. Structural calls B-A [0,-3,0,-3], reads all zero,
-full elapsed median +9.288 s (not causal). All final tasks pass, but pair 4 A's
-black final image defeats complete primary-delivery qualification. Retain explicit
-read-only batching convenience, no speed/token promotion or Research Freeze.
-Next bounded work: offline resumable report pages with exact reconstruction and
-explicit incomplete coverage; image delivery/accounting remain separate open gaps.
-
-Latest execution: [OpenTTD pair 4 both audited](../research/live_control/RECOVERY_PAIR4.md).
-All eight registered episodes executed. B groups four reads in one call; A needs
-four calls. Both guard scores pass; each has seven exact frames/53 events and
-16 exchanges. Full times A 112.397 s, B 65.583 s retain A's image anomaly and
-extra inspection. Next aggregate four pairs, verify paired invariants, and decide
-helper scope without claiming causal speed, token savings or model qualification.
-
-Latest execution: [OpenTTD pair 4 A audited](../research/live_control/RECOVERY_PAIR4.md).
-Seven of eight episodes executed. Four separate recovery reads/calls; seven exact
-frames and 53 events audited; independent guarded score and cleanup pass.
-Sequence-2 saved PNG is nonblack and matches AIT despite intermittent black
-presentation. Retain extra inspection and 112.397 s total, no clean presentation
-or performance claim. Next pair 4 B with unchanged runner; do not rerun A.
-
-Latest paired result: [OpenTTD pair 3 complete](../research/live_control/RECOVERY_PAIR3.md).
-Six of eight episodes executed. A/B both pass guard scoring and require one
-recovery call/read; 14 exact frames and 94 events audited. Initial PNG, steps,
-and runtime manifests match. Full times A 64.668 s / B 317.617 s retain B's
-presentation interruption; no causal speed claim. Next pair 4 depth 3 A then B.
-
-Latest execution: [OpenTTD pair 3 B](../research/live_control/RECOVERY_PAIR3.md).
-Five of eight episodes executed; A pending. One recovery read/call, 47 events and
-7 exact frames audited, independent guarded road score passed, cleanup verified.
-Build output overflow required saved-result/image inspection without input retry.
-Keep full 51.689 s to terminal / 317.617 s to evaluation; presentation failure
-retained, no qualified performance claim. Next pair 3 A with unchanged runner.
-The older chronological entries below describe earlier states, not remaining work.
-
-Latest paired result: [pair 2 complete](../research/live_control/RECOVERY_PAIR2.md).
-A needed four separate recovery calls; B grouped the same four socket reads into
-one call. Both tasks passed, same initial PNG/steps/sources, 18 frames/94 events
-audited. Full times A 92.787 s, B 59.039 s include review/commentary; exact model
-configuration missing, no qualified latency/token gain. 4/8 episodes complete;
-next pair 3 OpenTTD depth 1 B then A. Keep all prior failures and frozen results.
-
-Latest execution: [pair 2 B](../research/live_control/RECOVERY_PAIR2.md) traversed
-three additional historical clocks plus its own clock in four reads within one
-model orchestration. Reviewed move/save passed, nine frames/47 events audited.
-Pair 2 A is pending: same frozen runner, seed 202, four separate recovery calls.
-3/8 episodes executed; no paired effect or model-performance qualification yet.
-
-Latest prospective execution: [recovery pair 1](../research/live_control/RECOVERY_PAIR1.md)
-completed A then B at Inkscape depth 1. Both need one recovery call/read. B's move
-stopped on recorded focus change and required explicit recovery; retain full
-51.799/104.123 s durations. Exact model identity/configuration remains unavailable,
-so model-performance qualification fails. Two of eight episodes executed; next
-pair 2 is Inkscape depth 3, B then A. Do not rerun pair 1 to erase the interruption.
-
-Latest comparison decision: [phase accounting and prospective study](../research/live_control/RECOVERY_COMPARISON.md)
-finds zero recovery-read reduction in the existing actual cohorts. The 10-to-8
-total difference is fully explained by the older malformed save attempt. Keep the
-helper explicit/unpromoted for speed. An eight-episode, two-domain/depth comparison
-is registered but not executed; follow its fixed order and retain all outcomes.
-
-Latest actual use: [live pending-clock recovery](../research/live_control/PENDING_CLOCK_LIVE.md)
-returned history and image in one response; explicit reviewed move/save passed.
-Eight frames/40 unique events verified; one read-only recovery exchange. Total
-capture-to-evaluation 75.753 s, local reader/persistence 20.182 ms; these are not
-paired speed/model-token gains. Next fix comparison conditions before adding
-more local mechanisms, and preserve failure/recovery and domain coverage gates.
-
-Latest implementation: [pending-clock reader](../research/live_control/PENDING_CLOCK.md)
-adds bounded read-only progress to an already-issued clock. Recorded recovery
-reconstructs the intervening history in one read; nine injected controls remain
-unresolved. No commands/retries/continuation approval are generated. New live use
-and model round-trip/latency benefits remain to be tested.
-
-Latest live integration: [sequence mismatch and history assembly](../research/live_control/LIVE_HISTORY.md)
-uses a current cursor with deliberately stale image records. Own clock identity
-matches, sequence mismatch stops before input, and real received-history assembly
-supports a separate observe-only recovery. Three frames/22 records verified; no
-physical input recorded. Scripted readiness, not task/model performance. Next
-bound read-only progress through historical clock boundaries without weakening
-identity or review requirements.
-
-Latest implementation: [bounded received-history assembly](../research/live_control/RECEIVED_HISTORY.md)
-replaces manual concatenation with cursor/overlap checks and complete slice
-metadata retention. Seven actual slices restore exactly; ten negative controls
-reject invalid or unresolved histories. This remains offline review assistance;
-live read-only draining and direct sequence-mismatch validation are outstanding.
-
-Latest recovery evidence: [Inkscape live view](../research/live_control/POINTER_VIEW_RECOVERY.md)
-stopped on a stale historical clock boundary before input. A subsequent malformed
-save-key program was rejected before admission; explicit correction completed the
-legacy move-right task. All 45 unique records and nine frames are audited, with
-both failures retained. Direct sequence-mismatch and automatic bounded recovery
-remain unqualified; do not weaken identity checks to bypass the observed boundary.
-
-Latest follow-up: [live reversible report use](../research/live_control/POINTER_VIEW_LIVE.md)
-completed a new known OpenTTD task with both program views and original images in
-their respective single responses, without observed truncation or image-only
-recovery. Six frames/37 records and original-view restoration pass the audit.
-This is one actual-use integration result, not a paired speed/token qualification.
-Next stress the live presentation/reconciliation boundary and another domain.
-
-Latest evidence: [actual combined OpenTTD response](../research/live_control/POINTER_COMBINED.md)
-passed the guarded task, but the second full report was truncated at the model
-presentation boundary. Recovery read the saved result/image without input retry.
-All 37 records and six frames are audited. A reversible offline report view removes
-exact duplicate receipts while retaining unique evidence. Next, validate this view
-in actual combined result/image use before paired timing/token qualification.
-The full 358.071-second capture-to-evaluation interval remains in the record.
-
-This document incorporates the user's research convergence proposal. It is the
-current working objective for this task and future handoffs. The app's existing
-active goal remains active: the available tool cannot edit its objective text.
-Do not mark that goal complete merely to replace its wording.
-
-## 最終目標
-
-Agent Interfaceを、私自身が実際に使い、画面の変化に応じて普通の人間に
-近い速度・テンポでライブ操作できるインターフェースへ改善する。
-正確性を必須条件とし、同一モデル・課題・環境で、最初の有用なフィードバック、
-意味的完了の把握、待ち時間、操作・観測の往復、回復コストを測る。
-トークン削減は実際のモデル入力・費用で評価し、バイト削減と区別する。
-DOOMは実時間で進む環境への転用とデモの評価対象とし、他のGUIでの正確性を
-代替しない。人間並みの性能・製品完成は比較可能な証拠なしに宣言しない。
-
-## Domain coverageを基準にした直近の優先順位
-
-DOOMを最大・最難関benchmarkとして扱わない。重要なfast continuous motor /
-reactionのstress benchmarkとして残し、Desktop apps、real-time planning /
-multi-object manipulation、dense GUI / long-horizon planning、3D navigation /
-manipulationと直交する一領域に位置づける。
-
-Linux/X11のArchitecture Discoveryに集中する。まずMindustry・OpenTTD・Luantiの
-小さなfeasibility studyで導入・固定scenario・Xvfb・独立採点・reset・資源負荷・
-課題の明確さを比較する。正式採用やcross-domain合格と起動成功を混同しない。
-[Domain Coverage Matrix](../research/benchmark_discovery/README.md)に要求能力、
-現在のshared runtimeで測れた範囲、未検証の能力を分けて記録する。
-
-設計変更は「どの能力軸の不足を解消するか」で選ぶ。DOOMのスコアだけで選ばない。
-候補の追加は評価範囲の改訂として次の比較前に宣言し、過去のfreeze条件を遡って
-書き換えない。Windows/macOS対応のためだけに候補を広げる作業はPhase Cまで待つ。
-画面提示経路の未解決問題と既存の正確性hard gateは継続して扱う。
-
-2026-09-13進捗: 三候補の初期feasibility比較を記録し、OpenTTDの保存済み小課題で
-shared pointer候補による自己操作・独立採点を1回通過した。正式採用・freeze合格には
-数えない。直近はテスト用GUI起動失敗の再現性、対象周辺を含む配置採点、fresh caseと
-desktop回帰、動く画面での有用な観測・入力継続を検証する。次の領域は初期状態を
-固定したMindustry。詳細は[自己操作記録](../research/openttd_task/SELF_USE.md)を参照。
-
-配置採点の追記: 周辺42タイルの道路・所有状態を比較し、旧操作の再生で余分な1タイルを
-検出した。終点を画面で確認した修正後の自己操作は追加条件も通過。これはdevelopment
-caseの改善であり、未知課題での性能や速度改善の証拠にはしない。
-
-## 現在のフェーズと直近の目標
-
-caller game接続追記: 同じv1 caller/adapterでOpenTTD・Mindustryの期限切れ要求拒否、
-実行中Shift hold取消・解放、その後の既知課題のscripted replay採点を通過した。
-初回OpenTTD起動引数不足は入力なしの失敗として保持。22画像と134記録を監査済み。
-次は実自己操作での画像同時提示、live古い観測/途中期限/混雑条件を確認してから対比較へ。
-[接続試験](../research/live_control/POINTER_DOMAINS.md)。
-
-caller統合追記: session_v9を変更せずsocket11で包む候補と、時計問い合わせ＋明示操作を
-1回のcaller起動で扱う候補を実装。Inkscape実操作の保存結果・9観測・39記録を監査した。
-10応答制御例も確認。次はOpenTTD/Mindustry接続とlive取消・期限・古い観測の検証を行い、
-画像同時提示を含めて固定する。速度改善やtoken削減の比較は未実施。
-[候補記録](../research/live_control/POINTER_CALLER.md)。
-
-比較優先順位の追記: 同じsession_v9の実操作3領域を時間分解し、最初の撮影から最後の
-操作terminalまでの95.7–98.6%がaccepted→terminalの外側にあると確認した。推論時間とは
-断定できない。次はbackendを固定したcaller・画像提示経路の共通化と境界検証を先行し、
-新しい対比較で往復・回復込みの全体時間を測る。過去の3例を対比較にはしない。
-[時間分解と比較方針](../research/evolution/POINTER_TIMELINE.md)。
-
-Mindustry建設自己操作追記: live unit・空の経路から共有pointerで6コンベヤーを建設し、
-112タイルのguardと入力終了後の搬送48個を通過した。チタン製の誤選択、Qで建設予定を
-消した失敗からの回復を含む。操作完了まで145.184秒で速度目標は未証明。新しい局所機能を
-増やす前に、この領域をdesktop/OpenTTDと同じ候補比較へ接続し、判断間隔と回復コストを
-残した比較を行う。[建設自己操作](../research/benchmark_discovery/MINDUSTRY_BUILD_SELF_USE.md)。
-
-Mindustry搬送採点追記: engineで作った6状態を実GUIで校正し、正しい6タイルの搬送路は
-銅32個を届け、余分な配置付きの搬送路は31個届いても112タイルのguardで不合格となった。
-欠落・逆向き・部分建設・空状態の搬送は0。エージェント建設成功ではない。次は
-player-readyな空経路から共有pointerで実際に建設し、建設費と搬送の測定区間を分ける。
-[採点校正](../research/benchmark_discovery/MINDUSTRY_FLOW.md)。
-
-Mindustry自己操作追記: 共有session_v9から再開・ユニット出現の画面確認・右移動・
-一時停止を実行した。保存読込直後はunit=nullで、再開後に生成される。次の課題では
-初期状態一致とplayer-readyを別々に確認する。12観測の完全復元と終了後の独立ログを
-監査済み。最初の撮影から最後の操作terminalまで71.837秒で、人間並みの速度は証明していない。
-[自己操作記録](../research/benchmark_discovery/MINDUSTRY_READINESS.md)。
-
-Mindustry追記: 同一保存ファイルを4回の独立GUI起動で読み込み、75,000タイルの
-測定項目・初期銅量・再読込画面の一致を確認した。生成時の画面は着陸演出中で
-一致しないため、課題は保存ファイルの再読込から開始する。次はplayer/input readiness、
-向きの異なる配置と実際の資源搬送を含む小課題の採点校正。全engine状態や再開後の
-決定性は未証明。[記録](../research/benchmark_discovery/MINDUSTRY_RESET.md)。
-
-現在は **Phase A: Architecture Discovery**。新しい局所機能の追加をいったん
-優先から外し、既存研究を収束判断できる状態へ整理する。
-
-1. Evolution Ledgerを整備し、主要revisionの根拠・判断・未測定項目を索引化する。
-   生の実験記録は移動・改変しない。歴史的な未記録項目はゼロとせず欠測にする。
-2. failure taxonomyを固定し、新しい失敗分類、既知分類の再発、回帰を区別する。
-   後付け分類には監査済み範囲を付け、観測例と未検証リスクを混ぜない。
-3. 最新の各機能が別々の試作品で成立している状態から、同じ候補意味論を複数環境で
-   評価できる実験計画へ収束させる。まだ全履歴ファイルを統合・削除しない。
-4. 比較前にbaseline・候補・正確性ゲート・主要指標・評価量を固定する。
-   同じモデル、課題、環境、出力上限を揃え、順序効果を扱う。
-5. failure discovery、regression、architecture churnの収束に加え、合理的な候補と
-   実測した組み合わせがPareto frontierを意味のある量だけ改善できなくなったかを
-   審査する。cross-domain correctnessをhard gateとし、単独効果の縮小は補助指標にする。
-   単発10%はpromotionの強い目安であり、Research Freezeの終了条件にはしない。
-
-直近のコンパクト表示への機能追加より、ledger・分類監査・共通評価計画を先に行う。
-重要イベント保持は未解決のcritical-event lossとして候補に残すが、追加実装を
-自動的な次の仕事にはしない。
-
-## 実験の採択と目標更新
-
-新案は次のいずれかに明確に結び付く場合に採択する：未解決の失敗分類、
-core architectureの不確実性、主要指標の意味ある改善、異なる領域への一般化検証。
-該当しなければDEFERする。改善値が大きい指標を結果の後で選ばない。
-
-主要な失敗・回帰・実測・ユーザーの方向修正が次の優先順位や終了条件を変える場合、
-この文書、ledger、handoffを更新する。最終目的を狭めたり、達成基準を既存結果に
-合わせて緩めたりしない。変更理由と証拠を記録し、通常の方針更新で再承認を求めない。
-
-## フェーズの終了を区別する
-
-- Research Freeze: architecture discoveryの区切り。製品完成ではない。
-- Phase B: Runtime Consolidation。意味論・共通評価をまとめ、Protocol Freezeを審査。
-- Phase C: Windows/macOS backendとcross-platform validation。
-- Phase D: Production stabilization、性能・配布・デモの仕上げ。
-
-Phase A終了だけで最終目標をcompleteにしない。移植開始にはOS非依存の意味論と
-X11固有部分の分離、入力権限・期限・解放・フォーカス・観測/イベント・stale action・
-入力命令体系・planner/runtime境界の安定を要する。
-
-## Change log
-
-- 2026-09-14 r6: explicit point/motion contractの最初のOpenTTD移植では、frame/
-  motion意味論は2/2正しい一方、密な無記名toolbarのsemantic groundingは0/2。
-  runtimeは誤ったiconを正確に追跡し、local conditionが後続mutationを停止した。
-  失敗pairを固定し、次の局所目標をfull-frame直接指定から、固定候補に対する
-  bounded delayed-hover label evidenceへ更新。Domain Coverage Matrix、独立採点、
-  human-tempo最終目標とfreeze未達は維持する。
-
-- 2026-09-13 r3: ユーザーのDomain Coverage Matrix提案を採用。DOOM中心の
-  次段階から、Linuxでの直交benchmark候補のfeasibilityを直近の優先に変更。
-  正式採用・freeze qualificationは未達のまま維持する。
-
-- 2026-09-13 r2: Research Freeze Criteria Revision Proposalを採用。
-  単独候補の採用判断と研究終了判断を分離。小さく再現可能な改善を保持し、
-  組み合わせ効果・相互作用・複雑性・移植コストを含めて残る改善余地を実測する。
-  組み合わせの未測定を収束と扱わない。現在もfreeze未達、最終目標は継続。
-
-- 2026-09-13 r1: ユーザーのConvergence / Freeze Proposalを採用。
-  終了条件のない局所改善ループから、収束記録と段階的freezeを伴う研究へ変更。
-  現時点ではfreeze未達。新規意味論・観測漏れ・未測定のモデル性能が残る。
-
-See [freeze criteria](../research/evolution/freeze_criteria.md),
-[ledger](../research/evolution/evolution.csv), and
-[original proposal](../research/evolution/source_proposal.md).
-
-2026-09-13 Issue #4/#5 refinement: optimize the capability a planner can express
-through observation, action and feedback, preserving universal GUI fallback.
-Observation-bound visual addressing, selectable presentation, deterministic effect
-feedback and bounded continuation are isolated research candidates, not a bundled
-new requirement or evidence of performance. Evaluate correctness, application
-effect, planner boundaries and cost on fresh cases across the Domain Coverage
-Matrix. See the latest [handoff](LOCAL_RESEARCH_HANDOFF.md) and
-[guided pointer evidence](../research/live_control/GUIDED_POINTER.md).
-
-2026-09-13 Issue #6–#10 refinement: consider reactive local macros, optional
-multi-view/composite presentation and ephemeral learned accelerators as isolated
-comparison arms. Preserve independent scoring, original authority and plain GUI
-fallback. Measure observable planner absence and distinguish planner/tool latency,
-architectural latency and Python research overhead. Rust/native probes require
-stable contracts and measured relevance; formal methods target narrow invariants.
-These refinements do not change cross-domain correctness or freeze requirements.
-
-- 2026-09-14 r4: OpenTTDのchanged-objective実測により、次の局所目標を
-  「画像を増やす」から「未確認の意味的効果を次mutationへ持ち越さず、
-  task stateを変えないview recoveryを使えること」へ更新。5-tile L課題では
-  full+action cropがfull単独より判断を改善せず526 input tokens増加したため不採用。
-  observed/contradicted/uncertain checkpointはfalse verifyと第2mutationを防いだが、
-  11 turns/182,284 input tokensでsafe stopし未完了。公式に定義されたCtrl+2 tree
-  transparencyは0-model実測で道路・owner・saveを保ちつつ視認性を改善した。
-  次はtyped view methodとしてcheckpoint回復へ統合し、同一seed/model/taskで
-  task correctness、model boundaries、feedback、tokens、repair costを比較する。
-  これはOpenTTD固有optimizer候補であり、universal fallback・Domain Coverage
-  Matrix・human-tempo最終目標・freeze未達の判定は維持する。
-
-- 2026-09-14 r5: typed tree-transparencyを同一seed/model/taskへ統合。Astraは
-  turn 6/8/10でtoggleを反復し、追加task mutationなしでturn 12にsafe stop。
-  taskは未完了、198,746 input tokensであり効率改善なし。0-model校正では
-  v2のy=-16が912..915へ誤配置する一方、y=-12..+4はすべて977..979へ正しく
-  建設し、tool選択を別programへ分けた即時/15秒境界も同じ効果を保持した。
-  よって次の局所目標を、toggle公開から「既知view stateに基づく一方向の
-  pre-action postcondition」へ更新。`ensure_trees_transparent`を一度だけ許可し、
-  repeat/unknown stateを拒否するschema probeはcross-OSで通過。次は一般的な
-  view-state検出を混同せず、固定fixtureでpre-action適用のcorrectness/costを
-  新規割当比較する。全体目標とfreeze未達は維持する。
-Latest active-grounding result: one Luna-low planner proposes a coarse OpenTTD
-toolbar target, receives live persistent hover evidence through Agent Interface,
-and selects the evidence-bound point itself. The first preregistered three-point
-pair is retained failed: self-reported `visually_unambiguous` confidence omits
-company finances and the independent oracle remains false. V2 detects30 repeated
-toolbar slots from source pixels, takes a fixed five-slot neighborhood around the
-model anchor, and probes it in bounded3+2 batches. Its association fault refuses
-before the second model call and target input; stable selects/rehovers `[485,51]`,
-opens finances and passes the independent exact-title oracle. Inputs are9,296 and
-10,178 tokens, hover batches6.400s, and decision-to-evaluation33.920s. The126
-v1/v2 frames audit Windows/WSL. Subagents are outside the evaluated operation:
-token improvement must come from the same planner model's interface, observation
-and local execution, not shifting context to another agent. Change layout/domain
-next, then reduce serial probe cost without removing evidence. See
-research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
-
-- 2026-09-14 r7: verified hover evidenceのtoken圧縮を、subagentを判断経路へ
-  挟まず、同じLuna-lowが読む観測表現として実測。既存source+5 stripsと、
-  tooltip pixels/receipt/pointだけのcompact sheetを同一prompt/schemaでABBA比較し、
-  両条件2/2正答。full10,170対compact8,274 input tokens、平均1,896/18.64%削減。
-  Windows/WSL監査はRGB再構築、4 raw model turns、binding、usageを確認した。
-  次の局所目標は同じreceipt contractをlayout/application変更へ移植し、正答保持を
-  再検証すること。dynamic latency、general GUI、人間速度、freezeは未達のまま。
-
-- 2026-09-14 r8: fresh X11 surfaceを実際に`[21,28]`移動してから、同じ
-  Luna-lowがcoarse pointとcompact receiptを選ぶlive transferを実施。固定y=40を
-  廃止した画面全行slot detectorはtoolbar row68/30 slotsを154.287msで導出。
-  model `[506,79]`、receipt3、exact rehover、released click、移動後独立finance
-  oracleが成功し、50 framesをWindows/WSL監査。inputs9,294+8,277、5 hoverは
-  6.199s、decision-to-evaluation29.639s。次はanchor 1件を先に検証し、意味不一致
-  の場合だけ近傍展開する段階取得を、過去のconfidently-wrong anchorを含めて比較。
-  resize/reflow、未知app、人間速度、freezeは未達。
-
-- 2026-09-14 r9: anchor-first persistent evidenceを追加。固定ABBAで、finance
-  anchorは`target_reference` 2/2、過去の`visually_unambiguous`誤anchorは
-  `expand_search` 2/2。fresh translated liveではmodel `[505,79]`をslot
-  `[506,79]`へ正規化し、1 receiptだけでexact rehover/click/oracle成功。
-  initial hover6,198.997->1,283.273ms、durable calls16->14、frames50->39。
-  sequential total29.639->25.964sはmodel wait差を含むため因果claimなし。
-  次の局所目標は、入力を許可せず誤anchorからlive expansionを実行し、5 receipts
-  後に独立完了まで回復すること。人間速度・unknown app・freezeは未達。
-
-- 2026-09-14 r10: 誤anchor回復をpreregistered fault injectionとして実機化。
-  過去の誤点`[436,51]`を観測surface delta`[21,28]`で移し、検出slot
-  `[456,79]`へ正規化。1 receiptで同じLuna-lowが`EXPANSION_REQUIRED`を返し、
-  clickを許可せず4近傍を追加、5 receiptsから`[506,79]`を選択。exact rehover、
-  唯一のbutton-down、release、移動後finance oracleが成功。18 durable calls、
-  50 frames、inputs8,107+8,280、decision-to-evaluation24.956sをWindows/WSL監査。
-  v1のWindows/WSL path preflight失敗も未上書きで保存。これは自然誤り率や速度
-  比較ではない。次の局所目標は、同じ段階取得を別GUI domain/layoutへ移し、
-  正答・初回feedback・展開cost・tokensを測ること。人間速度・freezeは未達。
-
-- 2026-09-14 r11: anchor-first evidenceをMindustryの4x4建築paletteへ移植。
-  model-free hoverでConveyor意味panelの永続性を確認後、formal v1はOpenTTD由来の
-  固定62px evidence rowが314x100 cropを拒否し、2nd model/click前に失敗。20 events、
-  0 button-down、cleanupを保存。共有`compact_hover_sheet_v2`は小さいOpenTTD画像を
-  RGB同一に保ち、Mindustryではscale1/row104へ適応。formal v2でLuna-low粗点
-  `[1004,578]`をscreen-derived `[1007,577]`へ正規化し、1 receiptをaccept、唯一の
-  button-downでConveyor選択。hover useful image466.619ms、reply909.187ms、semantic
-  selection20.771s、oracle23.538s、inputs9,300+8,115、6 exchanges/15 frames。
-  Windows/WSL監査。次はpalette意味証拠とworld target証拠を分離したchanged-geometry
-  1-tile placement。人間速度・broad reliability・freezeは未達。
-
-- 2026-09-14 r12: Mindustryでpalette controlとworld targetを別receiptとして結び、
-  以前の8-tile route外 `(137,52)` にnorth-facing Conveyorを1個だけ配置。formal
-  v1は冗長point/pointsのschema-validator不一致、v2はcandidate `oneOf`非対応、v3は
-  world receipt `oneOf`非対応、v4はproperty type欠落で停止し、全失敗と0 placementを
-  保存。v5はflat typed schema、48px bounded palette binding、animated previewのstable
-  change-mask receiptを使用。Luna-low4 calls、inputs34,967(cached subset4,864)、14 socket
-  exchanges、33 exact frames、2 button-down。独立scoreはtarget block/team/rotation、
-  copper -1、112-tile guard、source/core、paused idleを検証。world useful feedback
-  457.934ms、placement image270.075ms、semantic bind46.467s、completion53.463s。
-  Windows/WSL監査。Issue #54をschema preflight用に追加。次はpreflight実装後、positive/
-  no-match/ambiguousの有限matched block。人間速度・reliability rate・freezeは未達。
-
-- 2026-09-14 r13: 実endpointと同じCLI output-schema経路をGUI開始前に呼ぶ
-  `schema_preflight_v1`を実装し、5 fresh requests+1 cache reuseをpreregistered実測。
-  保持済みのcandidate `oneOf`とproperty type欠落をcompleted turn/usageなしで拒否し、
-  修正版3 schemaは成功。fresh compatible callsはinputs23,674/output240/reasoning81。
-  同一schema/model/runner/instructions/CLI/Node/request-shape keyの再利用はmodel callなし。
-  Windows/WSL監査、GUI artifact 0。server revisionは独立識別できず、live runnerへの
-  authority-before-acquisition統合も未完了なのでIssue #54は継続。次はこのgateを新しい
-  Mindustry runnerへ接続し、positive/no-match/ambiguousの有限matched blockを行う。
-  token削減・endpoint恒久互換・人間速度・freezeは未達。
-
-- 2026-09-14 r14: 未検査だったMindustry world-receipt v1の`oneOf`も別の
-  preregistered no-GUI blockで実endpoint拒否を確認。3,625.993ms、completed turn 0、
-  usageなし。修正版candidate/anchor/worldの3 schemaはhash固定cacheから全件通過し、
-  fresh call 0。`schema_preflight_gate_v1`は全件`ENDPOINT_COMPATIBLE`以外ではcallerへ
-  戻らず、Mindustry v6 wrapperはこのgateを履歴v5 GUI continuationの前に配置。
-  実cacheの順序テストはrefusal時continuation 0、accept時1を確認。Windows/WSL監査。
-  次は同wrapperでpositive/no-match/ambiguousを実GUI実行し、分岐別button admission、
-  calls、feedback、tokens、independent scoreを比較する。live efficacy・人間速度・freezeは未達。
-
-- 2026-09-14 r15: schema gateを最初のGUIより前に通し、同一Linux/X11 fixture・
-  Luna-low・palette path・authority/scorerでpositive/no-match/unreadableを順次実行。
-  positiveは4 calls/35,017 input/14 exchanges/33 frames/51.761sで独立成功。
-  viewport外no-matchは3 calls/26,689 input/6 exchanges/14 frames/31.239s、world hover/
-  placementなし。unreadable faultは4 calls/35,025 input/8 exchanges/23 frames/42.144s、
-  `unreadable_evidence`でplacementなし。両negativeはguard/copperを保全。ただしno-match
-  reasonが事前条件`no_candidate/no_match`ではなく`ambiguous`だったためformal blockは
-  false、再試行なし。Windows/WSLで70 frames、11 turns、28 exchangesを監査。次は同じ
-  authorityを持つnegative reasonをoperational classへ畳む案とreason精度指標を分離して
-  新しいcaseで評価。token削減・自然誤り率・人間速度・freezeは未達。
-
-- 2026-09-14 r16: Issue #52向けにreceipt意味判断と入力権限を分離するflat contract
-  v2を追加。positiveはverified receipt 1件を`TARGET_REFERENCE_ONLY`として返し、
-  no-match/ambiguous/unavailable/budget-exhaustedはreceipt 0・empty pointsの
-  `NO_TARGET_AUTHORITY`へ正規化しつつdiagnosticを保持。保持済みOpenTTD 5 receipts、
-  Mindustry 3 outcomes、座標混入等4 invalid controlsが通過。新schemaの実endpoint
-  preflightは7,232.759ms、input7,916/output107/reasoning48、GUI artifacts 0。
-  Windows/WSL監査。次は新しいOpenTTD receipt setでpositive/no-matchをfresh live実行し、
-  target button 0、task outcome、診断精度、calls/tokens/elapsedを別々に測る。
-  live efficacy・token削減・人間速度・freezeは未達。
-
-- 2026-09-14 r17: 新contractをfresh OpenTTD positive/no-match pairへ統合。formal v1は
-  anchor promptからtarget nounを落とした設計ミスでwrong receiptをacceptし、8,112 input/
-  8 calls/29 frames/button 0で停止、保存。v2はtargetを両判断境界へ戻し、同じseed991004、
-  `[21,28]` translation、wrong anchor、5 receipts、Luna-lowで実行。positiveはreceipt5
-  `[506,79]`、1 target button、finance oracle成功、18 calls/52 frames/16,489 input/26.774s。
-  no-match Airportは`NO_TARGET_AUTHORITY/no_match_in_observed_set`、pointなし/button 0、
-  12 calls/41 frames/16,503 input/18.694s。Windows/WSL監査、retry/subagent 0。
-  Issue #52のbranch mechanicsはMindustry candidate/receipt negativesと合わせて満たす。
-  自然誤り率・token削減・人間速度・freezeは未達。次は主要な残存failure taxonomyと
-  Domain Coverage Matrixを再監査し、局所contract追加より高い未解決軸を選ぶ。
-
-- 2026-09-14 r18: Issue #55向けに、model判断後のfresh observationでreceipt依存
-  pixelsを局所再検証してからtarget inputへ進むauthorityを追加。no-GUIでは変更、履歴
-  欠落、clock-only、stale、focus、resizeを拒否。Mindustry formal liveのunchangedは
-  Conveyor 1個を独立成功、palette変更/world変更/focus変更は対象入力を拒否。全体12
-  calls、115,443 input、44 exchanges、75 frames、retry/subagent 0。focus faultは安全に
-  `NO_TARGET_AUTHORITY`だったが、事前登録`current_evidence_unavailable`に対し実測は
-  `focus_or_surface_changed`のためformal falseを保持。次はtruly unavailable bindingと
-  live resizeを実行し、OS input raceを狭める。人間速度・一般性・freezeは未達。
-
-- 2026-09-14 r19: #55で残ったlive unavailable bindingとresizeを同じchecked-click
-  pathで実行。X11 InputOnly focusはfresh `pointer_binding:null`、
-  EWMH unmaximize+width変更はfresh `surface_size_changed`を生成し、両条件とも
-  authority/point/button-down 0、focus/geometry復元。formal v3は4 calls、
-  34,806 input、20 exchanges、15 framesでWindows/WSL監査合格。v1 path bug、
-  v2 empty-workspace bug、fault-control v1/v2失敗も保持。#55の有限branch要件は満たした。
-  次は#53の共通callerへcold acquire/warm reuse/invalidate/repairと全attempt accountingを
-  統合し、4逐次model境界と約31-39s model waitを削減候補として比較する。
-  自然fault率・OS atomicity・人間速度・freezeは未達。
-
-- 2026-09-14 r20: #53のoffline-first共通callerを追加。cold acquire、warm reuse、
-  invalidate/repair、no-match/exhaustion、stale/association、model failureを同じ関数で
-  分岐。attemptをmodel adapter前にjournalし、completed calls、field別usage coverage、
-  missing、duplicate ID、omitted stage、comparison classを分離。保持済みOpenTTD usageを
-  用いた15 scenariosはWindows/WSL監査合格。cold anchor 2 calls/17,386 input、
-  full expansion 3/25,675、injected subpath 2/16,387。warm 0とrepair 1/8,280は
-  test-double mechanicsであり削減claimなし。次はこの同一callerを実OpenTTDの有限
-  accepted/expanded/no-match/stale blockへ接続し、その後Mindustry layoutへ移植する。
-  live efficacy・causal latency/token benefit・portability・人間速度・freezeは未達。
-
-- 2026-09-14 r21: 新規Issue #56を確認し、次の中心課題を#53のlive分岐単体から
-  shared callerを用いたcompiled GUI interface統合実験へ更新。一度groundしたtarget、
-  state predicate、guarded action、effect/invalidation ruleをbounded symbol tableとして保持し、
-  fresh local observationに応じた最低2回のobserve/action遷移をfrontier-model再開なしで
-  実行できるかを検証する。symbolはauthorityを持たず、各side effectは#55のfreshness/
-  target admissionと独立effect verificationを通す。まず既存の独立score可能なdesktop
-  fixtureでplain/current-optimized/compiledのcold、warm、invalidation、repairを同じmodel/
-  settings/callerで有限比較し、全attempt tokens、planner boundaries、images、wall/local time、
-  correctness、fallbackを記録。その後Mindustryで別domainを確認する。#53はこのlive会計と
-  cross-domain完了まで継続。効率利得、break-even、人間速度・freezeは未測定・未達。
-
-- 2026-09-14 r22: #56のdeterministic local continuation境界を実装。bounded symbol/
-  predicate/action/state graphが各action前にfresh admissionを要求し、explicit effectを
-  次の観測で照合。Calc-shaped positiveはSave後のfresh dialog evidenceでConfirmを選び、
-  2 observe/action transitions、3 observations、frontier-model再開0、release 2/2。
-  unknown/ambiguous/stale/association/no-progress/effect/cancel/budget/delivery/release等12
-  controlと#53 cold/warm統合を含む15 scenariosがWindows/WSL監査合格。初回auditの
-  cancellation count誤りは保持。raw evidence retentionはadapter側未検証であり、GUI/
-  model/token/latency/break-even claimなし。次は既存desktop fixtureでpositiveとchanged/
-  unknownの有限live mechanics pairを事前登録し、成功後のみA/B/C cold/warm比較へ進む。
-- 2026-09-14 r23: #56 compiled interfaceをprivate Chromiumのfresh positive/changed
-  pairへ統合。v1 batch mint拒否、v2 flat field patch拒否、v3 read-check status mismatch、
-  v4 outer reason collapseを全て保持。v5 seed991025はpositiveで2 actions/3 local
-  observations/frontier resumptions 0、独立POST `t991025`成功。feedback 773.005/
-  568.488ms、first-action→semantic completion 1.855s。changedはenter後about:blankを
-  観測しSubmit 0でSAFE_YIELD。caller v2がunknown_state/completed_actions=1/
-  confirmed_partialを外側へ保持。fresh 2 calls/18,792 input、Windows/WSL監査合格。
-  1 pairのみでrate/速度/token削減/break-even/人間速度claimなし。次は同一条件の
-  plain/current-optimized/compiled matched efficiency blockを事前登録する。v5のopaque
-  session_scope文字列はseed991024のまま残ったが、case別process/registryでreuseなし。
-  凍結sourceは変更せず、次runnerでlabelを修正する。
-
-- 2026-09-14 r24: Issue #57の三方式統合比較を完了。正式前のzero-model composed
-  probe-01は18 GUI taskを実行できたが、submission historyがfinish時に公開されることを
-  task直後と誤認して全件0集計となり失敗保存。finish後task ID照合へ限定修正したprobe-02は
-  plain/ephemeral/persistent各6/6 exact、persistent task-4 old handle `MISSING`、旧target
-  pointer 0、synthetic grounding 14でprotocol RETAIN。これを含む29 source hash、seed991028、
-  arm順、fresh schema cost、no-retryを事前登録後、同一Luna-low/X11でformal live-01を一度実行。
-  3方式とも6/6 exact、release確認、persistent repair成功。preflight込みtask-6 inputは
-  63,128/63,779/26,563、generations 7/7/3、break-even task2。6-task elapsedは
-  56.412/73.238/44.131s、画像model waitは41.318/48.742/15.460s、クリックfeedback medianは
-  99.944/99.299/99.250ms。17 actual callsの総input153,470、全ID一意、Windows/WSL監査合格。
-  この固定1 sequenceではpersistentをRETAINするが、一般的token削減・成功率・人間速度は未証明。
-  次は通常進行を止めないFreedoom MAP01の有限clear attemptを事前登録し実行する。
-contract before another frozen hero attempt; keep the desktop golden demo and
-
-</details>
+#57 effect-receipt handoff suite reran 60/60 normal and 60/60 optimized on main 7e9caab2. This is synthetic identity/timing/comparison validation only; live provider usage, repeated reliability, and matched integrated efficiency remain open; R41 supplies one scoped recovered-task pass. See [current-main recheck](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_handoff_current_main_recheck_20261123/RESULT.md).
+
+**Research Preview WSL package R02 (2026-11-23; current main `c5fc0ee0`):** A complete persistent Ubuntu WSL checkout builds the bundle successfully: 29/29 frozen-source hashes match; builder tests 6/6; 22,647 members; checkout/archive static preflight pass; bundle SHA-256 `5850fc0581a47570b542d74198450227da75e010022365f52bc496c17a1b7006`; extracted `audit-retained` passes `RETAIN`. No dependency install, doctor, fresh Golden run or `audit-live`; #58 remains open. This supersedes the earlier sparse/Windows environment diagnosis without erasing it. See [R02](../research/integration/research_preview_current_main_wsl_build_r02_20261123/RESULT.md).
+
+**Research Preview WSL supported-host diagnostic R03/R04 (2026-11-23; frozen source `c5fc0ee0`):** The preserved R02 first acceptance run passed static preflight and stopped at the explicit dependency-install opt-in (setup exit 2; no `.venv`). Default system-Python doctor passed 8/15. R04 found existing Windows Chrome `157.0.8103.79`; a one-process WSL path override raised the file-presence check to 9/15, but did not launch the browser or validate control. Four Python modules and Windows Codex CLI JS remain missing; no dependency or runtime was installed. #58 stays open. See [R03](../research/integration/research_preview_current_main_supported_host_r03_20261123/RESULT.md) and [R04](../research/integration/research_preview_current_main_supported_host_r04_20261123/RESULT.md).
+
+**Research Preview Windows builder R01 (current main `39cbd0d2`):** Builder unit tests pass 6/6, but no archive was produced. A sparse Windows checkout initially materialized 26/29 frozen source mirrors with CRLF; exact main blobs reconciled all 29 hashes. The subsequent build correctly stopped because this sparse checkout omits 22 selected tracked files. No dependencies or live acceptance were run. Prior WSL R06 remains scoped to its recorded host/source. See [R01 diagnosis](../research/integration/research_preview_windows_builder_current_main_r01_20261123/RESULT.md).
+
+**Current-main Linux MCP contract R02 (2026-11-23; base `a9bb375a`):** Test-only async notification change passed the formerly failing combined Docker `-O` suite: 87/87 in normal and `-O`, plus the focused case 1/1 each; two-second waits unchanged. R01 combined optimized failure remains preserved. No production runtime code or live-control gate changed. See [R02](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261123/RESULT.md).
+
+**Issue #57 current-main public MCP/Calc composition R03 (2026-11-23; main `066d70435fe19d0dc2690bc01a114e0912b20f87`):** The frozen Fake App Server → public MCP → Calc profile/FODS-score selector passed 1/1 on Windows CPython 3.11.9 in normal and `-O` modes. The first import setup failures are preserved; the corrected `PYTHONPATH` affected only test-module discovery. This is synthetic composition evidence, not live-provider/task-success or recovery reliability. The offline three-arm R06 source hashes still match current main, so it was not rerun. See [R03](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_mcp_calc_composition_r03_20261123/RESULT.md).
+
+**Native Win32 expiry/recovery R24-R27 (2026-11-23; source main `490d7bcb`):** R25 is a stopped/mixed cohort (one recovered dispatch, one pre-dispatch foreground failure, third trial not run). R26 is one activated reproduction. R27 is a separate three-attempt activated cohort; all three exact HWND/PID foreground checks, delayed factual fixture effects, and separate one-shot recoveries passed, while original post-expiry actions remained UNKNOWN and replay-denied. This is scoped mechanics, not eligible task success or a general reliability estimate. R24-R27 evidence merged in [PR #10473](https://github.com/Unjuno/agent-interface/pull/10473); #57 remains open. The local host search found no GZDoom executable in the searched Windows program/Codex roots or Ubuntu WSL standard binary locations and no WAD under the Codex workspace, so #59 live threat exposure/MAP01 did not run and no runtime was installed or downloaded.
+
+**Issue #57 evidence/composition audit (2026-11-23; worktree based on main `490d7bcb`):** The historical frozen-source three-arm `integrated-efficiency-live-01` is a real scoped positive result: all arms completed 6/6 exact tasks; persistent was 21.8% faster than plain and 39.7% faster than ephemeral, used 57.9%/58.4% fewer input tokens, and reached input-token break-even at task 2. It is one older-source allocation, so it does not satisfy the current-main repetition/standard-caller goal. A separate Golden Desktop v1/v3 same-seed pair showed v3 20.5% less elapsed time but 5.1% more input tokens; that is a sequential App Server/CLI-route comparison. Calc G10's two saved effects and local OCR timing remain a narrow positive control; primary provider usage is UNKNOWN and the historical raw record cannot be admitted as a complete current comparison arm. R01 now proves a synthetic failed-provider/usage join into the durable Calc ledger, but not the complete three-arm prospective run or a real provider. R02 now confirms incomplete success-shaped, failed, deferred and unknown-usage envelopes are retained but all remain HOLD when telemetry and registered custody are absent (2/2 normal and `-O`). This does not test authentic v3 results. R03 now joins one synthetic failed App Server attempt, including usage, through v3 into a registered ProspectiveRun custodian (3/3 normal and `-O`); audit passes while projection and incomplete run remain HOLD. R04 additionally verifies synthetic known-usage deferral and usage-unknown failure through registered custody (4/4 normal and `-O`); deferred was caller-level synthetic. Next, join valid success/effect, then all three arms, before considering a live allocation. Do not replay G10 or repeat the late fixture experiment. See [crosswalk](maintenance/issue57-calc-evidence-bridge-audit-20261123.md), [frozen three-arm packet](../research/live_control/results/integrated-efficiency-live-01/report.json), and [Golden v3 scope](../runtime/GOLDEN_DESKTOP_DEMO_V3.md); #57 stays open.
+
+**Issue #57 complete offline ProspectiveRun three-arm composition R06 (2026-11-23):** All 18 frozen assignments received registered durable custody and projected successfully; the exact historical discovery/preflight contract passed the frozen evaluator (`RETAIN`). Normal and `-O` module runs pass 6/6. The token/time counts are deliberately synthetic inputs; no provider, GUI or dispatch occurred. See [R06](../research/integration/issue57_v3_durable_appserver_full_trace_r06_20261123/RESULT.md). This makes the offline composition path executable, not the live efficiency gate.
+
+**Issue #57 ProspectiveRun success/effect projection R05 (2026-11-23):** One synthetic completed caller result, execution receipt, independent exact-effect score and verified release telemetry passed registered custody audit and frozen-v1 task projection (`projected`). The 17 other assignments remain missing, so finalization is HOLD; dispatch is disabled. The full focused module passes 5/5 normally and under `-O`. See [R05](../research/integration/issue57_v3_durable_appserver_prospective_success_r05_20261123/RESULT.md). This is synthetic success-path evidence, not a live provider or GUI result.
+
+**Issue #57 ProspectiveRun deferred/unknown-usage join R04 (2026-11-23):** Synthetic `DEFERRED_UPSTREAM` with known usage and `FAILED_UPSTREAM` with usage UNKNOWN both survive the v3 caller into registered custody; audits pass while projection remains HOLD. The complete module passes 4/4 in normal and `-O`. The deferred status came from a synthetic caller-level failure, not a live provider. See [R04](../research/integration/issue57_v3_durable_appserver_prospective_run_r04_20261123/RESULT.md). R05 now validates one synthetic successful task/effect projection with audited execution and effect receipts (5/5 normal and `-O`); the rest of the 18-assignment run remains HOLD. R06 now completes the offline 18-assignment three-arm path: 18 custodians audited, all rows projected, frozen evaluator reaches `RETAIN`, and dispatch remains disabled (6/6 normal and `-O`). The apparent efficiency numbers are fabricated fixtures only. Next verify a fresh exclusive live allocation and real provider/accounting/task/release/recovery/cleanup joins before dispatch.
+
+**Issue #57 ProspectiveRun durable failed-attempt join R03 (2026-11-23):** The synthetic App Server failure and usage now reach a registered prospective task custodian. Custody audit succeeds with exact turn/thread identity and usage; the task projection stays HOLD because v1 cannot represent a failed attempt, and finalization stays HOLD with 17 assignments missing. The three transport/composition tests pass 3/3 normally and under `-O`. This does not invoke a provider or prove task success/effect. See [R03](../research/integration/issue57_v3_durable_appserver_prospective_run_r03_20261123/RESULT.md). Next: join authentic success, deferred and unknown-usage v3 outputs into custody.
+
+**Issue #57 synthetic durable provider join R01 (2026-11-23):** Added a fixed synthetic App Server transport case that flows a failed grounding answer and observed token usage through the persistent grounding adapter, v3 caller and durable Calc allocation auditor. The two transport tests pass 2/2 normally and 2/2 under `-O` on Windows CPython 3.13.14. This proves local failure/usage retention only; the fake peer did not invoke a real provider, and the three-arm `ProspectiveRun` still has dispatch disabled. Conditions/raw output/hashes: [R01 packet](../research/integration/issue57_v3_durable_appserver_composition_r01_20261123/RESULT.md). Next, use authentic v3 success/failure/deferred/unknown-usage outputs with registered durable custody; R02 only proved incomplete envelopes remain HOLD.
+
+**Post-merge Fake lifecycle R23 (2026-11-23; main `1bf4d236`):** Ten fresh public-caller recovery/task-oracle attempts passed (5/5 normal, 5/5 `-O`) with exact Fake callback receipts and short per-attempt C: TEMP roots. This is a local synthetic repeatability result only; it does not close real task effect, native recovery reliability, MAP01, or efficiency. See [R23](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r23_20261123/RESULT.md). Next: fresh independently scored native task-effect/recovery evidence through the standard caller.
+
+**Final observer scope correction R21/R22 (2026-11-23):** CI exposed a compatibility regression because the initial candidate bound ordinary one-shot observer calls as well. The final code binds only supervised-win32 and preserves ordinary lookup. R21's deep TEMP path failed one portable child launch; with short C: TEMP, R22 passed both complete MCP modules (94/94 normal and `-O`). See [R21](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_scope_correction_r21_20261123/RESULT.md) and [R22](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_scope_corrected_combined_r22_20261123/RESULT.md).
+
+**Observer-binding candidate R14/R15/R16 (2026-11-23):** Focused R14 and R15 each pass 1/1 normal and `-O`; the full module R16 fails in both modes (normal 12 errors; optimized 12 failures + 16 errors). Retain the broad-run interference as evidence, not a pass. See [R16 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_r16_20261123/RESULT.md). Next isolate each affected case/process and determine temp-file/worker contention before a new reliability run.
+
+**Isolated regression follow-up R17 (2026-11-23):** Three representative tests were run in six fresh processes with unique temporary roots; all six passed in normal and `-O`. This shows selected failures do not reproduce in isolation but does not rescue the failed full R16 suite. Preserve both packets and resume the standard-caller recovery/effect gate after isolating broad-run interference. See [R17](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_isolated_r17_20261123/RESULT.md).
+
+**Grouped regression follow-up R18 (2026-11-23):** Three recovery/public-caller cases that failed during R16 passed together in one process per mode (3/3 normal and `-O`). This narrows but does not resolve the full-suite interference question. Preserve R16's failure; next proceed on the independent standard-caller recovery/effect gate. See [R18](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_grouped_r18_20261123/RESULT.md).
+
+**TEMP-volume comparison and full-suite qualification R19/R20 (2026-11-23):** The R18 three-test group failed slowly with cleanup errors on `D:\CodexData\Temp` (59.060 s normal, 168.923 s `-O`), while the full 63-test module passed on dedicated C: TEMP (116.525 s normal, 118.401 s `-O`). This qualifies the observer-binding candidate's local suite under the C: environment and makes D: temp behavior the leading explanation for R16, without proving its OS-level cause. Keep R16/R19 failures. See [R19](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_temp_volume_r19_20261123/RESULT.md) and [R20](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_ssd_r20_20261123/RESULT.md).
+
+**Issue #57 public recovery eligibility controls R02 (2026-11-23; candidate from main `10680fe597678649c3de8a18a490462f4291edaf`):** The exact recovered-operation, target-generation, release, and horizon gate is isolated and tested with mismatch controls. The table-driven gate plus public positive, unknown-custody, and completed-action regressions pass 4/4 normally and under `-O`. Fake/local evidence only; no reliability or live-effect claim. See [R02](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_negative_controls_r02_20261123/RESULT.md). Next: fresh independent recovery lifecycles with delayed-operation and held-input evidence.
+
+**Issue #57 public recovered-caller composition R01 (2026-11-23; merged as PR #10467, main `10680fe597678649c3de8a18a490462f4291edaf`):** The public MCP compiled caller may receive a separate task-oracle result only when automatic recovery separately confirms release and the matching late-input horizon is verified; the action remains UNKNOWN and replay remains denied. The positive composition and unknown-custody control passed 2/2 normally and under `-O`. This is Fake/local fixture evidence only. See [R01](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovered_caller_r01_20261123/RESULT.md). Issue #57 remains open.
+
+**Issue #57 recovered-caller task-oracle composition R01 (2026-11-22; current main `cd708f52159cb87e38412640c49a59a0052c3e6d`):** The focused existing compiled-caller test passed 1/1 normally and 1/1 under `-O`. It accepts a separate independent task-oracle success after verified recovery while yielding `SAFE_YIELD / delivery_uncertain`, keeping graph transitions at zero, preserving automatic-recovery source action UNKNOWN/null, and denying replay. A missing recovery key-up receipt fails closed before task verification. This is a Fake/local composition test, not public MCP recovery, live task effect, MAP01, reliability, or efficiency evidence. Conditions, raw logs, source pins and hashes: [R01](../research/integration/standard_mcp_task_ledger_57_v1/current_main_recovered_caller_task_oracle_r01_20261122/RESULT.md). Next freeze and run the public standard-caller recovery task with an independent oracle.
+
+**Research Preview current-main WSL acceptance prefix R02 (2026-11-22; main `10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51`):** The official acceptance runner passed the committed-tree launcher preflight 19/19 on Ubuntu WSL2. No `runtime/.venv` existed; setup ran without `--install-dependencies`, refused with exit 2, and stopped before doctor or retained audit. No install, live run, model, GUI, or task action occurred. This is `HOLD_SETUP_OPT_IN_REQUIRED`, not acceptance. Full raw runner output and conditions are in [R02](../research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-prefix-r02-20261122/RESULT.md). Issue #58 remains open.
+
+**Win32 R16 orphan recovery with native late-input horizon (2026-11-22; frozen main `8a3085c0e494eab0214b72c3564841c13c4fe62e`):** One public `interface_recover_orphaned_input` call resolved the exact R14 durable UNKNOWN custody record on a fresh Win32 fixture generation. The old producer identity was absent; the public recovery receipt confirmed SHIFT-up and a 2 s/78-sample neutral horizon (maximum sample gap 32 ms), kept the source action UNKNOWN, left `task_success` null, denied replay, and fenced both source and recovery generations. The fixture recorded no task effect. The runner's raw failure classification is preserved; a separate adjudicator explains that its check expected an inapplicable `operation_invoked` field on the recovery response. Frozen pretrial/raw manifests and cleanup are retained; the 15-check adjudicator passes normally and under `-O`, as do four focused recovery tests in both modes. This closes only the scoped orphan-custody recovery case, not standard-caller recovery task success, repeated reliability, MAP01, integrated efficiency, Research Preview, or distributable-runtime acceptance. See [R16](../research/integration/win32_native_sendinput_recovery_20261122_r16/RESULT.md). Issue #57 remains open.
+
+**Issue #57 recorded Win32 effect R08 (2026-11-22; live source main `7bcf4a795e71a466e004b066bfb48f0fcb2d5491`; PR #10451 merged at `7075902b6dd95da57a2e25819e2d2d6859239c25`):** One frozen no-provider fixture action completed through public observe/dispatch/results/observe/close. Its independent delayed `a` effect, release, and 2 s/78-sample late-input horizon passed; public `task_success` remains null. The live runner stopped at post-close ledger construction, and the exact saved caller journal was then reconstructed offline through the completed-owner adapter repairs now on main. Five comparison/effect suites pass 70/70 normally and under `-O`. This is not a matched efficiency, expiry/recovery, reliability, MAP01, or Research Preview result. See [R08](../research/integration/win32_recorded_task_effect_r08_20261122/README.md) and the retained pre-dispatch [R07 stop](../research/integration/win32_recorded_task_effect_r07_20261122/README.md). Keep Issue #57 open.
+
+**Issue #57 public Win32 task-effect capture pair R02 (2026-11-22; local candidate from main `1542df47`):** Extended the research effect-receipt adapter to join public `interface_observe` before/after captures (observation IDs, same target generation, intervals and PNG custody) to one dispatch, exact result lookup, independent task score, and verified release/neutral horizon. The effect interval must lie strictly between capture windows; generation substitution and out-of-bracket intervals fail closed. Focused handoff tests pass 19/19 normally and under `-O`; the combined handoff/reuse/attribution/comparison/adapter suites pass 67/67 in both modes. This is synthetic only; R05 still lacks exact result lookup and an after-capture/task-score receipt, so no live task success, recovery reliability, or efficiency result follows. Raw conditions, outputs and hashes are in [R02](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_effect_pair_handoff_r02_20261122/RESULT.md). Next freeze a fresh finite standard-caller fixture run with this full receipt shape.
+
+**Issue #57 public Win32 observation measurement handoff R01 (2026-11-22; candidate branch from main `04ad2956`):** Extended the research measurement validator and caller-journal adapter to accept the standard `interface_observe` receipt by exact observation ID, target generation, capture interval, and decoded PNG bytes/digest; guarded numeric source-sequence evidence retains its existing shape. The comparison and adapter suites pass 38/38 normally and under `-O`; the combined effect-handoff/reuse-horizon/post-authority/comparison/adapter suite passes 64/64 in both modes. This is synthetic only; it does not adapt R05, bind captures to an exact dispatch/result/effect/release chain, or establish task success or efficiency. Conditions, logs, hashes and excluded harness attempts are in [R01](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_observation_handoff_r01_20261122/RESULT.md). Next join the captures to exact action identity and scorer/release/horizon evidence, then freeze a fresh finite standard-caller run.
+
+**Research Preview acceptance-runner repair merged (2026-11-22; main `d1a92e04c47b4dbf88e4c784c3dfdfea16bb8e10`):** PR #10440 fixes the supported-host runner so it reuses an existing golden venv and requires explicit `--install-dependencies` before creating one. On this exact main, the focused runner and bundle-builder suites pass 9/9 normally and under `-O`; replay-gate passed and the formal check was skipped. This repairs only the acceptance path. Windows Codex CLI JS and WSL Chromium remain unverified, so #58 and Research Preview graduation remain open. See [#58's retained update](https://github.com/Unjuno/agent-interface/issues/58#issuecomment-7075513226).
+
+**Research Preview current-main runner R01 (2026-11-22; frozen RC1 `8e5052e0`):** The merged runner passed launcher preflight 19/19 and recorded `skipped_existing_venv` without installing dependencies. Doctor then reproduced the prior 12/15 HOLD: WSLg/X11 and Python/Node passed; configured Windows CLI JS, WSL Chromium, and dependent Codex CLI were absent. The runner stopped before retained audit; `--live` was not requested. Raw output, conditions and hashes are preserved in [R01](../research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-runner-r01/RESULT.md). This validates the repaired runner path, not runtime acceptance; #58 remains open.
+
+**Research Preview current-main prefix R02 (2026-11-22; main `10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51`):** On a fresh Linux WSL checkout, the official runner passed launcher preflight 19/19 and correctly stopped before dependency installation because `--install-dependencies` was not authorized in the frozen conditions. Supplemental direct reads with the preexisting RC1 venv reproduced doctor 12/15 (Windows CLI JS and Chromium unset) and found `audit-retained` fails on seven current-source hashes even though the frozen report retains its six-task `RETAIN` result and task-2 break-even. Preserve both as separate HOLDs; do not weaken audit or treat this as acceptance. No live call, GUI, allocation, install, or task action occurred. See [R02](../research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-prefix-r02-20261122/RESULT.md); #58 remains open.
+
+**Research Preview frozen-source audit repair (candidate `2552fe76`; based on main `128c33f2`):** The seven `audit-retained` mismatches were later content changes; the original 29 source files remain byte-identical to frozen commit `54910c6`. Candidate repair verifies the archived sources against preregistration, reports current-source drift separately after line-ending normalization, and includes the archive in the distributable bundle. Local audit/bundle tests pass 5/5 normal and `-O`; the actual retained audit passes with zero archive mismatches and seven current-content differences. This does not close #58: supported-host Windows CLI/Chromium and fresh no-retry live acceptance remain open. Raw and checksums: [R01](../research/integration/research_preview_retained_source_audit_r01_20261122/RESULT.md).
+
+**Win32 current-main standard-caller fixture R05 (2026-11-22; main `ee14863bec0c7a222bec4d96300162afde61cf82`):** A third fresh scripted fixture action completed through public `supervised-win32`, confirmed release, and passed the 2 s/77-sample late-input horizon; its independent oracle recorded the delayed `a` effect at 6,015 ms. Public `task_success` remained null, so effect-to-caller attribution remains an open seam. The three focused Win32 backend/producer/MCP suites pass 27/27 normally and under `-O`. This was not a recovery trial, reliability estimate, MAP01, or efficiency result. Exact sources, raw MCP/fixture evidence, cleanup proof and manifest are in [R05](../research/integration/win32_current_main_fixture_effect_r05_20261122/README.md).
+
+**Issue #57 normal-completion effect handoff R01 (2026-11-22; branch from main `0b97018d`):** The research-only score adapter now validates normal `completion_custody` as well as the existing recovered/cancellation path. A 26-test handoff, reuse-horizon and effect-timing suite passes normally and under `-O`. It rejects an unverified neutral horizon, preserves post-expiry factual success as ineligible, and correctly allows a normal action to release before its later lease expiry while effects before expiry remain eligible. This does not adapt R05 raw, which lacks a recorded `interface_results` call and the public before/after capture pair. No live input or provider call was made. See [R01](../research/integration/standard_mcp_task_ledger_57_v1/completed_owner_handoff_r01_20261122/README.md). R05-to-task-score live handoff, recovery trials, efficiency and reliability remain open.
+
+**Whole-repository membership recheck r163 (2026-11-22 JST; current main `1afb532ea153f3da3906764753909fac074afce3` before/after):** Complete paginated reads found 1,640 open Issues and 407 open PRs, matching r162 exact sets. Compared to r152/r157 IDs, no additions; removed Issues #7748/#7765/#7817 and PR #8181. This is membership evidence only, not semantic triage or evidence custody. See the [r163 receipt](maintenance/repository-inventory-recheck-20261122-r163.md).
+
+**Win32 current-main delayed-effect fixture R01–R03 (2026-11-22):** R01 exposed a prestarted-worker receipt-buffer capacity mismatch; its action remained UNKNOWN and was not replayed. The fix accepts the prestarted buffer's configured capacity while accounting only for the frozen program's operation count. A fresh R03 standard-caller fixture then completed one A key action, confirmed release and a 2 s/77-sample late-input horizon, and independently observed its delayed application effect at 6 s. The focused backend/producer suites pass 24/24 in normal and `-O` modes. R02's foreground refusal and successful separate recovery remain preserved. This is one narrow fixture task: #57 integrated efficiency, MAP01, repeated reliability, and Research Preview graduation remain open. See the [R01](../research/integration/win32_current_main_fixture_effect_r01_20261122/README.md), [R02](../research/integration/win32_current_main_fixture_effect_r02_20261122/README.md), and [R03](../research/integration/win32_current_main_fixture_effect_r03_20261122/README.md) packets.
+
+**Win32 current-main fixture replication R04 (2026-11-22):** On the merged receipt-capacity fix, a second independent standard-caller fixture action also completed, verified release, recorded a 2 s late-input horizon (77 observations; maximum gap 32 ms), and independently observed the same 6 s delayed `a` effect. R03/R04 are two scoped scripted passes, not a reliability estimate or MAP01/efficiency result. See the [R04 packet](../research/integration/win32_current_main_fixture_effect_r04_20261122/README.md).
+
+**Worktree custody recheck (2026-11-22, after PR #10427):** Read-only inspection found 15 registered worktrees (10 clean, 5 dirty); the oldest parent is 70 commits behind origin/main and contains unclassified changes, while multiple dirty worktrees hold raw or untracked evidence. Root outputs contain 61 unique files. No cleanup was performed; preserve first, route each branch/evidence set, and only then decide on removal. See [the custody report](maintenance/worktree-custody-recheck-20261122.md).
+
+**Targeted organization recheck (2026-11-22):** Draft PR #10144 remains open and explicitly requires further lifecycle-custody, deadline, release, scorer, and matched-trial work; its fake-transport suite is not live WSLc evidence, so it remains Draft. Issue #7773 remains on feasibility HOLD after current-main source search found no model-facing candidate-list consumer. See [the recheck report](maintenance/targeted-organization-recheck-20261122.md). These targeted results do not complete whole-repository triage.
+
+**Issue #58 host prerequisite probe (2026-11-22):** This PC's Ubuntu WSL2 exposes WSLg display/socket, Xvfb and Python 3.12.3, while Ubuntu has no Chromium or Node on PATH; `chromium` has no apt candidate and `chromium-browser` is a snap-transition package. Windows Node 24.13.0 and the Codex app exist, but the bridge was not exercised. No dependencies or allocations were changed/run. See [the targeted recheck](maintenance/targeted-organization-recheck-20261122.md); supported-host doctor and fresh golden audit remain open.
+
+**B13 #7794 evidence custody (updated after PR #10431):** Unique A01/A02 packets from Draft PR #7968 were transferred byte-for-byte to current main with SHA-256 manifests; #10431 merged and stale Draft #7968 was closed as superseded, preserving its branch/history. The A02 comparator caveat, A04 metadata mismatch, and A05 successor's narrower byte-bound replay remain distinct. Parent #7794 remains `HOLD_ACCOUNTING`; no operational carbon result or runtime postponement claim. See the [custody audit](../research/analysis/carbon_window_7794_a01_a02_import_20261122/CUSTODY_AUDIT.md).
+
+**Issue #57 Calc Fake X current-main recheck (2026-11-22):** The focused provider-to-public-MCP-to-Calc composition test passed 1/1 normally and under `-O` on Windows CPython 3.11.9 and in pinned Docker image `sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425`, using clean main `bc7e62ed`. Retained raw logs, conditions and hashes are in [the recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/calc_save_controller_receipt_order_20261121/post-merge/win32-current-main-r02/RESULT.md). This is a single synthetic case; it does not satisfy live GUI/MAP01, repeated reliability, integrated efficiency or preview graduation.
+
+**Issue #57 historical Calc/Fake X custody audit (2026-11-22):** Preserved the untracked diagnosis from base `897f4896` as historical evidence. Its legacy manifest had 1 mismatch and omitted 54 present raw files; the report also conflicts with its own Docker-run records. Raw bytes are unchanged, and a new full-snapshot manifest plus limits are recorded in [the custody audit](../research/integration/standard_mcp_task_ledger_57_v1/current_main_calc_failure_recheck_20261121/INTEGRITY_AUDIT.md). This superseded packet is not a current-main failure or live-runtime result.
+
+**Latest whole-repository membership refresh r162 (2026-11-22 JST; captured on main `ed0798d45d3bb7b839015619cd81f30e292a7583`):** Complete paginated comparison with r160 finds 1,640 open Issues and 407 open PRs: no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. A second full paginated read after docs PR #10423 merged at main `8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2` found the same sets and counts. #7817 closed at its finite T0 scope after merged #7938 was reconciled; the other dispositions remain individually documented. Membership does not equal semantic triage or custody reconciliation. Issue #57 remains open for matched live efficiency, standard-caller task success and repeated recovery reliability; Research Preview graduation and distributable-runtime acceptance remain open. See the [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md); the [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md) remains the latest full semantic-routing analysis, with targeted updates recorded separately.
+
+**Prior whole-repository membership refresh r161 (2026-11-22 JST; main `f75b34bc00b125c8cb6f106ea43835cea1401e2e` before/after):** Complete paginated comparison with r160 found 1,641 open Issues and 407 open PRs: no additions; Issues #7748/#7765 and PR #8181 were the only removals at that checkpoint. PR #10418 merged organization dispositions and the #8859 trace-feasibility audit into that main. See the [r161 receipt](maintenance/repository-inventory-recheck-20261122-r161.md).
+
+**B13 Issue #7817 finite-method disposition (2026-11-22):** The merged #7938 packet's candidate/auditor ran once each; the retained report records 10/10 expected cases, 5/5 applied hostile mutations, no authority change, and `PASS_METHOD_SCOPED`. A read-only audit checked all 17 manifest hashes against current-main Git blobs. #7817 is closed at that finite method scope; the stale issue comment's fixed two-review request was not repository policy and the PR had already merged. This says nothing about normative policy validity, real-source interpretation, GUI/runtime safety, or action authority. The B13 cohort has 22 open and three closed Issues. See the [targeted disposition](maintenance/idea-index-crosswalk-20261121-r160.md).
+
+**Prior whole-repository refresh r160 (captured 2026-11-21 on main `f39e966b6478170a7a91f1eec7859d30046784bf`; crosswalk base `87f1afe2ad2202a3a5200a4add86190e9f6a1496`):** Complete paginated open sets at r160 were 1,643 Issues and 408 PRs, byte-identical to r159; PRs #10402/#10403 had already merged before that snapshot. The r160 ID sets remain the frozen membership baseline; semantic index coverage and B01–B12 routes are recorded in the [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md). Issue #2369 remains a nonbinding local-check policy proposal; relevant local checks and explicit hosted-only gaps are the current practice, without a blanket full-CI runner requirement. Full semantic triage remains in progress.
+
+**Current-main synthetic late-input regression (2026-11-21; main `6684486163046b699ade1d376f35cbd222199a38`):** The existing Fake X process-cancellation test `test_delayed_down_during_recovery_horizon_keeps_owner_fenced` passes 1/1 normally and 1/1 under `-O` on Python 3.11.9. Its assertions retain UNKNOWN, `release_confirmed=false`, `task_success=null`, replay denied and owner fencing after observing a delayed synthetic DOWN. Raw stdout, conditions, source blob IDs and packet manifest are preserved in [the R01 packet](../research/integration/currentmain_fake_x_delayed_down_recovery_r01_20261121/RESULT.md). This is a synthetic regression rerun, not physical input-release, live GUI, task-success, efficiency or reliability evidence; no runtime code changed.
+
+**Current-main lease-expiry dispatch refusal (2026-11-21; main `aecc24ccbe50735d2d27ede10a1f7b563ff4d2ae`):** The existing Win32 backend regression for a 20 ms authority followed by a 50 ms wait and late button-DOWN passes 1/1 normally and 1/1 under `-O`. The receipt distinguishes expiry refusal before dispatch. The backend and `release_all` are test doubles; this proves neither native input suppression nor release of already-held physical input. Raw stdout, exact conditions, source pins and packet manifest are in [R02](../research/integration/currentmain_fake_x_expired_down_refusal_r02_20261121/RESULT.md).
+
+**Issue #57 G10 comparison-contract readiness audit (2026-11-21; frozen current main `ce6449f38a56e1731f01d1024837fb34c9c759a3`):** The retained one-run Calc OCR graph remains a scoped positive control; all 33 declared source hashes and 69 retained run files verify. On current main, `recorded_comparison_adapter_v1` correctly rejects the unmodified G10 raw record because it has no reconciled caller receipt/events. Primary provider usage remains UNKNOWN, so G10 cannot be turned into an efficiency arm or counted as zero. Normal and `-O` audits pass with byte-identical results. This used no live/provider action and does not add an efficiency result. See [the crosswalk and audit](../research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md). #57 and #58 remain open.
+
+**Issue #57 effect-receipt to reuse-horizon composition (merged 2026-11-21; main 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb):** PR #10396 composes the retained effect-score adapter output into the reuse-horizon evaluator, with receipt task identity bound before adaptation. The three synthetic timing cases and combined adapter/comparison/composition suites pass 33/33 in normal and -O modes using an isolated worktree TEMP. Timely effects qualify break-even at task 2; post-horizon and unknown timing preserve factual/token accounting while blocking correctness qualification. This is offline accounting only, not live GUI/provider completion, broad efficiency or recovery reliability, or preview graduation. [Evidence packet](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md). Issue #57 remains open.
+
+**Portable runtime packet integrated (2026-11-21; main `63449e8a`, source runtime `acbdfc0f9`):** PR #10377 retained a deterministic 786,369-byte zipapp and its build conditions, second-build bytes, Windows/WSL CLI smoke, normal/-O tests, initial worktree-TEMP failures, and source/archive audit. Windows CPython 3.13.14 distribution tests pass 21/21 normally and under `-O`; the same artifact's outside-checkout `doctor` and `validate --help` exit 0 on Windows CPython 3.13.14 and Ubuntu WSL CPython 3.12.3. The independent audit verifies 64/64 source blobs and zero mismatches. The merge added evidence only; runtime source is unchanged from the pinned source. This proves packaging and basic startup, not live target control or Research Preview acceptance. See [the packet](../research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/RESULT.md) and [Issue #58 update](https://github.com/Unjuno/agent-interface/issues/58#issuecomment-7057262432). #58 remains open.
+
+**Issue #57 public owner receipt join (merged 2026-11-21, main `3d546e5b`):** The offline comparison adapter joins a recorded `interface_dispatch` and exact-call `interface_results` response by call ID, operation ID and target generation before using verified release/horizon bounds for effect attribution. Exact-main post-merge tests at `3d546e5b8c0b9354bfd635d1ae379896855b0058`: 56/56 normal and `-O`; current-main supervised Win32 projection test 1/1 in both modes. The v2 packet manifest verifies 50/50 retained files. This is synthetic only: no provider calls, native GUI input, Docker or WSLc, and no live efficiency/reliability result. It does not supersede the preserved full-discovery R02 scheduling failure. See [R02 owner-receipt join](../research/integration/standard_mcp_task_ledger_57_v1/native_owner_receipt_join_v2/RESULT.md). #57 stays open.
+
+**Issue #57 current-main full-discovery recheck (2026-11-21, main `6f33f6ac` after #10367):** The repaired Windows/Docker Calc composition passes. Current full discovery finds 117 tests: R01 passes 117/117 in normal and `-O`; R02 passes 117/117 under `-O` but normal has one repeat of the cancellation-accounting test's three-second Save-boundary timeout. That same test passes in isolation in both modes. Preserve the failure and treat full discovery as not repeatably green; the prior 107-test failures remain historical, unchanged evidence. See [the recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_full_discovery_after_10367_20261121/RESULT.md). #57 remains open for live matched efficiency, task success, and recovery reliability.
+
+**Issue #57 late-usage current-main recheck (2026-11-21, base `8207849a`):** The focused App Server/spool/provider/client suite initially exposed a one-second fake-host scheduling race and teardown thread leak; the optimized run passed. A test-only repair added host scheduling slack and guaranteed publisher-thread join without changing runtime assertions. With correctly frozen source hashes, R03 passes 26/26 normally and 26/26 under `-O`. R01 FAIL and R02 invalid-freeze results remain preserved. The broader 107-test Calc/Fake X suite remains unresolved, and this synthetic suite does not prove real provider usage, task effect, efficiency, or recovery reliability. See [current-main recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_recheck_8207849_20261121/RESULT.md).
+**Research Preview RC1 setup/doctor R05 (2026-11-21; frozen RC1 `8e5052e0`):** The explicitly authorized setup installed only the nine pinned Python distributions in an isolated Ubuntu WSL venv. The doctor exited 1 (12/15 checks passed): the expected Windows Codex CLI JS and WSL Chromium were not configured, so `windows_cli`, `chromium`, and downstream `codex_cli` failed. Windows Chrome exists, but it was not substituted for the frozen WSL configuration; no application download, model call, GUI action, or golden task was performed. Preserve as HOLD until the required exact binaries are available; see [R05 packet](../research/integration/research_preview_rc1_setup_doctor_r05_20261121/RESULT.md). The existing current-main launcher preflight remains a separate, non-acceptance result. Issue #58 stays open.
+**Portable distribution rebuilt from current main (2026-11-21, `038486e100ceeda578daa442388f686fd2eedc2f`):** Windows Python 3.13.14 rebuilt the 784,932-byte zipapp, which contains 69 archive entries including 64 Git-managed source files; a second build was byte-identical. `runtime/distribution_v2` passes 21/21 normally and under `-O` on Windows. Ubuntu WSL Python 3.12.3 also passes 21/21 in both modes; the zipapp runs `doctor` and `validate --help` outside the checkout on both environments. The manifest’s 64 source hashes match current main `cc722677` as well as earlier packet revisions. Windows doctor reports Win32 available and WSL doctor reports X11 available; both report `side_effect_authority=false`. The executable, manifest, logs, conditions and hashes are in [the current-main distribution packet](../research/integration/portable_runtime_distribution_v2_current_main_20261121/RESULT.md). This verifies packaging and basic startup only; live GUI, native task effect, target permission flow, macOS, provider behavior, public release and research-preview graduation remain unverified.
+
+**Mindustry v160.2 asset readiness preflight (2026-11-21; current main `cfb691b3`):** The official GitHub release asset was downloaded to the untracked local `outputs/` area and independently matched the pinned 87,022,576-byte size and SHA-256 `7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539`. Both canonical saves on current main independently match Git blob `7663b25633d853a257fbb407723fe85579120111`, size 23,335, and SHA-256 `8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed`. Ubuntu WSL has Xvfb but no Java runtime, so no install, game launch, input, or formal allocation occurred. This is asset-materialization evidence with `HOLD_LAUNCH_RUNTIME_MISSING`, not a Mindustry task result. See [the retained asset-readiness packet](../research/integration/mindustry_asset_readiness_v1_20261121/RESULT.md).
+
+
+**Research Preview first-run launcher preflight (2026-11-21; current main `cfb691b3`):** A fresh sparse Git checkout on Ubuntu WSL2 ext4 passed all 19 `PASS_LAUNCHER_BOUNDARY` checks and exited 0. The same read-only preflight on the Windows-mounted `/mnt/c` worktree retained `FAIL_LAUNCHER_BOUNDARY` with four CRLF/worktree-byte mismatches; it was not relabeled. R02's temporary-output capture failure is also preserved. This checks only committed launcher bytes/mode/syntax/pins on current main; the frozen RC1 supported-host setup, doctor, retained audit, fresh no-retry golden workflow, and `audit-live` remain open. See [the preflight packet](../research/integration/research_preview_preflight_current_main_20261121/RESULT.md).
+
+
+**Post-recovery effect attribution audit and comparator candidate (2026-11-21; PR #10358 merged as `ac0dd892`, hash-pinning correction #10359 merged as `038486e1`):** Audited the retained R281 MAP01 raw packet from the ignored local `outputs/r281-audit-20261121/` directory. The first action expired and its owner verified neutral input; a separate action ID was admitted after recovery and later produced ammo 50→49. Intermediate observations remain 50, 50, 49, so the exact effect instant is only bracketed; the attribution candidate returns `unknown` rather than borrowing the last capture time. The research comparison measurement candidate now accepts optional authority/effect/release/horizon attribution and excludes unknown or late effects from correctness-qualified break-even while preserving the factual score. Raw audit checks pass 2/2 and comparison tests 21/21 normally and under `-O`. Existing records without attribution remain backward compatible, so this candidate is not yet a complete data contract for historical/live runs. It does not show a delayed effect from the expired action, provide a matched efficiency/reliability result, or qualify MAP01/product completion. Local raw SHA-256 values and limits are in [the R281 effect-attribution follow-up](../research/integration/standard_mcp_task_ledger_57_v1/post_authority_effect_attribution_v1/RESULT.md). Keep #57 open; continue toward a complete all-attempt provider/token/latency and correctness comparison.
+
+**MAP01 public-caller startup retry R273/R274 (2026-11-17, current main `c36be3f7`):** a fresh 90 s lease still failed before input: producer `Process.start()` took 90.047 s and returned 47 ms after expiry; all 11 operations were `not_started`, with zero program actions, SendInput returns, or local cursor actions. The public cancel response was 16 ms after expiry. Source action remains UNKNOWN and replay denied. Separate R274 orphan recovery verified the producer absent, returned `not_dispatched`, left source UNKNOWN, and cleared custody at revision 1006 with LEFT/W/SHIFT up. This adds no live task-effect or efficiency sample. Conditions and limits are in the [R273/R274 report](map01_r273_current_main_public_caller_start_20261117/REPORT.md); the private 106-file manifest SHA-256 is `d3b1d2d1e7b7b1dc527d58c6aa3dd222d110ea21c5828de54c1cf9817aabead2`. R270 (30 s) and R273 (90 s) both crossed expiry by 47 ms during startup; the next engineering question is prestarted producer readiness with a closed input gate until authority and generation validation. Keep #57 open.
+
+**R264 freeze audit (2026-11-17):** R264 was frozen to test a 30 s expiry lease and delayed operation, but its pinned runner actually executes a producer-exception recovery protocol: one LEFT tap and a 120 ms dwell, then looks for the UNKNOWN/cancellation receipt. It contains no 60 s wait, held SHIFT, or delayed second click. The conditions also pin main `a5a2e04`, while current main is `4000f9f8` with 37 runtime files changed since that pin. No R264 trial directory exists and no input was sent. Mark R264 unusable as the expiry test; preserve its freeze. Three exact-current-main synthetic start/cancel boundary tests pass 3/3 normally and under `-O`, which does not establish live expiry. See [R264 freeze audit](../research/integration/map01_r264_expiry_freeze_audit_20261117/REPORT.md). Next: derive a new freeze from the R263 expiry runner but pin current source, a distinct attempt ID, and fresh custody. #57 provider/token comparison remains gated by the absent trusted allocation attestor.
+
+**R241/R242 expiry-caller block audit (2026-11-17):** The separate frozen R241–R248 schedule stopped after R242 as preregistered. R241 automatic expiry-monitor arm passed one scoped native sample (ammo 50→49, recovered/released, delayed operations excluded, both horizons); R242 public-caller arm failed before input and was reconciled `not_dispatched`. Six scheduled IDs remain unattempted; there is no winner or efficiency result. The block source was old commit `4acd679`, and R242 raw custody is incomplete (two captured-file digest mismatches plus 17 later files outside the initial manifest). Three current-main synthetic boundary tests pass 3/3 normal and `-O`; this does not establish a current-main live pair. See the [audit report](../research/integration/map01_win32_expiry_caller_r241_r242_20261115/REPORT.md). Preserve the stopped block and keep #57 open.
+
+**Current-main MAP01 expiry result R198/R199 (2026-11-16, main `86a52662dc2bb690dd670d52ea8d97816aef2a26`):** R198 independently observed the calibrated ammo HUD 50→49, separate native releases, bounded recovery, both 2 s horizons and normal close, but its frozen query projection incorrectly expected source UNKNOWN/release false. Current main returned confirmed `recovered`/release true; its result is retained as a protocol-deviant partial observation and is not counted as a full preregistration pass. A read-only current-source/test crosswalk corrected the experiment expectation without changing runtime code. Fresh R199 then passed a corrected independent preregistration: one dispatch/recovery, delayed second click excluded, source `recovered`/release true, release receipt 32 ms after expiry, integrated 2 s horizon (75 samples; max gap 32 ms), independent neutral horizon, and exact HUD 50→49. `task_success=null` in both runs; neither measures model/provider tokens or integrated cost. The focused current-main composed contract test passed 9/9 normal and 9/9 under `-O`. Conditions, raw, adjudications, reports, test logs and SHA-256 manifests are in [research/integration/map01_win32_current_main_expiry_r198_r199_20261116](../research/integration/map01_win32_current_main_expiry_r198_r199_20261116/REPORT.md). This is one valid current-main live task-effect sample, not a reliability or speedup claim. #57's matched cold/warm/invalidation/repair and all-attempt model/token/latency accounting remains open; keep the goal active.
+
+**Win32 expiry/result-poll fixture timing correction (2026-11-16; candidate on main `5ae5991304`):** A fresh 51-test `runtime.cli_v1.test_mcp_supervised_win32` run found intermittent pre-dispatch expiry from a 1.5 s synthetic lease and a delayed recovery receipt whose 8 s fixture delay raced a 6 s query window. The test-only candidate gives both expiry fixtures 5 s for child startup/admission and extends the delayed receipt query window to 12 s; it preserves expiry, exact-call, recovery, release, UNKNOWN, and no-replay assertions. The full 51-test module then passed 51/51 normally (113.780 s) and under `-O` (125.381 s); the three focused expiry/recovery cases passed 3/3 in both modes. The 2 s recovery horizon and 8 s delayed receipt remain in the fixture. This improves synthetic stdio regression stability only; it provides no native GUI/MAP01 or #57 efficiency evidence.
+
+**Durable journal phase attribution probe (2026-11-16, main `628e275748c7a1143a753a1bc459bdd2a687a1c0`):** Replayed the same 38 retained records through `ReceiptJournal.append` for three independent journals while keeping production fsync enabled. Median append total was 1.228 s; fsync 1.215 s (98.9%), canonical JSON 3.82 ms, write 0.092 ms, flush 1.40 ms. Every reference/payload in all three outputs read back correctly. This confirms fsync dominates isolated replay but does not explain the full ~3.6 s core difference in the separate two-pair Fake caller contrast. No runtime/durability behavior changed. Full per-record timings and output hashes are in [the phase probe packet](../research/integration/calc_g10_journal_phase_probe_20261116/REPORT.md).
+
+**G10 candidate packet preserved (2026-11-16; base `b046c90d6ab80cedb47fcd1be85fac5111dfce0b`):** Integrated the 68-entry local evidence packet with zero SHA-256 mismatches. It preserves public G10 custody/caller outcomes, both successful and failed regression attempts, and a two-pair Fake X Files-versus-Journal timing contrast. The contrast is not durability-matched (Files is not fsync-backed; Journal fsyncs each record), so it is not an efficiency win claim. The one-shot 38-record journal append probe is 1.466 s and does not explain the whole 3.6 s core median gap. A report addendum corrects the earlier comparison of whole `get()` time against a readiness-only 5 s timeout. All evidence is local Fake X/stub/archived FODS, not live Calc, MAP01, or #57 matched economics. See [the preserved candidate report](../research/integration/calc_g10_mcp_profile_candidate_20261115/REPORT.md).
+
+**Win32 producer-exception public result-query recheck (2026-11-16, main `92aede657e8fd221bd2d56b31e9cac74ffcbf7cb`):** Three production-stdio integration cases passed 3/3 normally and 3/3 under `-O`: exact recovery result lookup/isolation, producer-exception UNKNOWN followed by separate fresh-generation recovery and caller attempt, and automatic recovery preserving outer recovery versus nested UNKNOWN source shape. Raw logs and source hashes are in [the verification packet](../research/integration/win32_exception_query_current_main_20261116/REPORT.md). Synthetic producer/supervisor only; no native input or new MAP01 result. Historical R175/R269 custody remains untouched; #57 matched economics remain open.
+
+**G10 public production-stdio receipt join checked (2026-11-16):** New MCP-client/stdio test exercises the current CLI entrypoint through G10 prepare, pending launch→exact-call result lookup, two release-verified saved actions, close, and independent parent verification (`verified/true`), 1/1 normal and 1/1 under `-O`. This is Fake X plus archived FODS. The Windows nested-spawn `get()` timing includes `process.start()` and the readiness wait; source inspection shows the production 5 s timeout applies only to the RPC readiness poll after `process.start()` returns. The original default-budget attempt timed out in that poll before launch/input, but the timing was not split by phase, so its cause remains unresolved. Linux X11 startup is unmeasured. No live Calc/MAP01/#57 evidence follows. See [the attempt ledger](../research/integration/issue57_g10_production_stdio_20261116/REPORT.md).
+
+**G10 stdio post-merge rerun (2026-11-16):** On main merge `156fd8fad2c94e8ece74e2f6ae4885f9cd998636`, the committed production-CLI/stdio receipt join passed 1/1 normal and 1/1 under `-O` (15.107/15.359 s). End-to-end owner `get()` measured 10.890/11.578 s in the Windows nested-spawn fixture; this includes `process.start()`, while the source's 5 s constant applies only to the later RPC readiness poll. The original default-budget attempt timed out in that poll; phase attribution remains unresolved. Full rerun logs and refreshed SHA-256 are in [the evidence packet](../research/integration/issue57_g10_production_stdio_20261116/REPORT.md). This confirms Fake X/archived-FODS transport and receipt joining only; live Calc, MAP01, and #57 matched economics remain unverified.
+
+**Public G10 two-save Calc profile integrated (2026-11-16, PR #10325; main `4fe3473c`):** Added the fixed `calc-g10-two-save-v1` public guarded profile with parent-held two-artifact custody, per-action dispatch/release joins, exact saved-byte checks, and post-close/exact-exit scoring. Current local Windows CPython 3.11.9 checks passed: G10 profile/custody/scorer 27/27 in normal and `-O`, focused public MCP 3/3 in both modes, and the full owned-process MCP suite 76/76 in both modes. The previously intermittent standard compiled caller passed isolated in both modes; earlier intermittent suite failures remain retained as history. Evidence is Fake X/offline plus archived FODS, not live Calc or MAP01. Issue #57's matched lifecycle/token/latency comparison remains open.
+
+**Candidate-only exact recovery UNKNOWN receipt integration (2026-11-15):** Added a production CLI/stdio failure-path test where the fake supervisor claims a recovered release and 2 s horizon but reports only one observation. The owned-session validator rejects the impossible sample coverage; after the public recovery call stays pending, exact-call `interface_results` returns outer UNKNOWN, leaves the source UNKNOWN, release false, task success null and replay denied. A same-generation public dispatch is then rejected as `ORPHAN_RECOVERY_UNRESOLVED` before input (`input_dispatched=false`). The focused case and the full 50-test Win32 MCP module pass in normal and `-O` modes. Logs, test-only fault parameter and SHA-256 are in [the candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This strengthens public receipt validation/lookup integration only; no native Win32 or MAP01 claim.
+
+**Candidate-only exception recovery exact-call composition (2026-11-15):** Extended the production CLI/stdio regression to join the producer-exception UNKNOWN record to a separate recovery that remains pending after its 2 s horizon, then resolves only through exact `interface_results(call_id)` before a fresh-generation compiled caller. The test checks source custody and call identity while pending; terminal release/horizon evidence does not upgrade source UNKNOWN, task success stays null, replay stays denied, and the later task receipt binds to its own dispatch call ID. The complete `runtime.cli_v1.test_mcp_supervised_win32` module passes 49/49 normally (107.097 s) and 49/49 under `-O` (93.874 s) on Python 3.11.9; logs and hashes are in [the candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). A current read-only host check still sees the R269 GZDoom target responding while its custody fence remains unresolved at revision 888; no input, recovery, focus change, or process close was performed, and the R269 gate prohibits continuing/replaying the source task. Fake-backed regression evidence only; this does not establish native MAP01 recovery or #57 efficiency.
+
+**Candidate-only delayed DOWN readback assertion (2026-11-15):** Strengthened the multiprocessing Fake-helper horizon test to require an explicit post-injection observer response with the obligated key pressed, and to assert recovery → initial neutral readback → delayed DOWN → non-neutral readback ordering. The focused test passed 1/1 normally and 1/1 under `-O`, and the full cancellation module passed 31/31 in both modes on Python 3.11.9; raw logs and source hashes are in [the candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This closes an assertion gap in the synthetic helper test only. It does not establish native Win32 late OS input, physical release, live GUI/MAP01 task effect, or #57 efficiency.
+
+**PR #10303 current-main isolated integration candidate (2026-11-15; base `f0d5fa202de83f39012bf4a914369b21f8e98a41`):** Resolved the two documentation conflicts while preserving current-main status and avoiding a duplicate R237–R240 ABBA section; the PR’s G10 implementation details remain in the updated Calc crosswalk. On this candidate, `runtime.cli_v1.test_mcp_supervised_win32` passed 47/47 normal and 47/47 under `-O`; six G10/compiled-X11 suites passed 110/110 in both modes. The combined 231-test run and standalone 74-test owned-process run had intermittent failures in existing focus/receipt/retirement scenarios and Windows temporary-report cleanup (`PermissionError` on `.report.json.tmp` / `.cancellation.json.tmp`); the two isolated receipt tests passed 2/2 when rerun. The failing existing tests are not changed by PR #10303, but the combined suite is not clean and the candidate remains isolated. GitHub still reports #10303 as open, draft, and `mergeable=false`; this local candidate commit does not merge the PR. Offline/Fake regressions only: no G10 live Calc, MAP01 trial, or #57 economic comparison is established.
+
+**Latest verified main state (2026-11-15, ce9e3d825ccfb8f7f0e62538f346238a4704c6af; PRs #10316 and #10317 merged):** Automatic Win32 orphan-input recovery no longer requires target foreground for global UP/release; generation checks, bounded deadline, receipt validation and independent neutral observation remain. On this main, cancellation/helper tests passed 74/74 normally and under -O; the public MCP producer-exception UNKNOWN → separate fresh-generation recovery query passed 1/1 in both modes. This validates the protocol/result projection only. R269 was not replayed, and this does not prove native MAP01 effect or #57 efficiency. Issue #57 is currently **open** (last fetched 2026-11-15); its 2026-11-14 closure mentioned later below was subsequently reversed, and the matched lifecycle/accounting comparison remains outstanding. Raw rerun logs, commands, environment and SHA-256 are preserved in [the verification packet](../research/integration/win32_focus_free_recovery_20261115/README.md); the merged change record is [focus-free orphan recovery](../research/integration/win32-orphan-recovery-focus-free-20261115.md).
+
+**Candidate-only exact orphan-recovery result query (2026-11-15; based on `a2ccc3a8df2ba7753e439f9c8457b79f32f7a1cc`):** A delayed-success MCP regression found that immediate `interface_recover_orphaned_input` returns its control receipt directly, while `interface_results(call_id)` sent the retained report through generic image-review presentation. Added the recovery operation to the management/control receipt path so exact-call retrieval keeps the same status and release fields. The composed tests cover direct server calls and the production CLI stdio transport: delayed success and delayed UNKNOWN both return pending, then exact-call retrieval preserves the terminal control receipt; immediate UNKNOWN stays UNKNOWN. Assertions retain source UNKNOWN, release and 2 s horizon receipt, `task_success=null`, replay denial, fresh-generation requirement, and one recovery call. The horizon fixture uses 21 samples over 2 s at a maximum 100 ms interval. All four focused cases pass 4/4 normally and under `-O`; raw commands/logs and hashes: [candidate report](../research/integration/win32_orphan_recovery_exact_query_candidate_20261115/README.md). This remains local Fake-backed protocol evidence and does not establish native recovery or MAP01 effect.
+
+**Production stdio recovery-query cross-call isolation (2026-11-15):** Extended `test_production_stdio_orphan_recovery_pending_exact_query` to query an unrelated unknown call ID while the real recovery is pending. The unrelated ID returns `unknown_call` with no recovery receipt; querying the original call ID then returns its terminal recovery receipt with source action still `unknown`, replay denied, and task success null. The focused test passes 1/1 normally (10.027 s) and under `-O` (9.678 s). Logs and hashes are in the [recovery-query packet](../research/integration/win32_orphan_recovery_exact_query_candidate_20261115/README.md). This is Fake-backed transport evidence, not live recovery or MAP01 task effect.
+
+**Production stdio pending/terminal receipt consistency (2026-11-15):** The same exact-call test now asserts pending response metadata and nested call arguments preserve the original source custody, unknown effect, null task outcome, denied replay, and exact call ID; after terminal, it retains recovery release/horizon while leaving source action UNKNOWN. An unrelated call lookup cannot receive that receipt. Both normal and `-O` runs passed 1/1; updated raw logs and hashes are in the [recovery-query packet](../research/integration/win32_orphan_recovery_exact_query_candidate_20261115/README.md). Fake-backed transport only.
+
+**Candidate-only G10 save-request chronology (2026-11-15):** The offline G10 save-controller join now requires each save request timestamp to fall at or after that action's `execution_started_ns` and strictly before its release-verified `execution_accepted_ns`. This rejects a request recorded only at/after completion. The composed fixture now records request timing at the fake execution adapter entry on the same perf-counter clock as the compiled core; it still uses archived FODS bytes and fake GUI/input. The G10 custody and composition suites pass 13/13 normally and 13/13 under `-O`; raw logs and hashes: [chronology candidate report](../research/integration/calc_g10_request_chronology_candidate_20261115/README.md). It strengthens the offline custody contract only; G10 remains unregistered in public MCP and no live Calc or #57 comparison is claimed.
+
+**Candidate-only G10 pre-dispatch receipt join (2026-11-15):** The trusted compiled X11 adapter now offers an optional `before_action_dispatch` callback after fresh admission and only when the actual bridge input-guard verification succeeds. It persists the adapter-minted action ID, action/operation, observed process/window generations, same-clock timestamp, and evidence reference before profile callback/input. G10's v2 save-request contract binds that exact persisted reference to its later release-verified transition and saved artifact. A negative regression proves neither persistence nor callback occurs when the input guard refuses. Three composition/custody suites pass 68/68 normally and under `-O`; native-bridge dependency tests pass 12/12 in both modes. Logs and source hashes are in [the evidence packet](../research/integration/calc_g10_pre_dispatch_action_receipt_candidate_20261115/README.md). This remains offline evidence: no public G10 MCP profile, live Calc/OCR/reference flow, or #57 economics is established.
+
+**Current verified state (2026-11-15; PRs #10308 and #10309 merged):** PR #10308 introduced supervised Win32 deadline-cancel policy/route projection and a Fake-backed production-CLI/MCP scenario for producer-exception UNKNOWN custody → separate 2 s bounded recovery under a fresh generation → a distinct compiled caller attempt with exact-call positive task-oracle evidence. Its merge commit was `0308966c55e53f32d7fc5abaa170d654edd54bf3`; PR #10309 consolidated this status note in merge commit `64ad888fc827c67e51fd1d2028e44efaab334113`. The supervised Win32 module passed 46/46 normally (123.380 s) and 46/46 under `-O` (110.922 s); logs and SHA-256 are held in the local follow-up report. This is protocol integration only, not native GUI input, MAP01 task effect, or an efficiency comparison. #57 remains open. #7924 remains STOP/HOLD for unresolved shared WSLc client ownership. Docker Desktop was visible, but no Docker/WSLc operation was performed; Windows app/path inventory found no GZDoom target. Historical R175 HUD 50→49 and R196/R197 single-arm MAP01 results retain their narrower scope.
+**Current-main follow-up to R180 (2026-11-14, PR #10299):** The missing public `late_input_horizon_verified` cancellation-result field is now integrated at `a26b22fde47d2fb57f5ccc09719f789296492ed9`; current main `d3a74d39bf117edd32ef07da20fbb037f73387c7` retains it. A fresh exact-result MCP assertion is covered, and 95 focused Win32 owner/MCP/compiled-caller tests pass normally and under `-O` on CPython 3.11.9. This repairs the projection gate only: R180 remains partial because its frozen runner ended before its remaining gates. No fresh native run or MAP01 result follows from the regression tests. The current Windows app/process inventory has no GZDoom target; the exact executable path is still being located.
+
+**Current-main public-caller integration and MAP01 direct/compiled ABBA comparison (2026-11-14, commit `68ee780c`):** The exact-current-main native R237/R238/R239/R240 block completed its frozen ABBA schedule (direct, compiled, compiled, direct). Each trial accepted one MAP01 LEFTDOWN under the same producer-only failure condition; source action remained UNKNOWN, separate release and both 2 s horizons passed, each independent HUD oracle classified 50→49, task success stayed null, replay was denied, and the target closed normally. All four trial manifests were rechecked with zero missing/hash/size mismatches. Direct route interval median was 3.0800423 s (3.0526709–3.1074137; 96/97 public result queries); compiled median was 3.4401911 s (3.3533185–3.5270636; 120/125 queries), 0.3601488 s or 11.7% slower at n=2 descriptive medians. No provider/model call occurred, so token cost is not applicable. The interval starts after the shared stable baseline; precise outer lifecycle timing was not instrumented. This is scoped native caller-path evidence, not a model/token efficiency or population speed/reliability result, and does not complete #57. Raw local packet and exact ledger: `private-packets/map01_native_windows_current_main_r217_exception_recovery_20261114/runner-candidates/r225-spawn-phase-profile/` (`REPORT.md`, `block-ledger.json`). Current-main focused `runtime.cli_v1.test_mcp_supervised_win32` and `runtime.cli_v1.test_owned_win32_session` passed 86/86 normally and 86/86 under `-O` on CPython 3.11.9. Next: retain the negative caller-route result, then design a valid current-main paired policy/economics study with full lifecycle and provider accounting; do not use the unsupported post-expiry `interface_cancel` arm described below.
+
+**#57 G10-to-current-main compatibility recheck (2026-11-14, exact main `68ee780c`):** Refreshed archived-vs-current source hashes and compared the G10 formula workflow to current Calc APIs before proposing another adapter. G10 uses OCR-bound fresh capture observations and scores two saved rows containing formulas `29×31` and `43×47`; current `calc-ocr-save-v1` is a different fixed literal 731/864 two-cell profile, and its FODS scorer rejects formula cells. The current parent-held artifact helper also remains UNKNOWN without trusted save-controller evidence. Main now adds an owned Calc profile/task-verifier path, compiled verifier deadlines and X11 custody fences, but none establishes G10 live compatibility. The old G10 caller's custom `a1_second` remint is still absent from the shared adapter contract; fresh-proposal composition remains offline/Fake X. Current profile/artifact and three G10 composition seam modules passed 50/50 normally and under `-O`; see [the refreshed G10 crosswalk](../research/integration/calc_g10_current_main_crosswalk_20261027.md). Next: keep the existing fixed profile unchanged and only then decide whether a distinct formula-capable task profile is needed for a prospectively frozen cold/warm/invalidation/repair study. No G10 allocation was rerun.
+
+**G10 formula effect scorer candidate (2026-11-14, local current-main edits):** Added `runtime/guarded_x11_v1/calc_g10_formula_effect_v1.py`, scoped to the two archived G10 cases (29×31 and 43×47). It scores exact FODS headers, values, cached products and formula, refuses extra/ambiguous/unsafe content, and never promotes `task_success`. The test scores the retained `first.fods`/`second.fods` bytes and passes with the existing literal profile and artifact custody tests: 41/41 normal and 41/41 under `-O`. It is not yet wired to `CalcTaskArtifact` or `interface_verify_task`; live Calc, fresh OCR/reference composition and #57 economic comparison remain unverified. Keep as candidate source pending parent-held custody integration; raw G10 allocation was not rerun.
+
+**G10 parent-side two-save custody candidate (2026-11-14):** Added `runtime/guarded_x11_v1/calc_g10_artifact_v1.py`. It keeps immutable `first` and `second` FODS snapshots and binds each to a release-verified action receipt, unique save request, same call/attempt/process/window generation, digest and file identity. It scores only after verified close and exact target exit, and promotes success only if both archived G10 formulas match. Tests exercise the actual archived FODS bytes plus missing, reordered, mutated, wrong-generation and unreleased evidence; candidate/profile/artifact focused suite passes 34/34 normally and 34/34 under `-O`. This class remains internal and offline: no public MCP registration, live G10 graph plumbing, fresh OCR/reference composition or live Calc trial exists yet. See the updated [G10 crosswalk](../research/integration/calc_g10_current_main_crosswalk_20261027.md). Next: integrate per-action parent receipts and distinct profile/plan through the public verifier without changing the existing 731/864 profile, then compose and freeze a live trial.
+
+**MAP01 native Win32 expiry/recovery / #57 handoff (2026-11-14, current main `7dcc86af`):** R187 observed HUD 50→49; R190's zero-dwell tap remained 50→50; R191/R192 and fresh current-main R196/R197 used 120 ms LEFT-down dwell and each observed 50→49. R194 and R195 are preserved pre-input runner/setup failures and are not effect trials. R196 accepted one dispatch (native input lower bound 4), excluded the delayed post-expiry SHIFT-UP/second click, verified separate release and the owner-bound 2 s horizon plus independent neutral horizon, and received the release receipt 15 ms after authority expiry. R197 independently reproduced these gates with a unique program and lease ID; its expiry-to-release receipt was also 15 ms. Both current-runtime repeats classified HUD 50→49; broad scene change stayed below 5% (R196 0.0303%, R197 0.0323%), and `task_success` remains null. Both owned GZDoom processes closed with exit 0, no forced termination; custody is clear (R196 revision 692, R197 revision 701). R196's 239-entry raw manifest and R197's 262-entry raw manifest have zero mismatches; their payload SHA-256 values are `51989fd268c64d56e59e77f098a6254ba810d59b27554a8b55c7b0a6ab5b69db` and `ce9372f8f494943932da4405fef01dbdec16c3ab3b534d1f8928c881ffb4baaf`; manifest-file SHA-256 values are `e561219f943f16c5eb2d780f8601672477cd8d20b18825df8ff869caeb038cae` and `d3a38a7c503f4a9f35ddcae9232b0c9efa3d29b38c4c1c575bed6264c221263c`. R196/R197 frozen condition SHA-256 values are `21bb769924410a1ad42de44e60ecd69881e469c0bc620e8bfcbb573ec92cf35e` and `727ea4dc6c918930d2c4b61086910df5a322422f8f759f3015ec4e314a11d2cb`. Each packet includes hash-checked snapshots of the frozen runner/oracle files. These two repeats support continued investigation of the dwell condition, not causal proof or broad reliability. R187/R190/R191/R192/R196/R197 are not a matched efficiency comparison. Issue #57 remains open.
+
+**#57 expiry-caller comparison seam (merged 2026-11-14, main `a141e4e`; native pair pending):** The optional `public_caller` policy routes expiry cancellation through the exact public `interface_cancel(call_id)` path with a bounded monitor fallback; default `automatic` behavior is unchanged. The production-CLI stdio test binds the pending call ID to the retained monotonic deadline, verifies caller cancellation within grace, and joins exact-call result/effect receipts. After merge, `runtime.cli_v1.test_mcp_supervised_win32` passes 43/43 normally and 43/43 under `-O` on CPython 3.11. This is Fake Win32 evidence only; it does not establish native expiry handling, delayed-input exclusion, real task effect, or efficiency. The last recorded host inventory found Docker Engine 29.8.1 running, all 16 stored containers stopped, and the MAP01 containers five weeks old on a Linux/Xvfb image; no `gzdoom.exe` was found in the inspected Windows/Steam paths. No old container was reused and no live input was sent. A fresh native pair still requires the target, pinned assets, exact condition, calibrated oracle, and complete accounting. Issue #57 was closed on 2026-11-14, but that closure does not resolve its integrated-efficiency question or supply experimental evidence. Details: [seam and freeze requirements](../research/integration/map01_win32_recovery_efficiency_crosswalk_20261114.md#57-map01-expiry-trigger-comparison-seam--candidate-implemented-native-pair-pending) and [prospective pair protocol](../research/integration/map01_win32_expiry_caller_pair_freeze_20261114.md).
+
+R196 candidate/conditions/runner and trial files are local-only under `private-packets/map01_native_windows_current_main_r180_abnormal_exit_20261114/runner-candidates/r193-current-main-held-click-repeat/`; the trial folder is `trials/r196_native_expiry_delayed_second_click_map01/`. R194 stopped before dispatch because the expected `server_with_expiry.py` was absent from its packet; R195 stopped before dispatch because runner and frozen dwell-key names differed. Both remained input-free, custody clear, and were closed normally through Computer Use, with exit codes unavailable; preserve them in the denominator as setup failures. R196 is the repaired fresh current-main attempt. Do not reuse any R187/R190/R191/R192/R194/R195/R196 conditions or IDs. #57's matched comparison and broader native task boundary remain open.
+
+**MAP01 native Win32 recovery R180 (2026-11-14):** R180 accepted one native LEFTDOWN, observed isolated producer exit 86, and retained separate UNKNOWN source action / recovered cancellation scopes with no replay. Owner receipt checks verify the returned left button-up attempt, a full two-second horizon from release receipt (77 observations, 32 ms max gap), and 15 ms exception-to-release latency; an independent post-stop neutral horizon also passed. The frozen runner stopped because it required a `late_input_horizon_verified` boolean absent from the public cancellation result, despite `recovered` and valid raw horizon fields. A pinned full-resolution image independently classifies 50 to 49, but the complete preregistered runner did not finish, so R180 remains `PARTIAL_EVIDENCE_STRICT_RUNNER_GATE_STOP`; task_success remains null. A later separate CUA cleanup attempt displayed 48 and is not part of the effect pair. Raw stays local-only; see [R180 evidence](../research/integration/map01_native_win32_recovery_r180_20261114.md). An isolated R181 private-runner horizon projection now passes ten fixture cases normally and under `-O` (exact 2 s passes; short coverage and invalid receipts fail closed). This is offline candidate coverage, not a live R181 result. Next: integrate it into a fresh full runner candidate and fixture-check every preregistered gate; keep frozen R180 evidence unchanged. Native reliability and matched #57 efficiency remain open.
+
+**MAP01 native Win32 recovery R179-R02 (2026-11-14):** exact-current-main trial reached one accepted LEFTDOWN and producer exit 86. The strict runner stopped on a public query-projection mismatch: nested action is UNKNOWN/release false, separate cancellation says recovered/release true, while the query envelope has `input_dispatched=false` and no release field. No replay occurred. Post-stop independent same-generation neutral horizon passed (2 s, 176 samples, max gap 13.3955 ms); public observation returned with matched generation, but its HUD capture was occluded and the alternate window-client capture was black. Exact ammo effect stays UNKNOWN and task_success stays null. The owned process was absent at passive readback after one bounded close request; no force termination. 171/171 private manifest entries verify, manifest SHA-256 `849f6eeea76e66626772aa11130a85f9f77501a603d33ab9f51a0ddf12e6841d`. See [R179-R02 evidence](../research/integration/map01_native_win32_recovery_r179_r02_20261114.md). Current-main `test_compiled_graph_routes_each_action_through_supervised_dispatch` confirms outer-query `input_dispatched=false` versus nested action `true`; focused CPython 3.11.9 run passed 1/1 normally and under `-O`. A separate recovery evidence-retention bug was fixed and merged in PR #10289 (main commit `a8020383`); 145 targeted tests pass normally and under `-O`. R180 addressed the query-scope and foreground-bound effect capture. Its retained runtime recovery/horizon/effect evidence is useful, but its private orchestration runner stopped on an absent public-result boolean; see [R180](../research/integration/map01_native_win32_recovery_r180_20261114.md). The offline R181 horizon projection now passes ten fixture cases normally and under `-O`. Next: integrate it into a full candidate runner and fixture-check every frozen gate before a fresh live attempt. Native reliability and matched #57 efficiency remain open.
+
+**MAP01 native Win32 recovery evidence R175–R178 (2026-11-14):** R175 is the distinct abnormal-producer path: after one accepted LEFTDOWN, the producer-only `os._exit(86)` left the source action UNKNOWN/release-unconfirmed; the same dispatch owner recovered within the scoped bound, both two-second horizons passed, and the exact ammo effect was 50→49. R176 and R177 remain strict preregistration failures despite useful post-stop evidence; their records explain the duplicated-UP and query-envelope/action-scope harness errors. R178 is a scoped observer-timeout pass with separate UNKNOWN source action and recovered cancellation, 50→49, and 320/320 raw hashes verified, but its producer exited normally (0), so it is not a second abnormal-exit sample. Raw stays local-only. Conditions, attempt classifications, hashes and limits are in [R175–R178 evidence index](../research/integration/map01_native_win32_recovery_evidence_r175_r178_20261114.md). PR #10286 adds current-main fake-producer coverage for the pending-to-recovered public query sequence; native abnormal-exit replication and the matched #57 comparison remain open.
+
+**MAP01 native public observation ROI probe (2026-11-14):** eight paired full-client/1×1 `screen_physical_px` observations on one GZDoom MAP01 target returned the same target generation and exact image dimensions. Full capture median/p90 were 344.134/350.008 ms; 1×1 median/p90 were 22.568/32.405 ms. The completed call window supports testing generation-only ROI revalidation inside the native exception-recovery path. A later Computer Use window-close click landed in the game client and the refreshed HUD showed ammo 50→49; the overall attempt is preserved as `DEVIATION_AFTER_MEASURED_CALLS`, not a clean zero-input PASS. No MCP dispatch or recovery was run. Raw packet: 96 files, zero hash/size mismatches, manifest SHA-256 `af56926eadf1b1c362811840d1d83dbaf22e3c0134f7931fbb953f274776178e`. Summary and all 16 timing/image-hash rows: [MAP01 ROI probe](../research/integration/map01_generation_observe_roi_probe_20261114/README.md). This does not establish faster integrated recovery, input release, task-effect success, reliability, or #57 economics; continue with a separately frozen native recovery attempt and retain full-resolution effect captures.
+
+**WSLc Fake X identity-prefix release E05 (2026-11-13):** one fresh cached-image WSLc run passed the public MCP `test_change_after_modifier_releases_prefix_and_requires_review` case (1/1, Python 3.11.2, network disabled). The fixture changed target identity after a modifier press; the exact in-test event assertion was CTRL KeyPress then KeyRelease, with a verified FakeX all-up release receipt. Terminal action remained `execution_failed`, `task_success=null`, replay denied, and review required; a stale-alias follow-up was refused before dispatch. Conditions, source hashes, invocation, stdout, retained test files and adjudication are in [E05](../research/integration/wslc_fake_x_identity_release_e05_20261113/README.md) and the local private packet. E01–E04 setup/import failures remain preserved. This is FakeX-only evidence, not physical/X-server input, task success, delayed horizon, native Win32 exception recovery, WSLc desktop, MAP01, reliability, or efficiency.
+
+**Win32 exception-to-fresh-recovery composition E01/E02 (2026-11-13):** deterministic producer coverage forces `_run_standard_program` to catch a dispatch exception and persist `runtime_failed` plus a `producer_exception` UNKNOWN release receipt; the one-shot parent reader retains it. A public MCP integration test now carries that failed action's operation, generation and program-derived obligations into a separate fresh `interface_recover_orphaned_input` session. It requires a late-request horizon when the exception leaves dispatch uncertain, joins a matching recovery/horizon receipt, keeps the original action UNKNOWN with release unconfirmed and task success null, denies replay, and reports that a fresh generation is required. Producer, supervisor, owner and MCP suites passed 122/122 in both Python 3.14.2 normal and `-O` modes. Backend and recovery supervisor are fakes; horizon values are fixture evidence only, and no native target, real input, physical UP or observed two-second horizon was run. Next: run this composition with the native producer and supervisor on an isolated target, preserving the same UNKNOWN and horizon gates. See `runtime/cli_v1/test_win32_standard_producer.py` and `runtime/cli_v1/test_mcp_supervised_win32.py`.
+
+**MAP01 expiry clock diagnosis, repair and live R158 (2026-11-13):** R142's exact task effect, eventual same-generation neutral readback, two-second horizon and scoped demo check passed, but its unchanged 20 ms boundary gate failed at 41.941 ms; release-call timing was not captured. R142 mixed CPython 3.11 `GetTickCount64` deadline timestamps with QPC sampler timestamps, and the shared auditor counted deadline equality as fully post-expiry. The auditor now requires strict `>`; 59 local tests pass normal and `-O`. Read-only R142 re-adjudication excluded seven equality rows and changed post-expiry-down attribution from 39.9998 to 24 ms while preserving the 41.941 ms QPC gap, 42.1552 ms outer bracket, and original `not_verified` outcome. Fresh R158 then passed all 19 runtime gates on the public compiled-supervised Win32 path using QPC: unchanged 20 ms outer bracket 10.4057 ms, first W-up read 8.3652 ms after expiry, two `SendInput` calls at +7.3236/+7.9675 ms, exact-call ammo 50→49, same-generation release, 2 s neutral horizon (183 samples; max gap 11.5357 ms), and scoped demo PASS. The owned process exited normally. The R158 packet's preregistration attempt label differs from its frozen conditions ID; preserved as a clerical deviation. Local post-exit/final manifests verified 81/81 and 87/87. [Diagnosis, raw clock probe and corrected R142 derivation](../research/integration/map01_expiry_clock_release_diagnosis_20261113/README.md); full R158 packet: `private-packets/map01_native_windows_deep_trace_20261113_r158`. This scoped pass does not establish reliability, exclude all queued OS effects, clear MAP01, or provide #57 efficiency; keep the broader goal active.
+
+**Deadline clock and custody call-path DCLK-R01/X01 (2026-11-13):** current merged-main stdio MCP clock-only preflight passed in parent, spawned child and server on CPython 3.14.2/QPC at 100 ns; two bracketed replies retained one server instance. No target, backend, authority, lease or input was opened. Its four-file manifest was independently verified. A separate isolated native-Windows custody experiment wrote UNKNOWN with Python 3.11.9/GetTickCount64, then reopened it under Python 3.14.2/QPC. The exact obligation remained, new admission was rejected, and the 506-byte journal hash did not change. The current v1 custody journal stores no monotonic timestamps or deadlines, so that transition needs no clock conversion. Conditions, scripts, outputs and journal are retained in the local packet and all eight manifest entries were verified. Eight caller-preflight tests pass normal and `-O`. D05/R142 still show why clock resolution and exact native release-call timing matter; D06 is no-input loop evidence, and R145/R146 are single instrumented release-path samples. See [DCLK-R01/X01](../research/integration/windows_deadline_clock_callpath_20261113/RESULT.md). Clock qualification does not establish restart recovery, physical release, reliability, a 20 ms guarantee, or matched efficiency.
+
+**Mixed-runtime stdio clock follow-up (2026-11-13):** a new parent-to-spawned-server diagnostic made eight clock-only calls per pair. CPython 3.11.9/GetTickCount64 parent versus CPython 3.13.14/QPC server placed 0/8 server samples inside the coarse parent brackets; the same-runtime CPython 3.13.14/QPC control placed 8/8 inside. Both were input/authority/lease free and retained one server identity. This shows the two readings cannot be used interchangeably for parent-side latency measurement in this setup. It does not test acceptance of `server_sample + TTL` at an action endpoint or native release. The raw samples and precise limits are in [the mixed-clock report](../research/integration/windows_mixed_python_clock_20261113/RESULT.md). The DCLK-R01/X01 report paths were omitted from this sparse working-tree materialization but are tracked in main; their retained packet manifests were re-read here and verified 4/4 and 8/8 with no missing files or hash/size mismatch.
+
+**Mixed-clock reversal and poll-resolution recheck R03–R05 (2026-11-13):** actual public stdio `interface_clock` calls now cover both mixed-runtime directions plus a same-QPC control: Python 3.11 client / 3.13 server was 0/8 bracketed (+22.459–35.968 ms after the client bracket); 3.13 client / 3.11 server was 0/8 (−36.096 to −22.268 ms); 3.14 QPC control was 8/8. All 24 calls were input-, backend-, authority-, and lease-free. A separate 20×50 ms loop using the runtime's actual 2 ms monotonic poll measured overshoot of 0.101–12.740 ms (median 12.613 ms) on Python 3.11.9/GetTickCount64, versus 0.086–0.388 ms (median 0.180 ms) on Python 3.13.14/QPC. This supports the D05 clock-quantization diagnosis and makes mixed clock coordinates a concrete caller/server hazard; it does not prove the cause of R142's 41.941 ms release bracket or test action-endpoint expiry, physical UP, or task effect. The new packet hashes and limits are in [R03–R05](../research/integration/windows_mixed_python_clock_20261113/R03_R05_RESULT.md). `interface_clock` stdio regression now also checks that the server's reported clock implementation matches the caller runtime; four clock tests pass normal and `-O` on CPython 3.11.9 and 3.14.2.
+
+**MAP01 native Win32 R157 (2026-11-13):** [R157](../research/integration/map01_native_win32_r157_20261113/README.md) passed its 18 single-run release/task gates and retained-demo adjudication. W was observed up 10.7525 ms after expiry within a 12.0785 ms outer sampling bracket; public recovery later confirmed release, and independent neutral input observation passed for 2 seconds on the same process/generation. The exact-call ammo oracle verified 50→49. Demo audit found no recorded W-forward command after expiry/release in the scoped interval, but cannot exclude queued Windows messages or other effects. Raw/conditions/manifests remain in the task-local packet. The frozen source was a docs-only task-branch commit atop main, not main itself, and this run did not exercise the exception-only reconciliation branch. Reliability, MAP01 completion, queue quiescence, and #57 matched efficiency remain open.
+
+**MAP01 recovery-stage trace (2026-11-13):** [R153/R154](../research/integration/map01_recovery_deep_trace_r153_r154_20261113/README.md) preserve R153's pre-action foreground-gate failure and R154's fresh one-dispatch pass. R154 passed the unchanged 20 ms outer release bracket at 10.0353 ms, independently verified the same-generation ammo effect 50→49, neutral release and two-second horizon, and attributed 1.1148 ms from helper exchange entry to recovery entry. The three process traces had QPC clocks and zero dropped spans; demo adjudication found no recorded forward command in its scoped interval. This does not explain R151's 7.9521 ms tail, establish broader reliability, or support a speed claim. Raw and hashes remain in task-local packets; continue the computer-control goal and #57 comparison.
+
+**Finite Calc economic comparison (2026-11-13):** [M01](../research/integration/calc_three_arm_m01_20261113/README.md) retained all six fixed-order attempts. All scoped correctness/release checks passed. Prepared-invocation medians: optimized ordinary 16.58s, compiled 19.40s, repeated grounding 33.48s. Compiled was approximately 17% slower than optimized ordinary in this small batch; HOLD economic promotion. Two samples per arm, cache/load uncontrolled; full goal and #57 broader scope remain open.
+
+**Calc reuse and bounded repair (2026-11-13):** [D25–D28](../research/integration/calc_reuse_repair_d25_d28_20261113/README.md) retain the original selection-repaint failure, two-phase correction, one-call location reuse and a known-obstruction refusal/repair/reuse result. These sequential qualifications do not establish compiled-plan reuse or matched efficiency.
+
+**Calc phase qualification (2026-11-13):** [D24](../research/integration/calc_phase_lifecycle_d24_20261113/README.md) completed one parameterized compiled phase with independently checked numeric saved effect and neutral terminal release. Same-session reuse, invalidation/repair and matched full-lifecycle economics remain open.
+
+**MAP01 capture freshness (2026-11-13):** [R151/R152](../research/integration/map01_capture_freshness_r151_r152_20261113/README.md) retain both the 22.3277 ms failed release bracket and the 12.2353 ms scoped pass. The cause of the long R151 interval, general reliability and matched efficiency remain open.
+
+**Public delayed-effect verification (2026-11-13):** [R150](../research/integration/win32_public_task_effect_r150_20261113/README.md) passed one native public-MCP composition: a queued counter effect occurred 766.8953 ms after the verified recovery horizon, and the server-configured oracle attached independent task success through `interface_verify_task`. The original recovered action stayed task-success-null and replay-denied. All 23 queue checks and eight receipt/evidence joins passed; 186 original files were retained and hash-verified. This advances the verifier connection beyond R149; MAP01, quiescence, reliability and same-model efficiency remain open.
+
+**Native queued-effect boundary (2026-11-13):** [R147-R149](../research/integration/win32_native_queue_effect_boundary_20261113/README.md) distinguish input release from later application effects on current main. R147 exposed a ctypes `MSG.hwnd` method defect and left its action UNKNOWN; separate R148 UP-only orphan recovery passed with a new observed target generation, a verified two-second horizon, and clear durable custody. Fresh R149 corrected the fixture field to `hWnd`, left accepted keyboard input in the native queue, and observed exactly one task-counter increment **691.4841 ms after the verified horizon ended**. The public action remained `recovered`, task success null and replay denied. This is a controlled queue-consumption counterexample, not spontaneous delayed OS delivery, MAP01 completion, reliability or efficiency. The report preserves all three first outcomes, adds a qualification to historical r09/r10, and retains 281 hash-verified raw files privately. The next task is to compose the task-effect distinction with the existing verifier/MAP01 caller; input-state recovery alone must not be read as application quiescence.
+
+**Win32 launcher visibility (2026-11-12):** [D14](../research/integration/win32_custody_launcher_visibility_20261112/README.md) found that the same unpackaged interpreter and logon namespace see different journal/HKCU-marker views under Codex and verified desktop Explorer. The native factory now refuses to initialize an empty view when the known MSIX peer layout retains that namespace's journal, and rechecks under the namespace mutex. The existing-journal path stays usable. The demonstrated regression failed before repair; 202 related tests passed normally and under `-O`. Read-only native factory probes passed the scoped refusal check with a constructor sentinel, leaving the real journal unchanged. Cross-launcher continuity itself remains FAIL: shared-store qualification and history-preserving migration are still required before arbitrary launcher transitions. This adds no input/recovery/MAP01 or efficiency result.
+
+**Win32 expiry recovery checkpoint (2026-11-12):** [PR #10247](https://github.com/Unjuno/agent-interface/pull/10247) preserves recovery UP evidence and corrects the release-boundary checker to use the conservative outer read interval. R144 therefore remains a strict-boundary failure at 20.0044 ms against the fixed 20 ms criterion. A fresh instrumented R145 passed at 18.0285 ms and measured 7.5713 ms in a phase-only journal write before cancellation could start. [PR #10248](https://github.com/Unjuno/agent-interface/pull/10248) schedules the bounded supervisor before that write while retaining the already-durable unresolved admission fence. Blocked/failed-write regressions and 192 related tests passed normally and under `-O`; instrumented composition passed 168 tests in each mode.
+
+Fresh R146 passed the same native release/task/demo gates at an outer bracket of **12.0067 ms**. Its W-UP API return preceded completion of the phase write. One dispatch independently changed ammo 50→49, retained same-generation neutral readback and the two-second horizon, and passed the scoped demo-command audit. The graph remained `SAFE_YIELD/delivery_uncertain`; the target exited normally and custody ended clear. The merged runtime tree equals the tested candidate. Conditions, raw and additive audits remain in task-local private packets; the linked PR records the reviewable implementation and evidence limits.
+
+These are chronological single instrumented native-Windows observations, not a matched speedup estimate or general 20 ms guarantee. Next work must reuse the retained delayed-effect studies and verify physical custody-store continuity across launchers before extending those claims. MAP01 completion, arbitrary queued-input exclusion and [#57 same-model/all-attempt efficiency](https://github.com/Unjuno/agent-interface/issues/57) remain open. Historical results below retain their original environments and limits.
+
+**Docker/Xvfb delayed-input recovery integration R06 (2026-10-29):** one standard public MCP caller run on the current local runtime passed the harness and Docker gates after fixing a local regression that passed the default `files` retention option into `OwnedGuardedSessionOwner`. The private Xvfb pause was 4,000.350 ms; cancel returned in 309.405 ms; separate supervisor release readback completed 4,061.120 ms after cancel start; the 8.5 s delayed-action horizon ended with A/B/C all up and no delayed B. The old exact task-effect oracle **failed**: A count rose from 1 to 3 via two post-cancel A presses. A distinct fresh-session C task passed its exact single-effect/readback and nine fence checks in 48.269 ms input-to-readback. The old operation remains `runtime_failed`, release false, cleanup UNKNOWN, task success null and replay denied. R06 is one synthetic Xvfb result using a test-only 12 s transaction budget; it does not prove native Win32/WSLc/MAP01 or broader reliability. Its recovery latency is not comparable with R23's one-action score (direct 100, compiled/files 94.99, compiled/journal 100.51); R23 showed near parity between journal and direct, not a demonstrated general speedup. See [R06 evidence and limits](../research/integration/docker_xvfb_delayed_release_recovery_r06/README.md); full raw and hashes are in its local private packet.
+
+**Docker/Xvfb receipt-retention comparison R23 (2026-10-29):** six matched pairs compared direct guarded X11, compiled GUI with per-file JSON receipts, and the current local O(1)-indexed JSONL journal on fresh FreeDoom2 MAP01 instances. All 18 arms passed task-effect, W-down, verified release, independent W-up and remaining route gates. Means were 875.531 ms direct, 921.742 ms compiled/files, and 871.079 ms compiled/journal. With direct normalized to score 100, scores were 100.00 / 94.99 / 100.51. Compiled/files was slower in all six pairs (+46.211 ms mean); journal beat per-file storage in all six (-50.663 ms mean), while journal-vs-direct was mixed 3–3 and near parity (-4.452 ms mean). All 222 journal references resolved in a separate read-only audit. This is one synthetic Docker/Xvfb action and bridge/compiled route, not MCP/provider-loop efficiency, WSLc/native Windows, delayed cancellation recovery, MAP01 completion or broad reliability. The O(1) journal change is unmerged and the result is not pooled with the preceding linear-scan R22 or runner-changed R20. See [R23 details and limitations](../research/integration/docker_vizdoom_receipt_journal_efficiency_r23/README.md); full raw is retained in the task-local private packet outside this repository.
+
+**Docker/Xvfb matched standard-caller auto-repeat control (2026-10-29):** preregistered A-B-B-A gave repeat ON old-task oracle FAIL 2/2 (effect count 4 vs expected 1; three post-cancel A presses each), and persistent OFF oracle PASS 2/2 (count exactly 1; no extra A presses). ON samples nearest to every extra press read mode 1 within 5.879 ms; OFF samples all read 0. All arms had a ~4 s observation gap during the Xvfb stop. Owner retirement, supervisor release readback, independent neutral reads, delayed-input horizon and distinct fresh-C task passed in every arm. The canceled API operation remained `release_confirmed=false`, cleanup UNKNOWN, task_success null, replay denied, terminal runtime_failed. This supports repeat as a contributor only in the pinned synthetic condition (n=2 per arm); original R02 raw is unavailable and exact historical cause remains unproven. See the [matched control report](../research/integration/docker_xvfb_autorepeat_matched_caller_20261029/README.md) and [lifecycle/custody report](../research/integration/docker_xvfb_delayed_release_budget_20261029/AUTOREPEAT_PERSISTENT_OFF_CALLER.md). No production global setting change, native Windows/WSLc/MAP01, broad reliability, or efficiency claim.
+
+**Docker/Xvfb delayed-input calibration update (2026-10-29):** A new disabled-auto-repeat XTEST control (r03) completed in the pinned Docker image: global auto-repeat was read back OFF, the exact private Xvfb was paused for 4,000.224 ms via pidfd, no repeated A presses occurred, and post-release keymap was neutral. Paired with the separate enabled calibration (two repeats 39.879 ms apart), this initially suggested auto-repeat as a compatible explanation; later caller-level controls refined that inference, and exact R02 causation remains unproven. R02 remains old-task-effect FAIL, runtime cleanup/release UNKNOWN, replay denied; its full structured raw was accidentally overwritten by a case-insensitive summary write. The local packet has an additive custody correction and retained summary/stdout/image, not the original full raw. The r01/r02 disabled-control setup failures stopped before any key event or Xvfb pause and are preserved. See [the R01–R02 and calibration scope record](../research/integration/docker_xvfb_delayed_release_budget_20261029/README.md) and local packets. No Windows/WSLc/MAP01 or end-to-end speed claim follows.
+**Docker/Xvfb standard-caller blocked-release follow-up (2026-10-28):** on current main, R04 (1 s child cancel-ack hold), R05 (no hold), and R06 (exact private Xvfb paused for 1 s through pidfd) each passed the prestarted-supervisor integration test 1/1. Each observed owner retirement, verified supervisor release attempt, separate all-up readback, no delayed B through about 8.5 s, and a distinct fresh-session C task oracle pass. Cancel returned in 256.883 ms (`cancel_unconfirmed`) for R04, 117.409 ms (`cancel_requested`) for R05, and 310.247 ms (`cancel_requested`) for R06. The original calls remain `UNKNOWN`, `release_confirmed=false`, `task_success=null`, replay denied; R05/R06 terminals retain `runtime_failed`/`EOFError()`. These one-run conditions are descriptive, not a causal timing estimate. R03's body passed but its structured report was not retained because of an environment-variable typo; do not count it as audited evidence. Direct-XTEST R02 separately observed held-key cleanup, with inner test exit 0 and outer wrapper exit 2 from CRLF. These are synthetic Xvfb samples, not native Win32/WSLc/MAP01 or a blocked X-server kernel call. See [the evidence and limitations](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md); full local packets are under `private-packets/`.
+
+**Docker/Xvfb MAP01 efficiency comparison (2026-10-28):** PR #9796 merged as `65edb4a7685bc9a6104965c294d612d4b34502c0`, allowing bounded `key_state` holds/releases in guarded X11 keyboard tails. Six counterbalanced direct-versus-compiled pairs then passed all twelve task-effect and input-release gates. Compiled was slower in all six pairs; median paired difference +49.027 ms (+5.58%). Local `runtime/guarded_x11_v1` discovery passed 197 tests with two environment-dependent skips, normally and under `python -O`. This is descriptive Docker Desktop Linux/Xvfb/FreeDoom MAP01 evidence only; it does not establish WSLc, Windows transfer, MAP01 completion, blocked-I/O recovery, or general reliability. Raw, conditions, failures and hashes are preserved in [the R10/R12/R14 packet](../research/integration/docker_vizdoom_x11_caller_efficiency_20261028/README.md).
+
+**Current-main efficiency follow-up (2026-10-28):** four additional counterbalanced pairs ran on `c7701e08ce13290a9c71aeacaf0af578521f85bb`, with 8/8 task-effect and input-release gates passed. Compiled was slower in all four pairs: mean +46.201 ms (+5.32%), median paired increase +46.092 ms. Receipt timing decomposition shows +1.510 ms in bridge execution interval and +44.692 ms in the surrounding route residual; every arm had bridge sequence 7, while compiled retained 19 more bridge JSON records. This points profiling at graph bookkeeping and retained evidence, without proving either alone caused the gap. These pairs are not pooled with earlier source candidates. Focused Docker-local tests passed 44/44 in normal mode and under `python -O`. The shell wrapper returned 2 after each saved arm result because of its CRLF ending; all arm-level records passed and no arm was retried. See [the R03 record](../research/integration/docker_vizdoom_x11_efficiency_current_main_r03_20261028/README.md) and task-local packet under `private-packets/`.
+
+**R04 instrumented profile:** Four new pairs again passed all 8 task/effect/release arms. Compiled averaged +54.034 ms (+6.17%) on this instrumented run. Its in-route `_save` calls took 84.285 ms per arm versus 31.695 ms direct; 19 additional receipt saves averaged 49.535 ms. This is the strongest measured overhead lead, not a confirmed sole cause; the trace and existing failure/replay semantics must be preserved. The original preregistration prose has a recorded interpolation defect, while the structured condition JSON and runner hash are intact. See [the R04 profile and limitations](../research/integration/docker_vizdoom_x11_efficiency_profile_r04_20261028/README.md).
+
+**R05 storage microbenchmark:** On the same Docker bind mount, 19 representative receipts written as separate pretty JSON files took 31.165 ms median; compact JSONL with per-record flush took 6.343 ms median (4.91x faster). This isolates storage layout only; it proves neither durability nor compatible `effect_ref` lookup or crash recovery. Next, prototype and test an append-only receipt journal with ordered lookup and fail-closed handling of a torn final record before considering runtime integration. See [R05 conditions and limits](../research/integration/docker_vizdoom_efficiency_storage_microbench_r05/README.md).
+
+**R07 persistent receipt-journal prototype:** Two independent runs each used 10 alternating repetitions on the same 19 actual R04 pair-19 receipts. All readbacks matched; 12 tests passed normally and under `python -O`. Combined median append plus verified lookup was 54.224/68.739 ms for pretty JSON files and 14.998/16.145 ms for persistent locked hash-linked JSONL, a 3.36–3.62x speedup (70.9–72.3% lower) in this storage-only sample; JSONL output was 21.1% larger. The prototype is isolated under research, flushes per record without `fsync`, and does not implement the production `compiled.py` separate `*-effect.json` API. Crash durability, interruption custody and caller compatibility are unverified. This storage result does not change the integrated score: compiled control remains about 5–6% slower than direct in observed Docker/Xvfb samples. Conditions, source, both runs, initial failed logs and a hash manifest are preserved in [R07](../research/integration/docker_vizdoom_receipt_journal_r07/README.md) and its local packet. Do not adopt into runtime based on this microbenchmark.
+
+**SQLite interruption archive boundary:** [The preserved #6526 packet](../research/integration/sqlite_interrupt_pending_write_6526_7772_20261003/README.md) records three historical database outcomes and retains its original text unchanged. Its statements about mandatory multiple nonauthor agreements and a sole sender are historical worker-imposed conditions, not current repository-wide merge requirements. Apply the user's current instruction, applicable repository rules and actual platform protection. The archive does not authorize replay or prove GUI task effects; its database states and negative controls remain evidence for their original narrow scope.
+
+**Calc compiled-control evidence and comparison boundary (2026-10-27 audit):** The current tree already contains a Calc-specific current-image callback and compiled-control history; the absence of a usable path must not be inferred from a missing historical file or unintegrated comparison. In [successor 05](../runtime/results/calc-compiled-pixel-admission-05/README.md), the compiled graph entered two cells and requested Save, then safely yielded on a changed window association. A separately chosen, newly grounded modal confirmation followed. The retained workbook hash matches `OUTCOME.json`, and a read-only inspection of its XLSX XML shows A1=317 and A2=529. This supports one saved-workbook outcome with a separate confirmation, not an autonomous graph-only completion. Calc returned 255 while the owner returned 0; retain both. The source-projected usage is construction-through-terminal, not a matched baseline, and billing is unavailable. Prior attempts [01](../runtime/results/calc-compiled-pixel-admission-01/README.md), [02](../runtime/results/calc-compiled-pixel-admission-02/README.md), [03](../runtime/results/calc-compiled-pixel-admission-03/README.md) and [04](../runtime/results/calc-compiled-pixel-admission-04/README.md) remain separate failures; [the current-image callback development](../runtime/results/calc-public-compiled-adapter-01/README.md) is tested in simulation and has not established a fresh live comparison. The #57 cold/warm/invalidation/repair, matched-model/token/latency comparison and broader application transfer remain open. No historical attempt was replayed in this audit.
+
+**GZDoom MAP01 compiled live control R57–R60 (2026-10-27):** R57's direct standard caller passed one fresh-generation W-forward action, verified release and task effect, with 99.19896% upper-80% pixel change. R58 then showed why the compiled route falsely reported `effect_failed`: Win32 `window_client` returned a completely black 3,726-byte GZDoom frame although Computer Use showed the live game. PR #9609 added explicit `capture_frame` selection to `run_public_compiled`, preserving `window_client` as the default and allowing a grounded `screen_physical_px` region; merged to main as `d1417d8ca6025f1d22fafa9cd6e0f1de4d8cead4`. The focused 56-test set passed normally and under `python -O`; all PR checks completed successfully. R59 verified visible movement (99.23634%) and neutral release, but the public task oracle was not called because the runner tried to create its release-readback file twice. R60 fixed the runner evidence naming and passed all 9/9 gates: one pending dispatch joined by exact call ID, verified release and same-generation W-neutral readback, 99.23076% visible pixel change, and public `task_success=true` bound to the same call/operation/generation. The owned process exited 0 after WM_CLOSE; all six protected UNKNOWN GZDoom processes remained intact. R59 and R60 raw packets are preserved locally with SHA-256 manifests (R59 45 entries; R60 51 entries, zero mismatches). This establishes one scoped compiled live movement success on this native Windows PC; it does not establish MAP01 completion, reliability, matched efficiency, or WSLc. Next: accumulate fresh-generation evidence and run a matched no-input comparison before making broader reliability or efficiency claims.
+
+**GZDoom MAP01 compiled-caller R56 (2026-10-27):** one fresh exact-window trial on merged main `7c51ecd7` dispatched exactly once. Same-call `interface_results` eventually reported completed execution, verified same-generation release custody and neutral readback. The compiled wrapper nevertheless returned `RUNTIME_FAILED`: it required a redundant `action.result.release_confirmed` field omitted by the public result shape. The defect reproduces from the preserved response and is fixed by the current local change; 56 relevant tests pass normally and under `python -O`. A separate passive same-generation capture was byte-identical to the baseline (0/1,003,200 changed pixels), so this trial has **no visible movement effect**; the public task oracle did not run and `task_success` remains null. No replay, WSLc, Docker, or provider calls. All six pre-existing UNKNOWN GZDoom processes, including R55, were preserved. The R56-owned process was later absent before identity recheck; this worker sent no close or termination. Raw and posthoc reconciliation remain local in `private-packets/map01_native_windows_20261027_r56_pending_result_join/`.
+
+**Compiled Win32 pending-result join integrated:** PR #9607 merged as `7c51ecd7e2e93d89a6b557c33954c152cf2a864e`. On merged main, 56 tests across `test_supervised_win32_compiled`, `test_compiled_gui`, and `test_mcp_supervised_win32` pass normally and under `python -O`. It resolves the R55 timing gap for exact-call pending result polling; R56 then exposed a second public-result shape mismatch, now fixed with a regression in the current follow-up.
+
+**GZDoom public task-effect replication R52 (2026-10-26):** a newly launched Freedoom MAP01 generation passed one standard supervised Win32 scan-code W-forward action and independent public verification. The exact new window was inspected through Computer Use before dispatch; the public caller reported completion and release, same-generation readback found W neutral, and the independent upper-80% oracle measured 995,195/1,003,200 changed pixels (99.2021%). `interface_verify_task` returned `verified / task_success=true` for the exact call/operation/generation; the dispatch result correctly retained `task_success=null`. The fresh process exited 0 after exact-window close, the original foreground was restored, three retained UNKNOWN generations remained untouched, and the 64-entry raw manifest had zero mismatches. This replicates visible movement effect only; no MAP01 completion, blocked-I/O recovery, reliability, efficiency, or WSLc result. Raw remains local-only. See [R52 result](../research/integration/win32_gzdoom_public_oracle_r52_20261026/RESULT.md).
+**Public-relay Win32 recovery series R36–R40 (2026-10-26):** R40 passed 12/12 scoped conditions, with 8/8 frozen-source hashes and 38/38 raw hashes verified. Standard `interface_cancel` overtook one deferred request; supervised recovery and independent same-generation SHIFT-up readback preceded blocked stdout resume at high-resolution timing. A stale generation was refused; one fresh-generation compiled click/type/save action passed its independently bound task oracle; all inputs read neutral, fixture cleanup succeeded, and the original Codex foreground HWND was restored. R39 passed the recovery and task gates but failed foreground restoration; R36/R37 safely stopped before input; R38 exposed timing and second-fixture focus gaps. Raw stays local. These runs use an in-process blocked stdout writer, not OS pipe saturation, production-app/MAP01, WSLc, efficiency, or reliability evidence. See [R36–R39 results](../research/integration/win32_relay_blocked_stdout_recovery_20261026_r39/RESULT.md), [R39 additive audit](../research/integration/win32_relay_blocked_stdout_recovery_20261026_r39/audit_followup.json), [R40 result](../research/integration/win32_relay_blocked_stdout_recovery_20261026_r40/RESULT.md), and [R40 additive audit](../research/integration/win32_relay_blocked_stdout_recovery_20261026_r40/audit_followup.json).
+**Public-relay OS-pipe recovery R41 (2026-10-26):** first attempt retained as `FAIL_OR_UNKNOWN_FIRST_OUTCOME_RETAINED`, caused by relay child server construction rejecting the one-sided supervised-Win32 factory injection. The owned fixture preflight and foreground check passed; child stderr captured the precise exception; no observation response arrived, no input was sent, no pipe saturation/cancel/recovery gate ran, fixture exited cleanly and original Codex foreground was restored. This is a harness wiring failure, not a control result. 10/10 preregistered code/source hashes and 7/7 raw hashes verified. Follow-up requires paired factory wiring and a new run ID; no replay. See [R41 result](../research/integration/win32_relay_blocked_os_pipe_recovery_20261026_r41/RESULT.md).
+**Public-relay OS-pipe recovery R42 (2026-10-26):** new ID after R41, paired native owner/producer injection, public observation and pending dispatch admission passed. Independent SHIFT-down was not observed within the preregistered 3 s window, so pipe pressure and cancel were not started. Shutdown retained `unknown caller action or producer` with `input_dispatched=false`, but `interface_close` returned busy for an unresolved operation; preserve as `FAIL_OR_UNKNOWN_FIRST_OUTCOME_RETAINED`, no replay. R42's runner review found teardown occurred before exact-call result reconciliation and did not send public cancel on its abort path. This explains the unresolved close but not the underlying producer start state. Fixture exited 0 and original Codex foreground was restored; not an OS-pipe, release, effect, or task-success sample. Next run must poll exact results and cancel/reconcile before teardown. See [R42 result](../research/integration/win32_relay_blocked_os_pipe_recovery_20261026_r42/RESULT.md).
+**Local supervised caller result-reporting fix:** a TDD regression reproduced pre-start target-generation refusal followed by a missing-producer exception from `complete_exited_action()`, which could hide the original refusal. The method now returns an already-retained non-running/cancelled result before requiring a producer handle; pre-start generation refusal carries explicit `input_dispatched=false`, `release_confirmed=false`, `task_success=null`, and `replay_allowed=false`. New regression observed RED before the fix. `test_owned_win32_session` (30), `test_mcp_supervised_win32` (20), and `test_mcp_supervised_backend_composition` (1) pass normally and under `python -O`. This is a local code/test change; it does not prove R42 traversed that exact branch or establish live OS-pipe recovery. R42's preregistered hashes omitted the relevant owner module; its baseline blob hash has been added only as retrospective scope qualification in the R42 result.
+**Win32 cancellation over the public stdio relay (2026-10-26):** `mcp_relay` now allowlists standard `interface_cancel` and classifies it as a priority cancellation request alongside `interface_guarded_cancel`. The relay's blocked-stdout, pending-limit and cancellation-writer-failure tests plus the legacy-tool parity regression pass 4/4 normally and under `-O`; R39 also demonstrates the standard cancel route and bounded release in an owned Win32 fixture. CI's first run caught and motivated the parity expectation update. See the R36–R39 series above for scope and remaining limits.
+**Win32 current-main bounded recovery + fresh-generation task R35 (2026-10-26):** one synthetic-fixture standard-caller sample passed 15/15 audit checks with 4/4 frozen and 38/38 raw hashes verified. A blocked producer-local SHIFT-up callable (before native `SendInput`) returned public cancel `pending` in 0.366 ms; separate supervised recovery completed and same-generation native readback confirmed SHIFT up in 17.0471 ms under the 3 s bound. A stale generation was refused before input; the fresh generation produced exactly one click, `office` and save, independently verified by `interface_verify_task` bound to its exact call/operation/generation. The recovery call stayed `task_success=null`; later task oracle returned true. R31–R34 are separately preserved no-input/setup failures. One injected adapter stall only: no OS/kernel hang, MAP01, reliability or efficiency claim. No WSLc/Docker/model/provider. Raw remains local-only. See [R35 result](../research/integration/win32_currentmain_blocked_release_recovery_20261026_r35/RESULT.md).
+**Win32 held-callback state discriminator R30 (2026-10-26):** one current-main synthetic-fixture run passed its 14/14 scoped audit. The exact-generation public cancel returned pending in 1.888 ms while an injected Ctrl-down low-level hook was held. During the hold, an independent same-generation `GetAsyncKeyState` observer read Ctrl-up, while the public same-call result still reported `action=running / cancellation=pending`. The callback was manually released 215.8 ms after cancel response; terminal recovery reported release confirmed 19.2069 ms after callback return, and immediate/delayed same-generation readbacks stayed neutral. The exact token task oracle succeeded; terminal runtime task_success stayed null. Per [Microsoft's LowLevelKeyboardProc docs](https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc), the async key state is updated after the low-level callback, so the held-state up sample is not proof of release; R30 does not establish release during the blocked interval. Eight frozen input hashes and 52 post-trial hashes verified; raw is local-only. See [R30 result](../research/integration/win32_blocked_cancel_hold_observer_20261026_r30/RESULT.md).
+**Win32 foreground-gated blocked-cancel recovery R29 (2026-10-26):** one current-main native synthetic-fixture trial passed its scoped 11/11 audit. CUA raised the exact visible fixture; independent foreground checks matched its HWND/PID. An injected Ctrl-down callback was still held when the standard public cancellation returned pending in 2.2356 ms; the callback returned 0.7104 ms after that response. After the harness opened the callback gate, action/cancel recovered with release confirmed and replay denied; the same-generation task verifier independently matched the exact token, call, operation and generation. Immediate and delayed independent Win32 observers found Ctrl up; the exact fixture exited 0. The terminal runtime task outcome remains null although the separate oracle verified the earlier token effect. Recovery completion was recorded 27.3588 ms after hook return, with no timestamp for the instant state first became neutral; therefore R29 does not prove release completed while the blocked callback remained held. This is one fixture sample, not an arbitrary OS/kernel-I/O guarantee, reliability estimate, MAP01 result or efficiency comparison. Seven frozen input hashes and 49 post-trial hashes verified; raw remains local-only. See [R29 result](../research/integration/win32_blocked_cancel_foreground_recovery_20261026_r29/RESULT.md).
+
+**GZDoom public-caller task-effect oracle integration R46–R48 and R51 (2026-10-26):** R48 and fresh-generation replication R51 completed the same one-shot Freedoom MAP01 W scan-code action through the standard supervised Win32 caller. Independent same-generation oracles measured 99.3161% and 99.2070% changed pixels in the upper 80%; release receipts and neutral readbacks passed, and the later public `interface_verify_task` receipts returned `verified / task_success=true` for each exact call/operation/generation. This proves visible W-forward effect only, not MAP01 completion; two successes are not a broad reliability rate or efficiency advantage. R46 stopped before input on a multiprocessing spawn wrapper bug; R47's independent effect measurement passed but public task_success remained UNKNOWN because oracle_id format was invalid. R48 and R51 have separate immutable packets with 65 and 64 raw entries, all hashes verified. No WSLc, Docker, or provider calls. See [R46–R51 integration result](../research/integration/win32_gzdoom_public_oracle_r46_20261026/RESULT.md); raw packets remain local-only.
+
+**Matched-duration native idle control R49–R50 (2026-10-26):** R49 stopped before observation because the gate receipt writer used `window_title` instead of the validator's required `title`; exact fresh target was visually confirmed, no input was sent, and WM_CLOSE exited 0. Fixed and syntax-checked the gate before a distinct R50 attempt. R50 completed a 13.281 s no-input interval against R48's 13.234 s baseline-to-postcapture interval, with zero dispatches, all keys up, same generation and 300/1,003,200 changed pixels (0.0299043%) in the upper 80%. Exact process exited 0; protected UNKNOWN processes remained alive and untouched. R48 and R51 action samples changed 99.3161% and 99.2070%; the single idle/action contrast remains descriptive, not reliability, MAP01 completion, latency bound, or efficiency evidence. R50 manifest contains 34 scoped entries; copied R49 records are excluded. No WSLc, Docker, or provider calls. See [R46–R51 result](../research/integration/win32_gzdoom_public_oracle_r46_20261026/RESULT.md).
+
+**Retained dispatch evidence projection:** fixed `interface_results` so a retained supervised Win32 action exposes its own `input_dispatched` value derived from the original result using MCP precedence (`program_emissions`, explicit boolean, then `emissions`). The retrieval response envelope remains `input_dispatched=false`, so query activity cannot be mistaken for the earlier action. Added unit and standard-caller integration assertions. Focused suites pass 49/49 in normal Python and 49/49 under `-O`; `git diff --check` passes. This makes retained action evidence usable by downstream audits without changing task-success or replay semantics.
+
+**Native pending-OS-I/O release/recovery through the standard caller (R10–R12, 2026-10-26):** all three packets preserve a genuine overlapped `ConnectNamedPipe` pending result (`ERROR_IO_PENDING` 997; event wait `WAIT_TIMEOUT` 258) after real SHIFT-down and before the producer's SHIFT-up send. Recovery measured 15 ms by helper monotonic / 16.5672 ms by QPC for R10, 16 ms on both clocks for R11, and 16 ms monotonic / 16.9 ms QPC for R12. R11's continuation stopped before action on an observation-wrapper error. R10's task/effect/oracle checks passed, yet its frozen audit failed the required post-dispatch observation-order gate; its `conditions.json` source-manifest hash also differs from the retained manifest file hash, so do not promote R10 to a full pass. R12 is the only complete pass: 14/14 checks, exact old-generation refusal, fresh compiled click/type/save with exact independent oracle, release/readback, cleanup, and the next observation request 2.6185 ms after dispatch response by QPC. Independent rehash found 39/39 raw + 5/5 pretrial entries for R10, 30/30 + 5/5 for R11, and 39/39 + 5/5 for R12, with no file mismatches. R12 used source commit c31a2ded plus the scan-code runtime diff now merged in #9590; current main also contains a later empty-obligation observer fix absent from that R12 execution, so this result does not validate that later helper change. These are scoped same-PC fixture trials: the block was pending overlapped named-pipe I/O, not a hang inside `SendInput` or an arbitrary-kernel-I/O guarantee; no reliability rate, MAP01 completion, WSLc, model/provider economics or energy follows. See [the R10–R12 evidence and limitations](../research/integration/win32_native_blocked_osio_recovery_r10_r12_20261026/RESULT.md). Raw packets remain local-only.
+
+**Configured GZDoom scan-code task effect and matched caller replication (2026-10-26; separate R31/R32/R33 series):** a scan-code extension to the Win32 program contract and backend was exercised through the public standard caller. Fresh-generation recovery/task R31 completed scoped pre-native SHIFT-up recovery in 15 ms, rejected the stale generation before input, then performed configured `W=+forward`: public and independent pixel effects were 54.3117% and 54.5109%, the exact-generation independent oracle returned success, input release/readback and graceful exit passed. Counterbalanced direct-versus-compiled R32/R33 repeated this across four pairs; all eight cells passed task, release, cleanup and corrected 16-check audits, with all 368 raw and 48 pretrial manifest entries verified. Compiled caller time averaged 2.57025 s versus 2.504 s direct (+66.25 ms, +2.65%) across these four pairs; dispatch averaged +11.5 ms. This is a small same-PC descriptive result: it shows no efficiency advantage and does not establish broad reliability, MAP01 completion, model/provider savings or energy. It supersedes the earlier *hypothesis* that GZDoom's Raw Input path alone explained the no-effect VK trials; scan-code `SendInput` worked here, but the encoding is not isolated from every other run difference. See [the scan-code result and scope](../research/integration/win32_gzdoom_scan_code_task_effect_r31_r33_20261026/RESULT.md). Raw packets remain local-only. No WSLc or Docker was used.
+
+**Native GZDoom MAP01 task-effect diagnostic R31–R33 (2026-10-26):** three fresh generations completed standard public dispatch, two input emissions, verified terminal release, and same-generation neutral completion readback, but none produced the preregistered >5% visible effect. R31 used `UP` without confirming its binding; R32 used the configured `W=+forward` key for 1.2 s; R33 used `Tab=togglemap`. All three independent captures had the exact same 316 changed pixels (0.0315%; x=524..539,y=425..445), so no forward movement or automap activation was observed. The cause remains unresolved; R12's successful target was VizDoom 1.3.1, not GZDoom. Additive reconciliation files correct a nested-field extraction error while preserving raw packets. No WSLc, Docker, or model was used; old UNKNOWN PIDs 21660/6696 remain untouched. See [R31–R33 result](../research/integration/win32_gzdoom_task_effect_20261026_r31_r33/RESULT.md). This is a scoped negative live-app result, not evidence of level completion or general input failure.
+
+**GZDoom input-path source follow-up (2026-10-26):** official GZDoom g4.14.2 prefers Raw Input (`RIDEV_INPUTSINK`) and falls back to DirectInput only if registration fails; ordinary `WM_KEYDOWN` is not the game-key path. Because `SendInput` synthesizes system-stream events rather than device-specific HID data, this is a strong hypothesis for R31–R33's no-effect result, but the running binary's actual selected backend remains unobserved. The next trial must use an input route GZDoom consumes or observe its registered backend. See the [source-path analysis](../research/integration/win32_gzdoom_task_effect_20261026_r31_r33/RESULT.md#source-path-follow-up).
+
+**MAP01 public-caller startup/readback diagnostic R27–R29 (2026-10-26):** the user supplied a native GZDoom path on this PC, so these trials used Win32 and no WSLc allocation. R27 was canceled 1.986 s after gate authorization, about 8.2 s before the same-host R17–R19 child-ready observation of 10.203 s; it remains UNKNOWN. R28 waited for startup and retained a child result: 0 input emissions, completed dispatch, and verified child release receipt, but the independent observer rejected the empty input-obligation set and public custody remained UNKNOWN. `_observe` now binds an empty state sample to the single configured target generation while still refusing empty-obligation recovery. The fix passes 56 selected helper/owner/public-MCP tests normally and with `-O`. Fresh-generation R29 then passed through the public standard caller: 10.513 s process-start-to-child-ready, 41.575 ms no-input dispatch, verified neutral producer receipt, matching generation-bound neutral observer readback 8.625 ms after exit, and public `release_confirmed=true`. R27/R28 PIDs and UNKNOWN outcomes remain untouched; only the R29 target was terminated after public confirmation. This establishes ordinary zero-input completion and readback only; it does not establish a task effect, blocked-I/O release/recovery, MAP01 success, a startup bound, or reliability. Private raw and attempt records are retained locally under `private-packets/map01_native_windows_20261026_r27`, `..._r28`, and `..._r29`. See [R29 result](../research/integration/win32_map01_empty_obligation_readback_20261026_r29/RESULT.md). WSLc remains gated by verified unused allocation under [#7924](https://github.com/Unjuno/agent-interface/issues/7924).
+
+**Counterbalanced model-guided route comparison R12e/R12f (2026-10-26):** the two preserved blocks provide four matched pairs (n=4 per arm); all eight direct/compiled fixture cells passed exact task effect, generation continuity, release/native all-up readback, independent terminal oracle, and cleanup. Every pair favored compiled on total elapsed time and App Server latency; median direct-minus-compiled differences were +3.425 s and +3.419 s, with one additional direct model turn (+10,482 reported input and +15 output tokens per pair). R12e and R12f audits were rerun from the exact `b62eed22` main archives: each passed 4/4 cells, 5/5 pretrial hashes, and 221/221 raw hashes. This is a replicated descriptive result for one local fixture task, not broad reliability or a causal/general efficiency claim. All 12 provider turns expose only App Server reported usage matching their journal fields; the retained records have no provider request/response IDs or billing fields, so independent billing reconciliation is unavailable from these packets. See [R12e](../research/integration/win32_appserver_matched_efficiency_20261026_r12e/RESULT.md), [R12f](../research/integration/win32_appserver_matched_efficiency_20261026_r12f/RESULT.md); the committed audit scripts were rerun from exact-main archives and the verification note is retained with private local evidence.
+
+**Native Win32 Freedoom MAP01:** R07–R13 exercised target-generation binding and the public task oracle; R12 passed the visible forward-effect check, while R13 reconciled a late recovery and correctly reported a below-threshold effect. The startup/lease follow-up R17–R19 now records three successful standard-caller actions: child readiness was 10.203 s after `process.start` in each, each 30 s authority lease completed with neutral release and a separately verified task effect, and exact-process cleanup passed. A read-only crosscheck independently verified all 117 listed packet files and confirmed the timing instrumentation and producer-start files are unchanged from their source commit to current main. See [the startup timing crosscheck](../research/integration/win32_freedoom_startup_timing_20261026/RESULT.md). These three samples are descriptive on one host; the exact lease-origin-to-completion margin was not retained, so no hard startup or lease bound follows. R07–R13/R17–R19 do not establish blocked-I/O release/recovery, MAP01 completion, matched efficiency, or reliability.
+
+**Native Win32 public-caller blocked-boundary R05/R06 (2026-10-26):** R05 is an immutable no-input runner setup failure: the native preflight and public raw observation generations matched, but the harness compared against the outer receipt-view wrapper. R06 corrected that read and passed the scoped held-SHIFT recovery experiment: real SHIFT-down was observed while the producer-local `SendInput` SHIFT-up entry was held; public cancellation returned pending in 0.460 ms; retained terminal custody reported recovered/verified release after 17.215 ms against a 3,000 ms cleanup deadline; and an independent same-generation native readback 9.043 ms later found SHIFT-up. There was no emergency release or fixture effect, and fixture exit/foreground restoration passed. Independent audit: 19/19 evidence checks and 13/13 raw hashes; [R06 result](../research/integration/win32_native_sendinput_recovery_20261026_r06/RESULT.md), [R05 assessment](../research/integration/win32_native_sendinput_recovery_20261026_r05/ASSESSMENT.md). The R06 runner retains two R05 internal labels, documented as a labeling defect; the unique attempt, process/window and call identities remain verified. The stall was injected before native `SendInput`, so this does not prove an OS/kernel hang or arbitrary I/O guarantee. No model, task-success, MAP01, efficiency, WSLc allocation, or Docker result follows. WSLc remains STOP/HOLD under [#7924](https://github.com/Unjuno/agent-interface/issues/7924).
+
+R06 follow-up: the bounded recovery boundary was subsequently joined to a fresh-generation live fixture task through the compiled public caller in R07–R09 below. Do not reuse R05 or R06 attempt IDs.
+
+**Recovery-to-task integration R07–R09 (2026-10-26):** R07's recovery phase passed, then its old-generation probe omitted the required `release_all`; no continuation input was sent, and its cleanup used the retired fixture path. R08 fixed those issues and successfully refused old-generation input, executed the exact fixture effect through `run_public_compiled`, and verified neutral input state, but the independent task oracle rejected an invalid `oracle_id`; task success remained null. R09 corrected the oracle ID and release-receipt audit. It passed: held-key recovery completed in 16.869 ms under the 3 s limit; the old generation was refused with zero input; the old process was retired before a distinct PID/generation started; one compiled action produced the exact click/`office`/save effect; native readback found all tracked inputs up; a fresh observation began 3.582 ms after dispatch response; and the independent task oracle returned success bound to exact call, operation and fresh generation. Audit: 14/14 checks, 38/38 raw hashes, 3/3 frozen pretrial hashes. See [R09 result](../research/integration/win32_native_sendinput_recovery_20261026_r09/RESULT.md), [R07 assessment](../research/integration/win32_native_sendinput_recovery_20261026_r07/ASSESSMENT.md), and [R08 assessment](../research/integration/win32_native_sendinput_recovery_20261026_r08/ASSESSMENT.md). The injected stall is before native `SendInput`; R09 used a fixed coordinate and no model, so OS/kernel API hangs, arbitrary-I/O bounds, AppServer integration, WSLc, MAP01, matched efficiency and reliability remain open.
+
+**Recovery → AppServer model → compiled task R10/R11 (2026-10-26):** R10's first Windows run used Python 3.11.9, so AppServer refused startup before any model call or task input. Its controlled SHIFT recovery passed in 16 ms, the old-generation probe was refused before input, and its fixture and foreground cleanup passed. The frozen R10 audit resolved preregistration paths from the wrong root; additive [R10 audit follow-up](../research/integration/win32_appserver_recovery_task_20261026_r10/audit_followup.json) verifies all five pretrial and 27 raw hashes and preserves the runtime-prerequisite failure. R11 pinned Python 3.13.14 and completed one actual `gpt-6.1-sol` low-effort image-grounded decision: `(150,90)`, 10,260 input / 19 output / 0 reasoning tokens, 5.092 s AppServer latency. Recovery completed in 17.185 ms under 3 s; the stale generation was refused; the model-grounding generation matched the first compiled observation after the model wait; one compiled action used the returned coordinate; release, neutral native readback, exact fixture effect/event order, fresh post-action observation, and exact-generation independent task oracle all passed. The R11 frozen runner retained `FAIL_OR_UNKNOWN` because it compared token dictionaries including the wrapper-only `status=reported` key. The additive [R11 audit follow-up](../research/integration/win32_appserver_recovery_task_20261026_r11/audit_followup.json) compares the reported token fields, verifies 5/5 pretrial and 50/50 raw hashes, and passes all 11 scoped checks; the original runner classification remains unchanged. AppServer usage is protocol-journal evidence, not independent upstream billing; image-token accounting is unavailable. The injected block is before native `SendInput`, and this is one fixture sample, not an OS/kernel hang, production-app, MAP01, efficiency or reliability result. No WSLc or Docker operation occurred.
+
+**Matched public-caller Fake X replication P10 (2026-10-26):** six model-grounded trials passed exact effect and neutral-release checks, with three counterbalanced direct/compiled pairs, provider usage reconciled to the App Server journal and private attempt ledger, and all raw manifests verified. Unlike the two-step R12 task, the one-action P10 task showed no consistent compiled speedup: direct-minus-compiled median total time was -113 ms (compiled slower), and the timing direction split across pairs. Report P10 separately from R12; neither result supports one cross-task percentage. Usage is App Server reported, not independent billing. See [P10 result](../research/integration/current_main_appserver_matched_efficiency_20261026_p10/RESULT.md).
+
+Next: preserve the R12e/R12f descriptive result and continue toward live-app/MAP01 transfer and broader recovery/reliability evidence. The R12 provider records have no external billing identifiers, so only an independently attributable usage source can close that separate accounting gap; do not infer billing from App Server journal equality. WSLc remains STOP/HOLD under [#7924](https://github.com/Unjuno/agent-interface/issues/7924); use it only after an exact unused allocation is independently verified. Preserve all frozen R10–R12f outcomes and audits.
+
+**WSLc standard-caller generation/recovery S34/S35 pair (2026-10-25):** two fresh uniquely named WSLc sessions on the same current-main standard-caller private-Xvfb test each passed, independently audited 23/23. Both carried process/window generation to public observation/mint; preserved UNKNOWN/no-replay after injected post-press + failed automatic release; recovered with independent all-up readback; executed exact recovery/continuation task effects; and refused destroyed-window generation/old alias before input. Two matched samples reveal stage-time variation (e.g. recovery 11.279/6.936 ms; stale refusal 33.346/6.813 ms), not a latency distribution or reliability estimate. No model/provider calls, tokens or energy were measured, so matched efficiency remains open. Both exact image/container/session cleanups passed; unique post-termination VHDXs remain retained and hashed in [S34](../research/integration/wslc-currentmain-xvfb-generation-standard-caller-s34/RESULT.md) and [S35](../research/integration/wslc-currentmain-xvfb-generation-standard-caller-s35/RESULT.md). Synthetic Xvfb only; not physical input, live app or MAP01.
+
+**WSLc current-main private-Xvfb S30-S33 (2026-10-25):** S30 and S31 were preserved pretrial HOLDs after exact-name CLI lookup returned `ERROR_PATH_NOT_FOUND`; S32 bypassed that lookup but raised `DirectoryNotFoundException` during `PullImageAsync` without pull progress. S33 added pull-boundary and full exception-chain markers and passed scoped: verified owner release/readback at 3953.343 ms (≤4000 ms), independent all-up readback at 4023.879 ms (≤5000 ms), delayed horizon all-up at 8503.074 ms, and both old/fresh synthetic task oracles passed. Public old cancellation remains UNKNOWN, replay denied, runtime `task_success=null`; SDK deleted its exact container/image and terminated its session. The S32 path error did not reproduce; its cause remains unknown. S33 is synthetic private Xvfb only, not physical Windows input, MAP01/live-app, efficiency, guarantee or reliability evidence. Its unique post-termination 234,881,024-byte VHDX is retained with SHA-256 in the [S33 packet](../research/integration/wslc-currentmain-xvfb-blocked-release-s33/RESULT.md). No Docker or global WSLc inventory was used.
+**WSLc current-main early-poll recovery S43 (2026-10-25):** one fresh WSLc 3.0.3 private-Xvfb run forced the first two supervisor result-pipe polls to return early; the third received the real response. The owner release readback was 3,943.861 ms after cancellation admission, independent all-up readback 3,998.095 ms, and delayed horizon 8,504.358 ms; old/fresh synthetic task oracles passed. The public canceled call remains UNKNOWN/replay-denied/`task_success=null`. Independent raw audit passed 28/28, and four frozen runtime/test Git blobs match current main `949fd12`. Host invocation capture is empty and external stage/dependency/XKB manifests are absent, so custody is partial. Synthetic Xvfb only; no kernel pipe or physical GUI/MAP01 claim. See [S43 packet](../research/integration/wslc-currentmain-blocked-release-early-pipe-s43-e08fb6311690/README.md).
+
+**WSLc current-main private-Xvfb S28 same-condition replicate (2026-10-25):** a fresh independent 3,930 ms trial passed the same 29-check gate as S27. Cancel response was 307.093 ms; release readback 3,987.763 ms, independent all-up readback 4,108.399 ms, and delayed-event horizon 8,502.318 ms. Old and fresh-session task oracles passed; the original public runtime result remains UNKNOWN/replay-denied/`task_success=null`. Transaction margin was 4.798 ms, compared with S27's 7.198 ms. The two samples suggest repeatability under this synthetic condition but do not establish a hard guarantee, live GUI, MAP01, efficiency, or reliability. The new session terminated; its unique 228,589,568-byte VHDX is hash-recorded in [S28](../research/integration/wslc-currentmain-xvfb-blocked-release-s28/POST_CLEANUP.json) and remains retained.
+
+**WSLc current-main private-Xvfb boundary S27 (2026-10-25):** one preregistered 3,930 ms trial passed its scoped gate with a 7.198 ms margin to the 4 s transaction deadline. Public cancel returned in 313.663 ms; release readback completed at 3,985.903 ms, independent all-up readback at 4,075.391 ms, and the delayed-event horizon stayed clear at 8,501.695 ms. Old-task and fresh-session recovery oracles both passed, while the original runtime call correctly remained UNKNOWN/replay-denied/`task_success=null`; exact container/image/session cleanup passed. Audit 29/29. See [S27](../research/integration/wslc-currentmain-xvfb-blocked-release-s27/RESULT.md). This is one synthetic private-Xvfb sample between S23's 3,920 ms pass and S25/S26's 3,940 ms failures; it does not establish a timing guarantee, live GUI, MAP01, matched efficiency or reliability. The session was freshly named and exact-name scoped; shared WSLc ownership remains unresolved. The unique WSLc session's 227,540,992-byte storage VHDX remains after termination with its hash in `POST_CLEANUP.json`; no deletion was performed.
+
+**WSLc current-main private-Xvfb boundary series S23-S26 (2026-10-25):** S23 passed at 3920 ms with an independently verified release receipt 13.123 ms before the 4 s deadline, separate all-up readback at 4358.689 ms, and 8502.055 ms late horizon (audit 25/25). S24 is retained as a zero-input setup failure caused by missing asset paths; container/image/session cleanup succeeded. S25 at 3940 ms produced a release receipt 7.614 ms before deadline, but independent all-up readback at 5002.641 ms missed the 5 s bound by 2.641 ms (audit 24/25; fail). A fresh S26 at the same 3940 ms pause crossed the transaction deadline by 3.5165 ms; the public result stayed UNKNOWN/no-replay/task_success=null and emitted no release/task oracle (audit 22/22). These samples bracket a near-deadline change between a narrow pass at 3920 ms and safety-bound failures at 3940 ms; they do not establish a deterministic timing guarantee or general reliability. All evidence is private synthetic Xvfb, not physical GUI, real application, MAP01, or efficiency results. See [S23](../research/integration/wslc-currentmain-xvfb-blocked-release-s23/RESULT.md), [S24](../research/integration/wslc-currentmain-xvfb-blocked-release-s24/OUTCOME.json), [S25](../research/integration/wslc-currentmain-xvfb-blocked-release-s25/RESULT.md), and [S26](../research/integration/wslc-currentmain-xvfb-blocked-release-s26/RESULT.md).
+**WSLc current-main private Xvfb blocked-release S21/S22 (2026-10-25):** S21 is preserved as a pretrial setup failure caused by CRLF in the container init script; no Xvfb/caller test input ran, and exact container/image/session cleanup succeeded. The distinct S22 WSLc 3.0.3 attempt passed the public standard-caller Xvfb test at a 3860 ms pause. Release readback completed at 3921.388 ms after admission (78.612 ms before the 4 s deadline); independent parent readback was 4219.074 ms; the delayed-request horizon was 8502.261 ms. Old and fresh synthetic task oracles passed, while public runtime state remains UNKNOWN/replay-denied/task_success=null. Audit: 25/25. This is private synthetic Xvfb evidence only, not physical GUI, real application, MAP01, efficiency or reliability evidence. See [S21](../research/integration/wslc-currentmain-xvfb-blocked-release-s21/OUTCOME.json) and [S22](../research/integration/wslc-currentmain-xvfb-blocked-release-s22/RESULT.md).
+**WSLc current-main saturated-relay cancellation S19/S20 (2026-10-25):** S19 is retained as a pre-test runner setup failure: all 31 wheel hashes passed, but its lockfile path did not exist; no unittest/Fake X event ran, and container/image/session cleanup passed (audit 8/8). A distinct S20 corrected that path and passed `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller` on WSLc 3.0.3. With 16 ordinary responses queued behind blocked stdout, cancel reached the standard caller and Fake X readback emptied its synthetic key/button state 115.290 ms after admission; this readback preceded stdout resume by 114.244 ms. The response was written after stdout resumed. Public state remained UNKNOWN, release-unconfirmed, task_success null and replay denied. The 12-check audit passed. Synthetic Fake X only: no physical release, real GUI/MAP01 effect, task success, efficiency or reliability claim. Unique session VHDX retained with hash. See [S19 setup failure](../research/integration/wslc-relay-cancel-saturation-currentmain-s19/RESULT.md) and [S20 result](../research/integration/wslc-relay-cancel-saturation-currentmain-s20/RESULT.md).
+
+**WSLc current-main Fake X target-generation refusal S16-S18 (2026-10-25):** S16 and S17 stopped before image/container/test because the scoped exact-name list returned exit 0 with empty stdout and the harness wrongly required JSON. Both sessions terminated; those attempt IDs remain setup failures. S18 corrected the parser and passed one standard-caller generation-mismatch test on WSLc 3.0.3.0 / CPython 3.12.14. The source/current generations differed; the public call refused before input (`input_dispatched=false`, no Fake X press receipt), `task_success=null`, replay denied. Thirteen raw records passed a 20-check audit. No real GUI/OS input, release/recovery, MAP01, or task-success result. The three unique session VHDXs remain, individually hashed; no global inventory or other allocation was queried. See the [S16-S18 packet](../research/integration/wslc-currentmain-fakex-generation-refusal-s16/RESULT.md), [S17](../research/integration/wslc-currentmain-fakex-generation-refusal-s17/RESULT.md), and [S18](../research/integration/wslc-currentmain-fakex-generation-refusal-s18/RESULT.md).
+
+**Local current-main Fake X delayed old-DOWN R01 (2026-10-25):** one local standard-caller regression passed; 8 raw receipts were hash-manifested and the post-run audit passed 12/12. A modeled late key-down followed a separate empty-state release readback, and public state correctly remained UNKNOWN/no-replay with `task_success=null`. This validates the conservative synthetic contract only; event ordering is modeled, not observed from real X. It is not WSLc or live-GUI evidence. The later S19/S20 WSLc attempts used fresh exact-name-scoped sessions under explicit user authorization to use this PC; they did not query global inventory or touch another session. This updates that local readiness note for those synthetic Fake X checks only; live GUI/MAP01 remains open. See [R01](../research/integration/currentmain_fake_x_late_down_caller_local_20261025_r01/RESULT.md).
+
+**WSLc current-main Fake X standard-caller S15 (2026-10-25):** one fresh isolated WSLc 3.0.3.0 session on current main `0024d763a106753eb8059cf6828417dca4467a58` passed the standard-caller blocked-Fake-X-reply cancellation test with 24 raw records and an independent 18-check audit. Three identity replies agreed on one target generation. Cancellation returned in 124.228 ms; owner retirement occurred, but the synthetic disconnect stayed UNKNOWN, so release was not attempted, task success stayed null, and replay stayed denied. No real X, desktop, application, MAP01, efficiency or reliability claim. See the [S15 result](../research/integration/wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42/RESULT.md). S12/S13 setup failures and S14's pass without event receipts are retained separately; the S15 manifest formatting correction is additive.
+
+**R31–R46 runtime correction:** those historically `wslc_`-named runs used Docker Desktop, not WSLc. Their results count only as synthetic-Xvfb Docker evidence. See the [runtime erratum](../research/integration/wslc_standard_caller_xvfb_20261025_R31-R46_RUNTIME-ERRATUM.md); frozen raw outcomes were not changed.
+**Docker Desktop/Xvfb standard-caller R31–R46 (2026-10-25; runtime-label correction):** R31–R36 stopped before input. R37–R41 passed at 3,500–3,800 ms; R42 at 3,900 ms exceeded the 4 s transaction deadline by 4.988 ms. Near the edge, R43 passed at 3,850 ms with 27.552 ms margin, R44 failed at 3,875 ms by 0.466 ms, and independent R45/R46 repeats passed at 3,860 ms with 20.877/18.848 ms supervisor margins and parent readbacks at +4104.230/+4108.282 ms. Passing trials reached the late-event horizon and both synthetic task oracles; runtime custody remains UNKNOWN, replay denied, and task success null. See the [R31–R46 rollup](../research/integration/wslc_standard_caller_xvfb_20261025_R31-R46.md) and [R46 result](../research/integration/wslc_standard_caller_xvfb_20261025_r46/RESULT.md). Synthetic Xvfb only; Win32/MAP01, real-app transfer, matched efficiency, and broad reliability remain open.
+
+**WSLc transaction-budget boundary R28–R30 (2026-10-25):** R28 passed a 2,900 ms private-Xvfb pause under the 3 s transaction deadline with 35.908 ms left. R29 increased the pause to 2,950 ms; the server resumed 101.597 ms before deadline, but the worker returned UNKNOWN at timeout and the public test failed before independent task oracles. Commit `aaa4fce67440fcd475e71e3134345f5649336f39` increased only the internal transaction budget to 4 s and added a Fake X regression for a release worker completing after 3.2 s. The regression failed before and passed after the change, in normal and optimized CPython 3.12.3. R30 repeated R29's 2,950 ms pause on the changed source: release/readback beat the 4 s deadline by 995.384 ms; independent key readback and old/fresh task oracles passed; runtime custody stayed UNKNOWN and replay denied. One trial per condition, synthetic Xvfb only; no Win32/MAP01, production task-success, efficiency, or reliability claim. See the [R28–R30 rollup](../research/integration/wslc_standard_caller_xvfb_20261025_R28-R30.md) and raw packets.
+
+**Win32 paired R50/R51 follow-up (2026-10-24):** R50's strict phase-1 release audit passed 11/11, but the paired attempt remained `FAIL_OR_UNKNOWN` (8/13) because its dashed UUID oracle ID was rejected by the public verifier; the exact fixture effect existed, but no accepted bound task receipt was returned. R50 is preserved and was not replayed. A fresh R51 added an input-free 32-lowercase-hex oracle-ID guard, passed preflight 14/14, phase 1 11/11, and the combined audit 13/13. Its callback stayed held 1,400.3203 ms after cancel; 89 exact-call polls and 74 same-generation Q-up samples were recorded, and recovery Q-up returned after 310.6963 ms. The separate fresh-generation task produced a success receipt bound to its new call, operation and target generation. The initial dispatch response correctly leaves `task_success` null; the subsequent standard `interface_verify_task` response is `status=verified, task_success=true` ([raw response](../research/integration/win32_supervised_standard_caller_20261024_r51/run/phase2_task/verify-task-0.json)). Neutral release/readback passed. The effect-file write-return to oracle-read-start interval was 256.4395 ms, not physical input-to-effect latency. The later session-close receipt's `release_confirmed=false` is separate: close does not issue a new release, so action-level release evidence is in the retained action receipt. R44, R47, R48, R49 and R51 are paired fixture passes, not a broad reliability estimate. See the [R50 failure](../research/integration/win32_supervised_standard_caller_20261024_r50/RESULT.md) and [R51 corrected replication](../research/integration/win32_supervised_standard_caller_20261024_r51/RESULT.md). Both used native Windows only; WSLc remains STOP/HOLD under [#7924](https://github.com/Unjuno/agent-interface/issues/7924). Real-app/MAP01 transfer, matched efficiency and broader reliability remain open.
+
+**Win32 paired R52/R53 continuation (2026-10-24):** R52 stopped before input because its owned fixture could not obtain a Computer Use activation receipt (preflight 15/15; zero dispatch/cancel; no phase 2). R53 passed its strict phase-1 release gate 11/11: the Q-up callback stayed held 1,403.6837 ms after cancel, recovery Q-up returned at +637.0034 ms, and independent same-generation readback observed it at +641.936 ms with 73 eligible samples during the hold. Its phase 2 then timed out before activation, with zero dispatch/cancel/task effect; the combined outcome remains `FAIL_OR_UNKNOWN` 3/14. Both stop outcomes and hash verification are captured in the [redacted R52/R53 packet](../research/integration/win32_supervised_standard_caller_20261024_r52_r53_public/README.md); neither is a task-success sample. R54/R55 are later fresh paired passes and remain separately reported below.
+
+**Win32 paired R54/R55 follow-up (2026-10-24):** two more fresh native-Windows attempts on the authorized PC passed the phase-1 strict release gate (11/11) and combined audit (14/14), then completed a separate fresh-generation task through the public verifier (`status=verified`, `task_success=true`) with independent exact-effect and neutral-release/readback evidence. Recovery Q-up was returned at +619.7598 ms and +632.4875 ms after cancel; same-generation readback observed it at +621.229 ms and +638.4985 ms while the injected callback remained held for 1,404.9483 ms and 1,402.8097 ms. Same-host `perf_counter_ns` intervals and R54's retained activation-helper exception are detailed in the [redacted R54/R55 packet](../research/integration/win32_supervised_standard_caller_20261024_r54_r55_public/README.md). Both 71-entry private manifests were verified; raw host/path/process/window metadata remains local and is not claimed as publicly re-auditable. The six runtime files pinned by the attempts are unchanged from source commit `0f6464a` through current main `d954307`. These two fixture passes narrow native-Windows release and task-effect uncertainty; they do not establish WSLc behavior, matched efficiency, MAP01/real-app transfer or broad reliability.
+
+**Win32 supervised standard-caller R42–R49 update (2026-10-24):** local-Windows attempts R42–R47 are indexed in the [R42–R47 rollup](../research/integration/win32_supervised_standard_caller_20261024_r42_r47/README.md), preserving each outcome separately. R42 passed its strict release phase but phase 2 stopped on a harness `NameError`; R43 independently verified a new-generation task effect but was not paired with release; R44 passed one paired release/task sequence; R45 missed the frozen 1,250 ms hold gate by 4.9554 ms and correctly did not start phase 2; R46 passed release but phase 2 stopped on a runner invocation error; R47 passed one paired sequence, with a 1,405.5285 ms callback hold and independent task oracle. R48 and R49 independently passed the same strict release gate (11/11) and fresh-generation task oracle (combined 13/13). R49 held the callback 1,410.2225 ms after cancel response, with 90 same-call polls and 74 eligible same-generation Q-up samples; its exact fixture effect passed and effect-write to oracle-read-start was 220.5783 ms. Both R48 and R49 phase-2 actions had neutral release/readback, while each later session-close receipt said `release_confirmed=false`; runtime `task_success` remains null. R44, R47, R48 and R49 are paired fixture passes, not a reliability estimate. See the [R48 packet](../research/integration/win32_supervised_standard_caller_20261024_r48/RESULT.md) and [R49 packet](../research/integration/win32_supervised_standard_caller_20261024_r49/RESULT.md).
+
+Merged [PR #9502](https://github.com/Unjuno/agent-interface/pull/9502) closes the R47 crosswalk's synthetic compiled-graph → supervised Win32 caller composition gap. The test retains the completed prefix and refuses a generation-stale suffix before producer start. Remaining gates include real-app/MAP01 transfer, matched efficiency and repeated reliability. WSLc remains STOP/HOLD under [#7924](https://github.com/Unjuno/agent-interface/issues/7924); R42–R49 used native Windows only.
+**Win32 input-free foreground eligibility R01 (2026-10-24):** after the exact owned fixture was activated through the Computer Use window API, the separate Win32 backend returned from `focus()` and an independent foreground read matched the target. Backend emissions remained zero; the fixture recorded only `ready`, and no effect was produced. Focus subtest is `PASS_SCOPED`; the whole attempt is `FAIL_OR_UNKNOWN` because its process exit code was not retained after WM_CLOSE, despite process/window disappearance. No retry, release, recovery, task-success, or WSLc evidence. See [R01](../research/integration/win32_focus_eligibility_input_free_20261024_r01/RESULT.md).
+
+**Win32 R39/R40 input-free setup failures and R41 foreground boundary (2026-10-24):** R39 stopped in preflight because its inherited R37b file hashes did not match two current-main runtime files; R40 stopped before input because the clean checkout lacked its referenced R36 raw/audit files. R41 used a new ID and current-main hashes; its preflight passed 11/11. The live public dispatch then failed at the first `focus` operation (`foreground focus verification failed`), before any pointer/key emission (`backend_emissions=0`, `input_dispatched=false`). The fixture recorded only `ready`; no Q-hook event or public cancellation occurred, so the strict release audit is 2/10 and the fresh-generation task phase was not started. The action remains UNKNOWN with `release_confirmed=false`, `replay_allowed=false`, and `task_success=null`; close stayed busy because completion readback was non-neutral. Producer, sampler, fixture and hook exited; the fixture window disappeared and foreground restoration passed. This is a focus/dispatch failure, not a release sample or task-success sample. No WSLc allocation was used. A later native fixture regression recorded `SetForegroundWindow=False`, foreground still different from target, and zero emissions; the failure does not identify the OS policy. See the [public PC eligibility and WSLc boundary record](../research/integration/win32_pc_wslc_eligibility_20261024/RESULT.md).
+
+**WSLc compiled-control core R01 (2026-10-24):** On current main `5e378a4`, the cached WSLc image ran 37 compiled-GUI and conservative release-recovery tests successfully under Python 3.14.8. This confirms software-contract compatibility for that isolated test set only. Memory hard-limit enforcement is unverified because the WSL kernel lacks swap/cgroup limit capabilities. The separate composed Fake X standard-caller attempt R01 stopped at import because the image lacks the MCP SDK; no test body or synthetic input ran, and exact-CID cleanup was verified. See the [core result](../research/integration/wslc_compiled_core_20261024_r01/RESULT.md) and [composed caller result](../research/integration/wslc_fake_x_standard_caller_20261024_r01/RESULT.md).
+
+**Win32 supervised caller + task oracle R03 (2026-10-24):** one fresh fixture
+passed the exact public observation → generation-bound validation/dispatch →
+same-call retained result → server-configured task-oracle path. The dispatch
+returned pending at 10 s; five read-only same-call lookups reached completed.
+The fixture's exact click/save/token effect passed, terminal all-up and separate
+neutral readback passed, the oracle receipt matched call/operation/generation,
+server and fixture closed, and foreground restoration was confirmed. R01/R02
+startup/response failures remain preserved; R02's fixture did complete, but its
+5 s caller timeout prevented the public oracle call and remains
+FAIL_OR_UNKNOWN. R03 is one fixture sample only; blocked-I/O release, recovery,
+MAP01, reliability, efficiency, and WSLc GUI remain open. See the [R03 packet](../research/integration/win32_live_task_oracle_20261024_r03/RESULT.md).
+**Win32 R36 strict public-cancel release gate (2026-10-24):** one fresh
+fixture/dispatch with same-generation Q-down baseline and one recorded public
+cancel passed the finite gate. Cancel response 1.266 ms; callback remained held
+1252.120 ms after cancel response; 78 exact-call status polls covered the
+1251.953 ms hold. Recovery Q-up SendInput returned at +627.600 ms; an
+independent same-generation sampler recorded 59 Q-up samples before callback
+return, exited cleanly with 602 samples, and a final separate readback was
+neutral. Matched terminal recovery receipt, exact producer exit, fixture/app
+cleanup and foreground restoration passed. `interface_close` nevertheless
+reported `release_confirmed=false`, and no second Q-up hook callback appeared.
+The click/save effect preceded cancellation; a later `q` char event followed;
+runtime `task_success` remains null. Strict bounded release is PASS for this
+single Win32 attempt only; reliability, task success, MAP01, WSLc and efficiency
+remain open. See [R36](../research/integration/win32_supervised_standard_caller_20261024_r36/RESULT.md).
+
+**Win32 standard-caller recovery → fresh-generation task-oracle construction check (2026-10-24):**
+the standard `interface_dispatch` / `interface_cancel` / `interface_results`
+path now has a local synthetic regression that recovers an old-generation call,
+keeps its task outcome unknown and its retained result unchanged, then dispatches
+and independently scores a distinct call under a new target generation. The
+new task receipt must match its exact call, operation and generation; one oracle
+invocation is allowed. The focused 88-test public MCP/Win32/session/oracle set
+passes in CPython 3.11.9 in both normal and `-O` modes, and the research workspace
+index passes. This is a construction check with fake processes and oracle; it is
+not live evidence, WSLc evidence, MAP01, or a reliability estimate. R37b now
+adds one live paired sequence; the regression still covers the controlled old-
+UNKNOWN/fresh-generation boundary locally. See
+`runtime/cli_v1/test_mcp_supervised_win32.py::test_standard_recovered_cancel_then_fresh_generation_task_success`.
+
+**Win32 R37b bounded recovery → fresh-generation task effect (2026-10-24):**
+one new native-Windows sequence passed the unchanged R36 strict release audit
+(10/10), then completed a separate task on a new fixture and target generation.
+Phase 1 held the Q-up callback 1,250.649 ms after a 2.039 ms cancel response,
+with 77 same-call polls; recovery Q-up returned at +626.382 ms, and 57
+same-generation samples observed Q-up before callback return. A final readback
+was neutral. Phase 2 began after cleanup, used one new observation/validation/
+dispatch, retrieved the exact pending call with five read-only polls, and the
+server-side oracle verified the exact click/save/token effect against the new
+call, operation and generation (`task_success=true`). Combined audit: 11/11
+`PASS_SCOPED`, one paired sample only. Both `interface_close` responses said
+`closed` but returned `release_confirmed=false`; phase 1 had no second distinct
+Q-up hook callback, and phase-1 task effect preceded cancellation. WSLc was not
+used; MAP01, efficiency, broad reliability and real-app transfer remain open.
+R37a's input-free root-path preflight failure is preserved separately. See the
+[R37b packet](../research/integration/win32_supervised_standard_caller_20261024_r37b/RESULT.md).
+
+**Win32 R38d timestamped task-effect observation (2026-10-24):** one fresh
+native-Windows fixture run completed one public observation, validation,
+dispatch, five read-only result polls and one exact-call server task-oracle
+check. The click/save/token effect matched; the task receipt matched call,
+operation, target generation and oracle ID; terminal release and neutral
+readback passed; fixture cleanup and foreground restoration passed. A
+packet-local fixture timestamped the effect-file write. The raw event-to-oracle
+difference was 265 ms, but this host's `monotonic_ns` uses `GetTickCount64()`
+with 15.625 ms reported resolution; the conservative interval is 249.375–280.625
+ms. The effect occurred 797 ms after the caller received `pending`. This is one
+fixture timing sample, not matched efficiency or reliability. R38/R38b/R38c
+setup failures are preserved; R38d's frozen audit schema error is also preserved
+with a corrected additive audit over unchanged raw. No WSLc or Docker was used;
+MAP01, real-app transfer and matched efficiency remain open. See the
+[R38d packet](../research/integration/win32_task_effect_timing_20261024_r38d/RESULT.md).
+
+**Win32 R35 terminal-release diagnostic correction (2026-10-24):** R35 did
+not record a public `interface_cancel`; the exact producer completed normally
+with verified terminal `release_all`. After the final Q-up SendInput return and
+before its held hook callback returned, the independent same-generation
+sampler recorded 48 `Q=false` samples. This qualifies normal terminal-release
+state observation only, not cancellation recovery. The callback lasted
+1490.357 ms, but only 4 status polls were recorded against the strict 21-poll
+gate; observer teardown ended `unknown`, no second Q-up hook event appeared,
+and runtime `task_success` remains null. The original R35 classification in
+PR #9479 was too strong; source inspection found hold_ms used before its local
+assignment, raising UnboundLocalError before interface_cancel; [the correction](../research/integration/win32_supervised_standard_caller_20261024_r35/correction.json)
+and [corrected result](../research/integration/win32_supervised_standard_caller_20261024_r35/RESULT.md)
+preserve the raw trial and supersede it. Strict R29 remains FAIL_OR_UNKNOWN.
+
+**Win32 proven-down release boundary R33 (2026-10-24):** one fresh public
+stdio-MCP attempt passed the 10-check input-free preflight and independently
+read `Q=true` for the fixture's exact generation before cancellation. The exact
+recovery `VK_Q` key-up `SendInput` returned at +619.931 ms; a second process
+read `Q=false` for that same generation at +930.848 ms, while the Q-up hook
+callback remained blocked until +1237.935 ms after cancellation. Public polls
+first reported recovered/release-confirmed at about +983 ms (four of 20 polls);
+the fixture's click/save/empty-text oracle matched at save time. Strict result
+stays FAIL_OR_UNKNOWN: the frozen gate requires at least 21 held polls (20 recorded),
+and no second Q-up hook event was observed. A posthoc evaluator repairs the
+frozen audit script's missing `readback` binding and snapshot-timing bug, but
+does not change this result. The raw also records a post-save `q` char event;
+runtime task_success remains null. See [R33](../research/integration/win32_supervised_standard_caller_20261024_r33/RESULT.md).
+
+**Win32 exact Q-up isolation R32 (2026-10-24):** the corrected no-text fixture
+matched click/save/empty-text exactly. During a 1258.489 ms held Q-down callback,
+the exact recovery Q-up `SendInput` returned after 310.487 ms; `release_all`,
+recovery receipt, observer neutral receipt, and four public recovered polls all
+arrived before callback return. The hook never observed Q-up, the early separate
+state sample preceded recovery, and the producer exited after callback return;
+strict audit remains FAIL_OR_UNKNOWN (17/20). This separates software release
+receipts from proof that Q-up reached the target. See [R32](../research/integration/win32_supervised_standard_caller_20261024_r32/RESULT.md).
+
+**WSLc isolated local runtime smoke S01 (2026-10-24):** WSL/WSLc 3.0.3.0; the
+exact pinned Python image inspect returned not found. One unique-name `--pull
+never` run stopped with `WSLC_E_IMAGE_NOT_FOUND` before writing a full CID or
+executing application code. A read-only query for that generated name returned
+no match; no container mutation or unrelated inventory query occurred. This is
+HOLD/UNKNOWN, not a WSLc pass or shared-allocation clearance. See [S01](../research/integration/wslc_local_runtime_smoke_20261024_s01/RESULT.md).
+**Win32 recovery-boundary trace R31 (2026-10-24):** one fresh fixture retained
+its Q-down callback for 1245.455 ms; all 20 same-call polls stayed
+pending/release-unconfirmed and strict audit was FAIL_OR_UNKNOWN (18/20).
+The recovery helper's `release_all` spanned the callback; four initial Unicode
+compensating key-up `SendInput` calls each took about 299–314 ms, and the fourth
+crossed callback return. The exact Q-up returned about 8.3 ms after callback
+return. This timing is consistent with a blocked native injection boundary but
+does not prove kernel causality. The R31 task-effect oracle also had a copied
+R30 text operation; actual click/save/text are preserved raw but the declared
+R31 sentinel mismatched, so no retry was made. See [R31](../research/integration/win32_supervised_standard_caller_20261024_r31/RESULT.md).
+**Win32 retirement-call trace R30 (2026-10-24):** with one fresh native
+fixture and a 1,253.867 ms blocked-hook hold, all 20 same-call polls remained
+`running / pending / release_confirmed=false`; strict audit 19/20
+FAIL_OR_UNKNOWN. A test-only trace on the exact producer showed
+`OperationCancellationSupervisor._retire_process` returned true about 8.6 ms
+after cancel start: `terminate()` took 0.366 ms, `join(0.1)` 4.128 ms, then
+`is_alive()` was false. Process retirement therefore did not span the blocked
+hook interval in this sample. The callback returned after the hold and only
+then did recovery/all-up/readback finish. The remaining recovery helper /
+`SendInput` boundary is the next instrumentation target; its blocking is still
+a hypothesis. See [R30](../research/integration/win32_supervised_standard_caller_20261024_r30/RESULT.md).
+
+**Blocked-hook boundary R29 (2026-10-24):** the fresh current-main Windows
+trial held the owned low-level Q-down callback for 1,304.466 ms after a 1.336
+ms cancel response. All 21 same-call polls during the hold remained
+`running / pending / release_confirmed=false`; the frozen audit is
+FAIL_OR_UNKNOWN 19/20 on release while blocked. A separate same-generation
+Q-up observation during the hold is nondiscriminating because the Q-down had not
+passed the hook. After callback return (1,306.210 ms after cancel start), exact
+producer exit, recovered/all-up receipt, same-generation neutral readback,
+fixture effect, and cleanup passed. This narrows the R14 result to one current
+main fixture; kernel scheduling cause and other Windows paths remain unknown.
+WSLc remained HOLD per #7924's uncached-image/unknown-cleanup record. See
+[R29](../research/integration/win32_supervised_standard_caller_20261024_r29/RESULT.md).
+
+**Standard-caller exact-call retrieval repeat R28 (2026-10-24):** on the
+current #9470 main commit (`380e1a9`), a fresh supervised Win32 fixture again
+returned `pending` after the supported 10,000 ms dispatch wait. One dispatch was
+issued; six read-only `interface_results` polls for the exact call ID reached
+`completed` 11,052.806 ms after dispatch start. The producer's verified all-up
+receipt was timestamped at 10,826.954 ms; independent neutral readback, the
+exact one-click/38-character/one-save fixture oracle, public session close,
+fixture exit, and foreground restore all passed. Strict R28 audit: 14/14 PASS.
+The public close response itself still reports `release_confirmed=false`; the
+terminal action receipt is the verified release evidence. R27 is independently
+reproduced once on current main, not a reliability claim. This remains a local
+Windows fixture result, not WSLc, blocked-I/O release, MAP01, runtime task
+success, or matched efficiency. R28 packet preserves an initial sparse-checkout
+preflight stop and a first audit attempt's field-name mismatch; neither sent
+additional input. See [R28](../research/integration/win32_supervised_standard_caller_20261024_r28/RESULT.md).
+
+# Current objective and working direction
+
+**Dispatch lock repair (2026-10-24):** the dispatch worker now exits after a
+verified `recovered` or terminal `unknown` cancellation, allowing its shared MCP
+operation lock to be released before the lease deadline. A public-path
+regression reproduces recovered cancellation and requires session close within
+a 150 ms bounded retry window. The targeted supervised Win32, owned-session and
+composition modules pass 42 tests in normal and `-O` Python. The relay test's
+observation does contain `source.sequence` and a process-generation digest; a
+minimal public observe/close call confirms that contract. The full CLI run's
+actual failure is later: `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`
+times out waiting for `held-reply.json`. Its Fake X caller emits a KeyPress and
+then a KeyRelease before `GetPointerControl`; the offline proxy candidate clears
+its pending-press association on that intervening request, so it forwards the
+later sync reply instead of holding it. The test then leaves an owner IPC worker
+blocked during executor shutdown. This is an unresolved event-order mismatch
+between the composed caller and test-only relay candidate, not a missing public
+observation field. The complete suite has not produced a summary.
+
+**Standard-caller blocked-hook trial R14 (2026-10-24):** the one-shot public
+stdio-MCP run is preserved in the [R14 result](../research/integration/win32_supervised_standard_caller_20261024_r14/RESULT.md).
+It held one injected Q-down inside the owned low-level callback for 700.934 ms
+after cancel. The cancel returned pending in 1.431 ms; eleven exact-call polls
+all retained `running / pending / release_confirmed=false`, and the callback
+was still blocked at hold end. An independent same-generation process saw Q-up
+during the hold, but this does not prove release because Q-down had not passed
+the hook. After callback return at 701.097 ms, exact producer exit and recovery
+UP followed; final independent readback was neutral, the fixture saved its
+sentinel, session/hook/fixture cleanup passed, foreground was restored, and
+runtime `task_success` remained null. The frozen audit is FAIL_OR_UNKNOWN
+19/20 on the blocked-I/O release check. Public close also reported
+`release_confirmed=false`. The next boundary is a safe way to retire or fence
+the blocked producer before recovery UP, without permitting late input, while
+preserving UNKNOWN until independent neutral readback. This was a
+user-authorized Windows-PC test, not a WSLc allocation. No rerun.
+
+**R15 hook-timeout trial launch (2026-10-24):** R15 prepared a 1250 ms
+low-level hook hold to test the documented Windows timeout boundary, but its
+source preflight refused to start because this page had an uncommitted tracked
+edit. The failure happened before output-directory/fixture/hook creation, MCP
+dispatch, or native input (`caller_dispatches=0`). Preserve it as a prelaunch
+failure; do not rerun R15. Its conditions and source are in the
+[R15 packet](../research/integration/win32_supervised_standard_caller_20261024_r15/RESULT.md).
+The next attempt needs a clean committed source SHA and a new attempt ID.
+
+**Standard-caller cancellation R13 (2026-10-24):** the repaired public stdio-MCP
+path passed its frozen auditor 19/19 on one fresh owned fixture. Same-call
+polling reached injected Q-down in 775.292 ms; one cancel returned in 1.495 ms,
+then exact producer exit, `recovered / release_confirmed=true`, and independent
+same-generation Q-up were observed within 235.151 ms of cancel. `interface_close`
+returned `closed` on its first call in 90.154 ms; fixture exit, hook exit and
+foreground restore passed. The fixture saved the exact R13 sentinel while
+runtime `task_success` remained null. This verifies the specific R12 lock-release
+repair for one Windows fixture; it does not establish MAP01, efficiency, broad
+reliability, or WSLc transfer. See the [R13 packet](../research/integration/win32_supervised_standard_caller_20261024_r13/RESULT.md).
+**Standard-caller cancellation R12 (2026-10-24):** the first pre-admission
+`unknown_call` was recorded, subsequent same-call polling reached the hook in
+1.003 s, and one cancel returned in 1.479 ms. Exact producer exit preceded hook
+UP; public results reached `recovered / release_confirmed=true`, independent
+same-generation readback observed Q-up, and the exact fixture effect was saved.
+The audit is FAIL_OR_UNKNOWN 18/19 because close stayed busy through 37
+attempts/4 s. Source inspection locates the likely cause: the dispatch worker
+continues while action status is `running` after cancellation has reached
+`recovered`, retaining the shared MCP operation lock. No local child remained;
+public close still did not confirm. The next step is a local regression and
+minimal exit-condition repair before another one-shot live check. See the
+[R12 result](../research/integration/win32_supervised_standard_caller_20261024_r12/RESULT.md).
+
+**Standard-caller cancellation R11 (2026-10-24):** 250 ms polling of the
+returned public call ID advanced execution to injected Q-down in 984.654 ms.
+The callback was held through a 1.699 ms public cancel response; the exact
+producer exited, hook UP followed, and an independent same-generation readback
+observed Q-up. The terminal same-call result reported `recovered` and
+`release_confirmed=true`; exact R11 fixture effect was saved, while runtime
+`task_success` stayed null. The immutable audit remains FAIL_OR_UNKNOWN 17/19:
+it counts an initial pre-admission `unknown_call` poll as a failure and the
+immediate session close was busy while cleanup was draining. Processes and
+fixture exited, hook and foreground cleanup passed. See the
+[R11 result](../research/integration/win32_supervised_standard_caller_20261024_r11/RESULT.md).
+The next one-shot should preserve the transient `unknown_call` and retry only
+busy `interface_close` within a finite drain window.
+
+**Standard-caller cancellation R10 (2026-10-24):** the one-shot public
+stdio-MCP run again completed the fixture effect and independent same-generation
+Q-up readback, but the 100 s hook gate expired about 0.780 s before injected
+Q-down reached the hook (100.780 s after wait start; 103.483 s after hook
+readiness). No cancel was sent; session close still reports release unknown.
+The frozen audit is FAIL_OR_UNKNOWN 9/17. Across R06/R07/R09/R10 the Q-down
+arrived 0.75–0.79 s after each finite hook wait, so the next test should poll
+same-call results during the wait instead of extending it. Preserve R10 and do
+not replay it; see its
+[result](../research/integration/win32_supervised_standard_caller_20261024_r10/RESULT.md).
+The goal remains active; no WSLc or Docker allocation was used.
+
+**Standard-caller cancellation R09 (2026-10-24):** R09 preserved one public
+stdio-MCP normal completion and exact fixture effect, but its 75 s cancellation
+gate expired about 0.788 s before injected Q-down reached the owned hook
+(75.788 s after gate start; 78.482 s after hook readiness). The frozen audit is
+FAIL_OR_UNKNOWN 9/17; no public cancel was sent, session close did not confirm
+release, and a separate same-generation readback later observed Q up. Do not
+replay R09. See its [result](../research/integration/win32_supervised_standard_caller_20261024_r09/RESULT.md)
+and raw. The next one-shot caller trial should use a 100 s finite hook-entry
+gate and 180 s lease, preserving the hook/running/cancel ordering. No WSLc or
+Docker allocation was used.
+
+**Standard-caller cancellation follow-up (2026-10-24):** the new [R05
+packet](../research/integration/win32_supervised_standard_caller_20261024_r05/README.md)
+records a caller-teardown construction failure before native input. R06 and
+R07 each returned a public zero-wait pending call ID and then completed the
+owned fixture task normally, with an exact saved sentinel, verified empty
+release, independent same-generation all-up readback, and clean foreground
+restoration. They did **not** exercise cancellation: injected Q-down reached
+the hook 10.7526 s after R06's 10 s wait and 45.7678 s after R07's 45 s wait,
+after each finite hook gate had already been released. Both immutable packets
+record FAIL_OR_UNKNOWN for the cancellation question; R05–R07 do not establish
+public cancellation recovery. The [R06](../research/integration/win32_supervised_standard_caller_20261024_r06/README.md)
+and [R07](../research/integration/win32_supervised_standard_caller_20261024_r07/README.md)
+records preserve the delayed producer-start boundary. The next caller trial
+must retain a finite window long enough to reach the hook, confirm the same
+call is still running, then cancel once and verify exit-before-UP and
+independent neutral state. The goal remains active; no WSLc or Docker allocation
+was used.
+
+**Supervised Win32 standard-caller effect path (2026-10-24):** the fresh [R04
+packet](../research/integration/win32_supervised_standard_caller_20261024_r04/README.md)
+passes its 15-check audit on the public stdio-MCP route. Observation and the
+owned fixture share a target generation; one dispatch returned pending after
+10.0028 s, and same-call readback showed `operation_invoked=true`,
+`input_dispatched=true`, verified empty release, and completed action. An
+independent neutral readback followed producer-exit confirmation, though both
+timestamps rounded to the same monotonic tick. The exact fixture journal and
+saved effect match, fixture cleanup restored the previous foreground, and the
+session closed. Runtime task success remains `null`. R01's producer-directory
+collision is repaired in `5da333c6`; R02's missing input-dispatch summary is
+repaired in `a448064e`. R01 and R03 are preserved pre-effect failures: R01 hit
+the path collision; R03 exceeded the public 10000 ms wait bound and was refused
+before input. R02 independently passes a supplemental audit after its first
+audit's pending-response assumption mis-scored the same-call terminal result.
+Across this sequence, 84 related local tests pass in normal and optimized
+Python. These results do not establish blocked-I/O release/recovery, a hard
+deadline, atomic generation fencing, MAP01, integrated task success, matched
+efficiency, or broad reliability. No WSLc/Docker allocation was used.
+
+**Native Win32 low-level hook delay probe (2026-10-24):** the frozen one-run
+[R01 packet](../research/integration/win32_sendinput_lowlevel_hook_20261024_r01/README.md)
+delayed one injected F13 key-down in `WH_KEYBOARD_LL`. `SendInput` returned
+0.9093 ms after callback return; one UP was observed, F13 was up, and unhook and
+thread cleanup succeeded. The callback lasted 64.4284 ms against the predeclared
+60 ms maximum, so the independent audit records **FAIL**. The one-shot raw,
+conditions, source hashes, and audit are preserved. This supports the narrow
+ordering observation for one finite callback stall only; it does not establish
+a hard release deadline, indefinite-block recovery, public MCP recovery, MAP01,
+or matched efficiency. Do not rerun this allocation.
+
+**Native Win32 supervised recovery (2026-10-24):** the frozen [R03 packet](../research/integration/win32_native_supervised_sendinput_hook_20261024_r03/README.md)
+passed all 20 predeclared audit checks in one owned EDIT fixture schedule. A
+real F13 DOWN entered the injected `WH_KEYBOARD_LL` callback while its producer
+was still inside `SendInput`; cancellation returned `pending` in 0.1971 ms,
+the exact producer exited before recovery, and the prestarted helper performed
+one same-generation `release_all` UP. An independent helper observed all-up
+14.2328 ms after recovery began and again after the 1.5 s horizon. Cleanup
+restored the previous foreground window, destroyed the fixture, retired all
+children and closed the supervisor; emergency UP was unnecessary. The raw and
+read-only audit are hash-bound. R01/R02 are preserved pre-action construction
+aborts. This is one finite host/schedule and does not qualify the standard MCP
+caller, task success, MAP01, bounded recovery across failure classes, efficiency
+or broad reliability. Do not rerun this packet.
+
+**Public Win32 overlap refusal (2026-10-24, synthetic):** the standard
+`interface_guarded_win32_admit` endpoint now preserves the owner’s unresolved
+producer refusal as a machine-readable `INPUT_PRODUCER_UNRESOLVED` result,
+including the earlier operation ID. A public route regression confirms the
+second action creates no call and never invokes another producer; replay and
+task success remain false/unknown. The 57 selected public composition,
+backend, owner and cancellation tests pass in normal and optimized Python.
+This improves caller handling of the unresolved native operation but does not
+prove native fencing or release. WSLc remains STOP/HOLD under #7924.
+
+**Public Win32 effect and timing (2026-10-24):** R01 was refused before input
+with `TARGET_GENERATION_REQUIRED`; its raw, audit, and clean fixture exit are
+preserved. R02 forwarded the matching generation from public observe to the
+standard dispatch and passed its 25-check audit with one exact independent
+effect and verified release. R02 exposed a 15.625 ms GetTickCount64 resolution,
+so its 78/141/94 ms endpoint readings are explicitly coarse. R03 uses the
+100 ns QueryPerformanceCounter-backed `perf_counter_ns()` clock and also passed
+25/25: click at 5.5515 ms, first/last text at 46.9063/60.5935 ms, effect file
+close at 61.8722 ms, public response at 122.9508 ms, then independent readback
+106.1251 ms after file close. See the
+[R01](../research/integration/win32_public_mcp_effect_timing_20261024_r01/README.md),
+[R02](../research/integration/win32_public_mcp_effect_timing_20261024_r02/README.md),
+[R03](../research/integration/win32_public_mcp_effect_timing_20261024_r03/README.md),
+[R04](../research/integration/win32_public_mcp_effect_timing_20261024_r04/README.md),
+and [R05](../research/integration/win32_public_mcp_effect_timing_20261024_r05/README.md)
+packets. This is one host/fixture positive path; release's exact sub-call time,
+blocked-I/O release bounds, recovery, atomic generation fencing, MAP01,
+matched efficiency, and broad reliability remain unproven. R03's 300 px final
+image clipped the sentinel tail; R04's assumed 420 px width exceeded the actual
+client area and failed at observe before input; both limits and the clean R04
+UNKNOWN are preserved. R05 measures `GetClientRect`, uses the actual 404x181 client region,
+and passes 29/29 with exact independent task effect, verified release, clean
+fixture exit, and a retained screenshot showing all of `VISUAL-R05`. It records
+dispatch-to-save at 59.7386 ms, public response at 129.0408 ms, and independent
+readback 116.0156 ms after save close; see the R05 packet. This one positive
+sample does not qualify blocked-I/O release, bounded recovery, MAP01, matched
+efficiency, or broad reliability.
+
+**Win32 unresolved producer fence (2026-10-24, synthetic):** while a direct
+session dispatch is inside a synchronous input call, concurrent recovery and
+overlapping dispatch now return `pending`/`INPUT_PRODUCER_UNRESOLVED` without
+issuing UP or another producer. The [R01 packet](../research/integration/win32_inflight_recovery_fence_20261024_r01/README.md)
+retains both accepted-before-return and blocked-before-acceptance fake-API
+schedules; all 76 selected backend/session/MCP tests pass in normal and
+optimized Python. After the fake producer resumes, its terminal UP/readback
+returns the model to neutral and clears the deferred recovery request. This
+narrows duplicate-producer and premature-recovery behavior in one session; it
+does not interrupt a blocked native call, impose a hard release deadline,
+qualify physical input or task effect, or use WSLc.
+
+**Win32 public recovery-failure custody (2026-10-24, synthetic):** a new
+public-MCP test injects a recovery helper that returns a mismatched operation
+receipt. `interface_results` retains UNKNOWN, release confirmation/task success
+stay unset, replay remains denied, the observer is not run, and the fake DOWN
+state remains visible. Public admission also normalizes target-incarnation
+property/read failures to `TARGET_GENERATION_CHANGED`; an explicit fake
+`GetPropW` cookie fixed a test-fixture recursion through `ctypes.cast`. The
+[R01 packet](../research/integration/win32_public_recovery_unknown_20261024_r01/README.md)
+records the raw failure and repair plus 51 selected caller/backend/owner/
+supervisor tests passing in normal and optimized Python. This verifies one
+joined failure path only; native input, bounded physical release, live task
+effect, MAP01, WSLc, matched efficiency, and reliability remain open.
+
+**Win32 target-incarnation cookie lifecycle (2026-10-24):** production
+`target_generation()` now adds a per-HWND-lifetime property and fails closed if
+the property is denied, changed, or missing after binding. `close()` retains
+the shared marker until Windows destroys the HWND, avoiding unsafe removal that
+could invalidate another backend. The standard MCP session records backend
+close receipts. A no-input native hidden-HWND probe passed with two backend
+instances sharing the cookie and Windows removing it at HWND destruction; see
+the [R04 packet](../research/integration/win32_target_incarnation_cookie_20261024_r04/README.md).
+Two earlier setup failures remain in R01/R02, and the superseded removal design
+is preserved in R03. The 79-test composed run passed in normal and optimized
+Python. This does not
+demonstrate numeric HWND reuse, cross-integrity behavior, an atomic check/use
+fence, input/release, bounded recovery, MAP01, WSLc, efficiency, or reliability.
+
+**Win32 target-incarnation property feasibility (2026-10-24):** the frozen [R01 packet](../research/integration/win32_property_cookie_20261024_r01/README.md) shows a same-integrity parent can `SetPropW` and read back a unique value on a hidden HWND owned by its child process. After destruction, the old handle was invalid and returned no property; a new HWND on the same PID/thread also had no value, but its numeric HWND differed, so reuse was not tested. The child exited cleanly and the 9/9 structural audit passes. Microsoft documents UIPI restrictions and per-window property cleanup requirements; this is a feasibility sample only, not a production generation fix or evidence for elevated targets, atomic fencing, input/release, recovery, MAP01, efficiency, or reliability.
+
+**Native Win32 same-thread HWND allocation discriminator (2026-10-24):** the frozen [R02 packet](../research/integration/win32_hwnd_reuse_20261024_r02/README.md) created and destroyed two sequential cohorts of 256 hidden windows on one process/thread, using production owner-identity and `target_generation()` methods. All 512 windows were confirmed destroyed; no numeric HWND repeated across cohorts, so the result is `NO_HANDLE_REUSE_OBSERVED_IN_THIS_BATCH`. Its 10/10 structural audit passes. R01's pre-entry `advapi32` setup failure is separately preserved. This finite host-specific allocation pattern does not prove HWND reuse cannot occur or close the same-number alias, target-fencing, input/release, recovery, MAP01, WSLc, efficiency, or reliability gates.
+
+**Public stdio MCP Win32 live integration (2026-10-23):** R01 failed before `session.dispatch` because Win32 lacked per-call capture-artifact support; preserve its raw failure. The repair now writes dependency-free PNG artifacts from exact BGRX capture; 28 focused tests and the 131-test CLI/API suite pass locally in normal and `-O` modes. Initial cross-platform CI exposed the missing Pillow dependency in the first implementation; the standard-library encoder fixes that failure. R02 confirmed the public observer creates a valid image artifact, then the probe failed while serializing the SDK image payload; raw is UNKNOWN and frozen. R03 independently reached public validation and one dispatch, and the fixture oracle confirmed click, exact 17-character text, and one save. The final release receipt remains `release_unverified` with unknown Ctrl/S and left-button states; R03 is a failed release trial and is not replayed. See the [R01](../research/integration/win32_public_mcp_live_effect_20261023_r01/README.md), [R02](../research/integration/win32_public_mcp_live_effect_20261023_r02/README.md), and [R03](../research/integration/win32_public_mcp_live_effect_20261023_r03/README.md) packets. This does not establish generation admission, bounded release under blocked I/O, supervisor recovery, MAP01, or efficiency.
+
+**Native Windows target-identity smoke (2026-10-23):** the [R01 packet](../research/integration/win32_native_target_identity_20261023_r01/README.md) exercises production `Win32Backend.process_identity()` and `target_generation()` against one hidden HWND created and destroyed by the probe on this PC. The real Win32 API returned stable PID/process-creation identity and generation across repeated reads; the owned HWND was absent after destroy. Its 8-check raw audit and 12 focused tests in normal/`-O` modes pass. An initial import-path setup error is preserved. This qualifies only native identity API wiring for one live HWND; no input, release, target-reuse detection, task effect, recovery, WSLc, or efficiency claim.
+
+**Native HWND reuse discriminator (2026-10-23):** the [R01 one-shot packet](../research/integration/win32_hwnd_reuse_20261023_r01/README.md) created and destroyed two hidden `STATIC` windows sequentially on the same thread, using production owner-identity and generation methods. Windows returned different numeric HWNDs (`50923368`, `50988904`), so the result is `NO_REUSE_OBSERVED_IN_THIS_SINGLE_TRIAL`; both windows were destroyed and the 7-check receipt audit passes. This is inconclusive about reuse/aliasing and was not retried. It adds no input, release, effect, recovery, MAP01, or efficiency qualification.
+
+**Standard Win32 caller target-generation seam (2026-10-23, implementation commit `251f1182`):** read-only observation brackets capture with matching target-generation reads; standard API dispatch requires a matching `source.target_generations` value for each explicitly focused Win32 target. The full public observation receipt exposes the generation, and missing/malformed/stale values or effects without explicit focus refuse before `session.dispatch`; non-Win32 callers keep their existing path. Core-contract, observation, admission and public-MCP suites pass 67/67 normally and under `python -O`. The [native public-MCP R01 packet](../research/integration/win32_public_mcp_generation_fence_20261023_r01/README.md) passed 14/14 frozen checks: an observation token from one owned fixture process was refused by a new public caller configured for a distinct fixture process; public validation accepted the program, dispatch refused `TARGET_GENERATION_CHANGED` before input, and the independent fixture journal recorded no character input. Both fixtures exited cleanly. This closes that stale-process-generation caller gap for one sample, but leaves a post-check/use race and does not qualify accepted input, release deadlines, recovery, MAP01, WSLc, efficiency, or broad reliability.
+
+**Real terminal saved-effect task (2026-10-23):** the [frozen rootless xterm trial](../research/integration/xterm_public_task_20261023_r01/README.md) uses public guarded MCP to type a known command through actual xterm/PTY/shell, producing exactly one independently read/fsynced record with owned ancestry.14 pre-frozen-auditor checks pass; source/native binaries and cleanup retained. Input returns65.438ms after invocation, saved effect commits72.876ms after invocation, so API completion precedes task commit by7.437ms in this sample. Custom record helper, one known zero-model task, no fault/comparison; no general terminal/Calc/MAP01 or efficiency/reliability claim. Setup is user-cache extraction only, not system installation or WSLc.
+
+**Queued-UP boundary and interpretation correction (2026-10-23):** [two new frozen cases](../research/integration/x11_queued_up_cancel_20261023_r01/README.md) record target UP queued after the delayed XTEST request and before real sync. Without server pause: old counted task PASS/count1 and fresh PASS; with1000ms pause: old FAIL/count3, fresh PASS. Both preserve UNKNOWN/no replay and pass28 raw checks each. Earlier descriptions of the old task as an “explicit held-key” operation were incorrect: it is `key_chord`, stalled behind the injected delayed request. The new packet supersedes that interpretation without rewriting old raw/results. Completion-hold comparison #9427 remains valid for its distinct after-reply hook. No hard deadline, physical/MAP01, efficiency or reliability claim.
+
+**Matched completion-hold discriminator (2026-10-23):** a [frozen ABBA public-guarded comparison](../research/integration/x11_tap_completion_hold_20261023_r01/README.md) uses identical current caller/guards with prior vs repaired key methods. During a one-second completion hold after a real X sync reply, both prior cases remain DOWN/count10; both repaired cases are UP/count1. All four end neutral; 47 pre-frozen-auditor checks pass. This qualifies that client-facing completion boundary only, not network reply loss, blocked send, stopped server, supervisor cancellation, general exactly-once effects, MAP01, efficiency or broad reliability.
+
+**Single-key chord reply-boundary repair (2026-10-23):** the [backend repair](../research/integration/x11_single_tap_reply_boundary_20261023_r01/README.md) queues eligible single-key DOWN/UP before one final key-state reply, retaining subclass guards and possible-DOWN custody. 143 related pure tests pass normal/-O. A [fresh native public-caller run](../research/integration/x11_single_tap_live_20261023_r01/README.md) passes 24 raw checks and fresh count `[0]→[1]→[1]`; old explicit held-key count `[1]→[3]` remains task FAIL/UNKNOWN. This removes an avoidable reply wait, not stalled-write/queue atomicity or held-key repetition. No measured speedup, physical/MAP01, efficiency or reliability claim.
+
+**Counted task-oracle repair and live verification (2026-10-23):** the [repair](../research/integration/xvfb_effect_count_oracle_20261023_r01/README.md) adds strict non-idempotent effect counts to the blocked-release fixture; 20 pure tests pass normally and under `-O`. A [new frozen native Xvfb run](../research/integration/xvfb_counted_effect_local_20261023_r01/README.md) independently reads old count `[1]→[4]` with unchanged value `[1]`, correctly scoring old task FAIL; fresh count `[0]→[1]→[1]` scores PASS. The 24-check raw audit and owned-process cleanup pass, while old runtime UNKNOWN/no-replay remains. This repairs observability, not old repeated effects or general exactly-once semantics. Other server-stop legacy scorers remain value-only; no WSLc/physical/MAP01, efficiency or reliability claim.
+
+**Paused local caller trial and oracle counterexample (2026-10-23):** [R01](../research/integration/xvfb_blocked_release_local_20261023_r01/README.md) passed its single existing Xvfb test: cancel response 254.184 ms, post-resume all-up, fresh-target effect `[0]→[3]` with 89.901 ms input-to-independent-readback, old UNKNOWN/no-replay preserved. The separate 20-check raw audit also found three old-window KeyPress/effect handlers masked by idempotent `[1]` assignment, so the scorer's literal “one initial effect” is unproven/contradicted at event level. Next: explicit non-idempotent effect-count fixture/oracle and duplicate-event regression; preserve this result. Native WSL2 only, no WSLc/Docker or Windows desktop input; no efficiency/reliability/MAP01 claim.
+
+**Local observation prerequisite (2026-10-23):** the [public MCP observation R01 packet](../research/integration/xvfb_public_observation_20261023_r01/README.md) records one new authenticated private Xvfb, two exact 64×64 fixture images, retained-image identity, timestamp ordering and clean close/exit; 19 offline raw-reconstruction checks pass. This qualifies the newly prepared local WSL2 observation environment only. No input, WSLc allocation, input-caused task effect or performance/reliability claim is made. Next: separately frozen blocked-I/O control/effect trial on a fresh owned server.
+
+**Latest main checkpoint (2026-10-23, `b0dba32da`, PR #9420):** PR #9418 integrated the synthetic Win32 caller and custody fixes; #9419 added oracle timestamp-window validation; #9420 repaired private-Xvfb pause cleanup using a retained process descriptor and post-STOP exception cleanup. Their packets preserve local test scopes and failures. Native input/release, live task/MAP01 effect, recovery authority, matched efficiency and reliability remain open.
+
+**Win32 target-generation discriminator (2026-10-23, PR #9435/#9436 and thread-identity follow-up):** `Win32Backend.target_generation()` hashes the configured HWND, GUI-thread ID, owner PID, and process creation time; the reader rechecks both PID and thread ID across the process-time query. The adapter and `create_server()` public-MCP tests confirm a changed HWND or GUI thread within one process is rejected before operation creation or producer start. All 25 focused backend/caller/server tests pass normally and under `python -O`. This is mocked Win32 API composition; reuse of the same numeric HWND on the same thread can still alias, native input remains unqualified, and no WSLc allocation was used.
+
+**Valid-generation public Win32 input, release, and fixture task effect (2026-10-23):** [R04](../research/integration/win32_public_mcp_valid_generation_effect_20261023_r04/README.md) used the actual stdio-MCP caller on the user-authorized PC and one owned Win32 fixture. Public observation returned a generation matching the fixture's native owner identity; validation accepted the matching program; one dispatch completed with a verified empty release receipt; the fixture independently saved the exact requested sentinel and journaled 18 character records plus one save event. The pre-frozen audit passes 14/14 and the fixture exited cleanly. This is one local fixture task/effect sample; R01/R02 setup failures and R03's frozen expectation mismatch remain separately retained. No blocked-I/O recovery, hard release deadline, post-focus race, MAP01, WSLc, efficiency or broad reliability claim is made.
+
+**Win32 runtime post-admission generation guard (2026-10-23):** the standard backend now re-reads a focused target's generation before focus, immediately after focus, and before every target-specific operation when the program carries `source.target_generations`. A changed/unavailable generation raises a fail-closed execution error and uses the existing release path; programs without generation evidence keep their legacy behavior. Five regression cases cover stale-before-focus, change-during-focus, change-between-effects, matching operation, and legacy operation. Win32 backend tests pass 73/73 in normal and optimized Python; relevant public caller tests pass 31/31 in both modes. This narrows the admission-to-use window but is not an atomic OS-side fence, does not interrupt a blocked generation query or platform call, and does not prove bounded release or task success.
+
+**Post-admission guard live compatibility R05 (2026-10-23):** the [one-shot packet](../research/integration/win32_public_mcp_valid_generation_effect_20261023_r05/README.md) ran one actual public stdio-MCP observe/validate/dispatch against a fresh owned Win32 fixture on the user-authorized PC, pinned to main `b9a8678b15fc2a271928a9f3b1429e396bdb23dc`. The observed generation matched the native owner identity; the exact frozen program was accepted; one dispatch completed with a verified empty release receipt; the independent fixture oracle saved the exact sentinel and journal; the process exited cleanly. The frozen audit passes 14/14 and raw is hash-manifested. This is one stable-generation positive-path compatibility sample. It does not observe an adversarial native generation change between focus and input or prove bounded release, recovery, MAP01, efficiency, or broad reliability.
+
+**WSLc smoke bounded-call repair (2026-10-23, PR #9438):** current main includes merged PR #8503's exact-container cleanup query, but its WSL/WSLc subprocesses had no caller timeout and its `finally` block deleted receipts even when run/cleanup state was unknown. The smoke now bounds version/run/cleanup CLI waits at 10/90/15 seconds, kills only its own timed-out CLI process, retains the unique probe directory and raw stdout/stderr logs after any run/cleanup uncertainty, and returns UNKNOWN without retry. PowerShell parser and child exit/output/timeout tests pass; an offline fake-CLI smoke passes success cleanup, run failure, run timeout, cleanup timeout, and non-empty cleanup retention. No WSLc CLI, container, image, or Docker command was run; #7924 remains STOP/HOLD.
+
+**Local Linux process-only result:** the [R02 packet](../research/integration/xvfb_pidfd_live_20261023_r02/README.md) records one owned Xvfb and three predeclared schedules passing with actual Linux pidfd STOP/CONT calls. Independent observers found healthy stopped/resumed states and resumed states after injected status-read/timer-start faults; target exit and absence were confirmed. The [R01 readiness FAIL](../research/integration/xvfb_pidfd_live_20261023_r01/README.md) is unchanged. R02 uses process-state readiness, not X transport readiness. No GUI input or WSLc operation occurred; this qualifies only this helper process-control sample, not live input release/task effects.
+
+**Oracle observation-window follow-up (`79aa55c0d`):** the [timing packet](../research/integration/win32_oracle_timing_20261023_r01/README.md) reproduces two false successes with stale/future observation timestamps. The caller now requires observation time within the oracle reservation/receipt-processing window and retains both endpoints. All 27 related tests pass normally and under `-O`, including valid endpoint equality and immutable UNKNOWN after rejection. This validates timestamp consistency; it does not independently establish task effect or effect latency.
+
+**Local Win32 supervisor checkpoint (2026-10-23, branch `codex/win32-supervisor-implementation-plan`, `4121be229`):** the approved prestarted-helper model now starts and validates recovery/observer workers before operation admission, then reuses them with operation-scoped result and completion receipts. Public route regressions cover duplicate start/cancel, blocked observation, timeout followed by a late oracle receipt, and separate Generation-A/Generation-B accounting. A fake-API spawned-process test invokes the actual `Win32RuntimeSession` and `Win32Backend.execute()` through blocked-before-acceptance and accepted-before-return schedules; both record producer retirement before recovery UP. A retirement timeout stays UNKNOWN with no recovery UP. The R01 [custody packet](../research/integration/win32_supervisor_custody_20261023_r01/README.md) records 79/79 selected pure/fake tests passing in normal and optimized modes and includes raw output, conditions and source hashes. This branch does not qualify native Windows input, physical release, late-DOWN exclusion, a live task/MAP01 oracle, hard real-time bounds, matched efficiency, or repeated reliability. An earlier broad command accidentally ran the native fixture integration class and failed before a successful emission was recorded; a fixture process query afterward found no remaining process, but this is retained as an unqualified incident because the run does not exclude all native API calls or side effects. Do not rerun that class. No WSLc allocation or Docker was used; #7924 remains STOP/HOLD.
+
+**Joined Win32 caller/backend checkpoint (2026-10-23, `de457b73e`):** the [joined-path R01 packet](../research/integration/win32_public_backend_composition_20261023_r01/README.md) connects public MCP tools to the actual Win32 session/backend through the existing injected producer factory with an inert API. Three new cases cover both blocked-DOWN schedules and unconfirmed producer retirement; all 15 related tests pass normally and under `-O`. An intentionally premature fake UP fails the ordering check. This closes a synthetic test-composition gap; production native adapter, real target identity, physical release, live task effect, efficiency and reliability remain open.
+
+**Current-main Win32 synthetic recheck (2026-10-23, `4c0fe4d31`):** the additive [R02 packet](../research/integration/win32_public_backend_composition_currentmain_20261023_r02/README.md) reruns 48 public-caller, backend-composition, owner, and recovery tests in normal and optimized Python against the current-main tree. Its eight retained public-backend traces pass an independent audit for generation/operation binding, one producer attempt, retirement-before-recovery ordering, UNKNOWN retention, and separate task-effect state. The traces still use inert Win32 APIs; native release, live task effect, WSLc, matched efficiency, and reliability remain unqualified.
+
+**Win32 start-generation repair (2026-10-23, `d06b5d280`):** the [recheck packet](../research/integration/win32_start_generation_recheck_20261023_r01/README.md) reproduces stale/unavailable target generations incorrectly authorizing a producer after admission. The caller now rechecks before factory work and before gate authorization, retains UNKNOWN on failure, and retires a still-gated child without requesting compensating input. Five pre-fix cases fail as expected; 43 related tests pass normally and under `-O`, including cancellation during a blocked generation query. Atomic native target fencing and recovery-time target authority remain open.
+
+**Closed-gate cancellation repair (2026-10-23, `aa891d55f`):** the [new packet](../research/integration/win32_unopened_gate_cancel_20261023_r01/README.md) reproduces an unwanted recovery UP while the final generation query was blocked and the producer gate was still closed. The public caller now declares the gate requirement, and the owner refuses recovery after retiring a never-authorized child. The fixed trace contains only child exit; UNKNOWN/no replay is retained. All 112 focused and compatibility tests pass normally and under `-O`. This is a synthetic-only repair, not native release qualification.
+
+The X11 supervisor remains opt-in. Public-caller live-Xvfb bystander refusal has one scoped test-wrapper sample. For current local Win32 evidence and limits, use the dated checkpoints above and the [supervisor design and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md) and [Win32 operation-owner implementation plan](architecture/WIN32_OPERATION_OWNER_IMPLEMENTATION_PLAN.md).
+
+**Prior checkpoint before PR #9408:**
+
+**Repository checkpoint (2026-10-22, historical):** PR #9401 is merged at
+`b688ecd3fdb4726b59201f10753ca65d82942b2b`; it preserves the scoped r09
+Chromium/App Server polling packet with an explicit source-currency limit. PR
+#9402 at `4606c917d22b0da0bd42cdbe7b95fbe606053f5e` records that no complete
+r09 source snapshot exists across 48 linked worktrees. PR #9403 at
+`375682310fa29d3bd0bf2af71835ef36ab3dc8ac` adds the Win32 operation-owner
+plan and confirms the existing owned-process recovery path is X11-specific.
+PR #9400 at `632d3603a8df157c1e841dac7ca422c766c77e60` adds a worktree-custody
+report. These changes do not alter runtime behavior or the r151 queue
+membership. The
+user-selected prestarted-supervisor design is already documented in the
+canonical [design and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md);
+it remains opt-in and unqualified at the limits recorded there. The current
+organization plan continues from that design and the [worktree custody
+report](maintenance/worktree-custody-recheck-20261022-r01.md). A read-only
+recheck of the r09 Chromium packet found 316/317 artifact hashes matching
+(README changed after its retained audit); all 309 r09 raw files match. Of the
+179 frozen source files, 161 match the extant dirty source worktree. A
+read-only search across all 48 linked worktrees found no complete source
+snapshot: expected versions for 170/179 entries occur somewhere, while nine
+were not found. The source worktree remains untouched.
+
+The current Win32 safety follow-up has a separately reviewed
+[operation-owner implementation plan](architecture/WIN32_OPERATION_OWNER_IMPLEMENTATION_PLAN.md)
+and an [inert prototype packet](../research/integration/win32_operation_owner_prototype_20261022_r01/README.md).
+Its r02 synthetic suite passes 12/12 normally and under `-O`; r01's one
+expectation failure is retained. The prototype confirms only its own process
+ordering. It makes no Windows `SendInput`, physical-release, standard-caller,
+or task-success claim; native work remains gated, and #7924 remains STOP.
+
+PR #9404 is merged at `a8f504597ef6a8e097e93dd1cf64611030eea9f7` and retains
+the Phase 1 Win32 process-owner model, including the r01 failure and r02
+12/12 synthetic pass in normal and optimized mode. A subsequent Phase 2
+prerequisite adds a digest of owner PID plus process creation time to the
+private Win32 move-reference binding and refuses when identity is missing or
+changes before input; related Win32 suites pass locally in both modes. This
+still does not connect the owner to the public standard MCP caller:
+`mcp_server` has no guarded-Win32 route, and the private MoveBridge remains
+synchronous. Bounded release under blocked native I/O, public caller
+composition, independent task effect, matched efficiency and reliability
+remain open. No native input or WSLc allocation was used; #7924 is OPEN/STOP.
+
+**Current verified functional baseline (2026-10-22):** PR #9397 merged at `b0e8c6c9b4cfb7917932f52e7a69d8267348aa89`, #9398 at `b57e140848087ab814db874f7dfe410926afd387`, and #9399 at current main `08064035460187ba5c8c5cbb2f4e9732ca622ada`. The fresh r151 membership recheck at that SHA has 1,654 open Issues and 452 open PRs, exactly matching r150. PR #9397 adds a public-caller test for terminal receipt archival blocked after cancellation; its scope and limits are in the [supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). Latest runtime behavior remains the bounded MCP-relay cancellation read-ahead from PR #9389, with one deferred ordinary request, one reserved response and fail-closed later dispatch; its relay/Fake X composition suites passed 26/26 in normal and optimized Windows CPython 3.11. PR #9395 adds offline App Server usage reconciliation checks (44/44 related tests in both modes on its exact main source). These are synthetic/local evidence; production provider routing, external usage reconciliation, native/physical release, live MAP01 effect, matched efficiency and broad reliability remain open. PR #8800 remains on an A14 raw-custody hold: its public aggregate is preserved, but the original private report/protocol/images and their owner were not recoverable in the accessible workspace; no rerun was made. The linked-worktree review found 48 worktrees, 14 with changes, including two with thousands of changed entries and unresolved ownership; see the [custody report](maintenance/worktree-custody-recheck-20261022-r01.md). WSLc Issue #7924 remains OPEN/STOP. See [r151](maintenance/repository-inventory-recheck-20261022-r151.md) and the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md); cleanup and consolidation records retain historical receipts.
+
+## Historical evidence summaries
+
+PR #9377 adds a research bridge from the existing model-call signature to the provider-attempt ledger and standard public MCP caller. Its injected-model tests preserve wrapper inputs, turn-level usage and JSONL, refuse a stale generation, and retain partial JSONL on timeout without sending a tool call. This is contract/composition evidence only: no real provider run or independent usage-log reconciliation occurred, and #57 remains open.
+
+The active objective is computer control: preserve model-led intent and strategy while qualifying bounded local observation, input release, task-effect checking, and recovery. PR #9346 integrated the retained R02 evidence at `4fd2fe76b516844c89efc2e3fb044dff6ceec5bc`; that Xvfb run used source `cdc8bd6b65bf976137db645c2be31e20090f7d67`. See its packet for the exact historical conditions. Use the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md) as the current execution pointer; the [cleanup ledger](REPOSITORY_CLEANUP_PLAN.md) and [consolidation record](REPOSITORY_CONSOLIDATION.md) retain historical receipts and must not be treated as live ownership grants.
+
+Historical current-main addendum after PR #9362 (`df2b41e4a4e0ff03a3a7a139416003bd5599b16`): the [Win32 blocked-SendInput R01 packet](../research/integration/win32_blocked_sendinput_recovery_20261022_r01/README.md) exercises that source's synchronous backend with an inert fake that accepts CTRL-down and blocks before returning. Recovery refuses with no UP while modeled key state remains down; normal and optimized CPython agree. This does not show Windows blocks at that point or establish physical release. The r138 membership pointer and PR #9363 status below applied to that historical checkpoint only; see r146 and the live repository plan above for current cleanup status.
+
+The existing [golden desktop v3 run](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) is a separate real-model integration candidate: one Codex app-server grounding thread completed two image-grounding turns plus one schema preflight; six fixed tasks completed exact-once, all 57 terminal programs verified neutral input, and the old-target pointer was never admitted. Its usage and timing are one persistent-only allocation with only descriptive comparison to retained v1, not a matched public-MCP comparison or reliability estimate. The 232-file/13,805,562-byte retention manifest matches current-main Git blobs. Re-running its source auditor against current main fails its frozen source-hash precondition; this is not a new experiment failure and does not replace the retained outcome. This path shows that a real model-backed desktop route exists. PR #9377 adds a research wrapper bridge, but production model-runner routing, independent provider usage reconciliation, and an integrated live comparison remain open.
+
+Historical membership receipt [r138](maintenance/repository-inventory-recheck-20261022-r138.md) captured main `5a32f1e486b40103a1f24a6059ae78c8cb884e0f` with 1,655 open Issues and 457 open PRs; it is superseded for membership by [r151](maintenance/repository-inventory-recheck-20261022-r151.md). Counts and hashes establish membership only, not semantic disposition. Refresh every live record before changing its state. See the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md) for the current execution order and the [cleanup ledger](REPOSITORY_CLEANUP_PLAN.md) for historical queue receipts.
+
+The opt-in prestarted supervisor has two retained current-main WSL2/Xvfb outcomes. R02 passed one standard-caller trial at source `cdc8bd6b65bf976137db645c2be31e20090f7d67`; R03 is an independent repeat at source `6b276fcabfa11c060282e0714501a1057e75c0a6`, merged by PR #9351. Both measured caller admission-to-response below 300 ms, independent key-up readback, and distinct fresh-session synthetic task-oracle success through an 8.5 s horizon; neither promotes the canceled operation from `UNKNOWN`, sets runtime task success, or permits replay. Their separate packets preserve raw conditions and source identity.
+
+A test-only R01 packet then stopped its exact private Xvfb process for 1,500.674 ms. The standard caller returned `pending` 253.566 ms after cancellation admission while Xvfb remained stopped; after resume, supervisor release readback completed in 59.355 ms and an independent client saw all keys up in 98.039 ms. The fresh synthetic task oracle passed, while the old cancellation remained `UNKNOWN` and replay-denied. See the [R01 boundary packet](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-xserver-pause-01/README.md) and [design record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). It does not establish release while X11 is stopped, physical desktop/MAP01, matched efficiency, or reliability.
+
+
+A matched private-Xvfb pilot then ran three no-pause controls and three 1.5 s whole-process pauses on current main `cc5ef16c560cc985ee0951d3d53d659e892f5167`. All six passed the frozen admission-based composite; response ranged 253.263–256.398 ms, and pause-arm independent all-up readback followed resume by 101.874–127.834 ms. Its pre-call harness timestamp includes test setup and a deliberate 50 ms stop-confirmation wait, so actual caller invocation-to-return is unqualified. The synthetic effect oracle passed but exact effect-readback time was not recorded. See the [matched pilot packet](../research/integration/standard_caller_xvfb_current_main_20261022/paused-server-matched-pilot-01/README.md); this is three pairs, not broad reliability or efficiency evidence.
+
+The corrected caller/effect timing instrumentation then passed one unpaused WSL2 private-Xvfb trial on the PR #9354 code. It measured cancellation invocation-to-return at 95.283 ms, input-to-app-event at 37.701 ms, event-to-effect-commit at 0.097 ms, commit-to-independent-readback at 4.937 ms, and input-to-readback at 42.735 ms. The separate synthetic task oracle passed, while the prior cancellation remained UNKNOWN and replay-denied. The [R01 packet](../research/integration/standard_caller_xvfb_current_main_20261022/caller-effect-timing-r01/README.md) preserves raw output, conditions and a PowerShell reconstruction. The outer WSL wrapper returned 1 even on a no-op command; the test subprocess itself returned 0. This is one unpaused synthetic observation, not a matched estimate, broad reliability result, or WSLc evidence.
+
+On exact current main `1263068ac473d6e64bad2136282fcfbf9eab666d`, a clean-worktree local recheck passes 63 supervisor/owned-caller/server-stop tests (one skipped) and 33 ledger/provider-recorder/public-MCP tests in both normal and optimized Python. The [R03 packet](../research/integration/standard_mcp_task_ledger_57_v1/current-main-20261022-r03-local-recheck/README.md) preserves raw output, exit codes, conditions, and source blob IDs. The composed target-generation refusal uses an injected fake provider and the public compiled MCP endpoint. A scoped source search found no matching production provider call site in `runtime`; external usage reconciliation and live-provider task effect remain open.
+
+The supervisor design also retains an open authority gap: the current per-method input lease does not exclude competing X11 clients from global key/button state. Owner-PID absence or supervisor-PID reuse is not sufficient authority for a shared-desktop XTest release. Until an exclusive-input lease is represented and checked, shared-desktop release remains unqualified; see the [design note](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+
+## Current live-XRes bystander result (2026-10-22)
+
+The direct-worker private-Xvfb R01 result remains preserved in its [disposition](../research/integration/live_xres_bystander_reuse_20261022_r01/DISPOSITION.md); R01 of the public-caller packet is separately retained as a preflight-only failure. The later public-caller [R02 disposition](../research/integration/live_xres_public_caller_bystander_20261022_r02/DISPOSITION.md) records one scoped live-Xvfb refusal: natural base reuse, independent PID observation, no release attempt, public result UNKNOWN/no-replay, and independent key-up readback after the delayed horizon. Its audit and source hashes pass. The response time of 251.602 ms is a single descriptive observation, not a hard-bound or reliability estimate. No WSLc/Docker allocation was used.
+
+The public-caller Fake X regression passes in normal and optimized modes; the live-Xvfb caller composition has one scoped pass using a test-only bystander wrapper. It does not prove global input exclusivity. No WSLc allocation is verified; this work used Ubuntu WSL2 only and made no WSLc or Docker operation. Matched efficiency, physical desktop control, MAP01, WSLc portability, and broad reliability remain unqualified. The repository records #17 and #57 as open and #7924 as STOP/HOLD; refresh each live record before any disposition.
+
+On current main `4bcf4e0a9254a8434032e00f6c4965e72c13293d`, a local public-caller target-generation regression recheck passed 20/20 in normal and optimized CPython 3.11.9. It includes fresh-session recovery with the prior UNKNOWN cancellation receipt retained. The adversarial lifecycle check/use race still permits a bounded prefix press after the final local check; the caller then verifies release and refuses retry. This is current-source Fake X evidence, not atomic generation validation or live X11/task-success evidence. See the additive [current-main recheck packet](../research/integration/standard_caller_target_generation_regression_20261022_r01/current-main-20261022-r01/README.md).
+
+X.Org's XTEST protocol accepts a no-delay/relative-millisecond input time, while Xlib `XSync` waits for server processing and X11 has no cross-client request ordering guarantee. This source-backed inference means helper termination bounds caller waiting but does not prove an already accepted request cannot take effect after a deadline. Release-effect bounds during X11 unavailability remain unproven; see the [deadline semantics audit](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#xtest-deadline-semantics-source-audit-2026-10-22). No WSLc allocation was used.
+The merged [PR #7181 P01 report](../research/audits/native_three_arm_57_p01_5884_20261004/REPORT.md) is a real three-arm native comparison: persistent input+output was 39,329 tokens versus 109,373 plain and 111,226 ephemeral; ready-to-independent-oracle time was 27.712, 36.631 and 46.550 seconds, respectively. It records 18 independently checked effects and one bounded persistent-path repair. Keep its disposition at HOLD: one fixed-order six-task sample per arm on one known fixture/domain, with model/cache/host-load confounding and limited timing scope. This contributes measured evidence to #57 but does not satisfy the integrated current-caller, second-domain or broad efficiency/reliability gates.
+
+The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; it does not classify meaning. See the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for family-by-family review and disposition criteria. The first current semantic audit refreshed #6 and #56 against their live Issue records and found the existing [family entry](ideas/reactive-macro-symbolic-interface.md) accurate; both distinct research questions remain open. This page is the short entry point, not an experiment ledger.
+The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
+records three disjoint family candidates (#17, #5, #59), not current assignments
+or resource grants. #17's local Fake X packet is complete. The #5 Fake X
+check/use discriminator is now preserved in
+[its packet](../research/integration/fake_x_window_lifecycle_check_use_20261019/README.md):
+one press can occur after the lifecycle reader retires in the constructed
+schedule, followed by refusal and verified Fake X prefix release. This does not
+qualify live X ordering or physical release. #59 and every reused work packet
+still require live source/owner refresh. Shared indexes remain serially
+integrated.
+
+## Objective
+
+Solve computer control: keep intent and strategy with the capable model; use
+bounded local observation, input, verification and recovery where they preserve
+correctness and reduce waiting, model calls or total resources. Universal
+computer control remains available. No component PASS proves the full objective.
+
+## Current maintainer priority
+
+Organize the repository so many workers can find useful, independent work and
+deliver it without conflicting instructions, duplicate experiments or lost
+evidence. Organize ideas into hypotheses, existing results, dependencies,
+priorities and executed tests. Documentation or Issue closure alone does not
+resolve a research question. Existing finite/running work keeps its safe boundary.
+Use the concise [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md)
+for the current work order; the cleanup ledger and consolidation record remain
+the detailed historical receipts.
+Repository cleanliness means every active artifact has a traceable disposition,
+not that all Issues are closed; see the [current consolidation plan](REPOSITORY_CONSOLIDATION.md#repository-wide-organization-plan-preserve-ideas-enable-parallel-work) and its detailed [family-by-family disposition rules](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
+The first current semantic triage keeps broad reactive-control Issue #6 distinct
+from focused symbolic-interface Issue #56; its exact next audit is recorded in
+the [family entry](ideas/reactive-macro-symbolic-interface.md) and [work map](WORKER_WORK_MAP.md).
+The visual-interface family now separately maps the #4 north star, #3 grid, #5
+address/feedback contracts, #7 view-set selection and #8 composite packing; its
+finite #7 crosswalk and evidence limits are in the [family agenda](ideas/visual-interface-agenda.md).
+
+The [A02/A03 evidence note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
+preserves both consumed first outcomes: A02 stopped before probe entry on an
+incomplete source mount; A03 passed one healthy control but timed out before
+the held-reply predicate. Do not replay them. The offline stream parser has
+since been connected to test-only relay/caller composition in merged PRs #9136
+and #9153. Local Fake X tests now exercise blocked reply, cancellation,
+disconnect, child retirement and a synthetic late queued KeyPress after an
+injected separate empty readback. The caller remains `UNKNOWN` and does not
+claim task success or permit replay; see the [preserved late-down packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
+The synthetic protocol order is modeled, not live server evidence. A later
+[X11 server-ordering source audit](../research/integration/standard_caller_fake_x_relay_20261019/server_disconnect_order_audit_20261019_r01/README.md)
+keeps the injected late-down result intact while marking that ordering
+unverified; it isolates an XTEST delayed-request case for a version-pinned
+Xvfb check. The
+additive [same-PID two-connection relay discriminator](../research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/README.md)
+forwards a colliding-sequence identity reply while holding only the matching
+input reply; parser/relay tests pass 28/28 and standard caller relay composition
+passes 3/3 in normal and optimized Python. The standard caller exercises its
+identity-query worker through the real target-query and process-identity logic,
+backed by shaped synthetic XRes/PID replies; the socket relay carries related
+synthetic transaction markers over a second connection. That worker sends
+three synthetic request/reply transactions across the second relay before
+input. The fixture generation-change case now rejects stale evidence before
+either relay sees a KeyPress. It does not exercise XRes wire encoding or live
+PID discovery. A03's missing per-connection trace and original failure are
+unchanged. Two separate native WSL/Xvfb validations are now retained:
+[blocked-I/O release and liveness timestamp](../research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-r01/README.md)
+and [standard-caller target generation and recovery](../research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md).
+They exercise the Linux caller against private synthetic Xvfb applications;
+they are not WSLc portability, physical desktop, or MAP01 evidence. The
+separate [Windows-host generation/cancellation recheck](../research/integration/standard_caller_windows_generation_cancel_recheck_20261021/README.md)
+passes three Fake X standard-caller tests in normal and optimized Python;
+stale process/window generations are refused and blocked-owner cancellation
+retains UNKNOWN. It does not qualify a live X server, physical input, or task
+effect. The [Windows process-start probe](../research/integration/standard_caller_cancel_process_start_20261021/README.md)
+measures synchronous event-loop stalls during actual helper startup and
+preserves the release gate after unknown disconnect.
+The [event-loop cleanup-delay probe](../research/integration/standard_caller_cancel_eventloop_block_20261021/README.md)
+separates those injected cleanup waits from real process-start delay; the
+[prestarted-supervisor Fake X probe](../research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md)
+is construction feasibility only and does not validate production supervisor
+behavior.
+The [standard-caller duplicate-cancel retention characterization](../research/integration/standard_caller_duplicate_cancel_retention_20261021/README.md)
+compares that production-caller seam with the already-passed independent-owner
+duplicate-cancel result in Issue #814: one cleanup attempt occurred, but the
+duplicate returned `not_active`, no operation ID or retained cancellation
+record was exposed, and the action result remained UNKNOWN. It is one Fake X
+trial, not a release guarantee.
+The [prestarted cancellation supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+records the merged opt-in caller path, XRes reuse rule, retained standard-caller
+Xvfb outcome, and remaining qualification gates. Its response/transaction
+budgets remain experimental targets, not compatibility promises.
+The local [public MCP cancellation-operation packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md)
+now implements one operation ID per call, a dedicated one-worker cancel path,
+pending/terminal retention alongside (not inside) the action result, and a
+450 ms Fake X caller-response check. Its normal and optimized focused suites
+pass 77/77 each. It still has no whole-transaction deadline or prestarted
+cleanup process and does not qualify real X11 release, task effect, recovery,
+or WSLc.
+The [current-main shutdown/cancel-drain probe](../research/integration/standard_caller_shutdown_cancel_drain_20261022/README.md)
+found that server lifespan exit stays pending after owner close returns while a
+cancellation callback remains blocked; the retained owner-liveness snapshot was
+stale against a Win32 PID readback. This is a test-gated Windows Fake X result,
+not real X11 release or a general shutdown-time guarantee.
+Current-source native-WSL/Xvfb reruns now directly cover two remaining caller
+boundaries: [blocked-owner release and delayed-request horizon](../research/integration/standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
+independently observed XTEST keys up in 448 ms while the public caller retained
+UNKNOWN; [target-generation/recovery/effect](../research/integration/standard_caller_xvfb_generation_current_e7_20261021/README.md)
+refused stale input, recovered in 10 ms, and verified a synthetic application
+effect through an independent X client. Both run current source `e7d79d04`,
+one trial each, on responsive private Xvfb. Neither covers a stopped X server,
+physical desktop, MAP01, reliability population, or matched efficiency.
+separate generation-run r01/r02 prelaunch stops are preserved without test
+retries. WSLc Issue #7924 remains `STOP / HOLD` for shared ownership; no WSLc
+allocation is verified. A future shared WSLc/MAP01 run requires fresh
+allocation and ownership evidence. Further local tests should target a concrete
+caller/integration decision rather than copy existing parser-only fixtures.
+The additive [standard-caller target-generation regression packet](../research/integration/standard_caller_target_generation_regression_20261022_r01/README.md)
+records five Fake X caller/lifecycle cases passing in normal and optimized
+Windows CPython 3.11.9 at source `c5fd95f38d1e4a780ea0c934da7103dafc3b5e8a`.
+It preserves an adversarial destroy-gap schedule where a key prefix can be
+emitted after the last local check, then released and locally verified; this
+does not make capture-to-press atomic or establish live target generation.
+
+Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
+from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
+assign people, grant resources or replace current user instructions.
+
+## Win32 R24 fresh-generation result (2026-10-24)
+
+The additive [R24 packet](../research/integration/win32_supervised_standard_caller_20261024_r24/RESULT.md)
+tested one new supervised stdio-MCP session and target generation after R23.
+The independent fixture effect was exact, and the persisted runtime report
+records completed execution, verified all-up release, producer exit, and
+neutral readback. The public dispatch nevertheless returned `pending` at
+8,004 ms; the immediate close returned `busy` with release unconfirmed. The
+session close later recorded `closed` but still `release_confirmed=false`.
+Strict R24 outcome remains `FAIL_OR_UNKNOWN`; the persisted result only narrows
+the failure to caller response/close timing. The raw's release timestamp
+annotation is contradicted by the persisted receipt and is rejected in the
+additive audit. A new attempt should wait longer than the observed 8.886 s
+producer completion and record the actual terminal receipt. R23's separate
+raw/manifest hash discrepancy remains an explicit preflight limitation.
+
+The separate [R25 result](../research/integration/win32_supervised_standard_caller_20261024_r25/RESULT.md)
+stopped before input: the public caller rejected `wait_for_result_ms=12000`
+with `INVALID_RESPONSE_WAIT` and `operation_invoked=false`. The source caps
+this wait at 10,000 ms. R25 used a new fixture and generation, wrote no effect,
+and cleaned up normally. R26 uses the supported 10,000 ms maximum in a fresh
+session; no R24 or R25 action is replayed.
+
+R26 used the supported 10,000 ms response wait but still returned `pending`
+at 10,010.6 ms. Its independent effect completed at 10,835.7 ms; the persisted
+report later records all-up release at 10,852.9 ms and neutral producer-exit
+readback at 10,915.9 ms. Public close returned `busy`, while later session
+shutdown reported closed without release confirmation. The strict result is
+`FAIL_OR_UNKNOWN`; an additive audit verified the persisted effect/release
+without changing that outcome. R27 will follow the pending receipt with
+bounded read-only `interface_results(call_id)` retrieval before closing.
+
+R27 follows that protocol and passes 14/14: after the 10 s public dispatch
+returned `pending`, six read-only lookups of its exact call ID produced the
+terminal `completed` receipt at 11,059.7 ms from dispatch start. The receipt
+records verified all-up release at 10,818.8 ms, producer exit and neutral
+readback; the independent fixture effect and event journal match exactly. The
+public session closed, fixture exited cleanly, and foreground was restored.
+`interface_close` itself says `release_confirmed=false`; the separate terminal
+dispatch receipt provides the release evidence. This is one local Windows
+fixture trial, with no WSLc, MAP01, blocked-I/O release, matched efficiency, or
+broad-reliability claim. See the [R27 packet](../research/integration/win32_supervised_standard_caller_20261024_r27/RESULT.md).
+
+## Remaining scientific gates
+
+The release-supervision packet preserves main run [39444638512](https://github.com/Unjuno/agent-interface/actions/runs/39444638512), instrumented run [39446039020](https://github.com/Unjuno/agent-interface/actions/runs/39446039020), rebased-head failure [39447636867](https://github.com/Unjuno/agent-interface/actions/runs/39447636867), and fixture-fixed rerun [39448218110](https://github.com/Unjuno/agent-interface/actions/runs/39448218110). r01 retained two `worker_did_not_exit_cleanly` failures among four cancel-retirement comparisons; its receipts discarded child result status. The supervisor diagnostics preserve status and monotonic receipt/exit times while leaving forced termination `UNKNOWN`. r02 had five blocked-owner cases with independent release readback and synthetic-oracle PASS; release took 337–411 ms and cancel 390–654 ms. In r04, all five blocked-owner oracle checks passed (cancel 628–879 ms; release-worker 549–570 ms), with release `UNKNOWN`, runtime `task_success=null`, replay denied. The r03 fixture race was fixed by atomic marker publication and the full Xvfb workflow passed; r03 remains preserved as failure. The separate whole-server-stop task oracle also failed. These results do not establish release while platform I/O is unavailable, physical input, MAP01, or efficiency.
+
+| Gate | Required evidence / next boundary |
+|---|---|
+| Input authority and release | Fresh target/observation binding, no late new presses, independently verified release and finite recovery under stated faults. Blocking X11 I/O still prevents a universal release-time guarantee. |
+| Local continuation and effect | Actual supported caller selects from fresh observations, checks independent application effect, and yields on unknown/stale state. |
+| Continuous control / MAP01 | Measured input/release/environment timing, useful response and bounded recovery, with an independently checked task objective. |
+| Integrated efficiency | Matched tasks/model/settings and baseline; correctness, all attempts, token/model accounting, latency, resources and failures. |
+| Platform transfer | Qualify each supported platform/domain separately; do not transfer a Linux candidate result to Windows or another caller. |
+
+The live parent Issues [#57](https://github.com/Unjuno/agent-interface/issues/57)
+(integrated efficiency), [#59](https://github.com/Unjuno/agent-interface/issues/59)
+(real-time control), and [#2789](https://github.com/Unjuno/agent-interface/issues/2789)
+(usable desktop integration) were rechecked OPEN on 2026-10-19. Their update
+timestamps differ; read the latest scope and ownership before shared changes
+rather than treating this status check as a fresh assignment.
+
+## Execution and preservation
+
+- Follow the active user's scope and FINAL v5. Ordinary reversible investigation,
+  implementation, local tests and authorized integration should proceed autonomously.
+- Use the smallest discriminating experiment or repair. Do not repeat a consumed
+  formal allocation; preserve first outcomes, raw, frozen conditions and limits.
+- Check only resources and ownership needed by the selected operation. A dated
+  inventory, open Issue or idle machine is not a resource grant. Closed historical
+  logs are context; closing them does not prove release or impose a new global gate.
+- Run relevant local validation; do not make optional remote CI a universal wait.
+  Obey actual repository permissions/protection. This page adds no reviewer quota.
+- Leave executed evidence, resulting decision and a concrete next action. Keep
+  ideas open or carry their distinct unresolved work into an actual successor.
+
+## Navigation and history
+
+[Integration gates](INTEGRATION_PLAN.md) · [repository consolidation](REPOSITORY_CONSOLIDATION.md) ·
+[ideas and outcomes](IDEAS_AND_OUTCOMES.md) · [research map](RESEARCH_MAP.md) ·
+[current interface](../runtime/USING_CURRENT_INTERFACE.md) · [evidence map](EVIDENCE_MAP.md).
+
+The previous 2,219-line document is preserved verbatim in
+[CURRENT_GOAL_HISTORY_20261015.md](CURRENT_GOAL_HISTORY_20261015.md).
+Its dated directions and allocations are history, not fresh instructions.
+## Release-state diagnostic checkpoint (2026-10-23)
+
+R04's input-free Win32 R02 diagnostic recorded the exact owned fixture in foreground on the active `Default` input desktop, successful input-desktop open with hook-control/read-object access, same named desktop for probe and fixture threads, and matching process integrity RID 8192. Neutral Ctrl/S/left-button `GetAsyncKeyState` samples were raw zero. The 10/10 auditor outcome is diagnostic completeness only; no input or release was tested. These conditions justify evaluating a narrowly scoped availability witness for interpreting zero as UP. The older public R03 receipt remains `release_unverified`; do not rewrite it. The implementation keeps UNKNOWN whenever foreground, active desktop, desktop access, or integrity cannot be proved. The separate R06 public trial passed for one owned fixture; it still does not establish bounded release under blocked I/O.
+
+**R05/R06 public Win32 release qualification (2026-10-23):** R05 remains `FAIL_OR_UNKNOWN` under its frozen 11/12 auditor because the probe searched the wrong result nesting; its raw public report records completed and verified release, but this does not rewrite its outcome. A separate one-shot R06 with corrected pre-frozen extraction/audit passed 14/14: public stdio observe/validate/dispatch, exact fixture effect and event counts, verified release with empty down/unknown sets and active-desktop query witnesses, and clean fixture exit. See the R05 and R06 packets; this is one scoped fixture result and does not establish blocked-I/O timing, generation admission, recovery, MAP01, or efficiency.
+
+**Blocked Win32 callback continuation (2026-10-24):** R14 observed a 650 ms
+held callback with cancel pending and no release receipt; R15 stopped before
+dispatch because the tracked goal document was dirty. R16–R19 are separate
+one-shot public MCP attempts against owned fixtures, all on this PC; none used
+WSLc or Docker. R16's effect check read the stale R14 sentinel. R17 and R18
+matched their exact fixture effects, while all held-window polls remained
+running/pending with release unconfirmed. R18's exact producer PID/creation-time
+samples changed from indeterminate at +3.1 ms to exited at +251 ms, before the
+2.0 s callback hold ended; the recovery-helper blockage explanation remains an
+inference because helper stage was not directly traced.
+
+R19 held the callback for 4.059 s. Cancellation changed to `unknown` at +2.866
+s with release and replay both false and task success null, while action stayed
+`running` in all 65 held-window polls. The producer identity was exited by +232
+ms. The R19 sentinel effect was independently saved, and fixture/hook/foreground
+cleanup succeeded; public close remained busy/UNKNOWN after 37 attempts. Its
+frozen audit is `FAIL_OR_UNKNOWN` (6/9): two checks fail to read the callback
+return and suppression evidence from the recorded event row; a third exposes
+the unresolved action state by requiring action `unknown` alongside cancellation
+`unknown`. The packet preserves that audit and raw; its result note separates
+the audit extraction defects from the actual unresolved terminal-action and
+input-release questions. These results narrow the boundary:
+cancellation uncertainty becomes visible within 3.5 s even while the callback
+is held, but action completion, release, recovery, and public close remain
+unproved. The source path and existing focused tests confirm cancel and action
+receipts are separate, and custody stays open while the owner is unresolved.
+Do not repeat these one-shot trials. No verified unused WSLc allocation is
+available, so this does not qualify WSLc or MAP01.
+
+**Terminal action receipt follow-up (2026-10-24):** the R19 state path confirms
+the supervised Win32 dispatch worker has itself returned when it observes
+terminal cancellation `unknown`. At that boundary `mcp_server` now retains an
+action result with `status=unknown`, `effect_status=unknown`, unknown
+`input_dispatched`, `release_confirmed=false`, `task_success=null`, and
+replay denied. It does not mutate owner custody; `interface_close` stays busy
+while the owner phase is unknown. A composed MCP regression first failed on the
+old `action=running` result, then passed after the change while asserting that
+the owner remains unresolved. The four focused session, supervised-MCP,
+operation-owner, and MCP server suites pass 69/69 in CPython 3.11.9 and 3.13,
+both normal and optimized. Later full CLI verification exposed an offline
+Fake X request-order mismatch: the standard caller emits a matching XTEST
+KeyRelease between KeyPress and GetPointerControl, while the test-only parser
+candidate discarded the association. R01 fixes that ordering, corrects the
+lifecycle race to accept both scheduler-valid outcomes, and makes the
+supervised cancellation test wait for its finalized receipt and bounded close
+drain. The full CLI suite then passed 593 tests (8 skipped) in 149.996 s; the
+focused parser, relay, composition, supervised-Win32 and lifecycle set passed
+48/48 in normal and optimized CPython 3.11.9. Raw output, conditions and
+limitations are in the [R01 packet](../research/integration/offline_proxy_reply_framing_20261019/standard-caller-order-r01/README.md).
+These are local synthetic checks only. The public-caller Win32 path has not
+been live-retested; a new run still requires a verified unused WSLc allocation
+under the active goal. The newest [#7924 readiness update](https://github.com/Unjuno/agent-interface/issues/7924#issuecomment-6370065073)
+records `WSLC_E_IMAGE_NOT_FOUND` before application code ran and no full
+container-ID cleanup receipt; it retains STOP/HOLD and must not be retried as
+the same allocation. A separate #9451 change repairs WSL version-log decoding,
+not that image or ownership condition.
+
+**Standard Win32 caller R20 terminal-action follow-up (2026-10-24):** after PR #9463 merged, one fresh public stdio-MCP attempt on the authorized Windows PC observed the exact producer exit during the held callback and action plus cancellation `UNKNOWN` within 3.5 s. Release/replay stayed false, runtime task success stayed null, close stayed busy, the held Q-down was suppressed on callback return, and the exact fixture effect/cleanup passed. The frozen auditor is preserved as FAIL_OR_UNKNOWN 7/10 because three checks read callback/suppression data from the pre-release snapshot; the separate post-hoc event-row audit passes 3/3. This confirms only bounded fail-closed terminal UNKNOWN for one run. It does not prove input release, recovery, MAP01, efficiency, reliability, or WSLc. Raw and both audits are in the [R20 packet](../research/integration/win32_supervised_standard_caller_20261024_r20/RESULT.md). WSLc remains STOP/HOLD under #7924; no WSLc or Docker operation was run.
+
+**R20 readback qualification (2026-10-24):** while the R20 injected Q-down was stopped inside the low-level hook, an independent child read the same target generation and returned `q_down=false` at +194.855 ms; the callback did not return until +4013.465 ms. The hook calls `CallNextHookEx` only after its bounded wait, so the event had not reached the fixture during that sample. An UP readback under this schedule cannot distinguish an undelivered down event from a release and must not satisfy the release gate. The additive [R20 post-hoc audit](../research/integration/win32_supervised_standard_caller_20261024_r20/audit_supplement.json) now checks this ambiguity alongside the raw event-row corrections; the original frozen 7/10 audit remains unchanged. Next release evidence must include a witness that the down event crossed the held boundary and a distinct, independently observed up/recovery event. No WSLc or Docker run occurred.
+
+**R21 bounded standard-caller recovery (2026-10-24):** one new Windows-PC public stdio-MCP trial held the injected Q-down callback for 249.367 ms after cancel, then forwarded it. Cancel returned pending in 1.3704 ms; the exact producer exited after callback return; public cancellation reached `recovered / release_confirmed=true` in 316.4537 ms; a later independent same-generation reader observed Q-up; the exact pre-cancel fixture effect and cleanup passed. The frozen audit remains FAIL_OR_UNKNOWN 8/10 because two checks read callback return from an intermediate snapshot taken before that timestamp was written. The additive [R21 supplement](../research/integration/win32_supervised_standard_caller_20261024_r21/audit_supplement.json) verifies final event rows and passes 7/7, but records PARTIAL: the retained public action still says `running`, and `interface_close` is `closed` with `release_confirmed=false`. The exact task effect precedes cancel; task success remains null. No WSLc or Docker operation occurred.
+
+**Recovered terminal-action receipt repair:** when the cancellation receipt has recovered, the standard public dispatch worker now persists action status `recovered` only if the nested custody operation ID, target generation, phase, and release confirmation all match. It retains unknown effect and `input_dispatched`, null task success, and denied replay. The new public-MCP regression first failed on `action=running`; after the repair it passes with the existing UNKNOWN-custody and close-drain tests. The whole `runtime/cli_v1` suite passes 594 tests with 8 skipped in both normal and optimized Python. A fresh live attempt is still needed to verify this repaired terminal receipt on the PC. R21 is preserved; do not replay it. WSLc remains STOP/HOLD under #7924.
+
+
+**R22 repaired-receipt retest (2026-10-24):** a new one-shot Windows-PC standard stdio-MCP attempt against source `e5e63a3` passed frozen preflight and source hashes. The callback forwarded the injected Q-down 259.200 ms after cancel returned; the exact producer exited 0.398 ms after callback return; Q-up reached the hook 5.407 ms after callback return; and an independent same-generation readback later observed Q-up. The retained public action and cancellation both reached `recovered` with matching generation and confirmed release. The repaired action preserves unknown effect/input-dispatched state, null task success, and denied replay. The exact fixture effect and owned cleanup passed, but the effect occurred before cancel. The original R22 audit remains FAIL_OR_UNKNOWN 8/10 due the same intermediate snapshot timestamp gap; the copied R21-specific supplement is unchanged and reports 6/7 because its old expected terminal-action gap is gone. New [R22 additive audit](../research/integration/win32_supervised_standard_caller_20261024_r22/audit_repair_followup.json) passes 9/9 evidence checks but classifies PARTIAL because `interface_close` says `closed` with `release_confirmed=false` while the cancellation and action receipts say true. Do not replay R22. No WSLc or Docker operation occurred; #7924 remains STOP/HOLD. Full local CLI suite had passed 594 tests and 8 skips in both normal and optimized Python before this packet-only report was added.
+
+
+**R22 interpretation correction (2026-10-24):** the initial additive audit classified R22 PARTIAL because `interface_close` returned `closed / release_confirmed=false`. Review of the frozen condition and current `OwnedWin32SessionOwner.close()` shows that this flag is close-operation evidence and is intentionally false even when no calls remain; the frozen R22 PASS gate did not require it to be true. R22 therefore passes its narrow one-run cancellation/recovery criterion: confirmed public recovery, exact producer retirement, same-generation independent Q-up after callback return, fixture effect, and cleanup all passed without emergency Q-up. The frozen 8/10 audit and earlier 6/7 supplement are preserved; the post-hoc 9/9 audit remains archived with its over-strict PARTIAL label. Broader task success after recovery, MAP01, efficiency, and reliability remain unproven. See the [interpretation correction](maintenance/win32-r22-result-interpretation-20261024.md).
+
+
+**R23 same-generation continuation boundary (2026-10-24):** one new public stdio-MCP attempt on frozen source `dc78ace` reproduced confirmed cancellation recovery and same-generation Q-up: cancel pending in 1.5495 ms, exact producer exit 0.182 ms after callback return, Q-up at 4.499 ms after return, independent same-generation neutral readback, exact pre-cancel fixture effect and cleanup. A separately observed program with a new lease and new program ID, but the same target generation in the same session, was refused as `fresh target generation required after cancellation`; `operation_invoked=false` and `input_dispatched=false`, so no second input or effect occurred. The frozen auditor remains FAIL_OR_UNKNOWN 6/10 (one mis-nested action release assertion plus the rejected continuation hypothesis); additive [R23 audit](../research/integration/win32_supervised_standard_caller_20261024_r23/audit_followup.json) passes 10/10 for the recovery and fail-closed refusal, disposition `HYPOTHESIS_REJECTED_FAIL_CLOSED`. Current `OperationOwner` explicitly bars same-generation admission after recovery; the Win32 public session has no target rebind/review method. A new target generation/new-session attempt is still untested. R23 is preserved; do not replay it. WSLc remains STOP/HOLD under #7924.
+
+R23's focused `runtime.guarded_win32_v1.test_operation_owner` suite passed 12/12 in normal and optimized Python, confirming the existing same-generation refusal invariant locally.
+
+**R281 retained-packet follow-up and expiry-release publication candidate (2026-11-21, frozen base `381a21ace42891c2cd1e9cff3e231bec763ec2ba`):** independently rechecked the R281 raw archive, all original custody hashes, 41/41 source Git blobs, event stream, expiry owner release, bounded post-expiry action, ammo 50→49, and runner exit. R281 is one bounded MAP01 task effect; it is not completion, reliability, or efficiency evidence. Its raw owner journal records verified neutral release after expiry, but the executor event stream has no standalone `input_released`. A current-main regression reproduced that omission (0 events; expected 1). A narrow candidate adds `expired` to the release-publication filter. Its Fake X contract suite passes 9/9 normal and `-O` on CPython 3.11.9 and 3.13.14; the isolated base reproduction fails as expected. Conditions, source delta, logs, and hashes are in [the R281 release-publication candidate packet](../research/integration/wslc_map01_r281_current_main_20261120/release_publication_candidate/CONDITIONS.md). This candidate does not establish a native expiry race, MAP01 recovery reliability, task success after recovery, or integrated efficiency. Keep the candidate under review and keep #57 open.
+
+**WSLc local API runtime smoke S01–S04 (2026-10-24):** S01 found the pinned image absent in its inspected context and performed no pull or run. S02 and S03 both stopped before image/container operations because `wslc system session enter` did not create a new named session at the supplied path. S04 used the documented `Microsoft.WSL.Containers` 3.0.3 API instead: a unique session started, the pinned Python digest pulled once, and a single container configured with `NetworkingMode.None` and `ContainerVolume.ReadOnly=true` read the preregistered sentinel, rejected a write with `EROFS`, and exited 0. Its exact container and image were deleted and the session termination was recorded. The harness returned 1 due to a whitespace-sensitive JSON marker check; a separate raw-output audit confirmed the registered runtime assertions. The attempt remains `HOLD` because the storage VHDX (203,423,744 bytes, SHA-256 recorded in the packet) remained after session termination and the execution policy rejected deleting that exact generated file before the command ran. Packets: [S02](../research/integration/wslc_local_runtime_smoke_20261024_s02/README.md), [S03](../research/integration/wslc_local_runtime_smoke_20261024_s03/README.md), [S04](../research/integration/wslc_local_runtime_smoke_20261024_s04/README.md). This only qualifies WSLc API session/container execution and read-only mount behavior. It is not Win32 GUI, input-release, environment-response, recovery, task-effect, efficiency, or reliability evidence. The next computer-control gate remains a new standard-caller Win32 attempt with an independently witnessed Q-down, distinct Q-up/recovery, and independently audited task effect; no WSLc or Docker claim closes it.
+
+**R34b standard-caller Win32 trial (2026-10-24):** one fresh attempt after a 10/10 input-free preflight recorded an independently confirmed same-generation Q-down before cancellation, 76 same-call status polls during a 1248.909 ms held callback, a recovery Q-up `SendInput` return at +624.284 ms, and an independent same-generation Q-up observation at +890.921 ms while the callback was still held. Public results later reached `recovered / release_confirmed=true`; exact producer exit followed the callback return. The separate hook trace still contained only one injected Q-up callback, with no second callback after release and none after exact producer exit. The supplemental audit is 20/22 FAIL_OR_UNKNOWN for those two hook-event gates; frozen audit execution retains its inherited `readback` NameError. The fixture click/save effect was independently observed before cancel, then a `q` character event appeared after save; runtime `task_success` remains null. Raw, preregistration, hashes and supplemental timing analysis are in [R34b](../research/integration/win32_supervised_standard_caller_20261024_r34b/RESULT.md). Do not replay this attempt. This is a bounded state-release/readback observation, not a strict hook-event PASS or post-recovery task-success claim.
+
+**R34b hook-delivery qualification:** Microsoft’s [LowLevelKeyboardProc documentation](https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc) says the hook runs on its installing thread, can be silently removed after callback timeout on Windows 7+, and has a 1000 ms maximum configured timeout on Windows 10 1709+. R34b’s measured callback lasted 1442.262 ms on build 26300; the timeout value was absent and the effective default was not measured. Silent hook removal is therefore a plausible explanation for the absent second event, not a proven cause and not a reason to change FAIL_OR_UNKNOWN. A sub-second follow-up can diagnose event visibility but cannot satisfy the frozen 1250 ms release gate.
+
+**2026-10-25 real-provider composition smoke:** a current-main Codex App Server turn now joins the all-attempt recorder to the standard compiled public-MCP caller and independent Fake X pixel oracle ([series rollup](../research/integration/current_main_appserver_public_mcp_fake_x_20261025_ROLLUP.md)). p05 passed the synthetic provider/caller gate with reported 11,090 input, 410 output and 65 reasoning tokens; three preceding setup failures and one provider schema rejection remain retained. No model grounding, physical/live UI, WSLc, matched efficiency or broad reliability claim follows.
+**Current-main checkout and post-#9557 regression baseline (2026-10-25):** remote `main` is `a3991e0c07ab847f7fd4da868f319843f3f2adbc`; a clean detached worktree at that SHA passed selected public cancel, X11 supervisor, target-generation and Win32 public-composition suites 77/77 under Python 3.13.14 normally and 77/77 with `-O`. Async slow-task diagnostics appeared in Win32 composition, but both runs passed. This clears the clean-current-main-checkout prerequisite from #7924 only; shared WSLc ownership remains STOP/HOLD. See the [audit](../research/integration/current_main_post9557_regression_20261025/README.md). No live GUI, input, WSLc, or Docker action was performed.
+
+**#9420 XRes CI race follow-up (2026-10-25):** the failed `x11-integration` log showed the parent reading a partially written JSON marker: helper subprocesses exposed the final path before `json.dump` finished. `_OWNER_START` and `_HELD_OWNER_START` now publish complete markers with temporary-file + `os.replace`, matching `_IDLE_OWNER_START`. A local deterministic test runs the actual owner helper with paused JSON output; the final marker remains absent until the atomic replace. The regression passes 2/2 normally and under `-O`; a direct-final-path mutation fails at the expected assertion. The complete XRes integration module passes with its two private-Xorg tests skipped on Windows. The current-main `runtime.cli_v1.test_mcp_supervised_win32` suite passes 17/17 normally and with `-O` (one asyncio slow-task diagnostic in normal mode). PR #9558 passed its X11 integration and all other required checks, then merged as `0803a9792cc4a2a2ba61d513c82d0ecab104303a`; raw diagnosis and limitations are in the [audit](../research/integration/current_main_post9557_regression_20261025/README.md). No live X server, WSLc, or Docker action occurred.
+
+**X11 supervisor early-poll timeout R01 (2026-10-25):** current main `0803a9792cc4a2a2ba61d513c82d0ecab104303a` misclassified an injected early `Connection.poll(timeout)==False` as transaction deadline, retiring an already-completed worker roughly 2 s before the absolute deadline. The new deterministic test first failed with `UNKNOWN/transaction_deadline`; the fix rechecks the monotonic deadline and polls again after a bounded 1 ms pause. The supervisor suite passes 13/13 and owned-process public-MCP suite 48/48 in normal and `-O` Python 3.13.14. PR #9559's full CI passed and it merged as `75d55fabec81791de4ff899c9d7478f8ff1ad02e`. This proves behavior under the injected early-timeout schedule, not that a native pipe returned early on this host, and not physical release/task effect. See the [R01 packet](../research/integration/x11_supervisor_early_poll_timeout_20261025_r01/README.md). No WSLc or Docker operation occurred.
+
+**P11 matched direct/compiled caller study (2026-10-25):** the local preregistered App Server study used three counterbalanced Fake X pairs on runtime source `63cc6c4`, an ancestor of current main. The 10 preregistered runtime source hashes and six runner hashes match; the local 522-entry packet manifest was rechecked with no mismatches. Its recorded auditor reports 15/15 in all six cells, exact one-effect synthetic scoring, verified releases and provider/ledger usage agreement. Compiled-route paired medians are 759 ms faster per provider turn and 754 ms faster to action return; paired differences vary in direction, and token medians are essentially equal. n=3 per arm is descriptive, not causal or a reliability estimate. Detailed raw remains local because `.bin` records contain a Windows profile path; a sanitized derivative is in [P11 public summary](../research/integration/current_main_appserver_matched_efficiency_20261025_p11_public/RESULT.md), with no raw or replayable audit included. P09's frozen incomplete result and P10's setup failure remain unchanged. This does not qualify live apps, MAP01, WSLc, blocked-I/O release/recovery, image-token usage or billing.
+
+**P12 matched direct/compiled caller replication (2026-10-25):** a new one-pair, fixed-order direct-then-compiled Fake X replication passed 15/15 local audit checks in each arm. Both exact-observation model selections minted on the same sequence, produced exactly one independently scored synthetic effect, and verified release; provider/protocol/ledger usage reconciled. Direct minus compiled was +1,119 ms per provider turn, +1,125 ms to action return and +1,314 ms total; input/output/reasoning deltas were −6/+6/+6 tokens. n=1 with fixed order is descriptive only and does not establish an efficiency effect. The local raw packet is retained; the [sanitized P12 result](../research/integration/current_main_appserver_matched_efficiency_20261025_p12_public/RESULT.md) excludes raw and is not independently replayable. No WSLc, Docker, physical input, live GUI/MAP01, blocked-I/O recovery, image-token accounting or broad reliability is established.
+
+**P12/P13 reversed-order efficiency replication (2026-10-25):** P13 ran the same one-pair Fake X comparison with compiled first, opposite P12’s direct-first order. Both attempts pass 15/15 local audit checks per cell; across four cells, independent synthetic task effect, release, and provider/protocol/ledger usage reconcile. Direct-minus-compiled latency signs reverse: P12 was +1,119/+1,125/+1,314 ms (provider/action-return/total), P13 −1,037/−1,057/−902 ms. The two-pair medians are +41/+34/+206 ms, while input/output/reasoning token deltas are −6/+23.5/+23.5. Because the sign reversed with pair order and there are only two pairs, no caller efficiency advantage can be claimed. The [sanitized rollup](../research/integration/current_main_appserver_matched_efficiency_20261025_p13_public/RESULT.md) excludes the local raw packets. No WSLc, live GUI/MAP01, blocked-I/O recovery, image-token accounting or broad reliability is established.
+
+**R12e owned-Win32 matched efficiency study (2026-10-26):** four fresh-fixture cells passed independent release, generation, exact-effect, task-oracle and cleanup gates in two counterbalanced pairs. Direct used 2 App Server turns and 5 observations per task; compiled used 1 turn and 4 observations; both used 2 dispatches. Direct-minus-compiled elapsed differences were +3.665 s and +3.184 s, with +10,482 input/+15 output reported tokens per pair. This is descriptive for this fixture task only (n=2), not a causal or broad reliability claim. R12–R12d setup/harness failures remain intact in sibling packets. See [R12e result](../research/integration/win32_appserver_matched_efficiency_20261026_r12e/RESULT.md) and its raw/audit manifests. WSLc, Docker and MAP01/live GUI were not used or verified; the shared WSLc gate remains STOP/HOLD.
+
+**R12f matched replication (2026-10-26):** an independent four-cell block repeated R12e with fresh fixtures and oracle IDs. All 4 cells passed; the combined counterbalanced R12e/f evidence is 4/4 successful cells per arm. Every one of four paired direct-minus-compiled differences favored compiled on elapsed and App Server time; medians were +3.425 s and +3.419 s. Direct used one extra provider turn and observation per task. This remains a small, single-PC fixture result, not general reliability or causal evidence. See [R12f result](../research/integration/win32_appserver_matched_efficiency_20261026_r12f/RESULT.md). The MAP01 target is still unavailable on this PC: no GZDoom process, app registration, or executable was found in checked standard locations; exact executable path is pending from the user. No WSLc or Docker resource was used.
+
+**R11b recovery-to-task replication (2026-10-26):** a fresh attempt on merged-main source `cca812f7` repeated held-SHIFT recovery followed by stale-generation refusal and one AppServer-grounded compiled fixture action. Recovery was 16.862 ms; the new-generation task effect, exact independent oracle binding, release/readback, fresh observation, and cleanup passed. Primary audit: 18/18 gates and all 50 raw hashes; corrected additive audit: 11/11 and the same hashes. The copied supplemental auditor's first outcome is retained as a failure caused by a stale literal oracle ID. See [R11b result](../research/integration/win32_appserver_recovery_task_20261026_r11b/RESULT.md). This is a second scoped recovery-to-task sample, not a reliability rate or OS/kernel hang bound; the injected hold remains before native `SendInput`.
+
+**Selected public-caller regression R01 (2026-10-26):** the five suites for compiled Win32 caller, public composition, target-generation admission, supervisor helpers, and owned-session custody passed 53/53 normally and 53/53 under `-O` at local source `76088cf`. Async slow-task diagnostics appeared in composed routes but both runs exited 0. This is local regression evidence only, not native blocked-I/O, live MAP01, WSLc, or broad reliability evidence. Raw output is in [R01](../research/integration/win32_public_caller_boundary_regression_20261026_r01/RESULT.md).
+**MAP01 effect boundary check (2026-10-26):** Read the local R48 and R51 trial programs and receipts. Both programs only focus the fresh `map01` target, hold scan-code W for 600 ms, release it, and require `release_all`; the independently bound public oracle certifies visible movement effect only. R48/R51 report `verified / task_success=true` for those exact dispatches, but their oracle receipt explicitly says this is not MAP01 completion. R50's duration-matched no-input interval changed 0.0299% of the upper-80% pixels versus 99.3161%/99.2070% in R48/R51; this is a small descriptive action/control contrast. No MAP01 exit/completion condition, such as a level-transition receipt or independently checked completion state, was tested. The exact executable is present, but three existing GZDoom windows share the title “Hydroelectric Plant - Freedoom: Phase 2”; this check sent no input and did not focus or close any of them. Next live attempt must first use a uniquely owned fresh process and preregister a completion oracle separable from movement; otherwise label only the movement effect. Evidence: `research/integration/win32_gzdoom_public_oracle_r46_20261026/RESULT.md` and local-only R48/R51 packets under `private-packets/` in the task root.
+**PR #9602 integrated (2026-10-26):** merged `fix/win32-prestart-generation-refusal` after all reported CI checks succeeded and the exact PR head `c16f2d77c392fbd48d4f98bee93876ba0898a197` was supplied as the expected head; squash merge is `6fb6f027cc82fb197e2167c7f7ceffbbfc654cce`. Focused local tests passed normally and with `python -O` (owned session 30, supervised Win32 20, backend composition 1). The PR fixes retained pre-start generation refusal reporting; it does not establish that this bug caused R42 or prove OS-pipe recovery. WSLc remains OPEN/STOP/HOLD in #7924, with no verified unused allocation; no WSLc or Docker operation was made.
+**Public-relay OS-pipe recovery R43 (2026-10-26):** failure-path custody repair now sends one standard public `interface_cancel`, polls exact-call `interface_results` for up to 8 s, requests `interface_close`, then tears down. The first run stopped before pipe pressure because SHIFT-down was not independently observed in 3 s. Cancel returned `not_cancellable`; exact results retained `action=unknown`, `input_dispatched=false`, producer-factory `FileExistsError`; close was `busy`. The 11-entry source freeze and 17-entry raw manifest verify. Diagnosis: the R42-derived child injected a producer factory rooted at the MCP call journal, colliding with its call-ID directory. No replay/input, fixture exited 0, foreground restored. See packet [R43](../research/integration/win32_relay_blocked_os_pipe_recovery_20261026_r43/RESULT.md); raw local-only.
+**Public-relay OS-pipe recovery R44/R45 (2026-10-26):** paired factory roots fixed R43's collision. Both fresh fixture attempts stopped before pressure because independent SHIFT-down was not seen (3 s for R44; 12 s for R45). In both, failure-path `interface_cancel` first returned pending, then exact results reached `action=recovered / release_confirmed=true`; the supervisor's reported cleanup latency was 47 ms, later same-generation native readback found SHIFT up, `interface_close` returned closed with zero unresolved calls, fixture exited 0, and the original foreground was restored. These are scoped cancellation/recovery samples, but input down was never observed and the measured full-pipe/outstanding-write gate was not reached. R44/R45 task success remains null; no replay. Source/raw manifests verify 12/12 and 19/19 per run. Child stdout was a real OS pipe, but server MCP adapter was in-process; this is not proof of recovery while that pipe is full, production MCP subprocess behavior, MAP01, efficiency, or reliability. See [R44](../research/integration/win32_relay_blocked_os_pipe_recovery_20261026_r44/RESULT.md) and [R45](../research/integration/win32_relay_blocked_os_pipe_recovery_20261026_r45/RESULT.md); raw remains local-only.
+
+**GZDoom idle-control correction and R66 (2026-10-27):** correction to the R61–R62 interpretation: those runners checked the Computer Use `sky.list_apps()/sky.list_windows()` inventories, not the complete native CUA window inventory. R62's target HWND was present in the earlier `cua.getState()` evidence, so R62 does not establish that CUA could not enumerate it. R61 remains a pre-observation duplicate-receipt-write failure; R62 remains a runner enumeration-gate failure caused by using the incomplete inventory path. R63 had an app-path binding bug before CUA; R64 was interrupted with target cleanup outcome unknown; R65's explicit launch produced a transient extra bare-GZDoom Fatal Error window whose exit mechanism is unknown, while its exact MAP01 target later exited 0. Preserve these attempt classifications and raw records; do not infer clean exits for R64/R65.
+
+R66 used the documented native `cua.listWindows()` on Windows, which includes open windows without app entries, then bound the exact returned HWND through `cua.getApp({windowId})`. One fresh target was selected (PID 64196/HWND 35000370), process identity and MAP01 visual state were independently checked, and the selected window was raised using its exposed accessibility action. The idle comparator made exactly two distinct public observations 2.672 s apart on the same target generation, with W neutral before/after and zero dispatches. It passed the preregistered idle comparator: 284/1,003,200 pixels changed (0.0283%, below the 5% threshold); the exact owned process exited 0 and the six protected UNKNOWN PIDs remained. Both outer receipts are historical references, but their nested raw runtime-observation reports contain distinct observation/call IDs, fresh monotonic capture intervals, matching target generation, pixel-artifact hashes and returned status. The 37-entry R66 raw manifest verifies with zero mismatches.
+
+R60 supplies one positive movement comparator on the same client geometry: one compiled 600 ms W action, confirmed W-up/release and independent task oracle, with 995,483/1,003,200 changed pixels (99.2308%); its 51-entry manifest also verifies with zero mismatches. R60 versus R66 is a useful descriptive one-positive/one-idle contrast (99.2025 percentage-point difference); it is not an efficiency estimate, reliability rate, or causal estimate. R66 did not test task success or MAP01 completion. R61–R66 packets remain task-local under `private-packets/`; WSLc and Docker were not used.
+
+**R67/R68 current-main positive replication (2026-10-27):** PR #9606 is merged at `d5b3db34569dd8ec2a9a3bb6dea397814ac46419`, an ancestor of current main `8dbcebbe668efae7a0c781447d5469f45b4f6dc0`; the runtime tree from R60 through current main is unchanged. Its focused `runtime/cli_v1/test_supervised_win32_compiled.py` suite passes 5/5 normally and 5/5 under `-O` locally. R67 used an invalid 36-character oracle ID; the local pixel oracle saw 99.2944% change and independent release/readback passed, but the public task verifier rejected the ID and `task_success` stayed null. Preserve R67 as FAIL_OR_UNKNOWN (50-entry raw manifest verified); no replay. Fresh independent R68 corrected the ID format and passed all preregistered gates on PID 60232/HWND 12587074: exact call/operation/generation oracle join, `task_success=true`, W-up/release and neutral readback, 995,251/1,003,200 changed pixels (99.2076%), owned-process exit 0, six protected UNKNOWN PIDs unchanged. Its 50-entry raw manifest verifies without mismatches. R68 versus R66's idle 0.0283% is a descriptive 99.1793-point difference; R60/R68 are two positive movement samples, not a causal or reliability estimate. These runs do not prove MAP01 completion or WSLc qualification. Full local packets and raw remain under the task-root `private-packets/map01_native_windows_20261027_r67_compiled_positive_replication/` and `...r68_compiled_positive_replication/` directories.
+
+**Native Windows GZDoom MAP01 R71–R73 (2026-10-28):** R71 and R73 each passed a fresh scoped compiled Win32 visible-movement trial on source `65410623684e6ca488a6b504f06357c2b1541859`. Both joined the sole dispatch to an independent task-effect oracle by exact call/operation/target generation, verified W release and same-generation neutral readback, and closed their owned process with exit code 0 after verifying release. R73 independently measured 996,173/1,003,200 changed pixels (99.2995%), with all 9/9 preregistered decision gates passing; its 52-entry packet manifest verifies without mismatches. R72 is the matched no-input idle sample (316/1,003,200, 0.0315%); R71/R72/R73 are only two positives and one idle contrast, not a reliability or efficiency estimate. R70 remains a failed focus-gate attempt and is not replayed. The R73 close receipt's separate `release_confirmed=false` and the runtime's `raw_evidence_retention=adapter_responsibility_unverified` remain explicit limitations; packet hashing establishes stored-file integrity only. These trials demonstrate visible movement, not MAP01 completion. Docker Engine was unavailable during this run (`dockerDesktopLinuxEngine` pipe absent; service stopped); neither Docker nor WSLc ran. Full local raw packet: `private-packets/map01_native_windows_20261028_r73_current_main_positive_replication/`; earlier R71/R72 packets remain task-local under the same `private-packets/` directory. Next evidence target: separately preregister and exercise bounded delayed-action recovery/input-release behavior, then obtain a genuine matched efficiency comparison before making speed claims for native Win32.
+
+**Windows delayed-input quarantine local regression (2026-10-28):** on fetched current main `65410623684e6ca488a6b504f06357c2b1541859`, `python -m unittest runtime.guarded_win32_v1.test_process_cancellation runtime.guarded_win32_v1.test_effect_quarantine` passed 25/25 in 12.788 s on the Windows host. These are synthetic/fake-input lifecycle checks, not native OS input or Docker evidence. The requested Docker experiment remains unavailable: Docker Desktop shows “Update Failed” and says the previous version was restored, but the Linux Engine named pipe is absent, `com.docker.service` is stopped, and `wsl --list --verbose` reports both Ubuntu and `docker-desktop` stopped. The Continue accessibility action was blocked because CUA resolved the click into the foreground ChatGPT window; no retry, container start, image pull, disk cleanup or VHD repair was performed. Continue the delayed-action/release investigation in live isolation when the Engine is verifiably running; meanwhile preserve the synthetic evidence as a separate scope.
+
+**Win32 delayed-input horizon admission gap (2026-10-28):** audit of current-main `OperationOwner.recovery_completed` found that its finite-horizon validator bounded gaps between readbacks and required the final readback to extend through the horizon, but did not bound the interval from the accepted release receipt to the first readback. A deterministic fake-clock case reproduced false recovery acceptance with the first neutral sample exactly one full horizon after release, leaving the whole initial interval unobserved. The owner now rejects that schedule as `unknown` with `late_input_validation_error=initial_observation_gap_exceeded`, keeping admission fenced. The new regression failed before the source change and passes afterward. The six focused owner, process-cancellation, effect-quarantine, owned-session, MCP-composition and supervised-MCP modules pass 102/102 normally and under Python 3.11.9 `-O`; after the final assertion tightening, the owner module was rerun 22/22 in both modes. This closes an offline validation gap only; native delayed-input behavior and Docker live recovery remain unverified. PR #9790 merged to main as `acf5af971f3c366c9de04840e81b30160e690051`; all PR checks passed, and the six focused local modules passed 102/102 on the merged tree normally and under Python 3.11.9 `-O`.
+
+**Docker/Xvfb delayed-request recovery boundary R01–R02 (2026-10-29):** on current main `a3bf4ae96ec49b7c0359e9985a05a9a3beac79cf`, a new private-Xvfb run paused the server 4 s while an 8 s XTEST request was queued. With the default 4 s transaction window, the prompt cancel returned pending in 310 ms, but the bounded transaction expired with owner disconnect/release `UNKNOWN`; the test stopped before the delayed horizon and fresh task. A separately preregistered R02 used the same outage/request with a 12 s **test-only** transaction-window injection (production default unchanged). Owner retirement/disconnect and supervisor release readback then completed; an independent client saw A/B up, the delayed B was absent at 8.5 s, and a separate fresh-generation C task passed. However, the old synthetic task's exact effect-count oracle **failed**: two additional A KeyPress effects occurred about 4.004 s and 4.043 s after cancel began (final count 3 vs expected 1). Cause is unresolved between X-server repeat and another queued transition. The old runtime terminal remains `runtime_failed`/`EOFError()`, `release_confirmed=false`, `cleanup_status=UNKNOWN`, `task_success=null`, replay denied. This is explicit-cancel synthetic-Xvfb evidence, not lease-expiry-only, Win32, MAP01, reliability or efficiency. Full local packets R01/R02 preserve raw report, observation image, conditions and source hashes under `private-packets/docker_xvfb_delayed_release_pause4000_*_20261029/`. The result motivates isolating the repeated post-cancel A effect before claiming delayed-action recovery is correct.
+**Docker/Xvfb public-MCP journal recovery R24 (2026-10-29):** the current journal-enabled owned-process path passed one real private-Xvfb/public-MCP recovery harness in pinned Docker (test 9.262 s; cancel response 308.315 ms; fresh C input-to-independent-effect-readback 44.623 ms). After exact owner retirement during blocked Xlib sync, its journal reopened with the durable observation/mint/program prefix and no execution-complete or session-close receipt. The old call correctly remains `runtime_failed`, release false, cleanup UNKNOWN, task success null and replay denied; the old exact effect-count task failed 1→3, while a distinct fresh C task passed and all keys were up. Physical supervisor readback does not upgrade the API result. Runtime pretrial SHA-256 entries (331) matched after the run; raw and command custody are in the [R24 record](../research/integration/docker_xvfb_owned_mcp_journal_recovery_r24/README.md) and task-local packet. This one recovery run is not a speed comparison or Issue #2789 gate pass; WSLc, native Windows, MAP01 completion, matched six-task efficiency and broad reliability remain open.
+
+**R23 raw-custody readback (2026-10-29):** located the exact trial packet under the shared parent `private-packets/` directory and recomputed all 758 entries in its posttrial SHA-256 index; zero missing files or mismatches. The saved summary confirms 18/18 scoped arms, six independent 37-reference journal audits (222 references total), and the recorded route means/scores. This verifies packet integrity, not the breadth of R23: it remains a one-action bridge/compiled comparison, without public MCP/provider-loop timing or MAP01 completion. See the [readback audit](../research/integration/docker_vizdoom_receipt_journal_efficiency_r23/custody_audit.json).
+
+\n
+
+**Win32 post-horizon queue discriminator r08–r10 (2026-11-10):** Three fresh fixture runs and raw packets are preserved at `research/integration/win32_live_delayed_input_recovery_20261110/r08` through `r10`. r08 blocked the UI pump and then recovered without action start; r09/r10 deferred and manually dispatched queued A key records after a verified 2 s release horizon, without a WM_CHAR/application effect. r10 is the cleanest scoped negative effect discriminator (76 samples, max gap 32 ms; dispatch ~110 ms post-horizon); it does not show spontaneous stale OS delivery. See the [research agenda](ideas/safety-control-agenda.md). GZDoom/MAP01 and WSLc remain open.
+
+**MAP01 expiry recovery R155/R156 (2026-11-13):** Fresh R155 passed one unchanged native public compiled-supervised attempt (outer QPC expiry bracket 12.03 ms; helper exchange-to-recovery 1.3152 ms) and did not reproduce R151's 7.9521 ms tail. R156 independently verified a 10.1136 ms expiry bracket and same-generation helper release acceptance, but the composed caller failed/unknown: it attempted to read a missing `expiry-held-w-samples.json`, the public dispatch remained uncertain/PermissionError, and task effect plus action-level release were unconfirmed. The runner closed its owned target normally; no retry. R156 is not a delayed-input or task-effect pass. Raw packet SHA-256 manifest: `8ee725a06356549d860ed8c0d74f5164582e1ac1ce6ee1c74bb62719c47e084f` (64 files, readback verified). See [R153–R156 report](../research/integration/map01_recovery_deep_trace_r153_r156_20261113.md). Next: fix artifact joining and exception-path same-generation readback/horizon, add regression, then preregister a fresh attempt. Broader MAP01, delayed-effect exclusion, reliability, and #57 economics remain open.
+
+**MAP01 retained-evidence join and adjudication (2026-11-13):** [input_evidence_join.py](../research/integration/map01_numeric_ammo_oracle_20261111/input_evidence_join.py) keeps pending-resolver polls separate from expiry-boundary samples and labels missing/malformed artifacts, including the native sampler's `monotonic_after_ns` field. [trial_adjudication.py](../research/integration/map01_numeric_ammo_oracle_20261111/trial_adjudication.py) now safely consumes retained directories: absent task-oracle/ammo files yield `not_verified`, expiry rows are not promoted to resolver evidence, and a public `task_success` claim is not certified without the complete exact-call effect join. The 54-test directory suite passed in CPython 3.11.9 normal and `-O`. Read-only application to the retained R156 trial classified all 5,199 expiry samples as independent sampler evidence, retained missing resolver/task-oracle state as unknown, and returned `not_verified` with `task_success=null` without raising. This offline adapter is not yet wired into the private R156/R157 runner; exception-path same-generation release readback, a two-second live horizon and task-effect adjudication remain open. Next: use it in a new frozen runner candidate, compose the resolver-error path with actual public recovery, then preregister a fresh attempt; preserve R156/R157 first outcomes.
+
+**MAP01 independent neutral horizon (2026-11-13):** Added [independent_neutral_horizon.py](../research/integration/map01_numeric_ammo_oracle_20261111/independent_neutral_horizon.py) for a bounded continuous-neutral observation that checks process identity and target generation around every sample. Five local tests cover stable neutral input, down-state restart, initial/mid-horizon generation mismatch, and oversized gaps. This remains runner preparation: the live MAP01 caller has not yet invoked the helper, and R156 task-effect/release adjudication remains unresolved.
+
+**Exact-result regression on current main (2026-11-15):** Cherry-picked diagnostic test fix `fd496bcbb3` onto `ae999ad61d` after main added bounded raw-report finalization wait. On CPython 3.11, `runtime.cli_v1.test_mcp_supervised_win32` passed 46/46 normally (69.659 s) and 46/46 under `-O` (74.259 s). `git diff --check` passed. Fake-backed tests only; no native MAP01/effect or efficiency claim.
+
+**Recovery-horizon receipt consistency (2026-11-15):** The compiled Win32 public caller previously accepted a recovery receipt with a 2 s observation span, `late_input_observation_count=2`, and reported max observed gap 32 ms (allowed max 100 ms). The producer's count is the observations spanning the reported start/end, so this tuple cannot cover that span. `_verified_recovery_custody` now requires `end-start <= (count-1)*max_observed_gap`; a regression fixture demonstrated the pre-fix false acceptance and is rejected after the fix. `test_supervised_win32_compiled`: 9/9 normal and `-O`; `test_mcp_supervised_win32`: 46/46 normal (68.524 s) and `-O` (65.285 s), CPython 3.11. This tightens receipt validation only and does not create live GUI/MAP01 evidence or alter historical trials.
+**Candidate-only recovery receipt presentation contract (2026-11-15):** Extended the production CLI/stdio delayed-success exact-call recovery test to repeat the lookup with `compact=true`, `report_refs=true`, and `detail=brief`. It confirms full recovery status/release/horizon and conservative source/task/replay fields remain intact, without generic image-review fields. The focused test passes 1/1; the full Win32 MCP module passes 50/50, normally and under `-O`. Raw logs and hashes are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This is a Fake-backed presentation-contract check only; no native recovery, MAP01, or #57 efficiency claim.
+**Candidate-only compact recovery-to-public-caller composition (2026-11-15):** Strengthened the production CLI/stdio exception-UNKNOWN → separate bounded recovery → exact `interface_results` lookup → `run_public_compiled` fresh-generation attempt test. The terminal recovery lookup now uses `compact=true`, `report_refs=true`, `detail=brief`; source custody, verified release horizon, null task success and replay denial remain intact, and the fresh task oracle binds to its own dispatch call ID. Focused test passes 1/1 normally and under `-O`; logs and hashes are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). Fake-backed composed caller evidence only. A current read-only host check still finds the R269 GZDoom target responding while custody remains unresolved at revision 888 for MAP01 LEFT and SHIFT; no native operation was performed.
+**Candidate-only actual caller compact exact-result handling (2026-11-15):** Strengthened `test_public_compiled_caller_joins_exact_result_query_and_task_oracle`: its `resolve_pending` now fetches both a completed dispatch and a later producer-exception UNKNOWN dispatch with `compact=true`, `report_refs=true`, `detail=brief`. Normal completion still reaches one exact-call task oracle; exception/UNKNOWN remains uncertain with release unverified and skips effect/task verification. Focused test passes 1/1 normally and under `-O`; raw logs/hashes are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). Fake-backed caller/server evidence only; native MAP01 and #57 economics remain unverified.
+**Candidate-only compiled caller recovery-release UNKNOWN boundary (2026-11-15):** `test_stdio_public_compiled_caller_preserves_unknown_exception` now retrieves the retained dispatch with `compact=true`, `report_refs=true`, `detail=brief`. Even with a recovered/release-confirmed cancellation receipt, the original exception action remains UNKNOWN and the caller skips effect/task verification. Focused stdio caller test passes 1/1 normally and under `-O`; raw logs/hashes are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This prevents release evidence alone from implying task effect; Fake-backed only.
+**Candidate-only compiled caller recovery-horizon boundary (2026-11-15):** Paired exact retained results at `_terminal`: a complete identity-bound recovery horizon maps producer-exception UNKNOWN to `delivery_uncertain` with verified release while task success remains null; the production-stdio delayed-expiry fixture has release-confirmed but explicitly unverified/zero late horizon and remains `uncertain` with release unverified. Both focused cases pass 2/2 normally and under `-O`; logs/hashes are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). The positive horizon case uses an in-process Fake owner, and the delayed stdio fixture uses Fake process/input; neither is native MAP01 evidence.
+**Candidate-only focus-free orphan-recovery module and current R269 admission gate (2026-11-15):** Re-ran the complete `runtime.guarded_win32_v1.test_process_cancellation` module on Python 3.11.9: 31/31 passed normally (15.189 s) and 31/31 passed under `-O` (14.971 s). The module covers focus-independent bounded release/readback, recovery/source generation binding, delayed-DOWN horizon fencing, and UNKNOWN when observations/horizon are incomplete. Logs and hashes are in [the candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This is local Fake/unit evidence only.
+
+Live admission remains closed for the retained R269 source. Its adjudication says one exact recovery call already returned UNKNOWN and forbids retrying that recovery or dispatching under the same generation; the latest saved read-only gate refresh records `adjudication=STOP`, `inputs_or_focus_changed_by_this_read_only_check=false`, and fence revision 888 unresolved. The current fence still binds operation `bb1c1f207e34407db20c28703713ae6a`, old target generation `3b8643...f393c6f`, obligations LEFT and SHIFT, and has no `last_resolved`. The currently observed GZDoom PID 41580 is a different process identity from the pending producer PID 26748; that mismatch does not itself authorize clearing the fence. No recovery, target action, focus change, process close, Docker, or WSLc operation was performed. Next live MAP01 work requires a fresh explicit recovery admission for the old custody record with a separately identified recovery generation plus a fresh target/action allocation after resolution; keep the old task UNKNOWN and do not replay it. Source hash: `process_cancellation.py` 6F953B9070F9E07E3FAD4B775059F1CCE91C17E4EC60A78D6B9694EB0577FD45; normal log 566616216E5DE487D13726CED4D445A5436A99BF16A751CCDF35CE603769C21E; optimized log B1DC167929AFEAB1442F19F5F00862FF8DA2E46C61EF80AD6D0FAAFFDF870326.
+
+**Candidate-only public orphan-recovery generation boundary (2026-11-15):** Added a production-MCP regression proving that a supplied recovery generation different from the currently bound target is refused before supervisor release (`recovery_target_generation_mismatch`), with no producer start, task success, or replay allowance. Paired with the existing fresh-generation recovery path; both pass in normal and `-O` modes. Full `runtime.cli_v1.test_mcp_supervised_win32` passes 51/51 normally and 51/51 under `-O`; logs, hashes, and precise scope are in the [candidate packet](../research/integration/win32_delayed_down_readback_candidate_20261115/README.md). This improves an offline safety boundary and proves the correct generation is necessary before the release helper is reached; no physical release or MAP01 effect is demonstrated. R269's saved live gate remains STOP/unresolved, so it was not retried.
+
+**Candidate-only stale recovery-generation refusal boundary (2026-11-15):** Public MCP now has a direct negative case for stale recovery identity. It refuses with `recovery_target_generation_mismatch` before calling the supervisor; producer start count is zero, release confirmation false, task success null, replay denied. The paired valid fresh-generation recovery path remains covered. Paired cases pass 2/2 normally and under `-O`; complete `runtime.cli_v1.test_mcp_supervised_win32` passes 51/51 in each mode. Logs and hashes are retained in the candidate packet. This is a candidate-local fake-backed contract regression, not native release evidence. Current public state check: #57 remains OPEN (updated 2026-11-14); PR #10303 remains OPEN/DRAFT/CONFLICTING. R269 custody is still unresolved at revision 888 under its saved STOP gate, so no live recovery/action was run. No main integration or PR mutation was performed.
+
+**Read-only desktop checkpoint (2026-11-15T13:03:14Z):** CUA listed the existing GZDoom window (PID 41580/HWND 250546256) and captured its screen without activation or input. The MAP01 HUD visibly showed ammo `50`, partially occluded by a foreground Lightbrowse window with voice-task controls. This is only a visual point-in-time observation: it is not a target-only screenshot, task-effect verdict, release receipt, or custody resolution. No key, mouse, recovery, foreground, microphone, Security UI, or process operation occurred. Additive record and SHA-256 are in the candidate packet. The foreground overlay reinforces the current no-recovery decision; pending R269 custody remains unresolved.
+
+**Reconciled G10 candidate re-verification (2026-11-15):** At candidate HEAD `5fadd3bc86f93b9e8dd6ef4561fa57ade8b27d82`, six G10/compiled-X11 suites passed 113/113 normally and 113/113 under `-O`; native dependency guard passed 12/12 in each mode (Python 3.11.9). Exact commands, raw logs/hashes and tested source hashes are in the [G10 candidate packet](../research/integration/calc_g10_pre_dispatch_action_receipt_candidate_20261115/README.md). Offline fixture/caller evidence only; no live Calc result or #57 economics claim.
+
+**PR #10303 current-main reconciliation verification (2026-11-15):** At tested code HEAD `f34c43c18f0d52f18a1a390b319eff3b472c0888`, the independent Win32 MCP, cancellation, six G10/compiled-X11, native-dependency, and public-owned/core-GUI suites pass respectively 51, 31, 113, 12, and 112 tests, each normally and under `-O` on CPython 3.11.9. Commands, source hashes, logs, candidate/base ancestry, and scope limits are captured in [the reconciliation packet](../research/integration/pr10303-current-main-reconcile-20261115/README.md). All are local contract/fixture evidence; no live GUI effect or #57 economics claim. GitHub shows original PR #10303 still OPEN/DRAFT/CONFLICTING; current `main` is `f0d5fa...`, the candidate base. Its head is an ancestor of this candidate and can be advanced without force. R269 custody remains unresolved and native recovery is not claimed.
+**Issue #57 current-main Calc cancellation focused recheck (2026-11-21, main `9a23c572` after #10368):** A new isolated Windows CPython 3.11.9 run passes 2/2 normally in 12.738 s but fails under `-O` in 15.361 s: Save was not observed within the unchanged 3 s budget, followed by terminal receipt timeout; the generic pending-cancel test passes. A one-off opt-in normal timing probe records Save 1.078 s after pending return, owner-I/O entry 110 ms later, cancel response 625 ms later, and terminal receipt 906 ms later. Instrumentation perturbs timing and is not conclusive; its optimized trace failed to retain post-return phases. No timeouts or assertions changed. See [the focused recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md). #57 remains open.
+
+**Issue #57 cancellation-boundary corrected diagnosis (2026-11-21, same frozen main `9a23c572`):** Added failure-boundary and cleanup receipts. Both normal and `-O` fail-fast reproductions terminate *before dispatch*: the retained Calc resolution marks `calc_entry` `STALE/expired_or_nonfresh_observation` against its 1500 ms capture-freshness bound; `owner_io_entered=false`, Save-state count is zero, and there is no input or task effect. The public report keeps effect UNKNOWN, task success null, and replay denied. Normal and optimized close receipts both verify owner retirement and exit 0, with `release_confirmed=false` because no input was dispatched. This corrects the earlier scheduling interpretation for these runs: they do not exercise cancellation or recovery. Next test is a fresh observation plus renewed explicit review/admission after delay, paired with changed-target rejection, without reusing the stale alias or weakening freshness. Details, conditions, raw artifacts and hashes are in the [updated packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md). #57 remains open.
+
+**Issue #57 cancellation-boundary corrected diagnosis (2026-11-21, same frozen main `9a23c572`):** Added failure-boundary and cleanup receipts. Both normal and `-O` fail-fast reproductions terminate *before dispatch*: the retained Calc resolution marks `calc_entry` `STALE/expired_or_nonfresh_observation` against its 1500 ms capture-freshness bound; `owner_io_entered=false`, Save-state count is zero, and there is no input or task effect. The public report keeps effect UNKNOWN, task success null, and replay denied. Normal and optimized close receipts both verify owner retirement and exit 0, with `release_confirmed=false` because no input was dispatched. This corrects the earlier scheduling interpretation for these runs: they do not exercise cancellation or recovery. Next test is a fresh observation plus renewed explicit review/admission after delay, paired with changed-target rejection, without reusing the stale alias or weakening freshness. Details, conditions, raw artifacts and hashes are in the [updated packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md). #57 remains open.
+
+**Issue #57 cancellation accounting correction (2026-11-21, frozen main `9a23c572`):** The wrapper had manually awaited an inner unittest method and discarded its assertion result, so a green outer wrapper did not prove the inner Calc cancel test passed. It now rethrows inner exceptions. The corrected wrapper passes 1/1 in normal (9.030 s) and `-O` (9.316 s), reaching Save and exercising cancellation; its assertions intentionally preserve UNKNOWN task/effect and deny replay. In the optimized raw run, cancellation exceeds the retirement grace: owner exits `-15`, supervisor cleanup is UNKNOWN and runtime `release_confirmed=false`. Independent Fake-X readback sees no keys/buttons down, but `interface_close` remains `cleanup_failed/verified=false`; this does not count as verified release. The matched product recovery gate remains unmet. Retained raw and conditions are in [the updated packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md).
+
+
+**Issue #57 cancellation accounting paired recheck (2026-11-21, frozen main 9a23c572):** Fixed the test-only stale setup by preparing the symbolic task before observation/mint; kept the public freshness guard unchanged and specified its supported 5000 ms bound for the synthetic composition. The wrapper now propagates inner assertion failures, retains one run-id-scoped artifact, and closes cleanly even when rejection occurs before a pending call exists. The accounting test passes 1/1 normally (5.807 s) and under -O (5.949 s), with Save reached and cancel exercised. In both raw receipts owner exits -15, independent Fake-X readback is verified empty, but runtime cleanup remains UNKNOWN, release_confirmed=false, task outcome UNKNOWN/replay denied, and close is cleanup_failed. This validates conservative cancellation accounting; it does not pass recovery/release reliability. Logs, raw conditions, and exact paired artifacts are in [the packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md).
+
+**Issue #57 X11 cancel custody-contract recheck (2026-11-21; frozen main `9a23c572`):** Source audit confirms the prestarted worker checks retired owner identity, session/PID/resource-base/binding generation, then records XRes disconnect, UP requests, sync, and readback. It deliberately treats readback as a stage receipt because it does not establish queue drainage or owner-exclusive physical state; `cleanup_status` remains UNKNOWN, `release_confirmed=false`, task success null, replay denied. Focused cancel/supervisor/XRes tests pass 41/41 (7 platform skips) normally and under `-O`; no product behavior changed. This explains why the paired empty Fake-X state cannot satisfy the release gate. Evidence and logs are in [the cancellation recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md). The runtime recovery gap remains open.
+
+**Issue #57 current-main late queued input recheck (2026-11-21; main `3db800fe` after PR #10369):** Reused the existing adversarial standard-caller test on the frozen current source. It passes 1/1 normally (1.058 s) and under `-O` (2.093 s): after exact owner-disconnect receipt and a separate cleanup client's verified empty readback, a queued old-owner KeyPress is applied and leaves keycode 1 down. The caller correctly retains UNKNOWN, release unconfirmed, late request possible, task success null, and replay denied. This synthetic Fake-X negative control shows empty readback cannot prove old-queue drainage; it does not pass late-operation exclusion or establish native X timing/task effect. See [the recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_late_operation_recheck_20261121/RESULT.md). Issue #57 remains open.
+
+**Issue #57 current-main Win32 finite recovery controls (2026-11-21; frozen main `069aa175`):** Existing normal/-O checks distinguish valid and invalid recovery evidence. The actual `OperationCancellationSupervisor` delayed-DOWN test detects a controlled old-generation key press during its 250 ms horizon and retains UNKNOWN/release-unconfirmed/replay-denied while refusing a new generation (1/1, 0.805 s normal; 0.832 s `-O`). The public stdio synthetic positive control accepts a distinct recovery generation after a 2 s neutral horizon with 22 observations; its one-sample negative control remains UNKNOWN and dispatch is refused. Mid-program expiry also stops later actions and recovers neutral state, while task effect remains UNKNOWN. The public stdio tests inject a synthetic backend/supervisor; none proves native Win32 device behavior or MAP01 task success. Conditions, raw receipts/logs and source hashes are in [the recheck packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_win32_expiry_recovery_positive_control_20261121/RESULT.md). The X11 queue-drain/release gate and live task/economics gates remain open.
+
+**Issue #57 WSL Xvfb cancellation-boundary HOLD (2026-11-21; frozen main `3a3cfa18`):** Ubuntu WSL2 has Python 3.12.3, Xvfb, xauth and python-xlib, but `/tmp/.X11-unix` is mode 0777 with WSLg `X0` present; Xvfb requires 1777 and cannot create a usable UNIX listener. The 41-test X11 supervisor/XRes suite has three Xvfb startup errors in both normal and `-O`; the same two display tests fail on exact source extracted to ext4. The X-server-independent 34-test subset passes in both modes. No shared WSL permission/socket was changed. Treat this as an environment HOLD, not a runtime pass/failure. See [the retained WSL recheck](../research/integration/standard_mcp_task_ledger_57_v1/current_main_xvfb_cancel_contract_recheck_20261121/RESULT.md); X11 real-server validation remains open.
+
+**Issue #57 integrated effect-attribution gate recheck (2026-11-21; source main 9cc75e28):** Re-ran the retained R149/R281 effect-attribution and matched comparison-measurement suites together on current main using Windows CPython 3.11.9: 27/27 pass normally and 27/27 under -O; both output logs have SHA-256 b16483b325beaf6864c364e65c68952a889251ca61e59879ac1bc66e5263e1e9. R149's queued effect remains factually observed after authority expiry and the 2 s horizon, while the comparator excludes it from authorized success; R281's exact effect time remains unknown and cannot qualify correctness break-even. This verifies the candidate comparison boundary, not integration from standard caller/provider raw receipts into a matched-run record. No provider request, GUI input, Docker, or WSLc allocation occurred. #57 stays open pending that adapter, trusted allocation, and the other completion gates.
+
+**Issue #57 caller-to-comparison adapter candidate (2026-11-21; based on main `9cc75e28`):** Added a research-only projection from the reconciled `ProviderAttemptRecorder` receipt into the existing standard measured-run schema. It verifies raw files and SHA-256, event-to-top-level raw-reference coverage, completed provider/MCP terminals, matched MCP responses, explicit full lifecycle and effect attribution, then validates the record. Three synthetic journal runs form an A/B/C matched block. Missing attribution, incomplete journal, omitted raw references, conflicting hashes for one path, and raw hash drift are rejected. The six adapter tests pass in normal and `-O`; the combined R149/R281 attribution, comparison, and adapter suites pass 33/33 in both modes. Raw journals, request/response bytes, synthetic scorer state/image, measured records, conditions, summary, logs, and SHA-256 manifest are retained in [the adapter packet](../research/integration/standard_mcp_task_ledger_57_v1/recorded_comparison_adapter_v1/RESULT.md). This does not prove production owner receipt linkage, independent provider exhaustiveness, or live efficiency; no provider calls, GUI input, Docker, or WSLc were used. Keep #57 open.
+
+**Issue #57 comparison adapter merged and rechecked (2026-11-21; main `428a38eaac2dce07c7b7557985ec58a998d8736b`):** PR #10373 merged after the adapter and retained evidence were locally validated. The exact merged main tree passes the combined R149/R281 attribution, comparison, and recorded-adapter suites 33/33 normally and 33/33 under `-O`; logs are retained in the packet. GitHub `replay-gate` and `public-navigation` succeeded; `formal` was skipped. This completes the scoped evidence-join contract only. Native owner receipt linkage, exhaustive independent provider accounting, empirical matched efficiency/reliability, preview acceptance, and distributable-runtime product gates remain open. #57 stays open.
+
+**Issue #57 late-usage/native-owner composition R01 (2026-11-21; merged main `ecb0f037`):** Added paired synthetic composition tests and retained runs joining post-score late usage from a timed-out attempt with a later action attempt, exact public dispatch/results identity, and an operation/target-generation-bound native owner release/horizon receipt. Positive totals are 28 input / 5 output and complete; the same two-attempt control without late usage remains incomplete with null totals. Both eligible task scores and effect times are UNKNOWN. Windows CPython 3.11 adapter suite passes 12/12 normally and under `-O`; exact clean-main audit verifies 24 raw references and 44 manifest entries. PR #10385's `replay-gate` passed and `formal` was skipped. This remains synthetic integration: it does not establish production owner truth, hidden provider-retry exhaustiveness, physical release/effect, task success, recovery reliability, or empirical efficiency. Next: join a production caller receipt with independent exhaustive provider-attempt evidence; keep #57 open.
+
+**Issue #57 isolated X11 delayed-input pair (2026-11-21; source `ccbc061f`):** WSL TCP-only Xvfb R01 is preserved as `HOLD_TRANSPORT_IDENTITY`; remote XRes PID identity was ambiguous before the selected queue discriminator. A separate ephemeral Docker container with private Unix socket ran one normal and one `-O` attempt. Both passed the scoped XRes held-key test, observed an independent release transition, no delayed synthetic KeyPress at 8.5 s, and final A/B keys up. The audit verifies both source blobs against the frozen commit and 19 evidence files. See [R01](../research/integration/standard_mcp_task_ledger_57_v1/current_main_xvfb_tcp_queue_recheck_20261121_r01/RESULT.md) and [R02b](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_xvfb_unix_queue_recheck_20261121_r02b/RESULT.md). This narrows only the synthetic Xvfb queue/release boundary; standard caller recovery, task effect/success, reliability, matched efficiency, live MAP01, and preview acceptance remain open. Next scoped gate: bind a standard caller generation-bound operation and its recovery receipt to an independent effect oracle in a finite synthetic composition.
+
+**Issue #57 standard-caller XRes budget candidate (2026-11-21; current-main ancestor `39bb51d0`, candidate `f27b07c8`):** The real standard MCP blocked-release fixture timed out its 150 ms XRes worker 4/4 optimized baseline attempts; final keys were released by cleanup, but owner disconnect and release stayed UNKNOWN/not attempted. A separate one-second diagnostic observed XRes disconnect after 199.5 ms and release readback. During the deliberately withheld cancel acknowledgement, A remained held and repeated A KeyPress/KeyRelease effects raised the old task's count from 1 to 20; the scheduled delayed B KeyPress was not observed. The candidate changes only the supervised XRes query bound to 500 ms. Normal and `-O` exact caller runs then both recorded disconnect, independent release readback, a ~258 ms pending response, <4 ms event-loop heartbeat gap, and UNKNOWN/no-replay for the old generation. The old task oracle failed from repeated A effects while A remained held through
+the withheld cancel acknowledgement (1→4 normal, 1→19 optimized); the scheduled
+delayed B KeyPress was not observed; a distinct new-generation task passed exactly once without old-input contamination. The 20 XRes unit tests pass in both modes. The five-packet audit verifies 87 retained files and all pinned source blobs. Evidence is in [the candidate packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_candidate_500ms_20261121_r01/RESULT.md) and linked R01–R04 packets. This is a bounded observation/release improvement candidate, not old-task recovery or task-success qualification. Next: verify the API-visible split between cleanup and task outcome, then test an explicit late-request quarantine policy before any MAP01 or efficiency allocation; #57 stays open.
+
+
+**Issue #57 post-merge caller receipt (2026-11-21; exact main `96c3476e9c665d801d6f57814ff7241b868d5636`):** Normal and `-O` exact standard-caller Xvfb runs each observed XRes disconnect and independent release readback, kept cancellation response `pending`, preserved old-generation UNKNOWN/no-replay, and ended with all keys up. The old task oracle failed from repeated A effects while A stayed held through the deliberately withheld cancel acknowledgement; the scheduled delayed B KeyPress was not observed. Separate fresh-generation task oracles passed. Packet source pins and 18-file manifest audit pass. This confirms the merged bounded observation/release behavior only; caller task success, live MAP01, reliability, matched efficiency, and preview acceptance remain open. See [post-merge packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_postmerge_96c_20261121_r01/RESULT.md).
+
+
+**Golden-v3 cleanup/task outcome boundary (2026-11-21; exact main `dd206c8e`):** A deterministic adapter probe and the existing focused suite show the intentional fail-closed mapping: when cleanup fails, public qualified status is `cleanup_failed` and top-level `task_success=false`, even if the raw application result recorded `task_success=true`; `program_completed=true` and the raw task assertion remain available. The focused suite passes 13/13 in normal and `-O`, including `test_cleanup_failure_cannot_succeed`. Treat this as an explicit two-layer contract, not an implementation bug or proof the app task succeeded after cleanup. Keep cleanup qualification and raw application evidence separate in comparisons; no schema change is justified by this probe alone. See [R01 evidence](research/integration/standard_task_cleanup_result_semantics_20261121_r01/RESULT.md).
+
+
+**G10 public stdio current-main recheck (2026-11-21; tested source `5dab476e`, current main `704ea90c`):** After materializing the exact pinned G10 FODS fixtures in this sparse checkout, `runtime.cli_v1.test_mcp_g10_production_stdio` passed 3/3 normally and 3/3 under `-O`. The public MCP/stdio ledger records two archived-byte fixture effects verified, input release verified, owner close closed and replay denied; provider usage remains unknown. The first R01 attempt in this checkout failed before reliable assessment because the sparse tree omitted `first.fods`; its failure logs are retained separately and are not pooled with the R02 pass. Exact code/fixture pins still match main after the documentation-only crosswalk merge. This is Fake X plus archived FODS, not live Calc/provider evidence or efficiency. See [R01/R02 packet](../research/integration/issue57_g10_currentmain_stdio_recheck_20261121/RESULT.md). #57 still needs a permitted prospective live lifecycle comparison and the broader task/recovery gates.
+
+**WSLc local runtime smoke custody (2026-11-21; source main `e5866db03e25c044f7ffead5118624a1cd8c33e9`):** One bounded WSLc pinned-image/read-only-bind smoke exited 0 and observed `EROFS`; its harness's success cleanup removed the exact-CID and cleanup-query raw files. Preserve as `SCOPED_PASS_WITH_RECEIPT_LIMITATION`, not a live computer-control result. The offline harness now emits a JSON exact-CID cleanup receipt before local scratch removal and passes under Windows PowerShell 5.1. Issue #7924 remains STOP/HOLD for shared ownership; no Docker parity, memory bound, task effect, efficiency, or reliability result follows. See [packet](../research/integration/wslc_local_runtime_receipt_fix_20261121/RESULT.md).
+
+**Issue #57 current-main Calc composition packet (tested main `3b941f8963a2c7ab739aec9c0d76740cb44cb6ec`; merged PR #10436 at `3d1ce3ab`):** The focused synthetic Fake X/provider-planner/public-MCP composition passes 1/1 normally (25.043 s) and 1/1 under `-O` (23.778 s) on Windows CPython 3.11.9. A historical `897f4896` candidate failure was traced to its test wrapper omitting task values in a temporary fake-owner root; current main passes without modification. Raw logs and hashes are in [the packet](../research/integration/standard_mcp_task_ledger_57_v1/outputs/r164-latest-main-baseline/RESULT.md). No live GUI, external provider, MAP01, reliability or integrated efficiency claim follows.
+
+**Issue #57 effect receipt handoff recheck (tested main `3d1ce3ab`; merged PR #10437 at `371cbca8`):** The research-only effect-score receipt adapter, recorded owner-receipt adapter and measurement validator pass 42/42 normally and under `-O` on Windows CPython 3.11.9. The covered offline contract binds independent scorer/captures to one action and target generation, distinguishes expiry/release/horizon timing, preserves factual success separately from eligible success, and rejects unknown or post-horizon evidence for qualified break-even. See [the current-main packet](../research/integration/standard_mcp_task_ledger_57_v1/outputs/effect-handoff-current-main/RESULT.md). The live standard-caller-to-adapter receipt path and actual provider usage accounting are still missing; #57, MAP01, broad recovery reliability, integrated efficiency and Research Preview graduation remain open.
+
+
+**Recovery lifecycle diagnostic update (2026-11-23; local candidate based on main `19d4752ed16063d63119f5d7347c51fb69f44a8c`):** R05 passed six ordinary tests but did not exercise its drain branch. R06/R07 are failed test designs; R08 passed a deterministic direct-server observation Future-drain check (one normal and one `-O`) only. R09 (7/10) and R10 (8/10) remain historical mixed outcomes; the R10 optimized-02 orphan report shows a real Win32 invalid-HWND observation with no input dispatch and zero owner calls, so Fake isolation is unverified for the R04/R09/R10 lifecycle cohorts. R11's two failures were an invalid envelope-level assertion after raw fake callback/marker checks passed; corrected R12 passed 1/1 normal and 1/1 `-O` for the minimal direct observe seam. This does not resolve the R10 compiled-caller anomaly. Before another lifecycle cohort, preserve per-callback identity/raw report and worker state through timeout and cleanup. All result claims remain scoped; no production reliability inference.
+
+R13 separately passed the deterministic direct public observation Future-drain test once in normal mode and once under `-O` (44.108 s and 46.170 s). A source audit suggests a possible late-executor-worker/test-patch race behind R10's real observer report, but the sequence is unproven and R04/R09/R10 remain invalid as verified Fake-only cohorts. See [R13](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_callback_future_drain_r13_20261123/RESULT.md); this does not exercise the compiled-caller lifecycle or close #57.
+**Project-wide checkpoint (2026-11-23; main `19d4752ed16063d63119f5d7347c51fb69f44a8c`):** PRs #10467/#10468 integrated public recovered-task verification and negative eligibility controls; #10469 retained the R04 lifecycle results. The 10-process R04 Fake lifecycle experiment passed 7/10 only; two action runs ended uncertain with release unverified and one missed the observation callback budget. Post-merge raw-log review also found a teardown `PermissionError` deleting an in-flight report temp file; its writer/cause are unresolved. This fails the repeatability gate; no production reliability claim follows. Portable runtime tests pass 21/21 on Windows and Ubuntu WSL, both normal and `-O`, in [the current-main packet](../research/integration/portable_runtime_distribution_v2_current_main_d5ada452_20261122/RESULT.md). #58 remains open: WSL Chromium and configured Windows Codex CLI JS are missing; supported-host doctor, fresh no-retry golden run and `audit-live` remain incomplete. #57 remains open for live MAP01, repeated reliable release/recovery, and matched all-attempt provider/token/latency/correctness comparison. See [project state](PROJECT_STATE.md), [roadmap](../ROADMAP.md), and [R04 evidence](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r04_20261123/RESULT.md).
+
+**Current-main App Server stderr drain R01 (2026-11-23; candidate from main `07c0d7f7`):** A local child that wrote 1 MiB of binary stderr before answering a JSON-RPC request reproduced a current-main timeout; bounded concurrent draining plus close-time reader retirement fixes the deadlock and the orphaned-pipe close hang. The exact two-test module passes 2/2 normally and under `-O`; 14 related App Server protocol modules pass 81/81 per mode (10 existing platform skips). The wider native protocol run remains FAIL/incomplete (713 tests, 31 errors, 3 failures, 17 skips; runner hit a cp932 console encoding error; missing optional `mcp==1.30.0` and existing Windows/POSIX mismatches are recorded). This is a local transport contract result, not live provider/task/recovery or efficiency evidence. See [R01](research/integration/standard_mcp_task_ledger_57_v1/appserver_stderr_drain_current_main_r01_20261123/RESULT.md). #57 and the project goal remain open.
+
+**Current-main Docker/Linux MCP contract R01 (2026-11-23; main `d18eefdb`):** The current runtime tree was mounted read-only into the existing cached `issue57-calc-appserver-r88` image with networking disabled. MCP standard + guarded modules passed 87/87 normally, but the combined `-O` run failed 1/87 at a 2 s worker-entry wait. The failing case passed alone under `-O`, and both constituent modules passed individually (31/31 and 56/56), so this is retained as a combined-suite timing HOLD; do not count the isolated controls as a full-suite pass. No GUI, model/provider, or live input ran. See [R01](research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r01_20261123/RESULT.md). Next diagnose the combined optimized timing context without weakening the 2 s condition.
+
+## Issue #57 provider success-to-custody R03 - 2026-11-23
+
+One synthetic valid App Server JSONL success traverses the real parser,
+grounding model, v3 adapter, adaptive caller, durable Calc allocation, and
+registered ProspectiveRun custodian. Exact identity and all five usage counters
+are retained; one synthetic effect projects and custody audits. Focused 1/1 and
+module 7/7 pass in normal and -O on Windows CPython 3.13.14. The run remains
+non-dispatching and HOLD with 17 assignments missing. This does not establish
+live-provider completeness or authorize the matched comparison. See [R03](../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
+
+## Issue #57 failed-turn UNKNOWN-usage R04 - 2026-11-23
+
+A synthetic failed App Server terminal response without usage traverses the
+real JSONL client/parser, grounding model, v3 caller, durable allocation, and
+ProspectiveRun custody. Identity is retained, all five usage totals remain
+UNKNOWN (None), no execution/effect receipt is promoted, and projection stays
+HOLD with dispatch disabled. Focused 1/1 and module 8/8 pass normal and -O on
+Windows CPython 3.13.14. This is synthetic and does not establish live
+provider completeness. See [R04](../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
+
+## Issue #57 successful effect with UNKNOWN usage R05 - 2026-11-23
+
+A valid synthetic JSONL response without usage keeps the caller's successful
+task/effect and audited receipts, while all five usage totals stay UNKNOWN.
+The frozen comparison projector returns HOLD for incomplete usage, and the
+prospective run remains non-dispatching with 17 assignments missing. Focused
+1/1 and module 9/9 pass normal and -O. No live provider or GUI ran. See [R05](../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).

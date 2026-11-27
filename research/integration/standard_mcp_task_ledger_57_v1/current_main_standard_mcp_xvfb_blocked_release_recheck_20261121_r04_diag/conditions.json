@@ -1,0 +1,14 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-XVFB-XRES-BUDGET-DIAGNOSTIC-20261121-R04",
+  "frozen_at_utc": "2026-11-21T06:18:00Z",
+  "source_revision": "f6ab37afc5276689b32a01fe6799aed51b601a8c",
+  "source_blobs": "source-blobs.txt",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "mode": "python3 -O",
+  "single_diagnostic_override": "runtime.cli_v1.owned_guarded_session._XRES_DISCONNECT_TIMEOUT_S changed in memory from 0.15 s to 1.0 s; no source file modified",
+  "purpose": "Mechanism diagnosis only: determine whether the optimized-path UNKNOWN is attributable to the 150 ms supervised XRes query budget, and observe the task oracle if recovery advances.",
+  "pass_claim": "None. This altered-bound diagnostic cannot pass the frozen normal/-O product condition and cannot justify widening the production timeout.",
+  "container": "ephemeral, network none, read-only source and root, private tmpfs, evidence directory writable",
+  "limits": "Synthetic Xvfb only; timing diagnostic, not reliability, MAP01, task product qualification, or preview acceptance."
+}

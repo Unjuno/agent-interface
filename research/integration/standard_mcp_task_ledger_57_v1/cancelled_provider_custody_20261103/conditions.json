@@ -1,0 +1,22 @@
+{
+  "experiment": "cancelled_provider_custody_v1",
+  "base_main_sha": "9c22e2bac77cc6ea95e57927133f3c08730fc65a",
+  "python": "Python 3.11.9",
+  "environment": "local Windows; synthetic fake provider and Relay; no WSLc, MAP01, live provider, or Docker",
+  "cancel_point": "after synchronous model worker starts and before its terminal response",
+  "worker_release": "threading.Event released after cancellation is delivered to awaiting task",
+  "change": "propagate asyncio.CancelledError after worker completion, carrying validated usage and raw response bytes for durable recording",
+  "assertions": [
+    "caller cancellation is re-raised",
+    "worker custody continues until synchronous worker exits",
+    "known usage is retained in cancelled model-attempt ledger event",
+    "raw response JSONL bytes are retained",
+    "public MCP tool dispatch count is zero",
+    "ledger reconciles complete"
+  ],
+  "controls": [
+    "existing integrated timeout regression",
+    "existing generic recorder cancellation propagation regression"
+  ],
+  "implementation_patch_sha256": "8ab060ab62e49158d35fa270f71822ae4337c48b1a8d361a0e377dbd7bd6af8e"
+}

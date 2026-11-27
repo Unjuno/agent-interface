@@ -1,0 +1,152 @@
+{
+  "candidate_pass": 6,
+  "control_count": 8,
+  "effective_semantic_controls": [
+    {
+      "label": "greenwash-original-false-stop",
+      "reason": "independently derived validation outcome/stopped type",
+      "rejected": true
+    },
+    {
+      "label": "changed-wire-alias",
+      "reason": "actual serialized original arguments/references/0/alias value",
+      "rejected": true
+    },
+    {
+      "label": "duplicate-request",
+      "reason": "one accepted fixture request",
+      "rejected": true
+    },
+    {
+      "label": "lost-original-reply",
+      "reason": "original return identity type",
+      "rejected": true
+    },
+    {
+      "label": "false-exit-bool",
+      "reason": "natural fixture0 one request",
+      "rejected": true
+    },
+    {
+      "label": "forged-parent",
+      "reason": "same original fixture parent/PID",
+      "rejected": true
+    },
+    {
+      "label": "extra-event-tail",
+      "reason": "complete original five events",
+      "rejected": true
+    },
+    {
+      "label": "dropped-cell",
+      "reason": "all six offered cases",
+      "rejected": true
+    }
+  ],
+  "first_candidate_setup_failure_retained": true,
+  "main_sends": 0,
+  "member_executions": 0,
+  "original_false_stop": 2,
+  "original_or_formal_producer_replays": 0,
+  "original_pass": 4,
+  "rows": [
+    {
+      "fixture_pid": 20240,
+      "label": "mint-stable",
+      "qualified": true,
+      "stage": "original",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 22416,
+      "label": "mint-mutated",
+      "qualified": false,
+      "stage": "original",
+      "stop": "incomplete or inconsistent batch mint result",
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 23868,
+      "label": "mint-preclone",
+      "qualified": true,
+      "stage": "original",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 34040,
+      "label": "feedback-stable",
+      "qualified": true,
+      "stage": "original",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 26416,
+      "label": "feedback-mutated",
+      "qualified": false,
+      "stage": "original",
+      "stop": "missing or inconsistent requested feedback",
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 35384,
+      "label": "feedback-helper",
+      "qualified": true,
+      "stage": "original",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 2228,
+      "label": "mint-stable",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 22684,
+      "label": "mint-mutated",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 24944,
+      "label": "mint-preclone",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 37264,
+      "label": "feedback-stable",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 23672,
+      "label": "feedback-mutated",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    },
+    {
+      "fixture_pid": 23852,
+      "label": "feedback-helper",
+      "qualified": true,
+      "stage": "candidate",
+      "stop": null,
+      "wire_requests": 1
+    }
+  ],
+  "scope": "actual inert relay request/return identity and caller liveness; no native image/task/release/latency qualification",
+  "status": "PASS_SAVED_REQUEST_VALIDATION_SCOPED"
+}

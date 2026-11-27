@@ -1,0 +1,32 @@
+{
+  "conclusion": "The 0.5s XRes budget completed normally but exceeded in this optimized WSLc sample. Old-generation task completion remains untrusted; delayed repeated A effects occurred despite neutral release/readback. A fresh generation completed one independently scored task without old-input contamination while the old fence stayed UNKNOWN.",
+  "limits": [
+    "one normal and one optimized sample",
+    "synthetic Xvfb only",
+    "not MAP01/live GUI",
+    "not matched economics or reliability rate",
+    "not research-preview acceptance",
+    "WSLc memory cap warning: swap limit unavailable"
+  ],
+  "normal": {
+    "effect_count": "1 -> 9",
+    "fresh_contamination": false,
+    "fresh_task_oracle": true,
+    "late_a": true,
+    "old_task_oracle": false,
+    "outer_wrapper_exit": 2,
+    "release_readback_neutral": true,
+    "runtime_cancel_release_confirmed": false,
+    "unittest_exit": 0,
+    "xres": "disconnected"
+  },
+  "optimized": {
+    "elapsed_ms": 504.48509199999944,
+    "final_keys_up": true,
+    "owner_release_attempt": "not_attempted",
+    "unittest_exit": 1,
+    "xres": "unknown/supervision_timeout"
+  },
+  "source_revision": "26152e5aaebf678d19f2e7431f57b7012a0064b1",
+  "status": "SCOPED_EVIDENCE_CAPTURED_NOT_PRODUCT_PASS"
+}

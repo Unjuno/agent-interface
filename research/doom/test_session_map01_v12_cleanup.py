@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 
-def actual_cleanup():
+def actual_cleanup(probe_delivery=None):
     source = Path(__file__).with_name('session_map01_v12.py')
     tree = ast.parse(source.read_bytes(), filename=str(source))
     main = next(node for node in tree.body
@@ -22,7 +22,7 @@ def actual_cleanup():
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
         body=cleanup, decorator_list=[])
     wrapper = ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[]))
-    namespace = {'json': json, 'shutil': shutil}
+    namespace = {'json': json, 'shutil': shutil, 'probe_delivery': probe_delivery}
     exec(compile(wrapper, str(source), 'exec'), namespace)
     return namespace['cleanup']
 
@@ -63,6 +63,14 @@ class CleanupTests(unittest.TestCase):
 
     def check_all_attempted(self):
         self.assertEqual(self.calls, ['executor', 'backend', 'game', 'session'])
+
+    def test_probe_cancel_error_still_closes_all_resources(self):
+        class Probe:
+            def cancel(self): raise RuntimeError('probe-cancel-sentinel')
+        self.cleanup=actual_cleanup(Probe())
+        with self.assertRaisesRegex(RuntimeError,'probe-cancel-sentinel'):
+            self.run_cleanup()
+        self.check_all_attempted()
 
     def test_normal_order_and_records(self):
         self.run_cleanup()

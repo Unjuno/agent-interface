@@ -99,6 +99,10 @@ export async function createRelayClient({ command, args, evidenceDirectory,
           !['returned', 'unknown_requires_reconciliation'].includes(row.status)) {
         throw new Error('relay response identity/status mismatch');
       }
+      if (row.status === 'returned' && row.result && Object.hasOwn(row.result, 'isError') &&
+          typeof row.result.isError !== 'boolean') {
+        throw new TypeError('relay response isError must be boolean when present');
+      }
       nextId = row.next_id;
       attempt.settled = true;
       attempt.resolve(row);

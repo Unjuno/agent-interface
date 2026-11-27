@@ -1,0 +1,9 @@
+# R05 result — live supervised Win32 Calculator action and same-session visual effect
+
+**Disposition: `PASS_SCOPED` for one target, one Calculator task, and the normal terminal-release path.** R05 used the user-authorized local Windows PC and the public `supervised-win32` MCP route. The frozen pre-action observation showed Calculator Standard mode displaying 1,042, with HWND 55117672 and target generation `6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c`. The fixed program cleared the prior result, entered 314 + 728, and evaluated it. Static validation passed once; exactly one dispatch was issued.
+
+The retained action completed with operation ID `2145f00d3f834fceb0adf3f28494e852`. Its completion release receipt is verified, the producer exited with code 0, and the separate completion readback was neutral with no keys or buttons down or unknown. Recovery was not required and replay remained denied. The same public MCP session then captured a post-action screen for the same HWND and target generation; the image shows Calculator displaying 1,042. This capture began 11.078 seconds after the pre-dispatch monotonic clock, inside the frozen 90-second limit. The server session closed with no unresolved calls. The reproducible audit passed 15/15 checks.
+
+The runtime `task_success` field remains null: no independent semantic Calculator oracle was configured. This is one live normal-path action, not a blocked-I/O/cancellation recovery result, MAP01 result, matched efficiency comparison, or reliability estimate. R01–R04 remain preserved as separate attempts, including the black R01 capture, R02/R03 orchestration gaps, and R04 pre-dispatch invalid-program stop.
+
+See `conditions.json`, `PRERUN_CUSTODY.json`, `FROZEN_SHA256SUMS`, `run/`, `audit_r05.py`, `run/audit.json`, and `SHA256SUMS` for conditions and evidence.

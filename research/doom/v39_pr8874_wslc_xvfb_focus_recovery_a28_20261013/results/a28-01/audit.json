@@ -1,0 +1,27 @@
+{
+  "schema": "a28-independent-audit-v1",
+  "experiment_decision": "FAIL_PREREGISTERED_OBSERVABILITY_AND_CLEANUP_GATE",
+  "audit_decision": "PASS_METHOD_SCOPED_AUDIT",
+  "checks": {
+    "focus_out_observed": true,
+    "matching_keypress_observed": true,
+    "matching_keyrelease_observed_by_original_window": false,
+    "explicit_up_receipt_present": true,
+    "admission_identity_link_valid": true,
+    "owner_keyup_sync_verified": true,
+    "server_keymap_up_after_explicit_up": true,
+    "focus_to_verified_up_within_2s": true,
+    "terminal_release_called": false,
+    "owner_closed_stopped": true,
+    "xvfb_exit_zero": true,
+    "candidate_observer_timeout": true
+  },
+  "observations": {
+    "focus_out_to_keyrelease_sync_ms": 0.264718,
+    "server_keymap_false_after_explicit_up": true,
+    "original_window_keyrelease_seen": false,
+    "terminal_release_invoked": false,
+    "candidate_error": "event 3 not observed: []"
+  },
+  "interpretation": "The candidate failed its preregistered requirement to observe KeyRelease at the original focused window and to execute the explicit terminal release path. The backend independently recorded an identity-linked explicit UP with XSync and server keymap false, then its focus monitor recorded a verified empty owner_release(reason=focus_changed). This is Xvfb/X11 virtual-server evidence only; no production/game/task-effect claim."
+}

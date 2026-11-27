@@ -1,0 +1,17 @@
+{
+  "packet_id": "issue57_late_usage_current_main_port_20261121",
+  "base_main": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "source_pr": 10218,
+  "source_pr_head": "b1e24401ca0817ed4504b62f9c7190a0c900735a",
+  "source_pr_base": "78cef41de52911b47857d6a62326a0aeb2c91081",
+  "candidate_branch": "codex/issue57-late-usage-current-main-20261121",
+  "host": "Windows",
+  "python": "CPython 3.11.9",
+  "tests": {
+    "normal": {"command": "python -m unittest discover -v -s research/integration/standard_mcp_task_ledger_57_v1 -p test_*.py", "count": 107, "exit_code": 0, "elapsed_seconds": 81.641},
+    "optimized": {"command": "python -O -m unittest discover -v -s research/integration/standard_mcp_task_ledger_57_v1 -p test_*.py", "count": 107, "exit_code": 0, "elapsed_seconds": 77.290}
+  },
+  "additional_checks": {"py_compile": "pass", "git_diff_cached_check": "pass"},
+  "custody": {"transferred_manifest_entries": 25, "verified": 25, "mismatches": 0, "correction": "One missing CR was uniquely recovered at byte offset 737 from the original expected SHA-256; see the additive CUSTODY_CORRECTION.md."},
+  "scope": "Deterministic App Server/spool/Fake X adapters and synthetic provider streams only. No real provider billing/log, live GUI, GZDoom, MAP01, or efficiency trial. observe_late_usage remains an explicit post-score call and is not wired into every runner."
+}

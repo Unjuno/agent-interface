@@ -1,0 +1,49 @@
+{
+  "app_messages": [],
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "errors": [
+    {
+      "dispatch_attempted": false,
+      "message": "Expecting value: line 1 column 1 (char 0)",
+      "type": "JSONDecodeError"
+    }
+  ],
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A35-20261015-01",
+  "finished_ns": 2889639707,
+  "owner_records": [],
+  "runtime": {
+    "display": ":177",
+    "python": "3.14.8 (main, Oct  6 2026, 04:36:55) [GCC 14.2.0]",
+    "uid": 0
+  },
+  "schema": "map01-v39-wslc-v10-owner-effect-raw-a35-v1",
+  "scope": "V10 X11 input-owner integration with a separate synthetic app; no Doom, model, desktop, or physical input",
+  "source_sha256": {
+    "doom_controller_failure_cleanup_v1.py": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b",
+    "input_owner_v10.py": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+    "map01_overlap_controller_v39.py": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501"
+  },
+  "status": "STOP",
+  "task_effect": {
+    "after_keypress": null,
+    "independent_counter_after_keypress": null,
+    "initial_counter": null
+  },
+  "xvfb": {
+    "argv": [
+      "Xvfb",
+      ":177",
+      "-screen",
+      "0",
+      "640x480x24",
+      "-nolisten",
+      "tcp",
+      "-noreset",
+      "-ac"
+    ],
+    "pid": 9,
+    "started_ns": 2339802917
+  }
+}

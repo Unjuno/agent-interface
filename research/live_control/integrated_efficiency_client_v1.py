@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -29,6 +30,9 @@ class RuntimeClient:
     def __init__(self, root: Path, seed: int):
         self.root = Path(root)
         self.seed = seed
+        self.chromium = os.environ.get("AGENT_INTERFACE_CHROMIUM")
+        if self.chromium is not None and not self.chromium.strip():
+            raise ValueError("AGENT_INTERFACE_CHROMIUM must not be empty")
         self.runtime = self.root / "runtime"
         self.errors = None
         self.process = None
@@ -39,22 +43,39 @@ class RuntimeClient:
         self.programs = []
         self.durable_calls = 0
 
-    def start(self):
-        self.root.mkdir(parents=True, exist_ok=False)
-        self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
-        self.process = subprocess.Popen([
+    def _runtime_command(self):
+        command = [
             sys.executable, "-u", str(HERE / "integrated_efficiency_socket_v1.py"),
             "integrated-efficiency-chromium-v1", "serve", "--", "--app", "chromium",
             "--seed", str(self.seed), "--out", str(self.runtime),
-        ], stdout=subprocess.PIPE, stderr=self.errors, text=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
-        self.journal = Path(self.temporary.name) / "journal.jsonl"
-        self.endpoint = json.loads(self.process.stdout.readline())
-        initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
-                               {"events": ["observation"], "timeout": 30})
-        self.ready = first(initial["reply"]["records"], "ready")
-        initialize(self.journal, initial["continuation"])
-        return self
+        ]
+        if self.chromium is not None:
+            command.extend(["--chromium", self.chromium])
+        return command
+
+    def start(self):
+        try:
+            self.root.mkdir(parents=True, exist_ok=False)
+            self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
+            self.process = subprocess.Popen(self._runtime_command(), stdout=subprocess.PIPE,
+                                            stderr=self.errors, text=True)
+            self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
+            self.journal = Path(self.temporary.name) / "journal.jsonl"
+            self.endpoint = json.loads(self.process.stdout.readline())
+            initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
+                                   {"events": ["observation"], "timeout": 30})
+            try:
+                self.ready = first(initial["reply"]["records"], "ready")
+            except StopIteration as error:
+                raise RuntimeError("runtime did not emit ready; inspect stderr.txt") from error
+            initialize(self.journal, initial["continuation"])
+            return self
+        except BaseException as error:
+            try:
+                self.close()
+            except Exception as cleanup_error:
+                error.add_note("startup cleanup failed: " + repr(cleanup_error))
+            raise
 
     def call(self, spec):
         started = time.perf_counter_ns()
@@ -109,11 +130,14 @@ class RuntimeClient:
         geometry = source.get("pointer_binding", {}).get("geometry")
         for kind in ("field", "submit"):
             source_point = grounding[kind + "_point"]
-            content_point = to_window_content(source_point, geometry)
+            # Validate the binding and point, but retain full-observation pixels:
+            # session_v33 crops the retained full-screen image at this point.
+            # The frame declares how a later window move translates the patch.
+            to_window_content(source_point, geometry)
             row = self.submit("mint-" + aliases[kind], [{
                 "op": "target_handle_mint_from_point", "name": aliases[kind],
                 "coordinate_frame": "window_content", "source_sequence": source["sequence"],
-                "point": content_point,
+                "point": source_point,
                 "region_size": [24, 38] if kind == "field" else [24, 14],
                 "ttl_ms": 300000, "freshness_ms": 1500, "search_radius": 0,
                 "allowed_transformations": ["window_translation"],
@@ -190,14 +214,16 @@ class RuntimeClient:
         return evaluation
 
     def close(self):
-        if self.process is not None and self.process.poll() is None:
-            self.process.terminate()
-        if self.process is not None:
-            self.process.wait(timeout=10)
-        if self.errors is not None:
-            self.errors.close()
-        if self.temporary is not None:
-            self.temporary.cleanup()
+        try:
+            if self.process is not None and self.process.poll() is None:
+                self.process.terminate()
+            if self.process is not None:
+                self.process.wait(timeout=10)
+        finally:
+            if self.errors is not None:
+                self.errors.close()
+            if self.temporary is not None:
+                self.temporary.cleanup()
 
     def __enter__(self):
         return self.start()

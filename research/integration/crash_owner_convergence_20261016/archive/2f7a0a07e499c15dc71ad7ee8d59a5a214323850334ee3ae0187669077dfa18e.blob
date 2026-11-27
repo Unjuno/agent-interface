@@ -1,0 +1,21 @@
+{
+  "schema":"v39-v15-process-owner-xvfb-a24-freeze-v1",
+  "allocation_id":"V39-V15-PROCESS-OWNER-XVFB-A24-20261012-01",
+  "successor_of":"V39-V15-PROCESS-OWNER-XVFB-A23-20261012-01",
+  "base_commit":"47e2a914ef7d81d07b69205d333f79f4151bc338",
+  "candidate_invocations_allowed":1,"auditor_invocations_allowed":1,"retries_allowed":0,
+  "source_sha256":{
+    "research/live_control/input_owner_process_v1.py":"0a8b42ccc926ad5763bad4558603e4f5bdd258a6b7a153409fbd6e0f30c0c726",
+    "research/doom/doom_controller_failure_cleanup_v1.py":"3f58d0cb390a2c9951a6bafc2f941524ce5bb2a1c169deac997d7bb14e976ee8",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py":"51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/v39_v15_process_owner_xvfb_a24_20261012/PLAN.md":"6de15493cc9919e9a0cd9c4dac069712da3419d0f5cf69a0f227f95415877a74",
+    "research/doom/v39_v15_process_owner_xvfb_a24_20261012/candidate.py":"f6202f62c552d3dd295ccf6d03107cf701dafe3ab1f3c08610c9b162fb81f325",
+    "research/doom/v39_v15_process_owner_xvfb_a24_20261012/run_candidate.sh":"f1ab309e18d56d5d7497b9141e565d5ca51f2d2459481aaa7d73f1e33f21b1d0"
+  },
+  "environment":{"host":"WSL2 Ubuntu","python":"CPython 3.12.3","xvfb":"TCP disabled","physical_input":false,"game_or_model":false,"network_calls":0},
+  "hypothesis":"With no competing ButtonPressMask observer, a fresh recovery observer can select ButtonRelease after owner death, observe the release, and verify button/key state; the event receipt records the observer result without consuming it twice in the candidate.",
+  "scope":"Private isolated Xvfb recovery primitive and cleanup boundary only.",
+  "decision_rule":"PASS requires independently observed key down events, global button/key down state, exact dead service generation, exact a/d and Button1 ledger state, recovery observer release events for all three, verified key/button up state, ledger-bound durable receipt, normal receipt absent, session alive, and clean Xvfb teardown. Otherwise preserve failure.",
+  "command":"unshare --user --map-root-user --mount --fork bash research/doom/v39_v15_process_owner_xvfb_a24_20261012/run_candidate.sh",
+  "output":"research/doom/v39_v15_process_owner_xvfb_a24_20261012/results/A01"
+}

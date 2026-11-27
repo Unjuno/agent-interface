@@ -1,0 +1,820 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r19",
+  "checks": [
+    {
+      "evidence": {
+        "attempt": "win32-supervised-standard-caller-20261024-r19",
+        "source_commit": "9d0342e35aa2e0fd03f5c08f29b6c8bbf331fb47",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_source_and_clean_tracked_tree",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_pid": 54676,
+        "generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+        "observed_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+      },
+      "name": "one_owned_fixture_and_matching_observation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "dispatch_attempts": 1,
+        "program_id": "supervised-standard-cancel-effect-r19",
+        "validation": {
+          "backend_checked": false,
+          "compilation": null,
+          "expanded_operation_count": 8,
+          "required_capabilities": [
+            "display.geometry",
+            "input.keyboard",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "runtime_admission": "not_evaluated",
+          "schema": "agent-interface/static-program-validation-v1",
+          "side_effect_authority": false,
+          "source_operation_count": 8,
+          "static_valid": true,
+          "status": "valid",
+          "task_success": null
+        }
+      },
+      "name": "validation_and_single_exact_dispatch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel": {
+          "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+          "cancellation": {
+            "action_operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+            "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+            "owner_phase": "cancel_pending",
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "result": {
+              "cleanup_deadline_ns": 479852062000000,
+              "completion_readback": null,
+              "completion_release_receipt": null,
+              "deadline_ns": 479938015000000,
+              "obligations": [
+                "button:fixture:left",
+                "key:fixture:CTRL",
+                "key:fixture:Q",
+                "key:fixture:S",
+                "unicode:002D",
+                "unicode:0030",
+                "unicode:0031",
+                "unicode:0032",
+                "unicode:0034",
+                "unicode:0036",
+                "unicode:0039",
+                "unicode:0043",
+                "unicode:0044",
+                "unicode:0045",
+                "unicode:0049",
+                "unicode:004B",
+                "unicode:004D",
+                "unicode:004F",
+                "unicode:0050",
+                "unicode:0052",
+                "unicode:0053",
+                "unicode:0055",
+                "unicode:0056"
+              ],
+              "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+              "phase": "cancel_pending",
+              "producer_exit_code": null,
+              "producer_gate_state": "authorization_attempted",
+              "producer_identity": {
+                "creation_time_100ns": 134372621402947238,
+                "pid": 51436
+              },
+              "recovery_id": null,
+              "release_confirmed": false,
+              "replay_allowed": false,
+              "status": "pending",
+              "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+              "task_success": null,
+              "uncertainty": null
+            },
+            "status": "pending",
+            "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+            "task_success": null
+          },
+          "input_dispatched": false,
+          "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+          "operation_invoked": false,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "scope": "supervised_win32",
+          "status": "pending",
+          "task_success": null
+        },
+        "cancel_elapsed_ms": 1.6839,
+        "hook": {
+          "callback_entry_ns": 479849082407600,
+          "callback_return_ns": null,
+          "error": null,
+          "events": [
+            {
+              "callback_entry_ns": 479849082407600,
+              "callback_return_ns": 479853145769700,
+              "flags": 16,
+              "message": 256,
+              "suppressed": true,
+              "vk": 81
+            }
+          ],
+          "flags": 16,
+          "hook_handle": 271647603,
+          "ready_ns": 479845329764800,
+          "thread_id": 36104,
+          "vk": 81
+        }
+      },
+      "name": "hook_observed_injected_q_and_cancel_was_bounded",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "callback_return_ns": null,
+        "producer_identity": {
+          "creation_time_100ns": 134372621402947238,
+          "pid": 51436
+        },
+        "samples": [
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479849087470600,
+            "status": "unknown",
+            "wait_result": 258
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479849316691100,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479849567130900,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479849817433300,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479850009371400,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479850260067700,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479850509503800,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479850760219300,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479851008179000,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479851256989000,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479851511449400,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479851761578700,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479852013020700,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479852268315500,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479852522446900,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479852771855900,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372621402947238,
+            "exit_code": 65536,
+            "pid": 51436,
+            "sampled_monotonic_ns": 479853023226500,
+            "status": "exited",
+            "wait_result": 0
+          }
+        ]
+      },
+      "name": "producer_exact_identity_exited_during_retained_callback",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "callback_return_ns": null,
+        "hold_end_ns": 479853145320800,
+        "hold_ms": 4059.3465,
+        "unknown_elapsed_ms": 2865.7863,
+        "unknown_poll": {
+          "action_status": "running",
+          "cancellation_release_confirmed": false,
+          "cancellation_status": "unknown",
+          "is_error": false,
+          "owner_release_confirmed": false,
+          "returned_monotonic_ns": 479851950057100,
+          "started_monotonic_ns": 479851946836900,
+          "status": null
+        }
+      },
+      "name": "terminal_unknown_within_bound_while_hook_remains_blocked",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-effect-r19",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "result": null,
+          "status": "running",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+        },
+        "terminal_cancellation": {
+          "action_operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+          "owner_phase": "unknown",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 479852062000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 479938015000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0031",
+              "unicode:0032",
+              "unicode:0034",
+              "unicode:0036",
+              "unicode:0039",
+              "unicode:0043",
+              "unicode:0044",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004B",
+              "unicode:004D",
+              "unicode:004F",
+              "unicode:0050",
+              "unicode:0052",
+              "unicode:0053",
+              "unicode:0055",
+              "unicode:0056"
+            ],
+            "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+            "phase": "unknown",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372621402947238,
+              "pid": 51436
+            },
+            "recovery_id": "55abf48aa3814d589f8146d65654f8ed",
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "status": "unknown",
+            "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+            "task_success": null,
+            "uncertainty": "recovery_process_exceeded_execution_window"
+          },
+          "status": "unknown",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+          "task_success": null
+        },
+        "unknown_polls": [
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479851950057100,
+            "started_monotonic_ns": 479851946836900,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852012911000,
+            "started_monotonic_ns": 479852010894100,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852074129100,
+            "started_monotonic_ns": 479852072608100,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852141215900,
+            "started_monotonic_ns": 479852136482800,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852204499100,
+            "started_monotonic_ns": 479852200083300,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852268134700,
+            "started_monotonic_ns": 479852264259100,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852328586600,
+            "started_monotonic_ns": 479852326912700,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852391400900,
+            "started_monotonic_ns": 479852389437700,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852458170700,
+            "started_monotonic_ns": 479852453714200,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852522162700,
+            "started_monotonic_ns": 479852516000900,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852580887200,
+            "started_monotonic_ns": 479852577314400,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852645929800,
+            "started_monotonic_ns": 479852640586000,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852708254800,
+            "started_monotonic_ns": 479852703642800,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852771633900,
+            "started_monotonic_ns": 479852766897400,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852834238300,
+            "started_monotonic_ns": 479852830224300,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852896406600,
+            "started_monotonic_ns": 479852892446800,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479852960264200,
+            "started_monotonic_ns": 479852955776900,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479853023040300,
+            "started_monotonic_ns": 479853018020400,
+            "status": null
+          },
+          {
+            "action_status": "running",
+            "cancellation_release_confirmed": false,
+            "cancellation_status": "unknown",
+            "is_error": false,
+            "owner_release_confirmed": false,
+            "returned_monotonic_ns": 479853084757600,
+            "started_monotonic_ns": 479853081709200,
+            "status": null
+          }
+        ]
+      },
+      "name": "unknown_keeps_release_replay_and_task_success_unclaimed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "events": [
+          {
+            "callback_entry_ns": 479849082407600,
+            "callback_return_ns": 479853145769700,
+            "flags": 16,
+            "message": 256,
+            "suppressed": true,
+            "vk": 81
+          }
+        ],
+        "suppressed": null
+      },
+      "name": "held_q_down_suppressed_on_callback_return",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R19"
+        },
+        "expected_effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R19"
+        },
+        "fixture": {
+          "client_rect": {
+            "bottom": 181,
+            "height": 181,
+            "left": 0,
+            "right": 404,
+            "top": 0,
+            "width": 404
+          },
+          "close_posted": true,
+          "effect": {
+            "clicked": true,
+            "saved": true,
+            "text": "SUPERVISED-MCP-OK-20261024-R19"
+          },
+          "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\effect.json",
+          "events": [
+            {
+              "hwnd": 142346596,
+              "kind": "ready"
+            },
+            {
+              "kind": "click"
+            },
+            {
+              "code": 83,
+              "kind": "char"
+            },
+            {
+              "code": 85,
+              "kind": "char"
+            },
+            {
+              "code": 80,
+              "kind": "char"
+            },
+            {
+              "code": 69,
+              "kind": "char"
+            },
+            {
+              "code": 82,
+              "kind": "char"
+            },
+            {
+              "code": 86,
+              "kind": "char"
+            },
+            {
+              "code": 73,
+              "kind": "char"
+            },
+            {
+              "code": 83,
+              "kind": "char"
+            },
+            {
+              "code": 69,
+              "kind": "char"
+            },
+            {
+              "code": 68,
+              "kind": "char"
+            },
+            {
+              "code": 45,
+              "kind": "char"
+            },
+            {
+              "code": 77,
+              "kind": "char"
+            },
+            {
+              "code": 67,
+              "kind": "char"
+            },
+            {
+              "code": 80,
+              "kind": "char"
+            },
+            {
+              "code": 45,
+              "kind": "char"
+            },
+            {
+              "code": 79,
+              "kind": "char"
+            },
+            {
+              "code": 75,
+              "kind": "char"
+            },
+            {
+              "code": 45,
+              "kind": "char"
+            },
+            {
+              "code": 50,
+              "kind": "char"
+            },
+            {
+              "code": 48,
+              "kind": "char"
+            },
+            {
+              "code": 50,
+              "kind": "char"
+            },
+            {
+              "code": 54,
+              "kind": "char"
+            },
+            {
+              "code": 49,
+              "kind": "char"
+            },
+            {
+              "code": 48,
+              "kind": "char"
+            },
+            {
+              "code": 50,
+              "kind": "char"
+            },
+            {
+              "code": 52,
+              "kind": "char"
+            },
+            {
+              "code": 45,
+              "kind": "char"
+            },
+            {
+              "code": 82,
+              "kind": "char"
+            },
+            {
+              "code": 49,
+              "kind": "char"
+            },
+            {
+              "code": 57,
+              "kind": "char"
+            },
+            {
+              "clicked": true,
+              "kind": "save",
+              "saved": true,
+              "text": "SUPERVISED-MCP-OK-20261024-R19"
+            }
+          ],
+          "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\events.jsonl",
+          "exit_code": 0,
+          "hwnd": 142346596,
+          "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\fixture.log",
+          "meta": {
+            "height": 220,
+            "hwnd": 142346596,
+            "width": 420
+          },
+          "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\fixture-meta.json",
+          "pid": 54676,
+          "target_identity": {
+            "generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+            "owner": {
+              "creation_time_100ns": 134372621373975012,
+              "pid": 54676,
+              "window_thread_id": 32880
+            }
+          },
+          "window_exists_after_exit": false
+        },
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_stopped": {
+          "blocked_q_down_suppressed": true,
+          "callback_entry_ns": 479849082407600,
+          "callback_return_ns": 479853145769700,
+          "error": null,
+          "events": [
+            {
+              "callback_entry_ns": 479849082407600,
+              "callback_return_ns": 479853145769700,
+              "flags": 16,
+              "message": 256,
+              "suppressed": true,
+              "vk": 81
+            }
+          ],
+          "flags": 16,
+          "hook_handle": 271647603,
+          "ready_ns": 479845329764800,
+          "thread_exited": true,
+          "thread_id": 36104,
+          "unhook_last_error": null,
+          "unhook_return": true,
+          "vk": 81
+        }
+      },
+      "name": "exact_fixture_effect_and_cleanup",
+      "passed": true
+    }
+  ],
+  "claim_scope": "bounded fail-closed UNKNOWN only; no release or recovery success",
+  "passed": 6,
+  "schema": "win32-supervised-standard-caller-r19-audit-v1",
+  "source_commit": "9d0342e35aa2e0fd03f5c08f29b6c8bbf331fb47",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 9
+}

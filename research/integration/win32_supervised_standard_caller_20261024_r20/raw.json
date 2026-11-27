@@ -1,0 +1,3047 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r20",
+  "blocked_call_id": "c694094b3e604191baecdcf1ac98067c",
+  "blocked_io_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "generation_after": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "generation_before": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "pid": 8948,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 482311450703800,
+    "started_monotonic_ns": 482311450103100,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 45614442,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 26776,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 31588
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 45614442,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 26776,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 31588
+      }
+    ],
+    "status": "observed"
+  },
+  "blocked_io_release_readback": {
+    "reason": "no recovered release receipt during retained callback",
+    "status": "not_requested"
+  },
+  "caller_kind": "mcp_stdio",
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 482310203000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "2d658aab05994a79b312cb866353f64e"
+  },
+  "dispatch_attempts": 1,
+  "effect_readback": {
+    "clicked": true,
+    "saved": true,
+    "text": "SUPERVISED-MCP-OK-20261024-R20"
+  },
+  "ended_utc": "2026-10-23T21:30:15.850386+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "SUPERVISED-MCP-OK-20261024-R20"
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 45614442,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "code": 83,
+        "kind": "char"
+      },
+      {
+        "code": 85,
+        "kind": "char"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 86,
+        "kind": "char"
+      },
+      {
+        "code": 73,
+        "kind": "char"
+      },
+      {
+        "code": 83,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 68,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 77,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 79,
+        "kind": "char"
+      },
+      {
+        "code": 75,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 54,
+        "kind": "char"
+      },
+      {
+        "code": 49,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 52,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": "SUPERVISED-MCP-OK-20261024-R20"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 45614442,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 45614442,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\fixture\\fixture-meta.json",
+    "pid": 26776,
+    "target_identity": {
+      "generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+      "owner": {
+        "creation_time_100ns": 134372645996093128,
+        "pid": 26776,
+        "window_thread_id": 31588
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "hook_started": {
+    "callback_entry_ns": null,
+    "callback_return_ns": null,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 482311254137200,
+        "callback_return_ns": 482315269313000,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "hook_handle": 406259439,
+    "ready_ns": 482307496063000,
+    "thread_id": 53068
+  },
+  "hook_stopped": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 482311254137200,
+    "callback_return_ns": 482315269313000,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 482311254137200,
+        "callback_return_ns": 482315269313000,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 406259439,
+    "ready_ns": 482307496063000,
+    "thread_exited": true,
+    "thread_id": 53068,
+    "unhook_last_error": null,
+    "unhook_return": true,
+    "vk": 81
+  },
+  "hook_trace_after_dispatch": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 482311254137200,
+    "callback_return_ns": 482315269313000,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 482311254137200,
+        "callback_return_ns": 482315269313000,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 406259439,
+    "ready_ns": 482307496063000,
+    "thread_id": 53068,
+    "vk": 81
+  },
+  "hook_trace_after_recovery": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 482311254137200,
+    "callback_return_ns": 482315269313000,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 482311254137200,
+        "callback_return_ns": 482315269313000,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 406259439,
+    "ready_ns": 482307496063000,
+    "thread_id": 53068,
+    "vk": 81
+  },
+  "hook_wait": {
+    "ended_monotonic_ns": 482311254343300,
+    "entered": true,
+    "hook_trace": {
+      "callback_entry_ns": 482311254137200,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 482311254137200,
+          "callback_return_ns": 482315269313000,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 406259439,
+      "ready_ns": 482307496063000,
+      "thread_id": 53068,
+      "vk": 81
+    },
+    "poll_interval_ms": 250,
+    "started_monotonic_ns": 482310260749300,
+    "status_polls": [
+      {
+        "action_status": null,
+        "call_id": null,
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": null,
+        "is_error": true,
+        "operation_id": null,
+        "operation_invoked": false,
+        "returned_monotonic_ns": 482310261767400,
+        "started_monotonic_ns": 482310260754400,
+        "status": "unknown_call"
+      },
+      {
+        "action_status": "running",
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "29a6e1542b954b94aff667bd91848183",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 482310525965200,
+        "started_monotonic_ns": 482310519545500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "29a6e1542b954b94aff667bd91848183",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 482310786064400,
+        "started_monotonic_ns": 482310784727700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "29a6e1542b954b94aff667bd91848183",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 482311037805100,
+        "started_monotonic_ns": 482311036412500,
+        "status": null
+      }
+    ]
+  },
+  "independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "generation_after": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "generation_before": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "pid": 34996,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 482319458607500,
+    "started_monotonic_ns": 482319457861400,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 45614442,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 26776,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 31588
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 45614442,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 26776,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 31588
+      }
+    ],
+    "status": "observed"
+  },
+  "post_cancel_io_hold": {
+    "ended_monotonic_ns": 482315268636600,
+    "hook_trace_after_release": {
+      "callback_entry_ns": 482311254137200,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 482311254137200,
+          "callback_return_ns": 482315269313000,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 406259439,
+      "ready_ns": 482307496063000,
+      "thread_id": 53068,
+      "vk": 81
+    },
+    "hook_trace_before_release": {
+      "callback_entry_ns": 482311254137200,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 482311254137200,
+          "callback_return_ns": 482315269313000,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 406259439,
+      "ready_ns": 482307496063000,
+      "thread_id": 53068,
+      "vk": 81
+    },
+    "independent_readback_completed_before_release": false,
+    "initial_readback_completed_before_release": true,
+    "producer_liveness_samples": [
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482311258825800,
+        "status": "unknown",
+        "wait_result": 258
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482311496327800,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482311747155500,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482311995091100,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482312245895400,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482312494964300,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482312748728400,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482312999945600,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482313251200900,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482313502794500,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482313754701600,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482314004219200,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482314193074000,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482314446772800,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482314701363500,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482314958463500,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372646025352181,
+        "exit_code": 65536,
+        "pid": 39056,
+        "sampled_monotonic_ns": 482315208714800,
+        "status": "exited",
+        "wait_result": 0
+      }
+    ],
+    "started_monotonic_ns": 482311257332700,
+    "status_polls": [
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311258620100,
+        "started_monotonic_ns": 482311257341300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311322286700,
+        "started_monotonic_ns": 482311320632100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311386236000,
+        "started_monotonic_ns": 482311384311300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311449771700,
+        "started_monotonic_ns": 482311448004000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311496239200,
+        "started_monotonic_ns": 482311494631500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311559425200,
+        "started_monotonic_ns": 482311557978300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311622287700,
+        "started_monotonic_ns": 482311620623000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311684999100,
+        "started_monotonic_ns": 482311683419200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311747057000,
+        "started_monotonic_ns": 482311745417600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311809042800,
+        "started_monotonic_ns": 482311807423300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311870655500,
+        "started_monotonic_ns": 482311869003800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311932240000,
+        "started_monotonic_ns": 482311930678800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482311995002600,
+        "started_monotonic_ns": 482311993490600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312059462400,
+        "started_monotonic_ns": 482312056291800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312122311300,
+        "started_monotonic_ns": 482312119242100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312184284800,
+        "started_monotonic_ns": 482312182288000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312245809600,
+        "started_monotonic_ns": 482312243959100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312308453700,
+        "started_monotonic_ns": 482312306980800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312370134800,
+        "started_monotonic_ns": 482312368595700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312433224000,
+        "started_monotonic_ns": 482312431655100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312494881600,
+        "started_monotonic_ns": 482312493393900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312557205100,
+        "started_monotonic_ns": 482312555754200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312622632500,
+        "started_monotonic_ns": 482312619015200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312686187400,
+        "started_monotonic_ns": 482312681186900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312748522500,
+        "started_monotonic_ns": 482312743639000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312811384400,
+        "started_monotonic_ns": 482312807076700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312873512500,
+        "started_monotonic_ns": 482312869907200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312938062100,
+        "started_monotonic_ns": 482312933186900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482312999765900,
+        "started_monotonic_ns": 482312995310600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313060516900,
+        "started_monotonic_ns": 482313057723300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313126017000,
+        "started_monotonic_ns": 482313121135900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313186008800,
+        "started_monotonic_ns": 482313184062400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313251017700,
+        "started_monotonic_ns": 482313246883900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313313591900,
+        "started_monotonic_ns": 482313309468700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313376039500,
+        "started_monotonic_ns": 482313371928300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313438749300,
+        "started_monotonic_ns": 482313434914100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313502619500,
+        "started_monotonic_ns": 482313497643200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313566207600,
+        "started_monotonic_ns": 482313560789600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313627666500,
+        "started_monotonic_ns": 482313623994000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313689489900,
+        "started_monotonic_ns": 482313686909400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313754426100,
+        "started_monotonic_ns": 482313749109100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313816797500,
+        "started_monotonic_ns": 482313811582500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313877623400,
+        "started_monotonic_ns": 482313874697300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482313942148300,
+        "started_monotonic_ns": 482313938501900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314003909900,
+        "started_monotonic_ns": 482314000850300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314069072600,
+        "started_monotonic_ns": 482314063248300,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314130426200,
+        "started_monotonic_ns": 482314126335100,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314192911300,
+        "started_monotonic_ns": 482314189724800,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314256392000,
+        "started_monotonic_ns": 482314253963900,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314321934800,
+        "started_monotonic_ns": 482314318154000,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314387383900,
+        "started_monotonic_ns": 482314382235300,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314446690100,
+        "started_monotonic_ns": 482314445184600,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314511305300,
+        "started_monotonic_ns": 482314509737500,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314575191200,
+        "started_monotonic_ns": 482314573058500,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314638605300,
+        "started_monotonic_ns": 482314636892200,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314701277400,
+        "started_monotonic_ns": 482314699678400,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314766584000,
+        "started_monotonic_ns": 482314762837500,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314832800200,
+        "started_monotonic_ns": 482314827016600,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314890918900,
+        "started_monotonic_ns": 482314889443000,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482314958246200,
+        "started_monotonic_ns": 482314953281100,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482315018797300,
+        "started_monotonic_ns": 482315017027900,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482315083496700,
+        "started_monotonic_ns": 482315079741200,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482315145762300,
+        "started_monotonic_ns": 482315142401000,
+        "status": null
+      },
+      {
+        "action_status": "unknown",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 482315208584300,
+        "started_monotonic_ns": 482315205580700,
+        "status": null
+      }
+    ],
+    "target_hold_ms": 4000
+  },
+  "pre_cancel_status_readback": {
+    "action": {
+      "metadata": {
+        "program_id": "supervised-standard-cancel-effect-r20",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "29a6e1542b954b94aff667bd91848183",
+      "result": null,
+      "status": "running",
+      "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+    },
+    "call_id": "c694094b3e604191baecdcf1ac98067c",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 482400203000000,
+        "lease_id": "supervised-standard-cancel-r20"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "text",
+          "text": "SUPERVISED-MCP-OK-20261024-R20"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "supervised-standard-cancel-effect-r20",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "previous_foreground_hwnd": 393882,
+  "probe_pid": 41976,
+  "probe_status": "completed_with_independent_effect",
+  "producer_exit_witness": {
+    "creation_time_100ns": 134372646025352181,
+    "observed_monotonic_ns": 482315269775600,
+    "pid": 39056,
+    "status": "exited",
+    "wait_started_monotonic_ns": 482315269024600
+  },
+  "producer_identity_from_cancel": {
+    "creation_time_100ns": 134372646025352181,
+    "pid": 39056
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 482400203000000,
+      "lease_id": "supervised-standard-cancel-r20"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R20"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-cancel-effect-r20",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_cancel": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"c694094b3e604191baecdcf1ac98067c\", \"operation_id\": \"ee3dc742a66c4d5e846590e9b963d8dd\", \"cancellation\": {\"operation_id\": \"ee3dc742a66c4d5e846590e9b963d8dd\", \"action_operation_id\": \"29a6e1542b954b94aff667bd91848183\", \"target_generation\": \"87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764\", \"status\": \"pending\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"operation_id\": \"29a6e1542b954b94aff667bd91848183\", \"target_generation\": \"87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764\", \"deadline_ns\": 482400203000000, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:Q\", \"key:fixture:S\", \"unicode:002D\", \"unicode:0030\", \"unicode:0031\", \"unicode:0032\", \"unicode:0034\", \"unicode:0036\", \"unicode:0043\", \"unicode:0044\", \"unicode:0045\", \"unicode:0049\", \"unicode:004B\", \"unicode:004D\", \"unicode:004F\", \"unicode:0050\", \"unicode:0052\", \"unicode:0053\", \"unicode:0055\", \"unicode:0056\"], \"status\": \"pending\", \"producer_identity\": {\"pid\": 39056, \"creation_time_100ns\": 134372646025352181}, \"producer_exit_code\": null, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": 482314234000000, \"recovery_id\": null, \"release_confirmed\": false, \"completion_release_receipt\": null, \"completion_readback\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"cancel_pending\"}, \"owner_phase\": \"cancel_pending\"}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"operation_invoked\": false, \"input_dispatched\": false, \"scope\": \"supervised_win32\"}",
+        "type": "text"
+      }
+    ],
+    "elapsed_ms": 1.463,
+    "is_error": false,
+    "response": {
+      "call_id": "c694094b3e604191baecdcf1ac98067c",
+      "cancellation": {
+        "action_operation_id": "29a6e1542b954b94aff667bd91848183",
+        "operation_id": "ee3dc742a66c4d5e846590e9b963d8dd",
+        "owner_phase": "cancel_pending",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 482314234000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 482400203000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0031",
+            "unicode:0032",
+            "unicode:0034",
+            "unicode:0036",
+            "unicode:0043",
+            "unicode:0044",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004B",
+            "unicode:004D",
+            "unicode:004F",
+            "unicode:0050",
+            "unicode:0052",
+            "unicode:0053",
+            "unicode:0055",
+            "unicode:0056"
+          ],
+          "operation_id": "29a6e1542b954b94aff667bd91848183",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372646025352181,
+            "pid": 39056
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "pending",
+        "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+        "task_success": null
+      },
+      "input_dispatched": false,
+      "operation_id": "ee3dc742a66c4d5e846590e9b963d8dd",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 482311257311400,
+    "started_monotonic_ns": 482311255848400
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "response": {
+      "cancellation_operation_id": null,
+      "cleanup_status": "UNKNOWN",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "status": "busy",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 482323464836100,
+    "started_monotonic_ns": 482323461039700
+  },
+  "public_close_attempts": [
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"unresolved_operation_id\": \"29a6e1542b954b94aff667bd91848183\", \"session\": {\"session_id\": \"09ee7d6c0c8040a3a859c84edc2f5eb9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": [\"c694094b3e604191baecdcf1ac98067c\"]}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r20\\\\run\\\\calls\\\\4cd81206d931497e999c0793d6652c41\", \"call_id\": \"4cd81206d931497e999c0793d6652c41\"}",
+          "type": "text"
+        }
+      ],
+      "is_error": false,
+      "response": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\4cd81206d931497e999c0793d6652c41",
+        "call_id": "4cd81206d931497e999c0793d6652c41",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": [
+            "c694094b3e604191baecdcf1ac98067c"
+          ]
+        },
+        "status": "busy",
+        "task_success": null,
+        "unresolved_operation_id": "29a6e1542b954b94aff667bd91848183"
+      },
+      "returned_monotonic_ns": 482319482850800,
+      "started_monotonic_ns": 482319478163700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482319587309200,
+      "started_monotonic_ns": 482319584044700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482319698282200,
+      "started_monotonic_ns": 482319695557200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482319809388500,
+      "started_monotonic_ns": 482319805784500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482319919876400,
+      "started_monotonic_ns": 482319916848600
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320029648400,
+      "started_monotonic_ns": 482320028347100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320143158400,
+      "started_monotonic_ns": 482320139842000
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320251989000,
+      "started_monotonic_ns": 482320248796500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320360460500,
+      "started_monotonic_ns": 482320358672100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320472177400,
+      "started_monotonic_ns": 482320468588900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320583720000,
+      "started_monotonic_ns": 482320579440800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320690552400,
+      "started_monotonic_ns": 482320689222400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320806218100,
+      "started_monotonic_ns": 482320801625700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482320914942500,
+      "started_monotonic_ns": 482320913033500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321023442900,
+      "started_monotonic_ns": 482321022042400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321132875900,
+      "started_monotonic_ns": 482321131451400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321243760500,
+      "started_monotonic_ns": 482321242336200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321354431300,
+      "started_monotonic_ns": 482321352117300
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321464946000,
+      "started_monotonic_ns": 482321462556200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321576496100,
+      "started_monotonic_ns": 482321572946100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321685574300,
+      "started_monotonic_ns": 482321684226500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321799245900,
+      "started_monotonic_ns": 482321796164000
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482321910379200,
+      "started_monotonic_ns": 482321907310700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322022962000,
+      "started_monotonic_ns": 482322018713300
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322133302900,
+      "started_monotonic_ns": 482322130381600
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322243696600,
+      "started_monotonic_ns": 482322240290100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322354437000,
+      "started_monotonic_ns": 482322351254600
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322464955000,
+      "started_monotonic_ns": 482322461044200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322576283500,
+      "started_monotonic_ns": 482322571976700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322684223000,
+      "started_monotonic_ns": 482322682587900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322797019000,
+      "started_monotonic_ns": 482322792802100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482322907491300,
+      "started_monotonic_ns": 482322904378400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482323019516500,
+      "started_monotonic_ns": 482323015096400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482323129781900,
+      "started_monotonic_ns": 482323126933600
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482323243170200,
+      "started_monotonic_ns": 482323238863800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482323354302500,
+      "started_monotonic_ns": 482323349978000
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482323464836100,
+      "started_monotonic_ns": 482323461039700
+    }
+  ],
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"c694094b3e604191baecdcf1ac98067c\", \"call\": {\"call_id\": \"c694094b3e604191baecdcf1ac98067c\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"supervised-standard-cancel-effect-r20\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"fixture\": \"87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764\"}}, \"authority\": {\"lease_id\": \"supervised-standard-cancel-r20\", \"expires_at_ns\": 482400203000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 70, \"y\": 70}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"op\": \"text\", \"text\": \"SUPERVISED-MCP-OK-20261024-R20\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"keys\": [\"Q\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 482400203000000,
+              "lease_id": "supervised-standard-cancel-r20"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "SUPERVISED-MCP-OK-20261024-R20"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r20",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "c694094b3e604191baecdcf1ac98067c",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "response_envelope": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 482400203000000,
+              "lease_id": "supervised-standard-cancel-r20"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "SUPERVISED-MCP-OK-20261024-R20"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r20",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "c694094b3e604191baecdcf1ac98067c",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 482310260726800,
+    "started_monotonic_ns": 482310259546900,
+    "wait_for_result_ms": 0
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"89036b0a6869d8f8cbe18ad8f5b1d9e4d0699e3d5efb795adb21db36734f19e8\", \"bytes\": 1455, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"c4a47abcc51e475796d4e4735f78d88e\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 45614442, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 482310218000000, \"capture_ended_ns\": 482310218000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r20\\\\run\\\\calls\\\\0b79d23ef9f94b478d1c75d2436de004\\\\images\\\\e6105cc892134a57868f16081fe729d5.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 482310218000000, \"converted\": 482310218000000, \"encoded\": 482310234000000, \"written\": 482310234000000}}}, \"target_generation\": \"87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"09ee7d6c0c8040a3a859c84edc2f5eb9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"c4a47abcc51e475796d4e4735f78d88e\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 45614442, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 482310218000000, \"capture_ended_ns\": 482310218000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r20\\\\run\\\\calls\\\\0b79d23ef9f94b478d1c75d2436de004\\\\images\\\\e6105cc892134a57868f16081fe729d5.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 482310218000000, \"converted\": 482310218000000, \"encoded\": 482310234000000, \"written\": 482310234000000}}}, \"target_generation\": \"87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"09ee7d6c0c8040a3a859c84edc2f5eb9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 482310218000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r20\\\\run\\\\calls\\\\0b79d23ef9f94b478d1c75d2436de004\\\\images\\\\e6105cc892134a57868f16081fe729d5.png\", \"relative_path\": \"images\\\\e6105cc892134a57868f16081fe729d5.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"c4a47abcc51e475796d4e4735f78d88e\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 45614442, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 482310218000000, \"capture_ended_ns\": 482310218000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"09ee7d6c0c8040a3a859c84edc2f5eb9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r20\\\\run\\\\calls\\\\0b79d23ef9f94b478d1c75d2436de004\", \"call_id\": \"0b79d23ef9f94b478d1c75d2436de004\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\0b79d23ef9f94b478d1c75d2436de004\\images\\e6105cc892134a57868f16081fe729d5.png",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 482310218000000,
+            "encoded": 482310234000000,
+            "started": 482310218000000,
+            "written": 482310234000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 482310218000000,
+        "capture_started_ns": 482310218000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 45614442,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "c4a47abcc51e475796d4e4735f78d88e",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\0b79d23ef9f94b478d1c75d2436de004",
+      "call_id": "0b79d23ef9f94b478d1c75d2436de004",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 482310218000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "c4a47abcc51e475796d4e4735f78d88e",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\0b79d23ef9f94b478d1c75d2436de004\\images\\e6105cc892134a57868f16081fe729d5.png",
+        "recorded_capture": {
+          "capture_ended_ns": 482310218000000,
+          "capture_started_ns": 482310218000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 45614442,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\e6105cc892134a57868f16081fe729d5.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\0b79d23ef9f94b478d1c75d2436de004\\images\\e6105cc892134a57868f16081fe729d5.png",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 482310218000000,
+                "encoded": 482310234000000,
+                "started": 482310218000000,
+                "written": 482310234000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 482310218000000,
+            "capture_started_ns": 482310218000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 45614442,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "c4a47abcc51e475796d4e4735f78d88e",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1455,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r20\\run\\calls\\0b79d23ef9f94b478d1c75d2436de004\\images\\e6105cc892134a57868f16081fe729d5.png",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 482310218000000,
+                  "encoded": 482310234000000,
+                  "started": 482310218000000,
+                  "written": 482310234000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 482310218000000,
+              "capture_started_ns": 482310218000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 45614442,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "c4a47abcc51e475796d4e4735f78d88e",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "89036b0a6869d8f8cbe18ad8f5b1d9e4d0699e3d5efb795adb21db36734f19e8"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 482310258098100,
+    "started_monotonic_ns": 482310238376900
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 8, \"expanded_operation_count\": 8, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 8,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 8,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 482310259533100,
+    "started_monotonic_ns": 482310258141500
+  },
+  "result_readbacks": [
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-effect-r20",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "29a6e1542b954b94aff667bd91848183",
+          "result": {
+            "effect_status": "unknown",
+            "input_dispatched": null,
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "status": "unknown",
+            "task_success": null
+          },
+          "status": "unknown",
+          "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+        },
+        "call_id": "c694094b3e604191baecdcf1ac98067c",
+        "cancellation": {
+          "action_operation_id": "29a6e1542b954b94aff667bd91848183",
+          "operation_id": "ee3dc742a66c4d5e846590e9b963d8dd",
+          "owner_phase": "unknown",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 482314234000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 482400203000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0031",
+              "unicode:0032",
+              "unicode:0034",
+              "unicode:0036",
+              "unicode:0043",
+              "unicode:0044",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004B",
+              "unicode:004D",
+              "unicode:004F",
+              "unicode:0050",
+              "unicode:0052",
+              "unicode:0053",
+              "unicode:0055",
+              "unicode:0056"
+            ],
+            "operation_id": "29a6e1542b954b94aff667bd91848183",
+            "phase": "unknown",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372646025352181,
+              "pid": 39056
+            },
+            "recovery_id": "6ca6203aec7e416395286aa9fca08c9a",
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "status": "unknown",
+            "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+            "task_success": null,
+            "uncertainty": "recovery_process_exceeded_execution_window"
+          },
+          "status": "unknown",
+          "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 482400203000000,
+            "lease_id": "supervised-standard-cancel-r20"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "op": "text",
+              "text": "SUPERVISED-MCP-OK-20261024-R20"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-effect-r20",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 482315272928800,
+      "started_monotonic_ns": 482315270161100
+    }
+  ],
+  "retained_report": {
+    "call_id": "c694094b3e604191baecdcf1ac98067c",
+    "compilation": null,
+    "input_dispatched": null,
+    "normalization": null,
+    "operation_id": "29a6e1542b954b94aff667bd91848183",
+    "operation_invoked": true,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": null,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "status": "unknown",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "09ee7d6c0c8040a3a859c84edc2f5eb9",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": [
+        "c694094b3e604191baecdcf1ac98067c"
+      ]
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "metadata": {
+          "program_id": "supervised-standard-cancel-effect-r20",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "29a6e1542b954b94aff667bd91848183",
+        "result": {
+          "effect_status": "unknown",
+          "input_dispatched": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "unknown",
+          "task_success": null
+        },
+        "status": "unknown",
+        "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+      },
+      "call_id": "c694094b3e604191baecdcf1ac98067c",
+      "cancellation": {
+        "action_operation_id": "29a6e1542b954b94aff667bd91848183",
+        "operation_id": "ee3dc742a66c4d5e846590e9b963d8dd",
+        "owner_phase": "unknown",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 482314234000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 482400203000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0031",
+            "unicode:0032",
+            "unicode:0034",
+            "unicode:0036",
+            "unicode:0043",
+            "unicode:0044",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004B",
+            "unicode:004D",
+            "unicode:004F",
+            "unicode:0050",
+            "unicode:0052",
+            "unicode:0053",
+            "unicode:0055",
+            "unicode:0056"
+          ],
+          "operation_id": "29a6e1542b954b94aff667bd91848183",
+          "phase": "unknown",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372646025352181,
+            "pid": 39056
+          },
+          "recovery_id": "6ca6203aec7e416395286aa9fca08c9a",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "unknown",
+          "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "task_success": null,
+          "uncertainty": "recovery_process_exceeded_execution_window"
+        },
+        "status": "unknown",
+        "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+        "task_success": null
+      },
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 482400203000000,
+          "lease_id": "supervised-standard-cancel-r20"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R20"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-effect-r20",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+    "task_success": null
+  },
+  "session_close_report": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "busy",
+    "task_success": null,
+    "unresolved_operation_id": "29a6e1542b954b94aff667bd91848183"
+  },
+  "session_mode": "supervised-win32",
+  "source_commit": "18541e1752cc26dcae45591a50f81697dbf853dd",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-23T21:29:59.388661+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}

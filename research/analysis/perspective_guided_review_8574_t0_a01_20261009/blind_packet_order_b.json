@@ -1,0 +1,82 @@
+[
+  {
+    "case_id": "Q16",
+    "source_contract": "For label L-7, set the value to Ready. After reopening the label list, L-7 must still be Ready and label L-8 must be unchanged.",
+    "proposed_verification_contract": "1. After reopening the label list, L-7 is Ready.\n2. L-8 equals its pre-change value."
+  },
+  {
+    "case_id": "Q15",
+    "source_contract": "Enable billing notifications for project P-31. In the dashboard, P-31 notifications must show as enabled after saving.",
+    "proposed_verification_contract": "Confirm the dashboard marks notifications for P-31 as on after the save."
+  },
+  {
+    "case_id": "Q14",
+    "source_contract": "Make the shared queue state final and preserve existing work. The contract does not define which queue item is shared or what state counts as final.",
+    "proposed_verification_contract": "Select the first visible queue item, set its state to Done, and verify Done is shown."
+  },
+  {
+    "case_id": "Q13",
+    "source_contract": "For job J-08, set Status to Complete, preserve its assigned Owner, and add one audit entry recording the status change.",
+    "proposed_verification_contract": "Verify J-08 shows Status=Complete."
+  },
+  {
+    "case_id": "Q12",
+    "source_contract": "For endpoint E-2, set Enabled to false. After closing and reopening the endpoint settings, E-2 must remain disabled.",
+    "proposed_verification_contract": "Verify E-2 is disabled in the current settings view."
+  },
+  {
+    "case_id": "Q11",
+    "source_contract": "For record R-22, set Status to Approved and Owner to Lee. In both compact and detail views, the same record ID R-22 must show both values after reopening. Every other record must be unchanged.",
+    "proposed_verification_contract": "1. In the detail view after reopening, R-22 has Status=Approved.\n2. In the compact view after reopening, a record has Owner=Lee.\n3. All record IDs are still present."
+  },
+  {
+    "case_id": "Q10",
+    "source_contract": "For report R-18, set review state to Validated. If the independent validation source cannot be reached, return UNKNOWN and do not claim either success or failure.",
+    "proposed_verification_contract": "Read the review state from the independent source. If the source is unavailable, return FAIL; otherwise PASS only when the state is Validated."
+  },
+  {
+    "case_id": "Q09",
+    "source_contract": "Move the selected task from Inbox to Later. At the time of the request there are three highlighted tasks, and the request gives no rule for choosing among them.",
+    "proposed_verification_contract": "Verify the first highlighted task appears in Later and no longer appears in Inbox."
+  },
+  {
+    "case_id": "Q08",
+    "source_contract": "For shortcut profile S-4, add Ctrl+K for Search. After relaunch, that binding must remain. No existing shortcut may be changed.",
+    "proposed_verification_contract": "After relaunch, S-4 maps Ctrl+K to Search."
+  },
+  {
+    "case_id": "Q07",
+    "source_contract": "Rename collection C-8 to Archive. After reopening, the same collection C-8 must retain that name, and peer collection C-9 must be unchanged.",
+    "proposed_verification_contract": "After relaunching the collections page, C-8 is titled Archive and C-9 matches its prior title."
+  },
+  {
+    "case_id": "Q06",
+    "source_contract": "For report R-18, release may be submitted only after the independent validation source verifies state Validated. If that source cannot be reached, return UNKNOWN and do not submit the release.",
+    "proposed_verification_contract": "Read the review state from the independent source. If the source is unavailable, return FAIL; otherwise PASS only when the state is Validated."
+  },
+  {
+    "case_id": "Q05",
+    "source_contract": "For project P-22, change timeout from 30 to 45 seconds. After reopening project settings, P-22 must show 45 seconds. Every other setting must remain unchanged.",
+    "proposed_verification_contract": "1. After reopening, P-22 timeout is 45 seconds.\n2. Every other P-22 setting matches its prior value."
+  },
+  {
+    "case_id": "Q04",
+    "source_contract": "For document D-41, change Status to Approved. After closing and reopening the workspace, D-41 must still be Approved. Every other document must remain unchanged.",
+    "proposed_verification_contract": "1. In the current view, D-41 has Status=Approved.\n2. After reopening, a document has Status=Approved.\n3. The total document count is unchanged."
+  },
+  {
+    "case_id": "Q03",
+    "source_contract": "For customer C-104, change the contact email to kai@example.test. No other customer may be edited.",
+    "proposed_verification_contract": "Verify customer C-140 has contact email kai@example.test."
+  },
+  {
+    "case_id": "Q02",
+    "source_contract": "Set the Preferences theme to Dark. After closing and reopening Preferences, Theme must still be Dark. Every other preference must remain unchanged.",
+    "proposed_verification_contract": "1. After reopening Preferences, Theme is Dark.\n2. Every other preference equals its pre-change value."
+  },
+  {
+    "case_id": "Q01",
+    "source_contract": "Change the profile display name to Kai. No request was made about payment or billing settings.",
+    "proposed_verification_contract": "Verify the display name is Kai and the saved payment card remains unchanged."
+  }
+]

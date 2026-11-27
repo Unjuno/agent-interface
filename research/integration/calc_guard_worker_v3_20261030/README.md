@@ -1,0 +1,7 @@
+# Calc save guard observation-worker prototype
+
+Successor to `research/integration/calc_guard_composition_v2_20261030`. The earlier prototype's guard calls the owner binding query while already running on the observation worker. A Fake X regression preserves the resulting nested-worker refusal with no input. The successor uses the supplied observation and frozen approved cell pixels in its guard callback, avoiding that nested query; the bridge continues its own association, focus, lease and target checks.
+
+The offline test uses the actual NativeHandleBridge and separate observation-worker thread with Fake X. It covers successful input, changed cell after Ctrl down, cancellation while a callback is blocked, and expired guard. In the changed-cell and cancellation held-key scenarios the observed fake keymap is neutral and the retained dispatch receipt reports verified release. Additional fixtures cover compiled and ordinary paths, mismatched source and OCR unknown/wrong conditions. Both normal and optimized suites recorded 43 tests.
+
+This is a research prototype, not a public MCP profile or a live Calc result. OCR evidence and the X server are simulated, and the worker test exercises the composition guard callback through an actual native bridge rather than a complete Calc graph. Native close, independent saved effect, real OS release, recovery, model usage and performance remain unproved. Command records replace local mount paths with placeholders.

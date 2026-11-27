@@ -1,0 +1,168 @@
+{
+  "action_status": "pending",
+  "blocked_owner_entered": true,
+  "cancel_operation_id": "70e320ca0582487eb5b64a5cfee0465f",
+  "cancel_return_elapsed_ms": 312.0,
+  "cancel_status": "pending",
+  "cancel_worker_entered": true,
+  "final_call_record": {
+    "call_directory": "D:\\CodexData\\Temp\\cancel-shutdown-probe-jsbfb5ak\\feee90b504d54030835edf49a54ad472",
+    "call_id": "feee90b504d54030835edf49a54ad472",
+    "cancellation": {
+      "admitted_monotonic_ns": 289568609000000,
+      "caller_response_deadline_monotonic_ns": 289568909000000,
+      "completed_monotonic_ns": 289574515000000,
+      "operation_id": "70e320ca0582487eb5b64a5cfee0465f",
+      "owner_generation": {
+        "binding_revision": 0,
+        "child_pid": 48260,
+        "session_id": "ebb489c67fde4ff590dbffde00f9ffd7",
+        "x_resource_base": 18874368
+      },
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result": {
+        "call_id": "feee90b504d54030835edf49a54ad472",
+        "cleanup_status": "UNKNOWN",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "cancel_unconfirmed",
+        "task_success": null
+      },
+      "status": "completed",
+      "task_success": null
+    },
+    "cleanup_status": "UNKNOWN",
+    "effect_status": "unknown",
+    "error": "EOFError()",
+    "late_server_request_possible": true,
+    "operation": "guarded_input",
+    "operation_invoked": false,
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 289573968000000,
+      "pid": 48260,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "retained_call": {
+      "arguments": {
+        "alias": "field",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          6,
+          6
+        ],
+        "tail": [
+          {
+            "keys": [
+              "CTRL",
+              "a"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "backend_attempted": true,
+      "call_id": "feee90b504d54030835edf49a54ad472",
+      "cancellation": {
+        "admitted_monotonic_ns": 289568609000000,
+        "caller_response_deadline_monotonic_ns": 289568909000000,
+        "completed_monotonic_ns": 289574515000000,
+        "operation_id": "70e320ca0582487eb5b64a5cfee0465f",
+        "owner_generation": {
+          "binding_revision": 0,
+          "child_pid": 48260,
+          "session_id": "ebb489c67fde4ff590dbffde00f9ffd7",
+          "x_resource_base": 18874368
+        },
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "call_id": "feee90b504d54030835edf49a54ad472",
+          "cleanup_status": "UNKNOWN",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "cancel_unconfirmed",
+          "task_success": null
+        },
+        "status": "completed",
+        "task_success": null
+      },
+      "operation": "guarded_input",
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "state": "finished"
+    },
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:0a368185c0d340c0aff71a8e4e1f4900",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 1,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 289573968000000,
+        "pid": 48260,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 48260,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "ebb489c67fde4ff590dbffde00f9ffd7",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": false
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": false
+    },
+    "status": "runtime_failed",
+    "task_success": null
+  },
+  "initial_blocked_input_state": [
+    1
+  ],
+  "owner_close_returned": true,
+  "owner_pid_after_shutdown": 48260,
+  "owner_pid_alive_after_shutdown": true,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9",
+  "shutdown_done_after_cancel_release": true,
+  "shutdown_done_while_cancel_held": false,
+  "shutdown_elapsed_until_observation_ms": 5594.0
+}

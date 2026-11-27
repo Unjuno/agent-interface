@@ -1,0 +1,52 @@
+{
+  "attempt_id": "win32-screen-calculator-task-20261024-r17-c48e9d7e",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "baseline_display": "1043",
+  "expected_display": "1044",
+  "frame": "screen_physical_px",
+  "frozen_utc": "2026-10-24T08:41:01.404172+00:00",
+  "image_sha256": "5c0c3c1d8e43e41818e8ad7ba9f7a9c21a98c46fdaaec46e4aa284fdbf386de8",
+  "observation_ids": [
+    "e174f72578334b7e981e75a6edfc0ac1"
+  ],
+  "program": {
+    "ops": [
+      {
+        "op": "focus",
+        "target": "calculator"
+      },
+      {
+        "op": "text",
+        "text": "+1="
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "region": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "runner_sha256": "b9b873aeee86814e28659e971a2ac3beb960c7fa1dcf898cd8e944a78c4dac5c",
+  "schema": "win32-screen-calculator-r17-target-v1",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "stop_rule": "One dispatch, no replay; await exact-call task verifier once; if pending one exact-call cancel and read-only poll at most 4s.",
+  "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b"
+}

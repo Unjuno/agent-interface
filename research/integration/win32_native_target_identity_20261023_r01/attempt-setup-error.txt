@@ -1,0 +1,10 @@
+Attempt 1 stopped before importing the backend or calling any Win32 API:
+
+Traceback (most recent call last):
+  File "probe.py", line 20, in <module>
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime'
+
+Classification: DRIVER_SETUP_ERROR, before HWND creation. The probe was fixed
+to add its repository root to sys.path. This file preserves the failed setup
+output; it is not a live native result.

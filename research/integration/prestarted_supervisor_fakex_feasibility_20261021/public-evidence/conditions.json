@@ -1,0 +1,48 @@
+{
+  "schema": "agent-interface/prestarted-supervisor-fakex-feasibility-v1",
+  "classification": "construction-feasibility-probe; not a runtime qualification or formal WSLc allocation",
+  "question": "Can a caller return by one absolute cancellation deadline while worker process startup is delayed inside an already-ready supervisor, and can a Fake X state oracle independently reject a stale-generation or late KeyRelease?",
+  "runtime": "Windows host; Python multiprocessing spawn; loopback Fake X state server; no X server, Xlib, physical input, WSL, WSLc, Docker, or external model",
+  "arms": {
+    "synchronous-delayed-start": {
+      "trials": 3,
+      "launch_delay_ms": 700,
+      "caller_deadline_ms": 300,
+      "expected": "caller misses deadline; late worker refuses effect; input remains down and result is unknown"
+    },
+    "prestarted-supervisor-delayed-start": {
+      "trials": 3,
+      "supervisor_readiness_deadline_ms": 5000,
+      "launch_delay_ms": 700,
+      "caller_deadline_ms": 300,
+      "response_slack_ms": 150,
+      "expected": "caller returns unknown within deadline plus slack; late worker refuses effect; input remains down"
+    },
+    "prestarted-supervisor-fast-control": {
+      "trials": 3,
+      "supervisor_readiness_deadline_ms": 5000,
+      "launch_delay_ms": 20,
+      "caller_deadline_ms": 2000,
+      "expected": "Fake X accepts exactly one KeyRelease before deadline and independent state readback reports key up"
+    },
+    "prestarted-supervisor-stale-generation": {
+      "trials": 3,
+      "supervisor_readiness_deadline_ms": 5000,
+      "launch_delay_ms": 20,
+      "caller_deadline_ms": 2000,
+      "expected": "Fake X rejects old generation; key remains down; caller reports unknown"
+    }
+  },
+  "frozen_inputs": {
+    "initial_key_state": ["a"],
+    "action": "KeyRelease(a)",
+    "generation": "unique per trial; stale arm sends the preceding generation",
+    "deadline_clock": "time.monotonic_ns shared by parent and spawned children",
+    "launch_delay_injection": "sleep in the Process.start wrapper immediately before the real start call"
+  },
+  "decision": {
+    "pass": "all six delayed-start trials meet their arm-specific response/effect expectations; all three fast controls release and read back up; all three stale controls are rejected; every raw row is retained",
+    "fail": "any delayed prestarted call exceeds 450 ms, any KeyRelease is accepted after deadline or under stale generation, any fast control lacks independent key-up readback, or any trial receipt is missing",
+    "scope_limit": "A PASS demonstrates only the constructed control-flow property. It does not qualify production supervisor code, actual X11/XTEST, blocked server I/O, caller integration, input release guarantees, MAP01, or reliability."
+  }
+}

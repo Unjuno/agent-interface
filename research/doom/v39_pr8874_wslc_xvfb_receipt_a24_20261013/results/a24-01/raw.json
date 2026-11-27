@@ -1,0 +1,274 @@
+{
+  "analyzer": {
+    "ambiguous_admission_count": 0,
+    "decision": "PASS: direct receipt-linked release evidence available",
+    "hold_count": 1,
+    "holds": [
+      {
+        "admitted_ns": 34355000790,
+        "censor_width_ms": 0.411866,
+        "input_ack_ns": 34355102678,
+        "input_kind": "key",
+        "intent_token": "a24-backend-token",
+        "key": "w",
+        "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+        "release_call_returned_ns": 34355646239,
+        "release_call_started_ns": 34355336261,
+        "retained_lower_ms": 0.233583,
+        "retained_upper_ms": 0.645449,
+        "source_events": [
+          "input_admission",
+          "input_release_transition"
+        ]
+      }
+    ],
+    "invalid_release_count": 0,
+    "malformed_admission_count": 0,
+    "measurement_ready": true,
+    "schema": "map01-direct-retained-input-v2",
+    "unmatched_admission_count": 0
+  },
+  "client_events": [
+    {
+      "detail": 25,
+      "observed_ns": 34355259186,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "detail": 25,
+      "observed_ns": 34356086570,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "display": ":0",
+  "error": null,
+  "events": [
+    {
+      "admitted_ns": 34355000790,
+      "emit_ns": 34355147929,
+      "event": "input_admission",
+      "id": "a24-probe",
+      "input_ack_ns": 34355102678,
+      "intent_token": "a24-backend-token",
+      "key": "w",
+      "keycode": 25,
+      "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+      "step": 0,
+      "valid_until_ns": 44354893553
+    },
+    {
+      "admission_receipt": {
+        "admitted_ns": 34355000790,
+        "event": "input_admission",
+        "id": "a24-probe",
+        "input_ack_ns": 34355102678,
+        "intent_token": "a24-backend-token",
+        "key": "w",
+        "keycode": 25,
+        "operation": "down",
+        "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+        "step": 0,
+        "valid_until_ns": 44354893553
+      },
+      "admission_receipt_valid": true,
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "emit_ns": 34355958476,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "a24-probe",
+      "intent_token": "a24-backend-token",
+      "intent_token_matches_after_batch": true,
+      "key": "w",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 0,
+      "owner_explicit_keyup_failure": null,
+      "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 34355883656,
+      "owner_sample_after_started_ns": 34355750605,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a24-backend-token",
+        "key": "w",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+        "owner_keymap_sampled_ns": 34355600448,
+        "owner_keyrelease_started_ns": 34355455356,
+        "owner_sync_returned_ns": 34355546362,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "w"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 34355600448,
+            "keyrelease_error": null,
+            "keyrelease_started_ns": 34355455356,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_error": null,
+            "sync_returned_ns": 34355546362
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 44354893553
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 0,
+      "release_batch_identifier": "a24-probe",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 0,
+      "release_call_bracket_ns": 309978,
+      "release_call_returned_ns": 34355646239,
+      "release_call_started_ns": 34355336261,
+      "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+      "step": 0,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 44354893553
+    }
+  ],
+  "focus": 2097152,
+  "keycode": 25,
+  "keymap": {
+    "after_explicit_up": false,
+    "while_held": true
+  },
+  "owner_cleanup": {
+    "closed": true,
+    "records": [
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a24-backend-token",
+        "key": "w",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+        "owner_keymap_sampled_ns": 34355600448,
+        "owner_keyrelease_started_ns": 34355455356,
+        "owner_sync_returned_ns": 34355546362,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "w"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 34355600448,
+            "keyrelease_error": null,
+            "keyrelease_started_ns": 34355455356,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_error": null,
+            "sync_returned_ns": 34355546362
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 44354893553
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "a24-backend-token",
+        "key_release_attempts": {
+          "25": {
+            "attempts": [],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 44354893553,
+        "verified": true,
+        "verified_ns": 34356706676
+      }
+    ],
+    "stopped": true,
+    "thread_alive": false
+  },
+  "owner_records_before_close": [
+    {
+      "cancel_requested_after_sync": false,
+      "event": "owner_explicit_keyup",
+      "intent_token": "a24-backend-token",
+      "key": "w",
+      "key_state_source": "x11_query_keymap",
+      "keycode": 25,
+      "operation": "up",
+      "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+      "owner_keymap_sampled_ns": 34355600448,
+      "owner_keyrelease_started_ns": 34355455356,
+      "owner_sync_returned_ns": 34355546362,
+      "physical_verification_authoritative": false,
+      "release_batch_initial_up_count": 1,
+      "release_batch_key_order": [
+        "w"
+      ],
+      "server_key_down_after_keyup": false,
+      "server_keyup_attempt_count": 1,
+      "server_keyup_attempts": [
+        {
+          "attempt": 1,
+          "keymap_after_error": null,
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 34355600448,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 34355455356,
+          "server_key_down_after": false,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 34355546362
+        }
+      ],
+      "server_keyup_verified": true,
+      "server_sync_completed": true,
+      "valid_until_ns": 44354893553
+    }
+  ],
+  "schema": "map01-backend-xvfb-adapter-a24-v1",
+  "window": 2097152,
+  "xvfb_exit": 0,
+  "xvfb_stderr": "_XSERVTransmkdir: ERROR: euid != 0,directory /tmp/.X11-unix will not be created.\n"
+}

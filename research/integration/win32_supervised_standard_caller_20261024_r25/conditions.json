@@ -1,0 +1,143 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r25",
+  "caller": "one fresh runtime.cli_v1.mcp_server stdio process in supervised-win32 mode, with a 12,000 ms result wait",
+  "cleanup": "one interface_close; close only the exact owned fixture HWND/process; restore only the foreground window that preceded this run; preserve raw on every outcome",
+  "decision": {
+    "fail_or_unknown": "Preserve FAIL_OR_UNKNOWN for any stale/mismatched generation, refusal, timeout or pending response, missing release/effect report, non-closed public close, cleanup uncertainty, or any need to retry. Never replay the R24 input.",
+    "pass": "One new owned fixture and a new public supervised stdio session return a distinct generation; exactly one validated dispatch returns its terminal completed report within the 12-second wait; the report records verified all-up release; the independent fixture effect and exact events match; public close returns closed; fixture exit and foreground restore pass; task_success remains null."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "the user-authorized local Windows PC",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_files": {
+    "README.md": "e6cf6d539faec65c2f7b9bd508aa0a7461ee60f62b107e6eea7ea619ba9161cd",
+    "audit.py": "2fe2f2788640f2911c5cab2be127d90acc2e8366ef137d56b79d341716385e57",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "30f33b0f0ce68c834315fedf29634365b55b425012a99d4e88c1a584873f1175",
+    "probe.py": "7dec8a2986d659e352ad7c6d8e507ed93fd35312076a092d46c21686566a977f"
+  },
+  "hypothesis": "A 12-second public result wait lets one fresh supervised Win32 session return its terminal report and close after the R24-like ~8.9-second action, with independently verified effect and release.",
+  "nonclaims": [
+    "this is a new action after R24, not a retry or continuous transaction",
+    "runtime-integrated task_success",
+    "release under blocked Win32 I/O",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "predecessor": {
+    "action_status": "completed",
+    "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+    "followup_audit_path": "research/integration/win32_supervised_standard_caller_20261024_r24/audit_followup.json",
+    "followup_audit_sha256": "0676f6cbfb34f7813374a4d93c17b8b2311cc05685bcf61773bf71bedfced8f7",
+    "formal_outcome": "FAIL_OR_UNKNOWN",
+    "producer_exit_code": 0,
+    "public_close": "busy",
+    "public_response": "pending",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r24/raw.json",
+    "raw_sha256": "7b82856cb85a36f4fae5951a403e584756d9847e1ecaf4695db877f43dde6b87",
+    "release_confirmed": true,
+    "report_path": "research/integration/win32_supervised_standard_caller_20261024_r24/run/mcp-calls/9293864843a34415ae8f3ed5dec070ae/report.json",
+    "report_sha256": "85fca10628897fadd37a4455a946fb37e4c7a5f543ec1507051bf7b203059023",
+    "target_generation": "4dfde70c60ac2d706642aaad099984a6448999c3bbc78e39e259d97dfb4bb100"
+  },
+  "resource_boundary": "One new fixture process/window, one new supervised MCP session, one observation, one validation, at most one dispatch, one public close. No WSLc/Docker, external window, replay, retry, cancellation, fallback input, or registry change.",
+  "retry_policy": "One input-free preflight and one public dispatch at most. Any timeout/UNKNOWN is retained and never retried.",
+  "schema": "win32-supervised-standard-caller-r25-conditions-v1",
+  "source_commit": "6d67189d4a6d5051be0058344da5b48a4fd2793f",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 45,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "public_close": 5,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe and independently matched to the new fixture"
+    },
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "R25-12S-TERMINAL-REPORT-EFFECT"
+    },
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-r25-terminal-report-lease",
+    "observation_region": "the exact GetClientRect width and height of this new owned fixture",
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "R24-NEW-GEN-SESSION-EFFECT"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": "measured client height",
+        "op": "observe",
+        "w": "measured client width",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-r25-terminal-report-effect",
+    "task_effect_oracle": "independently read effect.json and exact fixture events.jsonl after public dispatch; require one click, exact UTF-16 character sequence, and one save",
+    "wait_for_result_ms": 12000
+  }
+}

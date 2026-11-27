@@ -1,0 +1,51 @@
+"""No candidate import; independently inspect retained bytes and custody rows."""
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'primary-presentation-final-r2-20261016'
+
+def check(rows):
+ if len(rows)!=4 or {(r['route'],r['fault']) for r in rows}!={(a,b) for a in ('guarded-local','direct-post') for b in ('presentation','partial-effect')}:raise ValueError('coverage')
+ for r in rows:
+  if r['effect']!=b'A' or r['savedEffect']!='A':raise ValueError('effect/resend')
+  tool='interface_guarded_input' if r['route']=='guarded-local' else 'interface_dispatch'
+  if [c['tool'] for c in r['calls']]!=[tool,'interface_close']:raise ValueError('host sends')
+  if not r['afterFailure']['stopped'] or r['afterFailure']['next_id']!=2 or r['afterFailure']['busy']:raise ValueError('stop boundary')
+  if 'exchange stopped' not in r.get('refused','') or r['afterRefusal']['next_id']!=2:raise ValueError('admission')
+  if r.get('closeError') or r['final']['next_id']!=3 or not r['final']['stopped'] or r['final']['busy']:raise ValueError('explicit close')
+  files=r['files']
+  if json.loads(files['request-1.json'])!=r['request'] or json.loads(files['request-2.json'])!={'id':2,'method':'call','args':['interface_close',{}]}:raise ValueError('request custody')
+  if json.loads(files['original-reply-2.json'])['result']['content'][0]['text']!='{"status":"closed"}':raise ValueError('close reply')
+  if r['fault']=='presentation':
+   meta=json.loads(json.loads(files['original-reply-1.json'])['result']['content'][0]['text'])
+   if meta['status']!='completed' or files['presentation-1.json']!='occupied' or r['afterFailure']['caller_state']['stopped'] is not None:raise ValueError('post-return custody')
+  elif 'original-reply-1.json' in files or 'presentation-1.json' in files or not r['afterFailure']['caller_state']['stopped']:raise ValueError('unknown reply custody')
+
+def read(mode):
+ rows=[]
+ for directory in sorted((OUT/mode/'evidence/exchange-effects').iterdir()):
+  r=json.loads((directory/'WITNESS.json').read_text());r['effect']=(directory/'effect.txt').read_bytes()
+  actual={p.name:p.read_bytes() for p in directory.iterdir() if p.name not in ('WITNESS.json','effect.txt')}
+  if {name:text.encode() for name,text in r['files'].items()}!=actual:raise ValueError('raw file join')
+  rows.append(r)
+ return rows
+
+rows=read('current');check(rows);rejected=[]
+for kind in ('repeat_effect','missing_stop','consume_refusal','missing_reply','failed_close','extra_send'):
+ bad=copy.deepcopy(rows);r=next(r for r in bad if r['fault']=='presentation')
+ if kind=='repeat_effect':r['effect']=b'AA'
+ elif kind=='missing_stop':r['afterFailure']['stopped']=None
+ elif kind=='consume_refusal':r['afterRefusal']['next_id']=3
+ elif kind=='missing_reply':r['files'].pop('original-reply-1.json')
+ elif kind=='failed_close':r['closeError']='failed'
+ else:r['calls'].append(r['calls'][0])
+ try:check(bad)
+ except (ValueError,KeyError) as exc:rejected.append(dict(kind=kind,reason=str(exc)))
+ else:raise ValueError('contradiction accepted')
+control=read('missing_exchange_stop')
+for row in control:
+ if row['fault']=='presentation' and (row['effect']!=b'AA' or len(row['calls'])!=2 or row['afterFailure']['stopped'] is not None):raise ValueError('directed control did not repeat effect')
+try:check(control)
+except (ValueError,KeyError):pass
+else:raise ValueError('control accepted')
+print(json.dumps(dict(current_cells=4,mutations=rejected,control_cells=4,
+ control_post_return_repeated_effects=sum(r['effect']==b'AA' for r in control)),indent=2))

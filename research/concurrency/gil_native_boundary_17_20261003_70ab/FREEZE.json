@@ -1,0 +1,41 @@
+{
+  "allocation": "17-GIL-NATIVE-BOUNDARY-C02-20261003-70ab",
+  "worker": "01a0ff52-70ab-7f10-82b3-e60375a032fb",
+  "utc": "2026-10-03T15:04:56.146894+00:00",
+  "predecessor": "7109 C01 HOLD; no reclassification or replay",
+  "difference": "new Linux container, custom C nanosleep helper internally timestamps boundaries; same native CLOCK_MONOTONIC timestamp helper for parent/child",
+  "image": "sha256:fef7d1263cba47f4d15d2cee01b4dee380d5f6270275d8ef2d85e6732bf941f5",
+  "base_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "helper_build_result_sha256": "bcb48cfae201cb682b32038b885a5e955caa71800c492f4c72cd8ccd94a4746f",
+  "hashes": {
+    "helper.c": "a752cfaa1fd9e2c53d879c2f4543c97ad461be36483626e904fe6e8d81361696",
+    "helper.so": "bd6258983751563c6ae12670a459893f3322e92b31bd7aeb33268c6b00a084d8",
+    "probe.py": "211a9f3b7fc793f7f9953e370868d39734cb5f72f11d0da09efd47cf4250d654",
+    "audit.py": "163e482791a1546fd9be8c17f5bc8983ea821e8145edf66aa07e97f73e011792"
+  },
+  "modes": [
+    "released",
+    "held",
+    "held",
+    "released"
+  ],
+  "wait_usec": 300000,
+  "nominal_send_delay_sec": 0.05,
+  "resources": {
+    "vm": "research-6501-async-01a0ff52-70ab",
+    "vm_id": "01M3ZNWN09NSCEPP83HXRBJH8R",
+    "cpus": 0.25,
+    "memory_bytes": 134217728,
+    "memory_swap_bytes": 134217728,
+    "pids": 32,
+    "network": "none",
+    "source": "read-only",
+    "marker": "/root/17-gil-native-boundary-c02-70ab"
+  },
+  "H": "held GIL delays dedicated Python safety closure beyond internally sampled end, unlike released GIL",
+  "T": "4 first child processes, external cancellation byte, owner closes dummy devnull FD",
+  "D": "require four exact rows/streams/zero exits/closed FD; native start<=send before<=send after<native end, received>=send before, close>=received, native duration>=300ms; both released close before native end and both held close after native end => PASS finite fixture, otherwise HOLD; invalid completeness => audit failure",
+  "C": "nominal send sleep not actual scheduling guarantee; actual send bracket is eligibility gate; PyDLL deliberate stress fixture",
+  "U": "four observations; not latency bound/reliability estimate; CPU scheduling/load; no GUI/model/input/physical neutralization",
+  "retry": "none; preserve first outcomes, no replacements"
+}

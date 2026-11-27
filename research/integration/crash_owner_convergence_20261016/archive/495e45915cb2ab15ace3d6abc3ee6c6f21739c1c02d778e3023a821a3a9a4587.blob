@@ -1,0 +1,4 @@
+command: cd /mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_action_validity_executor_acceptance_xvfb_a01_20261012/SOURCE && PYTHONDONTWRITEBYTECODE=1 python3 -B candidate.py --out ../results/A01 --display :134
+exit_code: 1
+stdout: {"arms": ["health_unchanged_acceptance"], "cleanup": {"xvfb_exit": 0}, "errors": ["RuntimeError: current action did not traverse validity, acceptance, and keyup"], "status": "STOP"}
+classification: STOP. The valid arm recorded VALID_CURRENT and INPUT_ADMITTED and actual Xvfb KeyPress/verified KeyRelease. However KeyPress preceded the synthetic accepted_ns, which reverses the production Executor ordering; the candidate also incorrectly checked for key-down after its explicit keyup. The low-health arm did not run. No rerun.

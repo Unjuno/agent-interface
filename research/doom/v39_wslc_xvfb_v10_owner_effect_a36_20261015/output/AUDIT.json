@@ -1,0 +1,397 @@
+{
+  "checks": [
+    {
+      "name": "frozen_input_manifest",
+      "observed": [
+        {
+          "actual": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+          "expected": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+          "pass": true,
+          "path": "input_owner_v10.py"
+        },
+        {
+          "actual": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+          "expected": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+          "pass": true,
+          "path": "map01_overlap_controller_v39.py"
+        },
+        {
+          "actual": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b",
+          "expected": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b",
+          "pass": true,
+          "path": "doom_controller_failure_cleanup_v1.py"
+        },
+        {
+          "actual": "67cb8516fce4eaf0b30fae2aa8c3917ebb3cfb1f85296fe32d13473002b2e2c0",
+          "expected": "67cb8516fce4eaf0b30fae2aa8c3917ebb3cfb1f85296fe32d13473002b2e2c0",
+          "pass": true,
+          "path": "app_probe.py"
+        },
+        {
+          "actual": "6c75fb9a8db297fd669929f2ece16e3e4558a0606d18e2a3d1deb8996e932da1",
+          "expected": "6c75fb9a8db297fd669929f2ece16e3e4558a0606d18e2a3d1deb8996e932da1",
+          "pass": true,
+          "path": "candidate.py"
+        },
+        {
+          "actual": "72ac74fbefaf141b15cf96dca3d7ace84c469ff16793a59f66e35de2d9e468ef",
+          "expected": "72ac74fbefaf141b15cf96dca3d7ace84c469ff16793a59f66e35de2d9e468ef",
+          "pass": true,
+          "path": "auditor.py"
+        },
+        {
+          "actual": "d9498aa0913d660ce7b951af6aa5b01cf6bfbca907c105ce5329c264501bc97e",
+          "expected": "d9498aa0913d660ce7b951af6aa5b01cf6bfbca907c105ce5329c264501bc97e",
+          "pass": true,
+          "path": "run-a36.sh"
+        },
+        {
+          "actual": "6486d72fb3c24061cd476646c540a075648f7778be041d2faebd602c781e2219",
+          "expected": "6486d72fb3c24061cd476646c540a075648f7778be041d2faebd602c781e2219",
+          "pass": true,
+          "path": "test_candidate_event_log.py"
+        },
+        {
+          "actual": "833b938122dbd237a5dc068139a1abccb8da6713457f59e463ab479981be11ce",
+          "expected": "833b938122dbd237a5dc068139a1abccb8da6713457f59e463ab479981be11ce",
+          "pass": true,
+          "path": "FREEZE.json"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "merged_main_source_identity",
+      "observed": {
+        "doom_controller_failure_cleanup_v1.py": true,
+        "input_owner_v10.py": true,
+        "map01_overlap_controller_v39.py": true
+      },
+      "pass": true
+    },
+    {
+      "name": "experiment_identity",
+      "observed": "MAP01-V39-WSLC-V10-APP-EFFECT-A36-20261015-01",
+      "pass": true
+    },
+    {
+      "name": "candidate_complete",
+      "observed": {
+        "candidate_complete": true,
+        "errors": [],
+        "status": "CANDIDATE_COMPLETE"
+      },
+      "pass": true
+    },
+    {
+      "name": "V10_admission_matches_dispatch",
+      "observed": {
+        "admission": {
+          "admitted_ns": 2707304951,
+          "event": "input_admission",
+          "input_ack_ns": 2707436725,
+          "key": "a",
+          "valid_until_ns": 3007184749
+        },
+        "dispatch": {
+          "deadline_ns": 3007184749,
+          "intent": "MAP01-V39-WSLC-V10-A36-20261015-01",
+          "key": "a",
+          "keycode": 38,
+          "operation": "down",
+          "owner_id": "fc7e5a90cfa74508b167f79a5f56a780",
+          "started_ns": 2707195506
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "separate_app_received_matching_keypress",
+      "observed": {
+        "counter_after": 1,
+        "counter_before": 0,
+        "effect_ns": 2707588117,
+        "event": "app_keypress_effect",
+        "keycode": 38,
+        "type": 2,
+        "window_id": 4194304
+      },
+      "pass": true
+    },
+    {
+      "name": "exactly_one_matching_press_and_release",
+      "observed": {
+        "keypress_effect_count": 1,
+        "keyrelease_count": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "app_task_effect_observed_independently",
+      "observed": {
+        "app_report": {
+          "counter_after": 1,
+          "counter_before": 0,
+          "effect_ns": 2707588117,
+          "event": "app_keypress_effect",
+          "keycode": 38,
+          "type": 2,
+          "window_id": 4194304
+        },
+        "task_effect": {
+          "after_keypress": 1,
+          "after_release": 1,
+          "effect_ns": 2707588117,
+          "independent_counter_after_keypress": 1,
+          "initial_counter": 0,
+          "response_latency_ns": 151392
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "bounded_application_feedback",
+      "observed": {
+        "bound_ns": 200000000,
+        "response_latency_ns": 151392
+      },
+      "pass": true
+    },
+    {
+      "name": "separate_app_received_matching_keyrelease",
+      "observed": {
+        "event": "app_keyrelease",
+        "keycode": 38,
+        "release_ns": 3007600100,
+        "type": 3,
+        "window_id": 4194304
+      },
+      "pass": true
+    },
+    {
+      "name": "app_terminal_task_state_preserved",
+      "observed": {
+        "counter": 1,
+        "event": "app_stopped",
+        "stopped_ns": 3008420964
+      },
+      "pass": true
+    },
+    {
+      "name": "separate_app_event_file_matches_raw",
+      "observed": {
+        "error": null,
+        "raw_rows": [
+          {
+            "counter_atom": 228,
+            "event": "app_ready",
+            "focus_id": 4194304,
+            "initial_counter": 0,
+            "keycode": 38,
+            "ready_ns": 2702676321,
+            "window_id": 4194304
+          },
+          {
+            "counter_after": 1,
+            "counter_before": 0,
+            "effect_ns": 2707588117,
+            "event": "app_keypress_effect",
+            "keycode": 38,
+            "type": 2,
+            "window_id": 4194304
+          },
+          {
+            "event": "app_keyrelease",
+            "keycode": 38,
+            "release_ns": 3007600100,
+            "type": 3,
+            "window_id": 4194304
+          },
+          {
+            "counter": 1,
+            "event": "app_stopped",
+            "stopped_ns": 3008420964
+          }
+        ],
+        "rows": [
+          {
+            "counter_atom": 228,
+            "event": "app_ready",
+            "focus_id": 4194304,
+            "initial_counter": 0,
+            "keycode": 38,
+            "ready_ns": 2702676321,
+            "window_id": 4194304
+          },
+          {
+            "counter_after": 1,
+            "counter_before": 0,
+            "effect_ns": 2707588117,
+            "event": "app_keypress_effect",
+            "keycode": 38,
+            "type": 2,
+            "window_id": 4194304
+          },
+          {
+            "event": "app_keyrelease",
+            "keycode": 38,
+            "release_ns": 3007600100,
+            "type": 3,
+            "window_id": 4194304
+          },
+          {
+            "counter": 1,
+            "event": "app_stopped",
+            "stopped_ns": 3008420964
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "app_stdout_and_stderr_retained",
+      "observed": {
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "text": ""
+        },
+        "stdout": {
+          "sha256": "8e3db63f0502051fc0c47c3fd8806f439b58c95f9002db4764448543a6648241",
+          "text": "Xlib.xauth: warning, no xauthority details available\n"
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "V10_release_is_verified_known_empty",
+      "observed": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "key_state_errors": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "expired",
+        "valid_until_ns": 3007184749,
+        "verified": true,
+        "verified_ns": 3007777060
+      },
+      "pass": true
+    },
+    {
+      "name": "bounded_expiry_recovery",
+      "observed": {
+        "bound_ns": 1000000000,
+        "overshoot_ns": 592311
+      },
+      "pass": true
+    },
+    {
+      "name": "app_release_arrived_within_recovery_bound",
+      "observed": {
+        "bound_ns": 1000000000,
+        "deadline_ns": 3007184749,
+        "release_ns": 3007600100
+      },
+      "pass": true
+    },
+    {
+      "name": "independent_X11_keymap_reports_up",
+      "observed": {
+        "key_up": true,
+        "keycode": 38,
+        "sampled_ns": 3008158116,
+        "source": "independent X11 connection query_keymap"
+      },
+      "pass": true
+    },
+    {
+      "name": "current_V39_predicate_accepts_V10_expiry_receipt",
+      "observed": {
+        "error": null,
+        "terminal": {
+          "event": "terminal",
+          "id": "a36-one-shot",
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "key_state_errors": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "expired",
+            "valid_until_ns": 3007184749,
+            "verified": true,
+            "verified_ns": 3007777060
+          },
+          "status": "expired"
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "merged_PR8771_predicate_accepts_V10_release",
+      "observed": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "key_state_errors": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "expired",
+        "valid_until_ns": 3007184749,
+        "verified": true,
+        "verified_ns": 3007777060
+      },
+      "pass": true
+    },
+    {
+      "name": "missing_known_empty_fields_are_rejected_by_both_predicates",
+      "observed": {
+        "key_state_errors": {
+          "cleanup_rejected": true,
+          "v39_rejected": true
+        },
+        "keys_unknown": {
+          "cleanup_rejected": true,
+          "v39_rejected": true
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "expiry_receipt_is_from_V10_owner_history",
+      "observed": {
+        "owner_record_count": 2,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "key_state_errors": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "expired",
+          "valid_until_ns": 3007184749,
+          "verified": true,
+          "verified_ns": 3007777060
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "owner_and_app_stopped_cleanly",
+      "observed": {
+        "app_exit": 0,
+        "owner_closed": true,
+        "owner_error": null,
+        "owner_stopped": true,
+        "owner_thread_alive": false,
+        "xvfb_exit": 0
+      },
+      "pass": true
+    }
+  ],
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A36-20261015-01",
+  "independent_audit": true,
+  "passed": 22,
+  "schema": "map01-v39-wslc-v10-owner-effect-audit-a36-v1",
+  "scope": "V10 X11 input-owner release evidence and separate synthetic app task effect; no Doom, model, Windows desktop, or physical input",
+  "status": "PASS",
+  "total": 22
+}

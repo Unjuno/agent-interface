@@ -1,0 +1,86 @@
+test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score. ... Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1935> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.103 seconds
+test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score. ... Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at /workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py:1935> wait_for=<Future pending cb=[Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.105 seconds
+ERROR
+
+======================================================================
+ERROR: test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 1547, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertEqual(observed['status'],'observed',observed)
+AssertionError: 'backend_unavailable' != 'observed'
+- backend_unavailable
++ observed
+ : {'status': 'backend_unavailable', 'error': 'RuntimeError(\'\\n        An attempt has been made to start a new process before the\\n        current process has finished its bootstrapping phase.\\n\\n        This probably means that you are not using fork to start your\\n        child processes and you have forgotten to use the proper idiom\\n        in the main module:\\n\\n            if __name__ == \\\'__main__\\\':\\n                freeze_support()\\n                ...\\n\\n        The "freeze_support()" line can be omitted if the program\\n        is not going to be frozen to produce an executable.\')', 'operation': 'guarded_observe', 'operation_invoked': False, 'effect_status': 'none', 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'cleanup_status': 'UNKNOWN', 'owner_process': {'pid': None, 'alive': False, 'exitcode': None, 'retired': False, 'release_confirmed': None, 'liveness_observed_monotonic_ns': 250574029933048}, 'late_server_request_possible': True, 'failure_phase': 'session_initialization', 'input_dispatched': False, 'session': {'session_id': 'dee16996283a4b73a88c0f4827be1470', 'mode': 'guarded-x11-owned-process', 'state': 'failed', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': None, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'observations': None, 'target_queries': None, 'target': 'app', 'observation_sequence': None, 'review_required': False, 'owner_process': {'pid': None, 'alive': False, 'exitcode': None, 'retired': False, 'release_confirmed': None, 'liveness_observed_monotonic_ns': 250574031255648}, 'owner_client_disconnect': None, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_input_obligations_source': 'parent_initial_state', 'owner_input_obligations_live_read': {'status': 'not_read'}, 'owner_release_attempt': None, 'cleanup_status': None}, 'call_directory': '/tmp/tmp25qe9j34/947a763b00194d54a2a1558b71a1724e', 'call_id': '947a763b00194d54a2a1558b71a1724e'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py", line 1935, in test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+    await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 1664, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertTrue(closed['owner_process_retired'],closed)
+                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'owner_process_retired'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.217s
+
+FAILED (errors=1)
+FAIL
+
+======================================================================
+FAIL: test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 1547, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertEqual(observed['status'],'observed',observed)
+AssertionError: 'backend_unavailable' != 'observed'
+- backend_unavailable
++ observed
+ : {'status': 'backend_unavailable', 'error': 'EOFError()', 'operation': 'guarded_observe', 'operation_invoked': False, 'effect_status': 'none', 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'cleanup_status': 'UNKNOWN', 'owner_process': {'pid': 12, 'alive': False, 'liveness_observed_monotonic_ns': 250574148228489, 'exitcode': 1, 'retired': False, 'release_confirmed': None, 'x_client_resource_base': None}, 'late_server_request_possible': True, 'failure_phase': 'session_initialization', 'input_dispatched': False, 'session': {'session_id': '8c34e8d42a3041c698ef4033f012a29d', 'mode': 'guarded-x11-owned-process', 'state': 'failed', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': None, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'observations': None, 'target_queries': None, 'target': 'app', 'observation_sequence': None, 'review_required': False, 'owner_process': {'pid': 12, 'alive': False, 'liveness_observed_monotonic_ns': 250574153272665, 'exitcode': 1, 'retired': False, 'release_confirmed': None, 'x_client_resource_base': None}, 'owner_client_disconnect': None, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_input_obligations_source': 'parent_initial_state', 'owner_input_obligations_live_read': {'status': 'not_read'}, 'owner_release_attempt': None, 'cleanup_status': None}, 'call_directory': '/tmp/tmpem_cb2pz/e05b3d4097e047adb4689438f94b6c68', 'call_id': 'e05b3d4097e047adb4689438f94b6c68'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py", line 1935, in test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+    await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 1662, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertEqual(closed['status'],'closed',closed)
+AssertionError: 'cleanup_failed' != 'closed'
+- cleanup_failed
++ closed
+ : {'status': 'cleanup_failed', 'error': "RuntimeError('owned guarded session unavailable: failed')", 'release_attempted': True, 'release_confirmed': False, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'replay_allowed': False, 'verified': False, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'resource_base_unavailable', 'worker_retired': None}, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {}, 'buttons': []}}, 'owner_release_attempt': {'status': 'not_attempted', 'reason': 'owner_disconnect_not_confirmed'}, 'owner_process_retired': True, 'owner_process_exitcode': 1, 'late_server_request_possible': True, 'session': {'session_id': '8c34e8d42a3041c698ef4033f012a29d', 'mode': 'guarded-x11-owned-process', 'state': 'failed', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': None, 'error': 'owned close result unavailable', 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'observations': None, 'target_queries': None, 'target': 'app', 'observation_sequence': None, 'review_required': True, 'owner_process': {'pid': 12, 'alive': False, 'liveness_observed_monotonic_ns': 250574180415235, 'exitcode': 1, 'retired': True, 'release_confirmed': False, 'x_client_resource_base': None}, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'resource_base_unavailable', 'worker_retired': None}, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {}, 'buttons': []}}, 'owner_release_attempt': {'status': 'not_attempted', 'reason': 'owner_disconnect_not_confirmed'}, 'cleanup_status': 'UNKNOWN'}, 'call_directory': '/tmp/tmpem_cb2pz/0563359eac52475ea4a285eb4396249f', 'call_id': '0563359eac52475ea4a285eb4396249f'}
+
+----------------------------------------------------------------------
+Ran 1 test in 1.417s
+
+FAILED (failures=1)

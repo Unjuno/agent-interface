@@ -1,0 +1,44 @@
+"""Inert implementation/test cross-check; no provider or application execution."""
+import hashlib,json,sys,types,unittest
+from pathlib import Path
+from unittest.mock import patch
+R=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+O=Path(__file__).parent
+sys.path[:0]=[str(R),str(R/'research/live_control')]
+def load(name,raw,path):
+    module=types.ModuleType(name);module.__file__=str(path);module.__package__='research.live_control'
+    exec(compile(raw,str(path),'exec'),module.__dict__);return module
+def main():
+    from research.live_control import integrated_efficiency_app_server_model_v1 as current
+    import research.live_control.test_grounding_failure_accounting as selected
+    original_class=selected.PersistentGroundingModel
+    candidate=load('research.live_control.saved_8772_model',
+        (O/'economics-8772-model.py.txt').read_bytes(),R/'research/live_control/integrated_efficiency_app_server_model_v1.py')
+    legacy=load('research.live_control.saved_8772_tests',
+        (O/'economics-8772-tests.py.txt').read_bytes(),R/'research/live_control/test_grounding_failure_accounting_6178.py')
+    reports=[]
+    for implementation,model in [('current',current),('candidate8772',candidate)]:
+        for contract,module in [('current',selected),('legacy8772',legacy)]:
+            selected.ROWS.clear();module.PersistentGroundingModel=model.PersistentGroundingModel
+            with patch.object(model,'CodexAppServerClient',side_effect=AssertionError('real client forbidden')):
+                suite=unittest.defaultTestLoader.loadTestsFromModule(module)
+                result=unittest.TextTestRunner(verbosity=2).run(suite)
+            reports.append(dict(implementation=implementation,contract=contract,methods=result.testsRun,
+                failures=[dict(test=str(t),trace=trace) for t,trace in result.failures],
+                errors=[dict(test=str(t),trace=trace) for t,trace in result.errors],skips=[str(x) for x in result.skipped],
+                rows=json.loads(json.dumps(selected.ROWS)) if contract=='current' else []))
+    selected.PersistentGroundingModel=original_class
+    source_pins={}
+    for module in list(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if filename:
+            path=Path(filename).resolve()
+            if path.is_relative_to(R) and path.is_file() and path.suffix=='.py':
+                source_pins[path.relative_to(R).as_posix()]=hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    output=dict(python=sys.version,optimize=sys.flags.optimize,cells=reports,source_sha256_lf=source_pins,
+        condition='Only inert borrowed RPC clients, inert synthetic execute/effect callbacks and temporary files. Candidate compiled with original source filename for current schema/instruction lookup. No provider/GUI/WSL/container/model.')
+    Path(sys.argv[1]).write_text(json.dumps(output,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps([dict(implementation=r['implementation'],contract=r['contract'],methods=r['methods'],failures=len(r['failures']),errors=len(r['errors']),rows=len(r['rows'])) for r in reports]))
+    a,b,c,d=reports
+    if a['failures'] or a['errors'] or d['failures'] or d['errors'] or not (b['failures'] or b['errors']) or not (c['failures'] or c['errors']):raise SystemExit('adoption discriminator not established')
+if __name__=='__main__':main()

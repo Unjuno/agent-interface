@@ -1,0 +1,81 @@
+{
+  "schema": "agent-interface/chromium-public-compiled-standard-caller-conditions-v1",
+  "run_id": "chromium-public-compiled-standard-caller-live-r01-20261021",
+  "frozen_at_utc": "2026-10-20T22:25:54.6319807Z",
+  "source": {
+    "repository": "Unjuno/agent-interface",
+    "branch": "research/owned-cancel-supervisor-prototype-r01",
+    "head": "ef768ac74517d70c43c7b673b6ea4319db87d4f4",
+    "base": "origin/main at bc10001a7a5e5648360d5cfa209248b65f15aacd",
+    "working_tree_dirty": true,
+    "source_manifest": "source-sha256-r01.txt"
+  },
+  "host": {
+    "platform": "Ubuntu native WSL2, not WSLc",
+    "display": ":94",
+    "screen": "1024x768x24",
+    "display_socket_absent_before_run": true,
+    "no_Xvfb_Chromium_or_App_Server_process_before_run": true,
+    "free_memory_bytes_before_run": 31847428096,
+    "available_memory_bytes_before_run": 32626073600,
+    "free_disk_bytes_before_run": 1021052289024,
+    "pinned_chromium": "/home/user/.cache/agent-interface-live-caller-20261021/browsers/chromium-1248/chrome-linux64/chrome",
+    "chromium_version": "Google Chrome for Testing 156.0.8078.4",
+    "runtime": "CPython 3.12 with existing cached site-packages from agent-interface-xvfb-current-e7-r02",
+    "python_packages": {
+      "mcp": "1.30.0",
+      "anyio": "4.15.1",
+      "pydantic": "2.14.1",
+      "Pillow": "10.2.0",
+      "python-xlib": "0.33"
+    },
+    "app_server_executable": "/mnt/c/Users/user/AppData/Local/OpenAI/Codex/bin/896a0166b774037a/codex.exe"
+  },
+  "task": {
+    "application": "one local Chromium app window serving only 127.0.0.1 fixture HTTP",
+    "token": "uictrl-20261021-f3a8",
+    "steps": [
+      "observe the source page through public interface_guarded_observe",
+      "send exactly that screenshot to one Codex App Server turn for target grounding",
+      "re-observe after the model wait and validate target scope, geometry, and cue pixels",
+      "mint fresh aliases and compile the fixed two-action interface",
+      "execute via public interface_guarded_compiled and retrieve the call by call_id",
+      "independently check exactly one POST carrying the exact token"
+    ],
+    "maximum_provider_turns": 1,
+    "maximum_compiled_actions": 2,
+    "no_retry": true,
+    "live_input": "only to the private Chromium window on display :94",
+    "external_network": "not used by the fixture; provider access uses configured Codex App Server"
+  },
+  "model": {
+    "requested": "gpt-6.1-sol",
+    "effort": "medium",
+    "attempt_limit": 1
+  },
+  "budgets": {
+    "page_render_ready_seconds": 10,
+    "mcp_initial_wait_ms": 10000,
+    "terminal_result_seconds": 35,
+    "browser_window_seconds": 20,
+    "xvfb_display_ready_seconds": 5
+  },
+  "acceptance": {
+    "task": "one independently captured POST to /submit with exactly the frozen token",
+    "evidence": "retained provider turn and usage, source and fresh screenshots, public call and terminal result, close/release receipt, fixture POST and independent score",
+    "safety": "fresh post-model scope and target checks pass; public call terminates; cleanup/readback remains honestly classified",
+    "runtime_task_success": "must remain null; independent fixture scorer is reported separately"
+  },
+  "stop_conditions": [
+    "preflight missing or ambiguous target: zero model call and zero input",
+    "model output invalid or target/source changes after model wait: refuse before input",
+    "call remains pending after 35 seconds: preserve incomplete result and do not retry",
+    "unexpected public effect count or token: record failure; do not repeat this run ID"
+  ],
+  "non_claims": [
+    "physical desktop or external application control",
+    "blocked-platform-I/O input-release guarantee",
+    "target-generation race or recovery",
+    "MAP01, WSLc, Docker, reliability population, matched efficiency, or timing distribution"
+  ]
+}

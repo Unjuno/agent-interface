@@ -1,0 +1,111 @@
+{
+  "all_trials_passed_synthetic_task_oracle": true,
+  "all_trials_runtime_release_unknown": true,
+  "all_trials_terminal_liveness_snapshot_conflicts_with_cancel_receipt": true,
+  "cancel_ack_withheld_s": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "interpretation": "Five repeats in one workflow job and one Xvfb lifetime. Scoped observed release and synthetic task-oracle pass; caller retains UNKNOWN and the terminal owner-liveness snapshot conflicts.",
+  "schema": "agent-interface/xvfb-blocked-release-raw-audit-v1",
+  "source": {
+    "github_job": "x11-integration",
+    "github_run_id": "39376306302",
+    "github_sha": "d41347e7ad538c8a55b5b7206f00997cf70a485a",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15 (main, Oct  1 2026, 02:35:59) [GCC 13.3.0]"
+  },
+  "terminal_snapshot_capture_time": null,
+  "timing_ms": {
+    "cancel": {
+      "max": 935.622703,
+      "median": 690.572894,
+      "min": 675.176308
+    },
+    "pid_qualified_disconnect": {
+      "max": 77.3860040000045,
+      "median": 74.13922000000639,
+      "min": 73.19443800000158
+    },
+    "verified_release_worker": {
+      "max": 622.9315860000071,
+      "median": 608.6933910000027,
+      "min": 595.51403399999
+    }
+  },
+  "trial_count": 5,
+  "trials": [
+    {
+      "cancel_ack_withheld_s": 1.0,
+      "cancel_elapsed_ms": 935.622703,
+      "disconnect_elapsed_ms": 74.13922000000639,
+      "file": "r01/standard-mcp-xvfb-blocked-release.json",
+      "release_elapsed_ms": 603.6892730000005,
+      "runtime_cleanup_status": "UNKNOWN",
+      "runtime_release_confirmed": false,
+      "runtime_task_success": null,
+      "task_oracle": "pass",
+      "terminal_owner_alive_snapshot": true
+    },
+    {
+      "cancel_ack_withheld_s": 0.0,
+      "cancel_elapsed_ms": 706.670536,
+      "disconnect_elapsed_ms": 77.3860040000045,
+      "file": "trace-comparison/standard-mcp-xvfb-cancel-retirement-no-trace-1.json",
+      "release_elapsed_ms": 622.9315860000071,
+      "runtime_cleanup_status": "UNKNOWN",
+      "runtime_release_confirmed": false,
+      "runtime_task_success": null,
+      "task_oracle": "pass",
+      "terminal_owner_alive_snapshot": true
+    },
+    {
+      "cancel_ack_withheld_s": 0.0,
+      "cancel_elapsed_ms": 690.546621,
+      "disconnect_elapsed_ms": 73.19443800000158,
+      "file": "trace-comparison/standard-mcp-xvfb-cancel-retirement-no-trace-2.json",
+      "release_elapsed_ms": 611.058503999999,
+      "runtime_cleanup_status": "UNKNOWN",
+      "runtime_release_confirmed": false,
+      "runtime_task_success": null,
+      "task_oracle": "pass",
+      "terminal_owner_alive_snapshot": true
+    },
+    {
+      "cancel_ack_withheld_s": 0.0,
+      "cancel_elapsed_ms": 675.176308,
+      "disconnect_elapsed_ms": 73.78632399999674,
+      "file": "trace-comparison/standard-mcp-xvfb-cancel-retirement-trace-1.json",
+      "release_elapsed_ms": 595.51403399999,
+      "runtime_cleanup_status": "UNKNOWN",
+      "runtime_release_confirmed": false,
+      "runtime_task_success": null,
+      "task_oracle": "pass",
+      "terminal_owner_alive_snapshot": true
+    },
+    {
+      "cancel_ack_withheld_s": 0.0,
+      "cancel_elapsed_ms": 690.572894,
+      "disconnect_elapsed_ms": 75.27424299999552,
+      "file": "trace-comparison/standard-mcp-xvfb-cancel-retirement-trace-2.json",
+      "release_elapsed_ms": 608.6933910000027,
+      "runtime_cleanup_status": "UNKNOWN",
+      "runtime_release_confirmed": false,
+      "runtime_task_success": null,
+      "task_oracle": "pass",
+      "terminal_owner_alive_snapshot": true
+    }
+  ],
+  "xvfb": {
+    "package_returncode": 0,
+    "package_stderr": "",
+    "package_stdout": "xvfb=2:21.1.12-1ubuntu1.9",
+    "path": "/usr/bin/Xvfb",
+    "pid": 2807,
+    "sha256": "0081b27338b510ec5e2068a93c6db31480872de9bb082f347f3747ef1648e794",
+    "status": "captured"
+  }
+}

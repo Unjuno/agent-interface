@@ -1,0 +1,19 @@
+{
+  "candidate_errors": [],
+  "checks": {
+    "candidate_completed_clean_xvfb": true,
+    "candidate_hash_matches_freeze": true,
+    "executor_sigkill_active_down": true,
+    "independent_keyrelease_event_observed": false,
+    "owner_release_record_verified": true,
+    "owner_thread_stopped": true,
+    "source_hashes_match": true,
+    "supervisor_observed_eof": true,
+    "x_keymap_up_after_close": true
+  },
+  "decision": "STOP",
+  "observer_source_mask_line": "candidate.py uses event_mask=sum(types), where types are X event numbers, not X KeyPressMask/KeyReleaseMask",
+  "raw_key_release_event": null,
+  "raw_key_up_after_owner_close": true,
+  "schema": "v39-executor-hardkill-supervised-a03-audit-v1"
+}
