@@ -13,7 +13,7 @@ class DiagnosticTests(unittest.TestCase):
             waits=[]
             result=collect(Path(directory), capture=lambda: Image.new("RGB",(2,2),(1,2,3)),
                            neutral=lambda: True, clock=lambda: next(ticks), wait=waits.append)
-            self.assertEqual(waits,[0.1,0.1,0.1])
+            self.assertEqual(waits,[0.0,0.1,0.1])
             self.assertEqual(len(result["frames"]),3)
             self.assertEqual([x["capture_ns"] for x in result["frames"]],[20,40,60])
             self.assertTrue(all(x["neutral"] is True for x in result["frames"]))

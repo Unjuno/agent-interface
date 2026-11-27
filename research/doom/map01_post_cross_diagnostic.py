@@ -5,7 +5,7 @@ import os
 def collect(directory, *, capture, neutral, clock, wait):
     frames=[]
     for index in range(3):
-        wait(0.1)
+        wait(0.0 if index == 0 else 0.1)
         if neutral() is not True:
             raise ValueError("input is not neutral before diagnostic capture")
         started=clock()
