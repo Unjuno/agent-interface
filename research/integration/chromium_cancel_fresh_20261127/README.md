@@ -1,5 +1,7 @@
 # Chromium cancellation and fresh-window probe
 
+**Follow-up:** a separate [delayed-transport attempt](PROXY_REPORT.md) recorded an extra input effect in the fresh Chromium window and failed its task oracle. The pass below applies only to the earlier server-delay condition.
+
 One preregistered, no-model attempt used source `8566a9edbdcfab86e5ed07f0a46f9c54e5577838`, two real Chromium app windows with separate profiles, a local HTTP application, and public MCP tool methods called in process. All processes ran in a private user/mount/network/PID namespace with private Xvfb. A test owner injected an 8-second XTEST delay into the runtime-tracked second `a` press and withheld the child cancellation ACK for one second; the prestarted cancellation supervisor was enabled. This is a forced fault, not a natural failure rate.
 
 The independent HTTP fixture recorded exactly one `old=a` input effect before cancellation and one `fresh=c` effect from a new owner and distinct browser window. No further effects were recorded through 8,503.679 ms after cancellation. Independent keymap reads showed `a`, `b`, and `c` up after cancellation, at the horizon, and before fixture cleanup. The fresh input completed and the fresh close was verified; the old close returned `cleanup_failed` with `UNKNOWN` and `release_confirmed=false`. Both browser leader processes exited with code 0. The fixture then explicitly issued key-up cleanup in the private display. `PASS_SCOPED` in the raw report means only that the preregistered fixture checks passed.
