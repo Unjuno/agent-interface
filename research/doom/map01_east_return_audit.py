@@ -10,9 +10,18 @@ import re
 import sys
 from pathlib import Path
 
-_CHECKOUT=Path('/home/user/issue59-door-effect')
-sys.path[:0]=[str(_CHECKOUT/'research/doom'),str(_CHECKOUT/'research/live_control'),str(_CHECKOUT)]
 from map01_reverse_program import reverse_stages
+
+
+def validate_loaded_source(module, checkout, relative, pins):
+    """Reject a helper loaded outside the registered, pinned worktree."""
+    checkout=Path(checkout)
+    path=checkout/relative
+    loaded=Path(getattr(module,'__file__',''))
+    if (path.is_symlink() or loaded.resolve()!=path.resolve()
+            or type(pins) is not dict or type(pins.get(str(path))) is not str
+            or hashlib.sha256(path.read_bytes()).hexdigest()!=pins[str(path)]):
+        raise ValueError('auditor helper source differs')
 
 
 def expected_program(arm='east-return'):
@@ -33,12 +42,12 @@ def validate_trace(events,samples,*,arm='east-return'):
     require(all(type(row.get('command')) is dict and row['command'].get('op') in ('submit','door-settle','finish') for _,row in command_rows),'unexpected command')
     submits=[(i,row) for i,row in command_rows if row['command']['op']=='submit']
     finishes=[(i,row) for i,row in command_rows if row['command']['op']=='finish']
-    require(len(submits)==len(program)==(26 if arm=='east-return-reopen' else 24) and len(finishes)==1,'wrong command count')
+    require(len(submits)==len(program)==(26 if arm in ('east-return-reopen','east-return-cross650') else 24) and len(finishes)==1,'wrong command count')
     require([(row['command'].get('id'),row['command'].get('steps')) for _,row in submits]==program,'fixed program differs')
     require(len(samples)==len(program) and [row.get('stage') for row in samples]==[stage for stage,_ in program],'sample order differs')
     stages=[stage for stage,_ in program]
     keyed=[stage for stage,steps in program if steps[0]['op']=='hold']
-    require(len(keyed)==(17 if arm=='east-return-reopen' else 16),'unexpected keyed count')
+    require(len(keyed)==(17 if arm in ('east-return-reopen','east-return-cross650') else 16),'unexpected keyed count')
     for event,expected in (('accepted',stages),('terminal',stages),('input_admission',keyed),('input_release_transition',keyed)):
         require([row.get('id') for row in events if row.get('event')==event]==expected,'unexpected '+event+' events')
     require(not any(row.get('event') in ('rejected','pointer_admission','input_release_unverified') for row in events),'runtime rejection in trace')
@@ -458,7 +467,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     import sys
     from map01_candidate_setup_evidence_v1 import read_sealed_directory
     from map01_east_return_classification import classify_endpoint,SCOPED_RULES,STAGES
-    from map01_east_return_launcher_preflight import validate_runtime_inputs
+    from map01_east_return_launcher_preflight import validate_runtime_inputs, registered_checkout
     def require(condition,message):
         if not condition:raise ValueError(message)
     def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
@@ -480,7 +489,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     require(hashlib.sha256(registration_bytes).hexdigest()==registration_sha256,'registration hash differs')
     reg=json.loads(registration_bytes,parse_constant=reject_constant)
     require(type(reg) is dict and reg.get('schema')=='map01-east-return-registration-v1'
-            and reg.get('root')==str(root) and reg.get('arm') in ('east-return','east-return-turn75','east-return-reopen')
+            and reg.get('root')==str(root) and reg.get('arm') in ('east-return','east-return-turn75','east-return-reopen','east-return-cross650')
             and type(reg.get('repeat_limit')) is int and reg['repeat_limit']==1
             and type(reg.get('model_calls')) is int and reg['model_calls']==0,'registration scope differs')
     require(canonical(reg.get('endpoint_rules'))==canonical(SCOPED_RULES)
@@ -498,19 +507,29 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     require(hashlib.sha256(Path(__file__).read_bytes()).hexdigest()==reg.get('auditor_sha256'),'running auditor differs')
     claim=read('claim.json');launch_record=read('launch.json');launch=read('launcher-outcome.json');worker=read('worker-outcome.json')
     require(claim.get('registration_sha256')==registration_sha256 and claim.get('unit')==reg.get('unit'),'claim differs')
-    require(worker.get('passed') is True and worker.get('settled_operations')==(26 if reg['arm']=='east-return-reopen' else 24)
+    require(worker.get('passed') is True and worker.get('settled_operations')==(26 if reg['arm'] in ('east-return-reopen','east-return-cross650') else 24)
             and type(worker.get('settled_operations')) is int and worker.get('runtime_exit_code')==0
             and type(worker.get('runtime_exit_code')) is int and worker.get('cleanup_drain_eof') is True
             and worker.get('model_calls')==0 and type(worker.get('model_calls')) is int,'worker not complete')
-    validate_runtime_inputs(root,reg,expected_checkout=Path('/home/user/issue59-door-effect'),
+    validate_runtime_inputs(root,reg,expected_checkout=registered_checkout(reg),
         baseline_path=Path('/home/user/issue59-grandchild-bound-setup-yzkdlh9q/registration.json'),
         baseline_sha256='4dbe44082da117dde60a7713157065bcc5d490bf720a9a988b1e0e7707b4ee6d')
+    import importlib
+    for name,relative in (
+        ('map01_reverse_program','research/doom/map01_reverse_program.py'),
+        ('map01_door_driver_protocol','research/doom/map01_door_driver_protocol.py'),
+        ('map01_door_task_contract','research/doom/map01_door_task_contract.py'),
+        ('map01_candidate_setup_evidence_v1','research/doom/map01_candidate_setup_evidence_v1.py'),
+        ('map01_east_return_classification','research/doom/map01_east_return_classification.py'),
+        ('map01_east_return_launcher_preflight','research/doom/map01_east_return_launcher_preflight.py'),
+        ('input_owner_process_v3','research/live_control/input_owner_process_v3.py')):
+        validate_loaded_source(importlib.import_module(name),registered_checkout(reg),relative,reg['files'])
     events=lines('runtime/events.jsonl');raw=lines('runtime.stdout');driver=lines('driver.jsonl')
     samples=lines('runtime/door-sector-private.jsonl');owner=read('runtime/owner-events.json')
     validate_trace(events,samples,arm=reg['arm']);validate_raw_delivery(events,raw,driver);validate_trial_deadline(worker,driver)
     identity_tuple=validate_caller_policy(events,driver,manifest_sha=reg['candidate_manifest_sha256'],
         save_sha=reg['candidate_save_sha256'],evidence_sha=reg['candidate_evidence_sha256'],restore_tic=870,arm=reg['arm'])
-    require(validate_owner_events(events,owner,program=expected_program(reg['arm']))==(17 if reg['arm']=='east-return-reopen' else 16),'keyed owner count differs')
+    require(validate_owner_events(events,owner,program=expected_program(reg['arm']))==(17 if reg['arm'] in ('east-return-reopen','east-return-cross650') else 16),'keyed owner count differs')
     durations=validate_contract_replay(events,arm=reg['arm'])
     keyed=[stage for stage,steps in expected_program(reg['arm']) if steps[0]['op']=='hold']
     require(list(durations)==keyed and worker.get('keyed_submit_attempted')==keyed
@@ -547,7 +566,6 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     for name in ('startup.json','control.json','recovery.json','finish.json'):
         sealed_bytes('runtime/input-owner-service/'+name)
     inner_startup=sealed_bytes('runtime/input-owner-service/startup.json')
-    checkout=Path(reg['checkout']);sys.path.insert(0,str(checkout/'research/live_control'))
     from input_owner_process_v3 import read_service_receipt
     saved=read_service_receipt(service_dir,startup['startup'])
     validate_close_receipt(owner,close,hashlib.sha256(startup_bytes).hexdigest(),startup,owner_id,
@@ -556,7 +574,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     validate_independent_final(events,score,lines('runtime/scorer-samples.jsonl'),read('runtime/scorer-summary.json'))
     # Detect any file mutation during this inspection, including the producer's rereads.
     read_sealed_directory(root,seal_sha256,expected_pass=True)
-    validate_runtime_inputs(root,reg,expected_checkout=Path('/home/user/issue59-door-effect'),
+    validate_runtime_inputs(root,reg,expected_checkout=registered_checkout(reg),
         baseline_path=Path('/home/user/issue59-grandchild-bound-setup-yzkdlh9q/registration.json'),
         baseline_sha256='4dbe44082da117dde60a7713157065bcc5d490bf720a9a988b1e0e7707b4ee6d')
     by_stage={row['stage']:row for row in samples};classified=classify_endpoint([by_stage[stage] for stage in STAGES])

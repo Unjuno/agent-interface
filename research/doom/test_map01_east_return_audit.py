@@ -387,4 +387,19 @@ class EastReturnTraceTests(unittest.TestCase):
   bad=copy.deepcopy(samples);bad[0]['refresh_count']=True;mutations.append((events,bad))
   for es,ss in mutations:
    with self.subTest(events=len(es),samples=len(ss)),self.assertRaises(ValueError):validate_trace(es,ss)
+class AuditorSourceBindingTests(unittest.TestCase):
+ def test_rejects_unregistered_or_changed_loaded_source(self):
+  from types import SimpleNamespace
+  from map01_east_return_audit import validate_loaded_source
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp);path=root/'research/doom/module.py';path.parent.mkdir(parents=True)
+   path.write_bytes(b"registered")
+   pins={str(path):hashlib.sha256(b"registered").hexdigest()}
+   validate_loaded_source(SimpleNamespace(__file__=str(path)),root,'research/doom/module.py',pins)
+   with self.assertRaises(ValueError):
+    validate_loaded_source(SimpleNamespace(__file__=str(root/'other.py')),root,'research/doom/module.py',pins)
+   path.write_bytes(b"modified")
+   with self.assertRaises(ValueError):
+    validate_loaded_source(SimpleNamespace(__file__=str(path)),root,'research/doom/module.py',pins)
+
 if __name__=='__main__':unittest.main()

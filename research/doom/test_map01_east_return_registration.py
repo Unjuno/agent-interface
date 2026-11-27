@@ -62,6 +62,14 @@ class RegistrationTests(unittest.TestCase):
   self.assertTrue(spec['guard_requires_new_frame'])
   self.assertEqual(spec['endpoint_rules'],SCOPED_RULES)
 
+ def test_cross650_arm_requires_timed_owner_and_binds_runtime(self):
+  hashes={'driver_sha256':'1'*64,'launcher_sha256':'2'*64,'preflight_sha256':'3'*64,'auditor_sha256':'4'*64}
+  args=(Path('/tmp/trial'),'map01-east-ab12.service',Path('/repo'),'a'*40,'b'*40,{'/repo/source':'c'*64},hashes)
+  with self.assertRaises(ValueError):build_spec(*args,arm='east-return-cross650')
+  spec=build_spec(*args,arm='east-return-cross650',timed_hold=True)
+  self.assertEqual(spec['runtime_argv'][spec['runtime_argv'].index('--door-task-reverse-arm')+1],'east-return-cross650')
+  self.assertIn('--owner-timed-hold',spec['runtime_argv'])
+
  def test_invalid_unit_revision_or_hash_is_rejected(self):
   hashes={'driver_sha256':'1'*64,'launcher_sha256':'2'*64,'preflight_sha256':'3'*64,'auditor_sha256':'4'*64}
   with self.assertRaises(ValueError):build_spec(Path('/tmp/trial'),'bad.service',Path('/repo'),'a'*40,'b'*40,{},hashes)

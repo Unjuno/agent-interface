@@ -3,6 +3,27 @@ import unittest
 from map01_reverse_program import reverse_stages
 
 class ReverseProgramTests(unittest.TestCase):
+    def test_longer_cross_arm_changes_only_cross_and_has_distinct_manifest(self):
+        from map01_reverse_program import reverse_manifest
+        base=reverse_stages("east-return-reopen")
+        variant=reverse_stages("east-return-cross650")
+        self.assertEqual(len(base),len(variant))
+        differences=[(a,b) for a,b in zip(base,variant) if a!=b]
+        self.assertEqual(differences,[(("reverse-cross",[{"op":"hold","keys":["Up"],"duration_ms":600}]),
+                                        ("reverse-cross",[{"op":"hold","keys":["Up"],"duration_ms":650}]))])
+        self.assertNotEqual(reverse_manifest("east-return-reopen")["suffix_sha256"],
+                            reverse_manifest("east-return-cross650")["suffix_sha256"])
+        from map01_door_driver_protocol import DoorDriverProtocol
+        from map01_door_task_contract import DoorTaskContract
+        from map01_east_return_caller_gate import EastReturnCallerGate
+        from map01_east_return_audit import expected_program
+        caller=DoorDriverProtocol("use","a"*64,"b"*64,"c"*64,870,traverse=True,reverse_arm="east-return-cross650")
+        contract=DoorTaskContract("use",traverse=True,reverse_arm="east-return-cross650")
+        gate=EastReturnCallerGate(reference=None,reference_sha256="a"*64,runtime_dir=None,identity={},arm="east-return-cross650")
+        self.assertEqual(caller.reverse_arm,contract.reverse_arm)
+        self.assertEqual(gate.arm,caller.reverse_arm)
+        self.assertIn(("reverse-cross",[{"op":"hold","keys":["Up"],"duration_ms":650}]),expected_program(gate.arm))
+
     def test_longer_turn_is_distinct_and_changes_only_one_stage(self):
         from map01_reverse_program import reverse_manifest
         baseline=reverse_stages('east-return');candidate=reverse_stages('east-return-turn75')

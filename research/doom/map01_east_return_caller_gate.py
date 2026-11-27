@@ -24,7 +24,7 @@ def require_new_frame(source, expected_stage):
 
 class EastReturnCallerGate:
     def __init__(self, *, reference, reference_sha256, runtime_dir, identity, arm='east-return'):
-        if arm not in ('east-return','east-return-turn75','east-return-reopen'):
+        if arm not in ('east-return','east-return-turn75','east-return-reopen','east-return-cross650'):
             raise ValueError('unsupported registered east-return arm')
         self.arm=arm
         self.reference=reference

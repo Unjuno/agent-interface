@@ -137,7 +137,7 @@ def validate_verified_fixture_setup(args, post_load_gate):
     exit_probe=getattr(args,'door_task_exit',False)
     exit_arm=getattr(args,'door_task_exit_arm',None)
     reverse_arm=getattr(args,'door_task_reverse_arm',None)
-    if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75','east-return-reopen') or door_arm!='use' or not traverse or exit_probe):
+    if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75','east-return-reopen','east-return-cross650') or door_arm!='use' or not traverse or exit_probe):
         raise ValueError('reverse door mode requires use/traverse without exit probe')
     if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
             or not exit_probe and exit_arm is not None):
@@ -606,7 +606,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--synthetic-exit-refresh", action="store_true")
     parser.add_argument("--door-task-arm", choices=("control","use"))
     parser.add_argument("--door-task-traverse", action="store_true")
-    parser.add_argument("--door-task-reverse-arm", choices=("control","use","calibrate","east-return","east-return-turn75","east-return-reopen"))
+    parser.add_argument("--door-task-reverse-arm", choices=("control","use","calibrate","east-return","east-return-turn75","east-return-reopen","east-return-cross650"))
     parser.add_argument("--door-task-exit", action="store_true")
     parser.add_argument("--door-task-exit-arm", choices=("control","use"))
     parser.add_argument("--door-expected-manifest-sha256")
