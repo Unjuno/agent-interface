@@ -296,7 +296,7 @@ def run():
                               'geometry':deepcopy(observed['pointer_binding']['geometry'])}
                     east_gate=east_gate_module.EastReturnCallerGate(
                         reference=root/'east-reference.png',reference_sha256=registered['east_reference_sha256'],
-                        runtime_dir=runtime,identity=identity)
+                        runtime_dir=runtime,identity=identity,arm=registered['arm'])
                 if east_gate is not None and east_gate.state=='collecting':
                     east_gate.receive(row)
                 if command is not None:

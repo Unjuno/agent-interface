@@ -23,7 +23,10 @@ def require_new_frame(source, expected_stage):
 
 
 class EastReturnCallerGate:
-    def __init__(self, *, reference, reference_sha256, runtime_dir, identity):
+    def __init__(self, *, reference, reference_sha256, runtime_dir, identity, arm='east-return'):
+        if arm not in ('east-return','east-return-turn75'):
+            raise ValueError('unsupported registered east-return arm')
+        self.arm=arm
         self.reference=reference
         self.reference_sha256=reference_sha256
         self.runtime_dir=runtime_dir
@@ -81,7 +84,7 @@ class EastReturnCallerGate:
         expected_identity=(identity['surface'],identity['owner'],identity['generation'],
                            identity['process_digest'],identity['window_digest'])
         return (getattr(protocol,'ready',False) is True
-                and getattr(protocol,'reverse_arm',None)=='east-return'
+                and getattr(protocol,'reverse_arm',None)==self.arm
                 and getattr(protocol,'pending',None)=='east-turn-1'
                 and getattr(protocol,'typed',None) is None
                 and getattr(protocol,'identity',None)==expected_identity

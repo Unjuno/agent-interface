@@ -15,6 +15,16 @@ from PIL import Image
 from map01_east_return_caller_gate import EastReturnCallerGate, require_no_pending_output, require_new_frame
 
 class CallerGateTests(unittest.TestCase):
+ def test_guard_requires_the_registered_reverse_arm(self):
+  identity={'surface':7,'owner':'owner','generation':3,'process_digest':'proc','window_digest':'window'}
+  gate=EastReturnCallerGate(reference='/tmp/ref',reference_sha256='a'*64,runtime_dir='/tmp',identity=identity,arm='east-return-turn75')
+  gate.full={'sequence':4}
+  command={'op':'submit','id':'east-turn-1','steps':[{'op':'hold','keys':['Right'],'duration_ms':600}],'expected_sequence':4}
+  protocol=SimpleNamespace(ready=True,reverse_arm='east-return-turn75',pending='east-turn-1',typed=None,identity=(7,'owner',3,'proc','window'),latest=gate.full)
+  self.assertTrue(gate._protocol_matches(protocol,command))
+  protocol.reverse_arm='east-return'
+  self.assertFalse(gate._protocol_matches(protocol,command))
+  with self.assertRaises(ValueError):EastReturnCallerGate(reference='/tmp/ref',reference_sha256='a'*64,runtime_dir='/tmp',identity=identity,arm='unexpected')
  def test_new_frame_gate_rejects_reuse_and_mismatched_image_number(self):
   source={'event':'observation','id':'reverse-cross','sequence':4,'image_reused':False,'image':'/tmp/004.png'}
   self.assertIsNone(require_new_frame(source,'reverse-cross'))
@@ -76,6 +86,11 @@ class CallerGateTests(unittest.TestCase):
    identity={'owner':'owner','generation':3,'surface':7,'process_digest':'proc','window_digest':'window','geometry':[321,180,640,480]}
    command={'op':'submit','id':'east-turn-1','steps':[{'op':'hold','keys':['Right'],'duration_ms':600}],'expected_sequence':4,'valid_until_ns':500}
    protocol=SimpleNamespace(latest=full,pending='east-turn-1',typed=None,ready=True,reverse_arm='east-return',identity=(7,'owner',3,'proc','window'))
+   variant=EastReturnCallerGate(reference=ref,reference_sha256=digest,runtime_dir=root,identity=identity,arm='east-return-turn75')
+   for event in (transition,typed,full,terminal,settled):variant.receive(event)
+   protocol.reverse_arm='east-return-turn75'
+   self.assertTrue(variant.prepare(command,protocol,clock=lambda:200)['passed'])
+   protocol.reverse_arm='east-return'
    def ready():
     gate=EastReturnCallerGate(reference=ref,reference_sha256=digest,runtime_dir=root,identity=identity)
     for event in (transition,typed,full,terminal,settled):gate.receive(event)
