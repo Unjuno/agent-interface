@@ -20,7 +20,7 @@ from native_codex_usage_v1 import POLICY, accounting
 
 
 def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel,
-             on_output_claimed=None) -> dict:
+             on_output_claimed=None, model="gpt-5.6-luna") -> dict:
     health = base.doctor()
     if not health["passed"]:
         raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
@@ -50,11 +50,14 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
     implementation.OUT = out
     implementation.RuntimeClient = client_type
     started = time.perf_counter_ns()
-    preflight = implementation.preflight_call("persistent", "compiled")
+    options = {} if model == "gpt-5.6-luna" else {"model": model}
+    preflight = implementation.preflight_call("persistent", "compiled", **options)
+    if preflight.get("requested_model") != model:
+        raise ValueError("schema preflight model differs from grounding model")
     workspace = out / "workspaces" / "persistent"
     with grounding_model_type(
             out / "persistent-grounding-app-server", workspace,
-            contract="compiled", model="gpt-5.6-luna", effort="low", **launch) as grounding:
+            contract="compiled", model=model, effort="low", **launch) as grounding:
         rows, independent = implementation.run_arm(
             "persistent", seed, workspace, model_call=grounding.call)
         grounding_thread_id = grounding.thread_id
@@ -83,6 +86,7 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
             and len({call["call_id"] for call in calls}) == len(calls) == 3
         ),
         "seed": seed,
+        "requested_model": model,
         "tasks_exact": sum(row["exact_submission"] for row in rows),
         "routes": [row["route"] for row in rows],
         "planner_generations_including_preflight": len(calls),

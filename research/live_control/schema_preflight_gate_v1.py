@@ -15,7 +15,7 @@ class SchemaPreflightRefused(RuntimeError):
         self.report = report
 
 
-def require_compatible(entries, cache_dir, result_dir, workspace):
+def require_compatible(entries, cache_dir, result_dir, workspace, *, model=None):
     """Check every named schema and return only when all are compatible.
 
     Callers must invoke this function before starting an application process or
@@ -25,7 +25,8 @@ def require_compatible(entries, cache_dir, result_dir, workspace):
     result_dir.mkdir(parents=True, exist_ok=False)
     results = []
     for entry in entries:
-        value = preflight(entry["schema"], cache_dir, result_dir / entry["name"], workspace)
+        options = {} if model is None else {"model": model}
+        value = preflight(entry["schema"], cache_dir, result_dir / entry["name"], workspace, **options)
         results.append({"name": entry["name"], "result": value})
     accepted = all(row["result"]["endpoint_status"] == "ENDPOINT_COMPATIBLE" for row in results)
     calls = [row["result"]["model_call_performed"] for row in results]

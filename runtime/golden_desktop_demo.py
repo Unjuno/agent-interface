@@ -367,9 +367,12 @@ def audit_launch_policy(out, report, preflight, preflight_root):
                    ("requested_model", "requested_effort", "runner_sha256", "schema_sha256",
                     "instructions_sha256"))):
         raise ValueError("native executable or schema runner identity differs")
-    if identity.get("requested_model") != MODEL or identity.get("requested_effort") != EFFORT:
-        raise ValueError("native preflight differs from the fixed model or effort")
-    verify_native_exec_argv(argv, MODEL, EFFORT)
+    requested_model = report.get("requested_model", MODEL)
+    from target_handle_model_runner_v2 import parse_runner_arguments
+    parse_runner_arguments(["x"] * 9 + [requested_model])
+    if identity.get("requested_model") != requested_model or identity.get("requested_effort") != EFFORT:
+        raise ValueError("native preflight differs from the requested model or effort")
+    verify_native_exec_argv(argv, requested_model, EFFORT)
     roots = doctor_receipt["native_run_root"]
     source_root = PurePosixPath(roots["wsl_path"])
     windows_root = PureWindowsPath(roots["windows_path"])
@@ -649,6 +652,8 @@ def audit_live(out: Path) -> dict:
         preflight.get("model_call_performed") is True,
         len(call_ids) == 3 and len(set(call_ids)) == 3,
         report.get("planner_generations_including_preflight") == 3,
+        report.get("requested_model", preflight["identity"]["requested_model"]) == preflight["identity"]["requested_model"],
+        all(call.get("requested_model") == preflight["identity"]["requested_model"] for call in task_calls),
         report.get("model_visible_images") == 2,
         report.get("usage") == recomputed_usage,
         [row.get("task_id") for row in history] == expected_tasks,
@@ -756,7 +761,9 @@ def claim_output(out: Path, on_claimed) -> None:
         on_claimed(out.lstat())
 
 
-def run_live(out: Path, seed: int, *, on_output_claimed=None) -> dict:
+def run_live(out: Path, seed: int, *, on_output_claimed=None, model=None) -> dict:
+    if model not in (None, "gpt-5.6-luna"):
+        raise ValueError("the v1 launcher supports only the default model")
     if "windows_codex_exe" in configuration():
         raise RuntimeError("the Windows native Codex bridge requires the Golden v2/v3 launcher")
     health = doctor()
@@ -828,6 +835,7 @@ def main() -> int:
     live = sub.add_parser("run", help="run one fresh persistent six-task demonstration")
     live.add_argument("--out", type=Path, default=None)
     live.add_argument("--seed", type=int, default=991029)
+    live.add_argument("--model", default=None, help="explicit model for schema preflight and grounding")
     args = parser.parse_args()
     run_out = (args.out or default_output()).resolve() if args.command == "run" else None
     owned_out = None
@@ -844,7 +852,8 @@ def main() -> int:
         elif args.command == "audit-live":
             result = audit_live(args.out.resolve())
         else:
-            result = run_live(run_out, args.seed, on_output_claimed=record_claim)
+            options = {} if args.model is None else {"model": args.model}
+            result = run_live(run_out, args.seed, on_output_claimed=record_claim, **options)
     except Exception as error:
         failure = {
             "schema": "agent_interface_golden_failure_v1",

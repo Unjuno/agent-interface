@@ -386,12 +386,21 @@ def completed_receipt(value, returncode, *, run_nonce, owner_sha256, minimum_pro
             and type(value.get("exit_code")) is int and value["exit_code"] == returncode)
 
 
+def validate_request(request):
+    if len(request) not in (9, 10) or request[0] != "--native-codex-exe":
+        raise ValueError("the native preflight request is required")
+    try:
+        from .target_handle_model_runner_v2 import parse_runner_arguments
+    except ImportError:
+        from target_handle_model_runner_v2 import parse_runner_arguments
+    parse_runner_arguments(request)
+
+
 def main(argv):
     destination, nonce, runner, *request = argv
     if Path(runner).resolve() != Path(__file__).with_name("target_handle_model_runner_v2.py").resolve():
         raise ValueError("the built-in native preflight runner is required")
-    if len(request) != 9 or request[0] != "--native-codex-exe":
-        raise ValueError("the native preflight request is required")
+    validate_request(request)
     root = Path(destination)
     lease = LeaseReader(root, nonce)
     lease.await_owner()

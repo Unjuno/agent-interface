@@ -52,8 +52,10 @@ def require_native_runner():
         raise ValueError("native Codex requires the built-in schema preflight runner")
 
 
-def compatibility_identity(schema):
-    identity = {"schema_sha256": sha(schema), "requested_model": MODEL,
+def compatibility_identity(schema, *, model=MODEL):
+    from target_handle_model_runner_v2 import parse_runner_arguments
+    parse_runner_arguments(["x"] * 9 + [model])
+    identity = {"schema_sha256": sha(schema), "requested_model": model,
         "requested_effort": EFFORT, "runner_sha256": sha(RUNNER),
         "instructions_sha256": sha(INSTRUCTIONS),
         "request_shape": f"{RUNNER.name}:handle:no-image:output-schema"}
@@ -83,12 +85,12 @@ def local_schema_status(schema):
         return "INVALID", str(error)
 
 
-def preflight(schema, cache_dir, result_dir, workspace):
+def preflight(schema, cache_dir, result_dir, workspace, *, model=MODEL):
     schema = Path(schema).resolve(); cache_dir = Path(cache_dir).resolve()
     result_dir = Path(result_dir).resolve(); workspace = Path(workspace).resolve()
     result_dir.mkdir(parents=True, exist_ok=False); cache_dir.mkdir(parents=True, exist_ok=True)
     local_status, local_error = local_schema_status(schema)
-    identity, key = compatibility_identity(schema); cache_path = cache_dir / f"{key}.json"
+    identity, key = compatibility_identity(schema, model=model); cache_path = cache_dir / f"{key}.json"
     base = {"compatibility_key": key, "identity": identity, "schema": str(schema),
             "local_schema_status": local_status, "local_schema_error": local_error}
     if cache_path.exists():
@@ -127,6 +129,10 @@ def preflight(schema, cache_dir, result_dir, workspace):
             command = [str(WINDOWS_PYTHON), windows_path(RUNNER), NODE_ARG, CLI_ARG]
         command += [windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
                     windows_path(INSTRUCTIONS), windows_path(schema)]
+        if model != MODEL:
+            if RUNNER.resolve() != DEFAULT_RUNNER.resolve():
+                raise ValueError("non-default model requires the built-in preflight runner")
+            command.append(model)
         try:
             completed = subprocess.run(command, capture_output=True, timeout=90, **launch_options)
         except subprocess.TimeoutExpired as error:

@@ -37,7 +37,34 @@ class GoldenDesktopV2Tests(unittest.TestCase):
     def test_native_run_passes_executable_and_checks_required_usage(self):
         self.run_case(native=True)
 
-    def run_case(self, *, native):
+    def test_model_mismatch_stops_before_grounding_or_gui(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            implementation=types.SimpleNamespace(preflight_call=Mock(return_value={"requested_model":"gpt-5.6-luna"}),
+                                                 run_arm=Mock(), OUT=None, RuntimeClient=None)
+            grounding=Mock()
+            config={"chromium":root/"chrome", "windows_python":root/"python", "windows_codex_exe":root/"codex.exe"}
+            with patch.object(demo.base, "doctor", return_value={"passed":True}), \
+                 patch.object(demo.base, "configuration", return_value=config), \
+                 patch.object(demo.base, "configure_research_modules", return_value=(implementation, Mock())), \
+                 patch.object(demo.base, "windows_arg", return_value="W:/run"):
+                with self.assertRaisesRegex(ValueError, "preflight model differs"):
+                    demo.run_live(root/"out", 1, grounding_model_type=grounding, model="gpt-6.1-terra")
+            grounding.assert_not_called()
+            implementation.run_arm.assert_not_called()
+
+    def test_cli_forwards_explicit_model(self):
+        import io
+        with patch.object(sys, "argv", ["demo", "run", "--out", "output", "--model", "gpt-6.1-terra"]), \
+             patch.object(demo.base, "run_live", return_value={"passed": True}) as run, \
+             patch("sys.stdout", new_callable=io.StringIO):
+            self.assertEqual(demo.base.main(), 0)
+        self.assertEqual(run.call_args.kwargs["model"], "gpt-6.1-terra")
+
+    def test_explicit_model_reaches_preflight_and_grounding(self):
+        self.run_case(native=True, model="gpt-6.1-terra")
+
+    def run_case(self, *, native, model=None):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             # Import the real arm without requiring its Linux input transport on Windows.
@@ -54,10 +81,13 @@ class GoldenDesktopV2Tests(unittest.TestCase):
             history = [{**task, "exact": True, "received_ns": 2} for task in tasks]
             session = FakeGrounding()
 
-            def preflight(_arm, _contract):
+            seen_preflight = []
+            def preflight(_arm, _contract, **kwargs):
+                seen_preflight.append(kwargs)
                 (root / "out/workspaces/persistent").mkdir(parents=True)
                 (root / "out/arms/persistent").mkdir(parents=True)
-                return {"call_id": "preflight", "usage": USAGE.copy()}
+                return {"call_id": "preflight", "usage": USAGE.copy(),
+                        "requested_model": kwargs.get("model", "gpt-5.6-luna")}
 
             def run_task(_client, _arm, task, index, cached, workspace, model_root, *, model_call):
                 self.assertEqual(model_call, session.call)
@@ -95,8 +125,13 @@ class GoldenDesktopV2Tests(unittest.TestCase):
                  patch.object(implementation, "records", return_value=history), \
                  patch.object(implementation, "OUT", root / "out"), \
                  patch.object(implementation, "RuntimeClient", client_type):
-                report = demo.run_live(root / "out", 1, grounding_model_type=grounding)
+                opts = {} if model is None else {"model": model}
+                report = demo.run_live(root / "out", 1, grounding_model_type=grounding, **opts)
             options = grounding.call_args.kwargs
+            if model is not None:
+                self.assertEqual(options["model"], model)
+                self.assertEqual(seen_preflight, [{"model": model}])
+                self.assertEqual(report["requested_model"], model)
             if native:
                 self.assertEqual(options["executable"], config["windows_codex_exe"])
                 self.assertIs(options["allow_missing_cache_write"], True)

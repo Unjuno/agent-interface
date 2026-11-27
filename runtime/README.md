@@ -119,6 +119,12 @@ run and performs no automatic retry.
 `audit-live` recomputes call accounting, exact submissions, the stale-reference
 refusal, repair, and every terminal input release from the retained raw records.
 
+To explicitly select a model available through your configured Codex provider,
+add `--model MODEL_ID` to the v3 `run` command. The selected ID is used for
+both the fresh schema preflight and grounding, and the live audit checks that
+they match; the default remains `gpt-5.6-luna` at low reasoning effort. A
+model listing does not guarantee that a particular schema or image task will
+succeed, and a failed preflight does not authorize GUI input.
 The current task-grounding bridge uses two turns on one capability-minimized
 Codex app-server thread.  The schema preflight remains a separate compatibility
 call.  The first frozen v3 run completes 6/6 exact tasks with zero stale pointer
