@@ -147,7 +147,8 @@ class InputOwner:
 
         def release_key(code, *, max_attempts=3, force_first=False):
             attempts = []
-            server_down, before_error, _ = sample_key_down(code)
+            before_started_ns = time.perf_counter_ns()
+            server_down, before_error, before_sampled_ns = sample_key_down(code)
             for attempt in range(1, max_attempts + 1):
                 if server_down is False and not (force_first and attempt == 1):
                     break
@@ -164,12 +165,15 @@ class InputOwner:
                 except Exception as exc:
                     sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
                 sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
+                after_started_ns = time.perf_counter_ns()
                 server_down, after_error, sampled_ns = sample_key_down(code)
                 attempts.append({
                     "attempt": attempt,
                     "keyrelease_started_ns": started_ns,
                     "sync_returned_ns": sync_returned_ns,
                     "keymap_sampled_ns": sampled_ns,
+                    "keymap_before_started_ns": before_started_ns,
+                    "keymap_before_sampled_ns": before_sampled_ns,
                     "server_key_down_before": observed_down_before,
                     "server_key_down_after": server_down,
                     "keymap_before_error": before_error,
@@ -178,6 +182,7 @@ class InputOwner:
                     "sync_error": sync_error,
                 })
                 before_error = after_error
+                before_started_ns, before_sampled_ns = after_started_ns, sampled_ns
                 if server_down is False:
                     break
             return attempts, server_down is False
