@@ -6,6 +6,7 @@ explicitly registered target windows. It never decides admission itself.
 from __future__ import annotations
 
 import hashlib
+import threading
 import time
 from typing import Any
 from Xlib import X, XK, display, protocol
@@ -113,6 +114,7 @@ class X11Backend:
         win = self._target(target)
         if self._focus_within(win.id):
             return
+        self._check_program_deadline()
         win.set_input_focus(X.RevertToParent, X.CurrentTime)
         self.d.sync()
         if not self._focus_within(win.id):
@@ -154,6 +156,7 @@ class X11Backend:
             data=(32, [2, X.CurrentTime, 0, 0, 0]))
         try:
             self._before_activation_request(target,win.id)
+            self._check_program_deadline()
             receipt['request_attempted'] = True
             self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
             self.d.flush()
@@ -189,6 +192,7 @@ class X11Backend:
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
         rx, ry = self._root_point(target, frame, x, y)
+        self._check_program_deadline()
         xtest.fake_input(self.d, X.MotionNotify, x=rx, y=ry)
         self.emissions += 1
         self.d.sync()
@@ -221,6 +225,7 @@ class X11Backend:
             self._track_button_press(button)
             self._publish_input_obligations()
             self._before_input_emission()
+            self._check_program_deadline()
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
@@ -256,6 +261,7 @@ class X11Backend:
             self._track_key_press(key, code)
             self._publish_input_obligations()
             self._before_input_emission()
+            self._check_program_deadline()
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         if getattr(self, '_tap_defer_sync', False):
@@ -439,6 +445,7 @@ class X11Backend:
         buttons = [4] * max(0, -dy) + [5] * max(0, dy)
         buttons += [6] * max(0, -dx) + [7] * max(0, dx)
         for number in buttons:
+            self._check_program_deadline()
             xtest.fake_input(self.d, X.ButtonPress, number)
             xtest.fake_input(self.d, X.ButtonRelease, number)
             self.emissions += 2
@@ -528,10 +535,35 @@ class X11Backend:
         }
 
     def _wait_update(self, timeout_ms: int) -> None:
-        """Fixed delay; scoped backends may interrupt it at their own deadline."""
-        time.sleep(timeout_ms / 1000.0)
+        """Stop waiting at the original lease deadline when one is present."""
+        context = getattr(self, "_program_deadline_context", None)
+        deadline = getattr(context, "deadline", None)
+        if deadline is None:
+            time.sleep(timeout_ms / 1000.0)
+            return
+        remaining = deadline - time.monotonic_ns()
+        if remaining <= 0:
+            raise X11BackendError("LEASE_EXPIRED_DURING_EXECUTION")
+        time.sleep(min(timeout_ms / 1000.0, remaining / 1_000_000_000))
+        self._check_program_deadline()
+
+    def _check_program_deadline(self):
+        context = getattr(self, "_program_deadline_context", None)
+        deadline = getattr(context, "deadline", None)
+        if deadline is not None and time.monotonic_ns() >= deadline:
+            raise X11BackendError("LEASE_EXPIRED_DURING_EXECUTION")
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
+        context = self.__dict__.setdefault("_program_deadline_context", threading.local())
+        previous = getattr(context, "deadline", None)
+        authority = program.get("authority")
+        context.deadline = authority.get("expires_at_ns") if isinstance(authority, dict) else None
+        try:
+            return self._execute_program(program)
+        finally:
+            context.deadline = previous
+
+    def _execute_program(self, program: dict[str, Any]) -> dict[str, Any]:
         keyboard_mapping = self.preflight(program)
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
@@ -555,8 +587,14 @@ class X11Backend:
             }
 
         keyboard_mapping_changed = False
+        # Session admission validates the authority. Low-level synthetic callers
+        # may omit it; guarded callers provide their own stricter native fences.
+        authority = program.get("authority")
+        deadline = authority.get("expires_at_ns") if isinstance(authority, dict) else None
         try:
             for index, op in enumerate(program["ops"]):
+                if deadline is not None and time.monotonic_ns() >= deadline:
+                    raise X11BackendError("LEASE_EXPIRED_DURING_EXECUTION")
                 kind = op["op"]
                 if kind in {"text", "key_chord", "key_state"}:
                     if self._refresh_keyboard_mapping():
@@ -564,6 +602,8 @@ class X11Backend:
                     releasing_key = kind == "key_state" and op["down"] is False
                     if keyboard_mapping_changed and not releasing_key:
                         raise X11BackendError("keyboard mapping changed after program preflight")
+                    if deadline is not None and time.monotonic_ns() >= deadline:
+                        raise X11BackendError("LEASE_EXPIRED_DURING_EXECUTION")
                 if kind == "focus":
                     current_target = op["target"]
                     self.focus(current_target)

@@ -43,6 +43,7 @@ class InterruptCustodyTests(unittest.TestCase):
         self.enterContext(patch('runtime.backends.x11_v1.backend.xtest.fake_input', side_effect=emit))
         self.enterContext(patch('runtime.backends.x11_v1.backend.display.Display',
                                 side_effect=AssertionError('native display forbidden')))
+        self.enterContext(patch('runtime.backends.x11_v1.backend.time.monotonic_ns', return_value=9000))
         b.monotonic_ns = lambda: 9000
         b.manifest = lambda: capability_manifest('inert', 'linux', 'x11', OFFICE_FLOOR)
         b.close = Mock()
