@@ -50,3 +50,15 @@ re-runs the successful trial's retained OCR/effect and boundary auditors. The
 auditor is read-only apart from its temporary extraction directory. A local
 corruption check also verified that a modified archive is rejected before
 extraction. `audit-result.json` records the original audit run.
+
+## Runtime provenance
+
+The 383 retained runtime files exactly match the runtime files present in local
+checkout revision `55c22b21f5a8465420de792c3c8a565d14bd8543`, as verified by
+Git blob hashes. That checkout's full tree is also represented by draft
+[PR #10587](https://github.com/Unjuno/agent-interface/pull/10587) commit
+`4e4588a5d2f39b8b821dae15cc05f39eb9ec0198`. Relative to main at the time of
+the experiment, the snapshot differs in `runtime/guarded_x11_v1/target_queries.py`
+and its corresponding test. It is therefore a frozen research snapshot, not
+an unqualified test of then-current main. The 383-file manifest remains the
+byte-level authority; it is not a complete checkout manifest.
