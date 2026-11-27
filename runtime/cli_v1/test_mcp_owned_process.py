@@ -954,6 +954,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_does_not_replay_uncertain_release_without_display_fence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -983,6 +986,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 return True
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner._snapshot_cache = {}
         owner._process = LiveProcess()
         owner.state = 'open'
@@ -2894,6 +2900,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = True
@@ -2930,6 +2939,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_after_cancel_retirement_preserves_unconfirmed_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -2974,6 +2986,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_after_cancel_retirement_reuses_existing_cleanup_evidence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -3021,6 +3036,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_pipe_failure_runs_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -3052,6 +3070,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_forced_retirement_after_receipt_runs_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.Lock()
+        owner._startup_in_progress = False
+        owner._unregistered_startup_unknown = False
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = True

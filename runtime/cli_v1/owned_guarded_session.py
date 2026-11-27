@@ -362,6 +362,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._rpc = None
         self._control = None
         self._process = None
+        self._lifecycle_lock = threading.Lock()
+        self._startup_in_progress = False
+        self._close_during_startup = False
+        self._unregistered_startup_unknown = False
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
@@ -401,6 +405,47 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 interrupted_execution=deepcopy(snapshot.get('interrupted_execution'))))
 
     def _ensure_started(self):
+        # Linearize startup admission with the unopened close decision. Never
+        # hold this lock across process creation or an RPC wait.
+        with self._lifecycle_lock:
+            if self._startup_in_progress:
+                raise RuntimeError('owned guarded session startup already in progress')
+            if self.state == 'closed':
+                raise RuntimeError('owned guarded session unavailable: closed')
+            self._startup_in_progress = True
+        finished = False
+        try:
+            self._ensure_started_impl()
+            with self._lifecycle_lock:
+                interrupted = self._close_during_startup
+                if not interrupted:
+                    self._startup_in_progress = False
+                    finished = True
+                    return
+            # The original close has already returned UNKNOWN. Fence this
+            # generation even if retirement itself raises or cannot finish.
+            self.state = 'failed'
+            self._execution_unknown = True
+            self.review_required = True
+            self._retire('close was requested during owned startup')
+            supervisor = self._cleanup_supervisor
+            if supervisor is not None:
+                supervisor.close()
+            raise RuntimeError('owned startup completed after close request')
+        except BaseException:
+            with self._lifecycle_lock:
+                if self._process is None:
+                    self._unregistered_startup_unknown = True
+                    self._execution_unknown = True
+                    self.review_required = True
+                    self.state = 'failed'
+            raise
+        finally:
+            if not finished:
+                with self._lifecycle_lock:
+                    self._startup_in_progress = False
+
+    def _ensure_started_impl(self):
         if self._process is not None:
             if self._process.is_alive() and self.state == 'open':
                 return
@@ -452,13 +497,23 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     self._cleanup_supervisor_target,
                     expected_session_id=self.session_id)
             self.state = 'open'
-        except BaseException:
+        except BaseException as startup_error:
             try:
-                process_alive = process.pid is not None and process.is_alive()
-            except (AssertionError, ValueError):
-                process_alive = False
-            if process_alive:
-                self._retire('owned or cancellation supervisor readiness failed')
+                process_pid = process.pid
+            except (AssertionError, ValueError, OSError):
+                process_pid = None
+            if process_pid is not None:
+                # start() may raise after spawning but before registration. Keep
+                # the exact Process object even if it already exited.
+                if self._process is None:
+                    self._process = process
+                self._execution_unknown = True
+                self.review_required = True
+                try:
+                    if process.is_alive():
+                        self._retire('owned or cancellation supervisor readiness failed')
+                except Exception as cleanup_error:
+                    startup_error.add_note('startup retirement failed: ' + type(cleanup_error).__name__)
             if self.state == 'opening':
                 self.state = 'failed'
             for connection in (rpc_parent, control_parent, rpc_child, control_child):
@@ -494,22 +549,28 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     def snapshot(self):
         row = deepcopy(self._snapshot_cache)
-        if self._process is None:
+        with self._lifecycle_lock:
+            owner_process = self._process
+            unregistered_unknown = (owner_process is None and
+                                    (self._startup_in_progress or
+                                     self._unregistered_startup_unknown))
             observed_ns = time.monotonic_ns()
-            process = {'pid':None, 'alive':False, 'exitcode':None,
-                       'retired':False, 'release_confirmed':None,
-                       'liveness_observed_monotonic_ns':observed_ns}
+        if owner_process is None:
+            process = {'pid':None, 'alive':None if unregistered_unknown else False,
+                       'exitcode':None, 'retired':None if unregistered_unknown else False,
+                       'release_confirmed':None,
+                       'liveness_observed_monotonic_ns':None if unregistered_unknown else observed_ns}
         else:
-            alive = self._process.is_alive()
+            alive = owner_process.is_alive()
             observed_ns = time.monotonic_ns()
             if not alive and self.state == 'open':
                 self._execution_unknown = True
                 self.state = 'failed'
                 self.error = 'owned guarded process exited without an accepted close receipt'
                 self.review_required = True
-            process = {'pid':self._process.pid, 'alive':alive,
+            process = {'pid':owner_process.pid, 'alive':alive,
                        'liveness_observed_monotonic_ns':observed_ns,
-                       'exitcode':self._process.exitcode,
+                       'exitcode':owner_process.exitcode,
                        'retired':False if self._retirement is None else
                                  True if isinstance(self._retirement, dict) and
                                          self._retirement.get('retired') is True else None,
@@ -517,7 +578,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                        'x_client_resource_base':self._snapshot_cache.get(
                            'owner_x_client_resource_base')}
         execution_unknown = self._execution_unknown
-        if self._process is not None:
+        if owner_process is not None:
             process['release_confirmed'] = False if execution_unknown else None
         row.update(session_id=self.session_id, mode='guarded-x11-owned-process',
                    state=self.state, binding_revision=self.binding_revision,
@@ -1143,19 +1204,35 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        with self._lifecycle_lock:
+            if self._startup_in_progress:
+                self._close_during_startup = True
+                # A caller may retry, but this is not a completed close receipt.
+                return {'status':'startup_in_progress', 'session_id':self.session_id,
+                        'authority_granted':False, 'restart_allowed':False,
+                        'release_attempted':False, 'release_confirmed':False,
+                        'connection_close_attempted':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False, 'verified':False}
+            if self.close_report is not None:
+                return deepcopy(self.close_report)
+            if self._process is None:
+                if self._unregistered_startup_unknown:
+                    row = {'status':'cleanup_failed', 'session_id':self.session_id,
+                           'authority_granted':False, 'restart_allowed':False,
+                           'release_attempted':False, 'release_confirmed':False,
+                           'connection_close_attempted':False, 'cleanup_status':'UNKNOWN',
+                           'task_success':None, 'replay_allowed':False, 'verified':False}
+                else:
+                    self.state = 'closed'
+                    row = {'status':'closed', 'session_id':self.session_id,
+                           'authority_granted':False, 'restart_allowed':False,
+                           'release_attempted':False, 'release_confirmed':None,
+                           'connection_close_attempted':False, 'verified':True}
+                self.close_report = row
+                return deepcopy(row)
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()
-        if self.close_report is not None:
-            return deepcopy(self.close_report)
-        if self._process is None:
-            self.state = 'closed'
-            row = {'status':'closed', 'session_id':self.session_id,
-                   'authority_granted':False, 'restart_allowed':False,
-                   'release_attempted':False, 'release_confirmed':None,
-                   'connection_close_attempted':False, 'verified':True}
-            self.close_report = row
-            return deepcopy(row)
         retirement = getattr(self, '_retirement', None)
         client_disconnect = getattr(self, '_owner_client_disconnect', None)
         previous_release_attempt = getattr(self, '_owner_release_attempt', None)
