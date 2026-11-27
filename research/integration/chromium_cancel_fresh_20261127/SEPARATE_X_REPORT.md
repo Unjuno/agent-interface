@@ -1,0 +1,11 @@
+# Delayed old input with a separate fresh X server
+
+One preregistered no-model attempt used source `ac21495aa379cbed4eab291f964788b4685ce32d`, separate private Xvfb servers `:88` and `:90`, separate Chromium app windows and profiles, and one loopback HTTP effect oracle. On `:88`, the existing test proxy held the runtime-tracked second `a` request for 3,000 ms across old-client EOF. After old cancellation, a fresh public MCP owner on `:90` entered `c` into its independently launched browser. This is a forced transport fault in an isolated namespace, not a natural failure-rate study.
+
+The new server's task had exactly one `fresh=c` effect through 8,505.905 ms. The old task did **not** remain exact: its effects were `old=a` and then `old=aa`, with the second recorded after proxy forwarding. Both servers' observed `a`/`b`/`c` key states were up at the horizon and before fixture cleanup. Old cancellation remained `UNKNOWN`, `release_confirmed=false`, with late server requests possible. Both Chromium leader processes exited with code 0; namespace teardown was additional fixture cleanup.
+
+The raw `FRESH_ISOLATION_OBSERVED`/`scoped_pass` labels report the fresh-isolation checks only; `old_task_exact=false` records the old-task failure. This result shows a useful containment option for this ordering, not safe continuation of the old task, cancellation of a transmitted request, automatic environment migration, verified old release, or general fault tolerance. A separately launched application may not share or preserve the old task's state or external side effects. No stdio transport, model, performance or arbitrary-website claim follows.
+
+The sibling [same-X-server proxy trial](PROXY_REPORT.md) recorded `fresh=c` followed by contaminated `fresh=ca`. These are individually scoped forced-order observations, not a matched statistical comparison.
+
+`separate-x-raw.tar.gz` contains conditions, pre-run hashes, harness/proxy sources, original screenshots, MCP receipts, HTTP history, proxy events, X/WM/browser logs and cleanup records. Profiles and private HOME/XDG scratch are excluded. SHA-256: `c4c55a3f128c45f49ca93578b1456f574fbfec184066a19e3388b4ffb4d61a4d`. Launchers retain original scratch paths and are evidence, not portable rerun instructions.
