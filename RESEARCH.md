@@ -1,3 +1,7 @@
+# Issue #8609 T0 A01 — versioned semantic degradation
+
+`PASS_METHOD_SCOPED` on an authored 1,024-state contract matrix: the versioned selector retained supported read-only outcomes in 320 states versus 1 for the binary comparator, and six audit mutations were rejected. This does not establish deployed fallback safety or task success. See [report](research/analysis/versioned_semantic_degradation_8609_t0_a01_20261009/REPORT.md) and [protocol](research/analysis/versioned_semantic_degradation_8609_t0_a01_20261009/PROTOCOL.md).
+
 # Issue #8587 T0 A01 — multi-source event reconciliation
 
 `PASS_METHOD_SCOPED` on an authored 15-case trace fixture: eight identifiable faults localized, two cases UNKNOWN, and no false localizations on five benign controls. This does not establish real GUI event completeness or task success. See the [report](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) and [protocol](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/PROTOCOL.md).
