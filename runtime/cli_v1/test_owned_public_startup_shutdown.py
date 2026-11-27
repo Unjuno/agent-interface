@@ -6,6 +6,10 @@ from runtime.cli_v1.test_mcp_owned_process import _fake_owner_factory
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_process_identity import metadata
 
+def _marker_owner_factory(targets, directory, display_name, options):
+ Path(directory, 'factory-entered').write_text('entered', encoding='utf-8')
+ return _fake_owner_factory(targets, directory, display_name, options)
+
 class PublicStartupShutdownTests(unittest.IsolatedAsyncioTestCase):
  async def test_pre_pid_shutdown_can_be_followed_by_late_process_creation(self):
   # Counterexample: a parent-side cancellation flag cannot interrupt a start()
@@ -17,7 +21,7 @@ class PublicStartupShutdownTests(unittest.IsolatedAsyncioTestCase):
     entered.set()
     if not resume.wait(20):raise TimeoutError('pre-pid gate')
     original_start(process);spawned.append(process);late.append(shutdown_returned.is_set())
-   server=create_server({'app':20},directory,session_mode='guarded-x11',guarded_process_identity=True,guarded_query_worker=True,guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+   server=create_server({'app':20},directory,session_mode='guarded-x11',guarded_process_identity=True,guarded_query_worker=True,guarded_owned_process=True,_guarded_owner_factory=_marker_owner_factory)
    lifespan=server.settings.lifespan(server);await lifespan.__aenter__();call=None;exiting=None
    try:
     with patch.object(multiprocessing.process.BaseProcess,'start',gated_start):
@@ -30,6 +34,8 @@ class PublicStartupShutdownTests(unittest.IsolatedAsyncioTestCase):
      result=metadata(await asyncio.wait_for(asyncio.shield(call),10))
      self.assertEqual(late,[True])
      self.assertNotEqual(result.get('status'),'observed',result)
+     self.assertEqual(list(Path(directory).rglob('factory-entered')), [],
+                      'late child must not enter owner factory after shutdown')
    finally:
     resume.set()
     if call is not None and not call.done():

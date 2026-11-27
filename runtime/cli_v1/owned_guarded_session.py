@@ -220,12 +220,14 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, startup_cancel_event):
     owner = None
     control_stop = threading.Event()
     control_thread = None
     ready_sent = False
     try:
+        if startup_cancel_event.is_set():
+            raise RuntimeError('owned startup cancelled before owner initialization')
         owner = (owner_factory(targets, directory, display_name, options)
                  if owner_factory is not None else
                  GuardedSessionOwner(targets, directory, display_name, **options))
@@ -365,6 +367,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._lifecycle_lock = threading.Lock()
         self._startup_in_progress = False
         self._starting_process = None
+        self._startup_cancel_event = None
         self._close_during_startup = False
         self._unregistered_startup_unknown = False
         self._unclosed_startup_handles = []
@@ -482,6 +485,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             allocated.extend((control_parent, control_child))
             input_obligations_state = context.RawArray(
                 'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
+            startup_cancel_event = context.Event()
+            with self._lifecycle_lock:
+                self._startup_cancel_event = startup_cancel_event
+                if self._close_during_startup:
+                    startup_cancel_event.set()
             self._owner_input_obligations_state = input_obligations_state
             _publish_owner_input_obligations(input_obligations_state, {}, [])
             process = context.Process(
@@ -493,7 +501,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                        'observation_worker':self.observation_worker,
                        'window_lifecycle':self.window_lifecycle,
                        'retention_mode':self.retention_mode},
-                      self._owner_factory, input_obligations_state),
+                  self._owner_factory, input_obligations_state, startup_cancel_event),
                 name='guarded-x11-owner-' + self.session_id[:8])
         except BaseException as allocation_error:
             for connection in tuple(allocated):
@@ -1261,6 +1269,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             during_startup = self._startup_in_progress
             if during_startup:
                 self._close_during_startup = True
+                if self._startup_cancel_event is not None:
+                    self._startup_cancel_event.set()
                 self._execution_unknown = True
                 self.review_required = True
                 candidate = self._starting_process
@@ -1294,6 +1304,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         with self._lifecycle_lock:
             if self._startup_in_progress:
                 self._close_during_startup = True
+                if self._startup_cancel_event is not None:
+                    self._startup_cancel_event.set()
                 # A caller may retry, but this is not a completed close receipt.
                 return {'status':'startup_in_progress', 'session_id':self.session_id,
                         'authority_granted':False, 'restart_allowed':False,

@@ -30,6 +30,7 @@ class Context:
             if not resume.wait(5): raise RuntimeError('allocation gate timed out')
         return Conn(), Conn()
     def RawArray(self, kind, size): return bytearray(size)
+    def Event(self): return threading.Event()
     def Process(self, **kwargs): return self.process
 
 class StartupCloseFenceTests(unittest.TestCase):
