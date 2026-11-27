@@ -263,6 +263,21 @@ class OwnedServiceHandoffTests(unittest.TestCase):
                     self.assertTrue(previous.wait(5)["verified"]);self.assertTrue(backend.owned_service.startup["timed_up_enabled"])
                     self.assertEqual(receipt["generation"],1);self.assertIsNone(backend._source_identity)
                     backend.snapshot("new-source",0);self.assertIsNotNone(backend._source_identity)
+                    replacement=Executor(backend,events.append)
+                    try:
+                        replacement.submit("new-timed",[{"op":"hold","keys":["a"],"duration_ms":200}],
+                                           backend.sequence,time.perf_counter_ns()+10_000_000_000)
+                        worker=replacement.active[2] if replacement.active else None
+                        if worker:worker.join(6)
+                        self.assertFalse(worker and worker.is_alive())
+                        result=next(row for row in events if row.get("event")=="terminal" and row.get("id")=="new-timed")
+                        self.assertEqual(result["status"],"completed",result)
+                        self.assertTrue(result["release"]["verified"])
+                        up=next(row for row in events if row.get("event")=="input_release_transition" and row.get("id")=="new-timed")
+                        self.assertEqual(up["release_mode"],"owner_deadline")
+                        self.assertTrue(up["owner_thread_keyup_verified"])
+                    finally:
+                        replacement.close()
 
     def test_backend_rotates_verified_cancelled_owner_and_invalidates_source(self):
         with tempfile.TemporaryDirectory() as temp:
