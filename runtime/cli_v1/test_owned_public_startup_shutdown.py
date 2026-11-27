@@ -7,6 +7,41 @@ from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_process_identity import metadata
 
 class PublicStartupShutdownTests(unittest.IsolatedAsyncioTestCase):
+ async def test_pre_pid_shutdown_can_be_followed_by_late_process_creation(self):
+  # Counterexample: a parent-side cancellation flag cannot interrupt a start()
+  # already entered before a PID exists. This does not grant input authority.
+  with tempfile.TemporaryDirectory() as directory:
+   entered=threading.Event();resume=threading.Event();shutdown_returned=threading.Event()
+   spawned=[];late=[];original_start=multiprocessing.process.BaseProcess.start
+   def gated_start(process):
+    entered.set()
+    if not resume.wait(20):raise TimeoutError('pre-pid gate')
+    original_start(process);spawned.append(process);late.append(shutdown_returned.is_set())
+   server=create_server({'app':20},directory,session_mode='guarded-x11',guarded_process_identity=True,guarded_query_worker=True,guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+   lifespan=server.settings.lifespan(server);await lifespan.__aenter__();call=None;exiting=None
+   try:
+    with patch.object(multiprocessing.process.BaseProcess,'start',gated_start):
+     call=asyncio.create_task(server.call_tool('interface_guarded_observe',{}))
+     self.assertTrue(await asyncio.to_thread(entered.wait,3))
+     exiting=asyncio.create_task(lifespan.__aexit__(None,None,None))
+     await asyncio.wait_for(asyncio.shield(exiting),12)
+     shutdown_returned.set()
+     resume.set()
+     result=metadata(await asyncio.wait_for(asyncio.shield(call),10))
+     self.assertEqual(late,[True])
+     self.assertNotEqual(result.get('status'),'observed',result)
+   finally:
+    resume.set()
+    if call is not None and not call.done():
+     try:await asyncio.wait_for(asyncio.shield(call),10)
+     except Exception:pass
+    if exiting is None:await lifespan.__aexit__(None,None,None)
+    elif not exiting.done():await asyncio.wait_for(asyncio.shield(exiting),12)
+    for process in spawned:
+     if process.is_alive():process.kill()
+     await asyncio.to_thread(process.join,3)
+     self.assertFalse(process.is_alive())
+
  async def test_observe_does_not_complete_after_shutdown_during_start(self):
   with tempfile.TemporaryDirectory() as directory:
    captured=[]; original_init=OwnedGuardedSessionOwner.__init__
