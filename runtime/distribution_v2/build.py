@@ -123,6 +123,15 @@ if len(sys.argv) > 1 and sys.argv[1] in ("mcp", "relay"):
         raise SystemExit(2)
 else:
     from runtime.cli_v1.__main__ import main
+    if sys.argv[1:] in (["-h"], ["--help"]):
+        try:
+            main()
+        except SystemExit as error:
+            if error.code != 0:
+                raise
+        print()
+        print("Optional stdio modes: mcp and relay (require mcp==1.30.0).")
+        raise SystemExit(0)
 raise SystemExit(main())
 ''',
 }
