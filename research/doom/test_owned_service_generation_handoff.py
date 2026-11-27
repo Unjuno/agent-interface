@@ -11,6 +11,23 @@ from test_owned_owner_backend_adapter import child_geometry, parent_backend, Sig
 from input_owner_process_v3 import launch_owner_service
 
 @contextmanager
+def child_retire_reader(*,display,out,service_id):
+    from test_map01_process_identity_backend import backend_fixture
+    with backend_fixture() as (backend,events,generation,fake):
+        if display!=":fake":raise ValueError("fake display required")
+        fixtures.configure_geometry(fake)
+        fake.keysym_to_keycode=lambda value:{ord('a'):38,ord('d'):40}.get(value,0)
+        stop=threading.Event()
+        def retire():
+            while not stop.wait(.005):
+                if (out/"retire-reader").exists():
+                    backend.owner._inner.identity_reader.worker.close()
+                    return
+        thread=threading.Thread(target=retire);thread.start()
+        try:yield backend.owner
+        finally:stop.set();thread.join(2)
+
+@contextmanager
 def close_order_barrier(*,display,out,service_id):
     import input_owner_cancel_v4 as lane
     original=lane.CancellationService.close
@@ -153,6 +170,41 @@ class OwnedServiceHandoffTests(unittest.TestCase):
         backend.owned_generation_rotation_supported=False;self.assertFalse(predicate(backend))
         backend.owned_generation_rotation_supported=True;backend.window_identity=object();self.assertFalse(predicate(backend))
         backend.window_identity=None;backend.rotate_input_owner_after_cancel=None;self.assertFalse(predicate(backend))
+
+    def test_owned_child_target_invalidation_reaches_parent_and_recovers(self):
+        with tempfile.TemporaryDirectory() as temp:
+            def selected(*args,**kwargs):
+                kwargs.pop("owner_service",None)
+                return session_backend.Backend(*args,**kwargs,_owner_factory=child_retire_reader)
+            with patch.object(fixtures,"Backend",selected):
+                with parent_backend(temp,None) as (backend,events,_):
+                    backend.snapshot("source",0);executor=Executor(backend,events.append)
+                    executor.submit("old",[{"op":"hold","keys":["a","d"],"duration_ms":1000}],backend.sequence,time.perf_counter_ns()+10_000_000_000)
+                    deadline=time.monotonic()+3
+                    while not any(x.get("event")=="keys_held" for x in events) and time.monotonic()<deadline:time.sleep(.005)
+                    self.assertTrue(any(x.get("event")=="keys_held" for x in events))
+                    worker=executor.active[2];(backend.owned_service.out/"retire-reader").touch();worker.join(5)
+                    self.assertFalse(worker.is_alive())
+                    terminal=copy.deepcopy(next(x for x in events if x.get("event")=="terminal" and x.get("id")=="old"))
+                    from verified_interruption_release_v1 import qualified_interruption_release
+                    self.assertEqual(terminal["status"],"needs_decision",terminal)
+                    self.assertTrue(qualified_interruption_release(terminal));self.assertTrue(terminal["release"]["verified"])
+                    self.assertEqual(set(terminal["interruption"]["record"]["key_release_attempts"]),{"38","40"})
+                    from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
+                    protocol=InputOwnerGenerationProtocol();protocol.record_terminal(terminal,backend)
+                    old=backend.owned_service
+                    replacement,rotation=protocol.rotate({"op":"rotate_input_owner","id":"old"},executor=executor,
+                        backend=backend,executor_factory=lambda b:Executor(b,events.append))
+                    self.assertTrue(old.wait(5)["verified"]);self.assertFalse(old.process.is_alive())
+                    self.assertEqual(rotation["generation"],1);self.assertIsNone(backend._source_identity)
+                    refresh=protocol.refresh_source({"op":"refresh_owner_source","id":"old"},backend=backend)
+                    self.assertFalse(refresh["grants_input_authority"])
+                    replacement.submit("new",[{"op":"hold","keys":["a"],"duration_ms":5}],backend.sequence,time.perf_counter_ns()+10_000_000_000)
+                    worker=replacement.active[2] if replacement.active else None
+                    if worker:worker.join(4);self.assertFalse(worker.is_alive())
+                    new=next(x for x in events if x.get("event")=="terminal" and x.get("id")=="new")
+                    self.assertEqual(new["status"],"completed");self.assertTrue(new["release"]["verified"])
+                    replacement.close()
 
     def test_actual_new_child_start_failure_retains_handle_and_blocks_future_authority(self):
         from test_input_owner_process_v3 import fake_owner_start_error

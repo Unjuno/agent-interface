@@ -157,14 +157,23 @@ class InputOwner:
             # identity-bound cleanup as an already-released cancellation.
             records_after = self._records_snapshot()
             cleanup = records_after[-1] if records_after else None
+            cancelled = (lease is not None and
+                         getattr(getattr(lease, "cancel", None), "is_set", lambda: False)())
+            snapshot = getattr(lease, "interruption_snapshot", lambda: None)() if lease is not None else None
+            from verified_interruption_release_v1 import qualified_interruption_release
+            interrupted = (type(snapshot) is dict and snapshot.get("record") == cleanup
+                and qualified_interruption_release(
+                    {"event":"terminal", "status":"needs_decision", "interruption":snapshot},
+                    self._intent_token(lease))
+                and cleanup.get("target_process_identity") == list(getattr(lease, "target_process_identity", ())))
             cleanup_valid = (
                 str(error) == "up_batch requires the active input lease"
                 and lease is not None
-                and getattr(getattr(lease, "cancel", None), "is_set", lambda: False)()
+                and (cancelled or interrupted)
                 and markers and all(marker is not None for marker in markers.values())
                 and type(cleanup) is dict
                 and cleanup.get("event") == "owner_release"
-                and cleanup.get("reason") == "cancelled"
+                and (cleanup.get("reason") == "cancelled" if cancelled else interrupted)
                 and cleanup.get("verified") is True
                 and cleanup.get("keys_down") == []
                 and cleanup.get("buttons_down") == []
@@ -219,6 +228,7 @@ class InputOwner:
                 "owner_thread_keyup_verified": False,
                 "owner_cleanup_release_verified": True,
                 "owner_cleanup_record": dict(cleanup),
+                "owner_cleanup_keycode": markers[key][4],
                 "admission_receipt": self._admission_receipt_for_release(
                     markers[key], lease, "down", key, started_ns)[0],
                 "admission_receipt_valid": self._admission_receipt_for_release(
@@ -227,10 +237,11 @@ class InputOwner:
                 "owner_release_history_complete": True,
                 "ordinary_release_candidate": False,
                 "grants_input_authority": False,
-                "cancelled_cleanup_join": True,
+                "cancelled_cleanup_join": bool(cancelled),
+                "owner_interruption_cleanup_join": bool(interrupted and not cancelled),
                 "measurement_contract": (
-                    "verified owner cancellation cleanup released this key before its "
-                    "queued explicit UP; no explicit-UP receipt is claimed"
+                    "verified owner cleanup released this key before its queued "
+                    "explicit UP; no explicit-UP receipt is claimed"
                 ),
                 **lease_state,
             } for key in keys]
