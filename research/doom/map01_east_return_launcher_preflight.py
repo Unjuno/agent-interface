@@ -52,6 +52,20 @@ def retirement_disposition(unit_absent, cgroup_absent, service_observed):
     return absent, absent and service_observed
 
 
+def registered_checkout(spec):
+    """Use only the canonical worktree bound into the authenticated registration."""
+    value=spec.get('checkout') if type(spec) is dict else None
+    if type(value) is not str or not value:
+        raise ValueError('registered checkout is missing')
+    path=Path(value)
+    try:
+        if not path.is_absolute() or not path.is_dir() or path.resolve(strict=True)!=path:
+            raise ValueError('registered checkout must be a canonical directory')
+    except (OSError,RuntimeError) as error:
+        raise ValueError('registered checkout unavailable') from error
+    return path
+
+
 def validate_runtime_inputs(root, spec, *, expected_checkout, baseline_path, baseline_sha256):
     """Check the complete fixed runtime binding before consuming the claim."""
     root=Path(root);checkout=Path(expected_checkout)

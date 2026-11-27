@@ -10,6 +10,17 @@ from pathlib import Path
 from map01_east_return_launcher_preflight import validate_unspent, retirement_disposition, validate_runtime_inputs, read_marker
 
 class LauncherPreflightTests(unittest.TestCase):
+ def test_registered_checkout_accepts_canonical_worktree_and_rejects_alias(self):
+  import map01_east_return_launcher_preflight as preflight
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp);checkout=root/'alternate-worktree';checkout.mkdir()
+   resolve=getattr(preflight,'registered_checkout',lambda _spec:None)
+   self.assertEqual(resolve({'checkout':str(checkout)}),checkout)
+   for value in ('relative',str(checkout/'..'/'alternate-worktree')):
+    with self.subTest(value=value),self.assertRaises(ValueError):resolve({'checkout':value})
+   alias=root/'alias';alias.symlink_to(checkout,target_is_directory=True)
+   with self.assertRaises(ValueError):resolve({'checkout':str(alias)})
+
  def test_runtime_pins_and_git_revision_are_checked_before_claim(self):
   with tempfile.TemporaryDirectory() as temp:
    base=Path(temp);checkout=base/'source';checkout.mkdir();trial=base/'trial';trial.mkdir()

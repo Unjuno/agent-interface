@@ -69,7 +69,7 @@ try:
     preflight['validate_unspent'](root,spec,expected_east_sha='89a58ce4069bc4aff69805479164ed2cc9c96a61edb768a6685c1d6ad2fcc9cc',
         expected_initial_sha='c3f196d116c370b3d34daa47cafa73b400fd3fb8537b9c70d4a093b15a4b7988',
         expected_guard_sha='8ec9b693c15fa881096f429b71333cbb93c107976ace02cbe5cb96eb35612afa')
-    preflight['validate_runtime_inputs'](root,spec,expected_checkout=Path('/home/user/issue59-door-effect'),
+    preflight['validate_runtime_inputs'](root,spec,expected_checkout=preflight['registered_checkout'](spec),
         baseline_path=Path('/home/user/issue59-grandchild-bound-setup-yzkdlh9q/registration.json'),
         baseline_sha256='4dbe44082da117dde60a7713157065bcc5d490bf720a9a988b1e0e7707b4ee6d')
 except (ValueError,OSError) as error:
