@@ -1,0 +1,100 @@
+{
+  "schema": "agent-interface/issue59-8094-currentmain-delta-audit-v1",
+  "intake_main": "a3e6b0c1ab8d6af5c24abb88a451ce41c4ede028",
+  "merge_base": "21fecd58b9de30073c97234124e73b78c67d4b0c",
+  "candidate_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "candidate_pr": 8094,
+  "paths": [
+    {
+      "path": "research/doom/doom_batch_key_measurement_backend_v1.py",
+      "base_sha": null,
+      "main_sha": null,
+      "candidate_sha": "5b07504d68c69ee508d53458c7caf5392b5ea9e4",
+      "classification": "CANDIDATE_ADD_CLEAN"
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "base_sha": "193c2bd231795e7ee57de64aedfd741c8b814013",
+      "main_sha": "193c2bd231795e7ee57de64aedfd741c8b814013",
+      "candidate_sha": null,
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "base_sha": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+      "main_sha": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+      "candidate_sha": "e2de3df2934f68aadb17d9977ab46d399e3cabf9",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/doom/session_map01_v12.py",
+      "base_sha": "e701035302da4802e0db463035c4d653a7e7618b",
+      "main_sha": "e701035302da4802e0db463035c4d653a7e7618b",
+      "candidate_sha": "7ccd489625335522104a9a49a2c8427d212ae63b",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/doom/session_map01_v15.py",
+      "base_sha": "f71ca01426a703e4160c9403395fed03416c772e",
+      "main_sha": "f71ca01426a703e4160c9403395fed03416c772e",
+      "candidate_sha": "2d6974c20f4e272fd965efe033608977b5e95407",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/doom/v39_measurement_backend_selection_v1.py",
+      "base_sha": null,
+      "main_sha": null,
+      "candidate_sha": "c7d84b1b8b20e6e7e5ce980c5fc85dfbca08d1fd",
+      "classification": "CANDIDATE_ADD_CLEAN"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "base_sha": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+      "main_sha": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+      "candidate_sha": "5622e684f58869a8a812c220ca80cc6eedf1b806",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "base_sha": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "main_sha": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "candidate_sha": "159c5d310ee2e6dd306ebd9b3d8dc041960ee219",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/live_control/key_edge_measurement_v1.py",
+      "base_sha": null,
+      "main_sha": null,
+      "candidate_sha": "775c58961ebaa15aae8a226b2b1dd8fa4c286cb7",
+      "classification": "CANDIDATE_ADD_CLEAN"
+    },
+    {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "base_sha": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "main_sha": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "candidate_sha": "1e7ad4f936c45525eb1696c366bdf3b9471bac01",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    },
+    {
+      "path": "research/doom/map01_motor_responder_v10.txt",
+      "base_sha": "9ee9fe93d9783fa8bddba58f8f3c5b538d450076",
+      "main_sha": "9ee9fe93d9783fa8bddba58f8f3c5b538d450076",
+      "candidate_sha": "ef32ef849aabe57abe158d6d12040fd6d655ccd2",
+      "classification": "MAIN_UNCHANGED_CANDIDATE_ONLY"
+    }
+  ],
+  "counts": {
+    "total": 11,
+    "clean_add": 3,
+    "main_unchanged_candidate_only": 8,
+    "conflicts": 0
+  },
+  "decision": "PASS_CURRENT_MAIN_DELTA_NONCONFLICT_SCOPED",
+  "limits": [
+    "Git-blob/source compatibility only",
+    "does not run V15/V39/Executor/X11/game/model",
+    "does not approve PR #8094 or its 1467-file evidence delta",
+    "does not establish live per-key timing, useful feedback, recovery benefit, or MAP01 progress",
+    "snapshot-scoped to intake_main"
+  ]
+}
