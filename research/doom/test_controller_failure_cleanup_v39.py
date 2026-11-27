@@ -1,3 +1,4 @@
+import hashlib
 import json
 import tempfile
 import unittest
@@ -617,6 +618,45 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         }
         receipt = self.run_cleanup(None, [admission, released], status="cancelled")
         self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_failure_preserves_completed_decisions_refreshes_and_controller_events(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            events = [
+                {"event": "typed_observation", "sequence": 12, "health": 48},
+                {"event": "terminal", "id": "cover-0", "status": "completed"},
+            ]
+            decisions = [{"iteration": 0, "model_ns": 1500000000,
+                          "cover_policy": {"state": "active"}}]
+            source_refreshes = [{"iteration": 1, "status": "refused",
+                                 "reason": "invalid_observed_health"}]
+            scope = ControllerFailureCleanup(Planner(), output)
+            scope.observe_output(events, RetiredReader(), None, None, [])
+            scope.observe_progress(decisions, source_refreshes)
+            with self.assertRaisesRegex(RuntimeError, "source refresh refused"):
+                with scope:
+                    scope.set_stage("source_refresh")
+                    raise RuntimeError("source refresh refused")
+
+            progress_path = output / "controller-failure-progress.json"
+            progress_bytes = progress_path.read_bytes()
+            progress = json.loads(progress_bytes)
+            receipt = json.loads((output / "controller-failure.json").read_text())
+
+            self.assertEqual(progress["format"], "map01-controller-failure-progress-v1")
+            self.assertEqual(progress["failed_stage"], "source_refresh")
+            self.assertEqual(progress["decisions"], decisions)
+            self.assertEqual(progress["decision_count"], 1)
+            self.assertEqual(progress["source_refreshes"], source_refreshes)
+            self.assertEqual(progress["controller_events"], events)
+            self.assertEqual(progress["event_capture_status"], "complete")
+            self.assertIn("raw stdout bytes are not preserved",
+                          progress["controller_event_capture_scope"])
+            self.assertEqual(
+                receipt["diagnostic_progress"]["sha256"],
+                hashlib.sha256(progress_bytes).hexdigest(),
+            )
+            self.assertFalse((output / "controller-failure-progress.json.tmp").exists())
 
 if __name__ == "__main__":
     unittest.main()

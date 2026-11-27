@@ -1,5 +1,5 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
-import atexit,json,math,os,select,threading,time
+import atexit,hashlib,json,math,os,select,threading,time
 from collections import Counter
 from copy import deepcopy
 
@@ -234,6 +234,7 @@ class ControllerFailureCleanup:
         self.failed_stage='controller_setup'
         self.events=None;self.reader=None;self.event_wait=None;self.runtime=None
         self.reader_errors=[]
+        self.decisions=None;self.source_refreshes=None
     def track(self, process):
         self.process=process
     def set_stage(self, name):
@@ -242,6 +243,8 @@ class ControllerFailureCleanup:
         self.events=events;self.reader=reader;self.event_wait=event_wait
         self.runtime=runtime
         self.reader_errors=[] if reader_errors is None else reader_errors
+    def observe_progress(self, decisions, source_refreshes):
+        self.decisions=decisions;self.source_refreshes=source_refreshes
     def __enter__(self): return self
     def __exit__(self, kind, error, traceback):
         if error is None: return False
@@ -338,6 +341,39 @@ class ControllerFailureCleanup:
             if reader_alive:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
+        if self.decisions is not None and self.source_refreshes is not None:
+            def write_failure_progress():
+                events=self.events if type(self.events) is list else []
+                payload={
+                    'format':'map01-controller-failure-progress-v1',
+                    'failed_stage':self.failed_stage,
+                    'decision_count':len(self.decisions),
+                    'decisions':deepcopy(self.decisions),
+                    'source_refreshes':deepcopy(self.source_refreshes),
+                    'controller_events':deepcopy(events),
+                    'controller_event_capture_scope':(
+                        'parent-parsed stdout event objects after controller timing annotations; '
+                        'raw stdout bytes are not preserved by this artifact'),
+                    'event_capture_status':(
+                        'complete' if receipt['stdout_reader_retired'] and
+                        not receipt['stdout_reader_errors'] else 'incomplete'),
+                    'stdout_reader_errors':list(self.reader_errors),
+                }
+                serialized=(json.dumps(payload,indent=2,allow_nan=False)+'\n').encode('utf-8')
+                temporary=self.out/'controller-failure-progress.json.tmp'
+                final=self.out/'controller-failure-progress.json'
+                with open(temporary,'wb') as output:
+                    output.write(serialized)
+                    output.flush()
+                    os.fsync(output.fileno())
+                os.replace(temporary,final)
+                return {'path':str(final),'sha256':hashlib.sha256(serialized).hexdigest(),
+                        'decision_count':len(self.decisions),
+                        'event_count':len(events),
+                        'event_capture_status':payload['event_capture_status']}
+            progress_written=attempt('failure_progress_write',write_failure_progress)
+            if progress_written:
+                receipt['diagnostic_progress']=receipt['stages'][-1]['result']
         event_collection_valid=type(self.events) is list
         events=self.events if event_collection_valid else []
         receipt['control_boundary_failures']=[deepcopy(row) for row in events
