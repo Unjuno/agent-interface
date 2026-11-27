@@ -1413,7 +1413,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         and release.get('buttons_down') == []))
             verified_close = (report.get('status') == 'closed'
                               and report.get('connection_close_attempted') is True
-                              and neutral)
+                              and neutral
+                              and not self._unclosed_startup_handles)
             report = dict(report, verified=verified_close,
                           owner_process_retired=True,
                           owner_process_exitcode=self._process.exitcode,

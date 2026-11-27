@@ -306,6 +306,21 @@ class StartupCloseFenceTests(unittest.TestCase):
             with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=FailingContext()):
                 with self.assertRaises(OSError): owner._ensure_started()
             self.assertIsNot(owner.close().get('verified'), True)
+
+    def test_unconfirmed_startup_handle_prevents_verified_close_receipt(self):
+        with tempfile.TemporaryDirectory() as root:
+            owner = OwnedGuardedSessionOwner({'app': 20}, root)
+            child = Process(threading.Event(), threading.Event())
+            child.pid, child.exitcode = 123, 0
+            owner._process = child
+            owner._unclosed_startup_handles.append(Conn())
+            receipt = {'status': 'closed', 'connection_close_attempted': True,
+                       'release_attempted': False}
+            with patch.object(owner, '_request_locked', return_value=receipt):
+                result = owner.close()
+            self.assertFalse(result['verified'])
+            self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+
     def test_close_during_child_start_is_not_verified(self): self.exercise(False)
     def test_close_during_pre_spawn_allocation_is_not_verified(self): self.exercise(True)
 
