@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8587 T0 A01 multi-source event reconciliation](multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 8 identifiable boundary faults localized; 2 cases remain UNKNOWN; no false localizations on 5 benign controls. Authored trace fixture only.
+
 - [Issue #8527 singleton-control construction audit gap](belief_recovery_8527_singleton_diagnostic_20261027/REPORT.md) — post-result diagnostic: duplicated singleton control was accepted, so distinct-control coverage was not established; A02 formal candidate/auditor remain 0/0.
 
 - [Issue #8527 T0 A02 belief-space recovery construction](belief_recovery_margin_8527_t0_a02_20261008/README.md) — construction tests pass; formal candidate and auditor remain 0/0. This is not a scientific PASS or live recovery result; original frozen execution conditions remain historical.
@@ -884,6 +886,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`multifidelity_control_variate_6155_t0f_integrity_stop_20261003/`](multifidelity_control_variate_6155_t0f_integrity_stop_20261003/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
+- [`multisource_event_reconciliation_8587_t0_a01_20261009/`](multisource_event_reconciliation_8587_t0_a01_20261009/)
 - [`multistate_stop_recovery_5593_t0_20261002_01/`](multistate_stop_recovery_5593_t0_20261002_01/)
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)

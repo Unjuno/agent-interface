@@ -1,3 +1,7 @@
+# Issue #8587 T0 A01 — multi-source event reconciliation
+
+`PASS_METHOD_SCOPED` on an authored 15-case trace fixture: eight identifiable faults localized, two cases UNKNOWN, and no false localizations on five benign controls. This does not establish real GUI event completeness or task success. See the [report](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) and [protocol](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/PROTOCOL.md).
+
 # Issue #57 — current-main MAP01 public-caller start-gate failure R270 (2026-11-16)
 
 R270 froze current main `4d590fd6b31bdfaf20954e32b308ad96fba29a56` with a 30 s lease. Producer start took 30.031 s and returned 47 ms after expiry; all 11 program operations remained `not_started` (zero program actions / SendInput returns / cursor actions). The public cancellation arrived at expiry and returned in 16 ms, within its 250 ms grace. The source action remains `UNKNOWN`; task effect and release are unconfirmed. A distinct fresh-session R272 recovery reconciled the durable identity-verified gate as `not_dispatched`, cleared custody at revision 1000 and fenced the generation; `task_success=null`, replay denied. This is not a matched caller/automatic or efficiency result. A later separate Computer Use close interaction was excluded from R270 effect evidence. See the [R270 report](research/integration/map01_r270_current_main_caller_start_20261116/REPORT.md). #57 remains open.

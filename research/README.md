@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8587 T0 A01: [multi-source event reconciliation](analysis/multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 8 identifiable faults localized, 2 cases remained UNKNOWN, and 5 benign controls had no false localizations. Synthetic trace fixture only; no real GUI or task-effect claim.
+
 - Issue #57 / MAP01: [native Win32 recovery R180](integration/map01_native_win32_recovery_r180_20261114.md) — runtime release attempt, full two-second owner horizon, exception-to-release bound, and pinned 50-to-49 HUD effect are verified; the frozen private runner stopped on an absent public-result boolean, so the overall attempt remains partial. Raw is local-only; no matched #57 efficiency or general reliability claim.
 
 - Issue #8663: [predicate-aware DPOR evidence](gui_query_dpor_8663_a01_20261009/CUSTODY.md) — synthetic results with retained STOP, FAIL and corrected audit; the preregistered auditor limit was exceeded. No live GUI claim.
