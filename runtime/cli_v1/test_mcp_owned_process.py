@@ -3187,7 +3187,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         backend.release_all.assert_not_called()
         self.assertEqual(send.send.call_args.args[0]['status'],'unknown')
         self.assertEqual(send.send.call_args.args[0]['reason'],'cancellation_deadline_expired')
-        backend.close.assert_called_once()
+        backend.close.assert_not_called()
+        backend.d.display.close_internal.assert_called_once_with('client')
 
     def test_live_cancellation_deadline_is_forwarded_to_release(self):
         shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
