@@ -18,6 +18,13 @@ def reject_control_boundary_failure(row):
         raise SessionControlBoundaryFailure(row)
 
 
+def reject_stdout_reader_failure(row):
+    if type(row) is dict and row.get('event') == 'controller_stdout_reader_failed':
+        error_type=row.get('error_type')
+        suffix='' if type(error_type) is not str else ': '+error_type
+        raise RuntimeError('controller stdout capture failed'+suffix)
+
+
 def reject_duplicate_json_members(pairs):
     """Reject duplicate object names when used as json.loads object_pairs_hook."""
     result = {}

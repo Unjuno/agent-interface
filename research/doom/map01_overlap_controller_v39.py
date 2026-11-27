@@ -26,8 +26,8 @@ sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, capture_raw_stdout_events, load_controller_event,
-    operation_release_verified,
-    reject_control_boundary_failure)
+    operation_release_verified, reject_control_boundary_failure,
+    reject_stdout_reader_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_cover_renewal_probe_v1 import (
     EVENT as RENEWAL_PROBE_EVENT, request_passive_probe, verify_probe_frame)
@@ -1866,6 +1866,8 @@ def main():
                     process.stdout.buffer,raw_stdout_path,raw_stdout_capture,consume)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
+                incoming.put({"event":"controller_stdout_reader_failed",
+                              "error_type":type(error).__name__})
         latest = None
         reader_thread = threading.Thread(target=reader, daemon=True)
         reader_thread.start()
@@ -1884,6 +1886,7 @@ def main():
                 is_typed = row.get("event") == "typed_observation"
                 if is_typed:
                     row["controller_dequeued_ns"] = time.perf_counter_ns()
+                reject_stdout_reader_failure(row)
                 if consumed_events is not None:
                     consumed_events.append(row)
                 reject_control_boundary_failure(row)

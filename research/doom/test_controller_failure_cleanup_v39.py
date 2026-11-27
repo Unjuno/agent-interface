@@ -9,7 +9,8 @@ from pathlib import Path
 
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, load_controller_event, operation_release_verified,
-    capture_raw_stdout_events, reject_duplicate_json_members)
+    capture_raw_stdout_events, reject_duplicate_json_members,
+    reject_stdout_reader_failure)
 
 OMIT_TOKEN = object()
 
@@ -621,6 +622,14 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         }
         receipt = self.run_cleanup(None, [admission, released], status="cancelled")
         self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_stdout_reader_failure_stops_controller_wait(self):
+        with self.assertRaisesRegex(RuntimeError, "stdout capture failed: OSError"):
+            reject_stdout_reader_failure({
+                "event": "controller_stdout_reader_failed",
+                "error_type": "OSError",
+            })
+        reject_stdout_reader_failure({"event": "observation", "sequence": 1})
 
     def test_raw_stdout_capture_preserves_exact_bytes_and_hash(self):
         with tempfile.TemporaryDirectory() as directory:
