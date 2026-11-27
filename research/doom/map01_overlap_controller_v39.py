@@ -1062,6 +1062,13 @@ def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=
             if event is None:
                 fail('terminal_before_cancel_ack', row)
             if released is None:
+                intent = guard.active_intent
+                if (type(intent) is dict and qualified_interruption_release(row, intent.get('intent_token'))):
+                    try:
+                        receipt = guard.record_interrupted_terminal(row)
+                    except Exception as error:
+                        fail('interrupted_terminal_invalid', row, error)
+                    return event, None, None, row, receipt
                 fail('terminal_without_release', row)
             try:
                 receipt = guard.record_cancelled_terminal(row)
@@ -2547,12 +2554,20 @@ def main():
                      terminal,guard_receipt)=cancel_invalidated_action(
                         process,wait,identifier,running_guard,failure_root=args.out)
                     if index + 1 < args.iterations:
-                        rotation=recover_cover_owner_after_cancel_if_retired(
-                            process, wait, terminal, minimum_sequence=latest["sequence"],
-                            target_process_identity=args.target_process_identity,
-                            target_window_lifecycle=args.target_window_lifecycle,
-                            owned_input_service=args.owned_input_service,
-                            owned_rotation_supported=owned_rotation_supported)
+                        if terminal.get('status') == 'needs_decision':
+                            if (not args.target_process_identity or args.target_window_lifecycle
+                                    or (args.owned_input_service and not owned_rotation_supported)):
+                                raise RuntimeError('qualified owner interruption has no eligible recovery slot')
+                            rotation=rotate_retired_owner_after_cancel(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                expected_intent_token=accepted.get('intent_token'))
+                        else:
+                            rotation=recover_cover_owner_after_cancel_if_retired(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                target_process_identity=args.target_process_identity,
+                                target_window_lifecycle=args.target_window_lifecycle,
+                                owned_input_service=args.owned_input_service,
+                                owned_rotation_supported=owned_rotation_supported)
                         if rotation is not None:
                             latest=rotation["source_observation"]
                             owner_generation_rotations.append(dict(rotation,terminal_id=identifier))

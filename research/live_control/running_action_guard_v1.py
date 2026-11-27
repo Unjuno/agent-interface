@@ -192,8 +192,9 @@ class RunningActionGuard:
 
     def record_interrupted_terminal(self, terminal, intent_token):
         """Close an active program only after its owner interruption is bound."""
-        if self.state != ACTIVE or self.active_program is None:
-            raise ValueError("active program required before interrupted terminal")
+        cancelling = self.state == CANCEL and self.cancellation is not None
+        if (self.state != ACTIVE and not cancelling) or self.active_program is None:
+            raise ValueError("active program or acknowledged cancellation required before interrupted terminal")
         if (type(intent_token) is not str or not intent_token
                 or type(terminal) is not dict or terminal.get("event") != "terminal"
                 or terminal.get("status") != "needs_decision"
@@ -217,6 +218,11 @@ class RunningActionGuard:
                 or type(release.get("verified_ns")) is not int
                 or release["verified_ns"] > terminal["terminal_ns"]):
             raise ValueError("token-matched verified owner release required")
+        if cancelling and (terminal['terminal_ns'] < self.cancellation['requested_ns']
+                or type(record.get('verified_ns')) is not int
+                or not self.active_program['accepted_ns'] <= record['verified_ns'] <= terminal['terminal_ns']):
+            raise ValueError("interrupted release does not match cancellation chronology")
+        prior_invalidation = deepcopy(self.invalidation) if cancelling else None
         self.terminals.append(deepcopy(terminal))
         self.active_program = None
         self.invalidation = {
@@ -225,6 +231,8 @@ class RunningActionGuard:
             "requires_new_decision": True,
             "grants_input_authority": False,
         }
+        if prior_invalidation is not None:
+            self.invalidation['prior_invalidation'] = prior_invalidation
         self.state = REVOKED
         return self.receipt()
 

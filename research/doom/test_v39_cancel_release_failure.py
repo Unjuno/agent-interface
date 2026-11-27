@@ -59,6 +59,31 @@ def waiter(values):
 
 
 class CancelFailureTests(unittest.TestCase):
+    def test_unqualified_interruption_without_release_stays_failed(self):
+        terminal={"event":"terminal","id":"p1","status":"needs_decision","terminal_ns":310,
+            "release":{"verified":True,"verified_ns":309,"keys_down":[],"buttons_down":[],"keys_unknown":[],"key_state_errors":[]},
+            "interruption":{"intent_token":"other","record":{}}}
+        ack={"event":"cancel_requested","id":"p1","matched":True,"requested_ns":302}
+        with self.assertRaises(controller.CancellationReleaseFailed) as caught:
+            controller.cancel_invalidated_action(SimpleNamespace(stdin=Stream()),waiter([ack,terminal]),"p1",armed())
+        self.assertEqual(caught.exception.receipt["reason"],"terminal_without_release")
+        self.assertTrue(caught.exception.receipt["input_recovery_required"])
+
+    def test_matched_cancel_racing_qualified_interruption_closes_without_fake_release(self):
+        attempt={"attempt":1,"keyrelease_started_ns":303,"sync_returned_ns":304,"keymap_sampled_ns":305,
+                 "server_key_down_before":True,"server_key_down_after":False}
+        terminal={"event":"terminal","id":"p1","status":"needs_decision","terminal_ns":310,
+            "release":{"verified":True,"verified_ns":309,"keys_down":[],"buttons_down":[],"keys_unknown":[],"key_state_errors":[]},
+            "interruption":{"intent_token":"lease-token-1","record":{"event":"owner_release","intent_token":"lease-token-1",
+                "reason":"target_generation_invalidated","verified":True,"verified_ns":306,
+                "keys_down":[],"buttons_down":[],"keys_unknown":[],"key_state_errors":[],
+                "target_process_identity_reader":{"retired":True},"key_release_attempts":{"113":{"verified":True,"attempts":[attempt]}}}}}
+        ack={"event":"cancel_requested","id":"p1","matched":True,"requested_ns":302}
+        cancel,released,pending,actual,receipt=controller.cancel_invalidated_action(
+            SimpleNamespace(stdin=Stream()),waiter([ack,terminal]),"p1",armed())
+        self.assertEqual(actual,terminal);self.assertIsNone(released);self.assertIsNone(pending)
+        self.assertEqual(receipt["state"],"REVOKED_ACTION_NOT_CURRENT");self.assertFalse(receipt["current_input_authority"])
+
     def test_actual_selected_executor_failed_terminal_is_saved_before_stalled_release_resumes(self):
         from test_map01_process_identity_backend import backend_fixture, Executor, native
         with backend_fixture() as (backend, events, generation, fake), tempfile.TemporaryDirectory() as root:
