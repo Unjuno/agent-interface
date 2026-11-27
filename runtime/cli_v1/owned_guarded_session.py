@@ -152,8 +152,13 @@ def _release_retired_inputs_worker(send_connection, display_name, keys, buttons)
     finally:
         if backend is not None:
             try:
-                backend.close()
+                # python-xlib Display.close() flushes queued requests.  A
+                # failed release must discard any unsent requests instead;
+                # already transmitted requests remain unconfirmed.
+                backend.d.display.close_internal('client')
             except Exception:
+                # The disposable worker exits immediately; do not fall back
+                # to a close that might flush a pending input request.
                 pass
         try:
             send_connection.close()

@@ -76,7 +76,9 @@ def _serve_one(command_receive, result_send, ready_send, worker_target, xauthori
     finally:
         if pinned_backend is not None:
             try:
-                pinned_backend.close()
+                # Normal python-xlib close flushes pending requests, including
+                # releases left queued when a transaction expired or failed.
+                pinned_backend.d.display.close_internal('client')
             except BaseException:
                 pass
         for connection in (command_receive, result_send):
@@ -548,6 +550,8 @@ def x11_cancel_worker(request, *, pinned_backend=None):
     finally:
         if backend is not None and pinned_backend is None:
             try:
-                backend.close()
+                # Discard unsent input on every exit. Completed releases have
+                # already been synchronized; transmitted requests may remain.
+                backend.d.display.close_internal('client')
             except BaseException:
                 pass

@@ -43,7 +43,8 @@ class PinnedSupervisorCustodyTests(unittest.TestCase):
         self.ready.send.assert_called_once()
         self.worker.assert_called_once_with(self.request, pinned_backend=self.backend)
         self.result.send.assert_called_once()
-        self.backend.close.assert_called_once()
+        self.backend.close.assert_not_called()
+        self.backend.d.display.close_internal.assert_called_once_with('client')
 
     def test_wrong_or_missing_owner_is_refused_without_cleanup(self):
         for field, value in (('owner_pid', 43), ('x_resource_base', 8192),
@@ -64,7 +65,8 @@ class PinnedSupervisorCustodyTests(unittest.TestCase):
         envelope = self.result.send.call_args.args[0]
         self.assertEqual(envelope['result']['reason'], 'pinned_display_mismatch')
         self.assertEqual(envelope['result']['cleanup_status'], 'UNKNOWN')
-        self.backend.close.assert_called_once()
+        self.backend.close.assert_not_called()
+        self.backend.d.display.close_internal.assert_called_once_with('client')
 
 
 if __name__ == '__main__':
