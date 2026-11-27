@@ -1,0 +1,9 @@
+# Parent death during owned startup: two forced-order probes
+
+Both probes used candidate commit `75acd0c191daf3a2305ba7594407a9bd11b0021e`, Python 3.12, a private user/mount/network/PID namespace, and a synthetic owner. Neither used a GUI, injected input, a model, nor the public MCP caller. Conditions were written before each single attempt. Source, raw results, stderr, markers and checksums are retained in the `baseline` and `watcher` directories. The copied launchers use the original absolute scratch paths; they are evidence, not portable rerun instructions.
+
+In the baseline, the parent was killed and reaped while its spawned child was blocked inside synthetic owner initialization. After a fixture gate opened, the factory resumed. The fixture had opened a pidfd for the observed child, used it for cleanup if needed, and observed child exit. This is a counterexample to assuming the current parent-side shutdown flag handles abrupt parent death; it does not establish actual GUI effects.
+
+In the separate watcher probe, the synthetic factory opened a pidfd for its then-current parent and armed a child-side thread before the same forced parent death. The child exited before fixture intervention and the factory did not resume. This ordering does not cover parent death before watcher arming, parent identity races, a blocked or starved watcher, a lost interpreter/GIL, already-issued X requests, or input release and readback. It is not an independent supervisor or a production implementation. Both stderr logs report Python resource-tracker cleanup warnings for five semaphore objects following forced termination.
+
+These are two individually scoped observations, not matched performance measurements or a reliability estimate. An independent custody mechanism with an explicit admission protocol remains necessary before claiming bounded recovery from parent death.
