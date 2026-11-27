@@ -22,6 +22,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       : ['interface_observe', 'interface_dispatch',
         'interface_inspect_target', 'interface_review_target'])]);
   let stopped = null;
+  let recoveryRevision = null;
   function stop(reason) { stopped ??= reason; }
   function read(reply) {
     const text = reply.result.content.find(c => c.type === 'text')?.text;
@@ -127,6 +128,18 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         'interface_observe', structuredClone(observationArguments));
     },
     async call(tool, args, controlId = null) {
+      if (tool === 'interface_guarded_recover_input') {
+        if (route !== 'guarded-local' || !stopped || recoveryRevision === null ||
+            controlId !== null || !args || typeof args !== 'object' || Array.isArray(args) ||
+            Object.keys(args).join(',') !== 'current_binding_revision' ||
+            args.current_binding_revision !== recoveryRevision) {
+          throw Error('explicit recovery unavailable or revision mismatch');
+        }
+        // Consume the only permit before transmission: an ambiguous delivery is
+        // never grounds for retrying release or resuming the prior input.
+        recoveryRevision = null;
+        return await host.sendPresented(tool, args, sinks);
+      }
       if (stopped && tool !== 'interface_close') throw Error('trial stopped: ' + stopped);
       if (!tools.has(tool)) {
         stop('unavailable tool ' + tool);
@@ -159,6 +172,20 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         if (reply?.status === 'unknown_requires_reconciliation') {
           stop('relay delivery uncertain; reconciliation required');
           return reply;
+        }
+        // A retained, delivered input failure can authorize one explicit
+        // release-only recovery. It never clears the caller's STOP latch.
+        if (route === 'guarded-local' && tool === 'interface_guarded_input' &&
+            reply?.status === 'returned' && controlId === null) {
+          try {
+            const failed = read(reply);
+            if (failed.operation === 'guarded_input' && failed.status === 'execution_failed' &&
+                failed.replay_allowed === false && failed.session?.state === 'open' &&
+                failed.session?.recovery_required === true &&
+                Number.isSafeInteger(failed.session?.binding_revision) && failed.session.binding_revision >= 0) {
+              recoveryRevision = failed.session.binding_revision;
+            }
+          } catch {} // Preserve existing error handling for malformed replies.
         }
         if (reply.result.isError === true && !expected) {
           stop('unexpected MCP refusal');
