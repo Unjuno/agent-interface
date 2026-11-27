@@ -146,6 +146,19 @@ class _GameProxy:
             raise self._close_error
         return result
 
+def configure_reverse_capture_backend(factory, argv):
+    """Keep a distinct lossless artifact for every capture in reverse-door trials."""
+    if '--door-task-reverse-arm' not in argv:
+        return factory
+
+    def make_backend(*args, **kwargs):
+        backend = factory(*args, **kwargs)
+        backend.images.reuse = False
+        return backend
+
+    return make_backend
+
+
 def validate_door_runtime_options(argv):
     reverse_flag='--door-task-reverse-arm'
     reverse_options=[item for item in argv if item.split('=',1)[0]==reverse_flag]
@@ -230,6 +243,7 @@ def main():
             raise ValueError("passive renewal requires target process identity")
         from functools import partial
         TelemetryBackend = partial(TelemetryBackend, renewal_passive_observer=True)
+    TelemetryBackend=configure_reverse_capture_backend(TelemetryBackend,sys.argv[1:])
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')

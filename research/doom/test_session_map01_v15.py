@@ -18,6 +18,34 @@ from executor_v13 import Executor as ReleaseOrderedExecutor
 
 
 class SessionSelectionTests(unittest.TestCase):
+    def test_reverse_trial_publishes_distinct_artifacts_for_identical_captures(self):
+        from image_artifact import ImageArtifactSink
+        from tile_transport import Frame
+        with tempfile.TemporaryDirectory() as tmp:
+            class Backend:
+                def __init__(self):
+                    self.images = ImageArtifactSink(tmp, reuse=True)
+            backend = candidate.configure_reverse_capture_backend(Backend, ["--door-task-reverse-arm", "east-return"])()
+            frame = Frame(2, 2, "RGB", bytes(12))
+            first = backend.images.publish(frame)
+            second = backend.images.publish(frame)
+            self.assertFalse(second["image_reused"])
+            self.assertNotEqual(first["image"], second["image"])
+            self.assertEqual(Path(second["image"]).name, "002.png")
+            self.assertEqual(Path(first["image"]).read_bytes(), Path(second["image"]).read_bytes())
+
+    def test_non_reverse_trial_keeps_ordinary_artifact_reuse(self):
+        from image_artifact import ImageArtifactSink
+        from tile_transport import Frame
+        with tempfile.TemporaryDirectory() as tmp:
+            class Backend:
+                def __init__(self):
+                    self.images = ImageArtifactSink(tmp, reuse=True)
+            backend = candidate.configure_reverse_capture_backend(Backend, [])()
+            frame = Frame(2, 2, "RGB", bytes(12))
+            backend.images.publish(frame)
+            self.assertTrue(backend.images.publish(frame)["image_reused"])
+
     def test_timed_hold_is_explicit_and_requires_owned_process_identity(self):
         candidate.validate_timed_hold_options([])
         candidate.validate_timed_hold_options(["--owner-timed-hold","--owned-input-service","--target-process-identity"])
