@@ -14,6 +14,22 @@ class ReverseProgramTests(unittest.TestCase):
         caller=DoorDriverProtocol('use','a'*64,'b'*64,'c'*64,870,traverse=True,reverse_arm='east-return-turn75')
         contract=DoorTaskContract('use',traverse=True,reverse_arm='east-return-turn75')
         self.assertEqual(caller.reverse_arm,contract.reverse_arm)
+    def test_east_return_reopen_inserts_finite_use_and_wait_before_final_advance(self):
+        from map01_reverse_program import reverse_manifest
+        from map01_door_driver_protocol import DoorDriverProtocol
+        from map01_door_task_contract import DoorTaskContract
+        base=reverse_stages('east-return-turn75')
+        candidate=reverse_stages('east-return-reopen')
+        self.assertEqual(candidate[:-3],base[:-1])
+        self.assertEqual(candidate[-3:], [
+            ('east-reopen',[{'op':'hold','keys':['e'],'duration_ms':120}]),
+            ('east-reopen-wait',[{'op':'coast','duration_ms':1000,'sample_ms':100}]),
+            ('east-advance-2',[{'op':'hold','keys':['Up'],'duration_ms':400}])])
+        self.assertNotEqual(reverse_manifest('east-return-turn75')['suffix_sha256'],reverse_manifest('east-return-reopen')['suffix_sha256'])
+        caller=DoorDriverProtocol('use','a'*64,'b'*64,'c'*64,870,traverse=True,reverse_arm='east-return-reopen')
+        contract=DoorTaskContract('use',traverse=True,reverse_arm='east-return-reopen')
+        self.assertEqual(caller.reverse_arm,contract.reverse_arm)
+
     def test_matched_programs_differ_only_at_reopen_probe(self):
         control=reverse_stages('control');use=reverse_stages('use')
         self.assertEqual([x[0] for x in control],[x[0] for x in use])

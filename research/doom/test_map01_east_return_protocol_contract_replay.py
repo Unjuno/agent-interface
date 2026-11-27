@@ -49,11 +49,11 @@ class CoverAdapter:
 
 
 class EastReturnCompositionReplayTests(unittest.TestCase):
-    def replay(self, stop_after=None):
+    def replay(self, stop_after=None, arm="east-return"):
         protocol = DoorDriverProtocol(
             "use", "a" * 64, "b" * 64, "c" * 64, 870,
-            traverse=True, reverse_arm="east-return")
-        contract = DoorTaskContract("use", traverse=True, reverse_arm="east-return")
+            traverse=True, reverse_arm=arm)
+        contract = DoorTaskContract("use", traverse=True, reverse_arm=arm)
         now = 1_100_000_000
         fixture = {
             "manifest_sha256": "a" * 64, "save_sha256": "b" * 64,
@@ -63,7 +63,7 @@ class EastReturnCompositionReplayTests(unittest.TestCase):
         ready = {
             "event": "ready", "fixture": fixture,
             "post_load_clock_gate": {"passed": True},
-            "reverse_door_program": reverse_manifest("east-return"),
+            "reverse_door_program": reverse_manifest(arm),
         }
         self.assertIsNone(protocol.receive(ready, now))
         initial_typed = observation("initial", 1, now - 1, typed=True)
@@ -80,8 +80,8 @@ class EastReturnCompositionReplayTests(unittest.TestCase):
             ("intervention", [{"op": "hold", "keys": ["e"], "duration_ms": 120}]),
             ("traverse-1", [{"op": "hold", "keys": ["Up"], "duration_ms": 300}]),
         ])
-        program.extend(reverse_stages("east-return"))
-        self.assertEqual(len(program), 24)
+        program.extend(reverse_stages(arm))
+        self.assertEqual(len(program), 26 if arm=="east-return-reopen" else 24)
 
         previous = "cover-0"
         for index, (identifier, steps) in enumerate(program):
@@ -121,6 +121,12 @@ class EastReturnCompositionReplayTests(unittest.TestCase):
         self.assertTrue(protocol.stage == "finish")
         self.assertTrue(contract.finished)
         return protocol, contract, command, protocol.latest
+
+    def test_reopen_arm_composes_all_26_registered_stages(self):
+        protocol, contract, command, _ = self.replay(arm="east-return-reopen")
+        self.assertEqual(command, {"op": "finish"})
+        self.assertEqual(protocol.index, 26)
+        self.assertTrue(contract.finished)
 
     def test_synthetic_positive_composes_all_24_registered_stages(self):
         protocol, contract, command, _ = self.replay()

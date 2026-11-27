@@ -56,7 +56,7 @@ class DoorTaskContract:
         if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
                 or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
         if type(direct_exit) is not bool or direct_exit and not exit_probe:raise ValueError('invalid direct exit mode')
-        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75') or not traverse or arm!='use' or exit_probe or direct_exit):
+        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75','east-return-reopen') or not traverse or arm!='use' or exit_probe or direct_exit):
             raise ValueError('reverse mode requires the use/traverse prefix without exit probe')
         self.reverse_arm=reverse_arm
         self.direct_exit=direct_exit

@@ -213,7 +213,7 @@ def run():
             'driver, evidence or claim differs')
     require(registered.get('east_reference_sha256')=='89a58ce4069bc4aff69805479164ed2cc9c96a61edb768a6685c1d6ad2fcc9cc',
             'east reference differs from recorded USE endpoint')
-    require(registered['arm'] in ('east-return','east-return-turn75') and registered['repeat_limit']==1
+    require(registered['arm'] in ('east-return','east-return-turn75','east-return-reopen') and registered['repeat_limit']==1
             and registered['model_calls']==0 and registered['candidate_restore_tic']==870,
             'registered trial bounds differ')
     checkout=Path(registered['checkout'])
@@ -362,7 +362,7 @@ def run():
             end=read_json(runtime/'session-owner-service-close.json')
             require(end.get('verified') is True and end.get('startup_sha256')==sha(runtime/'session-owner-service-startup.json'),
                     'owner close receipt differs')
-            require(protocol.index==24,'settled operation count differs')
+            require(protocol.index==(26 if registered['arm']=='east-return-reopen' else 24),'settled operation count differs')
             retirement=display_retirement_evidence(descriptors,cgroup,lock,auth)
             record('display-retired.json',retirement)
             require(retirement['pidfds_signaled'] and all(retirement['pidfds_signaled'].values())

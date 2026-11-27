@@ -107,7 +107,7 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
     parser.add_argument('--owner-timed-hold',action='store_true')
-    parser.add_argument('--arm',choices=('east-return','east-return-turn75'),default='east-return')
+    parser.add_argument('--arm',choices=('east-return','east-return-turn75','east-return-reopen'),default='east-return')
     args=parser.parse_args()
     os.umask(0o077)
     print(json.dumps(prepare(timed_hold=args.owner_timed_hold,arm=args.arm),sort_keys=True))

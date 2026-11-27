@@ -12,11 +12,11 @@ from map01_east_return_audit import validate_trace, validate_raw_delivery, seale
 from map01_reverse_program import reverse_stages
 
 
-def trace():
+def trace(arm='east-return'):
  prefix=[('cover-0',[{'op':'coast','duration_ms':200,'sample_ms':100}])]
  prefix += [('approach-'+str(i),[{'op':'hold','keys':['Up'],'duration_ms':600}]) for i in range(1,5)]
  prefix += [('intervention',[{'op':'hold','keys':['e'],'duration_ms':120}]),('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':300}])]
- expected=prefix+reverse_stages('east-return');events=[{'event':'ready'},{'event':'typed_observation','id':'initial'},{'event':'observation','id':'initial'}];samples=[]
+ expected=prefix+reverse_stages(arm);events=[{'event':'ready'},{'event':'typed_observation','id':'initial'},{'event':'observation','id':'initial'}];samples=[]
  for i,(identifier,steps) in enumerate(expected):
   t=1000+i*100
   events += [{'event':'command','received_ns':t,'command':{'op':'submit','id':identifier,'steps':steps}},
@@ -31,6 +31,15 @@ def trace():
  return events,samples
 
 class EastReturnTraceTests(unittest.TestCase):
+ def test_reopen_trace_requires_exact_reopen_and_wait(self):
+  events,samples=trace('east-return-reopen')
+  validate_trace(events,samples,arm='east-return-reopen')
+  changed=copy.deepcopy(events)
+  command=next(row['command'] for row in changed if row.get('event')=='command' and row.get('command',{}).get('id')=='east-reopen')
+  command['steps'][0]['keys']=['Up']
+  with self.assertRaises(ValueError):validate_trace(changed,samples,arm='east-return-reopen')
+  with self.assertRaises(ValueError):validate_trace(events,samples,arm='east-return-turn75')
+
  def test_independent_final_agrees_and_follows_post_score(self):
   score={'map_exit':False,'episode_finished':False,'player_dead':False,'death_count':0,'kill_count':0}
   payload=dict(score,schema='independent-progress-sample-v2',sample_ns=110)

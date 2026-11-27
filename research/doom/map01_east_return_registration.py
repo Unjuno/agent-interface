@@ -22,8 +22,8 @@ UNIT_OPTIONS=['UMask=0077','PrivateTmp=yes','PrivateNetwork=yes','RuntimeMaxSec=
 def build_spec(root, unit, checkout, revision, tree, files, hashes, *, timed_hold=False, arm='east-return'):
     root=Path(root);checkout=Path(checkout)
     if type(timed_hold) is not bool:raise ValueError('timed_hold must be boolean')
-    if arm not in ('east-return','east-return-turn75'):raise ValueError('invalid east-return arm')
-    if arm=='east-return-turn75' and not timed_hold:raise ValueError('turn75 requires timed hold')
+    if arm not in ('east-return','east-return-turn75','east-return-reopen'):raise ValueError('invalid east-return arm')
+    if arm in ('east-return-turn75','east-return-reopen') and not timed_hold:raise ValueError('turn75 requires timed hold')
     keys=('driver_sha256','launcher_sha256','preflight_sha256','auditor_sha256')
     if (not root.is_absolute() or not checkout.is_absolute() or type(unit) is not str
             or re.fullmatch(r'map01-east-[a-z0-9]+\.service',unit) is None

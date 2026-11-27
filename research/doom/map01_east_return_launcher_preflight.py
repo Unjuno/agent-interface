@@ -18,7 +18,7 @@ def validate_unspent(root, spec, *, expected_east_sha, expected_initial_sha, exp
         raise ValueError('allocation root differs')
     if set(p.name for p in root.iterdir())!=set(FILES)|{'registration.json'}:
         raise ValueError('allocation is not unspent')
-    if (spec.get('schema')!='map01-east-return-registration-v1' or spec.get('arm') not in ('east-return','east-return-turn75')
+    if (spec.get('schema')!='map01-east-return-registration-v1' or spec.get('arm') not in ('east-return','east-return-turn75','east-return-reopen')
             or type(spec.get('repeat_limit')) is not int or spec['repeat_limit']!=1
             or type(spec.get('model_calls')) is not int or spec['model_calls']!=0
             or type(spec.get('unit')) is not str or re.fullmatch(r'map01-east-[a-z0-9]+\.service',spec['unit']) is None
@@ -71,7 +71,7 @@ def validate_runtime_inputs(root, spec, *, expected_checkout, baseline_path, bas
           '--door-expected-iwad-sha256',wad,'--door-expected-restore-tic','870']
     timed=spec.get('owner_timed_hold',False)
     if type(timed) is not bool:raise ValueError('timed hold binding malformed')
-    if spec.get('arm') not in ('east-return','east-return-turn75') or spec.get('arm')=='east-return-turn75' and not timed:
+    if spec.get('arm') not in ('east-return','east-return-turn75','east-return-reopen') or spec.get('arm') in ('east-return-turn75','east-return-reopen') and not timed:
         raise ValueError('runtime trial arm binding malformed')
     if timed:argv.append('--owner-timed-hold')
     files=spec.get('files');revision=spec.get('revision');tree=spec.get('tree')

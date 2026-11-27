@@ -33,12 +33,12 @@ def validate_trace(events,samples,*,arm='east-return'):
     require(all(type(row.get('command')) is dict and row['command'].get('op') in ('submit','door-settle','finish') for _,row in command_rows),'unexpected command')
     submits=[(i,row) for i,row in command_rows if row['command']['op']=='submit']
     finishes=[(i,row) for i,row in command_rows if row['command']['op']=='finish']
-    require(len(submits)==len(program)==24 and len(finishes)==1,'wrong command count')
+    require(len(submits)==len(program)==(26 if arm=='east-return-reopen' else 24) and len(finishes)==1,'wrong command count')
     require([(row['command'].get('id'),row['command'].get('steps')) for _,row in submits]==program,'fixed program differs')
-    require(len(samples)==24 and [row.get('stage') for row in samples]==[stage for stage,_ in program],'sample order differs')
+    require(len(samples)==len(program) and [row.get('stage') for row in samples]==[stage for stage,_ in program],'sample order differs')
     stages=[stage for stage,_ in program]
     keyed=[stage for stage,steps in program if steps[0]['op']=='hold']
-    require(len(keyed)==16,'unexpected keyed count')
+    require(len(keyed)==(17 if arm=='east-return-reopen' else 16),'unexpected keyed count')
     for event,expected in (('accepted',stages),('terminal',stages),('input_admission',keyed),('input_release_transition',keyed)):
         require([row.get('id') for row in events if row.get('event')==event]==expected,'unexpected '+event+' events')
     require(not any(row.get('event') in ('rejected','pointer_admission','input_release_unverified') for row in events),'runtime rejection in trace')
@@ -480,7 +480,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     require(hashlib.sha256(registration_bytes).hexdigest()==registration_sha256,'registration hash differs')
     reg=json.loads(registration_bytes,parse_constant=reject_constant)
     require(type(reg) is dict and reg.get('schema')=='map01-east-return-registration-v1'
-            and reg.get('root')==str(root) and reg.get('arm') in ('east-return','east-return-turn75')
+            and reg.get('root')==str(root) and reg.get('arm') in ('east-return','east-return-turn75','east-return-reopen')
             and type(reg.get('repeat_limit')) is int and reg['repeat_limit']==1
             and type(reg.get('model_calls')) is int and reg['model_calls']==0,'registration scope differs')
     require(canonical(reg.get('endpoint_rules'))==canonical(SCOPED_RULES)
@@ -498,7 +498,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     require(hashlib.sha256(Path(__file__).read_bytes()).hexdigest()==reg.get('auditor_sha256'),'running auditor differs')
     claim=read('claim.json');launch_record=read('launch.json');launch=read('launcher-outcome.json');worker=read('worker-outcome.json')
     require(claim.get('registration_sha256')==registration_sha256 and claim.get('unit')==reg.get('unit'),'claim differs')
-    require(worker.get('passed') is True and worker.get('settled_operations')==24
+    require(worker.get('passed') is True and worker.get('settled_operations')==(26 if reg['arm']=='east-return-reopen' else 24)
             and type(worker.get('settled_operations')) is int and worker.get('runtime_exit_code')==0
             and type(worker.get('runtime_exit_code')) is int and worker.get('cleanup_drain_eof') is True
             and worker.get('model_calls')==0 and type(worker.get('model_calls')) is int,'worker not complete')
@@ -510,7 +510,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     validate_trace(events,samples,arm=reg['arm']);validate_raw_delivery(events,raw,driver);validate_trial_deadline(worker,driver)
     identity_tuple=validate_caller_policy(events,driver,manifest_sha=reg['candidate_manifest_sha256'],
         save_sha=reg['candidate_save_sha256'],evidence_sha=reg['candidate_evidence_sha256'],restore_tic=870,arm=reg['arm'])
-    require(validate_owner_events(events,owner,program=expected_program(reg['arm']))==16,'keyed owner count differs')
+    require(validate_owner_events(events,owner,program=expected_program(reg['arm']))==(17 if reg['arm']=='east-return-reopen' else 16),'keyed owner count differs')
     durations=validate_contract_replay(events,arm=reg['arm'])
     keyed=[stage for stage,steps in expected_program(reg['arm']) if steps[0]['op']=='hold']
     require(list(durations)==keyed and worker.get('keyed_submit_attempted')==keyed
@@ -531,7 +531,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     if reg.get('owner_timed_hold') is True:
         require(startup.get('startup',{}).get('timed_up_enabled') is True,'timed owner capability missing')
         transitions=[row for row in events if row.get('event')=='input_release_transition']
-        require(len(transitions)==16 and all(row.get('release_mode')=='owner_deadline' for row in transitions),
+        require(len(transitions)==len(keyed) and all(row.get('release_mode')=='owner_deadline' for row in transitions),
                 'timed owner release evidence missing')
     ready=[row for row in events if row.get('event')=='ready']
     require(len(ready)==1,'runtime ready missing or duplicated')
