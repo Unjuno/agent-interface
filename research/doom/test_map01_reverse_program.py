@@ -3,6 +3,33 @@ import unittest
 from map01_reverse_program import reverse_stages
 
 class ReverseProgramTests(unittest.TestCase):
+    def test_longer_turn_is_distinct_and_changes_only_one_stage(self):
+        from map01_reverse_program import reverse_manifest
+        baseline=reverse_stages('east-return');candidate=reverse_stages('east-return-turn75')
+        self.assertEqual([i for i,(a,b) in enumerate(zip(baseline,candidate)) if a!=b],[8])
+        self.assertEqual(candidate[8],('reverse-turn-3',[{'op':'hold','keys':['Left'],'duration_ms':475}]))
+        self.assertNotEqual(reverse_manifest('east-return')['suffix_sha256'],reverse_manifest('east-return-turn75')['suffix_sha256'])
+        from map01_door_driver_protocol import DoorDriverProtocol
+        from map01_door_task_contract import DoorTaskContract
+        caller=DoorDriverProtocol('use','a'*64,'b'*64,'c'*64,870,traverse=True,reverse_arm='east-return-turn75')
+        contract=DoorTaskContract('use',traverse=True,reverse_arm='east-return-turn75')
+        self.assertEqual(caller.reverse_arm,contract.reverse_arm)
+    def test_east_return_reopen_inserts_finite_use_and_wait_before_final_advance(self):
+        from map01_reverse_program import reverse_manifest
+        from map01_door_driver_protocol import DoorDriverProtocol
+        from map01_door_task_contract import DoorTaskContract
+        base=reverse_stages('east-return-turn75')
+        candidate=reverse_stages('east-return-reopen')
+        self.assertEqual(candidate[:-3],base[:-1])
+        self.assertEqual(candidate[-3:], [
+            ('east-reopen',[{'op':'hold','keys':['e'],'duration_ms':120}]),
+            ('east-reopen-wait',[{'op':'coast','duration_ms':1000,'sample_ms':100}]),
+            ('east-advance-2',[{'op':'hold','keys':['Up'],'duration_ms':400}])])
+        self.assertNotEqual(reverse_manifest('east-return-turn75')['suffix_sha256'],reverse_manifest('east-return-reopen')['suffix_sha256'])
+        caller=DoorDriverProtocol('use','a'*64,'b'*64,'c'*64,870,traverse=True,reverse_arm='east-return-reopen')
+        contract=DoorTaskContract('use',traverse=True,reverse_arm='east-return-reopen')
+        self.assertEqual(caller.reverse_arm,contract.reverse_arm)
+
     def test_matched_programs_differ_only_at_reopen_probe(self):
         control=reverse_stages('control');use=reverse_stages('use')
         self.assertEqual([x[0] for x in control],[x[0] for x in use])
@@ -18,6 +45,15 @@ class ReverseProgramTests(unittest.TestCase):
         self.assertEqual(calibration,control[:9])
         self.assertEqual(calibration[-1][0],'reverse-turn-3')
         self.assertTrue(all(not any(step.get('keys')==['e'] for step in steps) for _,steps in calibration))
+    def test_east_return_extends_the_use_trial_with_bounded_stages(self):
+        stages=reverse_stages('east-return')
+        self.assertEqual(stages[:len(reverse_stages('use'))],reverse_stages('use'))
+        self.assertEqual(stages[-5:], [
+            ('east-turn-1',[{'op':'hold','keys':['Right'],'duration_ms':600}]),
+            ('east-turn-2',[{'op':'hold','keys':['Right'],'duration_ms':600}]),
+            ('east-turn-3',[{'op':'hold','keys':['Right'],'duration_ms':400}]),
+            ('east-advance-1',[{'op':'hold','keys':['Up'],'duration_ms':600}]),
+            ('east-advance-2',[{'op':'hold','keys':['Up'],'duration_ms':400}])])
     def test_invalid_arm_and_mutation_cannot_change_next_program(self):
         with self.assertRaises(ValueError):reverse_stages('invalid')
         stages=reverse_stages('use');stages[0][1][0]['duration_ms']=2

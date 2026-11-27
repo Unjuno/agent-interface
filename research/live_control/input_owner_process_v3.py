@@ -69,7 +69,7 @@ def _identity(startup):
     return {k:startup[k] for k in ('service_id','display','pid','parent_pid','supervisor_pid','owner_id')}
 
 
-def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,cancel_channel=None):
+def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,cancel_channel=None,timed_up=False):
     out=Path(out);startup=None;recovery=None;native=None;service_error=None
     context_ok=False;finish=None;relay=None
     try:
@@ -85,10 +85,12 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,can
                          generation_kind='fresh logical launch UUID; no native PID start-time proof',
                          source_sha256_lf=_pins())
             if relay is not None:startup['cancellation_enabled']=True
+            if timed_up:startup['timed_up_enabled']=True
             startup_hash=publish_json_exclusive(out/'startup.json',startup)
             ready.send(dict(ok=True,startup=startup));ready.close()
             try:
                 options=dict(lease_registry=relay.registry) if relay is not None else {}
+                if timed_up:options['timed_up']=True
                 core=rpc.serve_owner(channel,owner,display=display,service_id=service_id,**options)
             except BaseException as error:
                 service_error=type(error).__name__+': '+str(error)
@@ -239,10 +241,11 @@ class OwnedOwnerService:
         return result
 
 
-def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5,cancellation=False):
+def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5,cancellation=False,timed_up=False):
     """Launch only this owned spawn instance. Never terminate or retry automatically."""
     display=rpc._identity(display);startup_timeout=rpc._timeout(startup_timeout)
     if type(cancellation) is not bool:raise ValueError('cancellation must be boolean')
+    if type(timed_up) is not bool:raise ValueError('timed_up must be boolean')
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
     service_id=uuid.uuid4().hex;supervisor_pid=os.getpid()
     handle=OwnedOwnerService(None,None,out,service_id,supervisor_pid)
@@ -253,7 +256,8 @@ def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5,can
         if cancellation:handle._cancel_channel,cancel_service=socket.socketpair()
         parent_ready,child_ready=ctx.Pipe(duplex=False)
         args=(service,child_ready,display,out,service_id,supervisor_pid,_owner_factory or _default_owner)
-        if cancellation:args=(*args,cancel_service)
+        if cancellation or timed_up:args=(*args,cancel_service)
+        if timed_up:args=(*args,True)
         process=ctx.Process(target=_child_entry,args=args,name='owned-input-owner-'+service_id[:8])
         handle.process=process
         process.start();service.close();child_ready.close()
@@ -265,6 +269,7 @@ def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5,can
         startup=message['startup']
         if (startup.get('service_id')!=service_id or startup.get('display')!=display
                 or startup.get('supervisor_pid')!=supervisor_pid
+                or (timed_up and startup.get('timed_up_enabled') is not True)
                 or type(startup.get('pid')) is not int or type(startup.get('parent_pid')) is not int
                 or not (startup['pid']==process.pid or startup['parent_pid']==process.pid)):
             raise ValueError('owned process/interpreter lineage mismatch')

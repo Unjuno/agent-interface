@@ -145,6 +145,7 @@ class OwnedBackendTests(unittest.TestCase):
         client=rpc.OwnerRpcClient.__new__(rpc.OwnerRpcClient)
         client._sock=object();client._buffer=bytearray();client._gate=threading.Lock();client._records=[]
         client._closed=False;client._quarantined=False;client._next_id=1;client.timeout=.1
+        client.timed_up=False;client._timed_arm=None
         client.display=':fake';client.service_id='inert-service'
         response=dict(schema=rpc.RESPONSE,service_id='inert-service',request_id=1,ok=True,
                       result=[0,0,0,32],records=[],error=None)

@@ -25,6 +25,7 @@ def _merge_sources(out, *, process_identity=False, window_lifecycle=False,owned_
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    additions.append(RESEARCH/'live_control/session_v4.py')
     additions.append(HERE/'input_owner_generation_protocol_v1.py')
     additions.append(RESEARCH/'live_control/input_owner_rpc_v2.py')
     if owned_input_service:
@@ -180,10 +181,20 @@ def validate_synthetic_runtime_options(argv):
         raise ValueError('synthetic calibration requires owned target and observer without fixture modes')
 
 
+def validate_timed_hold_options(argv):
+    flag='--owner-timed-hold'
+    matches=[item for item in argv if item==flag or item.startswith(flag+'=')]
+    if matches and (matches!=[flag] or argv.count('--owned-input-service')!=1
+                    or argv.count('--target-process-identity')!=1):
+        raise ValueError('timed hold requires one explicit owned process identity selection')
+
+
 def main():
+    validate_timed_hold_options(sys.argv[1:])
     validate_synthetic_runtime_options(sys.argv[1:])
     validate_door_runtime_options(sys.argv[1:])
     owned_input_service='--owned-input-service' in sys.argv[1:]
+    timed_hold='--owner-timed-hold' in sys.argv[1:]
     process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
     clock_gate_requested = "--post-load-clock-gate" in sys.argv[1:]
@@ -211,6 +222,9 @@ def main():
             TelemetryBackend = partial(TelemetryBackend, window_lifecycle=True)
     if owned_input_service:
         from session_owned_owner_backend import Backend as TelemetryBackend
+    if timed_hold:
+        from functools import partial
+        TelemetryBackend=partial(TelemetryBackend,timed_hold=True)
     if "--renewal-passive-observer" in sys.argv[1:]:
         if not process_identity:
             raise ValueError("passive renewal requires target process identity")
@@ -229,7 +243,7 @@ def main():
     original_argv = sys.argv
     if process_identity:
         sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle','--owned-input-service',
-                                                           '--post-load-clock-gate')]
+                                                           '--post-load-clock-gate','--owner-timed-hold')]
     try:
         if post_load_gate is None:
             base.main()

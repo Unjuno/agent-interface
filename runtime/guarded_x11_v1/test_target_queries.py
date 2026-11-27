@@ -17,6 +17,25 @@ def process_details(xid, incarnation=None):
 
 
 class QueryWorkerTests(unittest.TestCase):
+    def test_query_wait_never_exceeds_remaining_deadline(self):
+        from . import target_queries as module
+        now=[1_000_000_000];waits=[]
+        class Pending:
+            def is_set(self):return False
+            def wait(self,timeout):
+                waits.append(timeout)
+                now[0]+=int(timeout*1_000_000_000)
+                return False
+        worker=TargetQueryWorker(lambda:None)
+        worker.thread=SimpleNamespace(is_alive=lambda:False)  # No background work.
+        fake_threading=SimpleNamespace(Event=Pending)
+        fake_time=SimpleNamespace(monotonic_ns=lambda:now[0])
+        with patch.object(module,'threading',fake_threading),patch.object(module,'time',fake_time):
+            with self.assertRaises(QueryUnavailable):
+                worker.read('focus_id',41,deadline_ns=now[0]+1_000_000,cancelled=lambda:False)
+        self.assertEqual(waits,[.001])
+        self.assertTrue(worker.retired)
+
     def test_windows_for_process_returns_only_viewable_xres_owned_descendants(self):
         from Xlib import X
         reader = object.__new__(X11TargetQueries)

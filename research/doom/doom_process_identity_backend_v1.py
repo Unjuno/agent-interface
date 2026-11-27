@@ -55,6 +55,12 @@ class Backend(Previous):
             raise
 
     def validate(self,steps):
+        if getattr(self,'_timed_hold_enabled',False) and isinstance(steps,list):
+            for step in steps:
+                if (isinstance(step,dict) and step.get('op')=='hold'
+                        and (type(step.get('keys')) is not list or len(step['keys'])!=1
+                             or type(step.get('duration_ms')) is not int)):
+                    raise ValueError('timed hold requires one key and integer milliseconds')
         if self._provided_input_owner is not None and isinstance(steps,list):
             if any(isinstance(step,dict) and str(step.get('op','')).startswith('pointer_') for step in steps):
                 raise ValueError('external service pointer operations are not qualified')

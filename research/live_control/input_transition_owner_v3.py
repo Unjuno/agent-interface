@@ -314,7 +314,7 @@ class InputOwner:
         if operation not in ("up", "button_up"):
             records_before = (
                 self._records_snapshot()
-                if operation in ("down", "button_down", "release") else None
+                if operation in ("down", "down_timed", "button_down", "release") else None
             )
             self._prune_completed_admissions(records_before)
             started_ns = time.perf_counter_ns() if operation in ("release", "close") else None
@@ -334,14 +334,14 @@ class InputOwner:
             if operation == "release":
                 self._prune_completed_admissions(self._records_snapshot())
             admitted = (
-                operation == "down" and isinstance(result, dict)
+                operation in ("down", "down_timed") and isinstance(result, dict)
                 and result.get("event") == "input_admission"
             ) or (
                 operation == "button_down" and isinstance(result, dict)
                 and result.get("event") == "pointer_admission"
             )
             if admitted:
-                admission_key = self._admission_key(lease, key)
+                admission_key = self._admission_key(lease, key["key"] if operation == "down_timed" else key)
                 if admission_key is not None and records_before is not None:
                     deadline = getattr(lease, "deadline", None) if lease is not None else None
                     admitted_ns = result.get("admitted_ns")
@@ -353,9 +353,9 @@ class InputOwner:
                             keycode if type(keycode) is int and keycode > 0 else None,
                             {
                                 "event": result.get("event"),
-                                "operation": operation,
-                                "key" if operation == "down" else "payload": (
-                                    result.get("key") if operation == "down"
+                                "operation": "down" if operation == "down_timed" else operation,
+                                "key" if operation in ("down", "down_timed") else "payload": (
+                                    result.get("key") if operation in ("down", "down_timed")
                                     else result.get("payload")),
                                 "owner_id": result.get("owner_id", self._inner.owner_id),
                                 "intent_token": result.get(

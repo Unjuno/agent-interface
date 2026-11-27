@@ -18,6 +18,14 @@ from executor_v13 import Executor as ReleaseOrderedExecutor
 
 
 class SessionSelectionTests(unittest.TestCase):
+    def test_timed_hold_is_explicit_and_requires_owned_process_identity(self):
+        candidate.validate_timed_hold_options([])
+        candidate.validate_timed_hold_options(["--owner-timed-hold","--owned-input-service","--target-process-identity"])
+        for argv in (["--owner-timed-hold"],
+                     ["--owner-timed-hold","--owned-input-service"],
+                     ["--owner-timed-hold","--owned-input-service","--target-process-identity","--owner-timed-hold"],
+                     ["--owner-timed-hold=yes","--owned-input-service","--target-process-identity"]):
+            with self.subTest(argv=argv),self.assertRaises(ValueError):candidate.validate_timed_hold_options(argv)
     def test_v15_selects_release_ordered_executor_and_hashes_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)

@@ -26,6 +26,28 @@ from doom_controller_failure_cleanup_v1 import operation_release_verified, owner
 from map01_reverse_program import reverse_stages
 
 
+def _hold_duration_verified(down, held, transition, up, duration_ms):
+    """Check a legacy hold or an explicitly bound owner-deadline hold."""
+    if (type(down) is not dict or type(held) is not dict or type(transition) is not dict
+            or type(up) is not dict or type(duration_ms) is not int
+            or type(down.get('input_ack_ns')) is not int or type(held.get('input_ack_ns')) is not int
+            or type(up.get('owner_keyrelease_started_ns')) is not int):
+        return False
+    started=down['input_ack_ns'];held_ns=held['input_ack_ns'];released=up['owner_keyrelease_started_ns']
+    if transition.get('release_mode') is None:
+        return (down.get('timed_ticket') is None and down.get('timed_deadline_ns') is None
+                and down.get('timed_armed_ns') is None and released-held_ns>=duration_ms*1_000_000)
+    ticket=down.get('timed_ticket');deadline=down.get('timed_deadline_ns');armed=down.get('timed_armed_ns')
+    return (transition.get('release_mode')=='owner_deadline' and type(ticket) is str and bool(ticket)
+            and type(deadline) is int and type(armed) is int and started<=armed<deadline
+            and deadline==started+duration_ms*1_000_000
+            and transition.get('timed_ticket')==ticket and transition.get('timed_deadline_ns')==deadline
+            and transition.get('timed_armed_ns')==armed
+            and up.get('release_mode')=='owner_deadline' and up.get('timed_ticket')==ticket
+            and up.get('timed_deadline_ns')==deadline and up.get('timed_armed_ns')==armed
+            and started<=held_ns<=released and deadline<=released)
+
+
 class DoorTaskContract:
     def __init__(self, arm, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False, reverse_arm=None):
         if arm not in ('control','use'):
@@ -34,7 +56,7 @@ class DoorTaskContract:
         if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
                 or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
         if type(direct_exit) is not bool or direct_exit and not exit_probe:raise ValueError('invalid direct exit mode')
-        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate') or not traverse or arm!='use' or exit_probe or direct_exit):
+        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75','east-return-reopen') or not traverse or arm!='use' or exit_probe or direct_exit):
             raise ValueError('reverse mode requires the use/traverse prefix without exit probe')
         self.reverse_arm=reverse_arm
         self.direct_exit=direct_exit
@@ -222,7 +244,7 @@ class DoorTaskContract:
                     or len(held)!=1 or held[0].get('keys')!=[key]
                     or type(held[0].get('input_ack_ns')) is not int
                     or not down['input_ack_ns']<=held[0]['input_ack_ns']
-                    or up['owner_keyrelease_started_ns']-held[0]['input_ack_ns']<self.steps[0]['duration_ms']*1_000_000
+                    or not _hold_duration_verified(down,held[0],transition,up,self.steps[0]['duration_ms'])
                     or not rows.index(down)<rows.index(held[0])<rows.index(transition)
                     or len(step_done)!=1 or type(step_done[0].get('completed_ns')) is not int
                     or not typed or len(typed)!=len(frames)
