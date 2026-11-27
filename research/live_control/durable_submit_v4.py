@@ -10,6 +10,7 @@ from received_continuation_v1 import advance, read_request
 from unix_json_deadline import exchange
 
 
+import append_checkpoint_v1 as checkpoint
 from append_checkpoint_v1 import store, load
 
 
@@ -68,7 +69,7 @@ def reconcile(pending, records):
 
 def run(path, spec, call=exchange):
     with locked(path):
-        state = load(path)
+        state, frame_count, _, _ = checkpoint.inspect(path)
         if state.get('format') != 'durable-submit-v4' or state.get('authority') != 'none':
             raise ValueError('invalid journal')
         if set(spec) - {'command', 'events', 'timeout'}: raise ValueError('unknown option')
@@ -84,6 +85,11 @@ def run(path, spec, call=exchange):
             if command.get('op') not in ('submit', 'clock') or 'id' in command or 'transport_request_id' in command:
                 raise ValueError('submit/clock only; journal assigns unique identities')
             if command['op'] == 'clock' and command != {'op': 'clock'}: raise ValueError('clock accepts no extra fields')
+            # A command needs both its may-have-been-sent checkpoint and a
+            # later reply checkpoint. Refuse before transport if the frame
+            # count alone proves that the second write cannot fit.
+            if frame_count + 2 > checkpoint.MAX_RECORDS:
+                raise ValueError('journal capacity cannot retain command and reply')
             if command['op'] == 'submit':
                 command['id'] = 'durable-' + uuid.uuid4().hex
                 q['action_id'] = command['id']
