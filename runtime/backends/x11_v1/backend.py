@@ -505,17 +505,31 @@ class X11Backend:
         reverse = {1: "left", 2: "middle", 3: "right"}
         return sorted(reverse[n] for n, bit in BUTTON_MASKS.items() if mask & bit)
 
-    def release_all(self) -> dict[str, Any]:
+    def release_all(self, *, deadline_monotonic_ns=None) -> dict[str, Any]:
+        if deadline_monotonic_ns is not None and type(deadline_monotonic_ns) is not int:
+            raise ValueError('deadline_monotonic_ns must be an integer or None')
+
+        def check_deadline():
+            if (deadline_monotonic_ns is not None
+                    and time.monotonic_ns() >= deadline_monotonic_ns):
+                raise X11BackendError('RELEASE_DEADLINE_EXPIRED')
+
         tracked = dict(self.held_keycodes)
         for code in list(self.held_keycodes.values()):
+            check_deadline()
             xtest.fake_input(self.d, X.KeyRelease, code)
             self.emissions += 1
         for button in list(self.held_buttons):
+            check_deadline()
             xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
             self.emissions += 1
+        check_deadline()
         self.d.sync()
+        check_deadline()
         keys = self._physical_keys_down(tracked)
+        check_deadline()
         buttons = set(self._physical_buttons_down())
+        check_deadline()
         # Core QueryPointer exposes only buttons 1–5. The XTEST map also
         # accepts extended buttons 8/9, whose state this readback cannot
         # establish. Preserve those obligations as UNKNOWN instead of treating

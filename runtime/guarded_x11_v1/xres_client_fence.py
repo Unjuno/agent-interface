@@ -13,16 +13,28 @@ def _validate_duration(name, value, *, allow_zero=False):
 
 
 def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
-                           accepted_statuses=('disconnected', 'still_connected', 'unknown')):
+                           accepted_statuses=('disconnected', 'still_connected', 'unknown'),
+                           wait_for_exit_until_deadline=False,
+                           absolute_deadline_monotonic_ns=None):
     """Run one worker under an external process deadline.
 
     A synchronous X request can exceed the worker's cooperative deadline. This
     supervisor bounds the query wait after process creation and reports UNKNOWN
     unless the worker returned a result and exited cleanly. Process creation and
     OS scheduling are outside that query budget. It does not prove input release.
+    When wait_for_exit_until_deadline is true, a 'released' reply may use the
+    remaining response budget for clean exit; exit must be observed before that
+    same deadline. Other replies retain the normal termination-grace behavior.
+    An optional absolute deadline also caps the wait and prevents starting a
+    worker when expiry is already observed; process creation is not interruptible.
     """
     _validate_duration('timeout_s', timeout_s)
     _validate_duration('terminate_grace_s', terminate_grace_s)
+    if type(wait_for_exit_until_deadline) is not bool:
+        raise ValueError('wait_for_exit_until_deadline must be boolean')
+    if (absolute_deadline_monotonic_ns is not None
+            and type(absolute_deadline_monotonic_ns) is not int):
+        raise ValueError('absolute_deadline_monotonic_ns must be an integer or None')
     if not callable(target) or not isinstance(args, tuple):
         raise TypeError('target must be callable and args must be a tuple')
     if (not isinstance(accepted_statuses, tuple) or not accepted_statuses
@@ -30,6 +42,11 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         raise ValueError('accepted_statuses must be a non-empty tuple of strings')
 
     started = time.monotonic()
+    if (absolute_deadline_monotonic_ns is not None
+            and time.monotonic_ns() >= absolute_deadline_monotonic_ns):
+        return {'status':'unknown', 'reason':'transaction_deadline_before_spawn',
+                'worker_retired':None, 'worker_exitcode':None,
+                'elapsed_ms':(time.monotonic()-started)*1000.0}
     deadline = None
     receive, send = None, None
     process = None
@@ -41,30 +58,44 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         receive, send = context.Pipe(duplex=False)
         process = context.Process(target=target, args=(send, *args),
                                   name='xres-disconnect-observer')
-        process.start()
-        process_started = True
-        # Process startup is outside the worker's response budget, matching
-        # this supervisor's contract. Keep elapsed_ms inclusive for receipts.
-        deadline = time.monotonic() + timeout_s
-        send.close()
-        send = None
-        if receive.poll(max(0.0, deadline - time.monotonic())):
-            try:
-                result = receive.recv()
-                worker_result_received_monotonic_ns = time.monotonic_ns()
-            except (EOFError, OSError):
-                result = None
+        expired_before_spawn = (absolute_deadline_monotonic_ns is not None
+                                and time.monotonic_ns() >= absolute_deadline_monotonic_ns)
+        if not expired_before_spawn:
+            process.start()
+            process_started = True
+            # Local response budget starts after spawn; an outer deadline,
+            # when supplied, is never extended by process creation.
+            deadline = time.monotonic() + timeout_s
+            if absolute_deadline_monotonic_ns is not None:
+                deadline = min(deadline, absolute_deadline_monotonic_ns / 1_000_000_000)
+            send.close()
+            send = None
+            if receive.poll(max(0.0, deadline - time.monotonic())):
+                try:
+                    result = receive.recv()
+                    worker_result_received_monotonic_ns = time.monotonic_ns()
+                except (EOFError, OSError):
+                    result = None
     except Exception as error:
         result = None
         reason = 'worker_start_failed'
         error_text = repr(error)
     else:
-        reason = 'supervision_timeout'
+        reason = ('transaction_deadline_before_spawn' if expired_before_spawn
+                  else 'supervision_timeout')
         error_text = None
 
     forced_stop = False
+    wait_for_released_exit = (wait_for_exit_until_deadline
+                              and 'released' in accepted_statuses
+                              and isinstance(result, dict)
+                              and result.get('status') == 'released')
+    exit_observed_in_budget = not wait_for_released_exit
     if process_started:
-        process.join(terminate_grace_s if result is not None else 0)
+        if wait_for_released_exit:
+            process.join(max(0.0, deadline - time.monotonic()))
+        else:
+            process.join(terminate_grace_s if result is not None else 0)
         if process.is_alive():
             forced_stop = True
             process.terminate()
@@ -77,6 +108,9 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         except (AssertionError, ValueError):
             worker_retired = False
         exitcode = process.exitcode
+        if wait_for_released_exit:
+            # Bound the observation itself, not just the preceding join.
+            exit_observed_in_budget = time.monotonic() < deadline
     else:
         worker_retired = None
         exitcode = None
@@ -91,7 +125,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
 
     elapsed_ms = (time.monotonic() - started) * 1000.0
     if (isinstance(result, dict) and worker_retired and not forced_stop
-            and exitcode == 0
+            and exit_observed_in_budget and exitcode == 0
             and result.get('status') in accepted_statuses):
         outcome = dict(result)
         outcome.update(worker_retired=True, worker_exitcode=exitcode,
@@ -100,6 +134,8 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         if forced_stop:
             reason = ('worker_did_not_exit_cleanly' if result is not None
                       else 'supervision_timeout')
+        elif result is not None and not exit_observed_in_budget:
+            reason = 'worker_exit_not_observed_before_deadline'
         elif result is not None and (
                 not isinstance(result, dict)
                 or result.get('status') not in accepted_statuses):
