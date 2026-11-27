@@ -32,6 +32,7 @@ def project(lines, selection):
     if len(begins) != len(selection):
         raise ValueError('Overlapping begin boundaries')
     windows, active, context, pending, seen = [], None, None, {}, {}
+    response_windows = {}
     for index, line in enumerate(lines, 1):
         record = json.loads(line)
         payload = record.get('payload', {})
@@ -62,6 +63,9 @@ def project(lines, selection):
             if not isinstance(rid, str) or not rid:
                 raise ValueError('Missing response identity')
             usage = validate_usage(payload.get('usage', {}))
+            previous_window = response_windows.setdefault(rid, active['name'])
+            if previous_window != active['name']:
+                raise ValueError('response identity crosses windows')
             identity = (payload.get('turn_id'), usage)
             if rid in seen:
                 if seen[rid] != identity:
