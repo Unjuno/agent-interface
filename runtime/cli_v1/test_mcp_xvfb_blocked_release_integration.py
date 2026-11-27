@@ -16,6 +16,7 @@ retained as task failures even when cancellation and release checks complete.
 
 import asyncio
 from copy import deepcopy
+from contextlib import nullcontext
 import hashlib
 import io
 import json
@@ -82,6 +83,17 @@ if not math.isfinite(_TRANSACTION_TIMEOUT_S) or not 0 < _TRANSACTION_TIMEOUT_S <
     raise ValueError('cancellation transaction timeout must be in (0, 30] seconds')
 if _RETENTION_MODE not in ('files', 'journal'):
     raise ValueError('retention mode must be files or journal')
+
+
+def _runtime_directory(raw_path):
+    """Keep raw test files only when a fresh absolute destination is requested."""
+    if raw_path is None:
+        return tempfile.TemporaryDirectory(prefix='mcp-xvfb-blocked-release-')
+    if not isinstance(raw_path, str) or not raw_path or not Path(raw_path).is_absolute():
+        raise ValueError('raw directory must be a nonempty absolute path')
+    destination = Path(raw_path)
+    destination.mkdir(mode=0o700, parents=False, exist_ok=False)
+    return nullcontext(str(destination))
 
 
 def _metadata(response):
@@ -587,8 +599,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         xvfb_resume_timer = None
         resume_xvfb = None
 
-        with tempfile.TemporaryDirectory(prefix='mcp-xvfb-blocked-release-') as td:
+        raw_path = os.environ.get('AGENT_INTERFACE_MCP_XVFB_RAW_DIRECTORY')
+        with _runtime_directory(raw_path) as td:
             root = Path(td)
+            if raw_path is not None:
+                report['raw_directory'] = str(root)
             try:
                 app_display = display.Display()
                 screen = app_display.screen()
