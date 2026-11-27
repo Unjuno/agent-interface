@@ -1,0 +1,58 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-callback-convergence-final-20261016'
+CORE='runtime.core_v1.test_compiled_callback_failure_composition.ROWS'
+CALLER='test_compiled_callback_caller_failures.ROWS'
+def check(core,caller):
+    expected={('runtime_finished',True,False),('runtime_finished',False,False),('action_terminal',False,True),(None,False,True),('effect_checked',False,False),(None,True,False)}
+    if len(core)!=6 or {(r['journal_at'],r['verify_failure'],r['mutate']) for r in core}!=expected or len(caller)!=4:raise ValueError('coverage')
+    for row in core:
+        r=row['result'];journal=row['journal_at'];verify=row['verify_failure']
+        prefix=2 if not verify and journal in (None,'runtime_finished') else 1
+        if r['completed_transitions']!=prefix or len(row['calls']['execute'])!=prefix:raise ValueError('core prefix')
+        if not all(t['release_verified'] for t in r['transitions']):raise ValueError('release')
+        if r['outcome']!=('TASK_SUCCEEDED' if journal is None and not verify else 'RUNTIME_FAILED'):raise ValueError('false success')
+        events=r['critical_events'];names=[e.get('event') for e in events]
+        if None in names or names.count('journal_write_failed')!=int(journal is not None) or names.count('effect_verification_failed')!=int(verify):raise ValueError('failure causes/private custody')
+        if names[-1]!='runtime_finished' or events[-1]['outcome']!=r['outcome'] or events[-1]['reason']!=r['reason']:raise ValueError('terminal evidence')
+        if journal and row['events'][-1]['event']!=journal:raise ValueError('journal retry')
+        if prefix==1 and r['pending_effect']['action']!='enter':raise ValueError('pending effect')
+    for row in caller:
+        if row['case']=='memory-verifier':
+            r=row['result']
+            if r['completed_transitions']!=1 or len(row['inputs'])!=1 or row['witnesses'][0]['stage']!='effect_verification':raise ValueError('memory witness')
+            continue
+        r=row['result'];receipt=r['compiled_execution_receipt']
+        if r['outcome']!='EXECUTION_INCOMPLETE' or receipt['completed_transitions']!=1 or r['execution_progress']['completed_actions']!=1:raise ValueError('caller prefix')
+        if row['emissions']!=[[2,1],[2,2],[3,2],[3,1]] or row['down'] or row['outer_checks']:raise ValueError('caller input/effect')
+        files={n:json.loads(bytes.fromhex(v)) for n,v in row['native_files_hex'].items() if n.endswith('.json')}
+        exceptions=[v for n,v in files.items() if n.endswith('-exception.json')]
+        if len(exceptions)!=int(row['verifier_failure']):raise ValueError('adapter witness count')
+        if exceptions and exceptions[0]['stage']!='effect_verification':raise ValueError('adapter witness stage')
+        names=[e['event'] for e in receipt['critical_events']]
+        if names.count('journal_write_failed')!=int(row['journal_at'] is not None):raise ValueError('caller journal failure')
+    return dict(core_rows=len(core),caller_rows=len(caller))
+report={}
+for mode in ('normal','optimized'):
+    records=json.loads((OUT/f'{mode}-records.json').read_text());core,caller=records[CORE],records[CALLER]
+    count=check(core,caller);meta=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'],len(set(meta['selected'])))!=(463,0,0,0,463):raise ValueError('suite')
+    controls={}
+    for name,failures,errors in [('baseline',8,3),('miss_terminal_failure',2,0)]:
+        m=json.loads((OUT/f'{name}-{mode}-result.json').read_text())
+        if (m['methods'],m['failures'],m['errors'],m['skips'])!=(14,failures,errors,0):raise ValueError('control')
+        controls[name]=m
+    rejected=[]
+    for name in ('lost_prefix','false_release','lost_second_failure','false_success','sink_retry','lost_witness'):
+        bad=copy.deepcopy(core);other=copy.deepcopy(caller);paired=next(r for r in bad if r['journal_at']=='runtime_finished' and r['verify_failure'])
+        if name=='lost_prefix':paired['result']['completed_transitions']=0
+        elif name=='false_release':paired['result']['transitions'][0]['release_verified']=False
+        elif name=='lost_second_failure':paired['result']['critical_events']=[e for e in paired['result']['critical_events'] if e['event']!='journal_write_failed']
+        elif name=='false_success':paired['result']['outcome']='TASK_SUCCEEDED'
+        elif name=='sink_retry':paired['events'].append({'event':'extra_retry'})
+        else:next(r for r in other if r['case']=='memory-verifier')['witnesses'][0]['stage']='lost'
+        try:check(bad,other)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('mutant accepted')
+    report[mode]=dict(methods=463,rows=count,controls=controls,mutations=rejected)
+print(json.dumps(dict(scope='saved-only callback failure/prefix/witness custody; no candidate import or durable app score',modes=report),indent=2))

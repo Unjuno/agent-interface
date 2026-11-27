@@ -1,0 +1,7 @@
+# R31 preparation and custody
+
+R31 began from merged current main `f4ab30af06209e5c2c4a3e2d835761e16711b972` after R30 (#9473). The input-free preflight passed all nine checks before launch: current commit and tracked tree, packet/runtime hashes, R30 raw/audit/trace hashes and semantics, read-only absent `LowLevelHooksTimeout`, native Windows, and a fake-process/fake-pipe/fake-backend/fake-SendInput exercise of every trace boundary. That self-test recorded helper exchange, `_recover`, `release_all`, and Q-up SendInput with no native input.
+
+The one live trial used one owned fixture and hook, one public dispatch, one cancel after hook entry, a 1250 ms planned callback hold, and 20 exact-call polls. The callback self-release cap remained 1500 ms. The source and conditions hashes were checked before the trial; the current-user registry was read only and absent. No retry, second dispatch/cancel, WSLc, Docker, registry write, or external window was used.
+
+A preparation defect is retained: the R31 `conditions.json` expected text effect was updated, but its frozen `operations` list still contained the R30 sentinel. Thus the actual click/text/save occurred, while the predeclared R31 text-effect oracle could not match. This run is not replayed. The raw manifest preserves the exact request and resulting fixture journal.

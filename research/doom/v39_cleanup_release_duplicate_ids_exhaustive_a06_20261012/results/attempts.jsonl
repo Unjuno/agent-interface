@@ -1,0 +1,3 @@
+{"stage":"candidate_run","status":"PASS_SCOPED","detail":"245411 sequences; candidate mismatches 0; main false positives 92690; main order-sensitive profiles 1118"}
+{"stage":"audit_harness","status":"REPAIRED","detail":"Initial independent audit used raw Git hash-object semantics under WSL and omitted reader-retirement fixture fields. Updated it to use the frozen source path's Git conversion rules and the same required fixture metadata; neither issue reflected an experiment mismatch."}
+{"stage":"independent_replay","status":"PASS_INDEPENDENT_REPLAY","detail":"245411 sequences replayed; counts reproduced; both source blobs verified"}

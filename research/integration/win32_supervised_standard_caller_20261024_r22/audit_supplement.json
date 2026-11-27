@@ -1,0 +1,252 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r22",
+  "audit_correction": "The frozen audit's two failures read callback_return_ns from hook_trace_after_release, a snapshot taken before the callback thread stored the return time. This supplement uses the final hook event row and hook_stopped snapshot; audit.json is unchanged.",
+  "checks": [
+    {
+      "evidence": {
+        "failed_checks": [
+          "injected_q_callback_was_held_and_forwarded_after_cancel",
+          "independent_same_generation_q_up_after_callback_return"
+        ],
+        "frozen_audit_status": "FAIL_OR_UNKNOWN",
+        "passed": 8,
+        "total": 10
+      },
+      "name": "frozen_audit_is_preserved",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "callback_return_ns": 483961725663900,
+        "cancel_return_ns": 483961466463800,
+        "final_hook_callback_return_ns": 483961725663900,
+        "hold_snapshot_callback_return_ns": null,
+        "suppressed": null
+      },
+      "name": "callback_return_is_retained_in_final_event_row",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "producer_exit": {
+          "creation_time_100ns": 134372662527692742,
+          "observed_monotonic_ns": 483961726062100,
+          "pid": 9824,
+          "status": "exited",
+          "wait_started_monotonic_ns": 483961725568000
+        },
+        "producer_identity": {
+          "creation_time_100ns": 134372662527692742,
+          "pid": 9824
+        },
+        "q_down_event": {
+          "callback_entry_ns": 483961463071300,
+          "callback_return_ns": 483961725663900,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        "q_up_event": {
+          "callback_entry_ns": 483961731070600,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      },
+      "name": "producer_exit_and_q_up_follow_forwarded_down",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_start_ns": 483961465057600,
+        "cancellation": {
+          "action_operation_id": "53d76f705809427fabe2b72ec03f2cfd",
+          "operation_id": "f40ac54d63a84a819fb349349c16ee8e",
+          "owner_phase": "recovered",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 483964437000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 484050406000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0031",
+              "unicode:0032",
+              "unicode:0034",
+              "unicode:0036",
+              "unicode:0043",
+              "unicode:0044",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004B",
+              "unicode:004D",
+              "unicode:004F",
+              "unicode:0050",
+              "unicode:0052",
+              "unicode:0053",
+              "unicode:0055",
+              "unicode:0056"
+            ],
+            "operation_id": "53d76f705809427fabe2b72ec03f2cfd",
+            "phase": "recovered",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372662527692742,
+              "pid": 9824
+            },
+            "recovery_id": "ed91991d8bc54a4da379a76ec05eae1e",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "target_generation": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "status": "recovered",
+          "target_generation": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+          "task_success": null
+        },
+        "custody": {
+          "cleanup_deadline_ns": 483964437000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 484050406000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0031",
+            "unicode:0032",
+            "unicode:0034",
+            "unicode:0036",
+            "unicode:0043",
+            "unicode:0044",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004B",
+            "unicode:004D",
+            "unicode:004F",
+            "unicode:0050",
+            "unicode:0052",
+            "unicode:0053",
+            "unicode:0055",
+            "unicode:0056"
+          ],
+          "operation_id": "53d76f705809427fabe2b72ec03f2cfd",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372662527692742,
+            "pid": 9824
+          },
+          "recovery_id": "ed91991d8bc54a4da379a76ec05eae1e",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "recovery_ms": 327.2261,
+        "recovery_poll_return_ns": 483961792283700
+      },
+      "name": "public_cancellation_receipt_confirms_bounded_recovery",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "callback_return_ns": 483961725663900,
+        "emergency_q_up": null,
+        "readback": {
+          "exit_code": 0,
+          "expected_generation": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+          "generation_after": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+          "generation_before": "0e9cbbb6dd035b7559b7170b35a58090c3d90a9fb32dff2cfec37ed6de6e6569",
+          "pid": 33752,
+          "process_retired": true,
+          "q_down": false,
+          "returned_monotonic_ns": 483961973869600,
+          "started_monotonic_ns": 483961973285800,
+          "state_witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 65602966,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 54896,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 54552
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 65602966,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 54896,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 54552
+            }
+          ],
+          "status": "observed"
+        }
+      },
+      "name": "independent_readback_confirms_same_generation_q_up",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R22"
+        },
+        "fixture_exit": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_stopped": true,
+        "window_exists_after_exit": false
+      },
+      "name": "exact_task_effect_and_host_cleanup_are_preserved",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close_release_confirmed": false,
+        "close_status": "closed",
+        "retained_action_status": "recovered",
+        "task_success": null
+      },
+      "name": "terminal_action_gap_is_explicitly_retained",
+      "passed": false
+    }
+  ],
+  "checks_passed": 6,
+  "checks_total": 7,
+  "frozen_audit_sha256": "3ef8b2d0d0a3d683d86841a30927abbc347a9f75258894a707f90021e28bad5a",
+  "limited_finding": "One 250ms callback hold produced a public recovered/release-confirmed receipt and independent same-generation Q-up after callback return; the retained dispatch action still says running, and session close reports release_confirmed=false.",
+  "overall_task_success": null,
+  "raw_sha256": "7c4f6c65fe9ac0df82a1ae177e7c5f86f1a9e4b6a662d88d85808d10ef0ce042",
+  "schema": "win32-supervised-standard-caller-r22-supplement-v1",
+  "status": "FAIL_OR_UNKNOWN"
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "$REVIEW_WORKSPACE\outputs\primary-request-snapshot-01a0ff32\audit-saved.py", line 57, in <module>
+    rows=reduce(data)
+         ^^^^^^^^^^^^
+  File "$REVIEW_WORKSPACE\outputs\primary-request-snapshot-01a0ff32\audit-saved.py", line 30, in reduce
+    fx=c['fixture_exit'];need(type(fx['code']) is int and fx['code']==0 and type(fx['requests']) is int and fx['requests']==1,'natural fixture0 one request');need(fx['pid']==c['fixture_start']['pid'] and fx['ppid']==c['fixture_start']['ppid']==r['pid'],'same original fixture parent/PID');need(type(c['host_exit']['code']) is int and c['host_exit']['code']==0 and c['host_exit']['signal'] is None,'original host0 no signal');exact(c['error'],None,'no producer exception');need(c['text_callbacks']==1 and type(c['text_callbacks']) is int,'one actual text presentation');exact(c['image_callbacks'],0 if mint else 1,'inert image presentations')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$REVIEW_WORKSPACE\outputs\primary-request-snapshot-01a0ff32\audit-saved.py", line 6, in need
+    if not ok:raise ValueError(msg)
+              ^^^^^^^^^^^^^^^^^^^^^
+ValueError: one actual text presentation

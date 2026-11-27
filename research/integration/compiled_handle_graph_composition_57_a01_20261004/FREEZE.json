@@ -1,0 +1,66 @@
+{
+  "command": "uv run --python 3.12 --with pillow python research/integration/compiled_handle_graph_composition_57_a01_20261004/run.py",
+  "conditions": [
+    "baseline",
+    "field_race_replace_pixels_after_observe_before_admit",
+    "submit_race_replace_pixels_after_observe_before_admit"
+  ],
+  "container_status": "STOP: prior OrbStack Docker probe failed on unsupported content blob; this candidate is native macOS only",
+  "dependency": {
+    "Pillow": "12.3.0",
+    "acquisition": "uv run --python 3.12 --with pillow",
+    "python": "3.12.13"
+  },
+  "frozen_at_utc": "2026-10-04T11:58:27Z",
+  "frozen_decision": {
+    "any_mismatch": "FAIL",
+    "baseline": "5/5 TASK_SUCCEEDED with exactly enter_exact_token then activate_submit",
+    "field_race": "5/5 SAFE_YIELD missing_symbol and zero execute operations",
+    "missing_or_invalid_raw": "HOLD",
+    "release": "every test-double execution reports verified empty keys and buttons",
+    "submit_race": "5/5 SAFE_YIELD missing_symbol after entry only and no activate_submit"
+  },
+  "input_png_sha256": {
+    "029.png": "2b9b4e9ff81eabb663be119756c6434cdcf910e55af44e4e8b71fd67191005d1",
+    "054.png": "a8bbea511d0dc2e28317a0146f0b8463a17adf5ca89650dee50ae07b186a0961",
+    "079.png": "29be334a2ecfa6c652e1d36dc58bcc7f3b8112d4845393f9ea5872e696f8610f",
+    "105.png": "c1394da379d20e299a07d8731f19dc156ca6ff3f4fc266312532e6769d643e53",
+    "134.png": "64f862340539dc803d904aaed6ddd7a63c0a1aef2869c06353ee0c0bb0e39309"
+  },
+  "integration_base": "9dc383a89043deb6199c847196498d867ba6bb75",
+  "schema": "compiled-handle-graph-composition-freeze-v1",
+  "source_module_git_blobs": {
+    "compiled_gui.py": "ca14d654a7580cfa8369a1aef988f59d1acc9442",
+    "handles.py": "45462cfa5da1a96e07df2a874670a3de23dab891",
+    "handles_base.py": "b22a0f9bef22638951307345549f72aa7f4596e6",
+    "handles_texture.py": "d72b9ba411eaeb8a63bb6519af9dc9bd415ca8f8"
+  },
+  "source_tree_sha256": {
+    "README.md": "a2d9ddc2eeb88ee8e8553d402b839508a11c27f86f0ddafc06e2f44a406b87d1",
+    "audit.py": "650348b2680e37516a81aafd7000f203fc683694201e74354c0d5820bdc94883",
+    "inputs/029.png": "2b9b4e9ff81eabb663be119756c6434cdcf910e55af44e4e8b71fd67191005d1",
+    "inputs/054.png": "a8bbea511d0dc2e28317a0146f0b8463a17adf5ca89650dee50ae07b186a0961",
+    "inputs/079.png": "29be334a2ecfa6c652e1d36dc58bcc7f3b8112d4845393f9ea5872e696f8610f",
+    "inputs/105.png": "c1394da379d20e299a07d8731f19dc156ca6ff3f4fc266312532e6769d643e53",
+    "inputs/134.png": "64f862340539dc803d904aaed6ddd7a63c0a1aef2869c06353ee0c0bb0e39309",
+    "inputs/A02_INPUTS.json": "805ab1b07e71c3f5ebf865653a9adecd6961881e38c6d885bc5f7f03cfb4614c",
+    "inputs/A03_INPUTS.json": "4b2ca26a478289421a9d39ceb9a3b56a9f8a6c585e341003d1ad28670b141c62",
+    "run.py": "71d7e4e826d3c0b553cdcb6ce07b10efcbb99806c4b2cbe4ee5d254bc79e3a80",
+    "source/a03_candidate.py": "b3f174135d3db957d133244c9756ee9ad915dfec5008d87996e47f7d0164f64a",
+    "source/compiled_form_adapter_v2.py": "f1f3f6b2a1f0487a9c6f65b51936fafc8b6101390b1e4070f8e31f741a28b6ef"
+  },
+  "upstream_prs": {
+    "7353": {
+      "head": "e8f7c02cb98d849312a4889fa4d52ec424088732",
+      "state": "open ready for review"
+    },
+    "7595": {
+      "head": "ad9057dbd2d2c276e0c3984d639355cc1ec682b2",
+      "state": "open draft"
+    }
+  },
+  "upstream_source_blobs": {
+    "a03_candidate.py": "74bd5cc95b7dd43db0016f01a261673d64149aac",
+    "compiled_form_adapter_v2.py": "e88409619f943086d877dc5b741e141075e2f403"
+  }
+}

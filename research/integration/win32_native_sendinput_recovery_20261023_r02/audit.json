@@ -1,0 +1,202 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r02",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-native-sendinput-recovery-20261023-r02",
+        "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154"
+      },
+      "name": "attempt_and_source_pinned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempt_id": "win32-native-sendinput-recovery-20261023-r02",
+        "helpers": {
+          "observer": {
+            "alive": true,
+            "identity": {
+              "creation_time_100ns": 134372400997963882,
+              "pid": 51736
+            },
+            "pid": 51736
+          },
+          "recovery": {
+            "alive": true,
+            "identity": {
+              "creation_time_100ns": 134372400995905957,
+              "pid": 45376
+            },
+            "pid": 45376
+          }
+        },
+        "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+        "status": "PASS"
+      },
+      "name": "spawn_helper_readiness_preflight",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "platform": "Windows-10-10.0.26300-SP0",
+        "resource_commands": [],
+        "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner"
+      },
+      "name": "native_windows_and_no_wslc",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "blocked-before-native-call"
+      ],
+      "name": "exactly_two_frozen_schedules",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+        "hwnd": 19268970,
+        "owner": {
+          "creation_time_100ns": 134372401031632200,
+          "pid": 42012,
+          "window_thread_id": 21576
+        },
+        "pid": 42012
+      },
+      "name": "schedule_1_owned_fixture_identity",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "state_before_cancel": {
+          "foreground_hwnd": 19268970,
+          "monotonic_ns": 457812187000000,
+          "state": false,
+          "witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 19268970,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 42012,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21576
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 19268970,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 42012,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21576
+            }
+          ]
+        },
+        "trigger": {
+          "monotonic_ns": 457812187000000,
+          "phase": "before_native_call"
+        }
+      },
+      "name": "schedule_1_frozen_trigger_and_input_state",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "alive": false,
+        "cancel_ms": 0.0,
+        "exitcode": -15,
+        "terminal": {
+          "cleanup_deadline_ns": 457820187000000,
+          "deadline_ns": 457831984000000,
+          "obligations": [
+            "CTRL"
+          ],
+          "operation_id": "native-sendinput-r02-schedule-1",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372401037603805,
+            "pid": 56084
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "terminal_ms": 0.0
+      },
+      "name": "schedule_1_bounded_cancel_and_exact_producer_retirement",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "recovery": {},
+        "timeline": [
+          {
+            "kind": "trigger_received",
+            "monotonic_ns": 457812187000000
+          },
+          {
+            "exitcode": -15,
+            "kind": "producer_exit_confirmed_by_join",
+            "monotonic_ns": 457812187000000
+          }
+        ]
+      },
+      "name": "schedule_1_retirement_before_one_verified_recovery_up",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "observed_duration_ns": 0,
+        "required_horizon_ns": 1500000000,
+        "sample_count": 0,
+        "states": []
+      },
+      "name": "schedule_1_independent_neutral_state_through_late_down_horizon",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect_after_close": null,
+        "effect_readback": null,
+        "event_count": 0,
+        "exit_code": null,
+        "fresh_generation": null,
+        "hwnd_gone": null,
+        "prior_generations": [
+          "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c"
+        ]
+      },
+      "name": "fresh_target_independent_task_effect",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "release": {},
+        "status": null
+      },
+      "name": "fresh_public_mcp_task_and_verified_release",
+      "passed": false
+    },
+    {
+      "evidence": [],
+      "name": "runner_cleanup_confirmed",
+      "passed": false
+    }
+  ],
+  "passed": 5,
+  "schema": "win32-native-sendinput-recovery-audit-v1",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 12
+}

@@ -1,0 +1,223 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "call_id": "observe-p08",
+      "ended_ns": 561218775334600,
+      "kind": "tool_call",
+      "method": "interface_guarded_observe",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-547142d27b01fb8ee2c87fa6b194190fa03e7bd0d6cd905f0e9f668e48292114.tool-request.bin",
+          "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+        },
+        {
+          "path": "raw/tool-547142d27b01fb8ee2c87fa6b194190fa03e7bd0d6cd905f0e9f668e48292114.tool-response.bin",
+          "sha256": "01e25d5ee05c759dcadadfa6b66f7000e25ee49f67287f05c86be3a17619f072"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"operation\": \"guarded_observe\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"observed\", \"input_dispatched\": false, \"source\": {\"sequence\": 1, \"observation_id\": \"45fa198721ca457394e3207065075f55\", \"binding_revision\": 0, \"capture_ns\": 561218764771200, \"image_source\": \"exact_capture_rgb_handoff\", \"pointer_binding\": {\"focus\": 20, \"surface\": 20, \"geometry\": [0, 0, 32, 32], \"process_generation\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}, \"native\": {\"artifact\": {\"mime_type\": \"image/png\", \"path\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\13b0d6ae7c26442492f0fdf677c7d527\\\\images\\\\b60339feae9f45b68871761bc3e33780.png\", \"sha256\": \"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\", \"bytes\": 534, \"width\": 32, \"height\": 32, \"source_raw_sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"timing_ns\": {\"started\": 561218758432300, \"converted\": 561218758456700, \"encoded\": 561218764384500, \"written\": 561218764730200, \"hashed\": 561218764749000}}, \"sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"width\": 32, \"height\": 32, \"capture_started_ns\": 561218764771200}, \"timing_ns\": {\"started\": 561218758335800, \"public_returned\": 561218764773900, \"binding_checked\": 561218765278700, \"artifact_verified\": 561218766104000, \"decoded\": 561218766107900}}, \"observation_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"status\": \"returned\", \"observation_id\": \"45fa198721ca457394e3207065075f55\", \"observation\": {\"artifact\": {\"mime_type\": \"image/png\", \"path\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\13b0d6ae7c26442492f0fdf677c7d527\\\\images\\\\b60339feae9f45b68871761bc3e33780.png\", \"sha256\": \"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\", \"bytes\": 534, \"width\": 32, \"height\": 32, \"source_raw_sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"timing_ns\": {\"started\": 561218758432300, \"converted\": 561218758456700, \"encoded\": 561218764384500, \"written\": 561218764730200, \"hashed\": 561218764749000}}, \"sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"width\": 32, \"height\": 32, \"capture_started_ns\": 561218764771200}, \"side_effect_authority\": false, \"input_dispatched\": false}, \"session\": {\"session_id\": \"33b875bd4cb14b679ff898408555d625\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"compiled_scope\": \"native-x11:d5a722eb3fcc4c8d97f9a821bf0eb895\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": false, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 28664, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 28664, \"alive\": true, \"liveness_observed_monotonic_ns\": 561218769042200, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"image_status\": \"image\", \"call_directory\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\13b0d6ae7c26442492f0fdf677c7d527\", \"call_id\": \"13b0d6ae7c26442492f0fdf677c7d527\"}",
+              "type": "text"
+            },
+            {
+              "annotations": null,
+              "data": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB3UlEQVR4nGOUkJBgoCVgYmBgYGd9SVsLfv4WV1N6QyMLGOFBdPfuXeoarayszMDAwIIs9NzYGFOd5NmzDAwM3M+xSH2VBEkZBz7HlDq7XhIRRDQFLFhFlc6f/3H5MgMjIxM3938mpn///sGl0vjCUvhC/vz/++HfJ0ZGxv///8Olzm9SunzzByMjAw8XEzMzXgv+//79LC6OgYGBTU1Nev36Hz9+QMRdOa0CuV2sn0b9/v+nXCDFTcD658+fcF2///yPK33GwMCgocS2bpoMUUH06/ZtRkZGOLdEIKnu3eTf//8wMDBM+7Qcl66b93/B2QQs4LK2Rg4fbTaVS79uQtif/31Fdj4yMDfg/PXrF74gYmRllVq0iJGFhU1J6SdMKUg1I1R9kUCCH5cTBzsHPPQYGBhYWRgXdUuxsTLqqHMw/P+LzweQOHgaFfV+9mwWFoQjbv9+oMemzsDA0PdhQcCLbCYmFO2QOIgoeBqU9RguRSCIvh87hmzKrE+rmoRyWcH+yOaPxqXrw6d/8NSFPSdzcnJ+//4dk83AwMDKysrMzPz///+/f/+ysrIiS3Fxcf37BzX69+/fioqKKBbQCDDR1HSGUQuIAKNxQBCMBhFBMBpEBMFoEBEENA8iACn6qy5hckfXAAAAAElFTkSuQmCC",
+              "meta": null,
+              "mimeType": "image/png",
+              "type": "image"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561218163263500,
+        "sdk_return_ns": 561218769381100,
+        "status": "returned",
+        "tool": "interface_guarded_observe"
+      },
+      "seq": 1,
+      "session_id": "10e4181283164670b93451407e5b8939",
+      "started_ns": 561218161679900
+    },
+    {
+      "attempt_id": "appserver-p08",
+      "ended_ns": 561223615409500,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/appserver-p08.request.bin",
+          "sha256": "58a6f827eebf161f80319dcfae13b5b358acbcc4b143cbd1d5e0d6fdc32fc639"
+        },
+        {
+          "path": "raw/appserver-p08.response.bin",
+          "sha256": "3d721671e2a873a774df8835ecdd8e3fcb5e5ab8a7bff705615b5dabe9ab400b"
+        }
+      ],
+      "response_status": "raw_retained",
+      "seq": 2,
+      "session_id": "10e4181283164670b93451407e5b8939",
+      "started_ns": 561218971775600,
+      "status": "completed",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10185,
+        "output_tokens": 60,
+        "reasoning_output_tokens": 41,
+        "status": "reported"
+      }
+    },
+    {
+      "call_id": "mint-p08",
+      "ended_ns": 561223642057600,
+      "kind": "tool_call",
+      "method": "interface_guarded_mint",
+      "model_attempt_id": "appserver-p08",
+      "raw_refs": [
+        {
+          "path": "raw/tool-5b66161c31701bbe9acc8da85d843c5eb3d36df5be5416cd119b923e031ce8c3.tool-request.bin",
+          "sha256": "471f02ed88fb20ae169aafb1514bbcf3d2223bc03d8f4d0fb9bfbd36ba594e14"
+        },
+        {
+          "path": "raw/tool-5b66161c31701bbe9acc8da85d843c5eb3d36df5be5416cd119b923e031ce8c3.tool-response.bin",
+          "sha256": "19f02c9a8cfa52fde4eb2aa6d46a6944a5bbe1666247d856009d793925970180"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 2,
+        "next_id": 3,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"operation\": \"guarded_mint\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"minted\", \"alias\": \"grounded_green\", \"offset\": [2, 2], \"lifetime\": {\"clock\": \"time.monotonic_ns\", \"minted_ns\": 561223632773100, \"expires_ns\": 561523632773100, \"capture_freshness_ms\": 1500, \"authority_granted\": false, \"scope\": \"Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.\"}, \"source_sequence\": 1, \"input_dispatched\": false, \"session\": {\"session_id\": \"33b875bd4cb14b679ff898408555d625\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"compiled_scope\": \"native-x11:d5a722eb3fcc4c8d97f9a821bf0eb895\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": false, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 28664, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 28664, \"alive\": true, \"liveness_observed_monotonic_ns\": 561223634653700, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_directory\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\531424aacdd146edb0689b8f93a6b3a0\", \"call_id\": \"531424aacdd146edb0689b8f93a6b3a0\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561223630634000,
+        "sdk_return_ns": 561223634869900,
+        "status": "returned",
+        "tool": "interface_guarded_mint"
+      },
+      "seq": 3,
+      "session_id": "10e4181283164670b93451407e5b8939",
+      "started_ns": 561223629161800
+    },
+    {
+      "call_id": "compiled-p08",
+      "ended_ns": 561223688023600,
+      "kind": "tool_call",
+      "method": "interface_guarded_compiled",
+      "model_attempt_id": "appserver-p08",
+      "raw_refs": [
+        {
+          "path": "raw/tool-c106db91c34231cbe71676db63df193b7dbd90ac80377b37b3c0aa393d5a003d.tool-request.bin",
+          "sha256": "e2f33976b0ebf254849b43f7ffd27226e65c727ebdd38ac673529f6b23544feb"
+        },
+        {
+          "path": "raw/tool-c106db91c34231cbe71676db63df193b7dbd90ac80377b37b3c0aa393d5a003d.tool-response.bin",
+          "sha256": "5f26bff46294245512a8bf525b3dcd5dcce6bcec83630c3af348def25481502d"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 3,
+        "next_id": 4,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"method_receipt\": {\"format\": \"compiled-gui-runtime-receipt-v1\", \"interface_id\": \"owned-compiled-profile\", \"method\": \"one-visible-transition\", \"method_version\": \"1\", \"session_scope\": \"native-x11:d5a722eb3fcc4c8d97f9a821bf0eb895\", \"outcome\": \"SAFE_YIELD\", \"reason\": \"association_changed\", \"completed_transitions\": 0, \"frontier_model_resumptions\": 0, \"observations\": [{\"sequence\": 2, \"captured_ns\": 561223666512100, \"evidence_ref\": \"observation-2\", \"evidence_digest\": \"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\", \"predicates\": {\"phase\": 0, \"present\": true}, \"observation_started_ns\": 561223665842400, \"observation_accepted_ns\": 561223668373500}], \"transitions\": [], \"critical_events\": [{\"event\": \"branch_selected\", \"state\": \"before\", \"outcome\": \"action\", \"action\": \"enter\", \"matched_conditions\": {\"phase\": 0}, \"evidence_ref\": \"observation-2\"}, {\"event\": \"admission_refused\", \"action\": \"enter\", \"status\": \"association_changed\", \"reason\": \"association_changed\"}, {\"event\": \"runtime_finished\", \"outcome\": \"SAFE_YIELD\", \"reason\": \"association_changed\", \"completed_transitions\": 0}], \"latest_evidence_ref\": \"observation-2\", \"pending_effect\": null, \"started_ns\": 561223665835300, \"ended_ns\": 561223670193700, \"elapsed_ns\": 4358400, \"input_authority\": \"admission_per_action_only\", \"raw_evidence_retention\": \"adapter_responsibility_unverified\"}, \"feedback\": {\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v3-report-ref\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"20d9ea82d3b872cdf3f7cca0f24af1e0d0dcef0c28d9847a25c9cd35161f3197\", \"bytes\": 1062, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"status\": \"returned\", \"observation_id\": \"2a4fcbd3b6eb4a9c845de0668e535d0b\", \"observation\": {\"artifact\": {\"mime_type\": \"image/png\", \"path\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\f50f74f00fc74c9695f5176820006030\\\\compiled\\\\images\\\\6ed8b51f93904140b26bfd03b1fc26d4.png\", \"sha256\": \"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\", \"bytes\": 534, \"width\": 32, \"height\": 32, \"source_raw_sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"timing_ns\": {\"started\": 561223665966200, \"converted\": 561223665996200, \"encoded\": 561223666150500, \"written\": 561223666472100, \"hashed\": 561223666489700}}, \"sha256\": \"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\", \"width\": 32, \"height\": 32, \"capture_started_ns\": 561223666512100}, \"input_dispatched\": false, \"side_effect_authority\": false}}, \"report\": {\"report_ref\": \"/source/raw_report\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}, \"report_reference\": \"/source/raw_report\", \"reference_scope\": \"Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.\"}, \"image\": {\"type\": \"image\", \"mimeType\": \"image/png\", \"data\": \"iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB3UlEQVR4nGOUkJBgoCVgYmBgYGd9SVsLfv4WV1N6QyMLGOFBdPfuXeoarayszMDAwIIs9NzYGFOd5NmzDAwM3M+xSH2VBEkZBz7HlDq7XhIRRDQFLFhFlc6f/3H5MgMjIxM3938mpn///sGl0vjCUvhC/vz/++HfJ0ZGxv///8Olzm9SunzzByMjAw8XEzMzXgv+//79LC6OgYGBTU1Nev36Hz9+QMRdOa0CuV2sn0b9/v+nXCDFTcD658+fcF2///yPK33GwMCgocS2bpoMUUH06/ZtRkZGOLdEIKnu3eTf//8wMDBM+7Qcl66b93/B2QQs4LK2Rg4fbTaVS79uQtif/31Fdj4yMDfg/PXrF74gYmRllVq0iJGFhU1J6SdMKUg1I1R9kUCCH5cTBzsHPPQYGBhYWRgXdUuxsTLqqHMw/P+LzweQOHgaFfV+9mwWFoQjbv9+oMemzsDA0PdhQcCLbCYmFO2QOIgoeBqU9RguRSCIvh87hmzKrE+rmoRyWcH+yOaPxqXrw6d/8NSFPSdzcnJ+//4dk83AwMDKysrMzPz///+/f/+ysrIiS3Fxcf37BzX69+/fioqKKBbQCDDR1HSGUQuIAKNxQBCMBhFBMBpEBMFoEBEENA8iACn6qy5hckfXAAAAAElFTkSuQmCC\"}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 561223666512100, \"path\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\f50f74f00fc74c9695f5176820006030\\\\compiled\\\\images\\\\6ed8b51f93904140b26bfd03b1fc26d4.png\", \"relative_path\": \"images\\\\6ed8b51f93904140b26bfd03b1fc26d4.png\", \"sha256\": \"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"2a4fcbd3b6eb4a9c845de0668e535d0b\", \"recorded_capture\": {\"width\": 32, \"height\": 32, \"capture_started_ns\": 561223666512100}}, \"image_status\": \"image\"}, \"session\": {\"session_id\": \"33b875bd4cb14b679ff898408555d625\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"compiled_scope\": \"native-x11:d5a722eb3fcc4c8d97f9a821bf0eb895\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": false, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 2, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 28664, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 28664, \"alive\": true, \"liveness_observed_monotonic_ns\": 561223674751900, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"owner_timing\": {\"schema\": \"agent-interface/compiled-owner-attempt-timing-v1\", \"clock\": \"time.monotonic_ns\", \"scope\": \"run_compiled method entry through graph, feedback and session snapshot\", \"status\": \"returned\", \"started_ns\": 561223664413400, \"completed_ns\": 561223672408700, \"elapsed_ns\": 7995300, \"method_outcome\": \"SAFE_YIELD\", \"effect_status\": null, \"error_type\": null, \"replay_allowed\": false}, \"owner_timing_retention\": {\"status\": \"recorded\"}, \"task_success\": null, \"replay_allowed\": false, \"call_directory\": \"<private-path>\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\work\\\\goal-integrated-composition-p07-20261025\\\\research\\\\integration\\\\current_main_appserver_public_mcp_generation_refusal_20261025_p08\\\\run\\\\server\\\\f50f74f00fc74c9695f5176820006030\", \"call_id\": \"f50f74f00fc74c9695f5176820006030\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561223661855500,
+        "sdk_return_ns": 561223675011600,
+        "status": "returned",
+        "tool": "interface_guarded_compiled"
+      },
+      "seq": 4,
+      "session_id": "10e4181283164670b93451407e5b8939",
+      "started_ns": 561223660500700
+    },
+    {
+      "ended_ns": 561223721683500,
+      "independent": true,
+      "kind": "task_score",
+      "raw_refs": [
+        {
+          "path": "raw/task-score.state.bin",
+          "sha256": "889edca6b58160fa92e6875f37a1b67dd4dbb066d6e824df844a46f4082b51eb"
+        }
+      ],
+      "scorer_id": "independent-stale-generation-refusal-v1",
+      "seq": 5,
+      "session_id": "10e4181283164670b93451407e5b8939",
+      "started_ns": 561223721683500,
+      "state_sha256": "889edca6b58160fa92e6875f37a1b67dd4dbb066d6e824df844a46f4082b51eb",
+      "task_success": true
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/tool-547142d27b01fb8ee2c87fa6b194190fa03e7bd0d6cd905f0e9f668e48292114.tool-request.bin",
+      "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+    },
+    {
+      "path": "raw/tool-547142d27b01fb8ee2c87fa6b194190fa03e7bd0d6cd905f0e9f668e48292114.tool-response.bin",
+      "sha256": "01e25d5ee05c759dcadadfa6b66f7000e25ee49f67287f05c86be3a17619f072"
+    },
+    {
+      "path": "raw/appserver-p08.request.bin",
+      "sha256": "58a6f827eebf161f80319dcfae13b5b358acbcc4b143cbd1d5e0d6fdc32fc639"
+    },
+    {
+      "path": "raw/appserver-p08.response.bin",
+      "sha256": "3d721671e2a873a774df8835ecdd8e3fcb5e5ab8a7bff705615b5dabe9ab400b"
+    },
+    {
+      "path": "raw/tool-5b66161c31701bbe9acc8da85d843c5eb3d36df5be5416cd119b923e031ce8c3.tool-request.bin",
+      "sha256": "471f02ed88fb20ae169aafb1514bbcf3d2223bc03d8f4d0fb9bfbd36ba594e14"
+    },
+    {
+      "path": "raw/tool-5b66161c31701bbe9acc8da85d843c5eb3d36df5be5416cd119b923e031ce8c3.tool-response.bin",
+      "sha256": "19f02c9a8cfa52fde4eb2aa6d46a6944a5bbe1666247d856009d793925970180"
+    },
+    {
+      "path": "raw/tool-c106db91c34231cbe71676db63df193b7dbd90ac80377b37b3c0aa393d5a003d.tool-request.bin",
+      "sha256": "e2f33976b0ebf254849b43f7ffd27226e65c727ebdd38ac673529f6b23544feb"
+    },
+    {
+      "path": "raw/tool-c106db91c34231cbe71676db63df193b7dbd90ac80377b37b3c0aa393d5a003d.tool-response.bin",
+      "sha256": "5f26bff46294245512a8bf525b3dcd5dcce6bcec83630c3af348def25481502d"
+    },
+    {
+      "path": "raw/task-score.state.bin",
+      "sha256": "889edca6b58160fa92e6875f37a1b67dd4dbb066d6e824df844a46f4082b51eb"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}

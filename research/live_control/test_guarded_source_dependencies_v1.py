@@ -93,7 +93,7 @@ class GuardedSourceTests(unittest.TestCase):
                         module.main()
                     retained=(root/'first/preregistration.json').read_bytes()
                     initial=json.loads(retained)['sources']
-                    (root/subject.IMPLEMENTATIONS[1]).write_text('changed frames')
+                    (root/'runtime/guarded_x11_v1/frames.py').write_text('changed frames')
                     with mock.patch.object(module,'OUT',root/'second'):
                         module.main()
                 updated=json.loads((root/'second/preregistration.json').read_bytes())['sources']
@@ -150,7 +150,7 @@ class GuardedSourceTests(unittest.TestCase):
                 tree=ast.parse((here/runner).read_text())
                 main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
                 gate=next(n for n in main.body if isinstance(n,ast.For))
-                code=compile(ast.Module(body=[gate],type_ignores=[]),runner,'exec')
+                code=compile(ast.Module(body=[gate],type_ignores=[]),runner,'exec', optimize=1)
                 env={'plan':{'sources':hashes},'HERE':fixture,'sha':sha,
                      'source_path':lambda name:fixture/name}
                 with self.subTest(runner=runner):
@@ -166,4 +166,7 @@ class GuardedSourceTests(unittest.TestCase):
             tree=ast.parse((root/name).read_text())
             for node in ast.walk(tree):
                 if isinstance(node,ast.ImportFrom) and node.level==1:
-                    self.assertIn('runtime/guarded_x11_v1/'+node.module+'.py',recorded)
+                    modules = ([node.module] if node.module is not None else
+                               [alias.name for alias in node.names])
+                    for module in modules:
+                        self.assertIn('runtime/guarded_x11_v1/'+module+'.py',recorded)

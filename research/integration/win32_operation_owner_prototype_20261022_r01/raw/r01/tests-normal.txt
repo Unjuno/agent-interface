@@ -1,0 +1,25 @@
+test_accepted_then_blocked_retires_before_fake_up_and_readback (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_accepted_then_blocked_retires_before_fake_up_and_readback) ... ok
+test_blocked_before_acceptance_cannot_emit_down_after_retirement (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_blocked_before_acceptance_cannot_emit_down_after_retirement) ... ok
+test_expired_budget_does_not_start_recovery_process (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_expired_budget_does_not_start_recovery_process) ... ok
+test_fresh_generation_is_required_after_recovery (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_fresh_generation_is_required_after_recovery) ... ok
+test_generation_mismatch_refuses_before_process_start (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_generation_mismatch_refuses_before_process_start) ... ok
+test_missing_operation_receipt_keeps_task_unknown (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_missing_operation_receipt_keeps_task_unknown) ... ok
+test_no_overlapping_dispatch_and_stale_operation_refused (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_no_overlapping_dispatch_and_stale_operation_refused) ... ok
+test_observer_retirement_timeout_preserves_unknown (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_observer_retirement_timeout_preserves_unknown) ... ok
+test_recovery_failure_never_runs_observer_or_claims_release (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_recovery_failure_never_runs_observer_or_claims_release) ... ok
+test_recovery_process_start_failure_keeps_input_fenced (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_recovery_process_start_failure_keeps_input_fenced) ... FAIL
+test_repeated_cancel_is_idempotent_and_never_replays (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_repeated_cancel_is_idempotent_and_never_replays) ... ok
+test_unconfirmed_retirement_fences_without_release (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_unconfirmed_retirement_fences_without_release) ... ok
+
+======================================================================
+FAIL: test_recovery_process_start_failure_keeps_input_fenced (research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner.InertOperationOwnerTests.test_recovery_process_start_failure_keeps_input_fenced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\goal57-appserver-public-mcp-r01-20261022\research\integration\win32_operation_owner_prototype_20261022_r01\test_operation_owner.py", line 302, in test_recovery_process_start_failure_keeps_input_fenced
+    self.assertEqual(self.event_count.value, 0)
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.260s
+
+FAILED (failures=1)

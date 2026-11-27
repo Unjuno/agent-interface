@@ -1,0 +1,29 @@
+"""Native macOS construction only; first four disjoint finite child cases."""
+import ctypes,datetime,hashlib,json,os,pathlib,select,subprocess,sys,threading,time
+p=pathlib.Path(__file__).resolve().parent
+if len(sys.argv)>1:
+    mode=sys.argv[1];r=int(os.environ['PROBE_CANCEL_FD']);fd=os.open(os.devnull,os.O_WRONLY);state={};ready=threading.Event()
+    def safety():
+        ready.set();b=os.read(r,1);state['received_ns']=time.monotonic_ns();os.close(fd);state['closed_ns']=time.monotonic_ns();state['cancel_byte']=b.hex()
+    t=threading.Thread(target=safety);t.start();ready.wait()
+    lib=(ctypes.CDLL if mode=='released' else ctypes.PyDLL)(None);fn=lib.usleep;fn.argtypes=[ctypes.c_uint];fn.restype=ctypes.c_int
+    print(json.dumps({'ready':True,'pid':os.getpid()}),flush=True)
+    go=sys.stdin.buffer.read(1);assert go==b'G'
+    state['call_start_ns']=time.monotonic_ns();state['return_code']=fn(300000);state['call_end_ns']=time.monotonic_ns()
+    t.join(timeout=1);assert not t.is_alive();os.close(r)
+    state['fd_closed']=False
+    try:os.fstat(fd)
+    except OSError:state['fd_closed']=True
+    print(json.dumps(state),flush=True);sys.exit(0)
+freeze=json.loads((p/'FREEZE.json').read_bytes())
+assert hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()==freeze['probe_sha256']
+rows=[]
+for i,mode in enumerate(['released','held','held','released']):
+    r,w=os.pipe();env=dict(os.environ,PROBE_CANCEL_FD=str(r));start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    q=subprocess.Popen([sys.executable,'-B',str(pathlib.Path(__file__).resolve()),mode],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,pass_fds=(r,),env=env);os.close(r)
+    assert select.select([q.stdout],[],[],2)[0];line=q.stdout.readline();ready=json.loads(line);assert ready['pid']==q.pid
+    q.stdin.write(b'G');q.stdin.flush();time.sleep(.05);a=time.monotonic_ns();os.write(w,b'C');b=time.monotonic_ns();os.close(w)
+    tail,error=q.communicate(timeout=2);row={'case':i,'mode':mode,'pid':q.pid,'start_utc':start,'end_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit':q.returncode,'send_before_ns':a,'send_after_ns':b,'ready':ready,'raw':json.loads(tail),'stderr_bytes':len(error)}
+    (p/f'case-{i}.stdout').open('xb').write(line+tail);(p/f'case-{i}.stderr').open('xb').write(error);rows.append(row)
+    (p/'RAW.json').write_text(json.dumps({'freeze':freeze,'rows':rows},indent=2)+'\n')
+print(json.dumps({'rows':len(rows),'pid':os.getpid(),'raw_saved':True}))

@@ -1,0 +1,18 @@
+# WSLc short-grab target-side observation probe
+
+This synthetic private-Xvfb follow-up to `wslc_guarded_x11_short_grab_probe_20261031` examines what a separate X11 listener can observe when it handles the target's F press after the short server grab. The research wrapper grabs on the guarded backend connection through the original `key_state` press, syncs and ungrabs before a 100 ms hold and release. In the queued arm, a second client flushes a magenta overlay map request during the grab. A third X connection selects key events on the target; on observing F press its listener captures the 8x8 screen patch and records whether the overlay is visible. This is a synthetic observation, not an actual application's semantic decision.
+
+| Run | Condition | Listener record | View captured after press observed |
+|---|---|---|---|
+| t01 | clean | release only | not captured; harness ended early |
+| t02 | queued overlay | release only | not captured; harness ended early |
+| t03 | clean | release, press, release | overlay absent |
+| t04 | queued overlay | release, press, release | magenta overlay visible |
+
+All four guarded actions completed and the original target connection recorded a matching press/release; action and owner close recorded neutral release and the F keymap was up. The first pair's listener treated an initial release event as its stop condition, so neither supplies a target-side press view despite the process recording `completed`. Both are retained as incomplete observation attempts. After observing this, t03/t04 were separately frozen with the listener waiting for a press followed by release; they are one fixed-order case per condition.
+
+In t04, the overlay map request was flushed during the grab, the same-connection image inside the grab matched the source, and the press synchronized before ungrab. The separate listener recorded press, then captured an all-magenta screen patch, then recorded release. This demonstrates that a screen change queued during the short grab can be visible to a target-side observer shortly after it receives the press, while the guard's earlier capture was unchanged. The screenshot is a separate request after event reception, so it does not prove the exact pixels at the instant of event delivery, nor that a real app used those pixels or performed a harmful action. The listener, target, injector and witness are different X connections within one test process/server, not independent physical sensors.
+
+The observation highlights the difference between ordering an XTEST press and fencing an application's eventual processing. It does not establish general atomicity, reliable delivery, absence of queued later input, fault recovery, MAP01 completion or a latency advantage. One example per arm and fixed order do not estimate reliability. The wrapper holds the global X server only until press synchronization; the key remains held after ungrab. Independent custody and failure cleanup remain unresolved.
+
+All cases used network-none WSLc, private Xvfb, one CPU and 1 GiB, the pinned `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25` image and a 20 s watchdog. The read-only Python runtime subset matched the earlier fixed-patch probe; intervening main changes were research only. The named containers were confirmed exited and removed. ZIPs preserve conditions, runner, screenshots, event records, action and close receipts and logs. `python audit.py` (Pillow, normal Python mode) reconstructs source/witness image linkage, grab and event ordering, the incomplete listener attempts, and neutral release.

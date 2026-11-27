@@ -42,7 +42,9 @@ def compile_form_method(*, interface_id, session_scope, surface,
             "value_field": {
                 "kind": "target_reference", "target_reference": field_handle,
                 "identity_predicate": "field_target_present",
-                "dependencies": ["field_target_present", "field_value_matches_task"],
+                # The entry branch requires a not-yet-matching field. Its
+                # post-action effect is not a pre-input identity dependency.
+                "dependencies": ["field_target_present"],
             },
             "submit_control": {
                 "kind": "target_reference", "target_reference": submit_handle,

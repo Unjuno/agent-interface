@@ -1,0 +1,76 @@
+{
+  "attempt_id": "win32-native-sendinput-r16-orphan-horizon-20261122",
+  "source_main": "8a3085c0e494eab0214b72c3564841c13c4fe62e",
+  "source_attempt": "win32-native-sendinput-r14-20261122",
+  "source_evidence": {
+    "result": "research/integration/win32_native_sendinput_recovery_20261122_r14/run/result.json",
+    "result_sha256": "c62445c7abce44ae19f3def333f2935a42c5d3b2b7aa46269e4757adf976dd03",
+    "operation_id": "aae52bafb0d64dce85136abf5efb9cf0",
+    "target_generation": "eab175df2940cb5ed04ed4696e5288db0f4c699266b584761afbe556ec6fcafc",
+    "producer_identity": {"pid": 42648, "creation_time_100ns": 134398196865271491},
+    "obligations": ["key:r14-expiry-owned-fixture:SHIFT:virtual_key"],
+    "dispatch_input_dispatched": null,
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "late_input_horizon_verified": false
+  },
+  "source_custody_record": {
+    "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+    "operation_id": "aae52bafb0d64dce85136abf5efb9cf0",
+    "target_generation": "eab175df2940cb5ed04ed4696e5288db0f4c699266b584761afbe556ec6fcafc",
+    "obligations": ["key:r14-expiry-owned-fixture:SHIFT:virtual_key"],
+    "do_not_replay": true,
+    "observed_producer_live": false,
+    "late_server_request_possible": true,
+    "dispatch": {
+      "input_dispatched": null,
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  "persistent_fence": {
+    "namespace_digest": "daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445",
+    "expected_status": "unresolved",
+    "expected_revision": 56,
+    "expected_sha256_before": "56a898e0e371895a029bfe0e17262aeef5bf71ab5cf1ab83a5e591cd4f7e3110",
+    "expected_status_after": "clear"
+  },
+  "recovery": {
+    "target_name": "r14-expiry-owned-fixture",
+    "fresh_fixture_process_and_generation": true,
+    "supervised_win32_late_input_horizon_ns": 2000000000,
+    "late_input_max_sample_gap_ns": 100000000,
+    "single_public_recovery_call": true,
+    "no_task_dispatch": true,
+    "no_provider_or_model": true,
+    "expected_effect": "source remains unknown; no replay/task-success inference",
+    "acceptance": {
+      "producer_identity_absent_before_api": true,
+      "fresh_public_observation_generation_differs_from_source": true,
+      "recovery_status": "recovered",
+      "release_confirmed": true,
+      "source_action_status": "unknown",
+      "task_success": null,
+      "replay_allowed": false,
+      "neutral_readback_same_recovery_generation": true,
+      "late_input_horizon_verified": true,
+      "late_input_horizon_ns_at_least": 2000000000,
+      "late_input_max_observed_gap_ns_at_most": 100000000,
+      "persistent_fence_status_after": "resolved",
+      "source_and_recovery_generations_fenced_after": true,
+      "foreground_restored": true,
+      "fixture_exit_code": 0
+    }
+  },
+  "activation": {
+    "method": "Computer Use exact-window activation",
+    "title": "Agent Interface Win32 Fixture",
+    "timeout_seconds": 180,
+    "must_match_fixture_hwnd": true
+  },
+  "retry_policy": "none; retain failure and do not manually mutate custody journal",
+  "wslc_used": false,
+  "docker_used": false
+}

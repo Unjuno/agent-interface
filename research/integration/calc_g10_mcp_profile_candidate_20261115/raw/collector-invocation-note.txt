@@ -1,0 +1,1 @@
+The initial focused-log collector used a single PowerShell string for multiple unittest module names, so Python treated it as one invalid test name and returned exit 1. The collector invocation was corrected to use a string array; both focused normal and optimized runs passed 25 tests. This is an invocation/collection error, not a test failure.

@@ -1,0 +1,138 @@
+test_explicit_dropped_invalidation_control_changes_old_answer_gate (__main__.JoinedRecoveryTests.test_explicit_dropped_invalidation_control_changes_old_answer_gate) ... ERROR
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py:1140: ResourceWarning: subprocess 30364 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\case.py:650: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  with outcome.testPartExecutor(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\case.py:650: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  with outcome.testPartExecutor(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_health_and_ammo_recovery_during_selected_backend_cancel (__main__.JoinedRecoveryTests.test_health_and_ammo_recovery_during_selected_backend_cancel) ... 
+  test_health_and_ammo_recovery_during_selected_backend_cancel (__main__.JoinedRecoveryTests.test_health_and_ammo_recovery_during_selected_backend_cancel) (signal='health') ... ERROR
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py:1140: ResourceWarning: subprocess 60832 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py:161: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  with self.subTest(signal=signal):self.drive(signal)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py:161: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  with self.subTest(signal=signal):self.drive(signal)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+  test_health_and_ammo_recovery_during_selected_backend_cancel (__main__.JoinedRecoveryTests.test_health_and_ammo_recovery_during_selected_backend_cancel) (signal='ammo') ... ERROR
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py:1140: ResourceWarning: subprocess 34828 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_unknown_release_keeps_joined_path_quarantined (__main__.JoinedRecoveryTests.test_unknown_release_keeps_joined_path_quarantined) ... ERROR
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py:1140: ResourceWarning: subprocess 7852 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_explicit_dropped_invalidation_control_changes_old_answer_gate (__main__.JoinedRecoveryTests.test_explicit_dropped_invalidation_control_changes_old_answer_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 117, in drive
+    low=wait(lambda r:r['event']=='typed_observation' and r['sequence']==2)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 100, in wait
+    if not condition.wait_for(lambda:any(predicate(r) for r in wire),timeout=5):raise TimeoutError(str(predicate))
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: <function JoinedRecoveryTests.drive.<locals>.<lambda> at 0x000001807F7FD8A0>
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 22] Invalid argument
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 163, in test_explicit_dropped_invalidation_control_changes_old_answer_gate
+    def test_explicit_dropped_invalidation_control_changes_old_answer_gate(self):self.drive(drop=True)
+                                                                                 ~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 138, in drive
+    process.stdin.close()
+    ~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+======================================================================
+ERROR: test_health_and_ammo_recovery_during_selected_backend_cancel (__main__.JoinedRecoveryTests.test_health_and_ammo_recovery_during_selected_backend_cancel) (signal='health')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 117, in drive
+    low=wait(lambda r:r['event']=='typed_observation' and r['sequence']==2)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 100, in wait
+    if not condition.wait_for(lambda:any(predicate(r) for r in wire),timeout=5):raise TimeoutError(str(predicate))
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: <function JoinedRecoveryTests.drive.<locals>.<lambda> at 0x000001807F8494E0>
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 22] Invalid argument
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 161, in test_health_and_ammo_recovery_during_selected_backend_cancel
+    with self.subTest(signal=signal):self.drive(signal)
+                                     ~~~~~~~~~~^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 138, in drive
+    process.stdin.close()
+    ~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+======================================================================
+ERROR: test_health_and_ammo_recovery_during_selected_backend_cancel (__main__.JoinedRecoveryTests.test_health_and_ammo_recovery_during_selected_backend_cancel) (signal='ammo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 117, in drive
+    low=wait(lambda r:r['event']=='typed_observation' and r['sequence']==2)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 100, in wait
+    if not condition.wait_for(lambda:any(predicate(r) for r in wire),timeout=5):raise TimeoutError(str(predicate))
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: <function JoinedRecoveryTests.drive.<locals>.<lambda> at 0x000001807F849A80>
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 22] Invalid argument
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 161, in test_health_and_ammo_recovery_during_selected_backend_cancel
+    with self.subTest(signal=signal):self.drive(signal)
+                                     ~~~~~~~~~~^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 138, in drive
+    process.stdin.close()
+    ~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+======================================================================
+ERROR: test_unknown_release_keeps_joined_path_quarantined (__main__.JoinedRecoveryTests.test_unknown_release_keeps_joined_path_quarantined)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 117, in drive
+    low=wait(lambda r:r['event']=='typed_observation' and r['sequence']==2)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 100, in wait
+    if not condition.wait_for(lambda:any(predicate(r) for r in wire),timeout=5):raise TimeoutError(str(predicate))
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: <function JoinedRecoveryTests.drive.<locals>.<lambda> at 0x000001807F8499E0>
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 22] Invalid argument
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 162, in test_unknown_release_keeps_joined_path_quarantined
+    def test_unknown_release_keeps_joined_path_quarantined(self):self.drive(blocked=True)
+                                                                 ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_selected_backend_recovery.py", line 138, in drive
+    process.stdin.close()
+    ~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+----------------------------------------------------------------------
+Ran 3 tests in 22.289s
+
+FAILED (errors=4)

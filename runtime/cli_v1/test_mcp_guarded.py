@@ -15,6 +15,8 @@ from runtime.cli_v1.mcp_server import create_server
 class FakeBridge:
     def __init__(self, display, targets, target, directory):
         self.sequence=0;self.binding_revision=0;self.review_required=False
+        self.target=target
+        self.history={}
         self.directory=Path(directory);self.directory.mkdir()
         self.backend=SimpleNamespace(configure_capture_artifacts=self.configure,
             targets={target:SimpleNamespace(id=targets[target])},release_all=Mock(return_value={
@@ -26,11 +28,14 @@ class FakeBridge:
         self.keyboard=Mock(side_effect=self.input)
         self.move=Mock(side_effect=self.input)
         self.review_window=Mock(return_value={'status':'needs_review','input_dispatched':False})
+        self.windows_for_process=Mock(return_value=[{
+            'xid':91,'process_pid':4321,'mapped':True,
+            'input_authority':False,'authenticated_role':False}])
 
-    def mint_reference(self, alias, source_sequence, point, *, region_size):
+    def mint_reference(self, alias, source_sequence, point, *, region_size, freshness_ms=1500):
         return {'offset':self.mint(alias,source_sequence,point,region_size=region_size),
                 'lifetime':{'clock':'time.monotonic_ns','minted_ns':1_000_000_000,
-                    'expires_ns':301_000_000_000,'capture_freshness_ms':1500,
+                    'expires_ns':301_000_000_000,'capture_freshness_ms':freshness_ms,
                     'authority_granted':False,'scope':'Same execution host clock; deadline does not grant input authority.'}}
 
     def configure(self, directory, *, retain_rgb=False):
@@ -45,8 +50,11 @@ class FakeBridge:
                 'artifact':{'path':str(image),'mime_type':'image/png',
                     'sha256':hashlib.sha256(image.read_bytes()).hexdigest(),
                     'source_raw_sha256':'raw-fixture'}}
-        return {'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
+        native['native_window_id']=next(iter(self.backend.targets.values())).id
+        observation={'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
                 'binding_revision':0,'capture_ns':1,'pointer_binding':{},'native':native}
+        self.history[self.sequence]=(observation,None)
+        return observation
 
     def input(self,*args,**kwargs):
         # The same worker must retain its request before reaching this boundary.
@@ -140,14 +148,19 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             opened.assert_not_called()
 
     async def test_invalid_feedback_refuses_before_open_or_input(self):
-        from mcp.server.fastmcp.exceptions import ToolError
         for cue in ({'expected_title':''},{'expected_title':'saved','timeout_ms':10001},
                     {'expected_title':'saved','rejected_titles':['saved']},
                     {'expected_title':'saved','unknown':1}):
             with self.subTest(cue=cue), tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
                 server=create_server({'app':123},td,session_mode='guarded-x11')
-                with self.assertRaises(ToolError):
-                    await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],feedback=cue))
+                response=await server.call_tool('interface_guarded_input',
+                    dict(alias='save',offset=[12,7],tail=[],feedback=cue))
+                row=metadata(response)
+                self.assertTrue(response.isError)
+                self.assertEqual(row['status'],'invalid_request',row)
+                self.assertFalse(row['operation_invoked'],row)
+                self.assertFalse(row['input_dispatched'],row)
+                self.assertFalse(row['replay_allowed'],row)
                 opened.assert_not_called()
 
     async def test_requested_activation_review_returns_exact_image_without_edit(self):
@@ -267,6 +280,160 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(many['minted'][0]['lifetime'],row['lifetime'])
             self.assertEqual(many['minted'][0]['offset'],[12,7])
             await server.call_tool('interface_close',{})
+
+    async def test_minted_reference_accepts_bounded_custom_freshness(self):
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            response=await server.call_tool('interface_guarded_mint',{
+                'alias':'field','source_sequence':1,'point':[20,20],
+                'region_size':[24,14],'freshness_ms':3000})
+            row=metadata(response)
+            self.assertEqual(row['lifetime']['capture_freshness_ms'],3000)
+            self.assertFalse(row['lifetime']['authority_granted'])
+            await server.call_tool('interface_close',{})
+
+    async def test_calc_alias_ledger_does_not_promote_stale_mint_receipts(self):
+        """A mint receipt for an old frame cannot satisfy current Calc provenance."""
+        from mcp.server.fastmcp import FastMCP
+        from mcp.types import CallToolResult, TextContent
+        from runtime.cli_v1.mcp_guarded import register_guarded_tools
+        sequence=0
+        calls=[]
+
+        async def submit(operation, arguments, compact, report_refs, **kwargs):
+            nonlocal sequence
+            calls.append((operation,arguments))
+            if operation == 'guarded_observe':
+                sequence+=1
+                row={'status':'observed','source':{'sequence':sequence,
+                    'native':{'artifact':{'sha256':f'{sequence:064x}'}}}}
+            elif operation == 'guarded_mint':
+                row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
+            elif operation == 'guarded_mint_many':
+                row={'status':'minted','source_sequence':arguments['source_sequence'],
+                    'minted':[{'alias':reference['alias'],'offset':[12,7]}
+                        for reference in arguments['references']]}
+            elif operation == 'guarded_calc_compiled':
+                row={'status':'completed','operation_invoked':True}
+            else:
+                row={'status':'unexpected','operation':operation}
+            return CallToolResult(content=[TextContent(type='text',
+                text=json.dumps(row))])
+
+        server=FastMCP('calc-alias-ledger-test')
+        register_guarded_tools(server,submit,compiled_enabled=True,
+            window_lifecycle_enabled=True)
+        first=metadata(await server.call_tool('interface_guarded_observe',{}))
+        old_mint=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'old_save','source_sequence':first['source']['sequence'],
+            'point':[24,24],'region_size':[12,12]}))
+        second=metadata(await server.call_tool('interface_guarded_observe',{}))
+        fresh_entry=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_entry','source_sequence':second['source']['sequence'],
+            'point':[16,16],'region_size':[12,12]}))
+        stale_save=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_save','source_sequence':first['source']['sequence'],
+            'point':[24,24],'region_size':[12,12]}))
+        self.assertEqual(old_mint['status'],'minted',old_mint)
+        self.assertEqual(stale_save['status'],'minted',stale_save)
+        refused=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1',
+            'bindings':{
+                'entry':{'alias':'calc_entry','offset':fresh_entry['offset']},
+                'save':{'alias':'calc_save','offset':stale_save['offset']}},
+            'reviewed_sequence':second['source']['sequence'],
+            'reviewed_artifact_sha256':second['source']['native']['artifact']['sha256'],
+            'blank_reviewed':True,'attempt_id':'calc-stale-mint-receipt-ledger'}))
+        self.assertEqual(refused['status'],'invalid_request',refused)
+        self.assertEqual(refused['error'],'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',refused)
+        self.assertFalse(refused['operation_invoked'],refused)
+        self.assertFalse(refused['input_dispatched'],refused)
+        self.assertIsNone(refused['release_confirmed'],refused)
+        self.assertFalse(refused['replay_allowed'],refused)
+
+        third=metadata(await server.call_tool('interface_guarded_observe',{}))
+        fresh_entry=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_entry','source_sequence':third['source']['sequence'],
+            'point':[16,16],'region_size':[12,12]}))
+        stale_many=metadata(await server.call_tool('interface_guarded_mint_many',{
+            'source_sequence':first['source']['sequence'],'references':[
+                {'alias':'calc_save','point':[24,24],'region_size':[12,12]}]}))
+        self.assertEqual(stale_many['status'],'minted',stale_many)
+        refused_many=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1',
+            'bindings':{
+                'entry':{'alias':'calc_entry','offset':fresh_entry['offset']},
+                'save':{'alias':'calc_save','offset':stale_many['minted'][0]['offset']}},
+            'reviewed_sequence':third['source']['sequence'],
+            'reviewed_artifact_sha256':third['source']['native']['artifact']['sha256'],
+            'blank_reviewed':True,'attempt_id':'calc-stale-mint-many-ledger'}))
+        self.assertEqual(refused_many['status'],'invalid_request',refused_many)
+        self.assertEqual(refused_many['error'],
+            'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',refused_many)
+        self.assertFalse(refused_many['operation_invoked'],refused_many)
+        self.assertFalse(refused_many['input_dispatched'],refused_many)
+        self.assertFalse(any(op=='guarded_calc_compiled' for op,_ in calls),calls)
+
+    async def test_successful_window_review_updates_calc_source_ledger(self):
+        """A review's returned frame is current for subsequent Calc mints."""
+        from mcp.server.fastmcp import FastMCP
+        from mcp.types import CallToolResult, TextContent
+        from runtime.cli_v1.mcp_guarded import register_guarded_tools
+        calls=[]
+
+        async def submit(operation, arguments, compact, report_refs, **kwargs):
+            calls.append((operation,arguments))
+            if operation == 'guarded_review_window':
+                if arguments['window_id'] == 999:
+                    row={'status':'needs_review','review':{}}
+                else:
+                    row={'status':'reviewed','review':{'source':{'sequence':7,
+                        'native':{'artifact':{'sha256':'7'*64}}}}}
+            elif operation == 'guarded_mint':
+                row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
+            elif operation == 'guarded_calc_compiled':
+                row={'status':'completed','operation_invoked':True}
+            else:
+                row={'status':'unexpected','operation':operation}
+            return CallToolResult(content=[TextContent(type='text',
+                text=json.dumps(row))])
+
+        server=FastMCP('calc-review-source-ledger-test')
+        register_guarded_tools(server,submit,compiled_enabled=True,
+            window_lifecycle_enabled=True)
+        reviewed=metadata(await server.call_tool('interface_guarded_review_window',
+            {'window_id':456}))
+        self.assertEqual(reviewed['review']['source']['sequence'],7)
+        bindings={}
+        for name,point in (('calc_entry',[16,16]),('calc_save',[40,16])):
+            minted=metadata(await server.call_tool('interface_guarded_mint',{
+                'alias':name,'source_sequence':7,'point':point,
+                'region_size':[12,12]}))
+            self.assertEqual(minted['status'],'minted',minted)
+            bindings['entry' if name=='calc_entry' else 'save']={
+                'alias':name,'offset':minted['offset']}
+        compiled=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger'}))
+        self.assertEqual(compiled['status'],'completed',compiled)
+        self.assertIn(('guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger',
+            'prepared_call_id':None}),calls)
+        failed_review=metadata(await server.call_tool('interface_guarded_review_window',
+            {'window_id':999}))
+        self.assertEqual(failed_review['status'],'needs_review')
+        refused=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger'}))
+        self.assertEqual(refused['error'],'CALC_REVIEW_SOURCE_STALE',refused)
+        compiled_attempts=[args for operation,args in calls
+            if operation=='guarded_calc_compiled']
+        self.assertEqual([args['attempt_id'] for args in compiled_attempts],
+            ['calc-review-source-ledger'])
 
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
         from mcp.server.fastmcp.exceptions import ToolError
@@ -458,7 +625,6 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             factory.assert_not_called()
 
     async def test_batch_entire_schema_validated_before_any_mint(self):
-        from mcp.server.fastmcp.exceptions import ToolError
         from copy import deepcopy
         valid={'alias':'field','point':[20,30],'region_size':[24,14]}
         bad=[]
@@ -468,9 +634,39 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
             for refs in bad:
-                with self.subTest(refs=refs),self.assertRaises(ToolError):
-                    await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
+                with self.subTest(refs=refs):
+                    response=await server.call_tool('interface_guarded_mint_many',{
+                        'source_sequence':7,'references':refs})
+                    row=metadata(response)
+                    self.assertTrue(response.isError)
+                    self.assertIn(row['status'],('invalid_request','refused'),row)
+                    if row['status']=='invalid_request':
+                        self.assertFalse(row['operation_invoked'],row)
+                        self.assertFalse(row['input_dispatched'],row)
+                        self.assertFalse(row['replay_allowed'],row)
+                        self.assertTrue(row['validation_errors'],row)
+                        self.assertTrue(all(item['path'][0]=='references'
+                                            for item in row['validation_errors']),row)
+                        self.assertNotIn('input_value',json.dumps(row))
             factory.assert_not_called();self.assertEqual(list(Path(td).iterdir()),[])
+
+    async def test_handler_validation_error_is_not_mislabeled_as_argument_refusal(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        from pydantic import TypeAdapter, ValidationError
+        from runtime.cli_v1.mcp_server import PublicArgumentMCP
+        server=PublicArgumentMCP('handler-validation-error-test')
+        invoked=[]
+
+        @server.tool()
+        async def handler_raises_validation_error(value:int)->dict:
+            invoked.append(value)
+            TypeAdapter(int).validate_python('not-an-integer')
+            return {'status':'unreachable'}
+
+        with self.assertRaises(ToolError) as raised:
+            await server.call_tool('handler_raises_validation_error',{'value':7})
+        self.assertEqual(invoked,[7])
+        self.assertIsInstance(raised.exception.__cause__,ValidationError)
 
     async def test_unknown_top_level_arguments_never_reach_bridge(self):
         opened=[]
@@ -494,6 +690,30 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             factory.assert_called_once()
             opened[0].keyboard.assert_called_once()
             opened[0].click.assert_not_called()
+            await server.call_tool('interface_close',{})
+
+    async def test_public_input_forwards_multikey_chord_once(self):
+        opened=[]
+        def open_fixture(*args,**kwargs):
+            bridge=FakeBridge(*args,**kwargs);opened.append(bridge);return bridge
+        tail=[{'op':'key_chord','keys':['Shift_L','a']}]
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_guarded.open_bridge',side_effect=open_fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            reply=await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],
+                'tail':tail,'interaction':'keyboard'})
+            row=metadata(reply)
+            self.assertEqual(row['status'],'completed')
+            self.assertIsNone(row['task_success'])
+            self.assertFalse(row['replay_allowed'])
+            opened[0].keyboard.assert_called_once_with(
+                'browser_context',[12,12],tail=tail)
+            opened[0].click.assert_not_called()
+            retained=await server.call_tool('interface_results',{'call_id':row['call_id']})
+            self.assertEqual(metadata(retained)['result'],row['result'])
+            self.assertFalse(metadata(retained)['operation_invoked'])
+            opened[0].keyboard.assert_called_once()
             await server.call_tool('interface_close',{})
 
     async def test_explicit_mode_tools_shared_retention_and_no_replay(self):
@@ -561,8 +781,13 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_strict_schema_and_failed_initialization_do_not_reopen(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=OSError('display failed')) as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
-            with self.assertRaises(Exception):
-                await server.call_tool('interface_guarded_mint',{'alias':'x','source_sequence':True,'point':[1,2],'region_size':[24,14]})
+            invalid=await server.call_tool('interface_guarded_mint',
+                {'alias':'x','source_sequence':True,'point':[1,2],'region_size':[24,14]})
+            invalid_row=metadata(invalid)
+            self.assertTrue(invalid.isError)
+            self.assertEqual(invalid_row['status'],'invalid_request',invalid_row)
+            self.assertFalse(invalid_row['operation_invoked'],invalid_row)
+            self.assertFalse(invalid_row['input_dispatched'],invalid_row)
             factory.assert_not_called()
             row=metadata(await server.call_tool('interface_guarded_observe',{}))
             self.assertEqual(row['status'],'backend_unavailable')
@@ -711,6 +936,66 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
 
 
 class PublicCompiledOwnerTests(unittest.TestCase):
+    def test_owner_close_retains_real_release_report_in_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
+        with tempfile.TemporaryDirectory() as td:
+            owner=GuardedSessionOwner({'app':7},td,retention_mode='journal')
+            journal=ReceiptJournal(Path(td)/'retention.jsonl')
+            backend=SimpleNamespace(
+                release_all=Mock(return_value={'verified':True,'keys_down':[],'buttons_down':[]}),
+                close=Mock(return_value={'status':'closed'}))
+            owner.bridge=SimpleNamespace(_closed=False,_receipt_journal=journal)
+            owner.session=SimpleNamespace(backend=backend)
+            owner.dispatch_attempted=True
+            report=owner.close()
+            retained=ReceiptJournal.read(Path(td)/'retention.jsonl','session-close')
+            self.assertEqual(report['release'],{'verified':True,'keys_down':[],'buttons_down':[]})
+            self.assertEqual(retained['release'],report['release'])
+            self.assertEqual(retained['backend_close'],{'status':'closed'})
+            self.assertEqual(report['receipt_journal']['status'],'close_receipt_recorded')
+
+    def test_owner_close_appends_close_report_and_releases_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            owner = GuardedSessionOwner({'app':7}, td, retention_mode='journal')
+            owner.bridge = SimpleNamespace(_closed=False, _receipt_journal=None)
+            class Journal:
+                def __init__(self): self.rows=[]; self.closed=False
+                def append(self, reference, kind, payload):
+                    self.rows.append((reference,kind,payload)); return reference
+                def close(self): self.closed=True
+            journal=Journal();owner.bridge._receipt_journal=journal
+            report={'status':'closed','release_attempted':True}
+            with patch('runtime.cli_v1.mcp_guarded.MCPSessionOwner.close', return_value=report):
+                returned=owner.close()
+            self.assertEqual(journal.rows[0][:2],('session-close','session-close'))
+            self.assertEqual(journal.rows[0][2],report)
+            self.assertTrue(journal.closed)
+            self.assertEqual(returned['receipt_journal']['status'],'close_receipt_recorded')
+
+    def test_owner_close_after_bridge_close_still_releases_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            owner=GuardedSessionOwner({'app':7},td,retention_mode='journal')
+            class Journal:
+                closed=False
+                def close(self): self.closed=True
+            journal=Journal()
+            owner.bridge=SimpleNamespace(_closed=True,_receipt_journal=journal)
+            with patch('runtime.cli_v1.mcp_guarded.MCPSessionOwner.close',return_value={'status':'closed'}):
+                owner.close()
+            self.assertTrue(journal.closed)
+
+    def test_retention_mode_is_explicit_and_reported(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaises(ValueError):
+                GuardedSessionOwner({'app':7}, td, retention_mode='unknown')
+            owner = GuardedSessionOwner({'app':7}, td, retention_mode='journal')
+            self.assertEqual(owner.snapshot()['retention_mode'], 'journal')
+            self.assertEqual(owner.snapshot()['target'], 'app')
+
     def owner(self, root):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         owner = GuardedSessionOwner({'app':7}, root, ':fixture')
@@ -723,6 +1008,222 @@ class PublicCompiledOwnerTests(unittest.TestCase):
     def callbacks(self):
         return {'perceive':lambda native,rgb:{}, 'verify_effect':lambda req,native,rgb:{}}
 
+    def test_actual_graph_runs_through_owner_and_keeps_action_effect_timing(self):
+        self._actual_graph_guard_case(refuse_second=False)
+
+    def test_actual_graph_owner_stops_after_second_guard_refusal(self):
+        self._actual_graph_guard_case(refuse_second=True)
+
+    def test_actual_graph_owner_does_not_publish_dispatch_before_first_guard(self):
+        self._actual_graph_guard_case(refuse_first=True)
+
+    def _actual_graph_guard_case(self, refuse_second=False, refuse_first=False):
+        """Compose the real graph, X11 adapter and public Python owner on Fake X."""
+        import hashlib
+        import time
+        from contextlib import contextmanager
+        from PIL import Image
+        from runtime.core_v1.test_compiled_gui import interface
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+
+        class Bridge:
+            def __init__(self, output):
+                self.scope='private'; self.binding_revision=0; self.sequence=0
+                self.target='app'; self.active=None; self.review_required=False
+                self.session=SimpleNamespace(recovery_required=False)
+                self.backend=SimpleNamespace(
+                    targets={'app':SimpleNamespace(id=7)},
+                    configure_capture_artifacts=self.configure_capture_artifacts)
+                self.history={}; self.saved=[]; self.inputs=[]; self.phase=0
+                self.store=SimpleNamespace(resolve_point=self.resolve_point)
+                self.output=Path(output); self.guard=None
+
+            def configure_capture_artifacts(self, directory, *, retain_rgb=False):
+                self.capture_directory=Path(directory)
+                self.capture_directory.mkdir(parents=True, exist_ok=True)
+
+            def _save(self, name, value):
+                self.saved.append((name, value))
+
+            def resolve_point(self, *args, **kwargs):
+                return {'eligible':True,'status':'VALID',
+                        'valid_until_ns':time.monotonic_ns()+2_000_000_000}
+
+            def _focus_within_target(self):
+                return True
+
+            def observe(self):
+                self.sequence += 1
+                image=Image.new('RGB',(16,16),(self.phase,20,30))
+                path=self.capture_directory/(str(self.sequence)+'.png')
+                image.save(path)
+                payload=path.read_bytes()
+                raw_digest='fixture-'+str(self.sequence)
+                captured=time.monotonic_ns()
+                source={'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
+                    'capture_ns':captured,'capture_started_ns':captured,
+                    'binding_revision':self.binding_revision,
+                    'pointer_binding':{'surface':7},
+                    'native':{'sha256':raw_digest,'capture_started_ns':captured,
+                        'native_window_id':7,
+                        'artifact':{'path':str(path),'mime_type':'image/png',
+                            'sha256':hashlib.sha256(payload).hexdigest(),
+                            'source_raw_sha256':raw_digest}}}
+                self.history[self.sequence]=(source,image)
+                return source
+
+            def resolve(self, stage):
+                native,image=self.history[self.sequence]
+                return self.guard(stage,native,image)
+
+            @contextmanager
+            def input_guard(self, alias, offset, *, tail, verify, interaction='keyboard'):
+                self.guard=verify
+                try:
+                    yield
+                finally:
+                    self.guard=None
+
+            def click(self, alias, offset, **kwargs):
+                if self.guard('fixture_before_input', *self.history[self.sequence]) is not True:
+                    return {'status':'refused','input_dispatched':False}
+                self.inputs.append((alias,offset,kwargs))
+                self.phase += 1
+                return {'status':'completed','execution':{'releases':[
+                    {'verified':True,'keys_down':[],'buttons_down':[]}]}}
+
+            keyboard=click
+            move=click
+
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); bridge=Bridge(root/'bridge')
+            owner=GuardedSessionOwner({'app':7},root,':fixture')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                owner.get()
+            spec=interface(); spec['surface']='x11-window-7'
+            spec['predicates'].append('present')
+            spec['symbols']['field'].update(identity_predicate='present',
+                                             dependencies=['present'])
+            spec['method']['max_runtime_ms']=1000
+            bindings={name:{'interaction':'click','offset':[2,2],'tail':[]}
+                      for name in ('enter','save')}
+            verified=[]; guard_calls=[]; dispatches=[]
+            clock=[time.monotonic_ns()]
+
+            def perceive(native, image):
+                return {'phase':image.getpixel((0,0))[0], 'present':True}
+
+            def guard_perceive(native, image):
+                guard_calls.append(native['sequence'])
+                return {'phase':image.getpixel((0,0))[0],
+                        'present':not ((refuse_first and len(guard_calls)==1)
+                                       or (refuse_second and len(guard_calls)==2))}
+
+            def before_action_dispatch(receipt):
+                dispatches.append(receipt)
+
+            def verify_effect(request, native, image):
+                if not verified:
+                    clock[0]+=10_000_000
+                verified.append((request['action'],request['observation']['evidence_ref']))
+                return {'status':'succeeded',
+                        'evidence_ref':request['observation']['evidence_ref']}
+
+            with (patch('runtime.cli_v1.mcp_guarded.monotonic_ns',
+                        side_effect=lambda:clock[0]),
+                  patch('time.monotonic_ns',side_effect=lambda:clock[0]),
+                  patch('time.perf_counter_ns',side_effect=lambda:clock[0])):
+                row=owner.run_compiled(spec,bindings,call_root=root/'method',
+                    perceive=perceive,verify_effect=verify_effect,
+                    guard_perceive=guard_perceive,
+                    before_action_dispatch=before_action_dispatch)
+            self.assertEqual(len(guard_calls),1 if refuse_first else 2)
+            receipt=row['method_receipt']
+            if refuse_first:
+                self.assertNotEqual(receipt['outcome'],'TASK_SUCCEEDED')
+                self.assertEqual(receipt['completed_transitions'],0)
+                self.assertEqual(len(bridge.inputs),0)
+                self.assertEqual(dispatches,[])
+                self.assertEqual(verified,[])
+                return
+            if refuse_second:
+                self.assertNotEqual(receipt['outcome'],'TASK_SUCCEEDED')
+                self.assertEqual(receipt['completed_transitions'],1)
+                self.assertEqual(len(bridge.inputs),1)
+                self.assertEqual(len(dispatches),1)
+                self.assertEqual(dispatches[0]['action'],'enter')
+                self.assertEqual([action for action,_ in verified],['enter'])
+                return
+            transitions=receipt['transitions']
+            effects=[event for event in receipt['critical_events']
+                     if event['event']=='effect_checked']
+            self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED',receipt)
+            self.assertEqual([action for action,_ in verified],['enter','save'])
+            self.assertEqual([action for action,_ in verified],
+                             [transition['action'] for transition in transitions])
+            self.assertEqual([event['action_id'] for event in effects],
+                             [transition['action_id'] for transition in transitions])
+            self.assertEqual(len(receipt['observations']),3)
+            self.assertEqual(bridge.sequence,4)
+            self.assertEqual(len(bridge.inputs),2)
+            self.assertEqual([row['action'] for row in dispatches],['enter','save'])
+            self.assertEqual([row['action_id'] for row in dispatches],
+                             [transition['action_id'] for transition in transitions])
+            self.assertEqual(row['feedback']['image_status'],'image',row)
+            self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-4')
+            timing=row['owner_timing']
+            self.assertEqual(timing['clock'],'time.monotonic_ns')
+            self.assertEqual(timing['schema'],
+                             'agent-interface/compiled-owner-attempt-timing-v1')
+            self.assertEqual(timing['status'],'returned')
+            self.assertEqual(row['owner_timing_retention'],{'status':'recorded'})
+            self.assertLessEqual(timing['started_ns'],
+                                 min(observation['captured_ns']
+                                     for observation in receipt['observations']))
+            self.assertGreaterEqual(timing['completed_ns'],
+                                    max(event['effect_verification_accepted_ns']
+                                        for event in effects))
+            self.assertEqual(timing['elapsed_ns'],
+                             timing['completed_ns']-timing['started_ns'])
+            self.assertGreaterEqual(timing['elapsed_ns'],10_000_000,timing)
+            retained=json.loads((root/'method'/'owner-attempt-timing.json').read_text())
+            self.assertEqual(retained,timing)
+            for event in effects:
+                self.assertLessEqual(event['execution_accepted_ns'],
+                                     event['effect_observation_captured_ns'])
+                self.assertLessEqual(event['effect_observation_captured_ns'],
+                                     event['effect_verification_started_ns'])
+                self.assertLessEqual(event['effect_verification_started_ns'],
+                                     event['effect_verification_accepted_ns'])
+            self.assertIsNone(row['task_success'])
+            self.assertFalse(row['replay_allowed'])
+
+    def test_trusted_owner_forwards_guard_and_post_release_settle(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); owner=self.owner(root)
+            guard=lambda native,image: {'present':True}
+            with patch('runtime.guarded_x11_v1.compiled.run',
+                       return_value={'outcome':'SAFE_YIELD','observations':[]}) as run:
+                owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks(),
+                                   guard_perceive=guard, post_release_settle_ms=25)
+            self.assertIs(run.call_args.kwargs['guard_perceive'],guard)
+            self.assertEqual(run.call_args.kwargs['post_release_settle_ms'],25)
+
+    def test_invalid_trusted_options_are_rejected_before_dispatch(self):
+        invalid=({'guard_perceive':42}, {'post_release_settle_ms':-1},
+                 {'post_release_settle_ms':1001}, {'post_release_settle_ms':True})
+        for options in invalid:
+            with self.subTest(options=options), tempfile.TemporaryDirectory() as td:
+                root=Path(td); owner=self.owner(root)
+                with patch('runtime.guarded_x11_v1.compiled.run') as run:
+                    with self.assertRaises(ValueError):
+                        owner.run_compiled({}, {}, call_root=root/'method',
+                                           **self.callbacks(), **options)
+                run.assert_not_called()
+                self.assertFalse(owner.dispatch_attempted)
+                self.assertFalse(owner.bridge.review_required)
+                self.assertFalse((root/'method').exists())
+
     def test_unopened_owner_is_not_implicitly_allocated(self):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         with tempfile.TemporaryDirectory() as td:
@@ -732,7 +1233,7 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                     owner.run_compiled({}, {}, call_root=root/'call', **self.callbacks())
                 opened.assert_not_called()
 
-    def test_final_image_uses_new_call_root_without_extra_observation(self):
+    def test_final_image_uses_owner_feedback_capture_in_new_call_root(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);owner=self.owner(root);bridge=owner.bridge
             receipt={'outcome':'TASK_SUCCEEDED','observations':[{'sequence':1}]}
@@ -744,9 +1245,9 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                 row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
             self.assertEqual(row['method_receipt'],receipt)
             self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
-            self.assertEqual(row['feedback']['image_status'],'image')
+            self.assertEqual(row['feedback']['image_status'],'image',row)
             self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to(root/'method'))
-            self.assertEqual(bridge.sequence,1);bridge.observe.assert_not_called();run.assert_called_once()
+            self.assertEqual(bridge.sequence,2);bridge.observe.assert_called_once();run.assert_called_once()
 
     def test_zero_observation_yield_does_not_present_previous_capture(self):
         with tempfile.TemporaryDirectory() as td:
@@ -756,15 +1257,47 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertIsNone(row['feedback']);self.assertEqual(owner.bridge.sequence,1)
 
     def test_exception_keeps_same_owner_cleanup_duty_and_never_replays(self):
-        with tempfile.TemporaryDirectory() as td:
-            root=Path(td);owner=self.owner(root);bridge=owner.bridge
-            with patch('runtime.guarded_x11_v1.compiled.run',side_effect=RuntimeError('after partial input')) as run:
+        for error in (RuntimeError('after partial input'),
+                      KeyboardInterrupt('after partial input')):
+            with self.subTest(error=type(error).__name__), tempfile.TemporaryDirectory() as td:
+                root=Path(td);owner=self.owner(root);bridge=owner.bridge
+                with patch('runtime.guarded_x11_v1.compiled.run',side_effect=error) as run:
+                    with self.assertRaises(type(error)):
+                        owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+                self.assertTrue(bridge.review_required);run.assert_called_once()
+                self.assertEqual(owner.owner_timing_retention,{'status':'recorded'})
+                retained=json.loads((root/'method'/'owner-attempt-timing.json').read_text())
+                self.assertEqual(retained['status'],'raised')
+                self.assertEqual(retained['error_type'],type(error).__name__)
+                self.assertEqual(retained['effect_status'],'unknown')
+                self.assertFalse(retained['replay_allowed'])
+                self.assertGreaterEqual(retained['elapsed_ns'],0)
+                close=owner.close();self.assertTrue(close['release']['verified'])
+                bridge.backend.release_all.assert_called_once()
                 with self.assertRaises(RuntimeError):
-                    owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
-            self.assertTrue(bridge.review_required);run.assert_called_once()
-            close=owner.close();self.assertTrue(close['release']['verified']);bridge.backend.release_all.assert_called_once()
-            with self.assertRaises(RuntimeError):
-                owner.run_compiled({}, {}, call_root=root/'another', **self.callbacks())
+                    owner.run_compiled({}, {}, call_root=root/'another', **self.callbacks())
+
+    def test_timing_persistence_failure_does_not_mask_result_or_original_error(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root)
+            with (patch('runtime.guarded_x11_v1.compiled.run',
+                        return_value={'outcome':'SAFE_YIELD','observations':[]}),
+                  patch('runtime.cli_v1.attempt._write_json',
+                        side_effect=OSError('timing disk full'))):
+                row=owner.run_compiled({}, {}, call_root=root/'success', **self.callbacks())
+            self.assertEqual(row['owner_timing_retention']['status'],'unavailable')
+            self.assertEqual(row['owner_timing_retention']['error_type'],'OSError')
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root)
+            with (patch('runtime.guarded_x11_v1.compiled.run',
+                        side_effect=RuntimeError('original input failure')),
+                  patch('runtime.cli_v1.attempt._write_json',
+                        side_effect=OSError('timing disk full'))):
+                with self.assertRaisesRegex(RuntimeError,'original input failure'):
+                    owner.run_compiled({}, {}, call_root=root/'failure', **self.callbacks())
+            self.assertTrue(owner.bridge.review_required)
+            self.assertEqual(owner.owner_timing_retention['status'],'unavailable')
+            self.assertEqual(owner.owner_timing_retention['error_type'],'OSError')
 
     def test_presentation_failure_retains_method_result_and_requires_review(self):
         with tempfile.TemporaryDirectory() as td:

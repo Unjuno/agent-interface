@@ -1,0 +1,32 @@
+test_XI1_suppressed_state_is_indistinguishable (__main__.Tests.test_XI1_suppressed_state_is_indistinguishable) ... ok
+test_fixed_XTEST_marker_is_not_generation_identity (__main__.Tests.test_fixed_XTEST_marker_is_not_generation_identity) ... ERROR
+test_suppressed_stubborn_must_not_clear_custody (__main__.Tests.test_suppressed_stubborn_must_not_clear_custody) ... FAIL
+test_visible_stubborn_control (__main__.Tests.test_visible_stubborn_control) ... ok
+
+======================================================================
+ERROR: test_fixed_XTEST_marker_is_not_generation_identity (__main__.Tests.test_fixed_XTEST_marker_is_not_generation_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\x11-state-access-construction-01a0ff2c\actor.py", line 94, in test_fixed_XTEST_marker_is_not_generation_identity
+    d=Endpoint();prop=d.xinput_get_device_property(7,42,19,0,1)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\outputs\x11-package-import-01a0ff2c\dependencies\python_xlib-0.33-py2.py3-none-any.whl\Xlib\ext\xinput.py", line 485, in get_device_property
+    return XIGetProperty(
+           ^^^^^^^^^^^^^^
+  File "<WORKSPACE>\outputs\x11-state-access-construction-01a0ff2c\actor.py", line 52, in property_request
+    return types.SimpleNamespace(**reply)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: types.SimpleNamespace() argument after ** must be a mapping, not DictWrapper
+
+======================================================================
+FAIL: test_suppressed_stubborn_must_not_clear_custody (__main__.Tests.test_suppressed_stubborn_must_not_clear_custody)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\x11-state-access-construction-01a0ff2c\actor.py", line 79, in test_suppressed_stubborn_must_not_clear_custody
+    self.assertNotEqual(r['status'],'completed','valid zero inventory suppressed by source-supported read denial is not neutral proof')
+AssertionError: 'completed' == 'completed' : valid zero inventory suppressed by source-supported read denial is not neutral proof
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=1, errors=1)

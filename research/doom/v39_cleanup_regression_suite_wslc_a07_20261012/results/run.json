@@ -1,0 +1,103 @@
+{
+  "cases": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-c",
+        "import hashlib,importlib,pathlib,sys,unittest; m=importlib.import_module(\"doom_controller_failure_cleanup_v1\"); p=pathlib.Path(m.__file__).resolve(); expected=pathlib.Path('/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py').resolve(); print(\"SOURCE_PATH=\"+str(p)); print(\"SOURCE_SHA256=\"+hashlib.sha256(p.read_bytes()).hexdigest()); assert p==expected, f\"source path mismatch: {p} != {expected}\"; sys.path.insert(0,'/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests'); suite=unittest.defaultTestLoader.loadTestsFromName(\"test_controller_failure_cleanup_v39\"); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+      ],
+      "elapsed_seconds": 0.1055,
+      "errored_tests": [],
+      "exit_code": 1,
+      "expected_source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py",
+      "failed_tests": [
+        "test_conflicting_duplicate_terminals_are_order_independent ",
+        "test_conflicting_duplicate_terminals_are_order_independent ",
+        "test_duplicate_acceptance_identity_is_ambiguous "
+      ],
+      "implementation": "main",
+      "optimized": false,
+      "raw_output": "test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) ... \n  test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[True, False]) ... FAIL\n  test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[False, True]) ... FAIL\ntest_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous) ... FAIL\ntest_matching_release_token_is_retained_as_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_matching_release_token_is_retained_as_empty) ... ok\ntest_mismatched_release_token_is_not_certified_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_mismatched_release_token_is_not_certified_empty) ... ok\ntest_release_without_optional_token_keeps_legacy_id_binding (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_without_optional_token_keeps_legacy_id_binding) ... ok\n\n======================================================================\nFAIL: test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[True, False])\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 95, in test_conflicting_duplicate_terminals_are_order_independent\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[False, True])\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 95, in test_conflicting_duplicate_terminals_are_order_independent\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 78, in test_duplicate_acceptance_identity_is_ambiguous\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 5 tests in 0.006s\n\nFAILED (failures=3)\nSOURCE_PATH=/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py\nSOURCE_SHA256=bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28\n",
+      "source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py",
+      "source_path_match": true,
+      "source_sha256": "bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28",
+      "test_count": 5
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-O",
+        "-c",
+        "import hashlib,importlib,pathlib,sys,unittest; m=importlib.import_module(\"doom_controller_failure_cleanup_v1\"); p=pathlib.Path(m.__file__).resolve(); expected=pathlib.Path('/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py').resolve(); print(\"SOURCE_PATH=\"+str(p)); print(\"SOURCE_SHA256=\"+hashlib.sha256(p.read_bytes()).hexdigest()); assert p==expected, f\"source path mismatch: {p} != {expected}\"; sys.path.insert(0,'/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests'); suite=unittest.defaultTestLoader.loadTestsFromName(\"test_controller_failure_cleanup_v39\"); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+      ],
+      "elapsed_seconds": 0.2993,
+      "errored_tests": [],
+      "exit_code": 1,
+      "expected_source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py",
+      "failed_tests": [
+        "test_conflicting_duplicate_terminals_are_order_independent ",
+        "test_conflicting_duplicate_terminals_are_order_independent ",
+        "test_duplicate_acceptance_identity_is_ambiguous "
+      ],
+      "implementation": "main",
+      "optimized": true,
+      "raw_output": "test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) ... \n  test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[True, False]) ... FAIL\n  test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[False, True]) ... FAIL\ntest_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous) ... FAIL\ntest_matching_release_token_is_retained_as_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_matching_release_token_is_retained_as_empty) ... ok\ntest_mismatched_release_token_is_not_certified_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_mismatched_release_token_is_not_certified_empty) ... ok\ntest_release_without_optional_token_keeps_legacy_id_binding (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_without_optional_token_keeps_legacy_id_binding) ... ok\n\n======================================================================\nFAIL: test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[True, False])\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 95, in test_conflicting_duplicate_terminals_are_order_independent\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) (order=[False, True])\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 95, in test_conflicting_duplicate_terminals_are_order_independent\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests/test_controller_failure_cleanup_v39.py\", line 78, in test_duplicate_acceptance_identity_is_ambiguous\n    self.assertFalse(receipt[\"input_terminals_complete\"])\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 5 tests in 0.007s\n\nFAILED (failures=3)\nSOURCE_PATH=/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py\nSOURCE_SHA256=bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28\n",
+      "source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/main/doom_controller_failure_cleanup_v1.py",
+      "source_path_match": true,
+      "source_sha256": "bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28",
+      "test_count": 5
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-c",
+        "import hashlib,importlib,pathlib,sys,unittest; m=importlib.import_module(\"doom_controller_failure_cleanup_v1\"); p=pathlib.Path(m.__file__).resolve(); expected=pathlib.Path('/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py').resolve(); print(\"SOURCE_PATH=\"+str(p)); print(\"SOURCE_SHA256=\"+hashlib.sha256(p.read_bytes()).hexdigest()); assert p==expected, f\"source path mismatch: {p} != {expected}\"; sys.path.insert(0,'/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests'); suite=unittest.defaultTestLoader.loadTestsFromName(\"test_controller_failure_cleanup_v39\"); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+      ],
+      "elapsed_seconds": 0.0951,
+      "errored_tests": [],
+      "exit_code": 0,
+      "expected_source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py",
+      "failed_tests": [],
+      "implementation": "candidate",
+      "optimized": false,
+      "raw_output": "test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) ... ok\ntest_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous) ... ok\ntest_matching_release_token_is_retained_as_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_matching_release_token_is_retained_as_empty) ... ok\ntest_mismatched_release_token_is_not_certified_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_mismatched_release_token_is_not_certified_empty) ... ok\ntest_release_without_optional_token_keeps_legacy_id_binding (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_without_optional_token_keeps_legacy_id_binding) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.003s\n\nOK\nSOURCE_PATH=/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py\nSOURCE_SHA256=5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c\n",
+      "source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py",
+      "source_path_match": true,
+      "source_sha256": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c",
+      "test_count": 5
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-O",
+        "-c",
+        "import hashlib,importlib,pathlib,sys,unittest; m=importlib.import_module(\"doom_controller_failure_cleanup_v1\"); p=pathlib.Path(m.__file__).resolve(); expected=pathlib.Path('/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py').resolve(); print(\"SOURCE_PATH=\"+str(p)); print(\"SOURCE_SHA256=\"+hashlib.sha256(p.read_bytes()).hexdigest()); assert p==expected, f\"source path mismatch: {p} != {expected}\"; sys.path.insert(0,'/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/tests'); suite=unittest.defaultTestLoader.loadTestsFromName(\"test_controller_failure_cleanup_v39\"); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+      ],
+      "elapsed_seconds": 0.2399,
+      "errored_tests": [],
+      "exit_code": 0,
+      "expected_source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py",
+      "failed_tests": [],
+      "implementation": "candidate",
+      "optimized": true,
+      "raw_output": "test_conflicting_duplicate_terminals_are_order_independent (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_conflicting_duplicate_terminals_are_order_independent) ... ok\ntest_duplicate_acceptance_identity_is_ambiguous (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_acceptance_identity_is_ambiguous) ... ok\ntest_matching_release_token_is_retained_as_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_matching_release_token_is_retained_as_empty) ... ok\ntest_mismatched_release_token_is_not_certified_empty (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_mismatched_release_token_is_not_certified_empty) ... ok\ntest_release_without_optional_token_keeps_legacy_id_binding (test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_without_optional_token_keeps_legacy_id_binding) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.004s\n\nOK\nSOURCE_PATH=/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py\nSOURCE_SHA256=5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c\n",
+      "source_path": "/mnt/d/codex-research/scratch/v39_cleanup_regression_suite_wslc_a07_20261012/inputs/candidate/doom_controller_failure_cleanup_v1.py",
+      "source_path_match": true,
+      "source_sha256": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c",
+      "test_count": 5
+    }
+  ],
+  "observed_local_cgroup": {
+    "cpu.max": "max 100000",
+    "memory.max": "max"
+  },
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "requested_container_constraints": {
+    "cpus": "1",
+    "memory": "512m",
+    "network": "none"
+  },
+  "runtime": "native Ubuntu WSL (WSLc file bind mount did not expose /runner; see attempts.jsonl)",
+  "status": "FAIL_SCOPED"
+}

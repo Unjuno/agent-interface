@@ -1,0 +1,71 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a32-audit-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A32-20261012-01",
+  "status": "PASS_METHOD_SCOPED",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "checks": {
+    "frozen_hashes_match": true,
+    "candidate_pass": true,
+    "child_exit_0": true,
+    "stdout_reader_retired": true,
+    "no_stdout_reader_errors": true,
+    "owner_generation_identity_match": true,
+    "normal_owner_receipt_verified": true,
+    "owner_receipt_fsynced": true,
+    "cleanup_complete": true,
+    "display_reuse_allowed": true,
+    "xvfb_exit_0": true,
+    "synthetic_scorer_and_owner_events": true
+  },
+  "hash_checks": {
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/candidate.py": {
+      "actual": "c3a0abc3c40cd97fc0d00d00e5124bcdb7526c682dafabe91caf697523454524",
+      "expected": "c3a0abc3c40cd97fc0d00d00e5124bcdb7526c682dafabe91caf697523454524",
+      "match": true
+    },
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/PLAN.md": {
+      "actual": "fc2e033a8769e60e7e908940467abb6f903aea48e26221f78504085ea74767ef",
+      "expected": "fc2e033a8769e60e7e908940467abb6f903aea48e26221f78504085ea74767ef",
+      "match": true
+    },
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/run_candidate.sh": {
+      "actual": "1ee698c7c2cf08c4e3fae9a6bf3397023c25426aeb0df693d746233d588ecc1d",
+      "expected": "1ee698c7c2cf08c4e3fae9a6bf3397023c25426aeb0df693d746233d588ecc1d",
+      "match": true
+    },
+    "research/doom/doom_controller_failure_cleanup_v1.py": {
+      "actual": "71090a40848f5bc2dff39f50cd114669d67255fb2852046fb71280fe1154bc46",
+      "expected": "71090a40848f5bc2dff39f50cd114669d67255fb2852046fb71280fe1154bc46",
+      "match": true
+    },
+    "research/live_control/input_owner_process_v1.py": {
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "match": true
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": {
+      "actual": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+      "expected": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+      "match": true
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": {
+      "actual": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418",
+      "expected": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418",
+      "match": true
+    }
+  },
+  "raw_sha256": "5003af843a9937845e1d1cea0b8f6397e1b6c4de39b5305ceff8b8a780af595f",
+  "owner_receipt_sha256": "c0820db360063f69a524251339bd5c2cc6f2d7ee05471b43908ad270441090bc",
+  "owner_receipt_hash_matches_raw": true,
+  "nonclaim": {
+    "full_v39_cli": false,
+    "synthetic_scorer_and_owner_events": true,
+    "keys_or_buttons_operated": false,
+    "physical_input": false,
+    "game_or_model": false,
+    "task_effect_correctness": false,
+    "real_scorer": false
+  },
+  "decision": "Actual cleanup class and real process-owner backend completed normal finish and generation-bound receipt gates. Scoped integration only; synthetic score and owner-event files supply cleanup evidence and cannot establish a production V39 task."
+}

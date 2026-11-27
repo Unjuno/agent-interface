@@ -1,0 +1,45 @@
+test_cancel_write_error_still_interrupts_and_waits_for_verified_release (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_cancel_write_error_still_interrupts_and_waits_for_verified_release) ... FAIL
+test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait) ... Exception in thread Thread-1 (run_helper):
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\threading.py", line 1044, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\threading.py", line 995, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_cancel_invalidated_cover_order.py", line 63, in run_helper
+    result["value"] = controller.cancel_invalidated_cover(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        planner, handle, Process(), lambda _predicate: terminal, "cover-1")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 444, in cancel_invalidated_cover
+    raise RuntimeError("invalidated cover did not verify empty release")
+RuntimeError: invalidated cover did not verify empty release
+ERROR
+
+======================================================================
+ERROR: test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_cancel_invalidated_cover_order.py", line 80, in test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait
+    self.assertIs(result["value"][1], terminal)
+                  ~~~~~~^^^^^^^^^
+KeyError: 'value'
+
+======================================================================
+FAIL: test_cancel_write_error_still_interrupts_and_waits_for_verified_release (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_cancel_write_error_still_interrupts_and_waits_for_verified_release)
+----------------------------------------------------------------------
+RuntimeError: invalidated cover did not verify empty release
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_cancel_invalidated_cover_order.py", line 121, in test_cancel_write_error_still_interrupts_and_waits_for_verified_release
+    with self.assertRaisesRegex(RuntimeError, "synthetic executor write failure"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "synthetic executor write failure" does not match "invalidated cover did not verify empty release"
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=1, errors=1)

@@ -1,0 +1,508 @@
+{
+  "cleanup_errors": [],
+  "conditions": {
+    "allocation": "Native WSL2 on user-selected PC; no WSLc or Docker allocation.",
+    "app_preflight_report": "preflight-r02.json",
+    "app_preflight_sha256": "7bf35e0e7c0e5e396d2efe71f83fd1d6ea73650d56edfa05a54aec0836b01233",
+    "app_preflight_status": "PASS_XTERM_MAPPED_INTERACTIVE_PTY_NO_INPUT",
+    "cancel_bound_ms": 3000,
+    "display": ":188",
+    "fault": "Existing Xvfb owner-factory injection queues one delayed XTEST key press after the first target key press, flushes it, and enters real python-xlib Display.sync reply wait.",
+    "fresh_target_title": "AI-XTERM-FRESH-R03",
+    "fresh_task_argument": "new04",
+    "late_request_delay_ms": 8000,
+    "late_request_horizon_ms": 9000,
+    "mcp": "1.30.0",
+    "model_calls": 0,
+    "old_target_title": "AI-XTERM-OLD-R03",
+    "old_task_argument": "old03",
+    "pillow": "10.2.0",
+    "prestarted_cancel_supervisor": true,
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "recovery": "Preserve old caller terminal outcome; observe old effect after finite delayed-request horizon; close and terminate old xterm; observe a new process/window generation; type a distinct saved-effect command once.",
+    "run_id": "xterm-cancel-recovery-local-20261023-r03",
+    "schema": "agent-interface/xterm-cancel-recovery-conditions-v1",
+    "screen": "1024x768x24",
+    "source_commit": "97e9ae1cf2136ca35f18d397972328cfb07614b4",
+    "task_oracle": "Separate fsynced append journal and done receipt for each xterm process.",
+    "xterm_bundle": "/home/user/.cache/agent-interface/xterm-20261023-r01/root",
+    "xterm_package": "xterm 390-1ubuntu3, rootless extraction",
+    "xterm_sha256": "5415c1445d44e4c347fe51e30dd8f014de7e489873cfc82fe32af628dc01d4c4",
+    "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "xvfb_tcp": false
+  },
+  "ended_ns": 19610357932,
+  "error": "fault injection markers",
+  "error_type": "TimeoutError",
+  "fresh_effect_rows_at_horizon": null,
+  "initial_keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+  "model_calls": 0,
+  "native_postrun": [
+    {
+      "matches": true,
+      "path": "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/bin/xterm",
+      "sha256": "5415c1445d44e4c347fe51e30dd8f014de7e489873cfc82fe32af628dc01d4c4"
+    },
+    {
+      "matches": true,
+      "path": "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/lib/x86_64-linux-gnu/libXft.so.2",
+      "sha256": "368eee2879589cb6716f03ba23dee35b97faa0a4102c715776c7224bef8e3164"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libICE.so.6",
+      "sha256": "899ff245d50d4f1a7bb114d13b6200f42f93696ad93f38020c6ed7c84a5a943e"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libSM.so.6",
+      "sha256": "c9301f0ff852c0edcfc766f91c5df4f73b1b300c0303ac188524154588892fd0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libX11.so.6",
+      "sha256": "edd2ddf6e00a81c40b8645f7dbb6d6603c6a0a78d583bdbe7491d8a84de6e3b6"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXau.so.6",
+      "sha256": "8040da3f8516c1acfe39f04ff022480cdb273705ba5e7a4ca70bbdb1527cd67a"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXaw.so.7",
+      "sha256": "18e0e839eb69d2abe4f025c288582f88e6cc8264efd3d66a9cd51e8350833ac9"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXdmcp.so.6",
+      "sha256": "667d97d6da16016400ab10de9f83ef4ab209ceb6adf68ff9650225ec13e723b0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXext.so.6",
+      "sha256": "2907e6a996465de5b32a0dd10534d4416b87f1dee5670aaa7b19301a1fc93f44"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXinerama.so.1",
+      "sha256": "dceff724f4f74c420116fa6a11ece62894af4fc0e74a2254c923ccc215e1a041"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXmu.so.6",
+      "sha256": "5dd17c27af809f60078aefd39bb89b763beeca5bbf30f204e6f1597f3cdf227f"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXpm.so.4",
+      "sha256": "1aeac465f86985fbeb48f47aa77ed5024126d30acc1c279eb418df63d7090e3d"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXrender.so.1",
+      "sha256": "250977e0e004b6c0556144c3e683487063b4582dc83d205196ec3aa65d54e2c6"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXt.so.6",
+      "sha256": "267143b6258b866a522e9cff8db1e11ed95acb4fe23c56d9224e71afe617b0b8"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbrotlicommon.so.1",
+      "sha256": "a91ead095d2c80520c55a89057bbe10b031a075340442e63f44b310f93883a1b"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbrotlidec.so.1",
+      "sha256": "64d8a5019d4c294b89fde1193343ea324bbd8603652554e5545f0a01595fa2c5"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbsd.so.0",
+      "sha256": "e86cd4f0019f42c2ba5e60602e0edc8694d2948377d98c3654d0f6bddb5254bb"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbz2.so.1.0",
+      "sha256": "cc08c9f50a8009ffd6391e0116a100369b11ca9238fa52392c019e6645b122a1"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libexpat.so.1",
+      "sha256": "286682ecbc5e59a638963b1a4e6351e65eb32fcf4bdcb9cb7569b6a61fe06a8d"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libfontconfig.so.1",
+      "sha256": "a94b4059b27766f563894c8f7e61762b6f6b2e25c59ef36b730164d4b75c6c98"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libfreetype.so.6",
+      "sha256": "992dac80abe3a3854f3eb2668da4207c029664ceca5f122ddb46e2a8169e9499"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libm.so.6",
+      "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libmd.so.0",
+      "sha256": "423e18586b6ea740f4465afd64f7a9a4cb7264ed979c8e7256f9085af5345fef"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libpng16.so.16",
+      "sha256": "89c0c6569a8c00480d451401ad4c0a74942e62dc57f229a970592fdc5adb29e8"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libtinfo.so.6",
+      "sha256": "e6089d7bb95eee5b545f3770dd69095b0bca47d26701cad145af429561d16306"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libutempter.so.0",
+      "sha256": "ee1185b2506922223bc55b1530a391ce1bdde755c204808dcf609f1465c89004"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libuuid.so.1",
+      "sha256": "78d7f4d6f27b7dffc1c84dfe2f83e84aefa6f6ceeffc6ac4bc41f9fbc61cb84e"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libxcb.so.1",
+      "sha256": "7958a0136b121bdc4c708968569ad152a9ed208ab026e2537b1005dde64ca440"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libz.so.1",
+      "sha256": "86200da370f20476a2507e9097a789b5ef97269b4ca8d5e164ad82dab9d99892"
+    },
+    {
+      "matches": true,
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/Xvfb",
+      "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/python3",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/xauth",
+      "sha256": "ffcb5f569bf9fce94cbf37f5d61790d463508c6122511a5f4c6e280d3633086e"
+    }
+  ],
+  "native_preflight": [
+    {
+      "matches": true,
+      "path": "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/bin/xterm",
+      "sha256": "5415c1445d44e4c347fe51e30dd8f014de7e489873cfc82fe32af628dc01d4c4"
+    },
+    {
+      "matches": true,
+      "path": "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/lib/x86_64-linux-gnu/libXft.so.2",
+      "sha256": "368eee2879589cb6716f03ba23dee35b97faa0a4102c715776c7224bef8e3164"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libICE.so.6",
+      "sha256": "899ff245d50d4f1a7bb114d13b6200f42f93696ad93f38020c6ed7c84a5a943e"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libSM.so.6",
+      "sha256": "c9301f0ff852c0edcfc766f91c5df4f73b1b300c0303ac188524154588892fd0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libX11.so.6",
+      "sha256": "edd2ddf6e00a81c40b8645f7dbb6d6603c6a0a78d583bdbe7491d8a84de6e3b6"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXau.so.6",
+      "sha256": "8040da3f8516c1acfe39f04ff022480cdb273705ba5e7a4ca70bbdb1527cd67a"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXaw.so.7",
+      "sha256": "18e0e839eb69d2abe4f025c288582f88e6cc8264efd3d66a9cd51e8350833ac9"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXdmcp.so.6",
+      "sha256": "667d97d6da16016400ab10de9f83ef4ab209ceb6adf68ff9650225ec13e723b0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXext.so.6",
+      "sha256": "2907e6a996465de5b32a0dd10534d4416b87f1dee5670aaa7b19301a1fc93f44"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXinerama.so.1",
+      "sha256": "dceff724f4f74c420116fa6a11ece62894af4fc0e74a2254c923ccc215e1a041"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXmu.so.6",
+      "sha256": "5dd17c27af809f60078aefd39bb89b763beeca5bbf30f204e6f1597f3cdf227f"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXpm.so.4",
+      "sha256": "1aeac465f86985fbeb48f47aa77ed5024126d30acc1c279eb418df63d7090e3d"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXrender.so.1",
+      "sha256": "250977e0e004b6c0556144c3e683487063b4582dc83d205196ec3aa65d54e2c6"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libXt.so.6",
+      "sha256": "267143b6258b866a522e9cff8db1e11ed95acb4fe23c56d9224e71afe617b0b8"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbrotlicommon.so.1",
+      "sha256": "a91ead095d2c80520c55a89057bbe10b031a075340442e63f44b310f93883a1b"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbrotlidec.so.1",
+      "sha256": "64d8a5019d4c294b89fde1193343ea324bbd8603652554e5545f0a01595fa2c5"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbsd.so.0",
+      "sha256": "e86cd4f0019f42c2ba5e60602e0edc8694d2948377d98c3654d0f6bddb5254bb"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libbz2.so.1.0",
+      "sha256": "cc08c9f50a8009ffd6391e0116a100369b11ca9238fa52392c019e6645b122a1"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libexpat.so.1",
+      "sha256": "286682ecbc5e59a638963b1a4e6351e65eb32fcf4bdcb9cb7569b6a61fe06a8d"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libfontconfig.so.1",
+      "sha256": "a94b4059b27766f563894c8f7e61762b6f6b2e25c59ef36b730164d4b75c6c98"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libfreetype.so.6",
+      "sha256": "992dac80abe3a3854f3eb2668da4207c029664ceca5f122ddb46e2a8169e9499"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libm.so.6",
+      "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libmd.so.0",
+      "sha256": "423e18586b6ea740f4465afd64f7a9a4cb7264ed979c8e7256f9085af5345fef"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libpng16.so.16",
+      "sha256": "89c0c6569a8c00480d451401ad4c0a74942e62dc57f229a970592fdc5adb29e8"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libtinfo.so.6",
+      "sha256": "e6089d7bb95eee5b545f3770dd69095b0bca47d26701cad145af429561d16306"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libutempter.so.0",
+      "sha256": "ee1185b2506922223bc55b1530a391ce1bdde755c204808dcf609f1465c89004"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libuuid.so.1",
+      "sha256": "78d7f4d6f27b7dffc1c84dfe2f83e84aefa6f6ceeffc6ac4bc41f9fbc61cb84e"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libxcb.so.1",
+      "sha256": "7958a0136b121bdc4c708968569ad152a9ed208ab026e2537b1005dde64ca440"
+    },
+    {
+      "matches": true,
+      "path": "/lib/x86_64-linux-gnu/libz.so.1",
+      "sha256": "86200da370f20476a2507e9097a789b5ef97269b4ca8d5e164ad82dab9d99892"
+    },
+    {
+      "matches": true,
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/Xvfb",
+      "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/python3",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    },
+    {
+      "matches": true,
+      "path": "/usr/bin/xauth",
+      "sha256": "ffcb5f569bf9fce94cbf37f5d61790d463508c6122511a5f4c6e280d3633086e"
+    }
+  ],
+  "old_app": {
+    "command": [
+      "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/bin/xterm",
+      "-ut",
+      "+bc",
+      "-fn",
+      "fixed",
+      "-geometry",
+      "80x24+20+20",
+      "-title",
+      "AI-XTERM-OLD-R03",
+      "-e",
+      "/bin/sh",
+      "-i"
+    ],
+    "geometry": [
+      20,
+      20,
+      484,
+      316
+    ],
+    "journal": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_cancel_recovery_20261023_r03/old-journal.jsonl",
+    "pid": 443,
+    "window_id": 4194316,
+    "wm_class": [
+      "xterm",
+      "XTerm"
+    ]
+  },
+  "old_effect_rows_at_cancel": null,
+  "old_effect_rows_at_horizon": null,
+  "old_final_close": {
+    "cancellation_operation_id": null,
+    "cleanup_status": "UNKNOWN",
+    "operation_invoked": false,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "busy",
+    "task_success": null
+  },
+  "old_input_response": {
+    "call": {
+      "arguments": {
+        "alias": "prompt",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          12,
+          12
+        ],
+        "tail": [
+          {
+            "op": "text",
+            "text": "record old03"
+          },
+          {
+            "keys": [
+              "Return"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "backend_attempted": false,
+      "call_id": "5f363f2de151464ca3adc5f723bfba0e",
+      "operation": "guarded_input",
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "state": "queued"
+    },
+    "call_id": "5f363f2de151464ca3adc5f723bfba0e",
+    "effect_status": "unknown",
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result_available": false,
+    "scope": "current_server",
+    "status": "pending",
+    "task_success": null
+  },
+  "old_input_started_ns": 16579811416,
+  "old_observation": {
+    "binding": {
+      "focus": 4194316,
+      "geometry": [
+        21,
+        21,
+        484,
+        316
+      ],
+      "process_generation": "38a895960438c47e8caf506a4ebf078d856c98bbcfb5fb6a83a8f0d88fff6386",
+      "surface": 4194316,
+      "window_generation": "4d4a1aa25db588503a63bd43b7afb58ac95bf0c014598c5d78dac21415fd9e2e"
+    },
+    "sequence": 1,
+    "session_id": "2d64c1d427544a5782dcc26b020a22b8"
+  },
+  "previous_display_environment": {
+    "DISPLAY": ":0",
+    "XAUTHORITY_was_set": false
+  },
+  "process_cleanup": {
+    "old": {
+      "exit_code": 15,
+      "initial_session_pids": [
+        443
+      ],
+      "pid": 443,
+      "pidfd_target": 443,
+      "remaining_session_pids": [],
+      "signal": "SIGTERM to the private xterm session while leader pidfd was retained"
+    }
+  },
+  "python_executable": "/home/user/.cache/agent-interface/xvfb-observation-20261023-r01-venv/bin/python",
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "schema": "agent-interface/xterm-cancel-recovery-v1",
+  "started_ns": 14220223274,
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_cancel_recovery_20261023_r03/trial.py\", line 303, in run_trial\n    await wait_until(lambda: marker.exists() and sync_entry.exists(), 3, 'fault injection markers')\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_cancel_recovery_20261023_r03/trial.py\", line 52, in wait_until\n    raise TimeoutError(name)\nTimeoutError: fault injection markers\n",
+  "xvfb_exit_code": 0,
+  "xvfb_pid": 439,
+  "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+  "xvfb_vendor": "The X.Org Foundation"
+}

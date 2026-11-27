@@ -1,0 +1,238 @@
+{
+  "schema": "issue57-r84-r86-corrected-custody-v1",
+  "created_at": "2026-11-04",
+  "purpose": "Additive custody mapping; original FREEZE.sha256 and its sidecar are unchanged in content. Exact line-ending reconstructions are recorded separately from unrecovered mismatches. Attempt files have no per-attempt source manifest.",
+  "runs": {
+    "r84": {
+      "freeze_manifest": {
+        "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/FREEZE.sha256",
+        "expected_sha256_from_sidecar": "655ab386caf13225d07d971126339e8e662ba625a9215b95e09e42e349fc82f5",
+        "observed_sha256": "655ab386caf13225d07d971126339e8e662ba625a9215b95e09e42e349fc82f5",
+        "bytes": 503,
+        "status": "exact"
+      },
+      "source_files": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/preregistration.md",
+          "expected_sha256": "bb3af112aa61b0780755fb8c1d0e42cd936bd72aefa5bc487e33ad6417a2fb19",
+          "observed_sha256": "bb3af112aa61b0780755fb8c1d0e42cd936bd72aefa5bc487e33ad6417a2fb19",
+          "bytes": 3906,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/experiment.py",
+          "expected_sha256": "8c1662195f5fbdb1d2489b7ebbcf6e991dfc4e0c0a7db01d0518c26269b0a660",
+          "observed_sha256": "5cbe5913b460abd9895f6908f86c03e40efc3b221cec9fd6505352ffffcebc0c",
+          "bytes": 12551,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/runner.sh",
+          "expected_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "observed_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "bytes": 1721,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/audit_r84.py",
+          "expected_sha256": "de0daf5afc24d0435dbb1826ee7fccaf11a338b215483d395d56e315284183a0",
+          "observed_sha256": "de0daf5afc24d0435dbb1826ee7fccaf11a338b215483d395d56e315284183a0",
+          "bytes": 7634,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/source-freeze.json",
+          "expected_sha256": "376522099a7adcb2eb342533d03fa22e4593eef35024750236cca28ace124b61",
+          "observed_sha256": "376522099a7adcb2eb342533d03fa22e4593eef35024750236cca28ace124b61",
+          "bytes": 1562,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/preflight-environment.txt",
+          "expected_sha256": "d9b93df47f5bb3fa8680cf23b2aa9cad5d0cf0879b3fecb40737cb1eefcc93a6",
+          "observed_sha256": "d9b93df47f5bb3fa8680cf23b2aa9cad5d0cf0879b3fecb40737cb1eefcc93a6",
+          "bytes": 876,
+          "status": "exact"
+        }
+      ],
+      "source_counts": {
+        "exact": 5,
+        "mismatch_unrecovered": 1
+      },
+      "attempt_outputs": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/r84-c8/docker-exit-code.json",
+          "observed_sha256": "ef5a068b6cfe0b32b0cee9a8a93ad2788ad652c48ad79124497a9ec6576002d2",
+          "bytes": 191,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/r84-c8/package-version.txt",
+          "observed_sha256": "d0aef5189b9813695a6f65ee38d517412d41fe0e9a728a2e438f711c9af2674d",
+          "bytes": 19,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r84/r84-c8/tesseract-version.txt",
+          "observed_sha256": "3826f2cf7b090ae0585d19f73aacd8ac89a31add87ee868e0c869594d0b3cfa6",
+          "bytes": 8,
+          "status": "retained_without_per_attempt_manifest"
+        }
+      ]
+    },
+    "r85": {
+      "freeze_manifest": {
+        "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/FREEZE.sha256",
+        "expected_sha256_from_sidecar": "ab48afa4db135423feffd792c1050c92b854e4e02edafbd71cb89088c33b809e",
+        "observed_sha256": "ab48afa4db135423feffd792c1050c92b854e4e02edafbd71cb89088c33b809e",
+        "bytes": 503,
+        "status": "exact"
+      },
+      "source_files": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/preregistration.md",
+          "expected_sha256": "d2f09100972daffaf8e9d1307891d1e0a2f37a53aa43ed125a39293d7ac35733",
+          "observed_sha256": "62b22029046861bc243602ab2868d3f4b17fb43bf97ad8d12c16259ceda3d846",
+          "bytes": 4057,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/source-freeze.json",
+          "expected_sha256": "fe03ac63fe598fb3536068e72863a9b9a4eee2298bc22150229f3b12d4dd27f7",
+          "observed_sha256": "fe03ac63fe598fb3536068e72863a9b9a4eee2298bc22150229f3b12d4dd27f7",
+          "bytes": 1562,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/preflight-environment.txt",
+          "expected_sha256": "54701fd33369e9202cb231b747fd7d3862ec4b2d425bf75e8ecaa61fde0e250e",
+          "observed_sha256": "528feb2887a8a05f2a427bf7e6c1418bc1f3c18eaba0dd59c41122fdbf3ddc7e",
+          "bytes": 766,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/experiment.py",
+          "expected_sha256": "acf368ec8288aaef8a20725fb45200ce95750e7bff1d9ab51e678dfdad14356e",
+          "observed_sha256": "b579a1621f97679564c06c112796b619a3b84d5aa101356220fbd76408d2c6cf",
+          "bytes": 12552,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/runner.sh",
+          "expected_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "observed_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "bytes": 1721,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/audit_r85.py",
+          "expected_sha256": "868b4bbd1aa86170be86396eb0c197cf7f5f7df34d6bb4715deab3de89cc46ca",
+          "observed_sha256": "cc720820aeac54583222ca2be988b236f75b118c2bbe92f60028e340757f8f95",
+          "bytes": 7635,
+          "status": "mismatch_unrecovered"
+        }
+      ],
+      "source_counts": {
+        "exact": 2,
+        "mismatch_unrecovered": 4
+      },
+      "attempt_outputs": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/r85-c9/docker-exit-code.json",
+          "observed_sha256": "50a0bf9c34f1653156be3523f11e48bd48629ff5030f9619b07f78af1c55ce01",
+          "bytes": 108,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/r85-c9/docker-invocation.txt",
+          "observed_sha256": "8bfaf59e67b3f1298cae48ceface7e0e4f0400c5185a72d884e25c30ede0a971",
+          "bytes": 719,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r85/r85-c9/experiment.py",
+          "observed_sha256": "b579a1621f97679564c06c112796b619a3b84d5aa101356220fbd76408d2c6cf",
+          "bytes": 12552,
+          "status": "retained_without_per_attempt_manifest"
+        }
+      ]
+    },
+    "r86": {
+      "freeze_manifest": {
+        "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/FREEZE.sha256",
+        "expected_sha256_from_sidecar": "d454de78bf2663a96e2043d3f13d7aa9cc1708b18e3ddad68759aa4ca881c511",
+        "observed_sha256": "d454de78bf2663a96e2043d3f13d7aa9cc1708b18e3ddad68759aa4ca881c511",
+        "bytes": 503,
+        "status": "exact"
+      },
+      "source_files": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/preregistration.md",
+          "expected_sha256": "2daea7e370b4a25ffe010bc5a3d536104e46dee8e384dd232d449811bd3a7f5b",
+          "observed_sha256": "fd5947772cc86412e21f458cef21c34b761ffd756e463735ecb75b115d190e76",
+          "bytes": 2076,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/source-freeze.json",
+          "expected_sha256": "57a32b0c79987b3a6d2a3ae5241b2ed541958bf31db88b3b3aaaafc015e3cb51",
+          "observed_sha256": "57a32b0c79987b3a6d2a3ae5241b2ed541958bf31db88b3b3aaaafc015e3cb51",
+          "bytes": 1439,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/preflight-environment.txt",
+          "expected_sha256": "4b34c3e19672974a687e1daafe9af5cb10411e895505c5bc18ec1738f6d879a4",
+          "observed_sha256": "2688d9f5a6e7303cf737f1bdb52d38838c88f1f3811467cdaaa2bedf7007529a",
+          "bytes": 345,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/experiment.py",
+          "expected_sha256": "b5ac5b9c79cb666e1564a9b8ee5bd202404c8cd5c958e2f50447494ea38c111b",
+          "observed_sha256": "737a84e7f5527dbabd7cdd611838861772f64cffa886cfdb0ef2c8d34d1e0ac5",
+          "bytes": 12556,
+          "status": "mismatch_unrecovered"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/runner.sh",
+          "expected_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "observed_sha256": "5eff5c24a7e303ad64daffdefe53516353feacc2ee2f036c913ffc75342ebfa8",
+          "bytes": 1721,
+          "status": "exact"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/audit_r86.py",
+          "expected_sha256": "e5b9a2d55a4207476bc922be1f89ee0fe7c03e38bc26826d52ef38714c30d017",
+          "observed_sha256": "5c53824efbb62de2300e2df46dfdabe00ea0425b41a87c483ebc7158988f1509",
+          "bytes": 7642,
+          "status": "mismatch_unrecovered"
+        }
+      ],
+      "source_counts": {
+        "exact": 2,
+        "mismatch_unrecovered": 4
+      },
+      "attempt_outputs": [
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/r86-c10/docker-exit-code.json",
+          "observed_sha256": "1e7cae357b4dae08e66cf40de73f4903b96954522e8d8c8a08f3ac42b3e0def0",
+          "bytes": 109,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/r86-c10/docker-invocation.txt",
+          "observed_sha256": "5047963cc38d97cf565abbc8bdee8f8edc187b929bc3044e0687346d3ffaa552",
+          "bytes": 834,
+          "status": "retained_without_per_attempt_manifest"
+        },
+        {
+          "path": "research/integration/issue57_calc_sameframe_live_20261103_r86/r86-c10/experiment.py",
+          "observed_sha256": "737a84e7f5527dbabd7cdd611838861772f64cffa886cfdb0ef2c8d34d1e0ac5",
+          "bytes": 12556,
+          "status": "retained_without_per_attempt_manifest"
+        }
+      ]
+    }
+  }
+}

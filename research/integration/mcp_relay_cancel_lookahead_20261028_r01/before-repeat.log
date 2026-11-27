@@ -1,0 +1,146 @@
+before attempt 01: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.125s
+
+OK
+before attempt 02: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.120s
+
+OK
+before attempt 03: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 04: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 05: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 06: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 07: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.126s
+
+OK
+before attempt 08: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 09: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.120s
+
+OK
+before attempt 10: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 11: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.119s
+
+OK
+before attempt 12: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.120s
+
+OK
+before attempt 13: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.119s
+
+OK
+before attempt 14: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 15: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 16: exit=1
+F
+======================================================================
+FAIL: test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/d/CodexData/Temp/agent-interface-native-mcp-prefx-20261028/runtime/cli_v1/test_mcp_relay.py", line 389, in test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes
+    self.assertEqual(client.calls,
+AssertionError: Lists differ: [('in[646 chars]ded_compiled', {'marker': 'queued-two'}), ('in[121 chars]l'})] != [('in[646 chars]ded_cancel', {'call_id': 'aaaaaaaaaaaaaaaaaaaa[121 chars]l'})]
+
+First differing element 17:
+('interface_guarded_compiled', {'marker': 'queued-two'})
+('interface_guarded_cancel', {'call_id': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'})
+
+Diff is 965 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+FAILED (failures=1)
+before attempt 17: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+OK
+before attempt 18: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.120s
+
+OK
+before attempt 19: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.120s
+
+OK
+before attempt 20: exit=0
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.126s
+
+OK

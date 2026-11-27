@@ -1,0 +1,1 @@
+wslc run --rm --name pending-ammo-recovery-a17-20261013 --pull never --network none --cpus 1 --memory 512M --workdir /opt/a17 a17-pending-ammo-recovery:20261013 python3 -m unittest -v test_a17_pending_ammo_recovery

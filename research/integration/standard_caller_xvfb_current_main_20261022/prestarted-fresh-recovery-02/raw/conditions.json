@@ -1,0 +1,61 @@
+{
+  "schema": "agent-interface/standard-caller-xvfb-experiment-conditions-v1",
+  "run_id": "AI-XVFB-PRESTARTED-FRESH-RECOVERY-20261022-R02",
+  "frozen_at_local": "2026-10-22 Asia/Tokyo",
+  "source": {
+    "repository": "Unjuno/agent-interface",
+    "commit": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+    "test": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py::StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+    "sha256": {
+      "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "67802eb0a052b6b2ddb9a6a03e82e632199ec9d4b2be7b090f22796bae7cd2b7",
+      "runtime/cli_v1/mcp_guarded.py": "71faeae795ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "runtime/cli_v1/owned_guarded_session.py": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "runtime/cli_v1/mcp_server.py": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "runtime/cli_v1/test_synthetic_task_oracle.py": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327"
+    }
+  },
+  "environment": {
+    "distribution": "Ubuntu 24.04.3 LTS on WSL2",
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8",
+    "xvfb_path": "/usr/bin/Xvfb",
+    "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "display": ":88",
+    "xvfb_arguments": ["-nolisten", "tcp", "-screen", "0", "1024x768x24", "-ac"],
+    "private_mount_namespace": true,
+    "socket_dir_overlay": "tmpfs mode=1777 mounted over /tmp/.X11-unix inside unprivileged user/mount namespace only",
+    "display_socket_free_before_run": true,
+    "dependencies": {
+      "python-xlib": "0.33",
+      "Pillow": "10.2.0",
+      "numpy": "1.26.4",
+      "mcp": "1.30.0",
+      "installation_scope": "user-local target under /home/user/.cache; no system package changes"
+    },
+    "wslc_used": false,
+    "docker_used": false,
+    "allocation_id": null
+  },
+  "environment_variables": {
+    "DISPLAY": ":88",
+    "AGENT_INTERFACE_MCP_XVFB_TEST": "1",
+    "AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR": "1",
+    "AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS": "1",
+    "AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S": "1.0",
+    "AGENT_INTERFACE_XVFB_PID": "captured from the one private Xvfb process before test invocation",
+    "AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT": "raw/result.json"
+  },
+  "frozen_conditions": {
+    "delayed_keypress_ms": 8000,
+    "test_asserted_cancel_bound_ms": 3000,
+    "independent_research_cancel_target_ms": 300,
+    "terminal_bound_ms": 5000,
+    "one_run_only": true,
+    "decision": "unittest PASS is separate from the 300 ms target; fresh-task oracle must pass; old operation remains UNKNOWN and replay denied"
+  },
+  "preservation": {
+    "raw_outputs": ["stdout.txt", "stderr.txt", "exit-code.txt", "xvfb.log", "xvfb.pid", "xvfb-executable.txt", "xvfb-exit-code.txt", "result.json", "runtime-manifest.sha256", "package-versions.txt", "dependency-install.log", "preflight-namespace.txt", "command.txt", "run-experiment.sh"],
+    "no_retry_after_first_candidate_outcome": true
+  }
+}

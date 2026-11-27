@@ -108,6 +108,64 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertFalse(box["result"].answer_eligible)
         self.assertTrue(box["result"].cancellation_requested)
 
+    def test_failed_abort_is_not_reported_as_completed_on_later_calls(self):
+        class FailedCloseClient(FakeClient):
+            def close(self, timeout=5):
+                self.close_calls.append(timeout)
+                raise OSError("close failed before retirement")
+        client = FailedCloseClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        with self.assertRaisesRegex(OSError, "close failed"):
+            planner.abort_pending_turn()
+        self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
+        with self.assertRaisesRegex(OSError, "close failed"):
+            planner.abort_pending_turn()
+        self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
+        self.assertEqual(client.close_calls, [5, 5])
+        self.assertFalse(planner.await_turn(handle).answer_eligible)
+
+    def test_failed_abort_can_be_retried_after_attempt_finishes(self):
+        class RecoveringCloseClient(FakeClient):
+            def close(self, timeout=5):
+                self.close_calls.append(timeout)
+                if len(self.close_calls) == 1:
+                    raise TimeoutError("condition fence unavailable")
+                self.release_completion.set()
+        client = RecoveringCloseClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        with self.assertRaisesRegex(TimeoutError, "condition fence unavailable"):
+            planner.abort_pending_turn()
+        self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
+        self.assertEqual(planner.abort_pending_turn()["outcome"], "aborted")
+        self.assertEqual(planner.abort_pending_turn()["outcome"], "already_aborted")
+        self.assertEqual(client.close_calls, [5, 5])
+        self.assertFalse(planner.await_turn(handle).answer_eligible)
+
+    def test_in_progress_abort_is_not_reported_as_completed(self):
+        entered, release = threading.Event(), threading.Event()
+        class BlockingCloseClient(FakeClient):
+            def close(self, timeout=5):
+                entered.set()
+                if not release.wait(1):
+                    raise TimeoutError("test close gate")
+        client = BlockingCloseClient([completed()])
+        planner = adapter(client)
+        planner.begin_turn("observe", output_schema=SCHEMA)
+        results = []
+        worker = threading.Thread(target=lambda: results.append(planner.abort_pending_turn()))
+        worker.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            self.assertEqual(planner.abort_pending_turn()["outcome"], "abort_unverified")
+        finally:
+            release.set()
+            worker.join(1)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(results[0]["outcome"], "aborted")
+        self.assertEqual(planner.abort_pending_turn()["outcome"], "already_aborted")
+
     def test_duplicate_interrupt_sends_only_one_request(self):
         client = FakeClient([{"status": "interrupted", "items": []}])
         planner = adapter(client)

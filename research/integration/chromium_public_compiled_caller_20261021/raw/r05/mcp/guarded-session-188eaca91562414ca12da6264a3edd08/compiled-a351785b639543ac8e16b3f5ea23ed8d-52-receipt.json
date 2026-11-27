@@ -1,0 +1,175 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "chromium-public-caller-live-r05",
+  "method": "enter_then_submit",
+  "method_version": "1",
+  "session_scope": "native-x11:b2d9d3dff2c14fc1892ad990f635a1ff",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_failed",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 3,
+      "captured_ns": 262114747816,
+      "evidence_ref": "observation-3",
+      "evidence_digest": "34459b77f6114a1063a5d8b51b398bcf6d238647d8460c409be0c7fb3890aafc",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 262113904395,
+      "observation_accepted_ns": 262143951369
+    },
+    {
+      "sequence": 28,
+      "captured_ns": 263272146756,
+      "evidence_ref": "observation-28",
+      "evidence_digest": "d64013da38c4313fafff440b6a47c9a26a62538873e5c30b45e51d9273be3fc6",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 263271204642,
+      "observation_accepted_ns": 263298674900
+    },
+    {
+      "sequence": 33,
+      "captured_ns": 263450990221,
+      "evidence_ref": "observation-33",
+      "evidence_digest": "e6338cc6febae1c7a8b07401b4b6f4bd4b684be8d145a47e579b8b0e74c6d4ed",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 263449668527,
+      "observation_accepted_ns": 263481516082
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "empty",
+      "to_state": "filled",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_pixels_changed": false,
+        "field_target_present": true
+      },
+      "observation_sequence": 3,
+      "evidence_ref": "observation-3",
+      "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+      "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-31-execution",
+      "release_verified": true,
+      "execution_started_ns": 262154947115,
+      "execution_accepted_ns": 263269250835
+    },
+    {
+      "from_state": "filled",
+      "to_state": "submitted",
+      "action": "submit_form",
+      "matched_conditions": {
+        "field_pixels_changed": true,
+        "submit_target_present": true
+      },
+      "observation_sequence": 28,
+      "evidence_ref": "observation-28",
+      "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+      "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-45-execution",
+      "release_verified": true,
+      "execution_started_ns": 263311131257,
+      "execution_accepted_ns": 263446584089
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "empty",
+      "outcome": "action",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_pixels_changed": false,
+        "field_target_present": true
+      },
+      "evidence_ref": "observation-3"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter_token",
+      "status": "completed",
+      "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+      "release_verified": true,
+      "execution_started_ns": 262154947115,
+      "execution_accepted_ns": 263269250835
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter_token",
+      "status": "succeeded",
+      "evidence_ref": "observation-28",
+      "action_id": "action-134ba1614b3f418e80017794ec820d7e",
+      "execution_accepted_ns": 263269250835,
+      "effect_observation_captured_ns": 263272146756,
+      "effect_observation_accepted_ns": 263298674900,
+      "effect_verification_started_ns": 263300456726,
+      "effect_verification_accepted_ns": 263302710960
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "submit_form",
+      "matched_conditions": {
+        "field_pixels_changed": true,
+        "submit_target_present": true
+      },
+      "evidence_ref": "observation-28"
+    },
+    {
+      "event": "action_terminal",
+      "action": "submit_form",
+      "status": "completed",
+      "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+      "release_verified": true,
+      "execution_started_ns": 263311131257,
+      "execution_accepted_ns": 263446584089
+    },
+    {
+      "event": "effect_checked",
+      "action": "submit_form",
+      "status": "failed",
+      "evidence_ref": "observation-33",
+      "verifier": "compiled_predicate_condition",
+      "action_id": "action-f30eb1eb790e403a8c4619a66e012dc3",
+      "execution_accepted_ns": 263446584089,
+      "effect_observation_captured_ns": 263450990221,
+      "effect_observation_accepted_ns": 263481516082,
+      "effect_verification_started_ns": null,
+      "effect_verification_accepted_ns": null
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-33",
+  "pending_effect": {
+    "action": "submit_form",
+    "expected_effect": {
+      "submission_pixels_changed": true
+    },
+    "effect_ref": "compiled-a351785b639543ac8e16b3f5ea23ed8d-45-execution"
+  },
+  "started_ns": 262113894212,
+  "ended_ns": 263486360485,
+  "elapsed_ns": 1372466273,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

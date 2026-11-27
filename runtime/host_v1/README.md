@@ -189,6 +189,16 @@ causal speed or token-saving claim. Completed input/release does not acknowledge
 rendering. Review the returned image before the next input; if it is insufficient,
 request a fresh image on the same session rather than replaying the action.
 
+## Explicit guarded primary release after a confirmed input failure
+
+For `guarded-local`, a delivered `guarded_input` execution failure that reports an open session, `recovery_required=true` and a binding revision enables one explicit release-only call on this same primary caller:
+
+```json
+{"id":6,"method":"call","args":["interface_guarded_recover_input",{"current_binding_revision":0}]}
+```
+
+Use the next command ID and the exact revision from the retained failure. This example revision is not a default. The permit is consumed before the recovery request is sent; a transport error or an uncertain result is not permission to retry. Inspect the original recovery reply for verified release. The primary caller remains stopped even after successful recovery. Do not replay the old input or infer task completion; reconcile its effect before a separately established continuation. A malformed, stale, unrelated or uncertain prior response grants no such permit. Public close remains available.
+
 ## When input release remains unverified
 
 On the public `persistent-x11` route, `recovery_required=true` blocks further
@@ -529,6 +539,10 @@ For `direct-post`, supply explicit `primaryOptions.observationArguments` before
 using observe. This CLI is a line transport, not a new MCP server registration.
 
 Wait for the JSON `ready` line, then send exactly one finite JSON command line:
+
+The line parser rejects duplicate object member names before command admission,
+including escaped spellings that decode to the same key. Text that merely looks
+like JSON inside a JSON string remains ordinary text.
 
 ```json
 {"id":1,"method":"observe","args":[]}

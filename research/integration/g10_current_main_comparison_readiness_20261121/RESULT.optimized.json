@@ -1,0 +1,73 @@
+{
+  "adapter_contract": {
+    "missing_receipt_fields_in_g10_raw": [
+      "complete",
+      "raw_refs",
+      "unresolved_attempt_ids",
+      "unresolved_tool_call_ids"
+    ],
+    "rejection_for_unmodified_g10_raw": "caller receipt does not match the reconciled recorder schema",
+    "required_measurement_fields": [
+      "effect_attribution",
+      "elapsed_ns",
+      "ended_ns",
+      "local_observations",
+      "model_delivered_images",
+      "phases",
+      "started_ns"
+    ],
+    "required_metadata_fields": [
+      "comparison",
+      "environment_sha256",
+      "model",
+      "run_id",
+      "schema",
+      "source",
+      "task"
+    ],
+    "required_receipt_fields": [
+      "complete",
+      "events",
+      "raw_refs",
+      "unresolved_attempt_ids",
+      "unresolved_tool_call_ids"
+    ]
+  },
+  "audit_id": "G10-COMPARISON-READINESS-20261121-R01",
+  "comparison_adapter_sha256": "9680761627e72a1986304eb8985b89280fe74d74f93aef9a2375ec02065aeac1",
+  "decision": {
+    "eligible_as_matched_efficiency_arm": false,
+    "live_or_provider_action_performed": false,
+    "reason": [
+      "the current comparison adapter rejects the unmodified G10 raw record",
+      "there is no matched comparison block in this one-allocation packet",
+      "primary provider usage is UNKNOWN and cannot be treated as zero",
+      "G10 native/graph/OCR events do not supply the recorder's complete model/tool/score event ledger"
+    ],
+    "retained_narrow_use": "live positive-control for fixed Calc OCR/guarded-save/effect path"
+  },
+  "g10_allocation": "CALC-COMPILED-OCR-3311-4D74-CONSTRUCTION-G10-20261004",
+  "g10_declared_source_count": 33,
+  "g10_raw_inventory": {
+    "graph_events": 11,
+    "images": 3,
+    "native_attempts": 2,
+    "ocr_attempts": 7,
+    "top_level_events": 0,
+    "verifier_calls": 2
+  },
+  "g10_source_hash_mismatches": [],
+  "g10_source_sha": "9823419dc71eb6f7fd745bfe8249cf7f7584a3a9",
+  "historical_audit": {
+    "disposition": "PASS_SCOPED_LIVE_OCR_GRAPH",
+    "errors": [],
+    "native_programs": 2,
+    "ocr_calls": 7,
+    "ocr_local_elapsed_ns": 493806119,
+    "primary_usage": "UNKNOWN"
+  },
+  "main_sha": "ce6449f38a56e1731f01d1024837fb34c9c759a3",
+  "retained_run_file_count": 69,
+  "retained_run_manifest_sha256": "237b611f16f01e8ed641f4166eeb5f37470101495fc86c052dd32cf73df86527",
+  "status": "PASS_CUSTODY_AND_EXPECTED_ADAPTER_HOLD"
+}

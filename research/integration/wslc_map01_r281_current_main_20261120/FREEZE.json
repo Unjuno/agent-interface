@@ -1,0 +1,70 @@
+{
+  "schema": "wslc-map01-r281-expiry-fresh-action-freeze-v1",
+  "allocation_id": "R281",
+  "attempt_id": "R281-one-shot",
+  "recovery_id": "R281-recovery",
+  "action_id": "R281-live-effect",
+  "frozen_at_utc": "2026-11-20T12:30:00Z",
+  "repository": "Unjuno/agent-interface",
+  "main_sha": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "source_count": 41,
+  "source_blobs_match": true,
+  "environment": {
+    "host": "Windows + WSL2 Ubuntu; isolated Xvfb/Openbox/XTEST; no Docker/download",
+    "python": "preinstalled venv",
+    "vizdoom": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  },
+  "seed": 281,
+  "skill": 1,
+  "timeout_seconds": 60,
+  "max_submissions": 3,
+  "programs": [
+    {
+      "id": "R281-one-shot",
+      "valid_for_ms": 250,
+      "steps": [
+        {
+          "op": "hold",
+          "keys": [
+            "Right"
+          ],
+          "duration_ms": 1200
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "space"
+          ],
+          "duration_ms": 100
+        }
+      ]
+    },
+    {
+      "id": "R281-recovery",
+      "admit_only_if": "first terminal expired and verified neutral release",
+      "steps": [
+        {
+          "op": "observe"
+        }
+      ]
+    },
+    {
+      "id": "R281-live-effect",
+      "admit_only_if": "new post-expiry typed observation has sequence greater than baseline, ammo 50, health 100; recovery terminal completed and release verified",
+      "steps": [
+        {
+          "op": "hold",
+          "keys": [
+            "space"
+          ],
+          "duration_ms": 100
+        },
+        {
+          "op": "observe"
+        }
+      ]
+    }
+  ],
+  "unknown_rule": "no retries; skip later phase when gate fails; do not treat the stale pre-expiry Space step as task input"
+}

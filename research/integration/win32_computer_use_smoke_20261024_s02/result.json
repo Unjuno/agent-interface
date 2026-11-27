@@ -1,0 +1,10 @@
+{
+  "attempt_id": "win32-calc-s02-20261024-005743Z",
+  "classification": "PASS_BUTTON_ROUTE_TASK_EFFECT_SCOPED",
+  "result": "The visible calculator controls produced the exact visible operation 12 + 30 = 42 after one reset and one six-click task sequence. A new screenshot followed every click.",
+  "contrast": "S01's `plus` key symbol produced a visible 12 = line and the task ended at 30. S02 used the visible plus button, which produced 12 + and final 42. This is consistent with an input-symbol mapping issue but does not prove its internal cause.",
+  "click_return_ms": {"task_actions": [104.3296,118.098,112.1867,119.3831,107.8857,105.0384], "median": 110.0362, "min": 104.3296, "max": 119.3831, "scope": "Tool call duration only, not end-to-end latency."},
+  "retry_count": 0,
+  "raw_final_screenshot": "raw/final-result.jpg",
+  "limits": ["No accessibility tree was returned.","No independent OS key-up state was observed.","No blocked-I/O or recovery was exercised.","The visual result is not an independent application oracle.","One Calculator window and one trial do not establish reliability, WSLc computer control, MAP01, or efficiency."]
+}

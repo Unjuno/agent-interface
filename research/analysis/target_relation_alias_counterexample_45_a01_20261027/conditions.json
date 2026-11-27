@@ -1,0 +1,117 @@
+{
+  "source_commit": "050b792652b678f1d75986ac448525f33dfe9190",
+  "prototype_sha256": "ab4ceda4e707d3d4d2e3de95c0383c47e9b762b77f8ef0ae30278fbd257da449",
+  "source": {
+    "surface": "app",
+    "container": "toolbar",
+    "role": "button",
+    "label": "Save",
+    "relations": [
+      "inside:toolbar",
+      "before:status"
+    ],
+    "generation": 4,
+    "complete": true
+  },
+  "cases": [
+    {
+      "id": "two-stable",
+      "candidates": [
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "before:status"
+          ],
+          "generation": 5,
+          "complete": true
+        },
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "after:status"
+          ],
+          "generation": 5,
+          "complete": true
+        }
+      ],
+      "hidden_original_index": 0
+    },
+    {
+      "id": "two-swapped",
+      "candidates": [
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "before:status"
+          ],
+          "generation": 5,
+          "complete": true
+        },
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "after:status"
+          ],
+          "generation": 5,
+          "complete": true
+        }
+      ],
+      "hidden_original_index": 1
+    },
+    {
+      "id": "single-stable",
+      "candidates": [
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "before:status"
+          ],
+          "generation": 5,
+          "complete": true
+        }
+      ],
+      "hidden_original_index": 0
+    },
+    {
+      "id": "single-replaced",
+      "candidates": [
+        {
+          "surface": "app",
+          "container": "toolbar",
+          "role": "button",
+          "label": "Save",
+          "relations": [
+            "inside:toolbar",
+            "before:status"
+          ],
+          "generation": 5,
+          "complete": true
+        }
+      ],
+      "hidden_original_index": null
+    }
+  ],
+  "hypothesis": "Exact unique relation signature identifies the original target in each declared synthetic world.",
+  "baseline": "Treat multiple compatible candidates as UNKNOWN; evaluate single replacement separately.",
+  "claim_ceiling": "Synthetic identifiability counterexample only; no runtime, GUI, WSLc, live allocation or authority."
+}

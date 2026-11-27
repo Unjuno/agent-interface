@@ -1,0 +1,11 @@
+COMMAND: py -3.13 <outside-checkout>/agent-interface-runtime.pyz validate --help
+CWD: fresh directory outside checkout
+EXIT: 0
+
+STDOUT:
+usage: agent-interface validate [-h] --program PROGRAM
+
+options:
+  -h, --help         show this help message and exit
+  --program PROGRAM  local UTF-8 JSON program; static validity is not runtime
+                     admission

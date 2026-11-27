@@ -1,0 +1,16 @@
+{
+  "schema": "agent-interface/observer-binding-scope-correction-r21",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "candidate_scope": "Bind the observer per server only for supervised-win32 observe requests; preserve module-global observe lookup for one-shot/non-supervised requests.",
+  "environment": "Windows CPython 3.11.9; unique TEMP/TMP/TMPDIR per mode under the C: worktree",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "a3e542b26dc65b341b758cb7c8b7e59576dbe4110df92eeb2174882056ad22c5",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "2921346df4d4882dc43159b77f30c48bd5ef3a21506bb65d06ea1ec51bcde1fc"
+  },
+  "question": "After narrowing the binding to supervised-win32 only, do both complete closely related MCP modules pass in normal and optimized modes?",
+  "order": ["normal-01", "optimized-01"],
+  "attempt_count": {"total": 2, "normal": 1, "optimized": 1},
+  "command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_server runtime.cli_v1.test_mcp_supervised_win32",
+  "pass_rule": "Both invocations exit 0 and report unittest OK; retain all failures without retry.",
+  "modules": ["runtime.cli_v1.test_mcp_server", "runtime.cli_v1.test_mcp_supervised_win32"]
+}

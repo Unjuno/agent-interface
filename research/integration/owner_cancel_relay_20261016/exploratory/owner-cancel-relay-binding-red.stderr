@@ -1,0 +1,32 @@
+FFF
+======================================================================
+FAIL: test_gated_reply_cannot_apply_cause_to_mutated_original_lease (test_input_owner_cancel_v4.CancelRelayTests.test_gated_reply_cannot_apply_cause_to_mutated_original_lease) (field='target_process_identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 114, in test_gated_reply_cannot_apply_cause_to_mutated_original_lease
+    self.assertFalse(entry['outcome']['release_verified'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_gated_reply_cannot_apply_cause_to_mutated_original_lease (test_input_owner_cancel_v4.CancelRelayTests.test_gated_reply_cannot_apply_cause_to_mutated_original_lease) (field='deadline')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 114, in test_gated_reply_cannot_apply_cause_to_mutated_original_lease
+    self.assertFalse(entry['outcome']['release_verified'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_gated_reply_cannot_apply_cause_to_mutated_original_lease (test_input_owner_cancel_v4.CancelRelayTests.test_gated_reply_cannot_apply_cause_to_mutated_original_lease) (field='intent_token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 114, in test_gated_reply_cannot_apply_cause_to_mutated_original_lease
+    self.assertFalse(entry['outcome']['release_verified'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.046s
+
+FAILED (failures=3)

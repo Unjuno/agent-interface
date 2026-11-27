@@ -1,0 +1,34 @@
+{
+  "schema": "wslc-fakex-standard-caller-currentmain-s13-v1",
+  "attempt_id": "wslc-fakex-standard-caller-currentmain-s13-5561097240c4",
+  "created_utc": "2026-10-24T17:13:11.3493103Z",
+  "source_commit": "0024d763a106753eb8059cf6828417dca4467a58",
+  "source_snapshot_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/source-py",
+  "source_manifest": "inputs/SOURCE-PY-SHA256.json",
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+  "replication_of": "S12 stopped before test body due wrong interpreter wheel target; no rerun, fresh allocation with correct CPython 3.12 target",
+  "wslc_session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-standard-caller-currentmain-s13-5561097240c4",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-standard-caller-currentmain-s13-5561097240c4",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "ai-control-wslc-fakex-standard-caller-currentmain-s13-5561097240c4",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "expected_python": "CPython 3.12.14",
+  "network": "none in formal container",
+  "container_count": 1,
+  "retries": 0,
+  "scope": "one standard MCP public caller Fake X cancellation case",
+  "pass": [
+    "exact unittest passes once",
+    "target-generation and fail-closed assertions pass",
+    "runtime release UNKNOWN, task_success null, replay denied",
+    "full raw stdout/stderr and exact cleanup retained"
+  ],
+  "fail": "Any dependency or test failure, timeout, missing evidence, or cleanup ambiguity is FAIL_OR_UNKNOWN; no retries",
+  "nonclaims": [
+    "real X or physical input",
+    "GUI/application or MAP01 task effect",
+    "provider/model",
+    "matched efficiency or broad reliability"
+  ]
+}

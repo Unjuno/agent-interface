@@ -1,0 +1,503 @@
+{
+  "cancel_terminal": {
+    "call_directory": "/tmp/tmpgms9xvxj/6c276596b95f470db79cb37ea4853893",
+    "call_id": "6c276596b95f470db79cb37ea4853893",
+    "cancellation": {
+      "admitted_monotonic_ns": 3196698720551,
+      "caller_response_deadline_monotonic_ns": 3196998720551,
+      "completed_monotonic_ns": 3197744278429,
+      "operation_id": "c57fee0167724154af322e985aec71ba",
+      "owner_generation": {
+        "binding_revision": 0,
+        "child_pid": 22,
+        "session_id": "00ec4a2a8a434db28ab1a4c3ea17e63d",
+        "x_resource_base": 18874368
+      },
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result": {
+        "already_requested": false,
+        "cleanup_status": "UNKNOWN",
+        "input_dispatched": false,
+        "late_server_request_possible": true,
+        "owner_client_disconnect": {
+          "expected_pid": 22,
+          "resource_base": 18874368,
+          "status": "disconnected"
+        },
+        "owner_input_obligations": {
+          "buttons": [],
+          "keys": {}
+        },
+        "owner_input_obligations_live_read": {
+          "obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "status": "snapshot"
+        },
+        "owner_input_obligations_source": "retired_child_shared_state",
+        "owner_process_exitcode": -15,
+        "owner_process_retired": true,
+        "owner_release_attempt": {
+          "release": {
+            "buttons_down": [],
+            "independent_fake_x_readback": true,
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "readback_verified"
+        },
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "review_required": true,
+        "status": "cancel_requested",
+        "task_success": null
+      },
+      "status": "completed",
+      "task_success": null,
+      "transaction_deadline_monotonic_ns": 3200698720551
+    },
+    "cleanup_status": "UNKNOWN",
+    "effect_status": "unknown",
+    "error": "EOFError()",
+    "late_server_request_possible": true,
+    "operation": "guarded_calc_compiled",
+    "operation_invoked": false,
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 3197700942532,
+      "pid": 22,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "retained_call": {
+      "arguments": {
+        "attempt_id": "calc-cancel-after-transition",
+        "bindings": {
+          "entry": {
+            "alias": "calc_entry",
+            "offset": [
+              12,
+              8
+            ]
+          },
+          "save": {
+            "alias": "calc_save",
+            "offset": [
+              8,
+              6
+            ]
+          }
+        },
+        "blank_reviewed": true,
+        "prepared_call_id": "9e0d899797ee4d049f3074f0b1f1c251",
+        "profile_id": "calc-ocr-save-v1",
+        "reviewed_artifact_sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+        "reviewed_sequence": 1
+      },
+      "attempt_id": "calc-cancel-after-transition",
+      "backend_attempted": true,
+      "call_id": "6c276596b95f470db79cb37ea4853893",
+      "cancellation": {
+        "admitted_monotonic_ns": 3196698720551,
+        "caller_response_deadline_monotonic_ns": 3196998720551,
+        "completed_monotonic_ns": 3197744278429,
+        "operation_id": "c57fee0167724154af322e985aec71ba",
+        "owner_generation": {
+          "binding_revision": 0,
+          "child_pid": 22,
+          "session_id": "00ec4a2a8a434db28ab1a4c3ea17e63d",
+          "x_resource_base": 18874368
+        },
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "already_requested": false,
+          "cleanup_status": "UNKNOWN",
+          "input_dispatched": false,
+          "late_server_request_possible": true,
+          "owner_client_disconnect": {
+            "expected_pid": 22,
+            "resource_base": 18874368,
+            "status": "disconnected"
+          },
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "obligations": {
+              "buttons": [],
+              "keys": {}
+            },
+            "status": "snapshot"
+          },
+          "owner_input_obligations_source": "retired_child_shared_state",
+          "owner_process_exitcode": -15,
+          "owner_process_retired": true,
+          "owner_release_attempt": {
+            "release": {
+              "buttons_down": [],
+              "independent_fake_x_readback": true,
+              "keys_down": [],
+              "verified": true
+            },
+            "status": "readback_verified"
+          },
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "review_required": true,
+          "status": "cancel_requested",
+          "task_success": null
+        },
+        "status": "completed",
+        "task_success": null,
+        "transaction_deadline_monotonic_ns": 3200698720551
+      },
+      "operation": "guarded_calc_compiled",
+      "parent_task_plan": {
+        "actions": {
+          "persist_document": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "request_save",
+            "target_symbol": "save_control"
+          },
+          "populate_cells": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "enter_pair",
+            "target_symbol": "cell_entry"
+          }
+        },
+        "interface_id": "planner-calc-two-cell-v1",
+        "method": {
+          "initial_state": "blank_sheet",
+          "max_runtime_ms": 9000,
+          "max_transitions": 2,
+          "name": "populate-and-save",
+          "states": {
+            "blank_sheet": {
+              "branches": [
+                {
+                  "action": "populate_cells",
+                  "next_state": "values_entered",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "blank": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "save_handoff": {
+              "branches": [
+                {
+                  "action": null,
+                  "next_state": null,
+                  "outcome": "yield",
+                  "reason": "effect_unavailable",
+                  "when": {
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "values_entered": {
+              "branches": [
+                {
+                  "action": "persist_document",
+                  "next_state": "save_handoff",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "cells_match": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            }
+          },
+          "version": "1"
+        },
+        "predicates": [
+          "context_ok",
+          "blank",
+          "cells_match"
+        ],
+        "schema": "agent-interface/calc-symbolic-plan-v1",
+        "symbols": {
+          "cell_entry": {
+            "dependencies": [
+              "context_ok"
+            ],
+            "identity_predicate": "context_ok",
+            "role": "entry"
+          },
+          "save_control": {
+            "dependencies": [
+              "context_ok",
+              "cells_match"
+            ],
+            "identity_predicate": "context_ok",
+            "role": "save"
+          }
+        }
+      },
+      "parent_task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "persistence_failure": null,
+      "profile_id": "calc-ocr-save-v1",
+      "response_wait_ms": 0,
+      "state": "finished",
+      "target_process_exit_receipt": null,
+      "task_artifact_admission": null,
+      "task_artifact_root_call_id": "9e0d899797ee4d049f3074f0b1f1c251",
+      "task_method_receipt": null,
+      "task_save_request": null
+    },
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:d79949c5b22942ea9295e7a5495337eb",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 15,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 3197700994690,
+        "pid": 22,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 22,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": true,
+      "session_id": "00ec4a2a8a434db28ab1a4c3ea17e63d",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "status": "runtime_failed",
+    "task_success": null
+  },
+  "compiled_count": 1,
+  "compiled_pending": {
+    "call": {
+      "arguments": {
+        "attempt_id": "calc-cancel-after-transition",
+        "bindings": {
+          "entry": {
+            "alias": "calc_entry",
+            "offset": [
+              12,
+              8
+            ]
+          },
+          "save": {
+            "alias": "calc_save",
+            "offset": [
+              8,
+              6
+            ]
+          }
+        },
+        "blank_reviewed": true,
+        "prepared_call_id": "9e0d899797ee4d049f3074f0b1f1c251",
+        "profile_id": "calc-ocr-save-v1",
+        "reviewed_artifact_sha256": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+        "reviewed_sequence": 1
+      },
+      "attempt_id": "calc-cancel-after-transition",
+      "backend_attempted": true,
+      "call_id": "6c276596b95f470db79cb37ea4853893",
+      "operation": "guarded_calc_compiled",
+      "parent_task_plan": {
+        "actions": {
+          "persist_document": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "request_save",
+            "target_symbol": "save_control"
+          },
+          "populate_cells": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "enter_pair",
+            "target_symbol": "cell_entry"
+          }
+        },
+        "interface_id": "planner-calc-two-cell-v1",
+        "method": {
+          "initial_state": "blank_sheet",
+          "max_runtime_ms": 9000,
+          "max_transitions": 2,
+          "name": "populate-and-save",
+          "states": {
+            "blank_sheet": {
+              "branches": [
+                {
+                  "action": "populate_cells",
+                  "next_state": "values_entered",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "blank": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "save_handoff": {
+              "branches": [
+                {
+                  "action": null,
+                  "next_state": null,
+                  "outcome": "yield",
+                  "reason": "effect_unavailable",
+                  "when": {
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "values_entered": {
+              "branches": [
+                {
+                  "action": "persist_document",
+                  "next_state": "save_handoff",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "cells_match": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            }
+          },
+          "version": "1"
+        },
+        "predicates": [
+          "context_ok",
+          "blank",
+          "cells_match"
+        ],
+        "schema": "agent-interface/calc-symbolic-plan-v1",
+        "symbols": {
+          "cell_entry": {
+            "dependencies": [
+              "context_ok"
+            ],
+            "identity_predicate": "context_ok",
+            "role": "entry"
+          },
+          "save_control": {
+            "dependencies": [
+              "context_ok",
+              "cells_match"
+            ],
+            "identity_predicate": "context_ok",
+            "role": "save"
+          }
+        }
+      },
+      "parent_task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "persistence_failure": null,
+      "profile_id": "calc-ocr-save-v1",
+      "response_wait_ms": 0,
+      "state": "running",
+      "task_artifact_root_call_id": "9e0d899797ee4d049f3074f0b1f1c251"
+    },
+    "call_id": "6c276596b95f470db79cb37ea4853893",
+    "effect_status": "unknown",
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result_available": false,
+    "scope": "current_server",
+    "status": "pending",
+    "task_success": null
+  },
+  "control_methods": [
+    "interface_guarded_cancel",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_results",
+    "interface_close"
+  ]
+}

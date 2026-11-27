@@ -1,0 +1,54 @@
+{
+  "checks": {
+    "candidate-normal": {
+      "methods": 57,
+      "endpoints": 176,
+      "side_endpoints": 35,
+      "decoder": 2,
+      "wire": 2,
+      "api": 1
+    },
+    "candidate-O": {
+      "methods": 57,
+      "endpoints": 176,
+      "side_endpoints": 35,
+      "decoder": 2,
+      "wire": 2,
+      "api": 1
+    },
+    "final-normal": {
+      "methods": 57,
+      "endpoints": 176,
+      "side_endpoints": 35,
+      "decoder": 2,
+      "wire": 2,
+      "api": 1
+    },
+    "final-O": {
+      "methods": 57,
+      "endpoints": 176,
+      "side_endpoints": 35,
+      "decoder": 2,
+      "wire": 2,
+      "api": 1
+    }
+  },
+  "source_negative_failures": 3,
+  "baseline_failures": 10,
+  "first_construction_failure": "retained indentation error, no tests executed",
+  "prior_141_endpoints_and_48_methods_unchanged": true,
+  "normal_O_semantic_rows_equal": true,
+  "controls_rejected": {
+    "omit_endpoint": "endpoint census",
+    "clear_owned": "retained side custody",
+    "allow_replay": "recovery without replay"
+  },
+  "source_delta_existing": [
+    ".github/workflows/runtime-x11-v1.yml",
+    "runtime/backends/x11_v1/backend.py",
+    "runtime/integration_checks/native.py"
+  ],
+  "new_test_module": "runtime/backends/x11_v1/test_sidebutton_ledger.py",
+  "actor_replays": 0,
+  "scope": "actual full imported backend and session, real Python-Xlib wrapper/decoder, inert transport; native ClientPointer/topology/physical release unqualified; adoption/application HOLD maintained"
+}

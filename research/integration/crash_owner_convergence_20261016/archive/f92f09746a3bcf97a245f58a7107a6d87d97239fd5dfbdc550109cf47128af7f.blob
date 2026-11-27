@@ -1,0 +1,18 @@
+{
+  "schema":"v39-v15-process-owner-xvfb-a27-audit-v1",
+  "allocation_id":"V39-V15-PROCESS-OWNER-XVFB-A27-20261012-01",
+  "status":"PASS_METHOD_SCOPED",
+  "candidate_invocations":1,"retries":0,"frozen_source_hashes_match":true,
+  "checks":{"real_InputOwnerProcess_started":true,"normal_close_requested":true,
+    "owner_thread_stopped":true,"receipt_fsynced_and_verified_empty":true,
+    "receipt_pid_start_ticks_and_owner_id_match_ready":true,
+    "normal_receipt_gate_accepted_after_service_exit":true,
+    "service_exit_code":0,"xvfb_exit_code":0,
+    "physical_input_or_game_or_model":false},
+  "raw_path":"results/A01/RAW.json",
+  "raw_sha256":"a0bf2f195c93149f985f705c9c0ff14af35313677ced09bbe5517f7ce0f8b50e",
+  "receipt_path":"results/A01/input-owner-process/input-owner-recovery-v1.json",
+  "receipt_sha256":"ce656b173f74a2ecff82d7fa9d961f75d71d767c3ac914e6d22c590392b90925",
+  "limitations":"One private WSL2/Xvfb normal-close run with no admitted inputs. Does not validate ordinary key/button action sequences, V39 full session, physical input, game/model feedback, or task effect.",
+  "decision":"Normal receipt generation binding is compatible with the process-owner and outer gate for this method-scoped case."
+}

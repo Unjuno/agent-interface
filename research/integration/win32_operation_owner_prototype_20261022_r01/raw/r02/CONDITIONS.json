@@ -1,0 +1,18 @@
+{
+  "schema": "agent-interface/win32-operation-owner-inert-r02-conditions-v1",
+  "observed_at_local": "2026-10-22T16:21:06.4113572+09:00",
+  "host": "Windows local host",
+  "python": "Python 3.11.9",
+  "commands": [
+    "python -m unittest research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner -v",
+    "python -O -m unittest research.integration.win32_operation_owner_prototype_20261022_r01.test_operation_owner -v"
+  ],
+  "native_input": false,
+  "wslc": false,
+  "win32_api_imported": false,
+  "test_scope": "spawned inert fake processes and shared in-memory state only",
+  "source_sha256": {
+    "operation_owner.py": "b9c7fef8c759f9004e5ee5e026babf604809f104499d88956228cc74b6c59a2b",
+    "test_operation_owner.py": "613a3124b508db001d15f605508d8ab0efc9c8bee5da7a7ae357c4720353c0ed"
+  }
+}

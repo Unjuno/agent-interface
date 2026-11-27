@@ -1,0 +1,35 @@
+{
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A14-20261012-01",
+  "auditor_invocations_allowed": 1,
+  "base_commit": "3ccaef7d0",
+  "candidate_invocations_allowed": 1,
+  "changed_factor": "non-child process termination observation uses /proc state instead of supervisor waitpid",
+  "decision_rule": "PASS_XSERVER_DISCONNECT_RELEASE requires SIGKILL sent to owner service, /proc reports zombie or absent, independent observer confirms both key releases and ButtonRelease plus all keymap/pointer-mask bits up, session remains alive through observation, no owner recovery receipt is claimed, and Xvfb is then terminated by supervisor with clean exit 0/-15. This is not process-owner recovery PASS.",
+  "environment": {
+    "game_or_model": false,
+    "host": "WSL2 Ubuntu",
+    "isolation": "unshare user+mount namespace; private tmpfs /tmp and mode-1777 X socket",
+    "network_calls": 0,
+    "numpy": "2.5.4 user-cache target",
+    "physical_input": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "xvfb": "Xvfb -displayfd, TCP disabled"
+  },
+  "hypothesis": "When only the detached InputOwnerProcess is SIGKILLed while session and Xvfb remain alive, X11 drops key and button state associated with the disconnected XTest client and independent observers see releases; no recovery receipt is expected.",
+  "retries_allowed": 0,
+  "schema": "v39-v15-process-owner-xvfb-a14-freeze-v1",
+  "scope": "Owner-service hard-death and X11 disconnect release for two keys plus Button1, no verified receipt.",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "cdad5849f54c020914dca46db9ff6ff5208c15938cb9b05edb7d05afb8af35f4",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/AUDIT.json": "f548f40b830d90ddb427dc5931c365651e4a0ce943b2a75f6b6655fea5c1dce3",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/RUN.json": "dfba27684fece30a825db6f78f30893b2e78632adda37f03ae134cd27e4f0220",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/results/A01/RAW.json": "8aa705cd91e23adfe10baaec60cefb3276b6edad904d84b212912e619b453a0a",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/results/A01/session-events.jsonl": "f270c19d315c0d1945f5eb23473ef6baaf707144244e655997cd8f76934043a0",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/PLAN.md": "b78d7e8a02b1262f89ac32793ea9751f1b6a2add244fd5408326642b72a779d2",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/candidate.py": "d8e0d30f0e450ca72ea8c5963c5b749d4ba80055630316524a73b6bc2c613559",
+    "research/doom/v39_v15_process_owner_xvfb_a14_20261012/run_candidate.sh": "a42fc5466a77149526743f2fcda0bb77a79ca63a6084db6cc7f05f653c6da3e1",
+    "research/live_control/input_owner_process_v1.py": "8e66140a01c9a9e49d8f5435dfdaf8cb6df85cf20e435b171397836d6c05ff83"
+  },
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A13-20261012-01"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/xvfb-x11-tcp-delivery-delay-prereg-v1",
+  "study_id": "xvfb-x11-tcp-delivery-delay-800ms-socket-ref-20261110",
+  "purpose": "Test whether held owner X11 TCP request bytes can be forwarded after local process termination, and whether server-side client disconnection or task effects remain bounded.",
+  "attempt_history": "r24 initialized the TCP Xvfb and proxy, then failed before arm because the fixture addressed the python-xlib socket incorrectly. It is retained and excluded. This preregistration uses the corrected display_connection.display.socket path; it is a new one-shot attempt, not a retry.",
+  "hypothesis": "A request buffered at a user-space relay before Xvfb receive remains deliverable after the local owner exits unless cancellation disconnects the server-side X client first.",
+  "primary_discriminator": "Compare proxy delivery_forwarded timestamp or send error with cancellation completion/owner retirement. Score old-task effect count, fresh-task contamination, keymap readback, and runtime receipt independently.",
+  "condition": {
+    "display": "parent :88 via local Unix; owner 127.0.0.1:89 TCP proxy",
+    "xvfb": "private :88 TCP listen on 6088",
+    "proxy": "127.0.0.1:6089 -> 127.0.0.1:6088",
+    "tracked_second_keypress": true,
+    "delay_ms": 800,
+    "cancel_ack_withheld_s": 1.0,
+    "supervisor": false,
+    "network": "Docker network none; loopback only",
+    "model_calls": 0
+  },
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "e4c747ee335fc1addfb3b1799cca3a0d21f05a5f09d995b1cf6d644a80d04cb6",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "stop_rule": "One run, no retry. Retain setup, runtime, assertion or task-oracle failures. Exclude from prior server-side XTEST timing cells.",
+  "scope": "Synthetic application and private Xvfb in cached Docker image on WSL2. This is an authored user-space delivery delay, not natural network jitter, WSLc, MAP01, or provider/model behavior."
+}

@@ -1,0 +1,329 @@
+{
+  "active_cover_guard_windows": [
+    {
+      "active_cover_source_iteration": 0,
+      "below_sequences": [],
+      "critical_health_minimum": 25,
+      "decision": 1,
+      "equal_sequences": [
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "hard_minimum": 85,
+      "maximum_health_loss": 12,
+      "reported_invalidation_sequence": null,
+      "reported_soft_event_sequence": 62,
+      "source_health": 97,
+      "source_sequence": 36,
+      "strict_rule": "hard invalidation iff observed health < hard_minimum"
+    },
+    {
+      "active_cover_source_iteration": 3,
+      "below_sequences": [],
+      "critical_health_minimum": 30,
+      "decision": 4,
+      "equal_sequences": [],
+      "hard_minimum": 55,
+      "maximum_health_loss": 10,
+      "reported_invalidation_sequence": null,
+      "reported_soft_event_sequence": 154,
+      "source_health": 65,
+      "source_sequence": 115,
+      "strict_rule": "hard invalidation iff observed health < hard_minimum"
+    },
+    {
+      "active_cover_source_iteration": 4,
+      "below_sequences": [
+        218
+      ],
+      "critical_health_minimum": 30,
+      "decision": 5,
+      "equal_sequences": [
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217
+      ],
+      "hard_minimum": 51,
+      "maximum_health_loss": 10,
+      "reported_invalidation_sequence": 218,
+      "reported_soft_event_sequence": 200,
+      "source_health": 61,
+      "source_sequence": 166,
+      "strict_rule": "hard invalidation iff observed health < hard_minimum"
+    }
+  ],
+  "episode_disposition": {
+    "claim": "persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state",
+    "deaths": 0,
+    "episode_finished": false,
+    "kills": 1,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "event_rows": 634,
+  "event_streams_byte_identical": true,
+  "inputs": {
+    "delivered": {
+      "bytes": 565849,
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/delivered.jsonl",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    },
+    "events": {
+      "bytes": 565849,
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    },
+    "report": {
+      "bytes": 344806,
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/report.json",
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+    },
+    "score": {
+      "bytes": 338,
+      "git_blob": "62f1ef8ce8b10d089267368eb0df7dab6849b7e7",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/score.json",
+      "sha256": "e9d09b4f955880b069dbbc581391ee9066711de825342d13fb42e8f8890de877"
+    }
+  },
+  "paired_full_observations": 218,
+  "schema": "v39-retained-pending-trajectory-result-v2",
+  "scope": "posthoc reconstruction of retained template-derived HUD and event data; no game/model/controller/GUI/OS input was run; no causal or independent game-state claim",
+  "sequences_contiguous": true,
+  "source_commit": "35f267b793de3d5e70d0750b58b0487320f66516",
+  "typed_observations": 218,
+  "windows": [
+    {
+      "decision": 0,
+      "end_capture_ns": 55510468026323,
+      "end_sequence": 28,
+      "health_ammo_changes": [
+        [
+          1,
+          97,
+          48
+        ]
+      ],
+      "model_ns": 8451982686,
+      "planner_terminal_observed_ns": 55510647411172,
+      "source_ammo": 48,
+      "source_capture_ns": 55501748980835,
+      "source_health": 97,
+      "source_sequence": 1
+    },
+    {
+      "decision": 1,
+      "end_capture_ns": 55517716224725,
+      "end_sequence": 70,
+      "health_ammo_changes": [
+        [
+          36,
+          97,
+          46
+        ],
+        [
+          37,
+          91,
+          46
+        ],
+        [
+          47,
+          91,
+          45
+        ],
+        [
+          62,
+          85,
+          45
+        ],
+        [
+          64,
+          85,
+          44
+        ]
+      ],
+      "model_ns": 5720460703,
+      "planner_terminal_observed_ns": 55517916677560,
+      "source_ammo": 46,
+      "source_capture_ns": 55511697940770,
+      "source_health": 97,
+      "source_sequence": 36
+    },
+    {
+      "decision": 2,
+      "end_capture_ns": 55524540673195,
+      "end_sequence": 91,
+      "health_ammo_changes": [
+        [
+          70,
+          85,
+          44
+        ],
+        [
+          76,
+          82,
+          44
+        ],
+        [
+          81,
+          76,
+          44
+        ],
+        [
+          90,
+          73,
+          44
+        ]
+      ],
+      "model_ns": 6306873822,
+      "planner_terminal_observed_ns": 55524633170212,
+      "source_ammo": 44,
+      "source_capture_ns": 55517716224725,
+      "source_health": 85,
+      "source_sequence": 70
+    },
+    {
+      "decision": 3,
+      "end_capture_ns": 55531536742633,
+      "end_sequence": 113,
+      "health_ammo_changes": [
+        [
+          91,
+          73,
+          44
+        ],
+        [
+          97,
+          72,
+          44
+        ],
+        [
+          103,
+          68,
+          44
+        ]
+      ],
+      "model_ns": 6724992386,
+      "planner_terminal_observed_ns": 55531825181805,
+      "source_ammo": 44,
+      "source_capture_ns": 55524540673195,
+      "source_health": 73,
+      "source_sequence": 91
+    },
+    {
+      "decision": 4,
+      "end_capture_ns": 55539708995120,
+      "end_sequence": 159,
+      "health_ammo_changes": [
+        [
+          115,
+          65,
+          43
+        ],
+        [
+          125,
+          65,
+          42
+        ],
+        [
+          143,
+          65,
+          41
+        ],
+        [
+          144,
+          64,
+          41
+        ],
+        [
+          154,
+          61,
+          41
+        ]
+      ],
+      "model_ns": 7197657842,
+      "planner_terminal_observed_ns": 55539823946173,
+      "source_ammo": 43,
+      "source_capture_ns": 55532110564498,
+      "source_health": 65,
+      "source_sequence": 115
+    },
+    {
+      "decision": 5,
+      "end_capture_ns": 55550033032859,
+      "end_sequence": 218,
+      "health_ammo_changes": [
+        [
+          166,
+          61,
+          40
+        ],
+        [
+          167,
+          55,
+          40
+        ],
+        [
+          177,
+          55,
+          39
+        ],
+        [
+          193,
+          52,
+          39
+        ],
+        [
+          194,
+          52,
+          38
+        ],
+        [
+          200,
+          51,
+          38
+        ],
+        [
+          212,
+          51,
+          37
+        ],
+        [
+          218,
+          48,
+          37
+        ]
+      ],
+      "model_ns": 8915949210,
+      "planner_terminal_observed_ns": 55550226108534,
+      "source_ammo": 40,
+      "source_capture_ns": 55540748339900,
+      "source_health": 61,
+      "source_sequence": 166
+    }
+  ]
+}

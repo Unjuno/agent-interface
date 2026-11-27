@@ -1,0 +1,54 @@
+[
+  {
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "buildkit.dockerfile.v0",
+    "Config": {
+      "Cmd": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "test_visual_context_staleness"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PYTHON_VERSION=3.14.8",
+        "PYTHON_SHA256=c2215904f02b175596dc49351585104f4bc20341e1c47378b26a2c274360ce73"
+      ],
+      "ExposedPorts": null,
+      "Labels": null,
+      "StopSignal": "",
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": "/opt/visual-a01"
+    },
+    "Created": "2026-10-12T03:02:57.803535617Z",
+    "Id": "sha256:4fc7258eb9f2430d573bcbd352fc9851eee6ce96a65ff026274dfb317119bb7b",
+    "Metadata": {
+      "LastTagTime": "2026-10-12T03:02:57.828184655Z"
+    },
+    "Os": "linux",
+    "Parent": "",
+    "RepoDigests": [],
+    "RepoTags": [
+      "visual-context-staleness:a01-20261012"
+    ],
+    "RootFS": {
+      "Layers": [
+        "sha256:0487fc82d485c6e44b5d5474f45d9740d7009d35040b4f0aad06327293ae5128",
+        "sha256:aa608ab8fe7e2cff3d58e1b2c62622dc68e83b7f2f6bbbd6cb3ed67b50945e3d",
+        "sha256:95bc6b7f78204d135ef84a8299c1ad390c09dd29d76a206fc15080c945fa5114",
+        "sha256:e45023dffebe5f63b91ad04c58c24a1288b8e2e99bd97928f9299c0a26d056fd",
+        "sha256:5230ff4f3c35a1eed943f52eade9eab3720b5df34d506f49f212f0eb9bc558d6",
+        "sha256:6f8bce049ea88c2457d16c7f1a8b857f9ee6fda48bd8c5fa93301a5314c14ec4",
+        "sha256:901127c7abe4a05c97f89544be41f1e8bd55cef042c8a9de7acf0ca550ddeedc",
+        "sha256:78e076be637b291a63986377b43bef94b00738dcf53ebf037886949bb6e537d2",
+        "sha256:2cca936f54a5cda2dba18c955d6a474b0c21d1c4ee1dcf0ec9314162b586ff00"
+      ],
+      "Type": "layers"
+    },
+    "Size": 1120454757
+  }
+]

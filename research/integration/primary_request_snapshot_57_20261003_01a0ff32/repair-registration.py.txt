@@ -1,0 +1,2 @@
+from pathlib import Path
+O=Path(__file__).resolve().parent;s=(O/'register-tests.py').read_bytes().decode();assert "'add','--no-cone'" in s;(O/'register-tests-v2.py').write_bytes(s.replace("'add','--no-cone'","'add'").encode())

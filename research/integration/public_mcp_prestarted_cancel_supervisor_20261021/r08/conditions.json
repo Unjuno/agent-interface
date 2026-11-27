@@ -1,0 +1,25 @@
+{
+  "packet": "public_mcp_prestarted_cancel_supervisor_20261021/r08",
+  "baseline_head": "a5e72673e0b0ae79a9ba88adbb32a8e2b167fa68",
+  "worktree": "feat/prestarted-cancel-supervisor-r01 with local PID-source correction",
+  "captured_start_utc": "2026-10-21T15:04:04.6215106Z",
+  "captured_end_utc": "2026-10-21T15:04:48.9316296Z",
+  "elapsed_seconds": 44.307,
+  "platform": "Microsoft Windows 11 Pro 26300; Python 3.11.9",
+  "commands": [
+    "python -B -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence",
+    "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+  ],
+  "scope": "Repeat the four focused deterministic Fake X modules on the local PID-source correction, including public MCP composition and owner PID request regression.",
+  "limits": [
+    "No live Xlib/Xvfb execution.",
+    "No WSLc or Docker allocation used.",
+    "No platform-I/O blocking release, independent product task-success, recovery, MAP01, efficiency or reliability claim."
+  ],
+  "normal_exit_code": 0,
+  "source_hash_file": "source-hashes-at-run.txt",
+  "optimized_start_utc": "2026-10-21T15:04:53.6088442Z",
+  "optimized_end_utc": "2026-10-21T15:05:36.7083662Z",
+  "optimized_elapsed_seconds": 43.095,
+  "optimized_exit_code": 0
+}

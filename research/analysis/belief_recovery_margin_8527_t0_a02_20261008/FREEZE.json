@@ -1,0 +1,45 @@
+{
+  "allocation_id": "BELIEF-RECOVERY-8527-T0-A02-20261008",
+  "issue": 8527,
+  "predecessor": "A01 construction and pre-run infrastructure STOP; immutable",
+  "base_main_sha": "a94da2c520edf566f615b1b909d5ed590a35c8f3",
+  "candidate_formal_invocations": 0,
+  "auditor_formal_invocations": 0,
+  "retry_budget": 0,
+  "formal_status": "NOT_STARTED_SHARED_WSLC_LANE_CLEARANCE_PENDING",
+  "host_construction": {
+    "os": "Windows",
+    "python": "3.12.10",
+    "normal_tests": "10/10",
+    "optimized_tests": "10/10"
+  },
+  "runtime": {
+    "name": "Microsoft WSLc",
+    "wsl_version_observed": "3.0.1.0",
+    "wslc_version_observed": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "pull_policy": "never",
+    "network": "none",
+    "cpus_requested_per_container": 1,
+    "memory_limit_requested": "512M",
+    "memory_enforcement_claim": false
+  },
+  "input_sha256": "af221df9931b26e7004a82270b76fc3a46cc2b89c544febd8a4d65bd9fd6cac1",
+  "input_canonical_sha256": "874913f9c495034ee7464e8977aceb8c54ff1f20fe2a39335016f55ebb96e152",
+  "truth_sha256": "6ecaec5c5352d3f8c6c2bf68527670f9e369f2c13c7138c70072484a3f4ece9f",
+  "source_sha256": {
+    "candidate.py": "a4c40c7fb85e827d43c7d838a6df536287714c992fcfaf838dc2084aa6816cf1",
+    "audit.py": "521532631d2ae21142b7ed81cf144f42a5344b98d7c9b46a3986d75facda5db5",
+    "test_solver.py": "66ca1dba85bc1e03ce2146fe05b5867361d5d15751dd41c357767b40cb9d1f51",
+    "test_audit.py": "3d4aff66b355a7f3be25e3ef1ff2d4aa7c128e41a8d39c9b51a2ed796eed655c",
+    "input.json": "af221df9931b26e7004a82270b76fc3a46cc2b89c544febd8a4d65bd9fd6cac1",
+    "truth.json": "6ecaec5c5352d3f8c6c2bf68527670f9e369f2c13c7138c70072484a3f4ece9f",
+    "PROTOCOL.md": "9e866c10be7ca7a8c5bb4e5bb211ab1d3bcde868e16c7aba9156ff929554050b"
+  },
+  "lane_clearance": {
+    "required": true,
+    "status": "PENDING_EXPLICIT_SHARED_OWNER_RELEASE",
+    "basis": "governing WSLc gates in Issues #6389/#6693/#7924/#7970"
+  }
+}

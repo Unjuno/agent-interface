@@ -1,0 +1,91 @@
+{
+  "close_error": null,
+  "closed_ns": 7733648245949,
+  "display": ":77",
+  "event_publisher_errors": [],
+  "owner_id": "30128f8ec4ee49229fb52a0154860d50",
+  "owner_records": [
+    {
+      "cancel_requested_after_sync": false,
+      "event": "owner_explicit_keyup",
+      "intent_token": "a37-owner-lease",
+      "key": "a",
+      "key_state_source": "x11_query_keymap",
+      "keycode": 38,
+      "operation": "up",
+      "owner_id": "30128f8ec4ee49229fb52a0154860d50",
+      "owner_keymap_sampled_ns": 7733634619321,
+      "owner_keyrelease_started_ns": 7733634402152,
+      "owner_sync_returned_ns": 7733634540610,
+      "physical_verification_authoritative": false,
+      "server_key_down_after_keyup": false,
+      "server_keyup_attempt_count": 1,
+      "server_keyup_attempts": [
+        {
+          "attempt": 1,
+          "keymap_after_error": null,
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 7733634619321,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 7733634402152,
+          "server_key_down_after": false,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 7733634540610
+        }
+      ],
+      "server_keyup_verified": true,
+      "server_sync_completed": true,
+      "valid_until_ns": 7741619280596
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "a37-owner-lease",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 7741619280596,
+      "verified": true,
+      "verified_ns": 7733643944432
+    }
+  ],
+  "owner_thread_stopped": true,
+  "receipt_fsynced": true,
+  "recovery_verified": true,
+  "release_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "a37-owner-lease",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 7741619280596,
+      "verified": true,
+      "verified_ns": 7733643944432
+    }
+  ],
+  "schema": "input-owner-recovery-v1",
+  "service_pid": 4889,
+  "service_start_ticks": 773347,
+  "trigger": "requested_close"
+}

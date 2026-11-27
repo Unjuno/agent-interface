@@ -1,0 +1,66 @@
+{
+  "platform": "win32",
+  "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "runs": [
+    {
+      "argv": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_supervised_backend_composition",
+        "runtime.cli_v1.test_mcp_supervised_win32",
+        "runtime.cli_v1.test_win32_supervisor_helpers",
+        "runtime.cli_v1.test_mcp_win32_composition"
+      ],
+      "elapsed_ns": 34957984100,
+      "exit_code": 0,
+      "mode": "normal",
+      "stderr": ".........................................................................Executing <Task pending name='Task-8' coro=<SupervisedBackendCompositionTests.test_public_cancel_recovers_after_actual_session_is_blocked_in_sendinput() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_supervised_backend_composition.py:209> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 1.640 seconds\n...................................................Executing <Task pending name='Task-149' coro=<GuardedWin32PublicRouteTests.test_public_cancel_composes_spawned_recovery_and_independent_readback() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:677> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 1.140 seconds\n..Executing <Task pending name='Task-162' coro=<GuardedWin32PublicRouteTests.test_public_fresh_generation_scores_separately_from_old_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:860> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.688 seconds\n.Executing <Task pending name='Task-171' coro=<GuardedWin32PublicRouteTests.test_public_observer_timeout_keeps_release_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:1033> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.343 seconds\n...Executing <Task pending name='Task-191' coro=<GuardedWin32PublicRouteTests.test_public_wrong_recovery_receipt_keeps_custody_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:1130> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.360 seconds\nExecuting <Task finished name='Task-191' coro=<GuardedWin32PublicRouteTests.test_public_wrong_recovery_receipt_keeps_custody_unknown() done, defined at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:1080> result=None created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.703 seconds\n.....\n----------------------------------------------------------------------\nRan 135 tests in 34.125s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_supervised_backend_composition",
+        "runtime.cli_v1.test_mcp_supervised_win32",
+        "runtime.cli_v1.test_win32_supervisor_helpers",
+        "runtime.cli_v1.test_mcp_win32_composition"
+      ],
+      "elapsed_ns": 34129251900,
+      "exit_code": 0,
+      "mode": "optimized",
+      "stderr": ".........................................................................Executing <Task pending name='Task-8' coro=<SupervisedBackendCompositionTests.test_public_cancel_recovers_after_actual_session_is_blocked_in_sendinput() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_supervised_backend_composition.py:209> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 1.625 seconds\n...................................................Executing <Task pending name='Task-149' coro=<GuardedWin32PublicRouteTests.test_public_cancel_composes_spawned_recovery_and_independent_readback() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:677> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 1.156 seconds\n..Executing <Task pending name='Task-162' coro=<GuardedWin32PublicRouteTests.test_public_fresh_generation_scores_separately_from_old_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:860> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.688 seconds\n.Executing <Task pending name='Task-171' coro=<GuardedWin32PublicRouteTests.test_public_observer_timeout_keeps_release_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:1033> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.343 seconds\n...Executing <Task pending name='Task-191' coro=<GuardedWin32PublicRouteTests.test_public_wrong_recovery_receipt_keeps_custody_unknown() running at D:\\CodexData\\Temp\\agent-interface-calc-error-receipt-r01\\runtime\\cli_v1\\test_mcp_win32_composition.py:1130> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:428> cb=[_run_until_complete_cb() at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\base_events.py:181] created at C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\asyncio\\runners.py:100> took 0.359 seconds\n.....\n----------------------------------------------------------------------\nRan 135 tests in 33.300s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "schema": "win32-late-input-horizon-checks-v1",
+  "source_commit": "52df8e2d934bd8b20d4d36da8a7f17a524c49210",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "0336a88c30b3fef58e7c0072015866f939ff8a9624ed3dd954485826e96a30ed",
+    "runtime/cli_v1/owned_win32_session.py": "6818a362cb45d2a090d648c5a22186b82529d9ee00beb178acee9027381e65d0",
+    "runtime/cli_v1/test_mcp_supervised_backend_composition.py": "97935e186edfdf06e511ad5422ce8495ade9c8aaf97376e04b4a4e11a3c86b86",
+    "runtime/cli_v1/test_owned_win32_session.py": "162ef251ec5879f88a5bef0e3d4d6cb3c325fdfb56fbce6af16f2dcae101a295",
+    "runtime/cli_v1/win32_supervisor_helpers.py": "cd1f0e3fb2465583bc63afa5f188dbda4267c0f98598502cbe87ed7aeb7b0f0b",
+    "runtime/guarded_win32_v1/operation_owner.py": "fa894d6b5d3b1cfa5060049cc0cc482310decaab4ae960e64601a437f8847104",
+    "runtime/guarded_win32_v1/process_cancellation.py": "0b8a4c8e70a98179d747c7fd4fec71fb0f9cb6739879e61631fcd23ad07d61a9",
+    "runtime/guarded_win32_v1/test_process_cancellation.py": "6ee55812bb71a5b372e938e5fb95fc3bb223b5f2add290db0bcc576c513595c5"
+  },
+  "test_modules": [
+    "runtime.guarded_win32_v1.test_operation_owner",
+    "runtime.guarded_win32_v1.test_process_cancellation",
+    "runtime.cli_v1.test_owned_win32_session",
+    "runtime.cli_v1.test_mcp_supervised_backend_composition",
+    "runtime.cli_v1.test_mcp_supervised_win32",
+    "runtime.cli_v1.test_win32_supervisor_helpers",
+    "runtime.cli_v1.test_mcp_win32_composition"
+  ]
+}

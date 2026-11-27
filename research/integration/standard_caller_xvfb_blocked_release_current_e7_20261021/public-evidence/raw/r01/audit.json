@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "accepted_initial_input_before_block": true,
+    "blocked_sync_marker_matches_owner": true,
+    "caller_retains_conservative_unknown": true,
+    "cancel_within_3000ms": true,
+    "delayed_request_horizon_observed": true,
+    "final_cleanup_all_keys_up": true,
+    "independent_release_readback_verified": true,
+    "independent_synthetic_task_oracle_pass": true,
+    "liveness_timestamp_fence_observed": true,
+    "owner_client_disconnect_confirmed": true,
+    "private_xvfb_identity_captured": true,
+    "private_xvfb_process_stopped": true,
+    "python_unittest_one_test_ok": true,
+    "terminal_result_bounded": true
+  },
+  "decision": "PASS_SCOPED_NATIVE_WSL_XVFB_TIMESTAMP_ORDER_AND_BOUNDED_RELEASE",
+  "derived": {
+    "cancel_elapsed_ms": 770.069501,
+    "disconnect_elapsed_ms": 69.13280300000224,
+    "horizon_ms_after_cancel_start": 8505.207703,
+    "liveness_precedes_cancel_by_ms": 517.900466,
+    "release_elapsed_ms": 448.227850999956,
+    "terminal_elapsed_ms": 9.074751,
+    "test_runtime_seconds": 9.196
+  },
+  "qualification": "One native WSL Ubuntu/Xvfb run only; no WSLc, Docker, model, physical desktop, full server-stop, MAP01, population reliability, or efficiency claim. Caller-level release remains UNKNOWN and caller task_success remains null.",
+  "run_id": "native-wsl-xvfb-current-main-e7-blocked-release-r01-20261021"
+}

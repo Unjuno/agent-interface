@@ -1,11 +1,20 @@
 """Explicit scoped-X11 owner for the existing retained public MCP transport."""
 from contextlib import contextmanager
 from copy import deepcopy
+import inspect
+import re
 from pathlib import Path
-from mcp.types import CallToolResult
+from time import monotonic_ns
+import json
+from mcp.types import CallToolResult, TextContent
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
 from .mcp_session import MCPSessionOwner
+
+_WINDOW_METADATA_MAX_AGE_NS = 500_000_000
+_WINDOW_METADATA_IDENTITY_FIELDS = (
+    'xid', 'parent_xid', 'transient_for_xid', 'wm_class', 'title_cue',
+    'role_cue', 'mapped', 'process_incarnation', 'window_incarnation')
 
 
 class GroundedReference(BaseModel):
@@ -31,14 +40,29 @@ class InputFeedback(BaseModel):
         return self
 
 
-def open_bridge(display_name, targets, target, directory):
+def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False, retention_mode='files'):
     # Optional Pillow/Xlib dependencies are loaded only for this explicit mode.
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
-    return NativeHandleBridge(display_name, targets, target, directory)
+    options = dict(process_identity=process_identity,query_worker=query_worker)
+    if observation_worker: options['observation_worker'] = True
+    if window_lifecycle: options['window_lifecycle'] = True
+    if retention_mode != 'files':
+        options['retention_mode'] = retention_mode
+    return NativeHandleBridge(display_name, targets, target, directory,**options)
 
 
 class GuardedSessionOwner(MCPSessionOwner):
-    def __init__(self, targets, directory, display_name=None):
+    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False, retention_mode='files'):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
+        if type(query_worker) is not bool or (query_worker and not process_identity):
+            raise ValueError('query_worker requires explicit process_identity=True')
+        if type(observation_worker) is not bool or (observation_worker and not query_worker):
+            raise ValueError('observation_worker requires explicit query_worker=True')
+        if type(window_lifecycle) is not bool or (window_lifecycle and not query_worker):
+            raise ValueError('window_lifecycle requires explicit query_worker=True')
+        if retention_mode not in ('files', 'journal'):
+            raise ValueError("retention_mode must be 'files' or 'journal'")
         if len(targets) != 1:
             raise ValueError('guarded-x11 requires exactly one explicitly configured target')
         super().__init__(targets, display_name)
@@ -46,6 +70,11 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.directory = Path(directory)/('guarded-session-'+self.session_id)
         self.bridge = None
         self.binding_revision = 0
+        self.process_identity = process_identity
+        self.query_worker = query_worker
+        self.observation_worker = observation_worker
+        self.window_lifecycle = window_lifecycle
+        self.retention_mode = retention_mode
 
     def get(self):
         if self.state == 'open':
@@ -54,7 +83,13 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise RuntimeError('guarded session unavailable: '+self.state)
         self.state = 'opening'
         try:
-            self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory)
+            options = {'process_identity':True} if self.process_identity else {}
+            if self.query_worker: options['query_worker'] = True
+            if self.observation_worker: options['observation_worker'] = True
+            if self.window_lifecycle: options['window_lifecycle'] = True
+            if self.retention_mode != 'files':
+                options['retention_mode'] = self.retention_mode
+            self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory, **options)
             self.session = self.bridge.session
             self.state = 'open'
             return self.session
@@ -66,12 +101,73 @@ class GuardedSessionOwner(MCPSessionOwner):
     def snapshot(self):
         row = super().snapshot()
         row['mode'] = 'guarded-x11'
+        row['process_identity'] = self.process_identity
+        row['query_worker'] = self.query_worker
+        row['observation_worker'] = self.observation_worker
+        row['window_lifecycle'] = self.window_lifecycle
+        row['retention_mode'] = self.retention_mode
+        compiled_scope = getattr(self.bridge, 'scope', None)
+        if isinstance(compiled_scope, str) and compiled_scope:
+            from runtime.guarded_x11_v1.compiled import surface
+            row['compiled_scope'] = compiled_scope
+            row['compiled_surface'] = surface(self.bridge)
+        observations = getattr(self.bridge,'_observations',None)
+        row['observations'] = observations.snapshot() if observations is not None else None
+        worker = getattr(self.bridge,'_target_queries',None)
+        row['target_queries'] = worker.snapshot() if worker is not None else None
         row['target'] = self.target
         row['observation_sequence'] = self.bridge.sequence if self.bridge else None
         row['review_required'] = self.bridge.review_required if self.bridge else None
         if self.bridge:
             row['binding_revision'] = self.bridge.binding_revision
         return row
+
+    def close(self):
+        bridge_closed = self.bridge is not None and getattr(self.bridge, '_closed', False)
+        already_closed = bridge_closed and not getattr(self, '_mcp_close_pending', False)
+        if self.bridge is not None and not bridge_closed:
+            # Consume authority now; remember unfinished cleanup across retries.
+            self.bridge._closed = True
+            self._mcp_close_pending = True
+        stop_workers = getattr(self.bridge, 'stop_target_queries', None)
+        if callable(stop_workers):
+            # Retire both idle read-only workers before the session closes its
+            # backend connection. Session.close() owns input cleanup, while the
+            # bridge owns these independent worker queues.
+            stop_workers()
+        if already_closed:
+            report = super().close()
+            journal = getattr(self.bridge, '_receipt_journal', None)
+            if journal is not None:
+                try:
+                    journal.close()
+                except Exception as error:
+                    report.update(status='cleanup_failed', receipt_journal={
+                        'status':'close_failed', 'error_type':type(error).__name__})
+                self.close_report = deepcopy(report)
+            return report
+        report = super().close()
+        journal = getattr(self.bridge, '_receipt_journal', None)
+        if journal is not None:
+            try:
+                journal.append('session-close', 'session-close', report)
+                report['receipt_journal'] = {'status':'close_receipt_recorded'}
+            except Exception as error:
+                report.update(status='cleanup_failed', receipt_journal={
+                    'status':'close_receipt_failed', 'error_type':type(error).__name__})
+            try:
+                journal.close()
+            except Exception as error:
+                report.update(status='cleanup_failed', receipt_journal={
+                    'status':'close_failed', 'error_type':type(error).__name__})
+            self.close_report = deepcopy(report)
+        self._mcp_close_pending = False
+        return report
+
+    def cancel_guarded(self, token):
+        if self.state != 'open' or self.bridge is None or not self.query_worker:
+            return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
+        return self.bridge.request_cancel(token)
 
     def _with_observation(self, row, source):
         row['source'] = source
@@ -96,7 +192,12 @@ class GuardedSessionOwner(MCPSessionOwner):
             yield
 
     def run_compiled(self, interface, bindings, *, call_root, perceive,
-                     verify_effect, cancelled=lambda: False):
+                     verify_effect, cancelled=lambda: False,
+                     guard_perceive=None, verify_unchanged_effect=None,
+                     on_action_completed=None,
+                     before_action_dispatch=None,
+                     post_release_settle_ms=0, effect_clock=None,
+                     effect_clock_domain="graph"):
         """Run one explicit graph on this already-open Python owner.
 
         Ground references first. Callbacks are trusted read-only caller code,
@@ -105,43 +206,103 @@ class GuardedSessionOwner(MCPSessionOwner):
         The existing graph retains its raw evidence in the bridge directory.
         The returned method verdict and delivered feedback remain distinct from
         independently verified task success. This is not an MCP tool endpoint.
+        After call-root creation, returned and raised attempts retain a monotonic
+        timing receipt there; exceptions preserve unknown effect and no replay.
         """
+        started_ns = monotonic_ns()
         if self.state != 'open' or self.bridge is None or self.session is None:
             raise RuntimeError('compiled method requires this open guarded owner')
         if self.bridge.review_required or self.session.recovery_required:
             raise RuntimeError('compiled method requires reviewed, recovered owner')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit callable perception, effect and cancellation required')
+        if guard_perceive is not None and not callable(guard_perceive):
+            raise ValueError('guard_perceive must be callable when supplied')
+        if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
+            raise ValueError('verify_unchanged_effect must be callable when supplied')
+        if on_action_completed is not None and not callable(on_action_completed):
+            raise ValueError('on_action_completed must be callable when supplied')
+        if before_action_dispatch is not None and not callable(before_action_dispatch):
+            raise ValueError('before_action_dispatch must be callable when supplied')
+        if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
+            raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         from runtime.guarded_x11_v1 import compiled
         from .review import present_result
+        from .attempt import _write_json
         root = Path(call_root)
         root.mkdir(parents=True, exist_ok=False)
         bridge = self.bridge
         previous_sequence = bridge.sequence
+
+        def retain_timing(status, *, method_outcome=None, error=None):
+            completed_ns = monotonic_ns()
+            timing = {'schema':'agent-interface/compiled-owner-attempt-timing-v1',
+                'clock':'time.monotonic_ns',
+                'scope':'run_compiled method entry through graph, feedback and session snapshot',
+                'status':status, 'started_ns':started_ns,
+                'completed_ns':completed_ns, 'elapsed_ns':completed_ns-started_ns,
+                'method_outcome':method_outcome,
+                'effect_status':'unknown' if error is not None else None,
+                'error_type':type(error).__name__ if error is not None else None,
+                'replay_allowed':False}
+            try:
+                _write_json(root/'owner-attempt-timing.json', timing)
+                return timing, {'status':'recorded'}
+            except BaseException as persist_error:
+                return timing, {'status':'unavailable',
+                    'error_type':type(persist_error).__name__,
+                    'error':repr(persist_error)}
+
         # An exception can follow partial input. Keep cleanup on this same
         # connection even when no terminal receipt reached the caller.
         self.dispatch_attempted = True
         try:
             bridge.backend.configure_capture_artifacts(root/'images', retain_rgb=True)
             receipt = compiled.run(bridge, interface, bindings, perceive=perceive,
-                                   verify_effect=verify_effect, cancelled=cancelled)
-        except Exception as error:
+                                   verify_effect=verify_effect, cancelled=cancelled,
+                                   guard_perceive=guard_perceive,
+                                   verify_unchanged_effect=verify_unchanged_effect,
+                                   on_action_completed=on_action_completed,
+                                   before_action_dispatch=before_action_dispatch,
+                                   post_release_settle_ms=post_release_settle_ms,
+                                   effect_clock=effect_clock,
+                                   effect_clock_domain=effect_clock_domain)
+        except BaseException as error:
             bridge.review_required = True
             self.error = repr(error)
+            _, self.owner_timing_retention = retain_timing('raised', error=error)
             raise
         feedback = None
         if receipt['observations']:
             try:
                 sequence = receipt['observations'][-1]['sequence']
                 if (type(sequence) is not int or sequence <= previous_sequence
-                        or sequence != bridge.sequence):
-                    raise ValueError('final graph observation no longer matches this owner')
-                source, _ = bridge.history[sequence]
-                feedback = present_result({
+                        or sequence not in bridge.history):
+                    raise ValueError('final graph observation is missing from this owner')
+                # Graph observations remain the method's semantic record. One
+                # later owner observation supplies delivery feedback only; it
+                # is not fed back into task/effect evaluation.
+                feedback_source = bridge.observe()
+                feedback_sequence = feedback_source.get('sequence')
+                if (type(feedback_sequence) is not int
+                        or feedback_sequence <= sequence
+                        or feedback_sequence not in bridge.history):
+                    raise ValueError('post-method feedback capture unavailable')
+                source, _feedback_image = bridge.history[feedback_sequence]
+                native_feedback = source.get('native', {})
+                if (native_feedback.get('native_window_id') !=
+                        bridge.backend.targets[bridge.target].id
+                        or bridge.review_required or bridge.session.recovery_required):
+                    raise ValueError('latest owner capture association is uncertain')
+                feedback_report = {
                     'schema':'agent-interface/runtime-observation-v1',
                     'status':'returned', 'observation_id':source['observation_id'],
                     'observation':source['native'], 'input_dispatched':False,
-                    'side_effect_authority':False}, root, compact=True, report_refs=True)
+                    'side_effect_authority':False}
+                feedback = present_result(
+                    feedback_report, root, compact=True, report_refs=True)
+                feedback['owner_feedback_sequence'] = feedback_sequence
+                feedback['owner_feedback_observation_id'] = source['observation_id']
                 if feedback.get('image_status') != 'image':
                     bridge.review_required = True
             except Exception as error:
@@ -149,10 +310,200 @@ class GuardedSessionOwner(MCPSessionOwner):
                 feedback = {'image_status':'needs_review', 'image':None,
                             'error':repr(error), 'replay_allowed':False,
                             'scope':'Method receipt retained; final feedback unavailable. No replay.'}
-        return {'method_receipt':receipt, 'feedback':feedback,
-                'session':self.snapshot(), 'task_success':None, 'replay_allowed':False}
+        session = self.snapshot()
+        timing, timing_retention = retain_timing(
+            'returned', method_outcome=receipt.get('outcome'))
+        return {'method_receipt':receipt, 'feedback':feedback, 'session':session,
+                'owner_timing':timing, 'owner_timing_retention':timing_retention,
+                'task_success':None, 'replay_allowed':False}
+
+    def run_compiled_profile(self, interface, bindings, predicate_rules,
+                             effect_rules, call_root, cancel_token):
+        """Run a data-only exact-pixel profile under whole-call cancellation.
+
+        Public MCP enables this only on the owned-process caller. Pixel matches
+        are a local observation contract, never independent task scoring.
+        """
+        if not self.query_worker:
+            raise RuntimeError('compiled public calls require the owned query worker')
+        self.get()
+        from runtime.guarded_x11_v1.pixel_profile import build_callbacks
+        perceive, verify_effect = build_callbacks(interface, predicate_rules, effect_rules)
+        with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True):
+            return self.run_compiled(interface, bindings,
+                call_root=Path(call_root)/'compiled', perceive=perceive,
+                verify_effect=verify_effect,
+                cancelled=self.bridge._cancel_requested)
+
+    def run_registered_calc_profile(self, profile_id, bindings, *,
+                                    reviewed_sequence, reviewed_artifact_sha256,
+                                    blank_reviewed, attempt_id, call_root,
+                                    cancel_token, task_artifact=None):
+        """Run the one server-owned Calc profile; requests contain data only."""
+        from runtime.guarded_x11_v1.calc_profile_v1 import (
+            PROFILE_ID, CalcPrimaryProfile)
+        from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+            PROFILE_ID as G10_PROFILE_ID)
+        if profile_id not in (PROFILE_ID, G10_PROFILE_ID):
+            raise ValueError('unregistered compiled profile')
+        if not self.query_worker:
+            raise RuntimeError('registered compiled calls require the owned query worker')
+        if (type(attempt_id) is not str
+                or not 1 <= len(attempt_id) <= 128
+                or any(ord(char) < 0x21 or ord(char) > 0x7e for char in attempt_id)):
+            raise ValueError('attempt_id must be printable ASCII, 1..128 characters')
+        self.get()
+        root = Path(call_root)
+        if profile_id == G10_PROFILE_ID:
+            if task_artifact is None:
+                raise ValueError('G10 requires its parent-created two-save artifact')
+            from runtime.guarded_x11_v1.calc_g10_profile_v1 import CalcG10Profile
+            profile = CalcG10Profile(self.bridge, bindings, root,
+                reviewed_sequence=reviewed_sequence,
+                reviewed_artifact_sha256=reviewed_artifact_sha256,
+                blank_reviewed=blank_reviewed,
+                call_id=task_artifact.call_id, attempt_id=attempt_id,
+                task_artifact=task_artifact)
+        else:
+            profile = CalcPrimaryProfile(self.bridge, bindings, root,
+                reviewed_sequence=reviewed_sequence,
+                reviewed_artifact_sha256=reviewed_artifact_sha256,
+                blank_reviewed=blank_reviewed,
+                call_id=(task_artifact.call_id if task_artifact is not None
+                         else cancel_token),
+                attempt_id=attempt_id, task_artifact=task_artifact)
+        with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True):
+            result = self.run_compiled(profile.interface, profile.bindings,
+                call_root=root/'compiled', perceive=profile.perceive,
+                guard_perceive=profile.guard_perceive,
+                verify_effect=profile.verify_effect,
+                verify_unchanged_effect=getattr(profile,
+                    'verify_unchanged_effect', None),
+                on_action_completed=getattr(profile,
+                    'on_action_completed', None),
+                before_action_dispatch=getattr(profile,
+                    'before_action_dispatch', None),
+                post_release_settle_ms=250,
+                effect_clock=profile.clock,
+                effect_clock_domain="time.monotonic_ns",
+                cancelled=self.bridge._cancel_requested)
+        result['profile_id'] = profile_id
+        result['attempt_id'] = attempt_id
+        if getattr(profile, 'symbolic_plan_binding', None) is not None:
+            result['task_plan_sha256'] = profile.symbolic_plan_binding['plan_sha256']
+            result['task_plan_interface'] = deepcopy(
+                profile.symbolic_plan_binding['interface'])
+            result['method_receipt']['task_plan_sha256'] = (
+                profile.symbolic_plan_binding['plan_sha256'])
+            result['method_receipt']['task_plan_interface'] = deepcopy(
+                profile.symbolic_plan_binding['interface'])
+        result['task_effect_verification'] = {
+            'status':'not_configured', 'task_success':None,
+            'reason':'trusted_save_controller_unavailable'}
+        if profile_id == G10_PROFILE_ID:
+            controller = profile.controller_receipt(result.get('method_receipt'))
+            result['task_effect_verification'] = {
+                'status':'unknown', 'task_success':None,
+                'reason':'verified_close_and_target_exit_required'}
+            result['task_artifact_admission'] = profile.artifact.descriptor
+            result['task_save_requests'] = deepcopy(profile.save_requests)
+            result['task_save_receipts'] = deepcopy(profile.save_receipts)
+            result['task_save_controller_receipt'] = deepcopy(controller)
+            result['task_artifact_root_call_id'] = profile.artifact.call_id
+        elif profile.task_artifact is not None:
+            result['task_artifact_admission'] = profile.task_artifact.descriptor
+            result['task_save_request'] = deepcopy(profile.task_save_request)
+            result['task_artifact_root_call_id'] = profile.task_artifact.call_id
+        return result
+
+    def inspect_window_metadata(self, window_id):
+        """Read one explicit XID's metadata cues through isolated XRes queries."""
+        self.get()
+        metadata = self.bridge.inspect_window_metadata(window_id)
+        return {'operation':'guarded_window_metadata','status':'inspected',
+            'window_metadata':metadata,'input_dispatched':False,
+            'authority_granted':False,'task_success':None,'replay_allowed':False}
+
+    def windows_for_process(self, pid, title_hint):
+        """Discover candidate XIDs for one exact XRes PID; grant no authority."""
+        if (type(pid) is not int or pid <= 0 or type(title_hint) is not str
+                or not title_hint or len(title_hint) > 128
+                or not title_hint.isprintable()):
+            raise ValueError('positive PID and bounded printable title hint required')
+        if not self.query_worker or not self.process_identity:
+            raise RuntimeError('process window discovery requires isolated XRes queries')
+        self.get()
+        rows = self.bridge.windows_for_process(pid, title_hint)
+        if not isinstance(rows, list):
+            raise RuntimeError('process window discovery returned malformed metadata')
+        return {'operation':'guarded_process_windows','status':'discovered',
+            'process_pid':pid,'title_hint':title_hint,'windows':deepcopy(rows),
+            'input_dispatched':False,'authority_granted':False,
+            'task_success':None,'replay_allowed':False}
+
+    def revalidate_window_metadata(self, source_metadata):
+        """Re-read an exact in-memory metadata source; never grants input authority."""
+        now = monotonic_ns()
+        observed_ns = (source_metadata.get('observed_monotonic_ns')
+            if isinstance(source_metadata, dict) else None)
+        base = {'operation':'guarded_window_metadata_revalidate',
+            'input_dispatched':False,'authority_granted':False,
+            'task_success':None,'replay_allowed':False}
+        if (not isinstance(source_metadata, dict)
+                or source_metadata.get('schema') !=
+                    'agent-interface/x11-window-metadata-cues-v1'
+                or type(observed_ns) is not int or observed_ns > now
+                or now - observed_ns > _WINDOW_METADATA_MAX_AGE_NS
+                or source_metadata.get('mapped') is not True
+                or source_metadata.get('focused_before') is not True
+                or source_metadata.get('focused_after') is not True):
+            return dict(base,status='stale_or_unfocused',same_window=False,
+                reason='source_expired_or_not_focused')
+        try:
+            current = self.inspect_window_metadata(source_metadata['xid'])['window_metadata']
+        except Exception as error:
+            return dict(base,status='needs_review',same_window=False,
+                reason='fresh_metadata_unavailable',error=repr(error))
+        completed_ns = monotonic_ns()
+        if (completed_ns < observed_ns
+                or completed_ns - observed_ns > _WINDOW_METADATA_MAX_AGE_NS):
+            return dict(base,status='stale_or_unfocused',same_window=False,
+                reason='source_expired_during_revalidation',
+                source_observed_monotonic_ns=observed_ns,
+                current_observed_monotonic_ns=current.get('observed_monotonic_ns'))
+        same = (current.get('mapped') is True
+            and current.get('focused_before') is True
+            and current.get('focused_after') is True
+            and all(current.get(field) == source_metadata.get(field)
+                    for field in _WINDOW_METADATA_IDENTITY_FIELDS))
+        return dict(base,status='revalidated' if same else 'needs_review',
+            same_window=same,source_observed_monotonic_ns=observed_ns,
+            current_observed_monotonic_ns=current.get('observed_monotonic_ns'),
+            source_window_metadata=deepcopy(source_metadata),
+            current_window_metadata=current,
+            reason=None if same else 'window_metadata_changed')
 
     def invoke_guarded(self, operation, arguments, call_root):
+        if operation == 'guarded_window_metadata':
+            try:
+                return self.inspect_window_metadata(arguments['window_id'])
+            except Exception as error:
+                return {'operation':operation,'status':'needs_review',
+                    'error':repr(error),'input_dispatched':False,
+                    'authority_granted':False,'task_success':None,
+                    'replay_allowed':False}
+        if operation == 'guarded_window_metadata_revalidate':
+            result = self.revalidate_window_metadata(arguments.get('source_metadata'))
+            result['metadata_call_id'] = arguments.get('metadata_call_id')
+            return result
+        if operation == 'guarded_recover_input':
+            if self.state != 'open' or self.bridge is None or self.session is None:
+                return dict(operation=operation,status='refused',error='RECOVERY_REQUIRES_OPEN_SESSION',
+                            release_attempted=False,authority_granted=False,task_success=None,replay_allowed=False)
+            report = self.bridge.recover_input(arguments['current_binding_revision'])
+            if report.get('release_attempted'): self.dispatch_attempted = True
+            self.binding_revision = self.bridge.binding_revision
+            return dict(report,operation=operation)
         cue = None
         if operation == 'guarded_input' and arguments.get('feedback') is not None:
             cue = InputFeedback.model_validate(arguments['feedback'])
@@ -209,7 +560,16 @@ class GuardedSessionOwner(MCPSessionOwner):
             self.dispatch_attempted = True
             method = {'click': bridge.click, 'keyboard': bridge.keyboard,
                       'move': bridge.move}[arguments['interaction']]
-            result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            if self.query_worker:
+                with bridge.cancellation_scope(Path(call_root).name):
+                    result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            else:
+                result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            if result.get('status') == 'execution_failed':
+                # A terminal failure can follow partial task effects even when
+                # same-owner release was verified. Require fresh visual review
+                # before another input can reuse the still-live source alias.
+                bridge.review_required = True
             row.update(status=result['status'], result=result)
             if cue is not None:
                 row['feedback_status'] = 'cue_not_attempted'
@@ -271,7 +631,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 if len(point) != 2 or len(size) != 2 or any(not 4 <= v <= 96 for v in size):
                     raise ValueError('point pair and region_size pair in 4..96 required')
                 grounded = bridge.mint_reference(arguments['alias'], arguments['source_sequence'], point,
-                                     region_size=tuple(size))
+                    region_size=tuple(size), freshness_ms=arguments.get('freshness_ms',1500))
                 return dict(row, status='minted', alias=arguments['alias'], **grounded,
                             source_sequence=arguments['source_sequence'], input_dispatched=False)
             if operation == 'guarded_review_window':
@@ -287,7 +647,340 @@ class GuardedSessionOwner(MCPSessionOwner):
             return dict(row, status='refused', error=repr(error), input_dispatched=False)
 
 
-def register_guarded_tools(server, submit):
+def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=False,
+                           window_lifecycle_enabled=False,
+                           calc_launch_enabled=False):
+    # Mint receipts are scoped to this MCP registration (and therefore to one
+    # server session). A caller cannot transplant aliases from another owner.
+    minted_calc_aliases = {}
+    latest_calc_source_sequence = None
+
+    def _json_tool_result(response):
+        try:
+            return json.loads(response.content[0].text)
+        except (AttributeError, IndexError, KeyError, TypeError, ValueError):
+            return None
+
+    @server.tool()
+    async def interface_guarded_recover_input(current_binding_revision: StrictInt,
+            wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
+        """Explicitly attempt tracked-input release once on this open guarded owner.
+
+        Requires recovery_required=true and the current binding revision. The
+        serialized input slot prevents a second writer during pending input or
+        cleanup. Accepted recovery consumes the revision and revokes old aliases
+        before one release/readback attempt, including on failure. A stale
+        request cannot repeat it. Verified neutrality clears only the input
+        recovery block; review the window and mint fresh aliases before choosing
+        new input. No capture, reconnect, program replay, task success or lease.
+        Blocking platform I/O can leave this call pending; inspect results and
+        never replay an uncertain request automatically. Retired workers remain
+        retired and require explicitly closing the session.
+        Optional wait_for_result_ms ends only the response await; pending returns
+        the original call ID without release confirmation. The same worker keeps
+        cleanup custody. Retrieve its result; never resubmit because it is pending.
+        """
+        options = {} if wait_for_result_ms is None else dict(wait_for_result_ms=wait_for_result_ms)
+        return await submit('guarded_recover_input',dict(current_binding_revision=current_binding_revision),False,False,**options)
+    if cancel is not None:
+        @server.tool()
+        async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
+            """Request cancellation of a running guarded operation.
+
+            Get the call ID from interface_results. This publishes retained local
+            state only; no input is injected by this request path. A cancellation
+            signal's input_dispatched=false does not describe the original call:
+            that call may already have sent input. Owned-process cancellation may
+            separately attempt cleanup. Acknowledgement is not release
+            confirmation. Inspect the original result and cleanup receipts; never
+            replay uncertain input. Old/unknown call IDs cannot cancel a new call.
+            """
+            result = cancel(call_id)
+            return await result if inspect.isawaitable(result) else result
+    if compiled_enabled:
+        @server.tool()
+        async def interface_guarded_window_metadata(window_id: StrictInt) -> CallToolResult:
+            """Read bounded X11 metadata for one explicitly supplied window ID.
+
+            Returns title/class/role/transient/process/window-generation cues
+            and focus sampled around the read. These values are not authenticated
+            identity and grant no target selection or input authority. Errors
+            retire the isolated query reader and require session review.
+            """
+            if not 1 < window_id < 2**32:
+                return CallToolResult(content=[TextContent(type='text',
+                    text=json.dumps({'status':'invalid_request',
+                        'error':'INVALID_WINDOW_ID','operation_invoked':False,
+                        'input_dispatched':False,'authority_granted':False,
+                        'task_success':None,'replay_allowed':False}))],isError=True)
+            return await submit('guarded_window_metadata',
+                {'window_id':window_id},False,False)
+
+        @server.tool()
+        async def interface_guarded_compiled(interface: dict, bindings: dict,
+                predicate_rules: dict, effect_rules: dict,
+                wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
+            """Run one bounded compiled X11 method through the owned standard caller.
+
+            This tool is exposed only with guarded owned-process, process-identity
+            query-worker, and window-lifecycle startup enabled. The window
+            incarnation guard binds the reviewed source and every input check
+            to one exact XID lifetime. `interface.session_scope` and
+            `interface.surface` must match the `session.compiled_scope` and
+            `session.compiled_surface` returned by an earlier guarded observation.
+            Bindings name previously minted aliases and exact offsets/tails.
+            `predicate_rules` maps every declared predicate to an exact pixel
+            point and a finite RGB-to-scalar table; unmatched/out-of-frame samples
+            are `unknown`. `effect_rules` maps every declared action to a separate
+            exact-pixel visible cue. These are read-only profiles, not OCR or an
+            independent task scorer. `task_success` remains null, and a graph
+            `TASK_SUCCEEDED` is only a local method verdict.
+
+            The method runtime and transition count are bounded by the interface.
+            The first target process/window generation is pinned; changes or
+            missing generation evidence stop the method. Use a short
+            `wait_for_result_ms` to obtain a call ID while work continues, then
+            `interface_results` to retrieve it. To cancel, call
+            `interface_guarded_cancel` with that call ID. Cancellation may retire
+            the exact owner; release remains unknown unless separately confirmed.
+            Never resubmit a pending or uncertain call.
+            """
+            from runtime.guarded_x11_v1.pixel_profile import build_callbacks
+            try:
+                build_callbacks(interface,predicate_rules,effect_rules)
+            except (TypeError,ValueError,KeyError,RecursionError) as error:
+                row={'status':'invalid_request','error':'COMPILED_PROFILE_INVALID',
+                    'detail':repr(error),'operation_invoked':False,'task_success':None,
+                    'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            arguments={'interface':interface,'bindings':bindings,
+                'predicate_rules':predicate_rules,'effect_rules':effect_rules}
+            return await submit('guarded_compiled',arguments,False,False,
+                wait_for_result_ms=wait_for_result_ms)
+        @server.tool()
+        async def interface_guarded_calc_prepare(
+                attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
+                task_values: dict | None = None,
+                task_plan: dict | None = None,
+                profile_id: StrictStr = 'calc-ocr-save-v1') -> CallToolResult:
+            """Reserve one blank server-owned FODS and retain task inputs/plan.
+
+            The call ID is the unguessable reservation handle. This operation
+            creates an artifact only: it does not launch Calc, discover a
+            window, retain process-group custody, or establish pre-launch
+            containment. It dispatches no input and accepts no filesystem path.
+            A reservation is bounded to one at a time, bound to the same attempt,
+            and consumed at most once by interface_guarded_calc_compiled. Do not treat its
+            artifact path or call ID as proof that any process was launched.
+            `task_values` are bounded decimal strings for A1/A2 and remain in
+            parent custody for input, OCR and post-close scoring. Optional
+            `task_plan` is a bounded declarative graph without values, aliases,
+            coordinates, code or callbacks. The parent retains it and binds it
+            to fresh reviewed aliases at execution.
+            `profile_id='calc-g10-two-save-v1'` selects the fixed two-save
+            formula task; that profile accepts no caller task values or plan.
+            """
+            from runtime.guarded_x11_v1.calc_profile_v1 import (
+                PROFILE_ID as OCR_PROFILE_ID, validate_calc_task_values)
+            from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                PROFILE_ID as G10_PROFILE_ID)
+            if profile_id == G10_PROFILE_ID:
+                if task_values is not None or task_plan is not None:
+                    row={'status':'invalid_request','error':'G10_TASK_IS_FIXED',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+                validated_values = None
+            elif profile_id == OCR_PROFILE_ID:
+                try:
+                    validated_values = validate_calc_task_values(task_values)
+                except (TypeError,ValueError) as error:
+                    row={'status':'invalid_request','error':'CALC_TASK_VALUES_INVALID',
+                        'detail':str(error),'operation_invoked':False,
+                        'input_dispatched':False,'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            else:
+                row={'status':'invalid_request','error':'CALC_PROFILE_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if task_plan is not None and profile_id == OCR_PROFILE_ID:
+                try:
+                    from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import (
+                        validate_and_bind_calc_plan)
+                    validate_and_bind_calc_plan(task_plan,
+                        session_scope='prepared-scope',
+                        surface='prepared-surface',
+                        target_aliases={'entry':'prepared_entry',
+                                        'save':'prepared_save'})
+                except (TypeError,ValueError) as error:
+                    row={'status':'invalid_request','error':'CALC_TASK_PLAN_INVALID',
+                        'detail':str(error),'operation_invoked':False,
+                        'input_dispatched':False,'task_success':None,
+                        'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if not re.fullmatch(r'[\x21-\x7e]{1,128}',attempt_id):
+                row={'status':'invalid_request','error':'CALC_ATTEMPT_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if not window_lifecycle_enabled:
+                row={'status':'invalid_request',
+                    'error':'CALC_WINDOW_LIFECYCLE_REQUIRED',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            return await submit('guarded_calc_prepare',{'attempt_id':attempt_id,
+                'profile_id':profile_id,'task_values':validated_values,
+                'task_plan':task_plan},
+                False,False,wait_for_result_ms=10000)
+
+        if calc_launch_enabled:
+            @server.tool()
+            async def interface_guarded_calc_launch(prepared_call_id: Annotated[
+                    StrictStr,Field(pattern=r'^[0-9a-f]{32}$')],
+                    wait_for_result_ms: Annotated[StrictInt,Field(ge=0,le=10000)]=1000
+                    ) -> CallToolResult:
+                """Launch the reserved Calc artifact and retain parent process custody.
+
+                Available only with explicit fixed launcher configuration and
+                an owned guarded X11 session whose sole target is the X root.
+                This starts Calc with a unique LibreOffice profile, synchronizes
+                exact launcher/GUI process-group custody, and returns read-only
+                XRes window candidates. It never focuses or activates a
+                candidate. Inspect the returned XID/title/class, then call
+                `interface_guarded_review_window` for that exact XID. Review
+                must confirm focus and stable generation before the launcher
+                can bind it for the registered profile. No task input or task
+                effect is implied by launch.
+                """
+                return await submit('guarded_calc_launch',
+                    {'prepared_call_id':prepared_call_id},False,False,
+                    wait_for_result_ms=wait_for_result_ms)
+
+        @server.tool()
+        async def interface_guarded_calc_compiled(profile_id: StrictStr,
+                bindings: dict, reviewed_sequence: StrictInt,
+                reviewed_artifact_sha256: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{64}$')],
+                blank_reviewed: StrictBool, attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
+                prepared_call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')] | None = None,
+                wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
+            """Run a registered Calc profile through the owned process.
+
+            This request selects only a registered server profile; it cannot
+            supply code, OCR commands, callbacks, interface graphs, input tails,
+            or filesystem paths. A symbolic graph was bounded and retained by
+            the parent at prepare; this request cannot replace it. Bindings provide only previously minted entry
+            and Save aliases/offsets. The reviewed sequence/hash must still be
+            the current source; `blank_reviewed` is the caller's asserted visual
+            review of that exact image. The profile rechecks current OCR inside
+            the existing native input guard before Save keystrokes. A Save key
+            is only a request. This profile does not score persisted workbook
+            bytes for the OCR profile; graph `task_success` remains null until
+            the parent-side post-close verifier proves saved effect. The fixed
+            G10 profile records two distinct formula-row saves and also requires
+            both exact saved-byte scores after close. `attempt_id` joins this
+            local call to an outer provider ledger and carries no token claims.
+            `interface_verify_task(call_id)` is available only on this owned
+            guarded-X11 route and after a verified owner close plus a parent-held
+            exit receipt for the exact Calc process generation. It scores no
+            caller path; expected values come from the parent-held preparation.
+            Without target-exit and trusted
+            call-owned save custody it returns unknown. The current Ctrl+S-only
+            profile cannot establish persisted workbook effect.
+            Call interface_guarded_calc_prepare to reserve the server-owned
+            artifact. When the opt-in launch route is configured, call
+            interface_guarded_calc_launch with that preparation call ID, inspect
+            its exact XRes candidate, and explicitly call
+            interface_guarded_review_window before this profile. The launch
+            operation retains launcher/process-group custody in the parent and
+            binds the reviewed window generation. Without launch configuration,
+            pass the preparation call ID here to bind the reserved artifact to
+            an already reviewed existing process/window. Calls without a
+            prepared artifact use the legacy local artifact path and cannot
+            establish parent pre-launch custody. This profile still does not
+            prove a trusted saved workbook effect.
+            """
+            from runtime.guarded_x11_v1.calc_profile_v1 import (
+                PROFILE_ID as OCR_PROFILE_ID)
+            from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                PROFILE_ID as G10_PROFILE_ID)
+            valid_bindings = (isinstance(bindings,dict) and set(bindings)=={'entry','save'}
+                and all(isinstance(bindings[name],dict)
+                    and set(bindings[name])=={'alias','offset'}
+                    and isinstance(bindings[name]['alias'],str)
+                    and isinstance(bindings[name]['offset'],list)
+                    and len(bindings[name]['offset'])==2
+                    and all(type(value) is int and value>=0
+                            for value in bindings[name]['offset'])
+                    for name in ('entry','save')))
+            if profile_id not in (OCR_PROFILE_ID, G10_PROFILE_ID) or not valid_bindings:
+                row={'status':'invalid_request','error':'CALC_PROFILE_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if profile_id == G10_PROFILE_ID and prepared_call_id is None:
+                row={'status':'invalid_request',
+                    'error':'G10_PARENT_ARTIFACT_REQUIRED',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if (type(blank_reviewed) is not bool or not blank_reviewed
+                    or type(reviewed_sequence) is not int or reviewed_sequence<=0
+                    or not re.fullmatch(r'[0-9a-f]{64}',reviewed_artifact_sha256)
+                    or not re.fullmatch(r'[\x21-\x7e]{1,128}',attempt_id)):
+                row={'status':'invalid_request','error':'CALC_REVIEW_OR_ATTEMPT_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if not window_lifecycle_enabled:
+                row={'status':'invalid_request',
+                    'error':'CALC_WINDOW_LIFECYCLE_REQUIRED',
+                    'detail':'start the owned guarded-X11 server with window lifecycle enabled',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if latest_calc_source_sequence != reviewed_sequence:
+                row={'status':'invalid_request',
+                    'error':'CALC_REVIEW_SOURCE_STALE',
+                    'detail':'reviewed sequence is not the latest source observed through this MCP session',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'release_confirmed':None,'effect_status':'unknown',
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            for name in ('entry','save'):
+                binding = bindings[name]
+                receipt = minted_calc_aliases.get(binding['alias'])
+                if (receipt is None
+                        or receipt['source_sequence'] != reviewed_sequence
+                        or receipt['offset'] != binding['offset']):
+                    row={'status':'invalid_request',
+                        'error':'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',
+                        'detail':f'{name} alias has no matching mint receipt in this MCP session',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'release_confirmed':None,'effect_status':'unknown',
+                        'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            arguments={'profile_id':profile_id,'bindings':bindings,
+                'reviewed_sequence':reviewed_sequence,
+                'reviewed_artifact_sha256':reviewed_artifact_sha256,
+                'blank_reviewed':blank_reviewed,'attempt_id':attempt_id,
+                'prepared_call_id':prepared_call_id}
+            return await submit('guarded_calc_compiled',arguments,False,False,
+                wait_for_result_ms=wait_for_result_ms)
     @server.tool()
     async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
             current_binding_revision: StrictInt, expires_at_ns: StrictInt,
@@ -295,9 +988,12 @@ def register_guarded_tools(server, submit):
             review_after_activation: StrictBool=False) -> CallToolResult:
         """Explicitly activate the registered target through ordinary admission.
 
-        Requires exact target window ID, latest delivered source sequence,
+        Requires exact target window ID, latest retained bridge source sequence,
         current binding revision and caller-supplied expiry on interface_clock's
-        host clock. EWMH activation must be supported by the window manager.
+        host clock. Recovery-cleared history requires a new observation. Pinned
+        source context, selected process generation and original expiry are
+        rechecked before the WM request; this is not atomic server acceptance
+        or a current-pixel guarantee. EWMH must be supported by the window manager.
         Sends no text/click. Success is a momentary focus
         check, not visual or task confirmation. After admitted or uncertain
         activation, explicitly review the window with guarded_review_window,
@@ -326,22 +1022,46 @@ def register_guarded_tools(server, submit):
         observation_refs=true references exact duplicate native image metadata at
         source.native within this response; image delivery is unchanged.
         """
-        return await submit('guarded_observe', {}, False, False, observation_refs=observation_refs)
+        nonlocal latest_calc_source_sequence
+        response = await submit('guarded_observe', {}, False, False,
+                                observation_refs=observation_refs)
+        receipt = _json_tool_result(response)
+        source = receipt.get('source') if isinstance(receipt,dict) else None
+        sequence = source.get('sequence') if isinstance(source,dict) else None
+        if (isinstance(receipt,dict) and receipt.get('status') == 'observed'
+                and type(sequence) is int and sequence > 0):
+            latest_calc_source_sequence = sequence
+            # Every new observation supersedes the caller's prior reviewed frame.
+            minted_calc_aliases.clear()
+        return response
 
     @server.tool()
     async def interface_guarded_mint(alias: StrictStr, source_sequence: StrictInt,
-                                    point: list[StrictInt], region_size: list[StrictInt]) -> CallToolResult:
+                                    point: list[StrictInt], region_size: list[StrictInt],
+                                    freshness_ms: Annotated[StrictInt, Field(ge=100,le=5000)]=1500) -> CallToolResult:
         """Name an explicitly image-grounded point from an exact delivered source.
 
         point=[screen_x,screen_y]; region_size=[width,height], each 4..96 pixels.
         Flat source regions refuse. Returns alias, offset and finite lifetime
         in this execution host's monotonic clock; compare with interface_clock.
-        Lifetime does not guarantee fresh pixels or admission; retained lookup
+        Freshness is bounded to 100..5000 ms; it does not guarantee current
+        pixels or admission. Retained lookup
         never renews it. After a pause, explicitly observe/review and ground a
         new alias if needed. Creates no input or semantic identity guarantee.
         """
-        return await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
-                            point=point,region_size=region_size),False,False)
+        minted_calc_aliases.pop(alias, None)
+        response = await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
+                            point=point,region_size=region_size,freshness_ms=freshness_ms),False,False)
+        receipt = _json_tool_result(response)
+        if (isinstance(receipt,dict) and receipt.get('status') == 'minted'
+                and receipt.get('alias') == alias
+                and source_sequence == latest_calc_source_sequence
+                and isinstance(receipt.get('offset'),list)
+                and len(receipt['offset']) == 2
+                and all(type(value) is int and value >= 0 for value in receipt['offset'])):
+            minted_calc_aliases[alias]={'source_sequence':source_sequence,
+                'offset':list(receipt['offset'])}
+        return response
 
     @server.tool()
     async def interface_guarded_mint_many(source_sequence: StrictInt,
@@ -358,9 +1078,28 @@ def register_guarded_tools(server, submit):
         Each successful reference includes its own finite lifetime in this host's
         monotonic clock. Reading retained results does not renew that deadline.
         """
-        return await submit('guarded_mint_many',{
+        references_payload=[ref.model_dump() for ref in references]
+        for reference in references_payload:
+            minted_calc_aliases.pop(reference['alias'],None)
+        response = await submit('guarded_mint_many',{
             'source_sequence':source_sequence,
-            'references':[ref.model_dump() for ref in references]},False,False)
+            'references':references_payload},False,False)
+        receipt = _json_tool_result(response)
+        if (isinstance(receipt,dict) and receipt.get('status') == 'minted'
+                and source_sequence == latest_calc_source_sequence
+                and isinstance(receipt.get('minted'),list)):
+            requested={reference['alias'] for reference in references_payload}
+            for minted in receipt['minted']:
+                if (isinstance(minted,dict) and minted.get('status','minted') == 'minted'
+                        and minted.get('alias') in requested
+                        and isinstance(minted.get('offset'),list)
+                        and len(minted['offset']) == 2
+                        and all(type(value) is int and value >= 0
+                                for value in minted['offset'])):
+                    minted_calc_aliases[minted['alias']]={
+                        'source_sequence':source_sequence,
+                        'offset':list(minted['offset'])}
+        return response
 
     @server.tool()
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],
@@ -368,7 +1107,8 @@ def register_guarded_tools(server, submit):
                                      observe_after: StrictBool=True,
                                      detail: Literal["full","brief"]="full",
                                      observation_refs: StrictBool=False,
-                                     feedback: InputFeedback | None=None) -> CallToolResult:
+                                     feedback: InputFeedback | None=None,
+                                     wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
         """Use a scoped alias once through fresh pixel guards and ordinary input admission.
 
         tail uses text, key_chord, wait_update or observe operations, within the
@@ -395,6 +1135,13 @@ def register_guarded_tools(server, submit):
         observation_refs=true additionally replaces exact duplicate image metadata
         with a local source.native reference. The reference layer is lossless;
         brief guard summaries remain lossy. Defaults keep the existing full shape.
+        Optional wait_for_result_ms limits the local response await, not input
+        execution/lease/cleanup. Pending names one queued/running original call;
+        it confirms neither release nor task success. The same worker can still
+        run after this response and retains its busy slot. Retrieve with
+        interface_results(call_id); never replay a pending/uncertain invocation.
+        Default null awaits the original terminal response. This is cooperative
+        scheduling, not a hard transport or physical-release time bound.
         """
         if feedback is not None and not observe_after:
             raise ValueError('feedback requires observe_after=true')
@@ -402,7 +1149,8 @@ def register_guarded_tools(server, submit):
                        interaction=interaction,observe_after=observe_after)
         if feedback is not None:
             arguments['feedback']=feedback.model_dump()
-        return await submit('guarded_input',arguments,False,False,detail,observation_refs)
+        options = {} if wait_for_result_ms is None else dict(wait_for_result_ms=wait_for_result_ms)
+        return await submit('guarded_input',arguments,False,False,detail,observation_refs,**options)
 
     @server.tool()
     async def interface_guarded_review_window(window_id: StrictInt) -> CallToolResult:
@@ -413,4 +1161,20 @@ def register_guarded_tools(server, submit):
         bridge's focused-window contract, not authenticated application identity
         or the transient-family inspection contract of persistent-x11 mode.
         """
-        return await submit('guarded_review_window',{'window_id':window_id},False,False)
+        nonlocal latest_calc_source_sequence
+        # Every review attempt revokes prior grounding; only a verified review
+        # may establish the source sequence used by the Calc profile.
+        latest_calc_source_sequence = None
+        minted_calc_aliases.clear()
+        response = await submit('guarded_review_window',{'window_id':window_id},False,False)
+        receipt = _json_tool_result(response)
+        review = receipt.get('review') if isinstance(receipt,dict) else None
+        source = review.get('source') if isinstance(review,dict) else None
+        sequence = source.get('sequence') if isinstance(source,dict) else None
+        if (isinstance(receipt,dict) and receipt.get('status') == 'reviewed'
+                and type(sequence) is int and sequence > 0):
+            latest_calc_source_sequence = sequence
+            # A successful review is a fresh source just like observe; old
+            # aliases cannot remain grounded after the reviewed frame changes.
+            minted_calc_aliases.clear()
+        return response

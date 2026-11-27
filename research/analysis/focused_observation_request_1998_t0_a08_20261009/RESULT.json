@@ -1,0 +1,56 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A08-20261009",
+  "audit_errors": [],
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_stdout_sha256": "380812bef6e94d9bbb6cf070f1a5308a0bef64b6a2a4925a599379238a33760f",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_stdout_sha256": "95d77bc66ccc2faa62b407a23460fe43a86d679a1320d73c22e229398b1518fe",
+  "case_count": 27664,
+  "decision_counts": {
+    "DECLARED_FOCUS": 16,
+    "FULL_FRAME": 16,
+    "REFUSE": 27632
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "focused_payload_bytes_saved_max": 97,
+  "focused_payload_bytes_saved_min": 92,
+  "focused_payload_bytes_saved_total": 1512,
+  "freeze_sha256": "599ae3d0e7a04cb100d4bd90cda85eb24a98c32cc36a0a902617b3cc857dc07d",
+  "mutation_controls": [
+    {
+      "detector_prefix": "coverage",
+      "name": "drop-row",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "evidence-pixels-or-metadata:",
+      "name": "corrupt-focused-pixels",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "evidence-pixels-or-metadata:",
+      "name": "corrupt-full-frame-pixels",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "action-authority:",
+      "name": "grant-action",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "frame-hash:",
+      "name": "wrong-frame-hash",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "decision:",
+      "name": "accept-stale",
+      "rejected": true
+    }
+  ],
+  "retries": 0,
+  "schema": "a08-result-v1",
+  "scope": "finite synthetic focused-observation request semantics only"
+}

@@ -1,0 +1,408 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s25",
+  "audited_utc": "2026-10-24T18:14:48.470642+00:00",
+  "classification": "FAIL_INDEPENDENT_READBACK_BOUND_5S",
+  "evidence_checks": {
+    "3860ms_pidfd_pause": true,
+    "all_up_at_delayed_horizon": true,
+    "attempt_and_commit_pins": true,
+    "caller_test_passed": true,
+    "commit_blob_runtime_cli_v1_mcp_server.py": true,
+    "commit_blob_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "commit_blob_runtime_guarded_x11_v1_process_identity.py": true,
+    "deps_manifest_hashes": true,
+    "exact_4s_transaction": true,
+    "harness_pinned": true,
+    "independent_readback_within_5s": false,
+    "network_none_and_readonly_mounts": true,
+    "old_and_fresh_effect_oracles": true,
+    "public_cancel_response_bound": true,
+    "release_before_deadline": true,
+    "runner_init_pinned": true,
+    "source_sha_runtime_cli_v1_mcp_server.py": true,
+    "source_sha_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "source_sha_runtime_guarded_x11_v1_process_identity.py": true,
+    "stage_manifest_hashes": true,
+    "unknown_and_replay_fence": true,
+    "wslc_runtime_cleanup": true,
+    "xkb_manifest_hashes": true,
+    "xres_identity_preflight": true,
+    "xvfb_process_terminated": true
+  },
+  "evidence_counts": {
+    "passed": 24,
+    "total": 25
+  },
+  "failed_evidence_checks": [
+    "independent_readback_within_5s"
+  ],
+  "observations": {
+    "container_removed": true,
+    "fresh_task_oracle": "pass",
+    "image_removed": true,
+    "independent_readback_after_cancel_start_ms": 5002.640632,
+    "late_horizon_after_cancel_start_ms": 8502.99614,
+    "observed_pause_ms": 3940.243379,
+    "old_task_oracle": "pass",
+    "public_cancel_response_ms": 309.201047,
+    "release_deadline_margin_ms": 7.613845,
+    "release_readback_from_admission_ms": 3992.386155,
+    "requested_pause_ms": 3860,
+    "resource_delta_from_r46": "WSLc settings requested CPU 2/memory 2048 MB/GPU disabled/network none; WSLc container API did not record Docker-only pids_limit or tmpfs settings.",
+    "runtime": "WSLc 3.0.3",
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_release_confirmed": false,
+    "runtime_replay_allowed": false,
+    "runtime_task_success": null,
+    "session_terminated": true,
+    "test_exit_code": 0
+  },
+  "raw_files": [
+    {
+      "bytes": 7631,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/audit_s25.py",
+      "sha256": "18dec5e4ab0ffcd5fc9209581ca5f515a49569f84c18c0208f7a8733d080b9f2"
+    },
+    {
+      "bytes": 1902,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/CONDITIONS.json",
+      "sha256": "0217a2875206303d26b388500f91dd75c1491b46c3673977420848a2ad38b2a1"
+    },
+    {
+      "bytes": 27114568,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/Microsoft.Windows.SDK.NET.dll",
+      "sha256": "e2e3ce9c4b967dcbbc2c6dcb89e952aa525fe8ec09aa240db9c5065f22e1f0d2"
+    },
+    {
+      "bytes": 7800648,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/runtimes/win-arm64/native/wslcsdk.dll",
+      "sha256": "447561431dc6dd71285d9ecb1abd12b7be20d940a17cfd6cd39b2ac8e91ca28b"
+    },
+    {
+      "bytes": 6644080,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/runtimes/win-x64/native/wslcsdk.dll",
+      "sha256": "3c7cf0af5315b500b54d4fd40c21cc5d81d8176dee25d361c354e93d93e65383"
+    },
+    {
+      "bytes": 2069,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/S25.deps.json",
+      "sha256": "cdffc2a980dfe98af832bb534c7e12876dd1008c48898eebf7ff1c3b73d1878b"
+    },
+    {
+      "bytes": 39424,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/S25.dll",
+      "sha256": "6aa7163b69b79222b12da2cd8d1813e736296e1a4aa74f3c2de27ba0c42561ae"
+    },
+    {
+      "bytes": 145408,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/S25.exe",
+      "sha256": "cf468038a3c523053a54a93b2b95df60480ee9bafcd61f372a0907f7e865216d"
+    },
+    {
+      "bytes": 14420,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/S25.pdb",
+      "sha256": "a8b82cbfc1f71a6730a9541210ece84b3435ba5420b75c6d805f8cbc19a171b4"
+    },
+    {
+      "bytes": 325,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/S25.runtimeconfig.json",
+      "sha256": "1e37b90d2683e3482072b1e51fcba0e8fd8fdb459f0312970532bc58cedc505e"
+    },
+    {
+      "bytes": 528944,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/WinRT.Runtime.dll",
+      "sha256": "bcf3a14e8712a90837fc5c0d8c8a24696af2bd7f74e9767597ec81ededfb23db"
+    },
+    {
+      "bytes": 169328,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/build-output/wslcsdkcs.dll",
+      "sha256": "c5642d06d4055ba72c2c6c8fec3cf0d608fbd5a9033ed27240f47b04e32c99c6"
+    },
+    {
+      "bytes": 198,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs",
+      "sha256": "9e76499c4e5cb623ad4889eaa99b1a53d9c970efcf902d8b096e78a19ee4285d"
+    },
+    {
+      "bytes": 145408,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/apphost.exe",
+      "sha256": "cf468038a3c523053a54a93b2b95df60480ee9bafcd61f372a0907f7e865216d"
+    },
+    {
+      "bytes": 6656,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/ref/S25.dll",
+      "sha256": "fa9b05a397af11271086092b008da61174635af775d44a6fc018826c6ca2c768"
+    },
+    {
+      "bytes": 6656,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/refint/S25.dll",
+      "sha256": "fa9b05a397af11271086092b008da61174635af775d44a6fc018826c6ca2c768"
+    },
+    {
+      "bytes": 1182,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.AssemblyInfo.cs",
+      "sha256": "1c21750f29023102bcbd962a87c655099014ab7e7cd160442afd0921715f43e8"
+    },
+    {
+      "bytes": 66,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.AssemblyInfoInputs.cache",
+      "sha256": "23b1cbf638504d9ff6b0f5a56292df2cca7db63e83670ce2d4852b88446dc276"
+    },
+    {
+      "bytes": 1532,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.assets.cache",
+      "sha256": "582afd68f78d37527c300fc52d1d2851f5821484832fd883af6d418b9722cb9b"
+    },
+    {
+      "bytes": 269,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.csproj.AssemblyReference.cache",
+      "sha256": "6288a8fbc6aa2b846a4974b93e13c11bb406847768ea28acab8733f9c412eb1b"
+    },
+    {
+      "bytes": 66,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.csproj.CoreCompileInputs.cache",
+      "sha256": "ab6812b22dbd198a01ddac01187ba045b3a4a9dbd2d9cda36cc9dd827d2af379"
+    },
+    {
+      "bytes": 5005,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.csproj.FileListAbsolute.txt",
+      "sha256": "0d2d20f845bd49b451a95b1c82c32acf9d20adc0a133be05961ce8a82823091b"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.csproj.Up2Date",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 39424,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.dll",
+      "sha256": "6aa7163b69b79222b12da2cd8d1813e736296e1a4aa74f3c2de27ba0c42561ae"
+    },
+    {
+      "bytes": 1291,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.GeneratedMSBuildEditorConfig.editorconfig",
+      "sha256": "6af17cfca38ec2b131320a69c6212e067f867bf38d0c1feeff75f95dd286b9c2"
+    },
+    {
+      "bytes": 66,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.genruntimeconfig.cache",
+      "sha256": "4e1e5704116388d4eebf47694ea869ec43bcc953408fa35a30f0ee9ff2dce331"
+    },
+    {
+      "bytes": 295,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.GlobalUsings.g.cs",
+      "sha256": "f3f134e9e825e3e7268090f58b1af2bda2de513f61a09c56f48b9b8d08612abc"
+    },
+    {
+      "bytes": 14420,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.pdb",
+      "sha256": "a8b82cbfc1f71a6730a9541210ece84b3435ba5420b75c6d805f8cbc19a171b4"
+    },
+    {
+      "bytes": 238,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/Debug/net9.0-windows10.0.26100.0/S25.sourcelink.json",
+      "sha256": "f3868b9dc4f3ea25a7a7289f0528980d02b4b0fee0fa837f1505e2b678487bb6"
+    },
+    {
+      "bytes": 5318,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/project.assets.json",
+      "sha256": "edcad6d7b4ba55a1b3032ddf35f533f3b8100b743479d8fd4f59cfe2a60a2a0d"
+    },
+    {
+      "bytes": 616,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/project.nuget.cache",
+      "sha256": "819c3d74a02a0a0df5aeea7f664babe9d4672e6b1ef2116915ea1775f4819db2"
+    },
+    {
+      "bytes": 3749,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/S25.csproj.nuget.dgspec.json",
+      "sha256": "e8538653f6ce71b2aa71b83236200d64a903192872f42ec2c9ae032a77d510b9"
+    },
+    {
+      "bytes": 1301,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/S25.csproj.nuget.g.props",
+      "sha256": "c7ccec664ccf77cc1d94d036d4b4ef7c6f1e10fa3780fbe724d25930693ff16b"
+    },
+    {
+      "bytes": 533,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/obj/S25.csproj.nuget.g.targets",
+      "sha256": "fa9a78a48c67276abac8edec3c488e1394bc0d3abb8d7e3d9d844f2998f9ee1a"
+    },
+    {
+      "bytes": 6674,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/Program.cs",
+      "sha256": "2ff47b5ccd41b58844d01b97f4f854e4ddb6863c9d23cefd2a4bf5297690772b"
+    },
+    {
+      "bytes": 436,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/harness/S25.csproj",
+      "sha256": "c7405739e40206cfe2c0dafe5a01f4721ce67efeac5c3dd46276c44550123948"
+    },
+    {
+      "bytes": 3,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/HARNESS-BUILD-EXIT-CODE.txt",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "bytes": 444,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/HARNESS-BUILD.log",
+      "sha256": "a32f5897c76d8b5233a1b8843791a8e951b68d649bf1d184357eea8735d9d0ff"
+    },
+    {
+      "bytes": 282,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/INPUT-READINESS-AUDIT.log",
+      "sha256": "d4fa9d32acc4db543a49eb6a954216f9ebd03ceefff743ecb0e473b51306969b"
+    },
+    {
+      "bytes": 314115,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/inputs/deps-manifest.json",
+      "sha256": "5328946e7af2816b3113245bc5e89390f33a13fb3cf6d34eea73f4ef211f86cc"
+    },
+    {
+      "bytes": 184532,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/inputs/stage-manifest.json",
+      "sha256": "b040cabac9c605a7590e5b6aab640f08bcb409b59550ecc65c29d274e947a8b1"
+    },
+    {
+      "bytes": 34226,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/inputs/xkb-manifest.json",
+      "sha256": "1496e615580fb1d2ec871328887f8790ef2eaea291d9955a040f85a9e65c20ac"
+    },
+    {
+      "bytes": 36062,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/inputs/xkb-materialization.json",
+      "sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673"
+    },
+    {
+      "bytes": 2264,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/INVOCATION-METADATA.json",
+      "sha256": "6d4fae83edde805abd2c59a03b805fcc8686ebab19dc4b7103276075b1b68250"
+    },
+    {
+      "bytes": 107,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/container-setup.json",
+      "sha256": "4013ff9eb1eedd5f72bc5215a7b30daec9e2405dc7d5ef7e537fc88baee5412e"
+    },
+    {
+      "bytes": 65,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/container.cid",
+      "sha256": "f69fa5afb473fe9a930e46eb74c338c9ce7caf8ae409b249482c382db9a26897"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/container.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 98,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/container.stdout.txt",
+      "sha256": "4686057f99d57c845475a82e85e55ee527fd37d131246498b038dfb1c894855f"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/preflight-status.txt",
+      "sha256": "9f56e761d79bfdb34304a012586cb04d16b435ef6130091a97702e559260a2f2"
+    },
+    {
+      "bytes": 506,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/resource-cleanup.json",
+      "sha256": "0df70b4ed909c5c98237af004089d20d44912955533933de11ca602ae2e8451b"
+    },
+    {
+      "bytes": 44053,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/result.json",
+      "sha256": "23aa3f7dc01425be141407712bcb0a14a70f8f7c471b0e9e70dcfffd63dca96e"
+    },
+    {
+      "bytes": 3029,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/result.observation.png",
+      "sha256": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef"
+    },
+    {
+      "bytes": 328,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/runner.stderr.txt",
+      "sha256": "ce3743449a6cc071f0f107ce55e49aa9a3fb21fba4537c1bb5228d9eacfb85a9"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/runner.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/test-exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "bytes": 65,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/trial-started.txt",
+      "sha256": "eaf7994667f897116ad7922137b73add2152065a6e9a46cca2aac508e32bed67"
+    },
+    {
+      "bytes": 3,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/wslc-host-harness-exit-code.txt",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "bytes": 10407,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/wslc-host-harness.log",
+      "sha256": "670f4906c7e9f865f21fca82081d93026760d47b798c30a9036f9500bf4ada66"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xauth.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xauth.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 291,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb-argv.json",
+      "sha256": "daa9798ac4b4eff80035b1fb0ca3550f9599892afbf8b7e91bd5eb32d95b35d9"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb-pid.txt",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb-process-absent-after-run.txt",
+      "sha256": "a9ac0c3ac83c40e1b4c3416066d63d324ee9f8c144641dfeed72d140b6557245"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb-process-identity-preflight.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 85,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb-process-identity-preflight.txt",
+      "sha256": "13d0c5504b2daa30b04e8f350bc1336bcfdc487c8486e8c6c05dd49723010e53"
+    },
+    {
+      "bytes": 3522,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/output/xvfb.log",
+      "sha256": "f55e2a6894d1dfbec3e5fcb281a8d1d729dfe04923cdfe02ca3a4e801739b3f2"
+    },
+    {
+      "bytes": 2399,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/PREREGISTRATION.json",
+      "sha256": "193299fb3bce70196bf014c5cadf1f75c85bf2ac0e8ff3e252a3e45bd9fe75ef"
+    },
+    {
+      "bytes": 361,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/runner/container-init.sh",
+      "sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e"
+    },
+    {
+      "bytes": 4514,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s25/runner/run-container.py",
+      "sha256": "067a45b71e048b6e2e155994bb7cdd6e7a93e5e473c1a0a005c6f6e2fded78cf"
+    }
+  ],
+  "schema": "wslc-s22-boundary-audit-v1"
+}

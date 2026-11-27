@@ -1,0 +1,33 @@
+{
+  "packet": "late-down-after-release-counterexample-20261019-r01",
+  "source_main_sha": "168200eb43dd0f9144b3ed4aef551387674c7bfd",
+  "platform": "Windows 10 build 26300",
+  "python": "3.11.9",
+  "scope": "standard MCP owned-process caller composed with Fake X relay; one synthetic late old-connection KeyPress after injected separate empty release readback",
+  "test": "runtime.cli_v1.test_mcp_relay_composition.TestMcpRelayComposition.test_standard_owned_caller_keeps_unknown_after_fake_late_down",
+  "source_test_blob": "ea1969e67ba8576a918fbcbc5158d2747d6851fa",
+  "commands": [
+    "python -m unittest runtime.cli_v1.test_mcp_relay_composition.TestMcpRelayComposition.test_standard_owned_caller_keeps_unknown_after_fake_late_down",
+    "python -O -m unittest runtime.cli_v1.test_mcp_relay_composition.TestMcpRelayComposition.test_standard_owned_caller_keeps_unknown_after_fake_late_down"
+  ],
+  "expected": "Caller and terminal remain UNKNOWN/unconfirmed after the modeled late DOWN; replay is false and task_success is null.",
+  "outcome": {
+    "normal": "PASS, 1 test",
+    "optimized": "PASS, 1 test",
+    "full_composition_module_normal": "PASS, 3 tests",
+    "full_composition_module_optimized": "PASS, 3 tests",
+    "owner_and_fence_normal": "PASS, 40 tests",
+    "owner_and_fence_optimized": "PASS, 40 tests",
+    "parser_and_relay_normal": "PASS, 30 tests",
+    "parser_and_relay_optimized": "PASS, 30 tests"
+  },
+  "event_order": "Explicit model event indexes: injected separate release readback precedes synthetic late queued request delivery. This is modeled order, not observed server protocol order.",
+  "first_attempt": "Retained normal-clock-resolution-first-attempt.txt: monotonic_ns returned equal adjacent values and a timestamp-order assertion failed; corrected test asserts explicit event indexes.",
+  "limitations": [
+    "Synthetic Fake X queue, injected disconnect, and injected release readback only.",
+    "No live X server or server-side ordering fence was observed.",
+    "No physical operating-system key-up or bounded physical release was measured.",
+    "No independent product-application task effect, MAP01 result, or general recovery was tested.",
+    "No WSLc, Docker, Xvfb, desktop input, or experiment allocation was used."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "allocation": "local-cached-image-construction-r03-positive-control-100ms-20261110",
+  "condition": {
+    "delay_ms": 100,
+    "fixture_direct_delayed_key": "b",
+    "runtime_key": "a",
+    "tracked_delayed_second_press": false
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "purpose": "Positive control for whether the Xvfb fixture detects a promptly delivered untracked delayed request; not a matched comparison with r01.",
+  "schema": "agent-interface/xvfb-fixture-injection-positive-control-prereg-v1",
+  "scope_limit": "Private Xvfb/synthetic app only; test fixture directly injects b. No runtime-tracked delayed b, product, or MAP01 claim.",
+  "source_sha256": "85eff51e95895284784daa49b06b33257b562b9b9d63210cd93ec9197bdc9716",
+  "stop_rule": "one attempt; retain all output; no retry.",
+  "working_diff_sha256": "dd0738f0614883327ecf8cf83f5578c520800e179cf08963d19a8716b642b6a6"
+}

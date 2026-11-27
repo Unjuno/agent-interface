@@ -1,0 +1,90 @@
+{
+  "auditor": {
+    "artifact_time": {
+      "artifact_written_local": "2026-10-09T02:33:13.010849100+09:00",
+      "local_timezone": "Asia/Tokyo"
+    },
+    "command": [
+      "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/Users/taka/Documents/Codex/2026-10-09/v39-hud-anchor-a02/research/doom/astra_v39_video_health_timing_a01_20261009/audit.py",
+      "--git-root",
+      "/Users/taka/Documents/Codex/2026-10-09/v39-hud-anchor-a02",
+      "--wad",
+      "/tmp/freedoom2-main.wad"
+    ],
+    "exact_process_end_utc": null,
+    "exact_process_start_utc": null,
+    "exit_code": 0,
+    "invocations": 1,
+    "result_sha256": "fe11f6d1596e620b3edc5eac977bcebf1b8b64df7d2efad36fe97368a01f67d1",
+    "runner_reported_elapsed_seconds": 7.0,
+    "sha256": "2d35f573b3cc2c27ab0491ac119b7133e4dfbd36ffa95037a7dbe9615e0471f6",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "591dba323296887af81f76e70463be2bd6f2ecde0b9b95652d01e33a2c116427"
+  },
+  "candidate": {
+    "artifact_time": {
+      "artifact_written_local": "2026-10-09T02:32:59.300925189+09:00",
+      "local_timezone": "Asia/Tokyo"
+    },
+    "command": [
+      "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/Users/taka/Documents/Codex/2026-10-09/v39-hud-anchor-a02/research/doom/astra_v39_video_health_timing_a01_20261009/candidate.py",
+      "--git-root",
+      "/Users/taka/Documents/Codex/2026-10-09/v39-hud-anchor-a02",
+      "--wad",
+      "/tmp/freedoom2-main.wad"
+    ],
+    "exact_process_end_utc": null,
+    "exact_process_start_utc": null,
+    "exit_code": 0,
+    "invocations": 1,
+    "result_sha256": "eafcad5641b72d918ce541297e63b1b91f0ee337afe2d86e04a5609aab7041b0",
+    "runner_reported_elapsed_seconds": 3.4,
+    "sha256": "0e172b4af44f7c50336732f8f77ed71e3047b93467c3722ded5730db62aec34e",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "07e6f70abafddc6f0fed3e3cb8d93614586421f37968c94a36ed68bdc2cd6cbe",
+    "timing_note": "The executor returned elapsed duration but its wrapper did not capture wall-clock invocation start/end. Result-file modification time records artifact write, not an independently measured process boundary."
+  },
+  "custody_status": "PASS_ARTIFACT_HASHES_WITH_START_TIME_GAP",
+  "execution_id": "astra-v39-video-health-timing-a01-20261009",
+  "external_inputs": {
+    "events_sha256": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "report_sha256": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "source_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+    "video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "wad_source": "https://github.com/Farama-Foundation/ViZDoom/blob/main/src/freedoom2.wad"
+  },
+  "freeze_sha256": "d04964834196e00e45863c29534b13cd56d55c2041bf1190ae2a003a64102693",
+  "frozen_base_commit": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "host": {
+    "container_used": false,
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.14",
+    "resource_load_snapshot": "not recorded"
+  },
+  "live_or_side_effecting_actions": {
+    "game_or_gui_launched": false,
+    "model_calls": 0,
+    "os_input_emitted": false,
+    "running_vm_entered_or_changed": false
+  },
+  "observed_result": {
+    "audit_status": "PASS_AUDIT",
+    "auditor_retries": 0,
+    "candidate_retries": 0,
+    "candidate_status": "PASS_POSTHOC_EXTRACTION",
+    "rows": 85,
+    "unknown_rows": 0
+  },
+  "postrun_source_continuity": {
+    "candidate_rerun": false,
+    "latest_main_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+    "receipt": "CURRENT_MAIN_CONTINUITY.json",
+    "source_blobs_unchanged": true
+  },
+  "schema": "astra-video-health-timing-a01-run-record-v1",
+  "scope": "Host-only post-hoc analysis. The missing exact invocation timestamps and unknown video/event synchronization are limitations; neither may be inferred from artifact write times."
+}

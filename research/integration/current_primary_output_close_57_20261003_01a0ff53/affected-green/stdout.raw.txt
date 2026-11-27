@@ -1,0 +1,288 @@
+TAP version 13
+# Subtest: silent close rejects returned write and retains accepted work
+ok 1 - silent close rejects returned write and retains accepted work
+  ---
+  duration_ms: 5.58275
+  type: 'test'
+  ...
+# Subtest: silent close rejects busy write and retains accepted work
+ok 2 - silent close rejects busy write and retains accepted work
+  ---
+  duration_ms: 2.929625
+  type: 'test'
+  ...
+# Subtest: completed write remains successful after later close
+ok 3 - completed write remains successful after later close
+  ---
+  duration_ms: 1.316958
+  type: 'test'
+  ...
+# Subtest: callback error remains the same first object after close
+ok 4 - callback error remains the same first object after close
+  ---
+  duration_ms: 1.665459
+  type: 'test'
+  ...
+# Subtest: already destroyed output rejects without another write call
+ok 5 - already destroyed output rejects without another write call
+  ---
+  duration_ms: 1.307875
+  type: 'test'
+  ...
+# Subtest: numbered commands return exact file/text descriptors with no image encoding
+ok 6 - numbered commands return exact file/text descriptors with no image encoding
+  ---
+  duration_ms: 2.953208
+  type: 'test'
+  ...
+# Subtest: commands arriving while outstanding are rejected rather than queued
+ok 7 - commands arriving while outstanding are rejected rather than queued
+  ---
+  duration_ms: 1.699417
+  type: 'test'
+  ...
+# Subtest: EOF waits for the already committed command without replaying it
+ok 8 - EOF waits for the already committed command without replaying it
+  ---
+  duration_ms: 0.694791
+  type: 'test'
+  ...
+# Subtest: malformed JSON is refused without invoking exchange or consuming a command
+ok 9 - malformed JSON is refused without invoking exchange or consuming a command
+  ---
+  duration_ms: 0.7875
+  type: 'test'
+  ...
+# Subtest: command error reports uncertainty and state without retry
+ok 10 - command error reports uncertainty and state without retry
+  ---
+  duration_ms: 0.444209
+  type: 'test'
+  ...
+# Subtest: output failure rejects the stream owner after one completed command
+ok 11 - output failure rejects the stream owner after one completed command
+  ---
+  duration_ms: 0.730916
+  type: 'test'
+  ...
+# Subtest: config refuses unknown routes and fields before starting a host
+ok 12 - config refuses unknown routes and fields before starting a host
+  ---
+  duration_ms: 0.198583
+  type: 'test'
+  ...
+# Subtest: terminal output refuses before starting a relay or allocating its evidence
+ok 13 - terminal output refuses before starting a relay or allocating its evidence
+  ---
+  duration_ms: 0.19325
+  type: 'test'
+  ...
+# Subtest: startup output failure keeps original exception, closes one relay and never writes again
+ok 14 - startup output failure keeps original exception, closes one relay and never writes again
+  ---
+  duration_ms: 52.314042
+  type: 'test'
+  ...
+# Subtest: failed review is correlated to its consumed command without a host call or replay
+ok 15 - failed review is correlated to its consumed command without a host call or replay
+  ---
+  duration_ms: 2.105417
+  type: 'test'
+  ...
+# Subtest: pre-admission envelope error keeps requested id distinct from unconsumed next id
+# STARTUP_EXCHANGE_WITNESS {"phase":"healthy","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-gFVhKw","hookCalls":1,"errorObserved":false,"statuses":["ready","terminal"],"rows":[{"schema":"agent-interface/primary-stdio-v1","status":"ready","state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}},{"schema":"agent-interface/primary-stdio-v1","status":"terminal","exit":{"code":0,"signal":null},"state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}}],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":62991,"ppid":62990},"fixtureExit":{"pid":62991,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+# STARTUP_EXCHANGE_WITNESS {"phase":"fault","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-bmkmy0","hookCalls":1,"errorObserved":true,"statuses":[],"rows":[],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":62993,"ppid":62992},"fixtureExit":{"pid":62993,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+ok 16 - pre-admission envelope error keeps requested id distinct from unconsumed next id
+  ---
+  duration_ms: 0.559666
+  type: 'test'
+  ...
+# Subtest: malformed command identity stays bounded and does not become a valid correlation
+ok 17 - malformed command identity stays bounded and does not become a valid correlation
+  ---
+  duration_ms: 0.321375
+  type: 'test'
+  ...
+# Subtest: input read failure waits for an accepted command and preserves its result
+ok 18 - input read failure waits for an accepted command and preserves its result
+  ---
+  duration_ms: 54.743792
+  type: 'test'
+  ...
+# Subtest: input read failure before a command rejects through the owned transport path
+ok 19 - input read failure before a command rejects through the owned transport path
+  ---
+  duration_ms: 53.987167
+  type: 'test'
+  ...
+# Subtest: whole owner retains ready_input failure and observes its original relay exit
+ok 20 - whole owner retains ready_input failure and observes its original relay exit
+  ---
+  duration_ms: 103.6245
+  type: 'test'
+  ...
+# Subtest: whole owner retains ready_output failure and observes its original relay exit
+ok 21 - whole owner retains ready_output failure and observes its original relay exit
+  ---
+  duration_ms: 100.29525
+  type: 'test'
+  ...
+# Subtest: whole owner retains terminal_output failure and observes its original relay exit
+ok 22 - whole owner retains terminal_output failure and observes its original relay exit
+  ---
+  duration_ms: 101.027083
+  type: 'test'
+  ...
+# Subtest: startup exchange creation healthy control publishes ready and terminal
+ok 23 - startup exchange creation healthy control publishes ready and terminal
+  ---
+  duration_ms: 103.104541
+  type: 'test'
+  ...
+# Subtest: startup exchange creation failure never publishes ready
+ok 24 - startup exchange creation failure never publishes ready
+  ---
+  duration_ms: 102.613625
+  type: 'test'
+  ...
+# Subtest: blocked busy output bounds response work for a batch of rejected commands
+ok 25 - blocked busy output bounds response work for a batch of rejected commands
+  ---
+  duration_ms: 3.048958
+  type: 'test'
+  ...
+# Subtest: overload preserves the committed result before rejecting the stream owner
+ok 26 - overload preserves the committed result before rejecting the stream owner
+  ---
+  duration_ms: 1.3525
+  type: 'test'
+  ...
+# Subtest: separately observed busy replies remain available during one committed command
+ok 27 - separately observed busy replies remain available during one committed command
+  ---
+  duration_ms: 1.327292
+  type: 'test'
+  ...
+# Subtest: first busy failure survives later input error
+ok 28 - first busy failure survives later input error
+  ---
+  duration_ms: 66.684792
+  type: 'test'
+  ...
+# Subtest: first busy failure survives later output error
+ok 29 - first busy failure survives later output error
+  ---
+  duration_ms: 59.241667
+  type: 'test'
+  ...
+# Subtest: ordered same-clock events separate transport, presentation and caller review before next send
+ok 30 - ordered same-clock events separate transport, presentation and caller review before next send
+  ---
+  duration_ms: 148.121917
+  type: 'test'
+  ...
+# Subtest: public capture review joins the same host timeline without a fabricated source sequence
+ok 31 - public capture review joins the same host timeline without a fabricated source sequence
+  ---
+  duration_ms: 92.036125
+  type: 'test'
+  ...
+# Subtest: failed instrumentation before send emits no request and transport remains closable
+ok 32 - failed instrumentation before send emits no request and transport remains closable
+  ---
+  duration_ms: 47.889291
+  type: 'test'
+  ...
+# Subtest: presentation failure is retained as a started-only boundary and blocks later action
+ok 33 - presentation failure is retained as a started-only boundary and blocks later action
+  ---
+  duration_ms: 88.781791
+  type: 'test'
+  ...
+# Subtest: invalid JSON does not consume an attempt and foreign review cannot gain an event
+ok 34 - invalid JSON does not consume an attempt and foreign review cannot gain an event
+  ---
+  duration_ms: 91.014333
+  type: 'test'
+  ...
+# Subtest: timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+ok 35 - timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+  ---
+  duration_ms: 302.720375
+  type: 'test'
+  ...
+# Subtest: opt-in image reuse requires explicit presented review and retains original base
+ok 36 - opt-in image reuse requires explicit presented review and retains original base
+  ---
+  duration_ms: 520.766
+  type: 'test'
+  ...
+# Subtest: unpresented review cannot acknowledge an image base
+ok 37 - unpresented review cannot acknowledge an image base
+  ---
+  duration_ms: 135.692625
+  type: 'test'
+  ...
+# Subtest: reference presentation failure blocks actions and cannot be treated as delivered
+ok 38 - reference presentation failure blocks actions and cannot be treated as delivered
+  ---
+  duration_ms: 142.888416
+  type: 'test'
+  ...
+# Subtest: a changed PNG is forwarded and invalidates the previous acknowledged base
+ok 39 - a changed PNG is forwarded and invalidates the previous acknowledged base
+  ---
+  duration_ms: 189.259959
+  type: 'test'
+  ...
+# Subtest: reviewed image reference preserves current MCP error status
+ok 40 - reviewed image reference preserves current MCP error status
+  ---
+  duration_ms: 140.802417
+  type: 'test'
+  ...
+# Subtest: returned local attempt selects retained reply even when relay IDs are reused
+ok 41 - returned local attempt selects retained reply even when relay IDs are reused
+  ---
+  duration_ms: 93.47475
+  type: 'test'
+  ...
+# Subtest: sendPresented delivers typed MCP refusal before resolving and never retries
+ok 42 - sendPresented delivers typed MCP refusal before resolving and never retries
+  ---
+  duration_ms: 93.398792
+  type: 'test'
+  ...
+# Subtest: sendPresented owns the whole send/display interval and wait returns the original promise
+ok 43 - sendPresented owns the whole send/display interval and wait returns the original promise
+  ---
+  duration_ms: 138.391041
+  type: 'test'
+  ...
+# Subtest: sendPresented checks delivery callbacks before dispatching input
+ok 44 - sendPresented checks delivery callbacks before dispatching input
+  ---
+  duration_ms: 49.258959
+  type: 'test'
+  ...
+# Subtest: sendPresented presentation failure preserves the reply and blocks subsequent input
+ok 45 - sendPresented presentation failure preserves the reply and blocks subsequent input
+  ---
+  duration_ms: 94.8135
+  type: 'test'
+  ...
+# Subtest: sendPresented snapshots callbacks before its request can wait
+ok 46 - sendPresented snapshots callbacks before its request can wait
+  ---
+  duration_ms: 93.527417
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2534.350792

@@ -1,0 +1,169 @@
+{
+  "authority_granted": false,
+  "calc_target_lifecycle": [
+    {
+      "prepared_call_id": "900e46c5493b422685af9dde7283f0d1",
+      "process_group_cleanup": {
+        "clean_exit_verified": false,
+        "members": [],
+        "replay_allowed": false,
+        "schema": "agent-interface/calc-process-group-cleanup-v1",
+        "signals_sent": [
+          "SIGTERM"
+        ],
+        "status": "terminated",
+        "task_success": null,
+        "verified_empty": true
+      },
+      "target_process_exit_receipt": {
+        "reason": "forced_cleanup_is_not_clean_exit",
+        "replay_allowed": false,
+        "status": "unknown",
+        "task_success": null
+      }
+    }
+  ],
+  "call_directory": "/evidence/r90-a01/server-output/6410b09645ff489ea10e621ae55bda35",
+  "call_id": "6410b09645ff489ea10e621ae55bda35",
+  "connection_close_attempted": true,
+  "owner_process_exitcode": 0,
+  "owner_process_retired": true,
+  "release_attempted": false,
+  "release_confirmed": null,
+  "restart_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 1,
+    "calc_process_group_cleanup": {
+      "clean_exit_verified": false,
+      "members": [],
+      "replay_allowed": false,
+      "schema": "agent-interface/calc-process-group-cleanup-v1",
+      "signals_sent": [
+        "SIGTERM"
+      ],
+      "status": "terminated",
+      "task_success": null,
+      "verified_empty": true
+    },
+    "calc_process_group_custody": {
+      "expected_members": {
+        "2242": 159985,
+        "2257": 160067
+      },
+      "launcher": {
+        "pid": 2242,
+        "start_ticks": 159985
+      },
+      "pgid": 2242,
+      "schema": "agent-interface/calc-process-group-custody-v1",
+      "session_id": 2242,
+      "target": {
+        "pid": 2257,
+        "start_ticks": 160067
+      }
+    },
+    "calc_process_group_custody_history": [
+      {
+        "custody": {
+          "expected_members": {
+            "2242": 159985,
+            "2252": 159986
+          },
+          "launcher": {
+            "pid": 2242,
+            "start_ticks": 159985
+          },
+          "pgid": 2242,
+          "schema": "agent-interface/calc-process-group-custody-v1",
+          "session_id": 2242,
+          "target": {
+            "pid": 2252,
+            "start_ticks": 159986
+          }
+        },
+        "observed_monotonic_ns": 1599867503296,
+        "transition": "initial"
+      },
+      {
+        "argv": [
+          "/usr/lib/libreoffice/program/soffice.bin",
+          "-env:UserInstallation=file:///evidence/r90-a01/server-output/900e46c5493b422685af9dde7283f0d1/calc-launch-profile",
+          "--calc",
+          "/evidence/r90-a01/server-output/900e46c5493b422685af9dde7283f0d1/task-artifact.fods",
+          "--nologo",
+          "--nodefault",
+          "--nofirststartwizard",
+          "--norestore"
+        ],
+        "authority_granted": false,
+        "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+        "input_dispatched": false,
+        "observed_monotonic_ns": 1600794589677,
+        "previous_target": {
+          "pid": 2252,
+          "start_ticks": 159986
+        },
+        "replay_allowed": false,
+        "target": {
+          "pid": 2257,
+          "start_ticks": 160067
+        },
+        "task_success": null,
+        "transition": "pre_review_gui_child_replacement"
+      }
+    ],
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:b72647c35d3a4ac9a46eb587bf5c948e",
+    "compiled_surface": "x11-window-8389410",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 1,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": false,
+      "exitcode": 0,
+      "liveness_observed_monotonic_ns": 1608259511842,
+      "pid": 2238,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 4194304
+    },
+    "owner_process_pid": 2238,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 4194304,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "retention_mode": "files",
+    "review_required": false,
+    "session_id": "f2f078f267d74726b9d813a67740f0a0",
+    "state": "closed",
+    "target": "calc",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": true,
+      "thread_alive": true
+    },
+    "targets": {
+      "calc": 8389410
+    },
+    "window_lifecycle": true
+  },
+  "session_id": "f2f078f267d74726b9d813a67740f0a0",
+  "status": "closed",
+  "verified": true
+}

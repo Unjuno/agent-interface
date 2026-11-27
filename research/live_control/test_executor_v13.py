@@ -2,6 +2,7 @@ import json
 import threading
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 import sys
 
@@ -33,6 +34,75 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_unverified_release_preserves_original_execution_error(self):
+        backend, events = Backend(), []
+        terminal_ready = threading.Event()
+        def execute(*_args):
+            raise RuntimeError('rejected receipt: {"owner_id":"unexpected"}')
+        backend.execute = execute
+        backend.release_all = lambda: {"verified": False, "keys_down": ["a"]}
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_ready.set()
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cover-1", [{"op": "hold"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_ready.wait(3))
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            self.assertEqual(terminal["status"], "failed")
+            self.assertFalse(terminal["release"]["verified"])
+            self.assertIn("rejected receipt", terminal["error"])
+            self.assertIn("unexpected", terminal["error"])
+            self.assertIn("input release not verified", terminal["error"])
+        finally:
+            executor.close()
+
+    def test_renewal_expiring_during_accepted_publication_never_starts_input(self):
+        backend, events = Backend(), []
+        wall = time.perf_counter_ns()
+        current = [wall]
+        deadline = wall + 1_000_000_000
+
+        def emit(event):
+            events.append(event)
+            if event["event"] == "accepted":
+                current[0] = deadline
+
+        executor = Executor(backend, emit)
+        try:
+            with patch("executor_v12.time.perf_counter_ns", side_effect=lambda: current[0]):
+                executor.submit("cover-0-renew-1", [{"op": "hold"}], 1, wall + 5_000_000_000,
+                                admission_deadline_ns=deadline)
+            self.assertFalse(backend.started.is_set())
+            self.assertEqual([event["event"] for event in events], ["accepted", "terminal"])
+            self.assertEqual(events[-1]["status"], "cancelled")
+            self.assertEqual(events[-1]["steps_completed"], 0)
+        finally:
+            executor.close()
+
+    def test_renewal_expiring_in_backend_validation_never_admits(self):
+        backend, events = Backend(), []
+        wall = time.perf_counter_ns()
+        current = [wall]
+        deadline = wall + 1_000_000_000
+
+        def validate(_):
+            current[0] = deadline
+
+        backend.validate = validate
+        executor = Executor(backend, events.append)
+        try:
+            with patch("executor_v12.time.perf_counter_ns", side_effect=lambda: current[0]):
+                with self.assertRaisesRegex(ValueError, "admission deadline expired"):
+                    executor.submit("cover-0-renew-1", [{"op": "hold"}], 1, wall + 5_000_000_000,
+                                    admission_deadline_ns=deadline)
+            self.assertFalse(backend.started.is_set())
+            self.assertEqual(events, [])
+        finally:
+            executor.close()
+
     def test_interruption_exceptions_preserve_worker_release_custody(self):
         publication = {
             "schema": "release-batch-delivery-v1", "identifier": "interrupted-up",

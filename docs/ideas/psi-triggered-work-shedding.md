@@ -1,0 +1,6 @@
+# PSI-triggered work shedding
+
+- **Status:** On hold after a consumed finite-method allocation; no pressure experiment ran.
+- **Source:** Issue [#8488](https://github.com/Unjuno/agent-interface/issues/8488), successor to [#5557](https://github.com/Unjuno/agent-interface/issues/5557).
+- **Idea:** Compare PSI memory-stall triggers with fixed concurrency, queue/deadline, and free-memory policies while preserving mandatory verification, freshness obligations, and retained evidence.
+- **Outcome:** A01's frozen candidate and auditor both used an inclusive completion boundary although the protocol defined an exclusive deadline. A read-only reconstruction found 8/32 rows differed. Corrected primary-trace misses were fixed=4, queue/deadline=3, free-memory=4, and PSI=1; PSI therefore failed the preregistered zero-miss gate. The disposition is `HOLD_DEADLINE_SEMANTICS_MISMATCH`; the earlier `NO_RESIDUAL` was withdrawn. No candidate/auditor rerun occurred. OrbStack preflight stopped before any container or T1 pressure experiment. The metric qualification for `deferred_ticks` also says that field double-counts unfinished optional jobs and is not quantitative evidence. Merged [PR #8491](https://github.com/Unjuno/agent-interface/pull/8491) preserves the correction. This is neither a runtime change nor evidence of OOM prevention or shared-host safety.

@@ -1,0 +1,66 @@
+test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) ... 
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='admission') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='factory') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='identity') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable_identity') ... FAIL
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='admission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '23fb1a4282024de6b6ff470b7cacd6d8', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='factory')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '230692cd228345359c920c2c5294eb10', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': 'fcf5615470ea4d23aeef0910d451a679', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': 'f48b5e34b51940dcbe9db478cb488534', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable_identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '0764031dcfb54412b3a6255023254a5b', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.100s
+
+FAILED (failures=5)

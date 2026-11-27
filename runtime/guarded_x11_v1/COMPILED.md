@@ -1,5 +1,14 @@
 # Bounded compiled methods over the shared X11 bridge
 
+The public MCP composition route is described in the
+[standard MCP guide](../cli_v1/MCP.md#public-compiled-x11-method). It accepts a
+declarative exact-pixel profile rather than executable Python callbacks and is
+only registered on the owned-process guarded caller. That narrows the public
+input surface; it does not make pixel rules an independent oracle or authorize
+the application task result. The MCP composition tests use Fake X and must not
+be reported as live GUI, MAP01, physical release, recovery or efficiency
+evidence.
+
 `runtime.guarded_x11_v1.compiled.run` connects the existing shared
 `runtime.core_v1.compiled_gui` graph to a caller-owned `NativeHandleBridge`.
 This is an opt-in portable Python API for Linux/X11. It imports no research
@@ -49,6 +58,16 @@ not an independent oracle and not a generic vision/OCR service. Scope/sequence
 changes in either callback prevent continuation or completion. They are
 synchronous per-iteration reads, not installed or background sensors.
 
+When a fresh post-action capture has the same evidence digest as the pre-action
+capture, the graph normally yields `SAFE_YIELD / no_progress` before calling
+the effect verifier. A caller may explicitly provide
+`verify_unchanged_effect` for actions whose effect can be checked without a
+visible frame change. That callback runs only on the unchanged-digest path and
+must independently establish the action's intended effect; the default path
+remains unchanged. The registered Calc profile opts in only to retain the
+nonvisual Save-request receipt and returns `unavailable`, so this path does not
+claim a persisted workbook effect or authorize another action.
+
 Every graph iteration retains a fresh native image and metadata through the
 bridge. Its output directory also retains the fixed plan, graph events,
 reference resolutions, admissions, full input receipts, effect verdicts and
@@ -60,6 +79,24 @@ perception exceptions are retained, then returned by the graph as
 completed/uncertain input before choosing a new action. Failures outside the
 observation boundary propagate after retention. There is no automatic retry or
 release claim when an execution supplies no actual release evidence.
+
+If saving the final graph receipt itself fails, `run` returns an in-memory
+`RUNTIME_FAILED / execution_failed` receipt, marks
+`raw_evidence_retention=failed`, records the retention failure stage and error
+type, and sets `replay_allowed=false`. A prior `TASK_SUCCEEDED` verdict is
+downgraded; the returned critical-event tail identifies the failed runtime
+receipt write. This makes the outcome available to the caller but does not make
+that final receipt durable. Inspect any retained native execution/release
+evidence and independently observe the target before deciding what to do next.
+
+When the first graph observation carries `process_generation` or
+`window_generation`, the adapter pins those values for the invocation. A later
+change or missing value yields `SAFE_YIELD / association_changed`; the adapter
+does not pass that capture to perception, effect verification or another input.
+This closes a case where the same XID could be reused after an action and the
+new process's pixels could otherwise be mistaken for that action's effect.
+If a session does not supply generation fields, this pin adds no generation
+qualification; the caller must not describe that run as generation-verified.
 
 `TASK_SUCCEEDED` is a local graph verdict. Independently score application task
 and collateral effects after the controller is terminal. Method deadline
@@ -117,6 +154,16 @@ renews authority. After a model wait, use the ordinary target/dependency review
 and admission; preserve a refusal instead of replaying input with a longer lease.
 A useful visible predicate is separate from independently scored persisted effects.
 
+The synchronous bridge call cannot be preempted by the method budget. If an
+input callback returns after that budget, the graph retains the returned action
+and actual release receipt, marks its effect pending, and stops before another
+effect observation or input. The focused fake-bridge regression exercises this
+ordering in normal and optimized Python; it does not prove a native server will
+return, that an OS-level release happens by the deadline, or that application
+effects are correct. Resolve any such pending effect through explicit authorized
+observation and recovery; never infer task success or replay permission from the
+late receipt.
+
 ## Native cleanup receipts before execution
 
 Backend validation may refuse a program before execution and return its verified
@@ -154,6 +201,16 @@ exercised the actual capture binding change and returned this typed receipt.
 After explicit primary modal review/new grounding/confirmation, the independently
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
+
+## Callback receipt failures
+
+Current callback receipt behavior is documented in the
+[source-bound #7954 convergence](../../research/integration/compiled_callback_convergence_20261016/README.md).
+Ordinary verifier exceptions retain a scoped adapter witness and return a typed
+core failure with known prefix/release. Post-input journal failure stops later
+input and retains in-memory failure evidence, including paired terminal sink
+failure. Pre-input journal exceptions still propagate. These receipts do not
+establish durable publication, independent application effects or recovery.
 
 ## Failed Inkscape keyboard transfer
 

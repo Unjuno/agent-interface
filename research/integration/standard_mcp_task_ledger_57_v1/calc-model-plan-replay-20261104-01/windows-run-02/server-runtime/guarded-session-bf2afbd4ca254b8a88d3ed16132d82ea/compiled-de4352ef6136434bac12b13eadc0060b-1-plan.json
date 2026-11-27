@@ -1,0 +1,160 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "planner-calc-two-cell-v1",
+    "session_scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+    "surface": "x11-window-20",
+    "predicates": [
+      "context_ok",
+      "blank",
+      "cells_match"
+    ],
+    "symbols": {
+      "cell_entry": {
+        "kind": "target_reference",
+        "target_reference": "entry_fresh",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok"
+        ]
+      },
+      "save_control": {
+        "kind": "target_reference",
+        "target_reference": "save_fresh",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok",
+          "cells_match"
+        ]
+      }
+    },
+    "actions": {
+      "persist_document": {
+        "target_symbol": "save_control",
+        "operation": "request_save",
+        "expected_effect": {
+          "cells_match": true
+        }
+      },
+      "populate_cells": {
+        "target_symbol": "cell_entry",
+        "operation": "enter_pair",
+        "expected_effect": {
+          "cells_match": true
+        }
+      }
+    },
+    "method": {
+      "initial_state": "blank_sheet",
+      "max_runtime_ms": 9000,
+      "max_transitions": 2,
+      "name": "populate-and-save",
+      "states": {
+        "blank_sheet": {
+          "branches": [
+            {
+              "action": "populate_cells",
+              "next_state": "values_entered",
+              "outcome": "action",
+              "reason": null,
+              "when": {
+                "blank": true,
+                "context_ok": true
+              }
+            }
+          ]
+        },
+        "save_handoff": {
+          "branches": [
+            {
+              "action": null,
+              "next_state": null,
+              "outcome": "yield",
+              "reason": "effect_unavailable",
+              "when": {
+                "context_ok": true
+              }
+            }
+          ]
+        },
+        "values_entered": {
+          "branches": [
+            {
+              "action": "persist_document",
+              "next_state": "save_handoff",
+              "outcome": "action",
+              "reason": null,
+              "when": {
+                "cells_match": true,
+                "context_ok": true
+              }
+            }
+          ]
+        }
+      },
+      "version": "1"
+    }
+  },
+  "bindings": {
+    "persist_document": {
+      "interaction": "keyboard",
+      "offset": [
+        8,
+        6
+      ],
+      "tail": [
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    },
+    "populate_cells": {
+      "interaction": "keyboard",
+      "offset": [
+        12,
+        8
+      ],
+      "tail": [
+        {
+          "op": "text",
+          "text": "731",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "864",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    }
+  },
+  "scope": "trusted caller-owned read-only perception/effect callbacks; not independent task scoring"
+}

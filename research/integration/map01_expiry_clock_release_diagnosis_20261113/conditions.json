@@ -1,0 +1,35 @@
+{
+  "schema": "map01-expiry-clock-diagnosis-r01-v1",
+  "captured_at_utc": "2026-11-13",
+  "question": "Does the host's Python 3.11 monotonic clock share a coordinate with QPC perf_counter used by the MAP01 expiry sampler?",
+  "procedure": {
+    "processes": 2,
+    "samples_per_process": 2000,
+    "sample_order": [
+      "time.monotonic_ns before",
+      "time.perf_counter_ns",
+      "time.monotonic_ns after"
+    ],
+    "input_or_backend": false,
+    "target_application": false,
+    "lease_or_authority": false
+  },
+  "interpreters": {
+    "python311": "CPython 3.11.9, system installation",
+    "python314": "CPython 3.14.2, task-local QPC runtime"
+  },
+  "probe_source": "probe_clocks.py",
+  "raw": {
+    "python311": "clock-correlation-r01/python311.csv",
+    "python314": "clock-correlation-r01/python314.csv"
+  },
+  "summary": {
+    "python311": "clock-correlation-r01/python311.json",
+    "python314": "clock-correlation-r01/python314.json"
+  },
+  "prior_attempts": {
+    "R142": "private-packets/map01_native_windows_delayed_cancel_20261112_r142_poll10ms_baseline",
+    "R157": "private-packets/map01_native_windows_deep_trace_20261113_r157"
+  },
+  "scope_limit": "No computer input, app action, release, or task effect was exercised by this paired-clock probe."
+}

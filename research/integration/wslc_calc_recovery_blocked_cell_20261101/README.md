@@ -1,0 +1,11 @@
+# Calc recovery with persistent cell obstruction
+
+This is a negative counterpart to [l02's fresh-owner continuation](../wslc_calc_post_entry_resume_20261101/README.md). After the fixed 731/864 entry completes and the compiled graph yields on a context change, the harness closes the original owner and deliberately keeps an 8x8 X overlay over the first reviewed cell region during the fresh-owner observation window. The observation-only loop has a two-second bound; it does not grant input authority or replay entry.
+
+Allocation m01 retained one completed entry and SAFE_YIELD / effect_unavailable, with the entry effect still pending. All 16 fresh captures failed the filled-cell cue over a 2.014 s capture span. The runner ended with the preregistered no-action failure; the fresh owner minted no reference and issued no program or Save. The original close release was verified, final X keys and buttons were neutral, and the independently parsed persisted file was byte-identical to the blank fixture. The fresh owner closed without dispatching input, so its close did not perform an input release.
+
+Two gpt-6.1-sol low model calls used 25,763 input tokens (12,160 cached subset) and 124 output tokens. Cached input is included in input. This is one negative correctness probe, not an efficiency comparison. The run used private Xvfb/Calc, 1 CPU / 1 GiB WSLc and no container network; host model calls were separate.
+
+`public.zip` retains fixed candidate, conditions, observations, model usage, action receipts, final saved bytes and cleanup. Run `audit.py` without Python optimization and with Pillow to verify the pinned archive, source/candidate hashes, all 16 cell-crop mismatches, one entry execution, no fresh-owner mint/program, independent blank FODS and final neutral X state. Private protocol journals and host path-bearing command lines are omitted and not independently audited.
+
+This deliberately obscures pixels; it does not alter the underlying cell values or prove detection of arbitrary wrong content. The fixed reference embeds expected values, the overlay is test-controlled, and mid-keystroke failure, persistent-obstruction recovery, general recognition, MAP01 and overall project completion remain unproven. Issue 57 remains open.

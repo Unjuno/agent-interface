@@ -1,0 +1,28 @@
+F
+======================================================================
+FAIL: test_cancel_after_first_transition_is_joined_without_replay (test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/standard_mcp_task_ledger_57_v1/test_partial_input_cancel_accounting.py", line 207, in test_cancel_after_first_transition_is_joined_without_replay
+    self.assertEqual(cancel_response.get("status"), "pending",
+AssertionError: 'cancel_requested' != 'pending'
+- cancel_requested
++ pending
+ : {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'disconnected', 'resource_base': 18874368, 'expected_pid': 12}, 'owner_input_obligations': {'keys': {'CTRL': 27, 's': 28}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'CTRL': 27, 's': 28}, 'buttons': []}}, 'owner_release_attempt': {'status': 'readback_verified', 'release': {'verified': True, 'keys_down': [], 'buttons_down': [], 'independent_fake_x_readback': True}}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True, 'call_id': '81656803afa54113bc66e2325a20b644', 'operation_id': '8cebe93021d248bdb34206c1c8b34ed6', 'cancellation': {'operation_id': '8cebe93021d248bdb34206c1c8b34ed6', 'status': 'completed', 'admitted_monotonic_ns': 3230613015322, 'caller_response_deadline_monotonic_ns': 3230913015322, 'transaction_deadline_monotonic_ns': 3234613015322, 'owner_generation': {'session_id': '7048865197f044f8999b4dc38a9b5b86', 'child_pid': 12, 'x_resource_base': 18874368, 'binding_revision': 0}, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'result': {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'disconnected', 'resource_base': 18874368, 'expected_pid': 12}, 'owner_input_obligations': {'keys': {'CTRL': 27, 's': 28}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'CTRL': 27, 's': 28}, 'buttons': []}}, 'owner_release_attempt': {'status': 'readback_verified', 'release': {'verified': True, 'keys_down': [], 'buttons_down': [], 'independent_fake_x_readback': True}}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True}, 'completed_monotonic_ns': 3230655972850}}
+
+----------------------------------------------------------------------
+Ran 1 test in 2.041s
+
+FAILED (failures=1)

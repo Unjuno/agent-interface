@@ -1,0 +1,449 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r03",
+  "caller_kind": "mcp_stdio",
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 475545265000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "89e1e9178ec04b4f861bdc383488018c"
+  },
+  "dispatch_attempts": 1,
+  "effect_readback": null,
+  "ended_utc": "2026-10-23T19:37:23.650938+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": null,
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 133892452,
+        "kind": "ready"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 133892452,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 133892452,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\fixture\\fixture-meta.json",
+    "pid": 9824,
+    "target_identity": {
+      "generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+      "owner": {
+        "creation_time_100ns": 134372578345533820,
+        "pid": 9824,
+        "window_thread_id": 43392
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "previous_foreground_hwnd": 393882,
+  "probe_status": "completed_without_expected_effect",
+  "program": {
+    "authority": {
+      "expires_at_ns": 475605265000000,
+      "lease_id": "supervised-standard-effect-r03"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R03"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-effect-r03",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"dbfa917af55d49809d0afec8c81cd8cd\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r03\\\\run\\\\calls\\\\de06a56cef01446eb31f3977f6def57f\", \"call_id\": \"de06a56cef01446eb31f3977f6def57f\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\de06a56cef01446eb31f3977f6def57f",
+      "call_id": "de06a56cef01446eb31f3977f6def57f",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+        "state": "closed",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "closed",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 475548431440800,
+    "started_monotonic_ns": 475548329494500
+  },
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"invalid_request\", \"error\": \"INVALID_RESPONSE_WAIT\", \"operation_invoked\": false, \"replay_allowed\": false}",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "response": {
+      "error": "INVALID_RESPONSE_WAIT",
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "status": "invalid_request"
+    },
+    "response_envelope": {
+      "error": "INVALID_RESPONSE_WAIT",
+      "operation_invoked": false,
+      "replay_allowed": false,
+      "status": "invalid_request"
+    },
+    "returned_monotonic_ns": 475545322183500,
+    "started_monotonic_ns": 475545321305000,
+    "wait_for_result_ms": 30000
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"9f82dba3328703452951cb7632e78f2b7dd4f8b049d8901e63c77ea8532c50a6\", \"bytes\": 1456, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"4fc66848fbce46cf86976f454f7167fd\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 133892452, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 475545281000000, \"capture_ended_ns\": 475545281000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r03\\\\run\\\\calls\\\\46f1f034661b49c3b610a6e7b6208641\\\\images\\\\3d6d7912a6f341e396dc1bd257fb725e.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 475545281000000, \"converted\": 475545281000000, \"encoded\": 475545281000000, \"written\": 475545281000000}}}, \"target_generation\": \"2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"dbfa917af55d49809d0afec8c81cd8cd\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"4fc66848fbce46cf86976f454f7167fd\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 133892452, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 475545281000000, \"capture_ended_ns\": 475545281000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r03\\\\run\\\\calls\\\\46f1f034661b49c3b610a6e7b6208641\\\\images\\\\3d6d7912a6f341e396dc1bd257fb725e.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 475545281000000, \"converted\": 475545281000000, \"encoded\": 475545281000000, \"written\": 475545281000000}}}, \"target_generation\": \"2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"dbfa917af55d49809d0afec8c81cd8cd\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 475545281000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r03\\\\run\\\\calls\\\\46f1f034661b49c3b610a6e7b6208641\\\\images\\\\3d6d7912a6f341e396dc1bd257fb725e.png\", \"relative_path\": \"images\\\\3d6d7912a6f341e396dc1bd257fb725e.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"4fc66848fbce46cf86976f454f7167fd\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 133892452, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 475545281000000, \"capture_ended_ns\": 475545281000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"dbfa917af55d49809d0afec8c81cd8cd\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r03\\\\run\\\\calls\\\\46f1f034661b49c3b610a6e7b6208641\", \"call_id\": \"46f1f034661b49c3b610a6e7b6208641\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\46f1f034661b49c3b610a6e7b6208641\\images\\3d6d7912a6f341e396dc1bd257fb725e.png",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 475545281000000,
+            "encoded": 475545281000000,
+            "started": 475545281000000,
+            "written": 475545281000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 475545281000000,
+        "capture_started_ns": 475545281000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 133892452,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "4fc66848fbce46cf86976f454f7167fd",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\46f1f034661b49c3b610a6e7b6208641",
+      "call_id": "46f1f034661b49c3b610a6e7b6208641",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 475545281000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "4fc66848fbce46cf86976f454f7167fd",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\46f1f034661b49c3b610a6e7b6208641\\images\\3d6d7912a6f341e396dc1bd257fb725e.png",
+        "recorded_capture": {
+          "capture_ended_ns": 475545281000000,
+          "capture_started_ns": 475545281000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 133892452,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\3d6d7912a6f341e396dc1bd257fb725e.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\46f1f034661b49c3b610a6e7b6208641\\images\\3d6d7912a6f341e396dc1bd257fb725e.png",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 475545281000000,
+                "encoded": 475545281000000,
+                "started": 475545281000000,
+                "written": 475545281000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 475545281000000,
+            "capture_started_ns": 475545281000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 133892452,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "4fc66848fbce46cf86976f454f7167fd",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1456,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\46f1f034661b49c3b610a6e7b6208641\\images\\3d6d7912a6f341e396dc1bd257fb725e.png",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 475545281000000,
+                  "encoded": 475545281000000,
+                  "started": 475545281000000,
+                  "written": 475545281000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 475545281000000,
+              "capture_started_ns": 475545281000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 133892452,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "4fc66848fbce46cf86976f454f7167fd",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "9f82dba3328703452951cb7632e78f2b7dd4f8b049d8901e63c77ea8532c50a6"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 475545319937400,
+    "started_monotonic_ns": 475545298418500
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 7, \"expanded_operation_count\": 7, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 7,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 7,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 475545321290100,
+    "started_monotonic_ns": 475545319980500
+  },
+  "result_readbacks": [],
+  "retained_report": null,
+  "session_close_report": null,
+  "session_mode": "supervised-win32",
+  "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-23T19:37:14.325471+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}

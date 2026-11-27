@@ -1,0 +1,21 @@
+{
+  "candidate_sha256": "a57c114db68fb812342122f52e9f2a4ffea9079fd98452289ebf9843e205bd7b",
+  "checks": {
+    "both_events_target_window": true,
+    "close_reason": true,
+    "event_keycodes_match": true,
+    "one_admission": true,
+    "owner_closed": true,
+    "owner_stopped": true,
+    "owner_thread_stopped": true,
+    "press_release_order": true,
+    "server_key_up": true,
+    "terminal_release_verified": true,
+    "xvfb_exit_zero": true
+  },
+  "decision": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "raw_sha256": "d7169e9547f6dabbb8c48ce7765b795b21ad1865944fe5d00d1ef940593fb221",
+  "schema": "v39-owner-close-xvfb-audit-a13-v1",
+  "scope": "one synthetic Xvfb owner close; verifies X server/client event and V12 terminal receipt only"
+}

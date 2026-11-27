@@ -1,0 +1,10 @@
+{
+  "tool_chunks": ["42feb0", "b17774", "d893da"],
+  "exit_code": 1,
+  "failed_command": "git diff --check, command15",
+  "raw": "freeze/git-15.stdout and freeze/git-15.stderr",
+  "cause": "New side-button test module had a surplus blank line at EOF.",
+  "repair": "Retain all initial source and freeze commands; make candidate_final with only surplus EOF newline removed; identical AST; rerun selected57 normal/O against exact final images; fresh separate freeze-final directory.",
+  "ref_or_main_writes": 0,
+  "old_source_and_evidence_retained": true
+}

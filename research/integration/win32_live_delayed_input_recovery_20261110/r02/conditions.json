@@ -1,0 +1,23 @@
+{
+  "stop_conditions": [
+    "wrong HWND/generation",
+    "unexpected event",
+    "authority refusal",
+    "release/horizon not confirmed",
+    "foreground restoration failure"
+  ],
+  "run_id": "win32-live-fixture-20261110-r02",
+  "source_commit": "0d4f8e323af30df6b7cb17bdbb83563c4a17f6fc",
+  "note": "No GZDoom/MAP01 or external application; fixture test only; task_success remains null without server-configured task oracle.",
+  "action": "one A key chord, focus then release_all",
+  "configured_horizon_ms": 2000,
+  "purpose": "Verify normal-completion neutral readback and finite late-input horizon via public supervised Win32 MCP while keeping the same stdio session alive through terminal result",
+  "max_actions": 1,
+  "application_effect_oracle": "fixture events.jsonl must contain exactly one WM_CHAR a after ready",
+  "target": "fresh repository-owned Agent Interface Win32 Fixture",
+  "route": "supervised-win32",
+  "wait_plan": [
+    "dispatch wait 10000 ms",
+    "if pending, poll interface_results on same live transport"
+  ]
+}

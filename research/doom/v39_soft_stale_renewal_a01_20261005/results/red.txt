@@ -1,0 +1,49 @@
+FFFF
+======================================================================
+FAIL: test_accepted_renewal_is_still_classified_as_admitted (research.doom.test_v39_soft_stale_renewal_v1.SoftStaleRenewalTests.test_accepted_renewal_is_still_classified_as_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 103, in test_accepted_renewal_is_still_classified_as_admitted
+    classify = load_controller_function("classify_cover_renewal_response")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 19, in load_controller_function
+    raise AssertionError(f"V39 lacks tested function {name}")
+AssertionError: V39 lacks tested function classify_cover_renewal_response
+
+======================================================================
+FAIL: test_coverless_wait_keeps_planner_alive_on_soft_event_and_interrupts_on_hard_change (research.doom.test_v39_soft_stale_renewal_v1.SoftStaleRenewalTests.test_coverless_wait_keeps_planner_alive_on_soft_event_and_interrupts_on_hard_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 154, in test_coverless_wait_keeps_planner_alive_on_soft_event_and_interrupts_on_hard_change
+    coverless = load_controller_function("wait_without_active_cover")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 19, in load_controller_function
+    raise AssertionError(f"V39 lacks tested function {name}")
+AssertionError: V39 lacks tested function wait_without_active_cover
+
+======================================================================
+FAIL: test_soft_observation_then_stale_sequence_rejection_is_no_cover_not_session_failure (research.doom.test_v39_soft_stale_renewal_v1.SoftStaleRenewalTests.test_soft_observation_then_stale_sequence_rejection_is_no_cover_not_session_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 115, in test_soft_observation_then_stale_sequence_rejection_is_no_cover_not_session_failure
+    outcome = load_controller_function("classify_cover_renewal_response")(response)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 19, in load_controller_function
+    raise AssertionError(f"V39 lacks tested function {name}")
+AssertionError: V39 lacks tested function classify_cover_renewal_response
+
+======================================================================
+FAIL: test_unexpected_renewal_rejection_still_fails_closed (research.doom.test_v39_soft_stale_renewal_v1.SoftStaleRenewalTests.test_unexpected_renewal_rejection_still_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 126, in test_unexpected_renewal_rejection_still_fails_closed
+    classify = load_controller_function("classify_cover_renewal_response")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-renewal-followup/research/doom/test_v39_soft_stale_renewal_v1.py", line 19, in load_controller_function
+    raise AssertionError(f"V39 lacks tested function {name}")
+AssertionError: V39 lacks tested function classify_cover_renewal_response
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.498s
+
+FAILED (failures=4)

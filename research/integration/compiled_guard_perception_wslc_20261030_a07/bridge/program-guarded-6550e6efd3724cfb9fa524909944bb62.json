@@ -1,0 +1,134 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-6550e6efd3724cfb9fa524909944bb62",
+  "source": {
+    "observation_seq": 3,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-a008c409041f453c86cf0b65a1976c1a",
+    "expires_at_ns": 5791785416
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "Home"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Down"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "2"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "9"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "TAB"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "3"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "TAB"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "="
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "A"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "2"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "*"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "B"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "2"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "s"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 500
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

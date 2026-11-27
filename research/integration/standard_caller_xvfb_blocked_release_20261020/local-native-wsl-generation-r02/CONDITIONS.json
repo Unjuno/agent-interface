@@ -1,0 +1,36 @@
+{
+  "conditions": {
+    "display": ":89 private local server",
+    "listen_tcp": false,
+    "screen": "1024x768x24",
+    "standard_caller_features": [
+      "guarded X11 session",
+      "process identity",
+      "query worker",
+      "window lifecycle",
+      "owned process"
+    ],
+    "synthetic_task": "application property changes on keypress; recovery and fresh-generation continuation are independently read",
+    "test_enabled": true,
+    "trials": 1
+  },
+  "environment": {
+    "distribution": "Ubuntu 24.04.3 LTS",
+    "mcp": "1.30.0",
+    "numpy": "1.26.4",
+    "pillow": "10.2.0",
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "runtime": "native Ubuntu WSL distro; no WSLc container or Docker",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8"
+  },
+  "fail_rule": "Any assertion failure, timeout, missing/inconsistent report, release/effect oracle failure, stale input dispatch, or cleanup failure. Preserve failure without retry in this run ID.",
+  "kind": "single native WSL/Xvfb integration validation; not a MAP01 episode, model run, or WSLc allocation",
+  "pass_rule": "One unittest passes; saved report status PASS_SCOPED_XVFB_STANDARD_CALLER_RECOVERY; recovery is under 3000ms with release verified; stale post-recovery input is refused with no dispatch; fresh target generation admits continuation; independent synthetic effect/key release oracle passes; close and cleanup complete.",
+  "qualification": "One local native WSL/Xvfb environment with Xvfb package 1ubuntu1.8 (prior CI runner was 1ubuntu1.9). Not WSLc portability, physical desktop, MAP01, population reliability, or efficiency evidence.",
+  "run_id": "native-wsl-xvfb-generation-recovery-r02-20261020",
+  "source_commit": "108b2717289611b4be84b897b2c56ef14a3f6032",
+  "test": "runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp",
+  "test_git_blob": "31cba573f41fef7b9ca77921a742e00cfea1b3d1",
+  "test_path": "runtime/cli_v1/test_mcp_xvfb_generation_integration.py"
+}

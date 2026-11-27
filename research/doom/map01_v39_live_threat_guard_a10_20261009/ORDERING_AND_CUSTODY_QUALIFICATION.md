@@ -1,0 +1,7 @@
+# A10 additive custody limitation and synthetic follow-up
+
+The original public A10 files, frozen FAIL, and STOP disposition are unchanged from PR #8759 head `d31c85116df463039219368c2b64e986f9d9dd55`. The original reconciliation infers an active lease from the terminal interruption token without consulting input-admission records. A synthetic non-guard cancellation with an admitted token, no token-bound release, and a terminal null token is falsely accepted by the original reconciler. This does not establish that the A10 retained raw contains this pattern; its private raw was not accessed.
+
+`audit_live_reconciliation_v2.py` is an additive local synthetic guard: for matched cancellations it additionally checks admitted tokens against unique terminal and release records, and fails closed on identity ambiguity or mismatches. It is not an audit of the retained A10 run and does not check event timing, causal ordering, completeness of the source trace, actual input state, or all possible schema defects. It does not upgrade A10, change its STOP, or authorize replay.
+
+On native Windows Python, five new synthetic tests plus the original three reconciliation tests pass normally and under `python -O -B`; the original auditor fails the missing-release regression. The two path-specific preflight tests in the original public suite fail on Windows due to different checkout location and POSIX path separators; their original macOS run is separately recorded. No game, GUI, container, model, or live input was run.

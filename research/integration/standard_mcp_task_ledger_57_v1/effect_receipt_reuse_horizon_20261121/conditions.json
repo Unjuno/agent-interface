@@ -1,0 +1,37 @@
+{
+  "experiment": "effect-receipt adapter -> matched comparison C-arm -> reuse-horizon evaluator",
+  "base_commit": "a8402e9d8f74284e0bafd0aff3b55702f3dc4089",
+  "fixture": "existing deterministic recorded-comparison fixture and four-block reuse-horizon fixture",
+  "arms": "A/B synthetic baseline and C synthetic reuse arm; only C block 1 is replaced by adapted measured run; conditions and attempt lineage normalized to frozen horizon fixture",
+  "cases": [
+    {
+      "effect_interval_ns": [
+        144,
+        145
+      ],
+      "expected": "factual and eligible success; correctness-qualified token break-even index 2"
+    },
+    {
+      "effect_interval_ns": [
+        161,
+        165
+      ],
+      "expected": "factual success but ineligible after release horizon; factual token break-even index 2; no correctness-qualified break-even"
+    },
+    {
+      "effect_interval_ns": null,
+      "expected": "factual success with unknown timing; factual token break-even index 2; no correctness-qualified break-even"
+    }
+  ],
+  "limits": [
+    "offline synthetic fixtures only",
+    "no live GUI/provider or user task",
+    "no speed/cost/reliability/generalization claim"
+  ],
+  "commands": [
+    "python -u run_local_tests.py",
+    "python -O -u run_local_tests.py"
+  ],
+  "temporary_directory": "Unique temporary directory inside isolated worktree, supplied to TEMP/TMP/TMPDIR by run_local_tests.py and removed when the runner exits",
+  "python_version": "3.11.9"
+}

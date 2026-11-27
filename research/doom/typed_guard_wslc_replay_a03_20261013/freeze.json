@@ -1,0 +1,73 @@
+{
+  "C": "Construction replay of selected historical events only; WSLc image/runtime differs from earlier Windows/Ubuntu results. Resource flags do not prove enforcement.",
+  "D": "PASS_PORTABILITY_SCOPED iff candidate/auditor succeed, exact four report outcomes and payloads reconcile, authority stays false, unique container absent via scoped CID query. Otherwise preserve first outcome.",
+  "H": "Candidate and raw-only independent auditor reproduce all four recorded outcomes using exact current-main pure guard; no authority is granted.",
+  "T": "One WSLc run from pinned digest, --pull never, network none, one CPU, 512M configured, C:-hosted read-only input and dedicated output; host timeout 60s, internal stages 20s each; one candidate and one audit; zero retries.",
+  "U": "No game/model/GUI/input/task effect/recovery; selected report exposes only two soft rows while cumulative count is three; one host and one run.",
+  "allocation": "WSLC-TYPED-POLICY-REPLAY-A03-20261013-01",
+  "created_before_candidate": true,
+  "deltas_from_A02": [
+    "Use b9767f56... image digest evidenced by same-host WSLc allocation A07; A02 f77ac9... was not cached.",
+    "Use C:-hosted input/output because A07 recorded D:-bind visibility failure.",
+    "Capture stdout/stderr as exact bytes; all scientific inputs/code/gates unchanged."
+  ],
+  "formal_live_allocation_consumed": false,
+  "inputs": {
+    "auditor.py": {
+      "bytes": 3882,
+      "sha256": "c0af2c2a38b45f870289e7b94af435d711ba522d66eec272def22393fd990412"
+    },
+    "candidate.py": {
+      "bytes": 4911,
+      "sha256": "1f2f0090ad03c7ff5d0aa550ed2742e6f282a39ec2c4d27149609cd9e1061dfa"
+    },
+    "events.jsonl": {
+      "bytes": 457736,
+      "sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a"
+    },
+    "observable_signal_guard_v2.py": {
+      "bytes": 7404,
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "report.json": {
+      "bytes": 262284,
+      "sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121"
+    },
+    "runner.py": {
+      "bytes": 650,
+      "sha256": "91c41fdea8b97e3764d50a2fb1d37c9c86447cf56e9bad2379d9eb746561fedb"
+    }
+  },
+  "launcher": {
+    "bytes": 4978,
+    "path": "invoke_once.py",
+    "sha256": "e241a8233026f59615093fe746477221b21d6968f52ae0b013e8107bdff7f5c9"
+  },
+  "preceding_stops": [
+    "A01 STOP_LAUNCHER_OUTPUT_DECODE_ERROR; candidate invocation unknown, no container remains.",
+    "A02 STOP_IMAGE_NOT_CACHED; candidate/auditor invocation 0, no container created."
+  ],
+  "question": "Does the retained four-event V39 typed-policy replay and independent audit produce the frozen semantics inside the A07-pinned Python image on WSLc using C:-hosted bind paths?",
+  "retries": 0,
+  "runtime": {
+    "cidfile": "<out>/container.cid",
+    "cpus": "1",
+    "image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+    "memory": "512M",
+    "mounts": [
+      "C: input -> /input:ro",
+      "C: output -> /out:rw"
+    ],
+    "network": "none",
+    "pull": "never",
+    "rm": true,
+    "unique_name": "wslc-typed-replay-a03-20261013",
+    "wslc": "3.0.1.0"
+  },
+  "schema": "wslc-typed-policy-replay-freeze-v1",
+  "source": {
+    "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+    "main_sha": "964c9197d5083ab55ea7fdc9105427623e89e677",
+    "repo": "Unjuno/agent-interface"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "experiment": "win32-recorded-task-effect-r07",
+  "status": "FROZEN_NOT_RUN",
+  "run_id": "b7a7c5fc2e7d4d2988deb52e73e60206",
+  "source_main": "7bcf4a795e71a466e004b066bfb48f0fcb2d5491",
+  "scope": "one fresh Win32 fixture; recorded public observe/dispatch/results/observe/close; one focus+A+release_all action; independent fixture score; no retry; 2 s late-input horizon",
+  "provider": "none",
+  "target_title": "Agent Interface Win32 Fixture",
+  "fixture_delay_ms": 6000,
+  "horizon_ms": 2000,
+  "max_horizon_gap_ms": 100,
+  "program_id": "r07-ec5c8a2357964eeba18583e4191fc19d",
+  "lease_id": "r07-e109966a6458458386442e9f499d9fc2",
+  "recorder_call_ids": {
+    "observe_before": "05c05eed4ad2402ba50fc3b146e24174",
+    "dispatch_boundary": "8e88884213be4a7082659c0d1fceaded",
+    "results_exact": "48b13f9588d04ff985ffedb91b71e758",
+    "observe_after": "bbb11e7083d14815b1dc5e6321edad4c",
+    "close_boundary": "6872a019b24e41b9b60b01f2451c2693"
+  },
+  "task_id": "r07-delayed-a-fixture-task",
+  "scorer_id": "fixture-delayed-a-independent-v1",
+  "stop_rules": [
+    "Require exactly one fresh fixture window and exact foreground PID/HWND/title before the public caller.",
+    "Do not dispatch on failed before observation or generation mismatch.",
+    "One dispatch only. If unresolved, cancel once, preserve UNKNOWN, and never replay.",
+    "Retain exact result lookup, both observations, score, release/horizon, and cleanup before closing the exact fixture."
+  ],
+  "not_claimed": [
+    "provider or model efficiency",
+    "recovery reliability rate",
+    "MAP01",
+    "Research Preview graduation"
+  ]
+}

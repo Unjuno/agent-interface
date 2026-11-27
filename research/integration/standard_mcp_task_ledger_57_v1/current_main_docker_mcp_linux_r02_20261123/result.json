@@ -1,0 +1,13 @@
+{
+  "experiment": "current_main_docker_mcp_linux_r02_20261123",
+  "baseline_commit": "a9bb375a09a03ca6129844053cc56910ad96efdf",
+  "image": "issue57-calc-appserver-r88:local",
+  "image_id": "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+  "scope": "test-only asyncio notification change; 2s bounds unchanged; production runtime unchanged",
+  "focused": {"normal": {"passed": 1, "total": 1}, "optimized": {"passed": 1, "total": 1}},
+  "combined": {"normal": {"passed": 87, "total": 87, "exit_code": 0}, "optimized": {"passed": 87, "total": 87, "exit_code": 0}},
+  "network": "disabled",
+  "source_mount": "read-only",
+  "live_provider_gui_game_or_wslc": false,
+  "interpretation": "scoped single-run regression repair evidence; not a product reliability estimate or live control gate"
+}

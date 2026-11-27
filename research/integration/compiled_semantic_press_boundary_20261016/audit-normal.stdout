@@ -1,0 +1,65 @@
+{
+  "scope": "saved-only synthetic semantic/readback consistency; no candidate import or real app oracle",
+  "modes": {
+    "normal": {
+      "rows": 8,
+      "current_false_unknown_counterexamples": 2,
+      "mutations_rejected": [
+        {
+          "name": "hidden_input",
+          "reason": "input/prefix"
+        },
+        {
+          "name": "lost_prefix",
+          "reason": "input/prefix"
+        },
+        {
+          "name": "wrong_selected_condition",
+          "reason": "selected condition"
+        },
+        {
+          "name": "artifact_tamper",
+          "reason": "artifact identity"
+        },
+        {
+          "name": "missing_control",
+          "reason": "coverage"
+        },
+        {
+          "name": "false_app_success",
+          "reason": "false app success"
+        }
+      ]
+    },
+    "optimized": {
+      "rows": 8,
+      "current_false_unknown_counterexamples": 2,
+      "mutations_rejected": [
+        {
+          "name": "hidden_input",
+          "reason": "input/prefix"
+        },
+        {
+          "name": "lost_prefix",
+          "reason": "input/prefix"
+        },
+        {
+          "name": "wrong_selected_condition",
+          "reason": "selected condition"
+        },
+        {
+          "name": "artifact_tamper",
+          "reason": "artifact identity"
+        },
+        {
+          "name": "missing_control",
+          "reason": "coverage"
+        },
+        {
+          "name": "false_app_success",
+          "reason": "false app success"
+        }
+      ]
+    }
+  }
+}

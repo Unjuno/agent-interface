@@ -1,0 +1,9 @@
+# Telemetry-channel-aware work allocation — #8897
+
+- **Status:** Unverified transfer and evaluation-method proposal; no experiment or result is recorded.
+- **Source:** Open [Issue #8897](https://github.com/Unjuno/agent-interface/issues/8897).
+- **Idea:** Hold allocator rules and available work fixed, vary only the resource-state telemetry channel (direct, delayed/noisy, sampled, bounded-memory summary, or stale/unknown), and test whether information improves deadline/obligation outcomes at equal useful-work budget after charging telemetry cost.
+- **Relation to prior work:** #6678 owns finite observation-channel ordering; #7934/#7955 own decision value of task evidence; #8651/#6526/#2874 address observation overhead/back-action; #8488/#5372/#8630/#5407 cover PSI/backpressure, budgets, and multi-agent assignment; #7430 owns non-pressure WSL memory accounting. #8897 is only the resource-telemetry-to-fixed-allocator information-factor question.
+- **Proposed minimum test:** Deterministically enumerate held-out finite workloads with deadlines, mandatory verification, recoverable execution and optional analysis. Compare queue/deadline baseline and full-state upper bound against fixed policies fed through delayed/noisy/dropout/aliased channels and a bounded encoder. Charge collection/history cost; an independent auditor checks decisions, resource accounting, and obligation conservation.
+- **Decision boundary:** A scoped method pass requires exact audit, preserved obligations, cost within budget, and improved preregistered outcomes on informative channel strata at matched useful-work budget without material harm elsewhere. Ties or telemetry cost erasing benefit mean no residual value; any obligation loss or latent-state leak fails.
+- **Limits:** Synthetic T0 does not establish WSL performance, Windows memory attribution, OOM prevention, model behavior, or production stability. It authorizes no host pressure or resource intervention.

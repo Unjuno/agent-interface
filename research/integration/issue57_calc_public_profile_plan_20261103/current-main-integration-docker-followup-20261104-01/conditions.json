@@ -1,0 +1,16 @@
+{
+  "base_sha": "cf3ddf2f8ef44f78fac3cfed78df2904aa596691",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "cpus": 2,
+  "memory": "4g",
+  "memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "source_mount": "read-only",
+  "test": "OwnedProcessMCPTests.test_parent_custodied_calc_launch_is_opt_in_and_gates_profile",
+  "modes": [
+    "normal",
+    "-O"
+  ],
+  "predecessor_packet": "../current-main-integration-docker-20261104 (214 tests; 213 pass, this stale-fixture test failed in both modes)"
+}

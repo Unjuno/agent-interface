@@ -1,0 +1,22 @@
+# Run from the repository root; all evidence paths must be new/nonexistent.
+
+$root = 'D:\ai57-main-current-20261104'
+$suite = Join-Path $root 'research\integration\standard_mcp_task_ledger_57_v1'
+$env:PYTHONPATH = "$root;$suite"
+Push-Location $suite
+
+# Windows normal
+$env:AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE = Join-Path $root 'research\integration\standard_mcp_task_ledger_57_v1\file-spool-calc-join-20261104-01\windows-run-01'
+python -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v
+
+# Windows optimized; use a fresh evidence destination
+$env:AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE = Join-Path $root 'research\integration\standard_mcp_task_ledger_57_v1\file-spool-calc-join-20261104-01\windows-opt-run-01'
+python -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v
+Pop-Location
+
+# Docker normal
+# Run from PowerShell; source is read-only and only /evidence is writable.
+docker run --rm --network none --cpus=2 --memory=4g --memory-swap=4g --pids-limit=256 -v D:/ai57-main-current-20261104:/workspace:ro -v D:/ai57-main-current-20261104/research/integration/standard_mcp_task_ledger_57_v1/file-spool-calc-join-20261104-01:/evidence -w /workspace/research/integration/standard_mcp_task_ledger_57_v1 -e PYTHONPATH=/workspace:/workspace/research/integration/standard_mcp_task_ledger_57_v1 -e AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE=/evidence/docker-run-01 agent-interface-xvfb-mcp:late-input-r19 python3 -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v
+
+# Docker optimized; use a fresh evidence destination
+docker run --rm --network none --cpus=2 --memory=4g --memory-swap=4g --pids-limit=256 -v D:/ai57-main-current-20261104:/workspace:ro -v D:/ai57-main-current-20261104/research/integration/standard_mcp_task_ledger_57_v1/file-spool-calc-join-20261104-01:/evidence -w /workspace/research/integration/standard_mcp_task_ledger_57_v1 -e PYTHONPATH=/workspace:/workspace/research/integration/standard_mcp_task_ledger_57_v1 -e AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE=/evidence/docker-opt-run-01 agent-interface-xvfb-mcp:late-input-r19 python3 -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v

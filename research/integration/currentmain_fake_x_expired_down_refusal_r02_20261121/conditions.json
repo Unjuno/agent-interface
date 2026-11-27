@@ -1,0 +1,54 @@
+{
+  "classification": "existing_synthetic_regression_rerun",
+  "main_commit": "aecc24ccbe50735d2d27ede10a1f7b563ff4d2ae",
+  "platform_shell": "Windows PowerShell",
+  "python": "3.11.9",
+  "test": "runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_expired_operation_receipt_identifies_late_down_refusal",
+  "sources": {
+    "runtime/backends/win32_v1/test_integration.py": "git-blob:6ea2e856d09b6409286840785e3199e1172d9071",
+    "runtime/backends/win32_v1/backend.py": "git-blob:d362bc6c697786644ed1dd1f0dcb09a5d117f1a5"
+  },
+  "frozen_case": {
+    "authority_lifetime_ms": 20,
+    "wait_update_ms": 50,
+    "requested_late_operation": "pointer_button:left:down",
+    "release_all": "mock returns verified",
+    "native_input_dispatch": false
+  },
+  "expected_receipts": {
+    "wait": [5, 0, 0, 0],
+    "expired_down_refusal": [6, 0, 0, 0]
+  },
+  "arms": [
+    {
+      "mode": "normal",
+      "command": "python -m unittest runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_expired_operation_receipt_identifies_late_down_refusal",
+      "tests": 1,
+      "passed": 1,
+      "duration_seconds": 0.074,
+      "result": "PASS"
+    },
+    {
+      "mode": "optimized",
+      "command": "python -O -m unittest runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_expired_operation_receipt_identifies_late_down_refusal",
+      "tests": 1,
+      "passed": 1,
+      "duration_seconds": 0.065,
+      "result": "PASS"
+    }
+  ],
+  "external_actions": {
+    "docker": false,
+    "wslc": false,
+    "provider": false,
+    "real_os_input": false,
+    "live_application": false
+  },
+  "claims": {
+    "post_expiry_down_refused_before_native_dispatch": true,
+    "already_held_physical_input_release_proven": false,
+    "task_success_proven": false,
+    "integrated_efficiency_proven": false,
+    "independent_audit_run": false
+  }
+}

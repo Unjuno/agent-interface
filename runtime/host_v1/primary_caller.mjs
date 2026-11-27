@@ -22,6 +22,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       : ['interface_observe', 'interface_dispatch',
         'interface_inspect_target', 'interface_review_target'])]);
   let stopped = null;
+  let recoveryRevision = null;
   function stop(reason) { stopped ??= reason; }
   function read(reply) {
     const text = reply.result.content.find(c => c.type === 'text')?.text;
@@ -82,7 +83,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     async mint(...values) {
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
-        value.every(Number.isSafeInteger);
+        Array.from(value).every(Number.isSafeInteger);
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
@@ -127,6 +128,19 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         'interface_observe', structuredClone(observationArguments));
     },
     async call(tool, args, controlId = null) {
+      if (tool === 'interface_guarded_recover_input') {
+        if (route !== 'guarded-local' || !stopped || recoveryRevision === null ||
+            controlId !== null || !args || typeof args !== 'object' || Array.isArray(args) ||
+            Object.keys(args).join(',') !== 'current_binding_revision' ||
+            args.current_binding_revision !== recoveryRevision) {
+          throw Error('explicit recovery unavailable or revision mismatch');
+        }
+        // Consume the only permit before transmission: an ambiguous delivery is
+        // never grounds for retrying release or resuming the prior input.
+        const revision = recoveryRevision;
+        recoveryRevision = null;
+        return await host.sendPresented(tool, {current_binding_revision: revision}, sinks);
+      }
       if (stopped && tool !== 'interface_close') throw Error('trial stopped: ' + stopped);
       if (!tools.has(tool)) {
         stop('unavailable tool ' + tool);
@@ -159,6 +173,20 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         if (reply?.status === 'unknown_requires_reconciliation') {
           stop('relay delivery uncertain; reconciliation required');
           return reply;
+        }
+        // A retained, delivered input failure can authorize one explicit
+        // release-only recovery. It never clears the caller's STOP latch.
+        if (route === 'guarded-local' && tool === 'interface_guarded_input' &&
+            reply?.status === 'returned' && controlId === null) {
+          try {
+            const failed = read(reply);
+            if (failed.operation === 'guarded_input' && failed.status === 'execution_failed' &&
+                failed.replay_allowed === false && failed.session?.state === 'open' &&
+                failed.session?.recovery_required === true &&
+                Number.isSafeInteger(failed.session?.binding_revision) && failed.session.binding_revision >= 0) {
+              recoveryRevision = failed.session.binding_revision;
+            }
+          } catch {} // Preserve existing error handling for malformed replies.
         }
         if (reply.result.isError === true && !expected) {
           stop('unexpected MCP refusal');
@@ -194,7 +222,10 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
             meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
             meta.outcome_summary.error === null : meta.status === 'completed';
           if (!completed || meta.image_status !== 'image' || !releases?.length ||
-              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
+              releases.some(r => r.verified !== true || !Array.isArray(r.keys_down) ||
+                r.keys_down.length !== 0 || !Array.isArray(r.buttons_down) || r.buttons_down.length !== 0 ||
+                ['keys_unknown', 'key_state_errors'].some(field => field in r &&
+                  (!Array.isArray(r[field]) || r[field].length !== 0)))) {
             stop('incomplete input or unverified neutral release');
           }
           if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {

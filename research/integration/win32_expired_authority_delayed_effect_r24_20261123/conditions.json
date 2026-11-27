@@ -1,0 +1,62 @@
+{
+  "authority_lease_ms": 2000,
+  "capture_frame": "window_client",
+  "capture_region": [
+    0,
+    0,
+    400,
+    180
+  ],
+  "environment_sha256": "f065274e7ab5711c362ad34d289665f417bcb65c91990eb72d2b768e0ec7d801",
+  "experiment": "win32-expired-authority-delayed-effect-r24",
+  "fixture_delay_ms": 6000,
+  "frozen_at_utc": "2026-11-22T19:25:13.256964+00:00",
+  "horizon_ms": 2000,
+  "lease_id": "r24-2e605032c1164e7da58fa41fd8e7387f",
+  "loaded_checkout_commit": "490d7bcb4d84927116112e5ff348cdeadfc489d6",
+  "max_horizon_gap_ms": 100,
+  "model": "none",
+  "not_claimed": [
+    "recovery reliability",
+    "matched efficiency",
+    "MAP01",
+    "Research Preview graduation",
+    "general GUI reliability"
+  ],
+  "orchestration_sha256": "8c20db2f4aaab02f1fb0cc947791942d1a68956ec54153f537f2c7dc4bd0cfbe",
+  "program_id": "r24-92eed4c54e4741ff97d5e4244d158970",
+  "provider": "none",
+  "recorder_call_ids": {
+    "close_boundary": "91d2676b07c64d54a2acf49912cf65ea",
+    "dispatch_boundary": "c29655f4d0844f4eb11ee65d60a7afe6",
+    "observe_after": "1209cfcb526f4e11917837bee020f246",
+    "observe_before": "8563d4fde66843d79c07ee541eb218bb",
+    "results_exact": "047e67d737ef4b889413a560669cf219"
+  },
+  "run_id": "159fa184854a4e8db5e5fb97a9748fb5",
+  "scope": "one new visible Win32 fixture; public observe/dispatch/results/observe/close; one focus+A+release_all action; fixture schedules delayed text after authority expiry; independent event/effect scorer; no provider/model; no retry",
+  "scorer_id": "fixture-delayed-a-independent-v1",
+  "source_hashes_sha256": {
+    "fixture_app.py": "94d63018177ca66d93e3b42eaf6a20eee89369d89ce8d440cd9518b56d04e674",
+    "foreground_probe.py": "f627b73521907018d56feb3b8c3c3bc8e6a35f19a38d7137cff0b7b01181c480",
+    "live_probe.py": "3da79d7d28948b5def53579447b11c487a4b701ac77e560dec7d37bf33fc93ea",
+    "scorer.py": "8d9188a078de459be3ce98383acc7964ed591a939b89e48d5440bce6206ff10e"
+  },
+  "source_main": "490d7bcb4d84927116112e5ff348cdeadfc489d6",
+  "source_tree_identity": {
+    "runtime": "0461d0be5592cc3ebd575861923fe0c04950efe5",
+    "standard_mcp_task_ledger": "f2d896996c041faec6939ca059492539d1865feb"
+  },
+  "status": "FROZEN",
+  "stop_rules": [
+    "Create exactly one fresh fixture and verify exact HWND/PID/title as foreground before the first public observation.",
+    "Observe with no-authority/no-input and verify the exact PNG/raw hashes before dispatch.",
+    "Dispatch one action only; no replay. Lease is 2 s; fixture effect timer is frozen at 6 s.",
+    "Preserve exact results, release and full 2 s neutral horizon; do not close the target if either is unknown.",
+    "Score final text and key-down/key-up independently from fixture event/effect files.",
+    "Expected adjudication: factual effect may be true; an interval crossing authority expiry is ambiguous/ineligible, never promoted to authorized task success.",
+    "If foreground, observation, dispatch, cleanup or receipt is ambiguous, preserve raw and stop without retry."
+  ],
+  "target_title": "Agent Interface Win32 Fixture R24",
+  "task_id": "r24-delayed-a-after-expiry-159fa184854a4e8db5e5fb97a9748fb5"
+}

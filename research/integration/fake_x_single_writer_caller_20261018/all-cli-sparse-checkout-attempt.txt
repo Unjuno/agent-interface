@@ -1,0 +1,365 @@
+......E..........................................FEEEE..............................{"case": "guarded-interrupt", "failed_readback": false, "emissions": [[2, 1], [3, 1]], "fake_down": [], "held_keycodes": {}, "quarantine": true, "execution": {"started_ns": 586422532133, "ended_ns": 586422585548, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 586422584870}], "waits": [], "activations": [], "completed_ops": [0], "error": "KeyboardInterrupt('after fake CTRL press')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}}
+{"case": "guarded-recovery", "failed_readback": false, "emissions": [[2, 1], [3, 1]], "report": {"status": "input_recovered", "release_attempted": true, "release": {"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 586423173877}, "recovery_required": false, "task_success": null, "replay_allowed": false, "previous_binding_revision": 0, "binding_revision": 1, "review_required": true, "authority_granted": false, "task_effect_status": "unknown", "note": "One release-only attempt. Review this window and mint fresh aliases before new input; retired workers stay retired. Prior task effects remain unknown. No replay or lease issued."}, "quarantine": false}
+{"case": "guarded-interrupt", "failed_readback": true, "emissions": [[2, 1], [3, 1]], "fake_down": [], "held_keycodes": {"CTRL": 1}, "quarantine": true, "execution": {"started_ns": 586425767216, "ended_ns": 586425814121, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"verified": false, "error": "OSError('cleanup readback')", "monotonic_ns": 586425812645}], "waits": [], "activations": [], "completed_ops": [0], "error": "KeyboardInterrupt('after fake CTRL press')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}}
+{"case": "guarded-recovery", "failed_readback": true, "emissions": [[2, 1], [3, 1], [3, 1]], "report": {"status": "input_recovered", "release_attempted": true, "release": {"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 586426259922}, "recovery_required": false, "task_success": null, "replay_allowed": false, "previous_binding_revision": 0, "binding_revision": 1, "review_required": true, "authority_granted": false, "task_effect_status": "unknown", "note": "One release-only attempt. Review this window and mint fresh aliases before new input; retired workers stay retired. Prior task effects remain unknown. No replay or lease issued."}, "quarantine": false}
+............{"case": "sibling-recovery", "failed": {"status": "execution_failed", "admission": "accepted", "error": "BACKEND_EXECUTION_FAILED", "required_capabilities": ["input.keyboard", "input.release_all", "window.focus"], "execution": {"started_ns": 586439462947, "ended_ns": 586439503421, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"verified": false, "error": "OSError('release readback unavailable')", "monotonic_ns": 586439502126}], "waits": [], "activations": [], "completed_ops": [0], "error": "OSError('after CTRL transport effect')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}, "recovery_required": true, "guard_checks": [{"stage": "before_admission", "observation_sequence": 2, "eligible": true, "status": "VALID", "handle": "field", "authority": "resolution only; ordinary admission remains required", "reason": "exact_region_match", "name": "field", "point": [8, 8], "observed_box": [2, 2, 12, 12], "binding_translation": [0, 0], "local_translation": [0, 0], "sequence": 2, "valid_until_ns": 587939203627, "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df", "reference_kind": "session_alias", "private_registry_id_exposed": false}]}, "recovery": {"status": "input_recovered", "release_attempted": true, "release": {"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 586439707901}, "recovery_required": false, "task_success": null, "replay_allowed": false}, "before": [[2, 1], [3, 1], [3, 1]], "after": [[2, 1], [3, 1], [3, 1]], "guarded_result": {"status": "refused", "error": "INPUT_RECOVERY_REQUIRED", "recovery_required": true, "input_dispatched": false}, "guarded_recovery_required": true}
+..................................execute program '/mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python': <_UnixSubprocessTransport pid=427 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=427 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+........EEE..............FF{"case": "pending-fatal-recovery", "exception": "KeyboardInterrupt", "pending": {"status": "pending", "call_id": "1d8c26838cca45f79ff03c80c954d5ea", "call": {"call_id": "1d8c26838cca45f79ff03c80c954d5ea", "operation": "guarded_input", "state": "running", "arguments": {"alias": "field", "offset": [6, 6], "tail": [{"op": "key_chord", "keys": ["CTRL", "a"]}], "interaction": "keyboard", "observe_after": false}, "backend_attempted": true, "persistence_failure": null, "response_wait_ms": 0}, "scope": "current_server", "result_available": false, "release_confirmed": false, "effect_status": "unknown", "task_success": null, "replay_allowed": false, "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."}, "terminal": {"status": "runtime_interrupted", "error": "KeyboardInterrupt('pending worker CTRL')", "exception_type": "KeyboardInterrupt", "operation": "guarded_input", "operation_invoked": false, "effect_status": "unknown", "release_confirmed": false, "task_success": null, "replay_allowed": false, "authority_granted": false, "report_artifact_present": false, "session": {"session_id": "741318d18f36478eb8599831aaab9500", "mode": "guarded-x11", "state": "open", "binding_revision": 0, "targets": {"app": 20}, "recovery_required": true, "error": null, "authority_granted": false, "restart_allowed": false, "process_identity": false, "query_worker": false, "observation_worker": false, "window_lifecycle": false, "observations": null, "target_queries": null, "target": "app", "observation_sequence": 2, "review_required": false}, "interrupted_execution": {"started_ns": 592917069487, "ended_ns": 592936835269, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 592936833929}], "waits": [], "activations": [], "completed_ops": [0], "error": "KeyboardInterrupt('pending worker CTRL')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}, "call_id": "1d8c26838cca45f79ff03c80c954d5ea", "call_directory": "/tmp/tmps30ybr4x/1d8c26838cca45f79ff03c80c954d5ea", "retained_call": {"call_id": "1d8c26838cca45f79ff03c80c954d5ea", "operation": "guarded_input", "state": "finished", "arguments": {"alias": "field", "offset": [6, 6], "tail": [{"op": "key_chord", "keys": ["CTRL", "a"]}], "interaction": "keyboard", "observe_after": false}, "backend_attempted": true, "persistence_failure": null, "response_wait_ms": 0, "worker_interrupted": "KeyboardInterrupt", "interruption_receipt": true}}, "recovery": {"status": "input_recovered", "release_attempted": true, "release": {"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 592972125368}, "recovery_required": false, "task_success": null, "replay_allowed": false, "previous_binding_revision": 0, "binding_revision": 1, "review_required": true, "authority_granted": false, "task_effect_status": "unknown", "note": "One release-only attempt. Review this window and mint fresh aliases before new input; retired workers stay retired. Prior task effects remain unknown. No replay or lease issued.", "operation": "guarded_recover_input", "session": {"session_id": "741318d18f36478eb8599831aaab9500", "mode": "guarded-x11", "state": "open", "binding_revision": 1, "targets": {"app": 20}, "recovery_required": false, "error": null, "authority_granted": false, "restart_allowed": false, "process_identity": false, "query_worker": false, "observation_worker": false, "window_lifecycle": false, "observations": null, "target_queries": null, "target": "app", "observation_sequence": 2, "review_required": true}, "call_directory": "/tmp/tmps30ybr4x/e350f0a7b40547ad9e685ff4b4cd800b", "call_id": "e350f0a7b40547ad9e685ff4b4cd800b"}, "emissions": [[2, 1], [3, 1]]}
+{"case": "pending-fatal-recovery", "exception": "SystemExit", "pending": {"status": "pending", "call_id": "93a26aefefaf4d8d9c3003def61a572a", "call": {"call_id": "93a26aefefaf4d8d9c3003def61a572a", "operation": "guarded_input", "state": "running", "arguments": {"alias": "field", "offset": [6, 6], "tail": [{"op": "key_chord", "keys": ["CTRL", "a"]}], "interaction": "keyboard", "observe_after": false}, "backend_attempted": true, "persistence_failure": null, "response_wait_ms": 0}, "scope": "current_server", "result_available": false, "release_confirmed": false, "effect_status": "unknown", "task_success": null, "replay_allowed": false, "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."}, "terminal": {"status": "runtime_interrupted", "error": "SystemExit('pending worker CTRL')", "exception_type": "SystemExit", "operation": "guarded_input", "operation_invoked": false, "effect_status": "unknown", "release_confirmed": false, "task_success": null, "replay_allowed": false, "authority_granted": false, "report_artifact_present": false, "session": {"session_id": "6efb3869703f4e63baeb45b8fa41619d", "mode": "guarded-x11", "state": "open", "binding_revision": 0, "targets": {"app": 20}, "recovery_required": true, "error": null, "authority_granted": false, "restart_allowed": false, "process_identity": false, "query_worker": false, "observation_worker": false, "window_lifecycle": false, "observations": null, "target_queries": null, "target": "app", "observation_sequence": 2, "review_required": false}, "interrupted_execution": {"started_ns": 593066165566, "ended_ns": 593085963290, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 593085962354}], "waits": [], "activations": [], "completed_ops": [0], "error": "SystemExit('pending worker CTRL')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}, "call_id": "93a26aefefaf4d8d9c3003def61a572a", "call_directory": "/tmp/tmp82rx6gnn/93a26aefefaf4d8d9c3003def61a572a", "retained_call": {"call_id": "93a26aefefaf4d8d9c3003def61a572a", "operation": "guarded_input", "state": "finished", "arguments": {"alias": "field", "offset": [6, 6], "tail": [{"op": "key_chord", "keys": ["CTRL", "a"]}], "interaction": "keyboard", "observe_after": false}, "backend_attempted": true, "persistence_failure": null, "response_wait_ms": 0, "worker_interrupted": "SystemExit", "interruption_receipt": true}}, "recovery": {"status": "input_recovered", "release_attempted": true, "release": {"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 593121290213}, "recovery_required": false, "task_success": null, "replay_allowed": false, "previous_binding_revision": 0, "binding_revision": 1, "review_required": true, "authority_granted": false, "task_effect_status": "unknown", "note": "One release-only attempt. Review this window and mint fresh aliases before new input; retired workers stay retired. Prior task effects remain unknown. No replay or lease issued.", "operation": "guarded_recover_input", "session": {"session_id": "6efb3869703f4e63baeb45b8fa41619d", "mode": "guarded-x11", "state": "open", "binding_revision": 1, "targets": {"app": 20}, "recovery_required": false, "error": null, "authority_granted": false, "restart_allowed": false, "process_identity": false, "query_worker": false, "observation_worker": false, "window_lifecycle": false, "observations": null, "target_queries": null, "target": "app", "observation_sequence": 2, "review_required": true}, "call_directory": "/tmp/tmp82rx6gnn/495eccf35ef940e5925e13370bed832b", "call_id": "495eccf35ef940e5925e13370bed832b"}, "emissions": [[2, 1], [3, 1]]}
+....{"case": "worker-stop", "lookup": {"status": "runtime_interrupted", "error": "WorkerStop('after CTRL')", "exception_type": "WorkerStop", "operation": "guarded_input", "operation_invoked": false, "effect_status": "unknown", "release_confirmed": false, "task_success": null, "replay_allowed": false, "authority_granted": false, "report_artifact_present": false, "session": {"session_id": "f5581027a6174993a0d7ab1c9c736599", "mode": "guarded-x11", "state": "open", "binding_revision": 0, "targets": {"app": 20}, "recovery_required": true, "error": null, "authority_granted": false, "restart_allowed": false, "process_identity": false, "query_worker": false, "observation_worker": false, "window_lifecycle": false, "observations": null, "target_queries": null, "target": "app", "observation_sequence": 2, "review_required": false}, "interrupted_execution": {"started_ns": 593904665922, "ended_ns": 593904720104, "emissions": 1, "program_emissions": 1, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 593904719517}], "waits": [], "activations": [], "completed_ops": [0], "error": "WorkerStop('after CTRL')", "failed_op": 1, "failed_op_effect": "unknown; may have emitted partial input"}, "call_id": "31e68857b9854f7ba903beddfd0c4d66", "call_directory": "/tmp/tmppfxloynr/31e68857b9854f7ba903beddfd0c4d66", "retained_call": {"call_id": "31e68857b9854f7ba903beddfd0c4d66", "operation": "guarded_input", "state": "finished", "arguments": {"alias": "field", "offset": [6, 6], "tail": [{"op": "key_chord", "keys": ["CTRL", "a"]}], "interaction": "keyboard", "observe_after": false}, "backend_attempted": true, "persistence_failure": null, "worker_interrupted": "WorkerStop", "interruption_receipt": true}, "presentation": {"requested": "brief", "returned": "full", "reason": "critical_or_unsupported_result"}}, "emissions": [[2, 1], [3, 1]]}
+.......................E..E............E...........execute program '/mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python': <_UnixSubprocessTransport pid=522 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=522 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...................................................................execute program '/mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python': <_UnixSubprocessTransport pid=649 running stdin=<_UnixWritePipeTransport fd=8 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=9 polling>>
+<_UnixReadPipeTransport fd=9 polling> was closed by peer
+<_UnixSubprocessTransport pid=649 running stdin=<_UnixWritePipeTransport closed fd=8 closed> stdout=<_UnixReadPipeTransport closed fd=9 closed>> exited with return code 0
+..E.......................EEEEEEEEEEE....E..........................E....................E..................................
+======================================================================
+ERROR: test_portable_report_survives_actual_closed_stdout_pipe (test_attempt.RetainedAttemptTests.test_portable_report_survives_actual_closed_stdout_pipe)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_attempt.py", line 158, in test_portable_report_survives_actual_closed_stdout_pipe
+    from runtime.distribution_v2.build import SOURCE_FILES, build
+ModuleNotFoundError: No module named 'runtime.distribution_v2'
+
+======================================================================
+ERROR: test_fsync_failures_preserve_ambiguous_committed_slot (test_cli.HostJSONPublicationTests.test_fsync_failures_preserve_ambiguous_committed_slot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_cli.py", line 56, in test_fsync_failures_preserve_ambiguous_committed_slot
+    from runtime.host_v1.file_publication import publish_json
+ModuleNotFoundError: No module named 'runtime.host_v1'
+
+======================================================================
+ERROR: test_invalid_finite_json_is_rejected_before_publication (test_cli.HostJSONPublicationTests.test_invalid_finite_json_is_rejected_before_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_cli.py", line 74, in test_invalid_finite_json_is_rejected_before_publication
+    from runtime.host_v1.file_publication import publish_json
+ModuleNotFoundError: No module named 'runtime.host_v1'
+
+======================================================================
+ERROR: test_slot_is_invisible_until_complete_and_cannot_be_overwritten (test_cli.HostJSONPublicationTests.test_slot_is_invisible_until_complete_and_cannot_be_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_cli.py", line 28, in test_slot_is_invisible_until_complete_and_cannot_be_overwritten
+    from runtime.host_v1.file_publication import publish_json
+ModuleNotFoundError: No module named 'runtime.host_v1'
+
+======================================================================
+ERROR: test_unsupported_platform_does_not_create_a_slot (test_cli.HostJSONPublicationTests.test_unsupported_platform_does_not_create_a_slot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_cli.py", line 19, in test_unsupported_platform_does_not_create_a_slot
+    from runtime.host_v1.file_publication import publish_json
+ModuleNotFoundError: No module named 'runtime.host_v1'
+
+======================================================================
+ERROR: test_open_owner_delegates_context_without_input_or_reopen (test_mcp_guarded.InputDependencyOwnerTests.test_open_owner_delegates_context_without_input_or_reopen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_guarded.py", line 830, in test_open_owner_delegates_context_without_input_or_reopen
+    from .mcp_guarded import GuardedSessionOwner
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_state_is_checked_at_context_entry (test_mcp_guarded.InputDependencyOwnerTests.test_state_is_checked_at_context_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_guarded.py", line 819, in test_state_is_checked_at_context_entry
+    from .mcp_guarded import GuardedSessionOwner
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_unopened_owner_cannot_register (test_mcp_guarded.InputDependencyOwnerTests.test_unopened_owner_cannot_register)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_guarded.py", line 811, in test_unopened_owner_cannot_register
+    from .mcp_guarded import GuardedSessionOwner
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_legacy_public_protocol_parity_without_changing_research (test_mcp_relay.PublicRelayTests.test_legacy_public_protocol_parity_without_changing_research)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_relay.py", line 284, in test_legacy_public_protocol_parity_without_changing_research
+    from research.live_control.native_mcp_relay_v1 import Relay as Legacy,PUBLIC_TOOLS as LEGACY_TOOLS
+ModuleNotFoundError: No module named 'research.live_control.native_mcp_relay_v1'
+
+======================================================================
+ERROR: test_portable_relay_outside_checkout_lists_validates_and_closes (test_mcp_relay.PublicRelayTests.test_portable_relay_outside_checkout_lists_validates_and_closes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_relay.py", line 301, in test_portable_relay_outside_checkout_lists_validates_and_closes
+    from runtime.distribution_v2.build import build
+ModuleNotFoundError: No module named 'runtime.distribution_v2'
+
+======================================================================
+ERROR: test_portable_stdio_runs_outside_checkout (test_mcp_server.PublicMCPTests.test_portable_stdio_runs_outside_checkout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_server.py", line 341, in test_portable_stdio_runs_outside_checkout
+    from runtime.distribution_v2.build import SOURCE_FILES, build
+ModuleNotFoundError: No module named 'runtime.distribution_v2'
+
+======================================================================
+ERROR: test_mcp_window_lifecycle (unittest.loader._FailedTest.test_mcp_window_lifecycle)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mcp_window_lifecycle
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_window_lifecycle.py", line 10, in <module>
+    from .mcp_server import create_server
+ImportError: attempted relative import with no known parent package
+
+
+======================================================================
+ERROR: test_existing_win32_capture_is_available_without_input_dispatch (test_observe.Win32ReadOnlyObserveTests.test_existing_win32_capture_is_available_without_input_dispatch) (frame='window_client')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 151, in test_existing_win32_capture_is_available_without_input_dispatch
+    backend, session, full = self.backend_session()
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_existing_win32_capture_is_available_without_input_dispatch (test_observe.Win32ReadOnlyObserveTests.test_existing_win32_capture_is_available_without_input_dispatch) (frame='screen_physical_px')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 151, in test_existing_win32_capture_is_available_without_input_dispatch
+    backend, session, full = self.backend_session()
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_artifact_request_still_refuses_before_capture (test_observe.Win32ReadOnlyObserveTests.test_win32_artifact_request_still_refuses_before_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 204, in test_win32_artifact_request_still_refuses_before_capture
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_capture_failure_is_not_retried_or_recovered (test_observe.Win32ReadOnlyObserveTests.test_win32_capture_failure_is_not_retried_or_recovered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 167, in test_win32_capture_failure_is_not_retried_or_recovered
+    from runtime.backends.win32_v1.backend import Win32BackendError
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_invalid_region_and_unknown_target_do_not_capture (test_observe.Win32ReadOnlyObserveTests.test_win32_invalid_region_and_unknown_target_do_not_capture) (target='fixture', region=[False, 0, 4, 4])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 179, in test_win32_invalid_region_and_unknown_target_do_not_capture
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_invalid_region_and_unknown_target_do_not_capture (test_observe.Win32ReadOnlyObserveTests.test_win32_invalid_region_and_unknown_target_do_not_capture) (target='unknown', region=[0, 0, 4, 4])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 179, in test_win32_invalid_region_and_unknown_target_do_not_capture
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_invalid_region_and_unknown_target_do_not_capture (test_observe.Win32ReadOnlyObserveTests.test_win32_invalid_region_and_unknown_target_do_not_capture) (target='fixture', region=[15, 15, 4, 4])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 179, in test_win32_invalid_region_and_unknown_target_do_not_capture
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_unknown_or_stale_target_refuses_both_frames (test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) (frame='window_client', target='unknown', live=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 189, in test_win32_unknown_or_stale_target_refuses_both_frames
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_unknown_or_stale_target_refuses_both_frames (test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) (frame='window_client', target='fixture', live=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 189, in test_win32_unknown_or_stale_target_refuses_both_frames
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_unknown_or_stale_target_refuses_both_frames (test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) (frame='screen_physical_px', target='unknown', live=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 189, in test_win32_unknown_or_stale_target_refuses_both_frames
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_win32_unknown_or_stale_target_refuses_both_frames (test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) (frame='screen_physical_px', target='fixture', live=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 189, in test_win32_unknown_or_stale_target_refuses_both_frames
+    backend, session, _ = self.backend_session()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_observe.py", line 108, in backend_session
+    from runtime.backends.win32_v1.backend import Win32Backend
+ModuleNotFoundError: No module named 'runtime.backends.win32_v1'
+
+======================================================================
+ERROR: test_no_inline_capture_summary_keeps_image_and_full_program_retrieval (test_post_dispatch_capture.PostDispatchCaptureTests.test_no_inline_capture_summary_keeps_image_and_full_program_retrieval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_post_dispatch_capture.py", line 158, in test_no_inline_capture_summary_keeps_image_and_full_program_retrieval
+    await self.exercise(include_prior=False,wait_ms=20,expect_summary=True)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_post_dispatch_capture.py", line 98, in exercise
+    from .public_summary import summarize_public_dispatch
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_receipt_composition_2916 (unittest.loader._FailedTest.test_receipt_composition_2916)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_receipt_composition_2916
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_receipt_composition_2916.py", line 3, in <module>
+    from research.integration.golden_v3_receipt_composition_2916.test_receipt_composition import ReceiptCompositionTests
+ModuleNotFoundError: No module named 'research.integration.golden_v3_receipt_composition_2916'
+
+
+======================================================================
+ERROR: test_review (unittest.loader._FailedTest.test_review)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_review
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_review.py", line 11, in <module>
+    from runtime.distribution_v2.build import SOURCE_FILES, build
+ModuleNotFoundError: No module named 'runtime.distribution_v2'
+
+
+======================================================================
+FAIL: test_cli_publication_stdin_and_duplicate_refusal_without_input (test_cli.HostJSONPublicationTests.test_cli_publication_stdin_and_duplicate_refusal_without_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_cli.py", line 85, in test_cli_publication_stdin_and_duplicate_refusal_without_input
+    self.assertEqual(first.returncode, 0, first.stderr)
+AssertionError: 1 != 0 : b'Traceback (most recent call last):\n  File "<frozen runpy>", line 198, in _run_module_as_main\n  File "<frozen runpy>", line 88, in _run_code\n  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/__main__.py", line 185, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/__main__.py", line 106, in main\n    from runtime.host_v1.file_publication import publish_json\nModuleNotFoundError: No module named \'runtime.host_v1\'\n'
+
+======================================================================
+FAIL: test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process (test_mcp_interruption_receipt.InterruptionReceiptTests.test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process) (kind='KeyboardInterrupt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_interruption_receipt.py", line 186, in test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process
+    self.assertEqual(proc.returncode, 0, proc.stderr)
+AssertionError: 1 != 0 : /mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python: No module named test_mcp_interruption_receipt
+
+
+======================================================================
+FAIL: test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process (test_mcp_interruption_receipt.InterruptionReceiptTests.test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process) (kind='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/pr9011-main-sync-20261018/runtime/cli_v1/test_mcp_interruption_receipt.py", line 186, in test_keyboardinterrupt_and_systemexit_are_preserved_in_owned_process
+    self.assertEqual(proc.returncode, 0, proc.stderr)
+AssertionError: 1 != 0 : /mnt/c/Users/user/AppData/Local/Temp/codex-fake-x-caller-20261018/bin/python: No module named test_mcp_interruption_receipt
+
+
+----------------------------------------------------------------------
+Ran 396 tests in 25.123s
+
+FAILED (failures=3, errors=26)

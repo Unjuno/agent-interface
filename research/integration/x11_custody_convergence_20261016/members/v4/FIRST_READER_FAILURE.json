@@ -1,0 +1,10 @@
+{
+  "tool_chunk": "ba3fd3",
+  "exit_code": 1,
+  "error": "ValueError: endpoint census",
+  "cause": "Reader counted only case-bearing endpoints and omitted 60 mixed_case-bearing rows; actual saved stdout has 183 JSON records including 176 endpoint rows.",
+  "retained_source": "read_saved_first.py",
+  "repair": "Include both case and mixed_case in endpoint census and prior-row comparison; preserve 176 threshold and every actor/source/assertion.",
+  "actor_replays": 0,
+  "pid_utc": "not separately captured for this data reader; not inferred from actor receipts"
+}

@@ -1,0 +1,64 @@
+{
+  "cleanup_status": "not_attempted",
+  "delay_ms": 8000,
+  "disconnect_receipt": null,
+  "error": "missing or ambiguous X-Resource process identity",
+  "error_type": "RuntimeError",
+  "final_cleanup_status": "key_release_sync_completed",
+  "final_key_down": {
+    "a": false,
+    "b": false
+  },
+  "independent_release_effect_observed": null,
+  "initial_held_readback": null,
+  "interpretation": null,
+  "keycodes": {
+    "a": 38,
+    "b": 56
+  },
+  "late_keypress_readback": null,
+  "owner": {
+    "flushed_ns": 276477750300477,
+    "keycodes": {
+      "a": 38,
+      "b": 56
+    },
+    "pid": 381,
+    "resource_base": 4194304
+  },
+  "owner_returncode": -9,
+  "owner_stderr": "",
+  "release_readback_before_delay_horizon": null,
+  "schema": "agent-interface/xvfb-held-key-disconnect-queue-v2",
+  "scope": "private X.Org Xvfb server; direct XTEST owner; no standard MCP caller",
+  "server_build_provenance": {
+    "packages": {
+      "xserver-xorg-core": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xserver-xorg-core="
+      },
+      "xvfb": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xvfb=2:21.1.12-1ubuntu1.8"
+      }
+    },
+    "path": "/usr/bin/Xvfb",
+    "resolved_path": "/usr/bin/Xvfb",
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84"
+  },
+  "server_display": "127.0.0.1:88",
+  "server_release_number": 12101011,
+  "server_vendor": "The X.Org Foundation",
+  "state_after_disconnect_before_release": null,
+  "status": "FAIL",
+  "xres_version": [
+    1,
+    2
+  ],
+  "xtest_version": [
+    2,
+    2
+  ]
+}

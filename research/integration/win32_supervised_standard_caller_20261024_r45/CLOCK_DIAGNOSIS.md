@@ -1,0 +1,9 @@
+# R45 clock-domain diagnosis (additive)
+
+**Finding:** R45's 4.9554 ms shortfall is consistent with a mixed-clock deadline in the frozen harness. This is a strong, testable cause hypothesis, not a proven causal result; the raw run did not retain every `time.monotonic()` read made by the hold loop.
+
+The R45 input-free preflight records CPython 3.11.9 on Windows 10.0.26300. This same interpreter reports `time.get_clock_info("monotonic") = GetTickCount64(), resolution 0.015625 s` and `time.get_clock_info("perf_counter") = QueryPerformanceCounter(), resolution 0.0000001 s`. Python documents that `get_clock_info` exposes a clock's implementation and resolution, and that `perf_counter` is the high-resolution elapsed-time clock ([Python 3.11 time documentation](https://docs.python.org/3.11/library/time.html)).
+
+In the frozen R45 hold loop, `hold_deadline` and loop termination use `time.monotonic()` (1250 ms requested). The hold start/end, cancel receipt and hook callback timestamps use `time.perf_counter_ns()`. Raw records 1,244.9507 ms between the hold loop's start/end timestamps; cancel response to hook callback return is 1,245.0446 ms. The latter is 4.9554 ms below the fixed 1,250 ms threshold. The 15.625 ms monotonic quantization is large enough to explain a short measured interval of this size when compared to the QPC audit clock.
+
+**Next discriminating change:** preserve the protocol, but use `time.perf_counter_ns()` for the hold deadline and its loop predicate, matching the existing hook/audit clock. Add a predeclared 1,400 ms hold so the fixed minimum retains at least 150 ms of planned margin, subject to the existing 2,900 ms projected and 3,000 ms callback safety ceilings. Record both clock metadata in the input-free preflight. A new unique attempt is required to test this correction. R45 remains immutable `FAIL_OR_UNKNOWN`; this diagnosis does not turn it into a pass.

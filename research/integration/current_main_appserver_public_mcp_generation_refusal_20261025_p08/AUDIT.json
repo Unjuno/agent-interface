@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "generation_invalidated_after_provider_before_mint": true,
+    "ledger_complete_and_score_matches_refusal_oracle": true,
+    "mint_uses_original_observation_sequence": true,
+    "model_point_inside_green_target": true,
+    "model_saw_exact_public_image": true,
+    "neutral_session_close_verified": true,
+    "no_owner_input_or_application_effect": true,
+    "no_wslc_docker_or_physical_input": true,
+    "one_completed_real_model_turn": true,
+    "prelaunch_sources_match": true,
+    "raw_manifest_all_match": true,
+    "redaction_hashes_match": true,
+    "runtime_task_success_remains_null": true,
+    "standard_compiled_caller_refused_stale_generation": true
+  },
+  "classification": "PASS_SCOPED",
+  "matched_efficiency_or_reliability": false,
+  "physical_input": false,
+  "schema": "agent-interface/appserver-p08-stale-generation-audit-v1",
+  "scope": "one real model wait, standard public compiled MCP, synthetic Fake X process-generation refusal",
+  "wslc_used": false
+}

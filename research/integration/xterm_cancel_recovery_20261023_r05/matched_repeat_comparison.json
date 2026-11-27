@@ -1,0 +1,57 @@
+{
+  "delta_R05_minus_R04_ms": {
+    "cancel_ms": -0.218047,
+    "fresh_fsync_ms": 2.621823,
+    "fresh_public_return_ms": 3.548491,
+    "fsync_after_public_return_ms": -0.926668
+  },
+  "interpretation": "Two scoped xterm samples with the same injected delayed XTEST/Display.sync condition passed. This is repeat evidence only; it is not a statistically meaningful reliability estimate or matched model/provider efficiency comparison.",
+  "runs": [
+    {
+      "audit_sha256": "d3643cc95d53c656c1aad5b79a2ada74a9c2476c3c24d9dd28dfaf4f478b4a3c",
+      "audit_status": "PASS_XTERM_CANCEL_NEW_GENERATION_EFFECT_SCOPED",
+      "cancel_ms": 97.416485,
+      "checks_passed": 16,
+      "checks_total": 16,
+      "fresh_fsync_ms": 103.948553,
+      "fresh_public_return_ms": 82.780861,
+      "fresh_rows": 1,
+      "fsync_after_public_return_ms": 21.167692,
+      "native_surface": 4194316,
+      "old_observed_rows": 0,
+      "old_outcome": "UNKNOWN",
+      "old_release_all_up": true,
+      "old_release_verified": true,
+      "process_generation_changed": true,
+      "result_sha256": "891f6e8dde27f72105f682b608ed2964a0f294ce2965b6508538c15cadd14b62",
+      "run": "R04",
+      "run_id": "xterm-cancel-recovery-local-20261023-r04",
+      "trial_status": "OBSERVED_XTERM_CANCEL_AND_NEW_GENERATION_PENDING_AUDIT",
+      "window_generation_changed": true
+    },
+    {
+      "audit_sha256": "b232bede33a2209401216abe17c6842fe05d21c0743f6ae35ae325299dbb7e13",
+      "audit_status": "PASS_XTERM_CANCEL_NEW_GENERATION_EFFECT_SCOPED",
+      "cancel_ms": 97.198438,
+      "checks_passed": 16,
+      "checks_total": 16,
+      "fresh_fsync_ms": 106.570376,
+      "fresh_public_return_ms": 86.329352,
+      "fresh_rows": 1,
+      "fsync_after_public_return_ms": 20.241024,
+      "native_surface": 4194316,
+      "old_observed_rows": 0,
+      "old_outcome": "UNKNOWN",
+      "old_release_all_up": true,
+      "old_release_verified": true,
+      "process_generation_changed": true,
+      "result_sha256": "cd45da2c6a8dcedc534853b868b0c55daa7a24fca214ed2be0eb8234171803c5",
+      "run": "R05",
+      "run_id": "xterm-cancel-recovery-local-20261023-r05",
+      "trial_status": "OBSERVED_XTERM_CANCEL_AND_NEW_GENERATION_PENDING_AUDIT",
+      "window_generation_changed": true
+    }
+  ],
+  "sample_count": 2,
+  "schema": "agent-interface/xterm-cancel-recovery-matched-repeat-comparison-v1"
+}

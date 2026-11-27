@@ -1,0 +1,23 @@
+test_actual_strict_owner_roundtrip_and_eof_releases (__main__.OwnerRpcTests.test_actual_strict_owner_roundtrip_and_eof_releases) ... ok
+test_blocked_release_keeps_transport_close_and_owner_stop_unverified (__main__.OwnerRpcTests.test_blocked_release_keeps_transport_close_and_owner_stop_unverified) ... ok
+test_changed_generation_is_refused_by_remote_current_owner (__main__.OwnerRpcTests.test_changed_generation_is_refused_by_remote_current_owner) ... ok
+test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel (__main__.OwnerRpcTests.test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel) ... ok
+test_duplicate_id_and_lease_rebinding_close_before_second_input (__main__.OwnerRpcTests.test_duplicate_id_and_lease_rebinding_close_before_second_input) ... ok
+test_inconsistent_close_receipt_is_not_a_release_certificate (__main__.OwnerRpcTests.test_inconsistent_close_receipt_is_not_a_release_certificate) ... FAIL
+test_module_available (__main__.OwnerRpcTests.test_module_available) ... ok
+test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (__main__.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) ... ok
+test_window_source_rejected_before_send_without_canonical_service_contract (__main__.OwnerRpcTests.test_window_source_rejected_before_send_without_canonical_service_contract) ... ok
+
+======================================================================
+FAIL: test_inconsistent_close_receipt_is_not_a_release_certificate (__main__.OwnerRpcTests.test_inconsistent_close_receipt_is_not_a_release_certificate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 219, in test_inconsistent_close_receipt_is_not_a_release_certificate
+    self.assertFalse(result['verified'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 9 tests in 4.417s
+
+FAILED (failures=1)

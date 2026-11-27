@@ -16,8 +16,9 @@ class Backend(Previous):
         super().__init__(session, out, emit, signal_readers)
         # V1 already replaced the construction owner before measured authority.
         # Replace that empty owner once more with the telemetry-only v11 wrapper.
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)
         self._input_event_context = None
 
     def execute(self, step, cancel, identifier, index):

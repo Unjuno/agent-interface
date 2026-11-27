@@ -1,0 +1,63 @@
+EEE
+======================================================================
+ERROR: test_point_mint_accepts_same_generation_and_keeps_private_registry_id (research.live_control.test_chromium_v5_generation_mint_guard_v1.ChromiumV5GenerationMintGuardTests.test_point_mint_accepts_same_generation_and_keeps_private_registry_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 135, in test_point_mint_accepts_same_generation_and_keeps_private_registry_id
+    result = execute_point_mint(harness)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 109, in execute_point_mint
+    return PointMintBackend.execute(harness, step, None, "attempt-1", 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v33.py", line 98, in execute
+    record = self.handles.mint(
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles.py", line 24, in mint
+    result = super().mint(
+             ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles_texture.py", line 23, in mint
+    raise FlatTargetRefused("visually flat target region refused")
+runtime.guarded_x11_v1.handles_texture.FlatTargetRefused: visually flat target region refused
+
+======================================================================
+ERROR: test_point_mint_refuses_process_generation_change_with_identical_pixels (research.live_control.test_chromium_v5_generation_mint_guard_v1.ChromiumV5GenerationMintGuardTests.test_point_mint_refuses_process_generation_change_with_identical_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 117, in test_point_mint_refuses_process_generation_change_with_identical_pixels
+    execute_point_mint(harness)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 109, in execute_point_mint
+    return PointMintBackend.execute(harness, step, None, "attempt-1", 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v33.py", line 98, in execute
+    record = self.handles.mint(
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles.py", line 24, in mint
+    result = super().mint(
+             ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles_texture.py", line 23, in mint
+    raise FlatTargetRefused("visually flat target region refused")
+runtime.guarded_x11_v1.handles_texture.FlatTargetRefused: visually flat target region refused
+
+======================================================================
+ERROR: test_point_mint_refuses_window_generation_change_with_identical_pixels (research.live_control.test_chromium_v5_generation_mint_guard_v1.ChromiumV5GenerationMintGuardTests.test_point_mint_refuses_window_generation_change_with_identical_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 128, in test_point_mint_refuses_window_generation_change_with_identical_pixels
+    execute_point_mint(harness)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 109, in execute_point_mint
+    return PointMintBackend.execute(harness, step, None, "attempt-1", 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\session_v33.py", line 98, in execute
+    record = self.handles.mint(
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles.py", line 24, in mint
+    result = super().mint(
+             ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\runtime\guarded_x11_v1\handles_texture.py", line 23, in mint
+    raise FlatTargetRefused("visually flat target region refused")
+runtime.guarded_x11_v1.handles_texture.FlatTargetRefused: visually flat target region refused
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (errors=3)

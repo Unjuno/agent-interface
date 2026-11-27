@@ -1,0 +1,183 @@
+{
+  "status": "audited",
+  "blocks": {
+    "fixed": {
+      "direct": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 5.525966867499999,
+          "method_seconds": 0.7292564914999999,
+          "post_method_seconds": 0.0025061125,
+          "recorded_tesseract_seconds": 0.13105245599999998
+        },
+        "samples": [
+          {
+            "allocation": "eo01",
+            "route": "direct",
+            "pre_method_seconds": 5.703577951,
+            "method_seconds": 0.739099186,
+            "post_method_seconds": 0.002076143,
+            "recorded_tesseract_seconds": 0.144983219
+          },
+          {
+            "allocation": "ep03",
+            "route": "direct",
+            "pre_method_seconds": 5.348355784,
+            "method_seconds": 0.719413797,
+            "post_method_seconds": 0.002936082,
+            "recorded_tesseract_seconds": 0.117121693
+          }
+        ]
+      },
+      "compiled": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 5.4564789915,
+          "method_seconds": 1.101995435,
+          "post_method_seconds": 0.00204367,
+          "recorded_tesseract_seconds": 0.114925954,
+          "compiled_owner_attempt_seconds": 0.6843623240000001,
+          "recovery_seconds": 0.4065463975
+        },
+        "samples": [
+          {
+            "allocation": "eo02",
+            "route": "compiled",
+            "pre_method_seconds": 4.786856312,
+            "method_seconds": 1.1043424,
+            "post_method_seconds": 0.002405178,
+            "recorded_tesseract_seconds": 0.112147289,
+            "compiled_owner_attempt_seconds": 0.691235958,
+            "recovery_seconds": 0.40126908
+          },
+          {
+            "allocation": "ep02",
+            "route": "compiled",
+            "pre_method_seconds": 6.126101671,
+            "method_seconds": 1.09964847,
+            "post_method_seconds": 0.001682162,
+            "recorded_tesseract_seconds": 0.117704619,
+            "compiled_owner_attempt_seconds": 0.67748869,
+            "recovery_seconds": 0.411823715
+          }
+        ]
+      },
+      "fresh": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 6.0383726175,
+          "method_seconds": 3.6169827750000003,
+          "post_method_seconds": 0.0033110229999999997,
+          "recorded_tesseract_seconds": 0.12236103400000001
+        },
+        "samples": [
+          {
+            "allocation": "eo03",
+            "route": "fresh",
+            "pre_method_seconds": 5.645658962,
+            "method_seconds": 2.917775761,
+            "post_method_seconds": 0.00279525,
+            "recorded_tesseract_seconds": 0.10634509
+          },
+          {
+            "allocation": "ep01",
+            "route": "fresh",
+            "pre_method_seconds": 6.431086273,
+            "method_seconds": 4.316189789,
+            "post_method_seconds": 0.003826796,
+            "recorded_tesseract_seconds": 0.138376978
+          }
+        ]
+      }
+    },
+    "temporary_obstruction": {
+      "direct": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 8.55614202,
+          "method_seconds": 0.719659587,
+          "post_method_seconds": 0.0022007505,
+          "recorded_tesseract_seconds": 0.1256806305
+        },
+        "samples": [
+          {
+            "allocation": "eq01",
+            "route": "direct",
+            "pre_method_seconds": 7.629845236,
+            "method_seconds": 0.732719163,
+            "post_method_seconds": 0.002192359,
+            "recorded_tesseract_seconds": 0.139841412
+          },
+          {
+            "allocation": "er03",
+            "route": "direct",
+            "pre_method_seconds": 9.482438804,
+            "method_seconds": 0.706600011,
+            "post_method_seconds": 0.002209142,
+            "recorded_tesseract_seconds": 0.111519849
+          }
+        ]
+      },
+      "compiled": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 9.0343151925,
+          "method_seconds": 1.1127707055,
+          "post_method_seconds": 0.002955257,
+          "recorded_tesseract_seconds": 0.114776539,
+          "compiled_owner_attempt_seconds": 0.6870746514999999,
+          "recovery_seconds": 0.41439279549999997
+        },
+        "samples": [
+          {
+            "allocation": "eq02",
+            "route": "compiled",
+            "pre_method_seconds": 8.647477442,
+            "method_seconds": 1.115508969,
+            "post_method_seconds": 0.002073343,
+            "recorded_tesseract_seconds": 0.121675023,
+            "compiled_owner_attempt_seconds": 0.684476786,
+            "recovery_seconds": 0.420009198
+          },
+          {
+            "allocation": "er02",
+            "route": "compiled",
+            "pre_method_seconds": 9.421152943,
+            "method_seconds": 1.110032442,
+            "post_method_seconds": 0.003837171,
+            "recorded_tesseract_seconds": 0.107878055,
+            "compiled_owner_attempt_seconds": 0.689672517,
+            "recovery_seconds": 0.408776393
+          }
+        ]
+      },
+      "fresh": {
+        "n": 2,
+        "medians": {
+          "pre_method_seconds": 8.751854974499999,
+          "method_seconds": 3.341183278,
+          "post_method_seconds": 0.0030436385,
+          "recorded_tesseract_seconds": 0.123353711
+        },
+        "samples": [
+          {
+            "allocation": "eq03",
+            "route": "fresh",
+            "pre_method_seconds": 9.556563331,
+            "method_seconds": 3.476992198,
+            "post_method_seconds": 0.003780103,
+            "recorded_tesseract_seconds": 0.106230013
+          },
+          {
+            "allocation": "er01",
+            "route": "fresh",
+            "pre_method_seconds": 7.947146618,
+            "method_seconds": 3.205374358,
+            "post_method_seconds": 0.002307174,
+            "recorded_tesseract_seconds": 0.140477409
+          }
+        ]
+      }
+    }
+  }
+}

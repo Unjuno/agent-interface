@@ -1,0 +1,202 @@
+{
+  "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r02",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r02",
+        "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03"
+      },
+      "name": "schema_attempt_and_frozen_source",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "hwnd": 99420516,
+        "owner": {
+          "creation_time_100ns": 134372385547114749,
+          "pid": 21108,
+          "window_thread_id": 43880
+        },
+        "pid": 21108
+      },
+      "name": "one_owned_fixture_process",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "consistency": null,
+        "target_generation": null
+      },
+      "name": "public_observation_returned_generation",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "observed": null,
+        "owned": "0f83bb97e87e15bb1f67f1ae7aa64e2a4ddd9010d13bf2bbea2d734a558de345"
+      },
+      "name": "observed_generation_matches_native_owner",
+      "passed": false
+    },
+    {
+      "evidence": {},
+      "name": "public_validation_accepted",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "program_supplied_observed_generation",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "exact_frozen_program",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "attempts": 0,
+        "error": null
+      },
+      "name": "single_public_dispatch",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "admission": null,
+        "recovery_required": null,
+        "status": null
+      },
+      "name": "dispatch_completed_and_admitted",
+      "passed": false
+    },
+    {
+      "evidence": {},
+      "name": "verified_release_all",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "after_close": null,
+        "expected": {
+          "clicked": false,
+          "saved": true,
+          "text": "PUBLIC-MCP-OK-DA32"
+        },
+        "readback": null
+      },
+      "name": "independent_task_effect_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": [
+          {
+            "hwnd": 99420516,
+            "kind": "ready"
+          }
+        ],
+        "expected": [
+          {
+            "hwnd": 99420516,
+            "kind": "ready"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 66,
+            "kind": "char"
+          },
+          {
+            "code": 76,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 68,
+            "kind": "char"
+          },
+          {
+            "code": 65,
+            "kind": "char"
+          },
+          {
+            "code": 51,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "clicked": false,
+            "kind": "save",
+            "saved": true,
+            "text": "PUBLIC-MCP-OK-DA32"
+          }
+        ]
+      },
+      "name": "independent_event_journal_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "close_posted": true,
+        "exit_code": 0,
+        "window_exists_after_exit": false
+      },
+      "name": "clean_fixture_shutdown",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "schema": "win32-public-mcp-valid-generation-effect-audit-v1",
+  "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 13
+}

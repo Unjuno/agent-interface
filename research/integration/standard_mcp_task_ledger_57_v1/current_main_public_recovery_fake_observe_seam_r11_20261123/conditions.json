@@ -1,0 +1,37 @@
+{
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "pass_rule": "Both attempts exit 0, fake called exactly once, unique fake observation ID returned, and no input dispatch. Any deviation invalidates the fake integration seam.",
+  "invariants": [
+    "no actual Win32 observation is authorized; if fake callback does not run, record failure and stop;",
+    "no dispatch or task effect; input_dispatched false;",
+    "direct await; no synthetic API timeout;",
+    "normal and -O each one fresh process; no retries/replacements."
+  ],
+  "question": "Does a minimal supervised-win32 server call to interface_observe invoke the patched mcp_server.observe fake exactly once and return its unique observation ID, or does it reach real Win32 observation for HWND 123?",
+  "not_tested": [
+    "dispatch/recovery lifecycle",
+    "native input or GUI task effect",
+    "MAP01",
+    "efficiency/provider/token",
+    "WSLc/Docker",
+    "preview/runtime distribution"
+  ],
+  "baseline": "Existing create_server supervised-win32 owner path; R10 orphan report observed native invalid-HWND error despite module patch",
+  "environment": "CPython 3.11.9; Windows host",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_supervised_observation_uses_injected_fake_backend",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "schema": "agent-interface/supervised-win32-fake-observe-injection-r11",
+  "scope": "Fake observation injection route validation in supervised Win32 server only",
+  "attempt_count": {
+    "optimized": 1,
+    "normal": 1,
+    "total": 2
+  },
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "11dac213e6a78ec6ab1ed098a7853a1f532c91f2410505f641b1074b877e73e2"
+  }
+}

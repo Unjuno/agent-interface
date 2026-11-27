@@ -1,0 +1,11 @@
+# Current-main V39 health-guard boundary — A01 result
+
+**Disposition: `PASS_METHOD_SCOPED`.** On frozen main `a6343bb76e4dc0a4afa32a29c8a485a617faeff8`, the exact current V39 controller source hash was `51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607`. The earlier current-main pending-invalidation package froze controller hash `e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754`, so it did not establish this source snapshot's identity.
+
+The health source was 100 and the authored validity rule was critical floor 35 with maximum loss 12, yielding hard floor 88. During a pending fake planner turn, current production code preserved the cover at health 89 and exactly 88, then invalidated at 87. The production pending wait path cancelled the Executor cover before requesting planner interruption. Its matching terminal fixture reported verified empty keys and buttons. The intentionally adversarial fake planner still returned an answer-eligible result after interruption; final admission returned `REJECTED_POLICY_INVALIDATED`, with no Executor admission and no input authority.
+
+The candidate ran once under network denial and exited 0. The independent raw-only auditor ran once and passed 13 checks. Its four mutation tests passed in normal and optimized Python. Current-main V39 controller, paired-signal and pending-observation-drain suites passed 57/57 in both normal and optimized Python. All frozen hashes and retained result hashes verify.
+
+The strict comparison is `value < hard_minimum`: a health value exactly equal to 88 remains within the authored loss budget; 87 invalidates. The initial pre-freeze prototype incorrectly expected equality to invalidate, then its corrected harness omitted the third observation. Both construction-only issues were fixed before freeze and are preserved in `CONSTRUCTION_LOG.md`; neither is a production defect.
+
+This verifies only software response to synthetic health evidence on the exact current-main controller. `threat_present` is synthetic metadata. No game, model, GUI, X server, container, OS input, physical key release, independent useful-feedback onset, bounded recovery, survival, or MAP01 exit was tested. The live threat-control gate remains open and needs an authorized fresh current-main allocation.

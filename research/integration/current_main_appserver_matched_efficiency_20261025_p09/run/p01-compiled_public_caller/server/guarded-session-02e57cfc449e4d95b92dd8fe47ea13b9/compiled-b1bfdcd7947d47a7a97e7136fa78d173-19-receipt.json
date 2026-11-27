@@ -1,0 +1,110 @@
+{
+  "completed_transitions": 1,
+  "critical_events": [
+    {
+      "action": "enter",
+      "event": "branch_selected",
+      "evidence_ref": "observation-2",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "outcome": "action",
+      "state": "before"
+    },
+    {
+      "action": "enter",
+      "action_id": "action-f7dfcba16fd040e297f1dc081daaae3e",
+      "event": "action_terminal",
+      "execution_accepted_ns": 561683271421400,
+      "execution_started_ns": 561683260092200,
+      "release_verified": true,
+      "status": "completed"
+    },
+    {
+      "action": "enter",
+      "action_id": "action-f7dfcba16fd040e297f1dc081daaae3e",
+      "effect_observation_accepted_ns": 561683274107300,
+      "effect_observation_captured_ns": 561683272194100,
+      "effect_verification_accepted_ns": 561683274844600,
+      "effect_verification_started_ns": 561683274440700,
+      "event": "effect_checked",
+      "evidence_ref": "observation-6",
+      "execution_accepted_ns": 561683271421400,
+      "status": "succeeded"
+    },
+    {
+      "action": null,
+      "event": "branch_selected",
+      "evidence_ref": "observation-6",
+      "matched_conditions": {
+        "phase": 1
+      },
+      "outcome": "complete",
+      "state": "done"
+    },
+    {
+      "completed_transitions": 1,
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete"
+    }
+  ],
+  "elapsed_ns": 19386400,
+  "ended_ns": 561683275610700,
+  "format": "compiled-gui-runtime-receipt-v1",
+  "frontier_model_resumptions": 0,
+  "input_authority": "admission_per_action_only",
+  "interface_id": "owned-compiled-profile",
+  "latest_evidence_ref": "observation-6",
+  "method": "one-visible-transition",
+  "method_version": "1",
+  "observations": [
+    {
+      "captured_ns": 561683256927700,
+      "evidence_digest": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+      "evidence_ref": "observation-2",
+      "observation_accepted_ns": 561683258683300,
+      "observation_started_ns": 561683256230000,
+      "predicates": {
+        "phase": 0,
+        "present": true
+      },
+      "sequence": 2
+    },
+    {
+      "captured_ns": 561683272194100,
+      "evidence_digest": "7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8",
+      "evidence_ref": "observation-6",
+      "observation_accepted_ns": 561683274107300,
+      "observation_started_ns": 561683271713900,
+      "predicates": {
+        "phase": 1,
+        "present": true
+      },
+      "sequence": 6
+    }
+  ],
+  "outcome": "TASK_SUCCEEDED",
+  "pending_effect": null,
+  "raw_evidence_retention": "adapter_responsibility_unverified",
+  "reason": "method_complete",
+  "session_scope": "native-x11:2eca387cc7ec4e598950212dfef194f0",
+  "started_ns": 561683256224300,
+  "transitions": [
+    {
+      "action": "enter",
+      "action_id": "action-f7dfcba16fd040e297f1dc081daaae3e",
+      "effect_ref": "compiled-b1bfdcd7947d47a7a97e7136fa78d173-10-execution",
+      "evidence_ref": "observation-2",
+      "execution_accepted_ns": 561683271421400,
+      "execution_started_ns": 561683260092200,
+      "from_state": "before",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "observation_sequence": 2,
+      "release_verified": true,
+      "to_state": "done"
+    }
+  ]
+}

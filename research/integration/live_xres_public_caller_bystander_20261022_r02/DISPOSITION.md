@@ -1,0 +1,9 @@
+# R02 disposition
+
+**Result: `PASS_PUBLIC_CALLER_XRES_BYSTANDER_REFUSAL_SCOPED`.** On source `15760a07ff774d902d9a897fe33432a2e60054ba`, one real public MCP caller admitted an XTEST `a` press and the existing fixture blocked the owner in the actual `python-xlib Display.sync()` response wait. After the caller retired owner PID 386, a separate bystander PID 391 naturally reused the same XRes base, `4194304`. The test-only supervisor wrapper invoked the unchanged `x11_cancel_worker`; XRes identified PID 391 and the worker returned `UNKNOWN` / `stale_owner_identity` with `owner_release_attempt=not_attempted`.
+
+The public cancel response returned `pending`; the eventual receipt remained `cleanup_status=UNKNOWN`, `release_confirmed=false`, `task_success=null`, and replay-denied. The independent keymap saw `a` still down immediately after worker refusal. After the fixture's 8-second delayed-request horizon, independent readback saw both `a` and `b` up; the harness verified final neutral state. The caller response was 251.602 ms from invocation to response in this one schedule. The private Xvfb exited and its display lock/socket were absent after cleanup. The independent audit checks the full result and source/freeze identities; see [`raw/r02/audit.json`](raw/r02/audit.json).
+
+The source-level XRes tests and public-caller Fake X bystander regression pass 33 tests plus 13 unittest subtests in normal and optimized CPython 3.12. R01 is retained separately as a preflight-only failure; it emitted no caller action or input.
+
+This is one scoped standard-caller composition sample using a test-only wrapper to create the bystander before calling the unchanged worker. It does not establish a hard response-time guarantee, shared/global input exclusivity, physical desktop/MAP01 behavior, independently verified application task success, matched efficiency or reliability, or WSLc portability. The runtime result remains UNKNOWN and the supervisor remains opt-in.

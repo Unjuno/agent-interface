@@ -1,0 +1,166 @@
+{
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "display": ":140",
+  "errors": [],
+  "executor_events": [
+    {
+      "accepted_ns": 215233390148,
+      "event": "accepted",
+      "id": "executor-crash-a02",
+      "steps": 1,
+      "valid_until_ns": 225233328678
+    },
+    {
+      "event": "step_started",
+      "id": "executor-crash-a02",
+      "issued_ns": 215233602811,
+      "operation": "hold",
+      "step": 0
+    },
+    {
+      "at_ns": 215234352205,
+      "event": "key_down_active",
+      "key": "a"
+    }
+  ],
+  "key_down_before_kill": true,
+  "key_press": {
+    "keycode": 38,
+    "observed_ns": 215234345889,
+    "type": 2,
+    "window": 2097152
+  },
+  "key_release_after_kill": {
+    "keycode": 38,
+    "observed_ns": 215236195879,
+    "type": 3,
+    "window": 2097152
+  },
+  "key_up_after_owner_close": true,
+  "keycode": 38,
+  "kill_requested_ns": 215234641706,
+  "owner_close_returned_ns": 215236726320,
+  "owner_close_started_ns": 215235799999,
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "hardkill-supervised-a04",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 215236283477,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 215235960332,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 215236143906
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            215235960332,
+            215236283477
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 235156215961,
+      "verified": true,
+      "verified_ns": 215236578924
+    }
+  ],
+  "owner_release_record": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "intent_token": "hardkill-supervised-a04",
+    "key_release_attempts": {
+      "38": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 215236283477,
+            "keyrelease_error": null,
+            "keyrelease_started_ns": 215235960332,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_error": null,
+            "sync_returned_ns": 215236143906
+          }
+        ],
+        "verified": true
+      }
+    },
+    "key_release_intervals_ns": [
+      {
+        "interval_ns": [
+          215235960332,
+          215236283477
+        ],
+        "keycode": 38
+      }
+    ],
+    "key_state_errors": [],
+    "key_state_source": "x11_query_keymap",
+    "keys_down": [],
+    "keys_unknown": [],
+    "reason": "close",
+    "valid_until_ns": 235156215961,
+    "verified": true,
+    "verified_ns": 215236578924
+  },
+  "owner_separate_from_executor": true,
+  "owner_thread_alive": false,
+  "owner_thread_stopped": true,
+  "schema": "v39-executor-hardkill-supervised-xvfb-raw-a04-v1",
+  "scope": "current-main Executor V3 child separated from current InputOwner V4/V12 resident in supervisor process",
+  "status": "CANDIDATE_COMPLETE",
+  "supervisor_events": [
+    {
+      "at_ns": 215234922706,
+      "event": "executor_channel_eof"
+    }
+  ],
+  "watcher_events": [
+    {
+      "keycode": 38,
+      "observed_ns": 215234326390,
+      "type": 3,
+      "window": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 215234345889,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 215236195879,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "window": 2097152,
+  "worker_dead_ns": 215235790300,
+  "worker_killed_by_sigkill": true,
+  "worker_returncode": -9
+}

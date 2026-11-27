@@ -1,0 +1,52 @@
+{
+  "packet": "win32_public_backend_composition_currentmain_20261023_r02",
+  "captured_at_utc": "2026-10-23T12:38:28.505820+00:00",
+  "source_commit": "4c0fe4d31efa6dbc6683fbef227bc77778a2b8e8",
+  "worktree_head": "52315366aca293e1937100af9cd6ec66d1a35ec6",
+  "source_tree_equal_to_origin_main": true,
+  "platform": {
+    "system": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "implementation": "CPython"
+  },
+  "scope": "Synthetic process/API regression only. The public MCP path uses injected owner and producer factories; Win32 input APIs are inert fakes. No native input, WSLc, or Docker operation was performed.",
+  "commands": [
+    "python -m unittest -v runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_mcp_win32_backend_composition runtime.cli_v1.test_owned_win32_session runtime.guarded_win32_v1.test_operation_owner runtime.guarded_win32_v1.test_process_cancellation",
+    "python -O -m unittest -v runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_mcp_win32_backend_composition runtime.cli_v1.test_owned_win32_session runtime.guarded_win32_v1.test_operation_owner runtime.guarded_win32_v1.test_process_cancellation"
+  ],
+  "outputs": [
+    {
+      "log": "raw-normal.txt",
+      "exit_code": 0,
+      "tests": 48,
+      "duration_seconds": 29.44,
+      "bytes": 15570,
+      "sha256": "08a556fa6fbd91d653b202a1d48bf5b5e9a7d377afcd7ec60064a8dd74d5bfa9"
+    },
+    {
+      "log": "raw-optimized.txt",
+      "exit_code": 0,
+      "tests": 48,
+      "duration_seconds": 29.579,
+      "bytes": 15570,
+      "sha256": "a690a911091b0fa372e0eb591996c6e60dad86d549ff64604d5f1e0d3a52fe01"
+    }
+  ],
+  "trace_files": [
+    "traces-normal/test_cancel_during_final_generation_read_sends_no_compensating_input.json",
+    "traces-normal/test_public_caller_backend_accept_before_return.json",
+    "traces-normal/test_public_caller_backend_block_before_acceptance.json",
+    "traces-normal/test_public_caller_backend_unretired_producer_stays_unknown.json",
+    "traces-optimized/test_cancel_during_final_generation_read_sends_no_compensating_input.json",
+    "traces-optimized/test_public_caller_backend_accept_before_return.json",
+    "traces-optimized/test_public_caller_backend_block_before_acceptance.json",
+    "traces-optimized/test_public_caller_backend_unretired_producer_stays_unknown.json"
+  ],
+  "coverage_note": "Includes changed/stale target-generation refusal, cancel during final generation query, public cancel/recovery/readback, unretired producer UNKNOWN, old UNKNOWN plus fresh-generation success, oracle timeout/late result, observer timeout, owner identity/custody and recovery/observer IPC failure schedules.",
+  "worktree_tree": "ffeb26be450352e29659b3e2945451838948db79",
+  "origin_main_tree": "ffeb26be450352e29659b3e2945451838948db79",
+  "independent_audit": {
+    "command": "python research/integration/win32_public_backend_composition_currentmain_20261023_r02/audit.py",
+    "result": "PASS: 8 traces; producer counts, target generations, recovery order, UNKNOWN retention"
+  }
+}

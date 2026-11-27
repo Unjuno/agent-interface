@@ -1,0 +1,7 @@
+# A06 result: the cleanup query detects the dropped key but does not retry it
+
+The one-shot fake-Xlib candidate ran once against main `5a290af598e4ef365ac5dfe66dca2c3c9916a20a`. The normal two-key case completed. In the fault case, the wrapper dropped exactly one explicit SPACE `KeyRelease`; the owner's subsequent cleanup queried the keymap, found keycode 65 still down, recorded `verified: false`, and raised `RuntimeError`. The trace contains no cleanup `KeyRelease`, so the hypothesis that cleanup would retry after the one-shot drop is rejected. The third case's unavailable cleanup query and close error were retained as the third JSONL row.
+
+The frozen candidate exited 0 after persisting all three cases. The preregistered auditor exited 1 because its expected-success assertions were not met (and it miscounted admission rows as releases); that failure is preserved in `AUDIT.json`. The later read-only `reconcile_posthoc.py` passes source/raw reconciliation in `POSTHOC_RECONCILIATION.json`. These results do not show the fault occurs on a real X server or prove physical key state. They do show the tested fake path can detect an unverified key-up and fail closed, but does not issue a second release.
+
+Disposition: `HYPOTHESIS_REJECTED / FAIL_A06_AUDITOR_EXPECTATION`. Preserve this candidate and raw; any retry behavior requires a separately versioned owner/backend candidate and a new frozen test.

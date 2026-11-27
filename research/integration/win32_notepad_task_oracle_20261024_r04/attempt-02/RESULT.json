@@ -1,0 +1,59 @@
+{
+  "scope": "single native Notepad task via public supervised-win32 MCP route",
+  "target": "one freshly opened blank Notepad window",
+  "initial_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "tasks": [
+    {
+      "call_id": "bfe9cb1ac82b4a6e9c0278167f26059a",
+      "program_id": "notepad-r04-type-marker",
+      "dispatch_started_ns": 529412109000000,
+      "dispatch_received_ns": 529414015000000,
+      "dispatch_summary": {
+        "call_id": "bfe9cb1ac82b4a6e9c0278167f26059a",
+        "status": null,
+        "release_confirmed": null,
+        "task_success": null,
+        "input_dispatched": null,
+        "replay_allowed": null,
+        "target_generation": null
+      },
+      "verification": {
+        "status": "unknown",
+        "task_success": null,
+        "outcome": null,
+        "oracle": {
+          "started_ns": 529414015000000,
+          "finished_ns": 529414015000000,
+          "observed_ns": 529414015000000,
+          "characters": 0,
+          "child_hwnd": 746588126,
+          "observed_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "raw_execution_status": "execution_failed"
+    }
+  ],
+  "limitations": [
+    "No blocked-platform-I/O recovery trial in this run.",
+    "No WSLc allocation used.",
+    "Single-task result is not a reliability estimate."
+  ],
+  "cleanup_skipped": "first action or independent task check did not fully pass",
+  "overall": "FAIL_OR_UNKNOWN",
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "201b9ddee6804af0bf6c713a785607e1",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 1,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-02\\mcp-calls\\545b8af02a9a4eb1855cf5f1ec04ac4f",
+    "call_id": "545b8af02a9a4eb1855cf5f1ec04ac4f"
+  }
+}

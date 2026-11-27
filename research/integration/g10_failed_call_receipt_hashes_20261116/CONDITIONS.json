@@ -1,0 +1,158 @@
+{
+  "base_main": "69471bbd936e94aa32d58a86c4b2d0035b1f4317",
+  "before_fix_baselines": {
+    "failure_normal_before_fix.json": {
+      "compiled_call_id": "e4b4f8d3a58f43709f5f02527b7a5afa",
+      "compiled_report_sha256": null,
+      "compiled_request_sha256": "df9fef9ce9772c3717036fa1016c45a773884c86d97b65104954fdb470ed9e7f",
+      "compiled_response_sha256": "521e260d490f4ac4fb7b5eac6420b5b1c121b7fd10c4fc4abab46de2e40541b2",
+      "effect_status": "unknown",
+      "raw_origin": "local pre-fix probe ledger; exact source was base_main",
+      "sha256": "f23ca2d05f9462c0ebcd5dfadce3f6924a1eb0dd56a9728194234b1f3a6b12b6",
+      "task_success": null,
+      "terminal_phase": "interface_guarded_calc_compiled",
+      "terminal_status": "failed"
+    },
+    "failure_optimized_before_fix.json": {
+      "compiled_call_id": "329e716de7e94429bbc482ce5b88ad24",
+      "compiled_report_sha256": null,
+      "compiled_request_sha256": "3126bc7ef3f48abc92434541ae079d73fed17db2f14cf83263c8534100014ced",
+      "compiled_response_sha256": "f2bdeed39bd5a21c309deacba230e3d31874a1867000031186538ab15ca04644",
+      "effect_status": "unknown",
+      "raw_origin": "local pre-fix probe ledger; exact source was base_main",
+      "sha256": "7cd51ccee3b475a02bc611f4ecc6428d4baedf98f5560847fc95b380c0a1bd9a",
+      "task_success": null,
+      "terminal_phase": "interface_guarded_calc_compiled",
+      "terminal_status": "failed"
+    }
+  },
+  "evidence_scope": "Fake X/process production MCP stdio; no external provider, live GUI, allocation comparison, or task efficiency claim",
+  "failpoint": "raise immediately after interface_guarded_calc_compiled response",
+  "final_verification_tests": {
+    "normal": {
+      "log": "research/integration/g10_failed_call_receipt_hashes_20261116/final_verification/normal.log",
+      "log_sha256": "5798134f856b2576de958578d2a95044d5e87eb8f957da285a54a2e5b2e7f670",
+      "result": "2/2 PASS"
+    },
+    "optimized": {
+      "log": "research/integration/g10_failed_call_receipt_hashes_20261116/final_verification/optimized.log",
+      "log_sha256": "f8f13b05bc710f9dc07331b0800dc0ce33e1ea3af20f2d22ba2d2844a8d087b6",
+      "result": "2/2 PASS"
+    }
+  },
+  "host_platform": "win32",
+  "log_handling": "Combined stdout/stderr retained in the packet. Worktree path strings are redacted from published logs. Original pre-redaction failure transcript hashes are preserved in local run metadata outside the repository.",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "runs": {
+    "failure_normal": {
+      "call_count": 36,
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "compiled_call_id": "57e1a065b37b49b98a6fda94b69c83ab",
+      "compiled_report_sha256": "249bbff7208ef59baaa1508d96cdf2868822e743a07559d20d9f7db10671fb16",
+      "compiled_request_sha256": "f661469b4bbb6b9ca6ee01293faac062d8af10774e589bef6b44ff100baa8fe2",
+      "compiled_response_sha256": "2a2cfac1bc301c3375f65f59c6a3e7272efefa77d2195e9fa1d029b9e48f382c",
+      "effect_status": "unknown",
+      "exit_code": 1,
+      "expected_exit": "nonzero (injected failure)",
+      "input_release_status": "unknown",
+      "input_release_verified": null,
+      "ledger_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\failure\\normal\\attempt\\attempt-ledger.json",
+      "ledger_sha256": "1528d9d60c309d81fc9585c07a5bf77639269d57a2ebebe74737c94a01aad176",
+      "owner_close_status": "unknown",
+      "stdout_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\failure\\normal\\stdout.log",
+      "stdout_sha256": "2ba645991a782b03037356399a03850574f060fcc73d9a651fcaf5d849ed374d",
+      "task_success": null,
+      "terminal_phase": "interface_guarded_calc_compiled",
+      "terminal_status": "failed"
+    },
+    "failure_optimized": {
+      "call_count": 36,
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "compiled_call_id": "0a5d55ca10a54e4c838dcb6f14d1331f",
+      "compiled_report_sha256": "9add070fee66220141dc3f98a765103a18a9efb2883915a1d66b8b0ae9d12aee",
+      "compiled_request_sha256": "6b72b2ce4ebe708d9d438b4864205a36e796c97ddcfc73b54c285742a37490d9",
+      "compiled_response_sha256": "9a97b46b47e286109ab41898dd0d431f3e815dba58225424f70817dd3cd6f392",
+      "effect_status": "unknown",
+      "exit_code": 1,
+      "expected_exit": "nonzero (injected failure)",
+      "input_release_status": "unknown",
+      "input_release_verified": null,
+      "ledger_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\failure\\optimized\\attempt\\attempt-ledger.json",
+      "ledger_sha256": "39819344cacd511e4b8c7563830a7e2dfd8de5e88c18955b573299064fdd7dee",
+      "owner_close_status": "unknown",
+      "stdout_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\failure\\optimized\\stdout.log",
+      "stdout_sha256": "0811566dc7161b801cc45d67222db82ee4c6a9cb5b829aea9949bf69f2548151",
+      "task_success": null,
+      "terminal_phase": "interface_guarded_calc_compiled",
+      "terminal_status": "failed"
+    },
+    "success_normal": {
+      "call_count": 35,
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "compiled_call_id": "0469db6da1ab4de09b8b914acbc6802f",
+      "compiled_report_sha256": "b79d56c9192088bdaa44f9181a61986b4761a7ed0635d5cd030fd41f47ad703e",
+      "compiled_request_sha256": "b7a7024afeea04a7bd290acf9f9fd97881b760803b70e58ed4b7f5bae6d06d61",
+      "compiled_response_sha256": "e47fb2c340cdc9efb330051b4670cc8a798d0422d9db346a756a35995789703f",
+      "effect_status": "verified",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "input_release_status": "verified",
+      "input_release_verified": true,
+      "ledger_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\success\\normal\\attempt\\attempt-ledger.json",
+      "ledger_sha256": "0b9f968eeb91480ef382a197cbaddb6fdbaf335dc39eb18571be512e9a7bb8f3",
+      "owner_close_status": "closed",
+      "stdout_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\success\\normal\\stdout.log",
+      "stdout_sha256": "520183656f955f79018b72520b59c794bca1de5aac6def07cc33caef5f060ac5",
+      "task_success": true,
+      "terminal_phase": "completed",
+      "terminal_status": "completed"
+    },
+    "success_optimized": {
+      "call_count": 39,
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "compiled_call_id": "59d7cc7e1312465aa5475788a66abb75",
+      "compiled_report_sha256": "adcc595f7e2449bd1daa6a18994358b2075384705487b7c52c115b30bd49b2f0",
+      "compiled_request_sha256": "f61f61bd1071bac6cd24d760357db754fd24fa68b9df110206ebe5d73481097d",
+      "compiled_response_sha256": "4a0ff894faefdd99adad5964b08101ab12394a53ad7f33dcce1edb213fdb2cff",
+      "effect_status": "verified",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "input_release_status": "verified",
+      "input_release_verified": true,
+      "ledger_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\success\\optimized\\attempt\\attempt-ledger.json",
+      "ledger_sha256": "04c0bfc343dc8af88b77a6d33b7697c79778a863174e4de0ad8ca8c99b33b448",
+      "owner_close_status": "closed",
+      "stdout_path": "research\\integration\\g10_failed_call_receipt_hashes_20261116\\success\\optimized\\stdout.log",
+      "stdout_sha256": "4d4fe8b7d1d96500c5a3670381de8311cdabebe14bc2c1d899b566d802c4a4c7",
+      "task_success": true,
+      "terminal_phase": "completed",
+      "terminal_status": "completed"
+    }
+  },
+  "schema": "agent-interface.g10-failed-call-receipt-hashes.v1",
+  "source": "runtime/cli_v1/test_mcp_g10_production_stdio.py",
+  "source_sha256": "cc5610411f4f9f55f334a73a061d7b309be54c7464105dae36916d9124c8ba06",
+  "source_sha256_after_regression_test": "ca1a209c081a60bb56cccf26aa848fe34d2c72015a9c9bbe5a94edc968f96eed"
+}

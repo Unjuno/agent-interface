@@ -1,0 +1,21 @@
+{
+  "schema": "agent-interface/observer-binding-isolated-regression-r17",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "environment": "Windows CPython 3.11.9",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "f9bd44a8378ba6b0710d4c2b084d0d860f42a63a38da17efbffcf6a5107c1a34",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "2921346df4d4882dc43159b77f30c48bd5ef3a21506bb65d06ea1ec51bcde1fc"
+  },
+  "process_isolation": "One unittest per fresh Python process; dedicated TEMP/TMP/TMPDIR for each invocation; no retries.",
+  "order": [
+    "cancel_before_admission normal", "cancel_before_admission optimized",
+    "queued observer binding normal", "queued observer binding optimized",
+    "public compiled caller normal", "public compiled caller optimized"
+  ],
+  "pass_rule": "All six exact test invocations exit 0 and report Ran 1 test / OK.",
+  "tests": [
+    "runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_cancel_before_admission_is_retained_and_prevents_producer_start",
+    "runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_queued_supervised_observation_keeps_server_bound_fake",
+    "runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle"
+  ]
+}

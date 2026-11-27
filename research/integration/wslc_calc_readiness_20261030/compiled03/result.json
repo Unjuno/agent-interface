@@ -1,0 +1,100 @@
+{
+  "status": "FAIL",
+  "events": {
+    "graph_started_ns": 57470126747
+  },
+  "window": [
+    6292258,
+    "study.fods - LibreOffice Calc",
+    2
+  ],
+  "initial_observation": {
+    "sequence": 1,
+    "observation_id": "ef75c999f9994e17a228a8036ef626cf",
+    "binding_revision": 0,
+    "capture_ns": 57429918025,
+    "image_source": "exact_capture_rgb_handoff",
+    "pointer_binding": {
+      "focus": 6292258,
+      "surface": 6292258,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "native": {
+      "bytes": 4096000,
+      "sha256": "ce6ce557fec169c088cd2e36354115adccda1d48d2389d304c09f93689bdcc26",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 6292258,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 57429918025,
+      "capture_ended_ns": 57435216490,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/out/bridge/images/b0faa453eea044c890e66f203a8dcd73.png",
+        "sha256": "28dd65c2c0d839638014baddf650ca3060eb3d86a2c1d9a97523c9cc81575f58",
+        "bytes": 56965,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "ce6ce557fec169c088cd2e36354115adccda1d48d2389d304c09f93689bdcc26",
+        "timing_ns": {
+          "started": 57436958728,
+          "converted": 57438224363,
+          "encoded": 57456905404,
+          "written": 57458524622,
+          "hashed": 57460265575
+        }
+      }
+    },
+    "timing_ns": {
+      "started": 57429325331,
+      "public_returned": 57460359703,
+      "binding_checked": 57462614259,
+      "artifact_verified": 57463873226,
+      "decoded": 57463877818
+    }
+  },
+  "mint": {
+    "offset": [
+      45,
+      7
+    ],
+    "lifetime": {
+      "clock": "time.monotonic_ns",
+      "minted_ns": 57465727222,
+      "expires_ns": 357465727222,
+      "capture_freshness_ms": 1500,
+      "authority_granted": false,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    }
+  },
+  "perception": [],
+  "error_type": "ValueError",
+  "error": "max_runtime_ms must be one to 10000",
+  "traceback": "Traceback (most recent call last):\n  File \"/out/runner.py\", line 60, in run\n    result['events']['graph_started_ns']=time.monotonic_ns();graph=run_compiled(bridge,interface,bindings,perceive=perceive,verify_effect=verify);result['events']['graph_returned_ns']=time.monotonic_ns();result['graph']=graph\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/runtime/guarded_x11_v1/compiled.py\", line 308, in run\n    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/runtime/guarded_x11_v1/compiled.py\", line 19, in __init__\n    self.interface = validate(interface)\n                     ^^^^^^^^^^^^^^^^^^^\n  File \"/src/runtime/core_v1/compiled_gui.py\", line 98, in validate\n    raise ValueError(\"max_runtime_ms must be one to 10000\")\nValueError: max_runtime_ms must be one to 10000\n",
+  "actor_exit": [
+    {
+      "name": "calc",
+      "exitcode": 255
+    },
+    {
+      "name": "openbox",
+      "exitcode": 0
+    },
+    {
+      "name": "xvfb",
+      "exitcode": 0
+    }
+  ]
+}

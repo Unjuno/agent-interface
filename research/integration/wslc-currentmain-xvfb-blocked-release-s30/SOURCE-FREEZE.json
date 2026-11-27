@@ -1,0 +1,63 @@
+{
+  "schema": "agent-interface/wslc-s30-source-freeze-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s30-a57146d1c900",
+  "frozen_utc": "2026-10-25T11:04:45.8181875Z",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "github_main": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "wslc_version": "3.0.3.0",
+  "wslc_process_count_at_freeze": 0,
+  "exact_session_name": "agent-interface-wslc-s30-a57146d1c900",
+  "exact_container_name": "ai-control-wslc-s30-a57146d1c900",
+  "output_directory_empty": true,
+  "session_storage_path_absent": true,
+  "source_test_git_blob": "ed59733cbaa64c8a818bcbe25171c19291d10a8f",
+  "source_server_git_blob": "40cd0c50ef3af59d606884ee238ef08f7261a1ae",
+  "asset_manifests": {
+    "deps": {
+      "bytes": 76673565,
+      "files": 3147,
+      "manifest_sha256": "94e1ae5ec5138be6af4c5cf8d9f0a4162be252faa719159ef27c43cd95041e53"
+    },
+    "deps_versions": {
+      "Pillow": "13.0.0",
+      "mcp": "1.30.0",
+      "python-xlib": "system python-xlib",
+      "six": "system python-six"
+    },
+    "repo": {
+      "bytes": 478750040,
+      "files": 20761,
+      "manifest_sha256": "d7526199a2ba46a991e5d677ccc7b829814a7cb71c74ab825ef5d334c6eb4741"
+    },
+    "runner": {
+      "bytes": 4875,
+      "files": 2,
+      "manifest_sha256": "376f69d98a391e66916ca6d68570b2e6c1f40e62951333bf1347706b1f7f90d5"
+    },
+    "stage": {
+      "bytes": 77038569,
+      "files": 1278,
+      "manifest_sha256": "d6f58b39e5753aa845049d540a515d8f29b07b3f7a18979439dfb3624facab20"
+    },
+    "stage_python_version": "3.12.3",
+    "xkb": {
+      "bytes": 3388828,
+      "files": 293,
+      "manifest_sha256": "dd7411e7ca7a17a3aa1706f79f015f5ac33e9400da4f04e7d895803e496193d3"
+    },
+    "xkb_source": "Ubuntu 24.04.3 /usr/share/X11/xkb"
+  },
+  "preparation_attempts": "PREPARATION-ATTEMPTS.json",
+  "preparation_helper": "Ubuntu WSL was used only to hash S29 input assets because Windows could not read one Linux symlink; no formal WSLc workload ran there.",
+  "runtime_policy": "one named session; exact generated-container-name preflight only; no global session/container inventory; no Docker; one run; no retry",
+  "file_sha256": {
+    "preregistration": "264b368845b9d554fa0829dd4260c095fa1cbc7536be71106e6fa830880f7289",
+    "conditions": "d4e5f94e41d6ea18d03e1c924da0148724275017e993f114e223289ce88b1f02",
+    "input_audit": "78c252cd6af130a2d3f503cf3ab0af72dc210154f0eb9065941e598ef6f580d9",
+    "inputs_summary": "fcb0ee88e1136e3496511dd6a1e1b01148a8688f359c73c1d5b3a14afbb5d5d5",
+    "harness_source": "13f97874f778118aab60b827149a2e7f17c7ff73e022cfbc2be5a3aab8af04a2",
+    "harness_project": "fbb54b1a3a3d2d4c73746793866ea78d76c7bcd00b9c5be61962c13613ea5988",
+    "harness_dll": "cc6897c48238a686848fe60536541c3cc45328c2f25cdf0487f226af84e828e9",
+    "source_runtime_archive": "6e1f21e7a4db3a348b2ed9e240c18078c002fd9f42f20d392fbac25f08ddf54b"
+  }
+}

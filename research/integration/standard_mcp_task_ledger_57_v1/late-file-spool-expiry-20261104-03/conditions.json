@@ -1,0 +1,28 @@
+{
+  "experiment": "late-file-spool-completion-after-caller-deadline",
+  "date": "2026-11-04",
+  "base_commit": "c45f0bc402df2ddd907ed4472bfa21b6b9615ace",
+  "source_file": "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+  "source_sha256": "09bf1f33b808123cc04f75ae987f4cca96f47091ac6f8633bc811b5503fd326d",
+  "task": "Fake X registered Calc compiled change, then delayed synthetic App Server completion after planner deadline",
+  "planned_repeats": 4,
+  "successful_repeats": 4,
+  "conditions": ["Windows CPython 3.11 normal", "Windows CPython 3.11 optimized -O", "Docker image pinned below normal", "Docker image pinned below optimized -O"],
+  "planner_timeout_seconds": 1,
+  "late_completion_protocol": "host worker waits for observed timeout, then publishes valid protocol completion and immutable completed spool receipt before outer caller returns",
+  "success_predicates": ["provider generation remains timeout", "late receipt exists", "tool_call_submitted is false", "public MCP call count unchanged after timeout", "task state digest unchanged after late receipt", "prior task effect independently scored true", "transition release_verified true", "close release_confirmed true"],
+  "docker": {
+    "engine": "29.8.1",
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_sha256": "bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 2,
+    "memory_bytes": 4294967296,
+    "memory_swap_bytes": 4294967296,
+    "pids_limit": 256,
+    "source_mount": "read-only",
+    "evidence_mount": "writable"
+  },
+  "scope_limit": "synthetic Fake X and synthetic host planner only; no live provider, desktop, Calc GUI, WSLc, MAP01, efficiency comparison, or broad reliability claim"
+}

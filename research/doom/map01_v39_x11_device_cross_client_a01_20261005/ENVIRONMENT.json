@@ -1,0 +1,98 @@
+{
+  "libraries": {
+    "Xvfb": {
+      "path": "/home/user/x11-xtest-device-cross-client-a01-20261005/deps/usr/bin/Xvfb",
+      "sha256": "d38fa3711bc2568f1d18b7cb7e61d5fb8fe748b6ba0f0ff4b55180663839a038"
+    },
+    "libX11.so.6": {
+      "package": "2:1.8.7-1build1",
+      "required_symbol_present": true,
+      "resolved": "libX11.so.6",
+      "sha256": "c5b5d782bd9cab3420a62df88f5c991507edf3331a89f98464ddbc538c37b879"
+    },
+    "libXi.so.6": {
+      "package": "2:1.8.1-1build1",
+      "required_symbol_present": true,
+      "resolved": "libXi.so.6",
+      "sha256": "a51348c921ce1a35123fa7c99dc59bfd3e815be6829874fe15ae55172901d3e4"
+    },
+    "libXtst.so.6": {
+      "package": "2:1.2.3-1.1build1",
+      "required_symbol_present": true,
+      "resolved": "libXtst.so.6",
+      "sha256": "b236448961631bb13464c878e68535f5335b5fa10a5d8411f3ad1a56ff430ec2"
+    },
+    "xkbcomp": {
+      "path": "/home/user/x11-xtest-device-cross-client-a01-20261005/deps/usr/bin/xkbcomp",
+      "sha256": "0967e7e7b03b077327cea74567726b265bd304b4fdf59f87bf7fdfe1074e7591"
+    }
+  },
+  "logical_cpu_count": 24,
+  "memory_first_three_kib": {
+    "MemAvailable": "31466728 kB",
+    "MemFree": "30189680 kB",
+    "MemTotal": "32775844 kB"
+  },
+  "network": "Candidate source makes no network calls; Xvfb uses -nolisten tcp; UNIX socket is private-mount-namespace tmpfs.",
+  "os_release": "PRETTY_NAME=\"Ubuntu 24.04.3 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.3 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "packages": [
+    {
+      "architecture": "Architecture: amd64",
+      "file": "libfontenc1_1%3a1.1.8-1build1_amd64.deb",
+      "package": "Package: libfontenc1",
+      "sha256": "0c5d57211cac9659e7f4c856f5e1922c4a522fe8bcf5776e9707b2811f965702",
+      "version": "Version: 1:1.1.8-1build1"
+    },
+    {
+      "architecture": "Architecture: amd64",
+      "file": "libxfont2_1%3a2.0.6-1build1_amd64.deb",
+      "package": "Package: libxfont2",
+      "sha256": "1d5653c395f17f48473fce56cdab30eed16aac017359e6d2c34bc402d85197a0",
+      "version": "Version: 1:2.0.6-1build1"
+    },
+    {
+      "architecture": "Architecture: amd64",
+      "file": "libxkbfile1_1%3a1.1.0-1build4_amd64.deb",
+      "package": "Package: libxkbfile1",
+      "sha256": "22ac5b7dca740e606261cebdfaf1a07738e92ad3d123570694374ddb4d5afea2",
+      "version": "Version: 1:1.1.0-1build4"
+    },
+    {
+      "architecture": "Architecture: amd64",
+      "file": "x11-xkb-utils_7.7+8build2_amd64.deb",
+      "package": "Package: x11-xkb-utils",
+      "sha256": "69df4191e165f8b89d067f6234fcce89a4923d27d1e66dd92e6d63d6da93cdb0",
+      "version": "Version: 7.7+8build2"
+    },
+    {
+      "architecture": "Architecture: all",
+      "file": "xserver-common_2%3a21.1.12-1ubuntu1.5_all.deb",
+      "package": "Package: xserver-common",
+      "sha256": "90ac3bbd61e8f7b60c81abf6831a82eadcc2f6e30841c0a12b3eb71517d2739f",
+      "version": "Version: 2:21.1.12-1ubuntu1.5"
+    },
+    {
+      "architecture": "Architecture: amd64",
+      "file": "xvfb_2%3a21.1.12-1ubuntu1.5_amd64.deb",
+      "package": "Package: xvfb",
+      "sha256": "fe29208e58785efdda1f5c49dad7923c70403f76f9b559c045248921033e193f",
+      "version": "Version: 2:21.1.12-1ubuntu1.5"
+    }
+  ],
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "python_executable": "/usr/bin/python3",
+  "resource_caps": "No CPU/memory limit applied or verified; one short Xvfb/candidate process only.",
+  "schema": "x11-xtest-device-cross-client-environment-a01-v1",
+  "setup_a05_connectivity": "XOpenDisplay True\n",
+  "setup_a05_result": "setup=PASS_NO_INPUT\nserver_pid=3653\n",
+  "shared_socket_dir_after_setup": "777 root root /tmp/.X11-unix\n",
+  "timestamp_utc": "2026-10-05T04:04:05Z",
+  "uname": {
+    "machine": "x86_64",
+    "node": "DESKTOP-DRP9HRE",
+    "processor": "x86_64",
+    "release": "6.18.33.2-microsoft-standard-WSL2",
+    "system": "Linux",
+    "version": "#1 SMP PREEMPT_DYNAMIC Thu Jun 18 21:54:43 UTC 2026"
+  }
+}

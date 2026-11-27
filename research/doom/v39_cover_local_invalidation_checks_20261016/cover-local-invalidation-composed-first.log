@@ -1,0 +1,23 @@
+test_existing_failure_evidence_and_primary_error_survive_abort_error (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_existing_failure_evidence_and_primary_error_survive_abort_error) ... ok
+test_failed_release_saved_before_abort_without_remote_interrupt (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_failed_release_saved_before_abort_without_remote_interrupt) ... ok
+test_local_invalidation_does_not_consume_the_remote_request (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_local_invalidation_does_not_consume_the_remote_request) ... ok
+test_selected_executor_stalled_release_is_saved_before_native_resume (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_selected_executor_stalled_release_is_saved_before_native_resume) ... FAIL
+test_stale_invalidation_cannot_poison_a_fresh_turn (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_stale_invalidation_cannot_poison_a_fresh_turn) ... ok
+test_wait_failure_aborts_with_local_invalidation_retained (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_wait_failure_aborts_with_local_invalidation_retained) ... ok
+
+======================================================================
+FAIL: test_selected_executor_stalled_release_is_saved_before_native_resume (research.doom.test_v39_cover_local_invalidation.LocalInvalidationTests.test_selected_executor_stalled_release_is_saved_before_native_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cover_local_invalidation.py", line 90, in test_selected_executor_stalled_release_is_saved_before_native_resume
+    self.assertEqual(receipt['terminal']['release_obligation'],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     executor.release_obligation_snapshot())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[152 chars]ty': [1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[372 chars]alse} != {'id'[152 chars]ty': (1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[372 chars]alse}
+Diff is 1310 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.263s
+
+FAILED (failures=1)

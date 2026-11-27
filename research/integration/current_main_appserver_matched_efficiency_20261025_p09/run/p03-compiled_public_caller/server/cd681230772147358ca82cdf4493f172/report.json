@@ -1,0 +1,267 @@
+{
+  "feedback": {
+    "authority": "none",
+    "image": {
+      "data": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB3UlEQVR4nGOUkJBgoCVgYmBgeP7iBW0tkJSQUFN6QyMLGOFBdPfuXeoarayszMDAwIIs9NzYGFOd5NmzDAwM3M+xSH2VBEkZBz7HlDq7XhIRRDQFLFhFlc6f/3H5MgMjIxM3938mpn///sGl0vjCUvhC/vz/++HfJ0ZGxv///8Olzm9SunzzByMjAw8XEzMzXgv+//79LC6OgYGBTU1Nev36Hz9+QMRdOa0CuV2sn0b9/v+nXCDFTcD658+fcF2///yPK33GwMCgocS2bpoMUUH06/ZtRkZGOLdEIKnu3eTf//8wMDBM+7Qcl66b93/B2QQs4LK2Rg4fbTaVS79uQtif/31Fdj4yMDfg/PXrF74gYmRllVq0iJGFhU1J6SdMKUg1I1R9kUCCH5cTBzsHPPQYGBhYWRgXdUuxsTLqqHMw/P+LzweQOHgaFfV+9mwWFoQjbv9+oMemzsDA0PdhQcCLbCYmFO2QOIgoeBqU9RguRSCIvh87hmzKrE+rmoRyWcH+yOaPxqXrw6d/8NSFPSdzcnJ+//4dk83AwMDKysrMzPz///+/f/+ysrIiS3Fxcf37BzX69+/fioqKKBbQCDDR1HSGUQuIAKNxQBCMBhFBMBpEBMFoEBEENA8iANR8qy7iZioVAAAAAElFTkSuQmCC",
+      "mimeType": "image/png",
+      "type": "image"
+    },
+    "image_reference": {
+      "authority": "none",
+      "capture_ns": 561787463694900,
+      "freshness": "historical referenced capture; no new observation",
+      "observation_id": "74c877473fbd4bcbbc59a9cf1c44bc08",
+      "path": "<private-path>",
+      "recorded_capture": {
+        "capture_started_ns": 561787463694900,
+        "height": 32,
+        "width": 32
+      },
+      "relative_path": "images\\38a6b1a94a6a44f292d19a6c5681929d.png",
+      "sha256": "7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8",
+      "status": "image"
+    },
+    "image_status": "image",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "failure_phase": null,
+      "reported_status": "returned"
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "reference_scope": "Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.",
+      "report": {
+        "report_ref": "/source/raw_report"
+      },
+      "report_reference": "/source/raw_report",
+      "schema": "agent-interface/receipt-view-v3-report-ref",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 1079,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 534,
+              "height": 32,
+              "mime_type": "image/png",
+              "path": "<private-path>",
+              "sha256": "7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8",
+              "source_raw_sha256": "88c538da3dcd911d565f8bcf98a0e0339801180238e54494c93114e4aa31d044",
+              "timing_ns": {
+                "converted": 561787463242300,
+                "encoded": 561787463332900,
+                "hashed": 561787463674600,
+                "started": 561787463229400,
+                "written": 561787463661400
+              },
+              "width": 32
+            },
+            "capture_started_ns": 561787463694900,
+            "height": 32,
+            "sha256": "88c538da3dcd911d565f8bcf98a0e0339801180238e54494c93114e4aa31d044",
+            "width": 32
+          },
+          "observation_id": "74c877473fbd4bcbbc59a9cf1c44bc08",
+          "schema": "agent-interface/runtime-observation-v1",
+          "side_effect_authority": false,
+          "status": "returned"
+        },
+        "sha256": "24784a0997065d32a45fd18561c5de96c5d00eae4bd12cef2510c98633aa61c6"
+      }
+    },
+    "schema": "agent-interface/review-v1"
+  },
+  "method_receipt": {
+    "completed_transitions": 1,
+    "critical_events": [
+      {
+        "action": "enter",
+        "event": "branch_selected",
+        "evidence_ref": "observation-2",
+        "matched_conditions": {
+          "phase": 0
+        },
+        "outcome": "action",
+        "state": "before"
+      },
+      {
+        "action": "enter",
+        "action_id": "action-71bddef74dae4f9295dcf5e891ef4ef5",
+        "event": "action_terminal",
+        "execution_accepted_ns": 561787462847100,
+        "execution_started_ns": 561787450470200,
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "enter",
+        "action_id": "action-71bddef74dae4f9295dcf5e891ef4ef5",
+        "effect_observation_accepted_ns": 561787465669200,
+        "effect_observation_captured_ns": 561787463694900,
+        "effect_verification_accepted_ns": 561787466631300,
+        "effect_verification_started_ns": 561787465999500,
+        "event": "effect_checked",
+        "evidence_ref": "observation-6",
+        "execution_accepted_ns": 561787462847100,
+        "status": "succeeded"
+      },
+      {
+        "action": null,
+        "event": "branch_selected",
+        "evidence_ref": "observation-6",
+        "matched_conditions": {
+          "phase": 1
+        },
+        "outcome": "complete",
+        "state": "done"
+      },
+      {
+        "completed_transitions": 1,
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    ],
+    "elapsed_ns": 20639600,
+    "ended_ns": 561787467308800,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "owned-compiled-profile",
+    "latest_evidence_ref": "observation-6",
+    "method": "one-visible-transition",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 561787447254900,
+        "evidence_digest": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+        "evidence_ref": "observation-2",
+        "observation_accepted_ns": 561787449084900,
+        "observation_started_ns": 561787446674300,
+        "predicates": {
+          "phase": 0,
+          "present": true
+        },
+        "sequence": 2
+      },
+      {
+        "captured_ns": 561787463694900,
+        "evidence_digest": "7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8",
+        "evidence_ref": "observation-6",
+        "observation_accepted_ns": 561787465669200,
+        "observation_started_ns": 561787463189200,
+        "predicates": {
+          "phase": 1,
+          "present": true
+        },
+        "sequence": 6
+      }
+    ],
+    "outcome": "TASK_SUCCEEDED",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "method_complete",
+    "session_scope": "native-x11:613c8f5633f240a4b271cf3c4fd0bd12",
+    "started_ns": 561787446669200,
+    "transitions": [
+      {
+        "action": "enter",
+        "action_id": "action-71bddef74dae4f9295dcf5e891ef4ef5",
+        "effect_ref": "compiled-78df78e8acac489797246aaa9a54e615-10-execution",
+        "evidence_ref": "observation-2",
+        "execution_accepted_ns": 561787462847100,
+        "execution_started_ns": 561787450470200,
+        "from_state": "before",
+        "matched_conditions": {
+          "phase": 0
+        },
+        "observation_sequence": 2,
+        "release_verified": true,
+        "to_state": "done"
+      }
+    ]
+  },
+  "owner_timing": {
+    "clock": "time.monotonic_ns",
+    "completed_ns": 561787469545500,
+    "effect_status": null,
+    "elapsed_ns": 24260800,
+    "error_type": null,
+    "method_outcome": "TASK_SUCCEEDED",
+    "replay_allowed": false,
+    "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+    "scope": "run_compiled method entry through graph, feedback and session snapshot",
+    "started_ns": 561787445284700,
+    "status": "returned"
+  },
+  "owner_timing_retention": {
+    "status": "recorded"
+  },
+  "replay_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 0,
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:613c8f5633f240a4b271cf3c4fd0bd12",
+    "compiled_surface": "x11-window-20",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 6,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 561787470901200,
+      "pid": 55380,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "owner_process_pid": 55380,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 18874368,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "review_required": false,
+    "session_id": "c76ca9a3c7a147de89a76a5ebfbebf68",
+    "state": "open",
+    "target": "app",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": true
+    },
+    "targets": {
+      "app": 20
+    },
+    "window_lifecycle": false
+  },
+  "task_success": null
+}

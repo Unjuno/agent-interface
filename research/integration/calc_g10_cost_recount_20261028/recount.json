@@ -1,0 +1,79 @@
+{
+  "format": "calc-g10-read-only-cost-recount-v1",
+  "historical_scope": {
+    "all_saved_effects_passed_in_original_audit": true,
+    "allocation": "CALC-COMPILED-OCR-3311-4D74-CONSTRUCTION-G10-20261004",
+    "original_audit_disposition": "PASS_SCOPED_LIVE_OCR_GRAPH",
+    "runs": 1,
+    "saved_effects_reported_by_original_audit": 2,
+    "source_main": "9823419dc71eb6f7fd745bfe8249cf7f7584a3a9"
+  },
+  "historical_sources_sha256": {
+    "host_receipt": "282fac9bbf310a264a4076f01d87283fa786b218dfec5195701e4de44fa1d29b",
+    "ocr_attempts": "2494317855edb657ba1875fe1262925a5e30df6dd8f8617230f6fcfe90f7ce59",
+    "original_audit": "2810e9b79ff47f6bdd96e736e16f7f6e5e041670d49c16b5aee0a37e8d7e0be3",
+    "original_report": "766ef2e2f26cb4f572c2707b50ddfb16addd6e46d6b2b4a9517b31961a7b9821",
+    "raw": "890c68f13e5fa8598bcbb2f456b8ee5319c584249c19492744a7c96f170014bf"
+  },
+  "limitations": [
+    "Derived read-only recount; original G10 actor and auditor were not rerun.",
+    "Timing intervals are historical single-run host/container/monotonic measurements with distinct endpoints.",
+    "A correct OCR transcript and two independently saved effects are the original scoped report, not general OCR or application reliability.",
+    "Requested WSLc CPU/memory settings are not evidence of enforcement.",
+    "This record contains no baseline and cannot support a comparative speed or token-efficiency claim."
+  ],
+  "not_reconstructed": {
+    "additional_benchmark_model_calls": 0,
+    "cold_warm_invalidation_repair_phases": "not compared",
+    "cumulative_reuse_break_even": "not available",
+    "matched_baseline_or_speedup": "not available",
+    "model_visible_tokens_images_and_wait": "not measured",
+    "primary_model_usage_and_attempts": "UNKNOWN per original report/audit",
+    "wall_time_to_independently_scored_task_effect": "not measured; original scoring is not timestamp-joined to host run"
+  },
+  "recount_script_sha256": "24713f69f2cff5cd6ca66de608d2eaf57cef8a7c0f257f2b30c5c13b1e0e8383",
+  "recounted_measurements": {
+    "compiled_graph_elapsed_ns": 1972078299,
+    "compiled_graph_observations": 3,
+    "container_process_elapsed_ns": 26555966267,
+    "host_launcher_elapsed_ns": 29933215000,
+    "native_program_attempts": [
+      {
+        "all_recorded_releases_verified_empty": true,
+        "attempt": 1,
+        "elapsed_ns": 568960810,
+        "program_emissions": 41,
+        "release_records": 1
+      },
+      {
+        "all_recorded_releases_verified_empty": true,
+        "attempt": 2,
+        "elapsed_ns": 565500765,
+        "program_emissions": 41,
+        "release_records": 1
+      }
+    ],
+    "native_program_elapsed_ns_sum": 1134461575,
+    "ocr_first_start_to_last_end_ns": 1905859600,
+    "ocr_subprocess_attempt_count": 7,
+    "ocr_subprocess_elapsed_ns_each": [
+      90128284,
+      69433372,
+      73710352,
+      63389951,
+      69189273,
+      64209868,
+      63745019
+    ],
+    "ocr_subprocess_elapsed_ns_sum": 493806119,
+    "ocr_subprocess_outputs_in_order": [
+      "",
+      "29",
+      "31",
+      "899",
+      "43",
+      "47",
+      "2021"
+    ]
+  }
+}

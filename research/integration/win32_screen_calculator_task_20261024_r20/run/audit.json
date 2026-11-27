@@ -1,0 +1,76 @@
+{
+  "schema": "win32-screen-calculator-r20-audit-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r20-8c91a6e4",
+  "call_id": "ab10318ed4424280bb534a605703b5a5",
+  "operation_id": "e1d0eb826ddf415f97147bf377bad3be",
+  "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+  "checks": {
+    "frozen_manifest": true,
+    "current_main_source_identity": true,
+    "runner_hash_bound": true,
+    "attempt_identity_bound": true,
+    "screen_observation": true,
+    "one_target_generation": true,
+    "ui_baseline_and_effect": true,
+    "monitor_baseline_and_exit": true,
+    "monitor_clean_monotone_transition": true,
+    "transition_bracket_under_200ms": true,
+    "one_dispatch_no_replay": true,
+    "verified_release": true,
+    "neutral_same_operation_readback": true,
+    "exact_bound_task_success": true,
+    "clean_close": true
+  },
+  "all_checks_pass": true,
+  "timing": {
+    "qpc_frequency": 10000000,
+    "sample_count": 39,
+    "read_errors": 0,
+    "requested_poll_ms": 10,
+    "observed_start_cadence_ms": {
+      "min": 30.5329,
+      "median": 31.40765,
+      "max": 105.7382
+    },
+    "uia_read_duration_ms": {
+      "min": 10.8504,
+      "median": 11.5523,
+      "max": 67.8948
+    },
+    "last_negative_sample": {
+      "sample": 28,
+      "qpc_start": 5237659352179,
+      "qpc_end": 5237659467982,
+      "qpc_frequency": 10000000,
+      "display_digits": "1045",
+      "root_name": "電卓",
+      "result_name": "表示は 1,045 です",
+      "error": null,
+      "utc_after_read": "2026-10-24T09:00:59.1124689Z"
+    },
+    "first_positive_sample": {
+      "sample": 29,
+      "qpc_start": 5237659662112,
+      "qpc_end": 5237659876677,
+      "qpc_frequency": 10000000,
+      "display_digits": "1046",
+      "root_name": "電卓",
+      "result_name": "表示は 1,046 です",
+      "error": null,
+      "utc_after_read": "2026-10-24T09:00:59.1524818Z"
+    },
+    "display_state_transition_bound_ms": 52.4498,
+    "dispatch_start_to_first_positive_read_end_ms": 803.1365000976563,
+    "first_positive_before_dispatch_return_ms": 50.8653,
+    "interpretation": "UI Automation display-state timing only; not physical key-event-to-screen-pixel latency."
+  },
+  "close_release_confirmed": false,
+  "metadata_correction": {
+    "raw_target_schema": "win32-screen-calculator-r19-target-v1",
+    "expected_target_schema": "win32-screen-calculator-r20-target-v1",
+    "raw_oracle_evidence_ref": "R19 UIA CalculatorResults exact display read",
+    "note": "Two inherited R19 labels remain in raw metadata. Raw is preserved; the R20 attempt ID, frozen conditions, runner hash and call/operation/generation bindings are exact."
+  },
+  "strict_disposition": "PASS_SCOPED",
+  "limits": "One native Calculator sample; no MAP01, WSLc, blocked-I/O release, matched efficiency, or broad reliability conclusion."
+}

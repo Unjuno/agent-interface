@@ -1,0 +1,117 @@
+{
+  "anchor_ambiguity_margin": 0.05,
+  "anchor_local_radius_frames": 2,
+  "anchor_max_score": 2.5,
+  "anchor_score_rows": 100,
+  "anchor_source_frames": [
+    {
+      "freeze_frame_index": 3
+    },
+    {
+      "freeze_frame_index": 4
+    },
+    {
+      "freeze_frame_index": 5
+    }
+  ],
+  "auditor_sha256": "2d35f573b3cc2c27ab0491ac119b7133e4dfbd36ffa95037a7dbe9615e0471f6",
+  "base_commit": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "blank_score_below": 0.2,
+  "candidate_sha256": "0e172b4af44f7c50336732f8f77ed71e3047b93467c3722ded5730db62aec34e",
+  "channel_tolerance": 24,
+  "decision": "PASS_POSTHOC_EXTRACTION iff all 85 selected rows are observed, all three anchor scores <=2.5 MAE, and no nonlocal match is within 0.05 MAE of a best anchor; otherwise preserve HOLD. Guard-floor crossings are sensitivity only. Timing alignment uncertainty excludes unknown media synchronization error.",
+  "event_count": 852,
+  "events_path": "research/doom/results/map01-astra-attempt-v1/events.jsonl",
+  "events_sha256": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+  "execution_id": "astra-v39-video-health-timing-a01-20261009",
+  "ffmpeg_path": "/opt/homebrew/bin/ffmpeg",
+  "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "glyph_size": [
+    26,
+    38
+  ],
+  "guard_floor_sweep": [
+    90,
+    88,
+    84,
+    80,
+    78
+  ],
+  "health_local_anchor": [
+    102,
+    411
+  ],
+  "minimum_margin": 0.2,
+  "minimum_score": 0.8,
+  "model_decision_index": 4,
+  "model_end_ns": 11870182915447,
+  "model_session_id": "01a0a0ee-f72c-7e63-97a0-921fc9170d6e",
+  "model_start_ns": 11858338320320,
+  "playback_rate_overlay": 2.0,
+  "preflight_path": "research/doom/astra_v39_video_health_timing_a01_20261009/PREFLIGHT.json",
+  "preflight_sha256": "93c35d6e1f293e6554e07071d8e2edd63346458d6940cc5a75e617bbb7ad4fcd",
+  "reader_modules": [
+    "research/doom/doom_hud_signal_v1.py",
+    "research/doom/doom_hud_signal_v2.py",
+    "research/doom/doom_hud_signal_v3.py"
+  ],
+  "report_path": "research/doom/results/map01-astra-attempt-v1/report.json",
+  "report_sha256": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+  "reported_model_ns": 11741060121,
+  "runtime_versions": {
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "python": "3.12.14"
+  },
+  "schema": "astra-video-health-timing-a01-freeze-v1",
+  "scope": "Offline post-hoc extraction of historical video only. No current V39 guard execution, GUI/game interaction, model call, OS input, release, effect, recovery, survival, or MAP01 completion claim.",
+  "source_frame_geometry": [
+    321,
+    180,
+    640,
+    480
+  ],
+  "source_frame_metadata": [
+    {
+      "capture_ns": 11849042916926,
+      "frame_path": "research/doom/results/map01-astra-attempt-v1/frames/03.png",
+      "freeze_frame_index": 3,
+      "sequence": 117,
+      "sha256": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4"
+    },
+    {
+      "capture_ns": 11857837890769,
+      "frame_path": "research/doom/results/map01-astra-attempt-v1/frames/04.png",
+      "freeze_frame_index": 4,
+      "sequence": 148,
+      "sha256": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965"
+    },
+    {
+      "capture_ns": 11870928824328,
+      "frame_path": "research/doom/results/map01-astra-attempt-v1/frames/05.png",
+      "freeze_frame_index": 5,
+      "sequence": 211,
+      "sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300"
+    }
+  ],
+  "source_freeze_path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+  "source_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+  "video_fps": 10.0,
+  "video_frame_count": 780,
+  "video_frame_range": [
+    220,
+    305
+  ],
+  "video_game_origin": [
+    0,
+    80
+  ],
+  "video_path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+  "video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "video_size": [
+    640,
+    560
+  ],
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "wad_source": "https://raw.githubusercontent.com/Farama-Foundation/ViZDoom/main/src/freedoom2.wad"
+}

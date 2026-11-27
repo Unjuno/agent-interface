@@ -1,0 +1,99 @@
+{
+  "schema": "win32-supervised-standard-caller-conditions-v1",
+  "attempt_id": "win32-supervised-standard-caller-20261024-r04",
+  "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+  "host": "user-authorized local Windows PC; one owned fixture process/window",
+  "environment": {
+    "python": "CPython 3.11.9",
+    "windows": "10.0.26300",
+    "session_mode": "supervised-win32",
+    "container_or_wslc": false
+  },
+  "hypothesis": "The public stdio MCP supervised-win32 caller can carry an observed HWND generation through standard validation and dispatch, retain native producer exit plus independently supervised neutral readback, and cause the owned fixture to record the exact requested save effect.",
+  "trial": {
+    "caller": "public stdio MCP: interface_clock, interface_observe, interface_validate, interface_dispatch, interface_results, interface_close",
+    "target": "one fresh runtime.backends.win32_v1.fixture_app process started and closed by probe.py",
+    "program_id": "supervised-standard-effect-r04",
+    "text_effect": "SUPERVISED-MCP-OK-20261024-R04",
+    "expected_effect": {
+      "saved": true,
+      "text": "SUPERVISED-MCP-OK-20261024-R04",
+      "clicked": true
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "op": "pointer_move",
+        "frame": "window_client",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": true
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": false
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R04"
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "CTRL",
+          "S"
+        ]
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "admission": {
+      "observation_seq": 1,
+      "binding_revision": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "lease_id": "supervised-standard-effect-r04",
+    "wait_for_result_ms": 10000
+  },
+  "decision": {
+    "pass": "the one public dispatch is accepted as pending or returned, then its same call has a retained returned/completed report with operation_invoked=true and input_dispatched=true; same operation and target generation retain verified empty release and an independent neutral readback; fixture journal and saved-effect file exactly match; fixture and session close cleanly.",
+    "fail_or_unknown": "any mismatch, missing evidence, timeout, unknown state, invalid request, or absent input_dispatched=true in the same call terminal report is FAIL_OR_UNKNOWN; do not dispatch again."
+  },
+  "competing_explanations": [
+    "The target could change after an observation or between a local identity read and an input call; the generation checks are not atomic OS fencing.",
+    "The fixture can accept input without reaching its saved effect, or effect-file persistence can fail independently of input.",
+    "One successful schedule does not establish a hard release deadline or recovery under blocked platform I/O."
+  ],
+  "timeouts_seconds": {
+    "fixture_ready": 10,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "validate": 10,
+    "dispatch_response": 20,
+    "result_readback": 15,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "owned_process_terminate": 2,
+    "attempt_total": 90
+  },
+  "retry_policy": "one validation and at most one dispatch; no fallback input, replay, allocation retry, or rerun",
+  "resource_boundary": "No WSLc or Docker command; no other window is a target. Restore the foreground HWND captured before fixture creation when it still exists.",
+  "claims_excluded": [
+    "release during blocked platform I/O",
+    "hard real-time release deadline",
+    "bounded recovery across failure classes",
+    "atomic capture-to-input fencing",
+    "independent task oracle integrated into runtime task_success",
+    "MAP01",
+    "matched efficiency or broad reliability"
+  ]
+}

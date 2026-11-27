@@ -1,0 +1,61 @@
+{
+  "allocation": "17-X11-GIL-READY-ARM-C05-20261004-70ab",
+  "worker": "01a0ff52-70ab-7f10-82b3-e60375a032fb",
+  "policy": "FINAL-v5",
+  "utc": "2026-10-03T17:08:50.112922+00:00",
+  "parent_issue": 17,
+  "main_intake": "0e1ce6d7e934db42e8e11f5437e3b1c3e7b76052",
+  "branch": "research/17-gil-cancel-c01-70ab-20261003",
+  "prefix": "research/concurrency/x11_gil_ready_arm_17_c05_20261004_70ab",
+  "image": "sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f",
+  "hashes": {
+    "probe.py": "736ad89bf051a13c80537d26ee326da6c100f011509c3682895a71adcac07ace",
+    "audit.py": "474c56505bcd2dcde8e01a0c1c25e5a0b07e0e9fa78e525924c586b4cc0ffa72",
+    "helper.c": "a752cfaa1fd9e2c53d879c2f4543c97ad461be36483626e904fe6e8d81361696",
+    "helper.so": "bd6258983751563c6ae12670a459893f3322e92b31bd7aeb33268c6b00a084d8"
+  },
+  "modes": [
+    "thread_cdll",
+    "thread_pydll",
+    "process_pydll",
+    "process_pydll",
+    "thread_pydll",
+    "thread_cdll"
+  ],
+  "wait_usec": 300000,
+  "nominal_cancel_delay_seconds": 0.05,
+  "observer_poll_seconds": 0.002,
+  "child_phase_wait_seconds": 2,
+  "backend": "one private Xvfb :77 Unix socket only, neutral reset observed before/after every case",
+  "owned_key": "Shift_L",
+  "bystander_key": "F9",
+  "resource": {
+    "vm": "research-6501-async-01a0ff52-70ab",
+    "vm_id": "01M3ZNWN09NSCEPP83HXRBJH8R",
+    "marker": "/root/17-x11-c05-70ab",
+    "cpu": 0.25,
+    "memory_bytes": 134217728,
+    "swap_bytes": 0,
+    "pids": 32,
+    "network": "none",
+    "source": "read-only",
+    "gpu": false
+  },
+  "environment": "Linux arm64 CPython3.12.15 glibc2.41 Xvfb2:21.1.16-1.3+deb13u4 libX11 2:1.8.12-1 Xtst2:1.2.5-1",
+  "H": "intentional retained-GIL wait postpones same-process safety thread key release until native end; independent process and CDLL thread release before native end",
+  "T": "six first cells balanced reversed triplets; same prearmed owned scope; independent parent whole-keymap observer and shared native in-call CLOCK_MONOTONIC bounds; once producer, saved-only independent oracle",
+  "D": "six exact rows and fixed mode order; native duration>=300ms; actual send inside native bounds; each before-cancel map both keys held; safety confirms only owned key released, bystander remains and all remaining key bits unchanged; child exits0 and retired, final cleanup neutral, actual cgroup values match. Valid contrast all retained-thread releases start after native end and first neutral observer starts after end; CDLL and process safety confirmation and independent first-neutral observation complete before end => PASS_FINITE_X11_GIL_BOUNDARY; otherwise HOLD_ORDER_OR_CONTRAST. Missing/invalid exposure, custody, release or cleanup STOP/METHOD_FAIL; no retry Additional exposure gate: both role READY plus exact ARM/PID acknowledgement and observed neutral full map before first positive input.",
+  "C": "PyDLL deliberately retains GIL, not production defect. Scheduling and shared-host load may obscure contrast; nominal delay does not establish in-call eligibility. Server key-state is logical virtual state, not physical hardware or application task effect. Process isolation does not fence later positive input: #7034 addresses that separate boundary",
+  "U": "six observations only, no latency guarantee/reliability estimate/backend-stall survival/model/task benefit/application receipt or production adoption; X11 library calls may themselves block. Explicit armed scope is research setup, not recovery from arbitrary owner death (#7041). Resource cap readback is cgroup configuration, not total host resource guarantee",
+  "dedup": "actual latest parent17 includes own three ordinaryphase reports; previous C04 source/allocation preserved, distinct scientific exposure protocol, not threshold relaxation/replacement of original STOP",
+  "retry": "0 formal repeats/replacements/gate tuning; first six cells only; any invalid exposure STOP and retain all unrun rows",
+  "formal_cases_started": 0,
+  "common_deadline": "unknown, not extended",
+  "method_delta": "C04 consumed STOP retained; separate20s preparation wait and explicit all-role ARM acknowledgments before any owned/bystander positive key input. Existing2s cancel/native/result gates,300ms native wait,50ms nominal cancel and scientific contrast unchanged. No child spawn after ARM.",
+  "prepared_support": [
+    "5971331192",
+    "5971352896",
+    "5971409853"
+  ],
+  "preparation_wait_seconds": 20
+}

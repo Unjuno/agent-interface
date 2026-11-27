@@ -1,0 +1,17 @@
+{
+  "run_id": "issue57-chromium-v5-generation-mint-r02",
+  "frozen_base_main": "759d15697be34a5db1afd6215b46ecf4e42d40d1",
+  "scope": "Fake-only direct call of the current V5 point-mint method; no desktop, browser, provider, or input dispatch",
+  "host": "Windows 10",
+  "python": "CPython 3.11.9",
+  "invocation": "PYTHONPATH=research/live_control; python -m unittest research.live_control.test_chromium_v5_generation_mint_guard_v1 (also python -O)",
+  "target_method": "research/live_control/session_v33.py::Backend.execute",
+  "runtime_store": "runtime/guarded_x11_v1/handles.py::TargetHandleStore",
+  "controls": [
+    "process generation changes while window generation and exact pixels remain identical",
+    "window generation changes while process generation and exact pixels remain identical",
+    "both generations remain identical and exact pixels remain identical"
+  ],
+  "acceptance": "Both generation-change conditions refuse before handle registry creation; same-generation positive creates one private-registry-backed alias with exact source and fresh patch digest equality.",
+  "baseline_retry_policy": "Run once normally and once under -O; retain all outcomes and do not retry baseline cases."
+}

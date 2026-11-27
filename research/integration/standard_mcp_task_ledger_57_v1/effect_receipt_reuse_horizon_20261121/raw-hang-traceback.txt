@@ -1,0 +1,53 @@
+COMMAND: python -X faulthandler -u -c <unittest+dump_traceback_later(8)>
+EXIT_CODE: null
+TIMEOUT: true
+STDOUT:
+STDERR:
+test_post_horizon_is_factual_but_not_eligible (test_effect_receipt_handoff_v1.EffectReceiptHandoffTests.test_post_horizon_is_factual_but_not_eligible) ... Timeout (0:00:08)!
+Thread 0x000022f0 (most recent call first):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 207 in _get_default_tempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 309 in _gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 316 in gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 127 in _sanitize_params
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 374 in mkdtemp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 871 in __init__
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\standard_mcp_task_ledger_57_v1\test_effect_receipt_handoff_v1.py", line 13 in setUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 576 in _callSetUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 619 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 678 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\runner.py", line 217 in run
+  File "<string>", line 1 in <module>
+Timeout (0:00:08)!
+Thread 0x000022f0 (most recent call first):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 207 in _get_default_tempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 309 in _gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 316 in gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 127 in _sanitize_params
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 374 in mkdtemp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 871 in __init__
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\standard_mcp_task_ledger_57_v1\test_effect_receipt_handoff_v1.py", line 13 in setUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 576 in _callSetUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 619 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 678 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\runner.py", line 217 in run
+  File "<string>", line 1 in <module>
+Timeout (0:00:08)!
+Thread 0x000022f0 (most recent call first):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 207 in _get_default_tempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 309 in _gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 316 in gettempdir
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 127 in _sanitize_params
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 374 in mkdtemp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 871 in __init__
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\standard_mcp_task_ledger_57_v1\test_effect_receipt_handoff_v1.py", line 13 in setUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 576 in _callSetUp
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 619 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 678 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\runner.py", line 217 in run
+  File "<string>", line 1 in <module>

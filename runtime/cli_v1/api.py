@@ -11,6 +11,53 @@ SCHEMA_DOCTOR = "agent-interface/runtime-doctor-v1"
 SCHEMA_DISPATCH = "agent-interface/runtime-dispatch-result-v1"
 
 
+def _win32_target_generation_error(session, program):
+    """Require fresh target identity for focused Win32 actions before admission."""
+    backend = getattr(session, "backend", None)
+    generation_reader = getattr(backend, "target_generation", None)
+    if (not callable(generation_reader)
+            or not callable(getattr(type(backend), "target_generation", None))):
+        return None
+    operations = program.get("ops")
+    if not isinstance(operations, list):
+        return None  # Core admission reports malformed programs.
+    source = program.get("source")
+    source = source if isinstance(source, dict) else {}
+    supplied = source.get("target_generations")
+    focused_target = None
+    required = set()
+    target_actions = {"key_chord", "key_state", "text", "pointer_move",
+                      "pointer_button", "scroll", "observe"}
+    for operation in operations:
+        if not isinstance(operation, dict):
+            continue
+        kind = operation.get("op")
+        if kind in {"focus", "activate"}:
+            focused_target = operation.get("target")
+            if isinstance(focused_target, str):
+                required.add(focused_target)
+        elif kind in target_actions:
+            if not isinstance(focused_target, str):
+                return "TARGET_GENERATION_REQUIRES_EXPLICIT_FOCUS"
+            required.add(focused_target)
+    if not required:
+        return None
+    if not isinstance(supplied, dict):
+        return "TARGET_GENERATION_REQUIRED"
+    for target in sorted(required):
+        expected = supplied.get(target)
+        if (not isinstance(expected, str) or len(expected) != 64
+                or any(character not in "0123456789abcdef" for character in expected)):
+            return "TARGET_GENERATION_INVALID"
+        try:
+            current = generation_reader(target)
+        except Exception:
+            return "TARGET_GENERATION_UNAVAILABLE"
+        if current != expected:
+            return "TARGET_GENERATION_CHANGED"
+    return None
+
+
 def _program_validation_diagnostic(program):
     """Explain a recorded refusal without changing admission or invoking input."""
     from runtime.core_v1.contract import ContractError, validate_program
@@ -174,21 +221,28 @@ def _dispatch(
         return row
     row: dict[str, Any] = {}
     try:
-        if capture_directory is not None:
-            configure = getattr(session.backend, "configure_capture_artifacts", None)
-            if not callable(configure):
-                raise ValueError("CAPTURE_ARTIFACTS_UNSUPPORTED")
-            configure(capture_directory)
-        result = session.dispatch(
-            program,
-            current_observation_seq=current_observation_seq,
-            current_binding_revision=current_binding_revision,
-        )
-        if result.get('status') == 'refused' and result.get('error') == 'INVALID_PROGRAM':
-            diagnostic = _program_validation_diagnostic(program)
-            if diagnostic is not None:
-                result = {**result, **diagnostic}
-        row = {"schema": SCHEMA_DISPATCH, "status": "returned", "result": result}
+        generation_error = _win32_target_generation_error(session, program)
+        if generation_error is not None:
+            row = {"schema": SCHEMA_DISPATCH, "status": "returned",
+                   "result": {"status": "refused", "error": generation_error,
+                              "input_dispatched": False, "operation_invoked": False,
+                              "task_success": None, "replay_allowed": False}}
+        else:
+            if capture_directory is not None:
+                configure = getattr(session.backend, "configure_capture_artifacts", None)
+                if not callable(configure):
+                    raise ValueError("CAPTURE_ARTIFACTS_UNSUPPORTED")
+                configure(capture_directory)
+            result = session.dispatch(
+                program,
+                current_observation_seq=current_observation_seq,
+                current_binding_revision=current_binding_revision,
+            )
+            if result.get('status') == 'refused' and result.get('error') == 'INVALID_PROGRAM':
+                diagnostic = _program_validation_diagnostic(program)
+                if diagnostic is not None:
+                    result = {**result, **diagnostic}
+            row = {"schema": SCHEMA_DISPATCH, "status": "returned", "result": result}
     except Exception as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error)}
     finally:

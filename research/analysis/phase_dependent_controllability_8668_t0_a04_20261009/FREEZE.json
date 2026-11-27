@@ -1,0 +1,34 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A04-20261009",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8668-ack-request-binding-a04-20261009",
+  "commands": {
+    "auditor": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr",
+    "candidate": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr"
+  },
+  "container_execution": false,
+  "decision_gate": "PASS_METHOD_SCOPED only when all 18 schedules reconstruct, all 8 mutations are rejected, request-bound policy has zero unsafe transitions, a valid pre-emission cancel remains eligible, and at least five specified stale/unbound witnesses defeat the arrival-type-only comparator.",
+  "formal_invocations": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "frozen_at_utc": "2026-10-08T21:30:33Z",
+  "hypothesis": "An ACK transition must match the exact issued request as well as operation ID and attempt; otherwise stale or unrequested receipts can change retry/completion classification.",
+  "issue": 8668,
+  "live_gui_or_effect_dispatch": false,
+  "predecessor": {
+    "head": "ef9bcf81edc02f673754a93f6bbca493f0bccf35",
+    "pr": 8751,
+    "scope": "A03 supports operation-ID-and-attempt binding only; prior A02 broader stale-ACK transition hold remains."
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "755f85f03e6291efbab19d069f398ce68e8a7aba23ba068bd390b8073c180179",
+    "PROTOCOL.md": "d9f3be1a43349702e2c03d3a92836544d71135f1f2c17c7a00f276e82d7717fa",
+    "README.md": "b6b79fc7e9c9e60535aca265dd5b2c307edb38252fe36d3ad25573eeb74072d0",
+    "auditor.py": "f6c010ff83b184e77fb7195d49bacc3415da357a00f4f8ee6a24198fb8ee3ea3",
+    "candidate.py": "ffc1b50ce6f0a2d199ce3ce0a3a50cee02237bc634a0dab6e70cfc452bf1739c",
+    "design.json": "454bc21f723e4dcded7b0a647c25cf9665b1ecb787ec5784a9107496a281450f",
+    "test_construction.py": "5131274140468a6ed6a63ef18a6a80ed15a9f8a3ac4848d91713cd3b9c2420a7"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "packet_id": "portable_runtime_distribution_v2_current_main_20261121",
+  "source_revision": "038486e100ceeda578daa442388f686fd2eedc2f",
+  "base_main": "038486e100ceeda578daa442388f686fd2eedc2f",
+  "current_main_at_audit": "cc722677cd51035339d4182103223ba76d4dd154",
+  "previous_source_revision": "b049316731b0c8ddf47ed22c3df28c37c9f5d396",
+  "archive_entry_count": 69,
+  "git_managed_source_file_count": 64,
+  "runtime_source_files_identical_to_previous_revision": true,
+  "runtime_source_files_identical_to_current_main": true,
+  "runtime_source_files_identical_to_base": true,
+  "host": {
+    "os": "Microsoft Windows 11 Pro",
+    "version": "10.0.26300",
+    "build": "26300",
+    "python": "Python 3.13.14"
+  },
+  "wsl": {
+    "distribution": "Ubuntu",
+    "kernel": "6.18.58.1-microsoft-standard-WSL2",
+    "python": "Python 3.12.3",
+    "git": "2.43.0",
+    "optional_dependencies_installed": {
+      "Pillow": false,
+      "python_xlib": true
+    },
+    "distribution_tests": {
+      "normal": {
+        "count": 21,
+        "exit_code": 0,
+        "elapsed_seconds": 175.236
+      },
+      "optimized": {
+        "count": 21,
+        "exit_code": 0,
+        "elapsed_seconds": 158.625
+      }
+    }
+  },
+  "tests": {
+    "normal": {
+      "count": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 31.060
+    },
+    "optimized": {
+      "count": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 29.493
+    }
+  },
+  "artifact": {
+    "name": "agent-interface-runtime.pyz",
+    "bytes": 784932,
+    "sha256": "b164c77e0e6b1f9f13b4aabfe61296710b2acdc5fc82c2c5afddd042356f4e40",
+    "source_revision": "038486e100ceeda578daa442388f686fd2eedc2f",
+    "doctor_exit_code": 0,
+    "validate_help_exit_code": 0,
+    "tested_from_checkout": false
+  },
+  "scope": "Local deterministic packaging and command startup on Windows and Ubuntu WSL only; no native input, live GUI target, permission prompt, provider, task effect, or public release.",
+  "repeat_build_sha256_matches": true,
+  "outside_checkout_smoke": {
+    "doctor_exit_code": 0,
+    "validate_help_exit_code": 0,
+    "doctor_backend": "win32-v1",
+    "side_effect_authority": false
+  },
+  "wsl_outside_checkout_smoke": {
+    "doctor_exit_code": 0,
+    "validate_help_exit_code": 0,
+    "doctor_backend": "x11-v1",
+    "side_effect_authority": false
+  },
+  "runtime_source_files_identical_to_previous_base_381a21a": true
+}

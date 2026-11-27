@@ -1,0 +1,57 @@
+{
+  "schema": "win32-public-mcp-valid-generation-effect-conditions-v1",
+  "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r04",
+  "created_utc": "2026-10-23",
+  "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03",
+  "host": "user-authorized local Windows PC; one owned fixture window only",
+  "caller": "public stdio MCP interface_observe, interface_validate, interface_dispatch",
+  "target": "one fresh runtime.backends.win32_v1.fixture_app process owned by this probe",
+  "program_id": "valid-generation-effect-r04",
+  "text_effect": "PUBLIC-MCP-OK-B741",
+  "operations": [
+    {"op": "focus", "target": "fixture"},
+    {"op": "text", "text": "PUBLIC-MCP-OK-B741"},
+    {"op": "key_chord", "keys": ["CTRL", "S"]},
+    {"op": "release_all"}
+  ],
+  "admission": {
+    "observation_seq": 1,
+    "binding_revision": 1,
+    "target_generation": "the generation returned by this attempt's public interface_observe"
+  },
+  "timeouts_seconds": {
+    "fixture_ready": 10,
+    "mcp_initialize_and_tool": 15,
+    "public_mcp_sequence": 75,
+    "attempt_total": 95,
+    "effect_readback": 2,
+    "fixture_close": 5,
+    "owned_process_terminate": 2
+  },
+  "retry_policy": "one validate and one dispatch; no retries, no fallback input, no replay",
+  "predecessor_attempts": [
+    {
+      "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r01",
+      "outcome": "FAIL_OR_UNKNOWN before MCP calls; repository import path missing; owned fixture closed cleanly with ready-only journal"
+    },
+    {
+      "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r02",
+      "outcome": "FAIL_OR_UNKNOWN before MCP calls; an invalid Win32Backend.close call; owned fixture closed cleanly with ready-only journal"
+    },
+    {
+      "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r03",
+      "outcome": "public input, verified release, and independent fixture effect observed, but frozen effect text disagreed with the frozen operation text; audit failed"
+    }
+  ],
+  "relation_to_predecessors": "distinct one-shot attempt with the repository path and backend lifecycle calls corrected; predecessor raw packets remain immutable",
+  "scoring": "PASS only if public observation generation is matched, validation accepts, the single dispatch completes with verified empty release, and an independent fixture effect file exactly matches the requested text",
+  "resource_boundary": "No WSLc or Docker; no other window or application is a target; do not reuse this attempt directory",
+  "claims_excluded": [
+    "atomic HWND lifetime fencing",
+    "post-focus foreground race prevention",
+    "hard real-time input-release deadlines",
+    "blocked-I/O cancellation or recovery",
+    "MAP01",
+    "efficiency, broad reliability, or general task success"
+  ]
+}

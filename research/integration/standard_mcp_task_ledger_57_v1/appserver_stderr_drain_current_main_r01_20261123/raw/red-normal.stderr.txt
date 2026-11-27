@@ -1,0 +1,16 @@
+test_large_invalid_stderr_does_not_block_rpc_and_keeps_bounded_raw_tail (research.live_control.test_appserver_stderr_backpressure_current_main_r01.AppServerStderrBackpressureCurrentMainTest.test_large_invalid_stderr_does_not_block_rpc_and_keeps_bounded_raw_tail) ... ERROR
+
+======================================================================
+ERROR: test_large_invalid_stderr_does_not_block_rpc_and_keeps_bounded_raw_tail (research.live_control.test_appserver_stderr_backpressure_current_main_r01.AppServerStderrBackpressureCurrentMainTest.test_large_invalid_stderr_does_not_block_rpc_and_keeps_bounded_raw_tail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\test_appserver_stderr_backpressure_current_main_r01.py", line 30, in test_large_invalid_stderr_does_not_block_rpc_and_keeps_bounded_raw_tail
+    result = client.request("stderr/probe", {}, timeout=2.0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\codex_app_server_client_v2.py", line 279, in request
+    raise TimeoutError(f"app-server request timed out: {method}")
+TimeoutError: app-server request timed out: stderr/probe
+
+----------------------------------------------------------------------
+Ran 1 test in 2.022s
+
+FAILED (errors=1)

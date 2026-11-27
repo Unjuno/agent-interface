@@ -1,0 +1,88 @@
+{
+  "frame_audit_sha256": "3bceaebab5fe6e8ce97d3520356393395e816f12f945e51d4b5110059112cded",
+  "fixture_sha256": "d9aecf5c8dab2eef9875eb5babb2f176d6046034d5cb6ee1431d983127c403f8",
+  "local_preflight_invocations": 2,
+  "test_sha256": "2b2e45608ba28c841cd1fd1320fc6cd0d1c975484af80c41ed87ed764efc455f",
+  "base_image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "classification": "CONSTRUCTION_ONLY_VISUAL_FRESHNESS_BOUNDARY",
+  "inputs": {
+    "events.jsonl": {
+      "bytes": 565849,
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl"
+    },
+    "002.png": {
+      "bytes": 215163,
+      "sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+      "git_blob": "7454f8b7cd2dd910b551b2227909a930f313c211",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/002.png"
+    },
+    "003.png": {
+      "bytes": 215305,
+      "sha256": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+      "git_blob": "3acc9f521eacfec42c22eeb55afb0fe0d4fe346f",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/003.png"
+    }
+  },
+  "experiment_id": "visual_context_staleness_a01_20261012",
+  "containerfile_sha256": "f17cfdb6774a1138b322896f12123c884fe260b34d2a9cdd0b38d4c4a1f58785",
+  "requested_container_constraints": {
+    "network": "none",
+    "memory": "512m",
+    "cpus": "1"
+  },
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "sources": {
+    "final_action_admission_v1.py": {
+      "bytes": 6160,
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "path": "research/live_control/final_action_admission_v1.py"
+    },
+    "map01_overlap_controller_v39.py": {
+      "bytes": 112524,
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "path": "research/doom/map01_overlap_controller_v39.py"
+    },
+    "action_validity_admission_v1.py": {
+      "bytes": 8845,
+      "sha256": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+      "git_blob": "db37e92c75d04dcd3f725e8507314f6fb64b6b8c",
+      "path": "research/live_control/action_validity_admission_v1.py"
+    },
+    "final_action_admission_v2.py": {
+      "bytes": 9505,
+      "sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+      "git_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "path": "research/live_control/final_action_admission_v2.py"
+    },
+    "doom_signal_value_domain_v1.py": {
+      "bytes": 483,
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+      "git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "path": "research/doom/doom_signal_value_domain_v1.py"
+    },
+    "persistent_planner_adapter_v2.py": {
+      "bytes": 11709,
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "path": "research/live_control/persistent_planner_adapter_v2.py"
+    },
+    "doom_action_validity_contract_v1.py": {
+      "bytes": 4146,
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+      "git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "path": "research/doom/doom_action_validity_contract_v1.py"
+    },
+    "observable_signal_guard_v2.py": {
+      "bytes": 7404,
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "path": "research/live_control/observable_signal_guard_v2.py"
+    }
+  },
+  "repository": "Unjuno/agent-interface",
+  "wslc_test_invocations": 1
+}

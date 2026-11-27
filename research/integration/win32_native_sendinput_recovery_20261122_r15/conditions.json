@@ -1,0 +1,97 @@
+{
+  "async_cancel_contract_rationale": {
+    "rule": "A first pending response is not a success. Require a subsequent public interface_results terminal recovered receipt with exact operation/generation, release confirmation, and 3 s bound.",
+    "source": "runtime/cli_v1/mcp_server.py interface_cancel calls owner.cancel_guarded; runtime/guarded_win32_v1/operation_owner.py maps recovery_pending to public pending"
+  },
+  "attempt_id": "win32-native-sendinput-r15-20261122",
+  "audit_sha256": "e27e7033cb172bc9ee2b6e3b056a4d9043005c15a9f254c12e09fec6f9108a96",
+  "custody_audit_sha256": "fcd8d7722edec8f1ba4092232ee752a4feda02b0ad08b045f7b802a66f7513ec",
+  "docker_used": false,
+  "historical_reference": {
+    "no_overwrite": true,
+    "result": "research/integration/win32_native_sendinput_recovery_20261026_r09/RESULT.md",
+    "result_sha256": "38574aa6ca3c8e93e1bdcf93391d2a16d6ee07f533e0e8c782eec87af4e55486",
+    "runner": "research/integration/win32_native_sendinput_recovery_20261026_r09/run.py",
+    "runner_sha256": "e14006f0466f343cfaedae4d0cd78fdd240d9c27e4c5e43c417ab9b16896c745"
+  },
+  "host_scope": "user-authorized Windows workstation; repository-owned disposable Win32 fixtures only",
+  "phase1": {
+    "action": "focus, SHIFT down, SHIFT up (child producer held immediately before native SendInput for SHIFT-up), release_all",
+    "authority_duration_ns": 8000000000,
+    "deadline_cancel_grace_ns": 2000000000,
+    "deadline_cancel_policy": "public_caller",
+    "late_input_expected": "SHIFT up on same target generation; blocked child exited; fixture has no effect events",
+    "late_input_horizon_ns": 2000000000,
+    "late_input_max_sample_gap_ns": 100000000,
+    "late_input_min_samples": 20,
+    "post_expiry_public_cancel_expected": "pending or recovered; public interface_results must report terminal recovered and release_confirmed within 3 seconds",
+    "pre_expiry_cancel_expected": "cancel_not_due",
+    "pre_expiry_cancel_offset_ns": 500000000,
+    "public_observe_before_dispatch": true,
+    "release_cleanup_deadline_ns": 3000000000,
+    "terminal_result_poll": {
+      "deadline_from_first_post_expiry_cancel_ns": 3000000000,
+      "release_confirmed": true,
+      "required_status": "recovered",
+      "same_operation_and_target_generation": true,
+      "surface": "public interface_results for same call_id"
+    }
+  },
+  "phase1_activation": {
+    "mode": "Computer Use exact fixture activation while probe alive",
+    "must_join_same_hwnd": true,
+    "native_foreground_and_shift_up_witness_required_before_public_observation": true,
+    "timeout_seconds": 180
+  },
+  "phase2": {
+    "activation_window_seconds": 180,
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "office"
+    },
+    "fresh_fixture_process_and_target_generation": true,
+    "independent_oracle_id": "9cf3b010d1aa4c4cb19188c6c6040008",
+    "must_activate_exact_fresh_fixture_before_preflight": true,
+    "old_generation_probe": "focus-only; expect TARGET_GENERATION_CHANGED and input_dispatched=false",
+    "oracle_binding": "exact public action call ID, operation ID, and fresh target generation",
+    "release_and_observation": "release confirmed; neutral Win32 readback; fresh observation after dispatch response",
+    "requires_phase1_pass": true,
+    "task": "one compiled click/type/save action"
+  },
+  "pretrial_execution_integrity": {
+    "all_manifest_lines_lf": true,
+    "conditions_json_must_parse_before_run": true,
+    "verify_pretrial_manifest_before_start": true,
+    "verify_runner_and_audit_hashes_before_start": true
+  },
+  "provider_or_model": "none",
+  "retry_policy": "none; retain the first failure/unknown outcome",
+  "runner_sha256": "5827c277c27ae54426419ec4fba250b2b7f591f530a88bf80c0fc7f7af85e5e6",
+  "runner_timeout_s": 420,
+  "runtime_source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "129318b21706a651ca488a9b65676626ecd3fc9147becb77b8bf732be0b690c8",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "8365d003bf2dd3679624daaac6fd7677f28b0407cf27520f063d4e8dc31d0c7f",
+    "runtime/cli_v1/mcp_server.py": "457637080c921bc5ed98715eb4da2db0e30d7840c88aeca62c62486c45b0e8b2",
+    "runtime/cli_v1/owned_win32_session.py": "93b3277d88db4546f5db99a8f7f302e15d5b05c160c23cdf6c14135e4522f0cc",
+    "runtime/cli_v1/supervised_win32_compiled.py": "440c705c50bb79c0797f24ee8bc7f1e1cbc53abf668ee5e707979df11f21d89f",
+    "runtime/cli_v1/win32_custody_fence.py": "17aed01460ea4a27bb67a35fe26a5a6274d8c935e0b3594c161b05e9a147f99e",
+    "runtime/cli_v1/win32_standard_producer.py": "c2948bff956c0592de3ac333a177c98c3be2089459e8bd0dd0e6e65b43e47d5a",
+    "runtime/cli_v1/win32_supervisor_helpers.py": "9a600c9a8b380a252bb75e1da6c4ab5437237f9c06a94f4c95b2ea788e3ace95",
+    "runtime/core_v1/compiled_gui.py": "fe66297f57aa012dbe79f668076f906f015491dfbe6a1c83002f5213f3003367",
+    "runtime/core_v1/contract.py": "f2f31a27877d1402dd7eb639a00f7ee76ac2c73b01cceb4e813ae12402a3c0cb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9f16cee9319c397a5cb20316dd0188b232d43052b63eda894d234eb172d5d8cd",
+    "runtime/guarded_win32_v1/process_cancellation.py": "1d0587b76a79a8e719816f547a34de90a9c02f77c542011c44b9a913b944031c",
+    "runtime/guarded_win32_v1/win32_process_identity.py": "403a651f6cb5c0c9bbb63be6b28fb2e2401f9a05b062ae5602b0d2c26fc3c3bb"
+  },
+  "scope_limits": [
+    "fixture only",
+    "pre-SendInput injected hold only",
+    "not a kernel/OS SendInput hang guarantee",
+    "not MAP01, reliability estimate, or efficiency comparison"
+  ],
+  "source_main": "fd24ed40e452e16865b9725af4f3d97b0067d9d6",
+  "target": "r15-expiry-owned-fixture",
+  "wslc_used": false
+}

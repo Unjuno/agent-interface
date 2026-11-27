@@ -1,0 +1,54 @@
+{
+  "schema": "win32-native-sendinput-recovery-v1",
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r02",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "host": "user-authorized local Windows PC; no WSLc or Docker",
+  "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner",
+  "fault_schedules": [
+    {
+      "name": "blocked-before-native-call",
+      "hook": "block immediately before the real Win32Backend._send invocation; cancel, retire exact producer, then issue one recovery UP"
+    },
+    {
+      "name": "real-sendinput-accepted-before-backend-return",
+      "hook": "call the real SendInput through Win32Backend._send; after it reports one accepted event, block before returning to key_state so the backend ledger remains uncommitted; cancel and retire exact producer, then issue one recovery UP"
+    }
+  ],
+  "frozen_input": {
+    "key": "CTRL",
+    "virtual_key": 17,
+    "down_events_per_schedule": 1
+  },
+  "cleanup": {
+    "operation_deadline_ms": 20000,
+    "cancel_cleanup_deadline_ms": 8000,
+    "cancel_response_max_ms": 1000,
+    "terminal_max_ms": 8000,
+    "late_down_observation_horizon_ms": 1500,
+    "late_down_poll_interval_ms": 25,
+    "retry_policy": "one child per schedule, one cancellation per child, no replay, no retries"
+  },
+  "emergency_cleanup": "If the supervisor terminates UNKNOWN and its cancellation thread is confirmed stopped, the exact producer is confirmed exited, the same fixture generation remains foreground, and independent state still reports CTRL down, the parent may issue one separately recorded safety UP. This cleanup never changes the experiment outcome from UNKNOWN/FAIL and is not a retry or task replay.",
+  "success": {
+    "pre_schedule_initial_state": "CTRL observed up before native call; remains UNKNOWN if state or witness is unavailable",
+    "accepted_schedule_initial_state": "CTRL observed down after the actual SendInput call returned accepted count 1",
+    "recovery_order": "the exact producer process is confirmed exited before the recovery helper begins",
+    "release": "one helper Win32Backend.release_all receipt verified with no tracked key/button down or unknown",
+    "observer": "separate prestarted helper observes CTRL up on every sample through the frozen 1500ms horizon with matching fixture generation and active foreground witness",
+    "fresh_effect": "a new fixture generation receives one public stdio-MCP task and independently records the exact frozen text plus one save event"
+  },
+  "task_effect": {
+    "text": "NATIVE-RECOVERY-EFFECT-R02",
+    "expected": {
+      "saved": true,
+      "text": "NATIVE-RECOVERY-EFFECT-R02",
+      "clicked": false
+    }
+  },
+  "limits": [
+    "the injected stall occurs immediately before or after the real SendInput call, not inside the Windows kernel/API implementation",
+    "does not prove Windows can block inside SendInput or establish a hard real-time guarantee",
+    "one local fixture and one key; no shared desktop, production application, MAP01, WSLc portability, efficiency, or broad reliability claim",
+    "a Windows zero-state read is accepted only with the backend's frozen active-desktop/foreground/integrity witness"
+  ]
+}

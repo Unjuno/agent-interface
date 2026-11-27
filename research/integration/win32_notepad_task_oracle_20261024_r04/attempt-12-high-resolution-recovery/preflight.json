@@ -1,0 +1,27 @@
+{
+  "recorded_at_utc": "2026-10-24",
+  "source_commit": "255fcbc4cafdb0c0c9661f82d22b9fbb2d50536f",
+  "scope": "fresh R12 native supervised-Win32 recovery run using retained perf_counter_ns timing",
+  "target": {
+    "name": "notepad",
+    "hwnd": 24840738,
+    "pid": 18100,
+    "thread_id": 2616,
+    "class_name": "Notepad",
+    "edit_control_hwnd": 746588126,
+    "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a"
+  },
+  "preconditions": {
+    "is_window": true,
+    "shift_down": false,
+    "document_text": "",
+    "document_characters": 0
+  },
+  "allocation": "local Windows PC authorized in this thread",
+  "wslc_used": false,
+  "docker_used": false,
+  "limits": [
+    "Producer was held only after SendInput returned; no hang inside Windows API was tested.",
+    "One recovery-only sample; no task_success, MAP01, efficiency, or reliability claim."
+  ]
+}

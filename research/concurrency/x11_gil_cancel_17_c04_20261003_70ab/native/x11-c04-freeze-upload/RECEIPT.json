@@ -1,0 +1,37 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-freeze-upload",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && test ! -e /root/17-x11-c04-70ab/src/FREEZE.json && tar -xf - -C /root/17-x11-c04-70ab/src && sha256sum /root/17-x11-c04-70ab/src/FREEZE.json"
+  ],
+  "launcher_pid": 65090,
+  "start_utc": "2026-10-03T16:08:34.232830+00:00",
+  "start_ns": 54679061889083,
+  "stdin": {
+    "path": "work/x11-gil-cancel-c04-70ab/freeze.tar",
+    "bytes": 10240,
+    "sha256": "ad8421736464106c2c732b942e1a47876f9d18e6e505600ea0fbfd382315fa9e"
+  },
+  "pid": 65093,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T16:08:34.363680+00:00",
+  "end_ns": 54679192576000,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 104,
+      "sha256": "c1ab71fda4e67241e1b272f70577b0e127e4cda44859520ff082cf81f1ebfc9e"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "agent-interface/inert-prestarted-helper-result-v1",
+  "status": "PASS_MODEL_SCOPED",
+  "source_main": "0c20307cc43579c382eb31dae2ac9f593ea0f1d1",
+  "candidate_scope": "inert process ordering and bounded helper-result wait only",
+  "normal": {"tests": 14, "passed": 14, "failed": 0, "exit_code": 0, "elapsed_seconds": 9.510},
+  "optimized": {"tests": 14, "passed": 14, "failed": 0, "exit_code": 0, "elapsed_seconds": 9.551},
+  "observed": {
+    "cancel_path_process_starts": 0,
+    "prestarted_helpers_required_before_producer": true,
+    "producer_retirement_precedes_fake_recovery": true,
+    "helper_completion_ack_required": true,
+    "uncertain_retirement_or_helper_timeout": "UNKNOWN",
+    "replay_allowed_on_uncertainty": false,
+    "operation_result_after_fake_recovery": "unknown",
+    "task_success": null
+  },
+  "claim_boundary": "No native Win32 APIs or desktop inputs; no public MCP integration, hard OS bound, task-success evidence, reliability result, or WSLc result. Synchronous owner initialization can still block before admission; producer start remains on begin()."
+}

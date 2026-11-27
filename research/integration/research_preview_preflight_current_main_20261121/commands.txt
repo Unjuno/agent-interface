@@ -1,0 +1,11 @@
+R01 (Windows-mounted sparse worktree):
+wsl.exe -d Ubuntu -- python3 <repo>/release/first_run_smoke_v1/preflight.py --root /mnt/c/.../.goal-main-381a21-20261120 --out <fresh-output>/preflight.json
+
+R02 (temporary WSL ext4 partial clone; wrapper output/custody failure):
+git clone --depth 1 --filter=blob:none --sparse --branch main https://github.com/Unjuno/agent-interface.git /tmp/agent-interface-rp-preflight-r02-20261121
+# See r02-unretained-wrapper/postrun-custody-note.txt; not counted.
+
+R03 (retained Ubuntu WSL ext4 sparse clone):
+git clone --depth 1 --filter=blob:none --sparse --branch main https://github.com/Unjuno/agent-interface.git /home/user/agent-interface-rp-preflight-r03-20261121
+git -C /home/user/agent-interface-rp-preflight-r03-20261121 sparse-checkout set --no-cone /release/first_run_smoke_v1/preflight.py /runtime/setup-golden-demo-v3.sh /runtime/golden-demo-v3.sh /runtime/golden_desktop_demo_v3.py /runtime/requirements-golden.txt
+wsl.exe -d Ubuntu -- python3 /home/user/agent-interface-rp-preflight-r03-20261121/release/first_run_smoke_v1/preflight.py --root /home/user/agent-interface-rp-preflight-r03-20261121 --out /mnt/c/.../outputs/research-preview-preflight-r03-20261121/preflight.json

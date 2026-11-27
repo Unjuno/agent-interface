@@ -1,0 +1,68 @@
+..Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+E
+======================================================================
+ERROR: test_public_g10_receipt_and_parent_effect_cross_stdio_transport (runtime.cli_v1.test_mcp_g10_production_stdio.PublicG10ProductionStdioTests.test_public_g10_receipt_and_parent_effect_cross_stdio_transport)
+----------------------------------------------------------------------
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+  |     if self._callMaybeAsync(method) is not None:
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+  |     return self._asyncioRunner.run(
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+  |     return self._loop.run_until_complete(task)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+  |     return future.result()
+  |            ^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\portable-runtime-current-main-acbdfc0f9-r01\runtime\cli_v1\test_mcp_g10_production_stdio.py", line 123, in test_public_g10_receipt_and_parent_effect_cross_stdio_transport
+  |     async with stdio_client(params) as (reader,writer):
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(typ, value, traceback)
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\client\stdio\__init__.py", line 182, in stdio_client
+  |     async with (
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\client\stdio\__init__.py", line 189, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\portable-runtime-current-main-acbdfc0f9-r01\runtime\cli_v1\test_mcp_g10_production_stdio.py", line 124, in test_public_g10_receipt_and_parent_effect_cross_stdio_transport
+    |     async with ClientSession(reader,writer) as client:
+    |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\portable-runtime-current-main-acbdfc0f9-r01\runtime\cli_v1\test_mcp_g10_production_stdio.py", line 264, in test_public_g10_receipt_and_parent_effect_cross_stdio_transport
+      |     self.assertEqual(result.get('profile_id'),'calc-g10-two-save-v1',result)
+      | AssertionError: None != 'calc-g10-two-save-v1' : {'status': 'runtime_failed', 'error': 'RuntimeError("FileNotFoundError: [Errno 2] No such file or directory: \'C:\\\\\\\\Users\\\\\\\\user\\\\\\\\Documents\\\\\\\\Codex\\\\\\\\2026-10-03\\\\\\\\new-chat-2\\\\\\\\.goal-main-381a21-20261120\\\\\\\\.worktrees\\\\\\\\portable-runtime-current-main-acbdfc0f9-r01\\\\\\\\research\\\\\\\\integration\\\\\\\\calc_current_shared_3311_4d74_20261004\\\\\\\\calc-compiled-ocrlive-4d74\\\\\\\\runs\\\\\\\\compiled_ocrlive10\\\\\\\\first.fods\'")', 'operation': 'guarded_calc_compiled', 'operation_invoked': True, 'effect_status': 'unknown', 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'cleanup_status': 'UNKNOWN', 'owner_process': {'pid': 38844, 'alive': True, 'liveness_observed_monotonic_ns': 287353859000000, 'exitcode': None, 'retired': False, 'release_confirmed': False, 'x_client_resource_base': 18874368}, 'late_server_request_possible': True, 'parent_task_save_custody_adoption': {'status': 'not_applicable'}, 'session': {'session_id': '0ccf33efe1164505b134d4c3eaef88bc', 'mode': 'guarded-x11-owned-process', 'state': 'open', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': False, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'compiled_scope': 'native-x11:c1d984893b6241ffacbe040b4e667010', 'compiled_surface': 'x11-window-20', 'observations': None, 'target_queries': {'retired': False, 'pending': False, 'thread_alive': True, 'close_error': None}, 'target': 'app', 'observation_sequence': 1, 'review_required': True, 'interrupted_execution': None, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_process_pid': 38844, 'owner_x_client_resource_base': 18874368, 'owner_process': {'pid': 38844, 'alive': True, 'liveness_observed_monotonic_ns': 287353921000000, 'exitcode': None, 'retired': False, 'release_confirmed': False, 'x_client_resource_base': 18874368}, 'owner_client_disconnect': None, 'owner_input_obligations_source': 'child_rpc_snapshot', 'owner_input_obligations_live_read': {'status': 'not_read'}, 'owner_release_attempt': None, 'cleanup_status': 'UNKNOWN', 'calc_process_group_custody': {'fixture': 'g10-stdio-parent-custody'}, 'calc_process_group_custody_history': [], 'calc_process_group_cleanup': None}, 'call_directory': 'D:\\CodexData\\Temp\\tmpnpvumg0w\\child-output\\9f1d239e47eb426fa3a19580500cd948', 'call_id': '9f1d239e47eb426fa3a19580500cd948'}
+      +------------------------------------
+
+----------------------------------------------------------------------
+Ran 3 tests in 39.987s
+
+FAILED (errors=1)

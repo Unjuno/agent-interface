@@ -1,0 +1,65 @@
+{
+  "scope": "saved-only composed cancellation/receipt/event order; Fake X readback, not physical time or app score",
+  "modes": {
+    "normal": {
+      "methods": 391,
+      "new_rows": 6,
+      "mutations": [
+        {
+          "name": "hidden_release",
+          "reason": "input custody"
+        },
+        {
+          "name": "lost_prefix",
+          "reason": "prefix/effect"
+        },
+        {
+          "name": "early_resume",
+          "reason": "early resume"
+        },
+        {
+          "name": "returned_before_release",
+          "reason": "isolated order"
+        },
+        {
+          "name": "revived_authority",
+          "reason": "revived authority"
+        },
+        {
+          "name": "lost_sync_control",
+          "reason": "synchronous blocked control"
+        }
+      ]
+    },
+    "optimized": {
+      "methods": 391,
+      "new_rows": 6,
+      "mutations": [
+        {
+          "name": "hidden_release",
+          "reason": "input custody"
+        },
+        {
+          "name": "lost_prefix",
+          "reason": "prefix/effect"
+        },
+        {
+          "name": "early_resume",
+          "reason": "early resume"
+        },
+        {
+          "name": "returned_before_release",
+          "reason": "isolated order"
+        },
+        {
+          "name": "revived_authority",
+          "reason": "revived authority"
+        },
+        {
+          "name": "lost_sync_control",
+          "reason": "synchronous blocked control"
+        }
+      ]
+    }
+  }
+}

@@ -40,6 +40,11 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`gui_query_dpor_8663_a01_20261009/`](gui_query_dpor_8663_a01_20261009/) -- retained GUI query concurrency study; consult its report and custody records for scope.
+- [`windows/`](windows/) -- retained Windows control research packets; each packet states its own evidence limits.
+
+- [`agreement_continuation_9004_v1/`](agreement_continuation_9004_v1/) — Issue #9004 finite synthetic agreement/lease T0; result is method-scoped and makes no live-control or timing claim.
+
 - [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
 
 - [`session_handoff/`](session_handoff/)
@@ -177,6 +182,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+
+- [`gui_query_dpor_8663_a01_20261009/`](gui_query_dpor_8663_a01_20261009/CUSTODY.md) — Issue #8663 synthetic predicate-aware DPOR evidence, including audit revisions and protocol deviation.
 - [`decision_regret_8528_t0_a01_20261008/`](decision_regret_8528_t0_a01_20261008/) — Issue #8528 finite synthetic decision-opportunity regret probe; read its protocol and audit for the authored toy-loss scope and STOP/qualification record.
 - [`gpu/`](gpu/) — archived local-GPU candidate triage snapshot and recovery status; not a current resource schedule or authorization.
 - [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.

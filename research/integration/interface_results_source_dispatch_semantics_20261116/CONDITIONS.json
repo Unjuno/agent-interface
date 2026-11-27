@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/source-action-dispatch-projection-v1",
+  "base_main": "c4c95bdd939f8f0cd04da3b1c77c33534ed9f803",
+  "runtime": "runtime/cli_v1/mcp_server.py",
+  "tests": "runtime/cli_v1/test_mcp_supervised_win32.py",
+  "python": "CPython 3.11.9",
+  "host": "Windows 10.0.26300",
+  "focused_tests": [
+    "test_exact_result_lookup_separates_query_and_source_dispatch",
+    "test_expired_start_gate_publishes_zero_native_action_count"
+  ],
+  "focused_results": {
+    "normal": "2/2 PASS",
+    "optimized": "2/2 PASS"
+  },
+  "focused_raw_logs": {
+    "normal.log": "f201cfdd4b4126ebb3ff4bbaf9f393cc500dd321f04942cbb36ee88c090ea00d",
+    "optimized.log": "c14574eae5c3bb0d8ff39b7887a3a5f7272107a379477ad268b24c0bc3e3097d"
+  },
+  "r193_raw_source_sha256": "a0671f25d03901fd1a856a8355ed2b0f0684e3d18ab2ab54c7e0f36362225590",
+  "limits": [
+    "Synthetic producer and operation-owner fixtures only",
+    "No native GUI input or MAP01 task effect in this change",
+    "No matched efficiency comparison"
+  ],
+  "runtime_sha256": {
+    "runtime/cli_v1/mcp_server.py": "2afb2bb5c0be5541284010b2a62cd2e5e2183acd6d8469ec26b320e89628f6f4",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "42dab5eeca309b804aaf92cf3ddabfa05e516b321020e4e204d0dfe672c80a1f"
+  }
+}

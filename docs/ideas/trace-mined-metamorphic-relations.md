@@ -1,0 +1,9 @@
+# Trace-mined metamorphic relations — #8904
+
+- **Status:** Unverified method-transfer proposal; no allocation or result is recorded.
+- **Source:** Open [Issue #8904](https://github.com/Unjuno/agent-interface/issues/8904).
+- **Idea:** Mine candidate, scoped metamorphic relations from a training partition of retained, typed traces, then freeze and independently validate them on held-out traces and semantic mutants. Relation frequency is evidence for a candidate, never proof that it is universally valid.
+- **Relation to prior work:** #5513 proposes manually declared, typed relations as partial oracles. #8904 asks whether trace-mined candidates add useful coverage beyond that manual baseline at equal checking budget. It must preserve #5513's scope and `UNKNOWN` semantics; mining cannot grant action authority or label effects.
+- **Proposed minimum test:** On a finite simulator, compare manual relations, independently validated mined relations, and naive unvalidated mining. Include valid opaque-ID renaming and independent-event permutation, plus meaningful-target renaming, conflicting-action reorder, erased authority epoch, changed effect lineage, missing preconditions, and held-out distribution shifts. A separate raw-only auditor reconstructs support, decisions, mutation kills and false alarms.
+- **Decision boundary:** A scoped pass requires an additional safety-relevant mutant detected beyond the manual baseline at equal budget, while held-out invalid/shifted relations are rejected or returned as `UNKNOWN`. A false relation that passes a semantic or authority violation is a failure. A sound result with no incremental detection is no incremental value.
+- **Limits:** Any result applies only to the frozen finite traces, transformations, and oracle. It does not establish universal GUI invariants, live safety, runtime benefit, or production defect prevalence. No GUI, model, human, or live action is proposed for T0.

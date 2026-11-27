@@ -1,0 +1,40 @@
+{
+  "authority": {
+    "expires_at_ns": 671555391778500,
+    "lease_id": "native-x11-de3716c500004bd59a8a7563a779697f"
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "frame": "screen_physical_px",
+      "op": "pointer_move",
+      "x": 17,
+      "y": 8
+    },
+    {
+      "button": "left",
+      "down": true,
+      "op": "pointer_button"
+    },
+    {
+      "button": "left",
+      "down": false,
+      "op": "pointer_button"
+    },
+    {
+      "op": "release_all"
+    }
+  ],
+  "program_id": "guarded-ef1d5fb5b91c4357ab8082692bb2f7fd",
+  "schema": "agent-interface/program-v1",
+  "source": {
+    "binding_revision": 0,
+    "observation_seq": 3
+  },
+  "terminal": {
+    "release_all_required": true
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+  "checks": {
+    "attempt_and_source_match": true,
+    "exact_fixture_event_journal": true,
+    "fresh_public_generation_matches_new_fixture": true,
+    "frozen_packet_hashes_match": true,
+    "frozen_preflight_passed": true,
+    "independent_fixture_effect": true,
+    "one_dispatch_and_valid_program": true,
+    "predecessor_r23_recovered_and_closed": true,
+    "prior_foreground_restored": true,
+    "public_close_and_owned_fixture_cleanup": false,
+    "raw_status_pass": false,
+    "runtime_completed_and_success_not_overclaimed": false,
+    "supervised_public_stdio_caller": true,
+    "verified_all_up_release": false
+  },
+  "nonclaims": [
+    "this is not one continuous session across the R23 cancellation and the R24 task",
+    "runtime-integrated task_success (must remain null)",
+    "release under blocked Win32 I/O",
+    "release while an input callback remains blocked",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "passed": 10,
+  "schema": "win32-supervised-standard-caller-r24-audit-v1",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 14
+}

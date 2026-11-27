@@ -1,0 +1,162 @@
+{
+  "admission_cache_entries_after_terminal": 0,
+  "analyzer": {
+    "ambiguous_admission_count": 0,
+    "decision": "FAIL: admission receipts do not form a complete verified release trace",
+    "hold_count": 0,
+    "holds": [],
+    "invalid_release_count": 0,
+    "malformed_admission_count": 0,
+    "measurement_ready": false,
+    "schema": "map01-direct-retained-input-v2",
+    "unmatched_admission_count": 1
+  },
+  "cancel_requested_ns": 20523127909,
+  "client_events": [
+    {
+      "detail": 25,
+      "observed_ns": 20523060054,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "detail": 25,
+      "observed_ns": 20525267008,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "display": ":0",
+  "error": null,
+  "events": [
+    {
+      "admitted_ns": 20522771778,
+      "emit_ns": 20522942351,
+      "event": "input_admission",
+      "id": "a26-probe",
+      "input_ack_ns": 20522892017,
+      "intent_token": "a26-backend-token",
+      "key": "w",
+      "keycode": 25,
+      "owner_id": "c5593eb5dc734e43bc1f7b3ac1cc1514",
+      "step": 0,
+      "valid_until_ns": 30522586338
+    }
+  ],
+  "focus": 2097152,
+  "keycode": 25,
+  "keymap": {
+    "after_cancel_release": false,
+    "while_held": true
+  },
+  "owner_cleanup": {
+    "closed": true,
+    "records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "a26-backend-token",
+        "key_release_attempts": {
+          "25": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 20525423039,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 20525187371,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 20525364474
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              20525187371,
+              20525423039
+            ],
+            "keycode": 25
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "cancelled",
+        "valid_until_ns": 30522586338,
+        "verified": true,
+        "verified_ns": 20525636993
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "release",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 20525790640
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 20526001123
+      }
+    ],
+    "stopped": true,
+    "thread_alive": false
+  },
+  "owner_records_before_terminal": [],
+  "recovery_latency_ns": 2140832,
+  "schema": "map01-backend-xvfb-adapter-a26-v1",
+  "terminal_release": {
+    "buttons_down": [],
+    "cancelled_pending_ups": [
+      {
+        "backend_owned_before_release": true,
+        "disposition": "not_attempted_owner_cancel_release",
+        "identifier": "a26-probe",
+        "key": "w",
+        "step": 0
+      }
+    ],
+    "event": "owner_release",
+    "intent_token": null,
+    "key_release_attempts": {},
+    "key_release_intervals_ns": [],
+    "key_state_errors": [],
+    "key_state_source": "x11_query_keymap",
+    "keys_down": [],
+    "keys_unknown": [],
+    "reason": "release",
+    "release_call_returned_ns": 20525809080,
+    "release_call_started_ns": 20525330857,
+    "valid_until_ns": null,
+    "verified": true,
+    "verified_ns": 20525790640
+  },
+  "window": 2097152,
+  "xvfb_exit": 0,
+  "xvfb_stderr": "_XSERVTransmkdir: ERROR: euid != 0,directory /tmp/.X11-unix will not be created.\n"
+}

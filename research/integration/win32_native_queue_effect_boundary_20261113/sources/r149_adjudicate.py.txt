@@ -1,0 +1,64 @@
+"""Read-only outcome check over R149 raw; no runtime/backend import."""
+import hashlib,json
+from pathlib import Path
+from protocol import public_body,exact_terminal,horizon_rows,walk
+P=Path(__file__).resolve().parent
+def read(name):return json.loads((P/name).read_text(encoding='utf-8'))
+def field(row,name):return row.get(name+'_ns',row.get(name+'_monotonic_ns'))
+def main():
+ c=read('conditions.json');meta=read('fixture-meta.json');before=read('terminal-before-resume.json')
+ row=before['row'];cid=before['call_id'];after=read('terminal-after-effect.json')
+ submission=read('submission.json');expiry=submission['program']['authority']['expires_at_ns']
+ timeline=read('timeline.json');ev=read('events-after-resume.json');held=read('events-before-resume.json')
+ horizons=horizon_rows(row)
+ valid=[]
+ for h in horizons:
+  end=field(h,'late_input_observation_end');release=field(h,'late_input_release_received')
+  if (type(end) is int and type(release) is int and end-release>=2_000_000_000
+      and h.get('late_input_observation_count',0)>=2
+      and 0<=h.get('late_input_max_observed_gap_ns',-1)<=h.get('late_input_max_sample_gap_ns',0)<=100_000_000
+      and h.get('late_input_validation_error') is None):valid.append(h)
+ horizon_end=max([field(h,'late_input_observation_end') for h in valid],default=0)
+ previews=[e for e in ev if e['kind']=='native_keyboard_peek_no_remove' and e['message']==0x100 and e['wparam']==65]
+ removed=[e for e in ev if e['kind']=='native_keyboard_removed' and e['message']==0x100 and e['wparam']==65]
+ effects=[e for e in ev if e['kind']=='task_effect']
+ resumed=[e for e in ev if e['kind']=='hold_resumed']
+ samples=read('key-state-samples.json')
+ after_samples=[s for s in samples['samples'] if s['begin_ns']>=before['observed_ns']]
+ keys=('hwnd','message','wparam','lparam','os_time_ms')
+ attempt_lists=[n['recovery_release_key_up_attempts'] for n in walk(row) if isinstance(n.get('recovery_release_key_up_attempts'),list)]
+ attempts=[a for group in attempt_lists for a in group if isinstance(a,dict)]
+ checks={
+ 'fresh_source_and_nonce':meta['nonce']==c['nonce'] and meta['source_sha256']==c['file_hashes']['fixture_app.py'],
+ 'frozen_source_unchanged':all(hashlib.sha256((P/name).read_bytes()).hexdigest()==sha for name,sha in c['file_hashes'].items()),
+ 'one_dispatch':sum(r['tool']=='interface_dispatch' for r in timeline)==1,
+ 'expiry_from_live_clock':expiry==public_body(json.loads(next(b['text'] for b in read('clock-raw.json')['content'] if b['type']=='text')))['monotonic_ns']+4_000_000_000,
+ 'exact_recovered_terminal':exact_terminal(row,cid) and row['action']['status']=='recovered' and before['observed_ns']>expiry,
+ 'release_confirmed':row['action'].get('release_confirmed') is True,
+ 'automatic_expiry_no_fallback':not (P/'fallback-cancel-request.json').exists(),
+ 'two_second_horizon':bool(valid),
+ 'A_down_independently_sampled':any(s['a_down'] and s['end_ns']<expiry for s in samples['samples']),
+ 'queued_A_before_expiry':any(e['monotonic_ns']<expiry for e in previews),
+ 'queued_A_after_horizon':bool(valid) and any(horizon_end<e['monotonic_ns']<read('resume.flag')['requested_ns'] for e in previews),
+ 'no_keyboard_consumption_or_effect_while_held':not any(e['kind'] in ('task_effect','wndproc_keyboard','native_keyboard_removed') for e in held),
+ 'normal_resume':len(resumed)==1 and resumed[0]['timeout'] is False,
+ 'original_native_record_dequeued':len(removed)==1 and any(all(removed[0][k]==p[k] for k in keys) for p in previews),
+ 'one_late_task_effect':len(effects)==1 and effects[0]['counter']==1 and effects[0]['first_transition'] is True
+      and effects[0]['phase']=='resumed' and effects[0]['monotonic_ns']>max(expiry,horizon_end,before['observed_ns']),
+ 'no_unexpected_keyboard_key':all(e['wparam'] in (65,97) for e in ev if e['kind']=='wndproc_keyboard'),
+ 'post_terminal_A_neutral':bool(after_samples) and not any(s['a_down'] for s in after_samples),
+ 'task_authority_not_upgraded':row.get('task_success') is None and after.get('task_success') is None
+      and row.get('replay_allowed') is False and after.get('replay_allowed') is False,
+ 'recovery_UP_evidence_retained':bool(attempt_lists),
+ 'native_A_UP_record_dequeued':any(e['kind']=='native_keyboard_removed' and e['message']==0x101 and e['wparam']==65 for e in ev),
+ 'custody_clear_after':read('custody-after.json')['state']['status']=='clear',
+ 'fixture_exited':read('fixture-exit.json')['state']['alive'] is False,
+ 'fixture_callbacks_healthy':not any(e['kind']=='callback_error' for e in ev),
+ }
+ result={'schema':'r149-queued-effect-audit-v1','status':'PASS_SCOPED_QUEUED_EFFECT' if all(checks.values()) else 'NOT_QUALIFIED',
+ 'checks':checks,'call_id':cid,'expiry_ns':expiry,'horizon_end_ns':horizon_end,
+ 'terminal_observed_ns':before['observed_ns'],'effects':effects,'recovery_UP_attempts':attempts,
+ 'limits':'One deliberately filtered native fixture; not spontaneous late OS delivery, MAP01, continuous neutrality or efficiency.'}
+ with (P/'AUDIT_R149.json').open('x',encoding='utf-8') as f:json.dump(result,f,indent=2,sort_keys=True);f.write('\n')
+ print(json.dumps(result,indent=2))
+if __name__=='__main__':main()

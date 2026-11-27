@@ -1,0 +1,11 @@
+# R20 result — native Win32 Calculator screen/UIA timing
+
+**Disposition: PASS_SCOPED.** One fresh native Windows Calculator task completed through the public supervised-Win32 caller. The independent UI Automation observer saw the display change from 1,045 to 1,046 during the same target generation, while the caller recorded verified input release, neutral same-operation readback, exact task-success receipt, and clean close with no unresolved calls.
+
+The independent observer recorded 39 samples with zero errors. Requested cadence was 10 ms; observed sample-start cadence was 30.5329–105.7382 ms (median 31.40765 ms). UIA property-read duration was 10.8504–67.8948 ms (median 11.5523 ms). The conservative interval from the start of the last negative read to the end of the first positive read was 52.4498 ms. The first positive read ended 803.1365 ms after dispatch start and 50.8653 ms before dispatch returned. These are UIA display-state measurements, not physical key-event-to-screen-pixel latency.
+
+The audited bindings are attempt `win32-screen-calculator-task-20261024-r20-8c91a6e4`, call `ab10318ed4424280bb534a605703b5a5`, operation `e1d0eb826ddf415f97147bf377bad3be`, generation `6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c`, against source commit `212c5f1494d0c84f48c6b6ebbe64fb4c77c2bed7` / tree `f9b12ec434ce48c0d084b884bb3bfcc136d035b6`. All 15 independent audit checks passed; see `run/audit.json` and rerunnable `audit_r20.py`.
+
+Two inherited R19 strings remain in frozen raw metadata: `FROZEN_TARGET.json` has the R19 schema label and the oracle receipt names an R19 evidence reference. They are disclosed in the audit and were not edited after execution. R20 attempt identity, frozen condition/runner hashes, and call/operation/generation bindings match. The exact local raw run is retained separately in the unpublishable `run-private-original/` directory with `SHA256SUMS.local`; the public `run/` copy has local workspace paths redacted, while binary screenshots are byte-identical. `RESULT_SHA256SUMS` covers this publishable packet.
+
+This result is one native Calculator sample. It does not demonstrate WSLc, MAP01, release under blocked platform I/O, bounded recovery, matched efficiency, or broad reliability. WSLc remains outside this attempt because the current allocation/owner state is unresolved.

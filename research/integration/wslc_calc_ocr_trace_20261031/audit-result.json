@@ -1,0 +1,32 @@
+{
+  "status": "audited",
+  "results": [
+    {
+      "allocation": "e06",
+      "mode": "unavailable",
+      "cue": "unknown",
+      "new_save": false,
+      "ocr_attempts": 1,
+      "statuses": [
+        "timeout"
+      ],
+      "input_tokens": 12197,
+      "output_tokens": 78
+    },
+    {
+      "allocation": "e07",
+      "mode": "clear",
+      "cue": "filled",
+      "new_save": true,
+      "ocr_attempts": 2,
+      "statuses": [
+        "returned",
+        "returned"
+      ],
+      "input_tokens": 12197,
+      "output_tokens": 78
+    }
+  ],
+  "legacy_metadata": "psm11 field retained; recorded runner calls use psm7",
+  "trace_scope": "runner-call arguments and hashes, not OS-level tracing"
+}

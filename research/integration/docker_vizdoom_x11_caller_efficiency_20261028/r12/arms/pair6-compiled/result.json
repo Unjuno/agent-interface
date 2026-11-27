@@ -1,0 +1,588 @@
+{
+  "alias_preflight": {
+    "eligible": true,
+    "status": "VALID",
+    "valid_until_ns": 2985289842654
+  },
+  "arm": "compiled",
+  "bridge_terminal": {
+    "backend_held_buttons": [],
+    "backend_held_keys": {},
+    "recovery_required": false,
+    "sequence": 7
+  },
+  "caller_path_elapsed_ns": 929318589,
+  "compiled_receipt": {
+    "completed_transitions": 1,
+    "critical_events": [
+      {
+        "action": "forward",
+        "event": "branch_selected",
+        "evidence_ref": "observation-3",
+        "matched_conditions": {
+          "moved": false,
+          "ready": true
+        },
+        "outcome": "action",
+        "state": "waiting"
+      },
+      {
+        "action": "forward",
+        "action_id": "action-6592c72414144426b36cbf300fe8acf6",
+        "event": "action_terminal",
+        "execution_accepted_ns": 2984673433414,
+        "execution_started_ns": 2983899710319,
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "forward",
+        "action_id": "action-6592c72414144426b36cbf300fe8acf6",
+        "effect_observation_accepted_ns": 2984749869391,
+        "effect_observation_captured_ns": 2984676798113,
+        "effect_verification_accepted_ns": 2984755017642,
+        "effect_verification_started_ns": 2984751879887,
+        "event": "effect_checked",
+        "evidence_ref": "observation-7",
+        "execution_accepted_ns": 2984673433414,
+        "status": "succeeded"
+      },
+      {
+        "action": null,
+        "event": "branch_selected",
+        "evidence_ref": "observation-7",
+        "matched_conditions": {
+          "moved": true,
+          "ready": true
+        },
+        "outcome": "complete",
+        "state": "done"
+      },
+      {
+        "completed_transitions": 1,
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    ],
+    "elapsed_ns": 922026865,
+    "ended_ns": 2984759869467,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "map01-forward-efficiency-r1",
+    "latest_evidence_ref": "observation-7",
+    "method": "one-forward-action",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 2983838149419,
+        "evidence_digest": "f6613d03d8f40a25ffa6af4f27efed397d69e2bbfc5b2bdef922243fe221d391",
+        "evidence_ref": "observation-3",
+        "observation_accepted_ns": 2983889486424,
+        "observation_started_ns": 2983837846867,
+        "predicates": {
+          "moved": false,
+          "ready": true
+        },
+        "sequence": 3
+      },
+      {
+        "captured_ns": 2984676798113,
+        "evidence_digest": "04685a2eba3b716dc42f6946b7155157b8b8a97d4c9e6c8b1aabf99656471c00",
+        "evidence_ref": "observation-7",
+        "observation_accepted_ns": 2984749869391,
+        "observation_started_ns": 2984676441797,
+        "predicates": {
+          "moved": true,
+          "ready": true
+        },
+        "sequence": 7
+      }
+    ],
+    "outcome": "TASK_SUCCEEDED",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "method_complete",
+    "session_scope": "native-x11:dd4b3ca0bd8e43a894e93e2070ad96b2",
+    "started_ns": 2983837842602,
+    "transitions": [
+      {
+        "action": "forward",
+        "action_id": "action-6592c72414144426b36cbf300fe8acf6",
+        "effect_ref": "compiled-212850e9b5ab4dcea25a4c76b21631af-10-execution",
+        "evidence_ref": "observation-3",
+        "execution_accepted_ns": 2984673433414,
+        "execution_started_ns": 2983899710319,
+        "from_state": "waiting",
+        "matched_conditions": {
+          "moved": false,
+          "ready": true
+        },
+        "observation_sequence": 3,
+        "release_verified": true,
+        "to_state": "done"
+      }
+    ]
+  },
+  "dispatch_elapsed_ms": 929.319,
+  "during_call_keymap_samples": [
+    {
+      "monotonic_ns": 2983835623612,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983845828476,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983856104614,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983866360066,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983876596579,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983886830058,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983897074511,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983907412868,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983918074228,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983928282910,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983938497394,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983948701088,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983958919466,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983970029987,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983980274702,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2983990506234,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984000694393,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984011054925,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984021472073,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984031697163,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984041978187,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984052223255,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984062402637,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984072565026,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984082751533,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984092933325,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984103114555,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984113511511,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984123809516,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984134186092,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984144604584,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984155073054,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984165457172,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984175983706,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984186433696,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984196762113,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984207187584,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984217454762,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984227766850,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984238223259,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984248658667,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984259271502,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984269644550,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984280249799,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984290826096,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984301122524,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984311463200,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984322022970,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984332331520,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984342957748,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984353482440,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984363939292,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984374409380,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984384733622,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984395058275,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984405387359,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984415617316,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984425944190,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984436310301,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984446568015,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984456830845,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984467084670,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984477297487,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984487517762,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984497804347,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984508045233,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984518334695,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984528577617,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984538949142,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984549289709,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984559522720,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984569713530,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984579950657,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984590156453,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984600419488,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984610682191,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984620881381,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984631091989,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984641316584,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984651603597,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2984661822921,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984672105747,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984682459119,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984692718056,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984702951258,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984713196309,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984723401671,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984733616607,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984743862310,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984754117612,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2984764367488,
+      "w_down": false
+    }
+  ],
+  "effect_oracle_sync_tick": "one game.advance_action(1, True) after key release and before post-action position readback",
+  "error": null,
+  "gates": {
+    "effect_receipt_succeeded": true,
+    "independent_w_neutral": true,
+    "position_changed": true,
+    "release_verified": true,
+    "route_completed": true,
+    "w_observed_down": true
+  },
+  "hold_ms": 600,
+  "independent_w_down_after": false,
+  "minted_reference": {
+    "lifetime": {
+      "authority_granted": false,
+      "capture_freshness_ms": 1500,
+      "clock": "time.monotonic_ns",
+      "expires_ns": 3283686257241,
+      "minted_ns": 2983686257241,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "offset": [
+      12,
+      19
+    ]
+  },
+  "no_model_provider_calls": true,
+  "oracle_at_verification": {
+    "delta": {
+      "x": 122.62849426269531,
+      "y": 0.0
+    },
+    "evidence_ref": "observation-7",
+    "passed": true,
+    "position": {
+      "x": -69.37150573730469,
+      "y": -192.0
+    }
+  },
+  "outcome": "PASS_SCOPED_ARM",
+  "pair": 6,
+  "passed": true,
+  "position_after": {
+    "x": -69.37150573730469,
+    "y": -192.0
+  },
+  "position_before": {
+    "x": -192.0,
+    "y": -192.0
+  },
+  "position_delta": {
+    "x": 122.62849426269531,
+    "y": 0.0
+  },
+  "preflight_source_sequence": 1,
+  "release_receipt": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 2984661323437,
+    "verified": true
+  },
+  "retained_execution_results": [
+    {
+      "file": "compiled-212850e9b5ab4dcea25a4c76b21631af-10-execution.json",
+      "receipt": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 2984661323437,
+        "verified": true
+      },
+      "status": "completed"
+    }
+  ],
+  "route_outcome": "TASK_SUCCEEDED",
+  "runtime": "Docker Desktop Linux Engine + Xvfb -cc 4",
+  "seed": 2026102916,
+  "source_route": "compiled",
+  "target": {
+    "display": ":91",
+    "height": 480,
+    "title": "VIZDOOM 1.3.0 (ZDOOM 2.8.1+)",
+    "width": 640,
+    "window_id": 2097168
+  },
+  "timed_end_ns": 2984764677382,
+  "timed_start_ns": 2983835358793,
+  "w_keycode": 25,
+  "window_geometry": {
+    "height": 480,
+    "width": 640,
+    "x": 320,
+    "y": 272
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r30",
+  "calls_spanning_callback_return": [],
+  "diagnostic_status": "TRACE_CAPTURED",
+  "exact_producer_pid": 51176,
+  "hook_callback_return_ns": 487128906533600,
+  "interpretation": "Trace identifies which Python process retirement API call spans callback return; it does not establish earlier key release, OS kernel causality, or release while blocked.",
+  "method_events": [
+    {
+      "args_repr": "()",
+      "elapsed_ns": null,
+      "error": null,
+      "event": "process_method_enter",
+      "method": "is_alive",
+      "monotonic_ns": 487127652390900,
+      "result_repr": null
+    },
+    {
+      "args_repr": null,
+      "elapsed_ns": 8400,
+      "error": null,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127652903300,
+      "result_repr": "True"
+    },
+    {
+      "args_repr": "()",
+      "elapsed_ns": null,
+      "error": null,
+      "event": "process_method_enter",
+      "method": "terminate",
+      "monotonic_ns": 487127653486400,
+      "result_repr": null
+    },
+    {
+      "args_repr": null,
+      "elapsed_ns": 106100,
+      "error": null,
+      "event": "process_method_return",
+      "method": "terminate",
+      "monotonic_ns": 487127653852200,
+      "result_repr": "None"
+    },
+    {
+      "args_repr": "(0.1,)",
+      "elapsed_ns": null,
+      "error": null,
+      "event": "process_method_enter",
+      "method": "join",
+      "monotonic_ns": 487127654030200,
+      "result_repr": null
+    },
+    {
+      "args_repr": null,
+      "elapsed_ns": 4128000,
+      "error": null,
+      "event": "process_method_return",
+      "method": "join",
+      "monotonic_ns": 487127658320500,
+      "result_repr": "None"
+    },
+    {
+      "args_repr": "()",
+      "elapsed_ns": null,
+      "error": null,
+      "event": "process_method_enter",
+      "method": "is_alive",
+      "monotonic_ns": 487127658515000,
+      "result_repr": null
+    },
+    {
+      "args_repr": null,
+      "elapsed_ns": 4100,
+      "error": null,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127658734500,
+      "result_repr": "False"
+    },
+    {
+      "args_repr": "()",
+      "elapsed_ns": null,
+      "error": null,
+      "event": "process_method_enter",
+      "method": "is_alive",
+      "monotonic_ns": 487127658968600,
+      "result_repr": null
+    },
+    {
+      "args_repr": null,
+      "elapsed_ns": 2300,
+      "error": null,
+      "event": "process_method_return",
+      "method": "is_alive",
+      "monotonic_ns": 487127659137000,
+      "result_repr": "False"
+    }
+  ],
+  "post_cancel_hold_end_ns": 487128906249700,
+  "raw_trace_event_count": 20,
+  "retire_entry": {
+    "deadline_ns": 487130625000000,
+    "event": "retire_enter",
+    "monotonic_ns": 487127652107200,
+    "pid": 45136,
+    "target_name": "SpawnProcess-3",
+    "target_pid": 51176
+  },
+  "retire_return_count": 1,
+  "schema": "win32-supervised-standard-caller-r30-retirement-trace-diagnosis-v1",
+  "strict_action_audit_status": "FAIL_OR_UNKNOWN"
+}

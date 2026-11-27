@@ -1,0 +1,29 @@
+FF
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 104, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertEqual(row['status'], 'receipt_unavailable')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'receipt_unavailable'
+- completed
++ receipt_unavailable
+
+
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 104, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertEqual(row['status'], 'receipt_unavailable')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'receipt_unavailable'
+- completed
++ receipt_unavailable
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.041s
+
+FAILED (failures=2)

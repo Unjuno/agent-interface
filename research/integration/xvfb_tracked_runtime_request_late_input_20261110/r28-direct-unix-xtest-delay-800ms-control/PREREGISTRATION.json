@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/xvfb-x11-cancel-delay-matched-control-v1",
+  "study_id": "xvfb-direct-unix-xtest-delay-800ms-control-20261110",
+  "purpose": "Direct-path matched control for R26/R27: same task and 800 ms delay using ordinary local Unix X11 and XTEST server-side delay.",
+  "matched_factor": "Only delayed-request boundary differs: XTEST time delay after request reaches X server vs R26/R27 user-space TCP relay before X server receive.",
+  "condition": {
+    "display": "parent and runtime :88 local Unix socket",
+    "xvfb": "private :88, TCP disabled",
+    "tracked_second_keypress": true,
+    "delay_ms": 800,
+    "delivery_delay_mode": "XTEST server-side delay; SOCKET_DELIVERY_DELAY unset",
+    "cancel_ack_withheld_s": 1.0,
+    "supervisor": false,
+    "network": "Docker network none",
+    "model_calls": 0
+  },
+  "primary_discriminator": "Compare action completion/cancel timing, owner-client disconnect, old and fresh task effect/counts, independent keymap at release/horizon, and UNKNOWN/replay fence with R26/R27.",
+  "prior_evidence": "R26/R27 are two user-space TCP proxy runs in which bytes were forwarded after cancel completion and stale a contaminated a fresh target before task input.",
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "d0f15a8d9a4891f7592198a83962c5ea50255935a812ef36af256e230cbc2fa4",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "stop_rule": "One matched control, no retry. Keep output distinct from prior randomized timing cells and from R26/R27.",
+  "scope": "Synthetic Xvfb local Unix socket, no natural network impairment, WSLc, MAP01, or model/provider."
+}

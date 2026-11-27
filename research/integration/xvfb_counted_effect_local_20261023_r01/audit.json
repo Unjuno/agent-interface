@@ -1,0 +1,151 @@
+{
+  "status": "PASS_COUNT_OBSERVABILITY_SCOPED",
+  "checks": [
+    {
+      "check": "host and inner exit zero",
+      "passed": true
+    },
+    {
+      "check": "one actual test, no skips/errors/failures",
+      "passed": true
+    },
+    {
+      "check": "frozen sources unchanged",
+      "passed": true
+    },
+    {
+      "check": "actual cancel response within 300ms",
+      "passed": true
+    },
+    {
+      "check": "composite cancel interval within 3000ms",
+      "passed": true
+    },
+    {
+      "check": "exact owned pidfd pause and successful resume",
+      "passed": true
+    },
+    {
+      "check": "exact owner retired before recorded supervisor release",
+      "passed": true
+    },
+    {
+      "check": "independent all-up after resume",
+      "passed": true
+    },
+    {
+      "check": "8.5 second horizon and independent all-up",
+      "passed": true
+    },
+    {
+      "check": "fresh target distinct from old target",
+      "passed": true
+    },
+    {
+      "check": "fresh property transition and horizon value",
+      "passed": true
+    },
+    {
+      "check": "one fresh keypress in captured app trace",
+      "passed": true
+    },
+    {
+      "check": "fresh input/event/commit/readback ordering",
+      "passed": true
+    },
+    {
+      "check": "fresh interval recomputes from timestamps",
+      "passed": true
+    },
+    {
+      "check": "fresh task before old horizon",
+      "passed": true
+    },
+    {
+      "check": "cancel UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "terminal UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "after_fresh UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "neutral final cleanup",
+      "passed": true
+    },
+    {
+      "check": "owned server/test exited, no old-session members",
+      "passed": true
+    },
+    {
+      "check": "independent old counts match captured handlers",
+      "passed": true
+    },
+    {
+      "check": "strict old oracle distinguishes duplicates from final value",
+      "passed": true
+    },
+    {
+      "check": "fresh independent counts and strict oracle",
+      "passed": true
+    },
+    {
+      "check": "explicit separated task outcomes",
+      "passed": true
+    }
+  ],
+  "scientific_task_outcomes": {
+    "fresh_task": "pass",
+    "old_task": "fail",
+    "scope": "Separate from control-path test completion and runtime UNKNOWN receipts"
+  },
+  "recomputed_ms": {
+    "cancel_invocation_to_return": 256.089124,
+    "resume_to_independent_all_up": 137.615987,
+    "fresh_input_to_independent_effect_readback": 90.487875
+  },
+  "exact_once_counterexample": {
+    "claimed_task_definition": "one initial a effect; no delayed b effect; both keys up after release and at the delayed-request horizon",
+    "runtime_test_oracle_status": "fail",
+    "old_target_keypress_count": 4,
+    "old_target_keypress_events": [
+      {
+        "detail": 38,
+        "effect_committed_ns": 6924225893,
+        "monotonic_ns": 6924105653,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 7959102312,
+        "monotonic_ns": 7959014669,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 7999155828,
+        "monotonic_ns": 7999031616,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 8038987609,
+        "monotonic_ns": 8038910577,
+        "type": 2,
+        "window": 2097152
+      }
+    ],
+    "old_property_remained": [
+      1
+    ],
+    "exactly_one_old_keypress": false,
+    "interpretation": "Idempotent property assignment masks repeated KeyPress/effect handlers. Trace alone does not prove the cause of repeats or a non-idempotent external task outcome."
+  }
+}

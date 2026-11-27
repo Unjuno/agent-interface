@@ -1,0 +1,17 @@
+# Calc plan evidence join — integrated boundary result (2026-11-04)
+
+## Result
+
+Pinned Docker image `agent-interface-xvfb-mcp:late-input-r19`, network disabled, 2 CPUs, 4 GiB memory and 4 GiB total memory+swap, 256 PIDs, read-only source and a separate evidence mount. The latest runner exited 0 (`docker-exit-final-12.txt`). The evidence-join plus reuse-horizon unit set passed 27/27 in normal mode and 27/27 under `-O`; the composed Fake App Server Calc test passed 1/1 in 9.433 s. Logs are `normal.log`, `optimized.log`, and `composition.log`. `raw-runtime-final-12/` retains provider-call, provider-ledger, App Server protocol and Fake X evidence. `SHA256SUMS.txt` hashes all packet files except itself.
+
+The run distinguishes the intermediate compiled-method result from the final composed task result:
+
+- Provider accounting retained seven model attempts, four successful Fake Planner generations and 32 public MCP calls. Total usage is incomplete because timeout and cancellation attempts have unavailable usage. The Fake Planner echoes fixture arguments; it is not a model-authored plan or provider efficiency measurement.
+- The provider-routed compiled call with attempt `calc-offline-e2e-01` uses the minted offsets `[12,8]` and `[8,6]`. Its compiled method returns `SAFE_YIELD` / `effect_unavailable` after two transitions and confirms release after both; this is an intermediate handoff, not the final task verdict. The subsequent public task verifier confirms the FODS effect and success. The join is proven by matching attempt IDs, provider `prepared_call_id` to the save controller call ID, SHA-256 of the exact provider method receipt to the save controller receipt, matching compiled scope and both minted alias offsets, and matching artifact digest to the independently read FODS bytes. The FODS parser independently reads A1=24680 and A2=13579. Replay remains disabled. Wrong, unknown and ambiguous post-input cases each stop after one transition, verify release, and keep success unknown. A separately recorded direct test-harness request uses zero offsets and is rejected as `CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE`; it is not the provider-routed request. The deliberately mismatched attempt is rejected as `CALC_REVIEW_SOURCE_STALE`.
+- The strict evidence join rejects unknown final task success, duplicate attempt/artifact/owner custody, digest substitutions, invalid repair sources and missing independent score.
+
+This run closes the offline Fake X composed Calc path from provider generation through guarded transitions, verified release, close-bound artifact verification and independent cell-value scoring. It demonstrates a successful integrated Fake X task for this fixture, while the inner compiled method itself correctly yields until the parent-held artifact verifier confirms the saved effect. It does not demonstrate live provider-authored planning, live Calc GUI behavior, a cold/warm/repair horizon, efficiency, WSLc, MAP01 or long-duration Docker Desktop stability.
+
+## Harness retries
+
+Earlier runner attempts failed during setup or exposed a test assertion key mismatch; their exit codes and causes are summarized in `failed-attempts.md` and are not counted as successful experiments. Final-12 is the sole full raw capture retained for this packet. Earlier duplicate and partial raw directories were removed from the PR after final-12 superseded them.

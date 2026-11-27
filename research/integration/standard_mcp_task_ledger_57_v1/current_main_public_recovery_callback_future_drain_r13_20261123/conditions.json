@@ -1,0 +1,28 @@
+{
+  "schema": "agent-interface/public-observation-future-drain-r13",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "environment": "Windows CPython 3.11.9",
+  "scope": "direct public observe Future timeout and bounded drain, fake backend only",
+  "question": "After the 8-second caller wait times out, does the original accepted fake observation Future complete once after release, finalize its report before teardown, and preserve no-input evidence?",
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "attempt_count": {
+    "total": 2,
+    "normal": 1,
+    "optimized": 1
+  },
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_observation_callback_timeout_drains_before_teardown",
+  "pass_rule": "Both invocations exit 0 and unittest reports OK; callback called once; exact same Future completes after release; report final and no temp remains before teardown; input_dispatched false.",
+  "not_tested": [
+    "compiled caller",
+    "task effect/recovery",
+    "live Win32 input",
+    "MAP01",
+    "efficiency",
+    "Research Preview",
+    "runtime distribution"
+  ],
+  "instrumented_source_sha256": "ef82baa131fc40891b2230855c3ee11aff88a0fa6e4cd65c8da27861bf2965e2"
+}

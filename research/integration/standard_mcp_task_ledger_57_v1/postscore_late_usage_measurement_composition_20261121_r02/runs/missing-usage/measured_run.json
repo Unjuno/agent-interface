@@ -1,0 +1,83 @@
+{
+  "measurement": {
+    "effect_attribution": {
+      "authority_expiry_ns": 280118281000000,
+      "effect_observed_ns": null,
+      "horizon_end_ns": 280118296000002,
+      "release_received_ns": 280118281000001
+    },
+    "elapsed_ns": 15000002,
+    "ended_ns": 280118296000002,
+    "local_observations": [],
+    "model_delivered_images": [],
+    "phases": [
+      {
+        "ended_ns": 280118296000002,
+        "name": "other",
+        "reason": "synthetic accounting composition; no target action",
+        "started_ns": 280118281000000
+      }
+    ],
+    "started_ns": 280118281000000
+  },
+  "task_ledger": {
+    "comparison": {
+      "arm": "A",
+      "block": 1,
+      "order": 1,
+      "task_seed": "synthetic-late-usage-57"
+    },
+    "environment_sha256": "a3b7ba1d551e272552579411a4cdf50ba251c17ede7917d3dd3575e10b8937ef",
+    "events": [
+      {
+        "attempt_id": "attempt-no-usage",
+        "ended_ns": 280118296000000,
+        "kind": "model_attempt",
+        "seq": 1,
+        "started_ns": 280118281000000,
+        "status": "timeout",
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "status": "unavailable"
+        }
+      },
+      {
+        "ended_ns": 280118296000000,
+        "independent": true,
+        "kind": "task_score",
+        "scorer_id": "synthetic-no-effect-oracle-v1",
+        "seq": 2,
+        "started_ns": 280118296000000,
+        "state_sha256": "585f82636a59b9c079add0370ed23c07a3a289154e1763e7ce988181f8f09d41",
+        "task_success": null
+      }
+    ],
+    "model": {
+      "effort": "low",
+      "id": "synthetic-provider-boundary",
+      "request_config_sha256": "5ef0ccd11ba7fe81b5dca8afe54c4cb73aad18ef441b5895a54163c0d6bd7ca7"
+    },
+    "raw_refs": [
+      {
+        "path": "raw/attempt-no-usage.request.bin",
+        "sha256": "dc9aa9ae9265de5ce4608a152f7db14e3840edca18e6cc70181833af15d31174"
+      },
+      {
+        "path": "raw/task-score.state.bin",
+        "sha256": "585f82636a59b9c079add0370ed23c07a3a289154e1763e7ce988181f8f09d41"
+      }
+    ],
+    "run_id": "run-without-late-usage",
+    "schema": "agent-interface/standard-mcp-task-ledger-v1",
+    "source": {
+      "commit": "d08596ee0590ba6a9531075a5769c0ac4abc1ec1",
+      "route_sha256": "f8504b0e2d4292063a6838e367d12e9dcefcadd17974339640fa03a10a0a16c1"
+    },
+    "task": {
+      "fixture_sha256": "b88066f8d3d5af004ad275383907fc900bdda75f6ef21e32864eddcc01c4dc18",
+      "scorer_sha256": "7777f885bffcb23c5c870a53704c14a012310e2f95372d39ea991b35afbf5b6b",
+      "task_id": "accounting-without-late-usage"
+    }
+  }
+}

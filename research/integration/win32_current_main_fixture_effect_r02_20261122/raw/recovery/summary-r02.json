@@ -1,0 +1,148 @@
+{
+  "recovery_attempts": 1,
+  "source_operation_id": "29e90d7cf3c54ed4b36136a424a9f77b",
+  "source_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+  "producer_absent": true,
+  "started_at_utc": "2026-11-21T19:20:58.680502+00:00",
+  "recovery_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+  "recovery_result": {
+    "status": "recovered",
+    "recovery_status": "recovered",
+    "source_operation_id": "29e90d7cf3c54ed4b36136a424a9f77b",
+    "source_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+    "recovery_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+    "source_custody_canonical_sha256": "212438b8d9d705c6b85706abb121a7d6d8a45e5726d52623972164cd8dae8887",
+    "source_action_status": "unknown",
+    "release_confirmed": true,
+    "recovery_id": "c5c696f3ba5d43f1b6eccecee54d2e23",
+    "recovery_receipt": {
+      "status": "recovered",
+      "operation_id": "29e90d7cf3c54ed4b36136a424a9f77b",
+      "target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "source_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "recovery_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "recovery_id": "c5c696f3ba5d43f1b6eccecee54d2e23",
+      "release_confirmed": true,
+      "release_receipt": {
+        "operation_id": "29e90d7cf3c54ed4b36136a424a9f77b",
+        "source_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+        "target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+        "recovery_id": "c5c696f3ba5d43f1b6eccecee54d2e23",
+        "release_accepted": true,
+        "release_receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "keys_unknown": [],
+          "buttons_unknown": [],
+          "state_query_witnesses": {
+            "65": [
+              {
+                "target": "fixture",
+                "hwnd": 59246350,
+                "pid": 50084,
+                "thread_id": 33996,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "desktop_hookcontrol_opened": true,
+                "probe_integrity_rid": 8192,
+                "target_integrity_rid": 8192
+              },
+              {
+                "target": "fixture",
+                "hwnd": 59246350,
+                "pid": 50084,
+                "thread_id": 33996,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "desktop_hookcontrol_opened": true,
+                "probe_integrity_rid": 8192,
+                "target_integrity_rid": 8192
+              }
+            ]
+          },
+          "release_errors": [],
+          "release_attempts": [
+            {
+              "ordinal": 0,
+              "domain": "key_up",
+              "virtual_key": 65,
+              "key_names": [
+                "A"
+              ],
+              "encoding": "virtual_key",
+              "sendinput_call_started": true,
+              "sendinput_return_count": 1,
+              "sendinput_error_type": null,
+              "outcome": "returned",
+              "error_type": null
+            }
+          ],
+          "verified": true,
+          "monotonic_ns": 331565500000000,
+          "perf_counter_ns": 331565521446500
+        },
+        "release_error_type": null,
+        "release_key_up_attempts": [
+          {
+            "virtual_key": 65,
+            "encoding": "virtual_key",
+            "status": "returned"
+          }
+        ],
+        "pending_unicode_ups": []
+      },
+      "readback": {
+        "operation_id": "29e90d7cf3c54ed4b36136a424a9f77b",
+        "source_target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+        "target_generation": "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+        "recovery_id": "c5c696f3ba5d43f1b6eccecee54d2e23",
+        "neutral": true,
+        "observed_monotonic_ns": 331567500000000,
+        "key_button_states": [
+          false
+        ],
+        "unicode_event_units": 0
+      },
+      "recovery_completed_monotonic_ns": 331567500000000,
+      "late_input_horizon_ns": 2000000000,
+      "late_input_observation_count": 77,
+      "late_input_release_received_monotonic_ns": 331565500000000,
+      "late_input_observation_start_monotonic_ns": 331565500000000,
+      "late_input_observation_end_monotonic_ns": 331567500000000,
+      "late_input_max_observed_gap_ns": 32000000,
+      "late_input_max_sample_gap_ns": 100000000,
+      "late_input_horizon_verified": true
+    },
+    "task_success": null,
+    "replay_allowed": false,
+    "next_action_requires_fresh_generation": true,
+    "session": {
+      "session_id": "937965106aac41bd8e7c7962c886c38b",
+      "mode": "supervised-win32",
+      "state": "open",
+      "synthetic_only": false,
+      "call_count": 0,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\worktrees\\repository-inventory-r163-20261122\\research\\integration\\win32_current_main_fixture_effect_r02_20261122\\raw\\recovery\\mcp\\543e80768879404ab21d568746897d33",
+    "call_id": "543e80768879404ab21d568746897d33"
+  },
+  "recovery_poll_count": 0,
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "937965106aac41bd8e7c7962c886c38b",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 0,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\worktrees\\repository-inventory-r163-20261122\\research\\integration\\win32_current_main_fixture_effect_r02_20261122\\raw\\recovery\\mcp\\d7633cac03f1477e8f56dd2d62d9eda3",
+    "call_id": "d7633cac03f1477e8f56dd2d62d9eda3"
+  },
+  "finished_at_utc": "2026-11-21T19:21:03.877674+00:00"
+}

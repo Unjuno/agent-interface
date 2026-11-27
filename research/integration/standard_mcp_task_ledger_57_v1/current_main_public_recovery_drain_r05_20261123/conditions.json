@@ -1,0 +1,54 @@
+{
+  "scope": "Fake/local test-harness lifecycle diagnostic only",
+  "frozen_baseline_source_sha256": {
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "0d216735aa30e0d85f562f327cb86a58936189f4f1b3688e0e699ef36d4b5ebf",
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510"
+  },
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "schema": "agent-interface/public-recovered-caller-callback-drain-r05",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+  "order": [
+    "normal-01",
+    "optimized-01",
+    "normal-02",
+    "optimized-02",
+    "normal-03",
+    "optimized-03"
+  ],
+  "not_tested": [
+    "live GUI/native input",
+    "MAP01",
+    "production reliability",
+    "matched efficiency/token/provider accounting",
+    "WSLc/Docker",
+    "preview graduation",
+    "distributable runtime"
+  ],
+  "artifact_order": [
+    "normal-01",
+    "optimized-01",
+    "normal-02",
+    "optimized-02",
+    "normal-03",
+    "optimized-03"
+  ],
+  "environment": "CPython 3.11.9; Windows host; values observed in R04 packet",
+  "instrumentation": [
+    "Do not alter runtime/production code, timeouts, action semantics, retry count, or release/recovery eligibility.",
+    "Test fixture records operation name, callback exception, future done state, and outstanding futures at teardown.",
+    "After the runner returns, wait at most 30s for already-submitted API futures before interface_close; do not cancel unresolved futures.",
+    "A sample with any callback timeout/runtime failure remains failed even if drain succeeds.",
+    "No retries/replacements; preserve all six stdout/stderr and exit codes."
+  ],
+  "attempt_count": {
+    "optimized": 3,
+    "normal": 3,
+    "total": 6
+  },
+  "question": "Does tracking each run_coroutine_threadsafe API future and draining outstanding futures before interface_close and TemporaryDirectory teardown eliminate the observed in-flight .report.json.tmp cleanup collision, while preserving the original 8s callback timeout and exact-once/no-replay safety conditions?",
+  "pass_rule": "Diagnostic question supported only if no teardown PermissionError/in-flight temp collision occurs and every submitted callback Future is completed before TemporaryDirectory exits in each sample. The six run pass/fail outcomes do not estimate production reliability.",
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "e84f48cbe58ef018f3b71962cc208383acf7410eb07af0410f00708d1b00a849",
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510"
+  }
+}

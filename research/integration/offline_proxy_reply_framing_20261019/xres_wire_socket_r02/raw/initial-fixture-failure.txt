@@ -1,0 +1,13 @@
+Initial run of test_query_client_ids_wire_round_trip_through_fake_relay:
+
+FAIL: test_query_client_ids_wire_round_trip_through_fake_relay
+Traceback (most recent call last):
+  File "test_xres_query_socket.py", line 110, in test_query_client_ids_wire_round_trip_through_fake_relay
+    self.assertEqual(remainder, b"")
+AssertionError: b"{\x00\x00\x00" != b""
+
+Cause identified from the python-xlib ClientIdValue wire layout: the synthetic
+value-size field is a byte count. The fixture wrote 1 instead of 4, so the
+parser correctly decoded zero 32-bit values and left the four PID bytes.
+Only the fixture size field changed; no runtime code or previous evidence was
+modified. Corrected normal and optimized reruns are preserved separately.

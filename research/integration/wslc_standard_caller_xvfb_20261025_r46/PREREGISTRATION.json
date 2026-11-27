@@ -1,0 +1,39 @@
+{
+  "schema": "wslc-standard-caller-xvfb-r46-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r46",
+  "source_commit": "e4e34a163e1f288d8841d300ae719abcf9e58223",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "question": "Does a fresh independent repeat at the 3860 ms private-Xvfb pause again produce independently verified release under the unchanged 4 s transaction deadline?",
+  "replication_of": "R45 same-condition independent repeat; new isolated container, Xvfb, output and single-use attempt ID",
+  "container_name": "ai-control-r46-974c1e5eb5c14e4f8511bbc5c191cc57",
+  "runner_sha256": "5d3f1a6d122ffd9bb02fc5d5df9038138f14b62470a7a63edb40c312bfc2be29",
+  "init_sha256": "36261df6f32ba9e38bfc2b6f2dd741c2960714bbe8fecb96c0b56b3139eea32b",
+  "launcher_sha256": "7d3a35632d28a949c7956b7f51547ac0f9d3770eebcf9e0bce974006ac26576c",
+  "preregistered_local_date": "2026-10-25",
+  "pause_ms": 3860,
+  "transaction_deadline_ms": 4000,
+  "public_cancel_response_bound_ms": 3000,
+  "independent_readback_ms": 5000,
+  "late_event_horizon_ms": 8500,
+  "retries": 0,
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "network": "none",
+  "cpu": 2,
+  "memory_mb": 2048,
+  "gpu": false,
+  "pids_limit": 128,
+  "tmpfs": "/tmp rw,exec,nosuid,nodev,mode=1777,size=512m",
+  "read_only_mounts": [
+    "repo",
+    "deps",
+    "stage",
+    "xkb"
+  ],
+  "write_mount": "output",
+  "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+  "decision": "One fresh repeat only. PASS requires preflight, caller test, release before deadline, independent readback, late horizon, both task oracles, UNKNOWN runtime fencing, and cleanup. Deadline failure remains UNKNOWN with no release/task claim. No retry."
+}

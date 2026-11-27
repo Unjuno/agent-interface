@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c05-terminal",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect --format \"{{json .State}}\" 17-x11-c05-study-70ab && test -z \"$(docker ps -q)\""
+  ],
+  "launcher_pid": 89038,
+  "start_utc": "2026-10-03T17:10:27.374284+00:00",
+  "start_ns": 58392194805083,
+  "pid": 89039,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T17:10:27.458086+00:00",
+  "end_ns": 58392278421708,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 224,
+      "sha256": "399fc0d58f68d33b7b48993a46b05d25f7530b729a05d3612cfa07e565ff0d02"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

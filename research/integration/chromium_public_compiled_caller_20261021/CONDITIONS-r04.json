@@ -1,0 +1,90 @@
+{
+  "schema": "agent-interface/chromium-public-compiled-standard-caller-conditions-v1",
+  "run_id": "chromium-public-compiled-standard-caller-live-r04-20261021",
+  "frozen_at_utc": "2026-10-20T22:36:19Z",
+  "source": {
+    "repository": "Unjuno/agent-interface",
+    "branch": "research/owned-cancel-supervisor-prototype-r01",
+    "head": "ef768ac74517d70c43c7b673b6ea4319db87d4f4",
+    "base": "origin/main at bc10001a7a5e5648360d5cfa209248b65f15aacd",
+    "working_tree_dirty": true,
+    "runner": "run_public_caller_r04.py",
+    "launcher": "launch-xvfb-r04.sh",
+    "source_manifest": "source-sha256-r04.txt",
+    "source_manifest_sha256": "a7c781a33908c0869d8de8795b8af749efe8f5ad6cfcf24b2628108a602def8c"
+  },
+  "host": {
+    "platform": "Ubuntu native WSL2, not WSLc",
+    "display": ":97",
+    "screen": "1024x768x24",
+    "display_socket_absent_before_run": true,
+    "no_Xvfb_Chromium_or_App_Server_process_before_run": true,
+    "free_memory_bytes_observed_before_run": 32869277696,
+    "available_memory_bytes_observed_before_run": 32744681472,
+    "free_disk_bytes_observed_before_run": 158674313216,
+    "pinned_chromium": "/home/user/.cache/agent-interface-live-caller-20261021/browsers/chromium-1248/chrome-linux64/chrome",
+    "chromium_version": "Google Chrome for Testing 156.0.8078.4",
+    "chromium_runtime_library_path": "/home/user/.cache/agent-interface-live-caller-20261021/linux-libs/rootfs/usr/lib/x86_64-linux-gnu",
+    "runtime": "CPython 3.12 with existing cached site-packages from agent-interface-xvfb-current-e7-r02",
+    "python_packages": {
+      "mcp": "1.30.0",
+      "anyio": "4.15.1",
+      "pydantic": "2.14.1",
+      "Pillow": "10.2.0",
+      "python-xlib": "0.33"
+    },
+    "app_server_executable": "/mnt/c/Users/user/AppData/Local/OpenAI/Codex/bin/896a0166b774037a/codex.exe",
+    "codex_home": "/mnt/c/Users/user/.codex"
+  },
+  "task": {
+    "application": "one local Chromium app window serving only 127.0.0.1 fixture HTTP",
+    "token": "uictrl-20261021-c4d2",
+    "steps": [
+      "start and verify one owned Xvfb server on :97",
+      "observe the source page through public interface_guarded_observe",
+      "send exactly that screenshot to one Codex App Server turn for target grounding",
+      "re-observe after model wait and validate target scope, geometry, and cue pixels",
+      "mint the field alias at [field_x, field_y-20] with the schema-minimum 4x4 patch on the audited static upper strip; mint the grounded submit alias with 32x32",
+      "execute the fixed two-action plan only through public interface_guarded_compiled",
+      "independently score exactly one POST carrying the frozen token",
+      "close the public MCP session and terminate/reap the exact Xvfb process"
+    ],
+    "maximum_provider_turns": 1,
+    "maximum_compiled_actions": 2,
+    "no_retry": true,
+    "live_input": "only to the private Chromium window on display :97; field click lands 4 px below top border",
+    "external_network": "not used by the fixture; provider access uses configured Codex App Server"
+  },
+  "model": {
+    "requested": "gpt-6.1-sol",
+    "effort": "medium",
+    "attempt_limit": 1
+  },
+  "budgets": {
+    "page_render_ready_seconds": 10,
+    "mcp_initial_wait_ms": 10000,
+    "terminal_result_seconds": 35,
+    "browser_window_seconds": 20,
+    "xvfb_display_ready_seconds": 5
+  },
+  "acceptance": {
+    "task": "one independently captured POST to /submit with exactly the frozen token",
+    "evidence": "retained provider turn and usage, source and fresh screenshots, public call and terminal result, close/release receipt, fixture POST and independent score",
+    "safety": "fresh post-model scope and target checks pass; public call terminates; cleanup/readback remains honestly classified",
+    "runtime_task_success": "must remain null; independent fixture scorer is reported separately"
+  },
+  "stop_conditions": [
+    "Xvfb startup, PID or geometry check fails: zero model call and zero input",
+    "preflight missing or ambiguous target: zero model call and zero input",
+    "model output invalid or target/source changes after model wait: refuse before input",
+    "call remains pending after 35 seconds: preserve incomplete result and do not retry",
+    "unexpected public effect count or token: record failure; do not repeat this run ID"
+  ],
+  "non_claims": [
+    "physical desktop or external application control",
+    "blocked-platform-I/O input-release guarantee",
+    "target-generation race or recovery",
+    "MAP01, WSLc, Docker, reliability population, matched efficiency, or timing distribution",
+    "stable-anchor audit was derived from one prior failed run and does not establish future click admission"
+  ]
+}

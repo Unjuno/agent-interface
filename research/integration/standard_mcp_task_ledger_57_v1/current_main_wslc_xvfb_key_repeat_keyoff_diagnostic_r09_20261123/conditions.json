@@ -1,0 +1,17 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-WSLC-XVFB-CURRENT-MAIN-R09-AUTOREPEAT-A-OFF-20261123",
+  "frozen_at_utc": "2026-11-23T14:10:00Z",
+  "source_revision": "36da81e3fb97dca875e4dc5b1d13d5385574b400",
+  "source_tree": "5ee7dcc7751fa7e7d12800eae855f5e65902c4be",
+  "runtime_tree": "a8101de9d6bc868a523e412ec3a98d40d6a8649e",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "runtime": "WSLc 3.0.5.0; pull never; network none; ephemeral --rm; source read-only; evidence writable; private /tmp; 2 CPU; 4 GiB memory limit only (swap limit unavailable); no read-only root feature.",
+  "display": "Private Xvfb :88. Before each test, Python Xlib resolves keysym a, disables auto-repeat for that keycode only, and records global/per-key readback. Global repeat remains enabled.",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "production_code_override": "None. Current-main XRes=0.5 s and release-worker=1.5 s budgets unchanged.",
+  "hypothesis": "R08 global-auto-repeat-off still produced five old-task A effects. Disabling the A key's per-key repeat bit should prevent the repeated A effects if they are server autorepeat; if effects remain, classify the source as unresolved rather than attributing it.",
+  "decision_rule": "Exactly one normal and one optimized attempt, no retries. Record test and task oracles separately, verify global_auto_repeat remains enabled and A's per-key bit is off before each caller attempt, then retain release/readback, late event, fresh task, and cleanup results. Altered Xvfb keyboard state is mechanism diagnosis only, not product acceptance.",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "limits": "Synthetic Xvfb only; not live GUI/provider, MAP01, matched efficiency, reliability rate, preview graduation, or distribution acceptance."
+}

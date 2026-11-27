@@ -1,0 +1,1 @@
+S09 local WSLc harness build: dotnet restore harness/S09.csproj --ignore-failed-sources PASS; dotnet build harness/S09.csproj --no-restore --configuration Release --output C:\wslc-s09-92f2f01f\bin PASS, 0 warnings/errors. Native DLL output path is 60 characters. Both completed before any S09 WSLc session.

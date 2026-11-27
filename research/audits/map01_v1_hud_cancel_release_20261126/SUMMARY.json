@@ -1,0 +1,88 @@
+{
+  "schema": "map01-v1-hud-cancel-release-public-v1",
+  "source_revision": "79b8d36aa026475a8b0c09b195fa8343ac787fa9",
+  "disposition": "PASS_SCOPED_DISPLAYED_HUD_DROP_CANCEL_RELEASE",
+  "conditions": {
+    "formal_trials": 1,
+    "fixture": "map01-threat-contact-v1",
+    "map": "MAP01",
+    "skill": 1,
+    "seed": 26011261,
+    "engine_episode_limit_seconds": 75,
+    "input": "Up",
+    "maximum_hold_seconds": 4.5,
+    "fire_commands": 0,
+    "damage_injection": false,
+    "provider_calls": 0,
+    "model_calls": 0
+  },
+  "clock_gate": {
+    "post_load_neutral_one_tic_refresh_calls": 4,
+    "immediate_pair_delta_tics": 1,
+    "waited_pair_delta_tics": 71
+  },
+  "screen": {
+    "controller_frames": 11,
+    "controller_trigger_sequence": 11,
+    "controller_hud_health": [
+      100,
+      97
+    ],
+    "passive_frames": 22,
+    "passive_frame_indices": [
+      16,
+      17,
+      18
+    ],
+    "passive_displayed_health": [
+      100,
+      97,
+      100
+    ],
+    "ammunition_all_frames": 50
+  },
+  "input": {
+    "accepted_programs": 1,
+    "input_admissions": 1,
+    "cancel_commands": 1,
+    "cancel_matched": true,
+    "keycode": 111,
+    "key_down_before_release": true,
+    "key_down_after_release": false,
+    "owner_verified_neutral": true,
+    "release_published_before_terminal": true,
+    "terminal": "cancelled",
+    "capture_to_verified_neutral_ms": 53.977102,
+    "cancel_request_to_verified_neutral_ms": 3.507007
+  },
+  "independent_scorer": {
+    "samples": 40,
+    "map_exit": false,
+    "player_dead": false,
+    "kill_count": 0,
+    "death_count": 0,
+    "engine_health": "NOT_MEASURED",
+    "attack_source": "UNVERIFIED",
+    "reason_for_display_return_to_100": "UNRESOLVED"
+  },
+  "retirement": {
+    "verified_process_roles": [
+      "game",
+      "input_owner",
+      "window_manager",
+      "Xvfb"
+    ],
+    "cgroup_gone": true,
+    "display_lock_absent": true,
+    "passive_witness_joined": true,
+    "runner_exit_code": 0,
+    "service_exit_code": 0
+  },
+  "integrity": {
+    "registration_sha256": "e65b5fb46576fc667cdbc5aeb057a3ab4bfbff32baafcc21bd79f74e0332e66e",
+    "raw_manifest_sha256": "df6f56a2210a077760a01531549ad6e5b6767cab01a44e7e7d6e9785c776b4c0",
+    "raw_manifest_entries": 2376,
+    "hud_review_manifest_sha256": "d5026c9942c40c3fd4302cdec1f66199d4a5cb67c7f244cec307ab62ea9bcbd6",
+    "hud_review_manifest_entries": 2
+  }
+}

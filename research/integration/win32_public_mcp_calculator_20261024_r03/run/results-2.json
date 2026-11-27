@@ -1,0 +1,184 @@
+{
+  "blocks": [
+    {
+      "sha256": "1472390b2638c7f1f3e01a4c1f1c0c08de192e6d738bda0947c92b184f2f9a18",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "parsed": {
+    "action": {
+      "metadata": {
+        "program_id": "win32-calculator-r01-314-plus-728",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "c2f50de2130f47009e9a1919ab972c8b",
+      "result": null,
+      "status": "running",
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+    },
+    "call_id": "228cbc0a86444f349f85ba7e2141db56",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 500533843000000,
+        "lease_id": "5741b24fe53740918580c38d6ccfc963"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "calculator"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 248,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 429
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 328,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 375
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 168,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 168,
+          "y": 375
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 328,
+          "y": 536
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "win32-calculator-r01-314-plus-728",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "raw_text": "{\"call_id\": \"228cbc0a86444f349f85ba7e2141db56\", \"action\": {\"operation_id\": \"c2f50de2130f47009e9a1919ab972c8b\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"running\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"win32-calculator-r01-314-plus-728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"win32-calculator-r01-314-plus-728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"5741b24fe53740918580c38d6ccfc963\", \"expires_at_ns\": 500533843000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+}

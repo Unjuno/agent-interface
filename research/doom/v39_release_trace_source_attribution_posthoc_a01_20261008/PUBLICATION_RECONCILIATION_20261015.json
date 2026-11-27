@@ -1,0 +1,33 @@
+{
+  "schema": "frozen-source-publication-reconciliation-v1",
+  "baseline_main": "4062116ea4d70f1904cdea9669c8c2226acd7b9d",
+  "reason": "A later *.py text attribute overrode the frozen bundle -text rule and normalized three source blobs.",
+  "files": [
+    {
+      "path": "doom/session_map01_v12.py",
+      "source_commit": "d5fb50e11f35b52c3d2a861b73dd8f12c2b4b7cf",
+      "source_path": "research/doom/session_map01_v12.py",
+      "prior_published_sha256": "82b94eb3b6363ccfdb086b926b66820ccaf1eaa57a03722cd9bc7239b6a488ec",
+      "restored_sha256": "92658baccea4c412196ecfa613a5f8ef8e6d0fb674762bcde5968222c31aba7f",
+      "restored_bytes": 19291
+    },
+    {
+      "path": "live_control/input_owner_v10.py",
+      "source_commit": "6149fc1856ce86de41b168de8ca12690347f524d",
+      "source_path": "research/live_control/input_owner_v10.py",
+      "prior_published_sha256": "ec4d6969d4c0cae2ee0a2989455a2fe87f930d90aeb3451afd3450c7c85e9718",
+      "restored_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "restored_bytes": 19041
+    },
+    {
+      "path": "live_control/input_owner_v5.py",
+      "source_commit": "6149fc1856ce86de41b168de8ca12690347f524d",
+      "source_path": "research/live_control/input_owner_v5.py",
+      "prior_published_sha256": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+      "restored_sha256": "ee72de489aa8da2f5276ab44927c5c13df777336dd3a8b88b1a77be53e6e2ea7",
+      "restored_bytes": 15093
+    }
+  ],
+  "freeze_and_original_results_changed": false,
+  "scientific_status": "Publication byte repair only; no live run or scientific promotion."
+}

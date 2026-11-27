@@ -1,0 +1,395 @@
+"""Drive the real V39 pending-cover loop with fake protocol events."""
+import ast
+import json
+import os
+import select
+import sys
+import threading
+import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
+
+HERE = Path(__file__).resolve().parent
+sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
+import map01_overlap_controller_v39 as controller
+
+RENEWED = "cover-0-renew-1"
+
+
+def pending_cover_loop(cycle_limit=None):
+    source = Path(controller.__file__)
+    tree = ast.parse(source.read_bytes(), filename=str(source))
+    main = next(node for node in tree.body
+                if isinstance(node, ast.FunctionDef) and node.name == "main")
+    loop = next(node for node in ast.walk(main)
+                if isinstance(node, ast.While) and ast.unparse(node.test) == "not future.done()"
+                and any(isinstance(child, ast.Name) and child.id == "next_cover"
+                        for child in ast.walk(node)))
+    module = ast.parse("""
+def run(future, wait, submit_cover, invalidation_monitor, planner, process,
+        recover_cover_owner, out=None):
+    current_cover = "cover-0"
+    current_cover_accepted = {"event": "accepted", "id": "cover-0"}
+    current_cover_source = {}
+    all_events, latest, cover_steps = [], {}, []
+    source_at_probe = {}
+    current_terminal = invalidation = planner_interrupt = None
+    cover_ids = [current_cover]
+    cover_terminals = []
+    cover_renewal_gaps_ms = []
+    index = 0
+    planner_handle = "pending-turn"
+    failure_cleanup = SimpleNamespace(set_stage=lambda stage: None)
+    args = SimpleNamespace(out=out, _cycle_max_submissions=configured_cycle_limit)
+    return invalidation, current_terminal, cover_terminals, planner_interrupt
+""")
+    module.body[0].body.insert(-1, loop)
+    namespace = {**vars(controller), "SimpleNamespace": SimpleNamespace,
+                 "configured_cycle_limit": cycle_limit}
+    exec(compile(ast.fix_missing_locations(module), str(source), "exec"), namespace)
+    return namespace["run"]
+
+
+def terminal(cover, *, status, stamp):
+    return {"event": "terminal", "id": cover, "status": status, "terminal_ns": stamp,
+            "release": {"event": "owner_release", "verified": True, "keys_down": [], "buttons_down": [],
+                        "keys_unknown": [], "key_state_errors": []}}
+
+
+class RenewalObservationTests(unittest.TestCase):
+    def test_cycle_budget_exhaustion_holds_before_probe_or_renewal(self):
+        old = terminal("cover-0", status="completed", stamp=100)
+        future = SimpleNamespace(done=Mock(return_value=False))
+        planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
+                                  abort_pending_turn=Mock(return_value={"outcome": "aborted"}))
+        submit = Mock()
+        with TemporaryDirectory() as temporary, patch.object(controller, "qualify_cycle_terminal") as qualify:
+            with self.assertRaises(controller.CoverCycleBudgetExhausted):
+                pending_cover_loop(cycle_limit=1)(future, lambda *a, **k: old, submit,
+                    SimpleNamespace(), planner, SimpleNamespace(), Mock(), out=temporary)
+            qualify.assert_called_once()
+        submit.assert_not_called()
+        planner.invalidate_turn.assert_called_once()
+        planner.abort_pending_turn.assert_called_once()
+
+    def test_cycle_renewal_rejection_is_recorded_and_never_retried(self):
+        old = terminal("cover-0", status="completed", stamp=100)
+        future = SimpleNamespace(done=Mock(return_value=False))
+        planner = SimpleNamespace(invalidate_turn=Mock(), abort_pending_turn=Mock())
+        rejected = {"event": "rejected", "id": RENEWED}
+        submit = Mock(return_value=rejected)
+        with TemporaryDirectory() as temporary, patch.object(controller, "qualify_cycle_terminal"):
+            with self.assertRaises(controller.CoverCycleBudgetExhausted) as caught:
+                pending_cover_loop(cycle_limit=2)(future, lambda *a, **k: old, submit,
+                    SimpleNamespace(), planner, SimpleNamespace(), Mock(), out=temporary)
+        self.assertEqual(caught.exception.cycle_budget_receipt["renewal_submit"], "rejected")
+        self.assertEqual(caught.exception.cycle_budget_receipt["renewal_response"], rejected)
+        submit.assert_called_once()
+
+    def run_renewal(self, result, *, followup_error=None):
+        observation = {"event": "typed_observation", "sequence": 8}
+        followup = {"event": "typed_observation", "sequence": 9}
+        old = terminal("cover-0", status="completed", stamp=100)
+        retired = terminal(RENEWED, status="cancelled", stamp=300)
+        waiting = iter((old, retired))
+        commands = []
+
+        def wait(predicate, **options):
+            row = next(waiting)
+            self.assertTrue(predicate(row))
+            if row is retired:
+                self.assertEqual(options["timeout"], 40)
+                self.assertTrue(select.select([reader], [], [], 0.25)[0])
+                commands.append(json.loads(messages.readline()))
+                planner.invalidate_turn.assert_called_once_with("pending-turn")
+                planner.interrupt.assert_not_called()
+            return row
+
+        def submit(identifier, consumed_events=None, *, renewal=False):
+            self.assertEqual(identifier, RENEWED)
+            self.assertTrue(renewal)
+            if consumed_events is not None:
+                consumed_events.append(observation)
+                if followup_error is not None:
+                    consumed_events.append(followup)
+            return {"event": "accepted", "id": identifier, "accepted_ns": 200}
+
+        future = SimpleNamespace(done=Mock(side_effect=(False, False, True)))
+        observer = SimpleNamespace(event_types={"typed_observation"}, observe=Mock())
+        if followup_error is not None:
+            observer.observe.side_effect = (result, followup_error)
+        elif isinstance(result, Exception):
+            observer.observe.side_effect = result
+        else:
+            observer.observe.return_value = result
+        planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
+                                  interrupt=Mock(return_value={"outcome": "interrupted"}))
+        recovery = Mock()
+        reader, writer = os.pipe()
+        with os.fdopen(reader, "r") as messages, os.fdopen(writer, "w") as stream:
+            process = SimpleNamespace(stdin=stream)
+            settled = pending_cover_loop()(future, wait, submit, observer, planner, process, recovery)
+            self.assertFalse(select.select([reader], [], [], 0)[0])
+        if followup_error is None:
+            observer.observe.assert_called_once_with(observation)
+        else:
+            self.assertEqual([call.args[0] for call in observer.observe.call_args_list], [observation, followup])
+        return settled, commands, planner, recovery
+
+    def test_hard_invalidation_consumed_before_ack_cancels_exact_renewal(self):
+        invalidation = {"reason": "health_below_floor", "requires_new_decision": True}
+        result, commands, planner, recovery = self.run_renewal(invalidation)
+        evidence, final_terminal, all_terminals, interrupt = result
+        self.assertEqual(evidence, invalidation)
+        self.assertEqual(commands, [{"op": "cancel", "id": RENEWED}])
+        self.assertEqual([row["id"] for row in all_terminals], ["cover-0", RENEWED])
+        self.assertEqual(final_terminal["status"], "cancelled")
+        self.assertEqual(interrupt["outcome"], "interrupted")
+        planner.invalidate_turn.assert_called_once_with("pending-turn")
+        planner.interrupt.assert_called_once_with("pending-turn")
+        recovery.assert_called_once_with(final_terminal, "policy_invalidated_cover")
+
+    def test_benign_renewal_ack_observation_does_not_cancel(self):
+        (invalidation, terminal_row, _, interrupt), commands, planner, recovery = self.run_renewal(None)
+        self.assertIsNone(invalidation)
+        self.assertIsNone(terminal_row)
+        self.assertIsNone(interrupt)
+        self.assertEqual(commands, [])
+        planner.invalidate_turn.assert_not_called()
+        recovery.assert_not_called()
+
+    def test_unreadable_renewal_ack_observation_cancels_and_invalidates_planner(self):
+        result, commands, planner, _ = self.run_renewal(ValueError("invalid synthetic signal"))
+        self.assertEqual(result[0]["reason"], "renewal_observation_unverified")
+        self.assertTrue(result[0]["requires_new_decision"])
+        self.assertEqual(commands, [{"op": "cancel", "id": RENEWED}])
+        planner.invalidate_turn.assert_called_once_with("pending-turn")
+
+    def test_later_reader_error_does_not_replace_observed_hard_reason(self):
+        hard = {"reason": "health_below_floor", "requires_new_decision": True}
+        result, commands, planner, _ = self.run_renewal(hard, followup_error=ValueError("late unreadable frame"))
+        self.assertEqual(result[0], {**hard, "observation_error_type": "ValueError"})
+        self.assertEqual(commands, [{"op": "cancel", "id": RENEWED}])
+        planner.invalidate_turn.assert_called_once_with("pending-turn")
+
+    def test_uncertain_ack_attempts_owned_cancel_and_aborts_planner(self):
+        timeout = TimeoutError("renewal ACK missing")
+        accepted = {"event": "accepted", "id": RENEWED, "intent_token": "renewed-lease"}
+        reverse_time = {**accepted, "accepted_ns": 99}
+        future_time = {**accepted, "accepted_ns": 10**30}
+        nonfinite_time = {**accepted, "accepted_ns": float("nan")}
+        for response, terminal_kind in ((timeout, "missing"), (accepted, "released"),
+                                        (timeout, "no_ack"), (timeout, "late_ack"), (timeout, "early_release"),
+                                        (reverse_time, "not_empty"),
+                                        (future_time, "released"), (accepted, "wrong_token"),
+                                        (nonfinite_time, "malformed_ack")):
+            with self.subTest(response=response), TemporaryDirectory() as directory:
+                old = terminal("cover-0", status="completed", stamp=100)
+                ending = terminal(RENEWED, status="cancelled", stamp=300)
+                ending["release"]["intent_token"] = "renewed-lease"
+                if terminal_kind == "wrong_token":
+                    ending["release"]["intent_token"] = "other-lease"
+                if terminal_kind == "not_empty":
+                    ending["release"]["keys_unknown"] = ["Up"]
+                planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
+                                          abort_pending_turn=Mock(return_value={"outcome": "aborted"}))
+                recover = Mock()
+                reader, writer = os.pipe()
+                cancellations = []
+                with os.fdopen(reader, "r") as messages, os.fdopen(writer, "w") as stream:
+                    def wait(predicate, **options):
+                        if predicate(old):
+                            return old
+                        self.assertTrue(predicate(ending))
+                        self.assertEqual(options["timeout"], controller.COVER_RENEWAL_IO_SECONDS)
+                        planner.invalidate_turn.assert_called_once_with("pending-turn")
+                        self.assertTrue(select.select([reader], [], [], 0.25)[0])
+                        cancellations.append(json.loads(messages.readline()))
+                        if terminal_kind == "missing":
+                            raise TimeoutError("renewal terminal missing")
+                        if terminal_kind in {"late_ack", "early_release"}:
+                            admission = {"event": "input_admission", "id": RENEWED,
+                                         "intent_token": "renewed-lease"}
+                            released = {"event": "input_released", "id": RENEWED,
+                                        "intent_token": "renewed-lease",
+                                        "owner_release": dict(ending["release"])}
+                            activity = (admission, released) if terminal_kind == "late_ack" else (released, admission)
+                            options["consumed_events"].extend([{**accepted, "accepted_ns": 200}, *activity])
+                            ending["release"]["intent_token"] = None
+                        return ending
+
+                    def submit(identifier, consumed_events, *, renewal):
+                        self.assertTrue(renewal)
+                        self.assertEqual(identifier, RENEWED)
+                        if isinstance(response, Exception):
+                            raise response
+                        return response
+
+                    future = SimpleNamespace(done=Mock(side_effect=(False, False)))
+                    cause = TimeoutError if response is timeout else ValueError
+                    with self.assertRaises(cause) as raised:
+                        pending_cover_loop()(future, wait, submit, None, planner,
+                                             SimpleNamespace(stdin=stream), recover, Path(directory))
+                if response is timeout:
+                    self.assertIs(raised.exception, timeout)
+                payload = (Path(directory) / "cover-renewal-unverified.json").read_text()
+                receipt = controller.load_controller_event(payload)
+                self.assertEqual(raised.exception.cover_renewal_receipt, receipt)
+                if terminal_kind == "malformed_ack":
+                    self.assertIs(receipt["ack"]["invalid_json"], True)
+                self.assertEqual(receipt["id"], RENEWED)
+                self.assertEqual(cancellations, [{"op": "cancel", "id": RENEWED}])
+                self.assertEqual(receipt["admission"], "UNKNOWN")
+                verified = terminal_kind in {"released", "late_ack"}
+                self.assertEqual(receipt["verified_empty_release"], verified)
+                self.assertEqual(receipt["input_recovery_required"], not verified)
+                self.assertEqual(receipt.get("verified_release_intent_token"), "renewed-lease" if verified else None)
+                self.assertIs(receipt["grants_input_authority"], False)
+                planner.abort_pending_turn.assert_called_once_with()
+                recover.assert_not_called()
+
+    def test_uncertain_renewal_reaches_outer_cleanup_without_joining(self):
+        pool = Mock()
+        error = TimeoutError("renewal ACK did not arrive")
+        error.cover_renewal_receipt = {"admission": "UNKNOWN", "planner_abort_error": "TimeoutError"}
+        with patch.object(controller, "ThreadPoolExecutor", return_value=pool):
+            with self.assertRaises(TimeoutError) as raised:
+                with controller.pending_cover_planner_pool():
+                    raise error
+        self.assertIs(raised.exception, error)
+        pool.shutdown.assert_called_once_with(wait=False, cancel_futures=True)
+
+    def test_pool_shutdown_failure_keeps_primary_cover_exception(self):
+        for receipt_name in ("cover_renewal_receipt", "cover_cancellation_receipt"):
+            with self.subTest(receipt=receipt_name):
+                error = TimeoutError("cover outcome unknown")
+                setattr(error, receipt_name, {"input_recovery_required": True})
+                pool = Mock()
+                pool.shutdown.side_effect = OSError("pool shutdown failed")
+                with patch.object(controller, "ThreadPoolExecutor", return_value=pool):
+                    with self.assertRaises(TimeoutError) as observed:
+                        with controller.pending_cover_planner_pool():
+                            raise error
+                self.assertIs(observed.exception, error)
+                self.assertIn("planner waiter pool shutdown failed: OSError", error.__notes__)
+                pool.shutdown.assert_called_once_with(wait=False, cancel_futures=True)
+
+    def test_hard_invalidation_full_pipe_aborts_without_claiming_release(self):
+        reader, writer = os.pipe()
+        planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
+                                  interrupt=Mock(), close=Mock(return_value=None),
+                                  abort_pending_turn=Mock(side_effect=OSError("abort failed")))
+        done = threading.Event()
+        waiter_started, release_waiter = threading.Event(), threading.Event()
+        waiter_futures = []
+        primary_failures, failures = [], []
+
+        def await_planner():
+            waiter_started.set()
+            release_waiter.wait()
+
+        with os.fdopen(reader, "rb", buffering=0) as drained, os.fdopen(writer, "w") as stream, \
+             TemporaryDirectory() as directory:
+            os.set_blocking(writer, False)
+            chunk = b"x" * os.fpathconf(writer, "PC_PIPE_BUF")
+            filled = 0
+            while True:
+                try:
+                    filled += os.write(writer, chunk)
+                except BlockingIOError:
+                    break
+            os.set_blocking(writer, True)
+            self.assertGreater(filled, 0)
+
+            def wait(predicate, *, timeout):
+                self.assertEqual(timeout, controller.COVER_RENEWAL_IO_SECONDS)
+                self.assertTrue(predicate(terminal(RENEWED, status="cancelled", stamp=300)))
+                raise TimeoutError("fixture has no terminal")
+
+            def run_cancel():
+                try:
+                    with controller.ControllerFailureCleanup(planner, Path(directory)) as cleanup:
+                        cleanup.set_stage("policy_cancel")
+                        with controller.pending_cover_planner_pool() as pool:
+                            waiter_futures.append(pool.submit(await_planner))
+                            if not waiter_started.wait(1):
+                                raise TimeoutError("planner waiter did not start")
+                            try:
+                                controller.cancel_invalidated_cover(
+                                    planner, "pending-turn", SimpleNamespace(stdin=stream), wait, RENEWED,
+                                    failure_root=directory)
+                            except BaseException as primary:
+                                primary_failures.append(primary)
+                                raise
+                except BaseException as error:
+                    failures.append(error)
+                finally:
+                    done.set()
+
+            worker = threading.Thread(target=run_cancel, daemon=True)
+            worker.start()
+            try:
+                self.assertTrue(done.wait(controller.COVER_RENEWAL_IO_SECONDS + 1),
+                                "failed cancellation did not reach outer cleanup with an active waiter")
+                self.assertTrue(waiter_started.is_set())
+                self.assertFalse(waiter_futures[0].done())
+                self.assertEqual(len(failures), 1)
+                self.assertIs(failures[0], primary_failures[0])
+                self.assertIn("planner transport abort failed: OSError", failures[0].__notes__)
+                self.assertIsInstance(failures[0], TimeoutError)
+                self.assertIn("pipe did not become writable", str(failures[0]))
+                receipt = controller.load_controller_event(
+                    (Path(directory) / "cover-cancel-failure.json").read_text())
+                self.assertEqual(receipt, failures[0].cover_cancellation_receipt)
+                self.assertEqual(receipt["id"], RENEWED)
+                self.assertIsNone(receipt["terminal"])
+                self.assertEqual(receipt["physical_input_state"], "unverified")
+                self.assertTrue(receipt["input_recovery_required"])
+                self.assertFalse(receipt["grants_input_authority"])
+                self.assertTrue(os.get_blocking(writer))
+                global_receipt = controller.load_controller_event(
+                    (Path(directory) / "controller-failure.json").read_text())
+                self.assertEqual(global_receipt["primary_error_type"], "TimeoutError")
+                self.assertEqual(global_receipt["failed_stage"], "policy_cancel")
+                self.assertFalse(global_receipt["input_releases_verified_empty"])
+                self.assertFalse(global_receipt["cleanup_complete"])
+            finally:
+                release_waiter.set()
+                drained_bytes = drained.read(filled)
+                worker.join(1)
+                for future in waiter_futures:
+                    future.result(timeout=1)
+            self.assertFalse(worker.is_alive())
+            self.assertEqual(drained_bytes, b"x" * filled)
+            self.assertFalse(select.select([reader], [], [], 0)[0])
+        planner.invalidate_turn.assert_called_once_with("pending-turn")
+        planner.abort_pending_turn.assert_called_once_with()
+        planner.close.assert_called_once_with(timeout=1)
+        planner.interrupt.assert_not_called()
+
+    def test_full_renewal_pipe_times_out_and_restores_blocking_mode(self):
+        reader, writer = os.pipe()
+        with os.fdopen(reader, "rb"), os.fdopen(writer, "w") as stream:
+            os.set_blocking(writer, False)
+            chunk = b"x" * os.fpathconf(writer, "PC_PIPE_BUF")
+            while True:
+                try:
+                    os.write(writer, chunk)
+                except BlockingIOError:
+                    break
+            os.set_blocking(writer, True)
+            with self.assertRaisesRegex(TimeoutError, "did not become writable"):
+                controller.send_bounded_cover_command(stream, {"op": "cancel", "id": RENEWED}, timeout=.01)
+            self.assertTrue(os.get_blocking(writer))
+
+    def test_late_pipe_readiness_does_not_write_after_deadline(self):
+        reader, writer = os.pipe()
+        with os.fdopen(reader, "rb"), os.fdopen(writer, "w") as stream:
+            with patch.object(controller.select, "select", return_value=([], [writer], [])), \
+                 patch.object(controller.time, "monotonic", side_effect=(0.0, 0.0, 2.1)):
+                with self.assertRaisesRegex(TimeoutError, "after its deadline"):
+                    controller.send_bounded_cover_command(stream, {"op": "cancel", "id": RENEWED})
+            self.assertEqual(select.select([reader], [], [], 0)[0], [])
+            self.assertTrue(os.get_blocking(writer))

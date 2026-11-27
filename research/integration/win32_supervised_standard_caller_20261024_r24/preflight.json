@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "frozen_commit": true,
+    "frozen_packet_hashes": true,
+    "frozen_source_hashes": true,
+    "native_windows": true,
+    "predecessor_current_blob_hash": true,
+    "predecessor_semantics": true,
+    "python_sources_compile": true,
+    "tracked_tree_clean": true
+  },
+  "frozen_packet_hashes": {
+    "PREPARATION.md": "f67718718a5fe5ffe3b874a8a6d593138731d85f8905c7337d11d76851766982",
+    "README.md": "d7f922e317b447718d08c91c56dd010b36d343dd0a9804a532095b096bf5e6be",
+    "audit.py": "183f0b06fc1991500daecea3c80333d126a575cab4669d7e41ebec22e1771f1e",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "eed0c6a29c6141d4ceee7819ee0332916d253938ed941334b13751686016a525",
+    "probe.py": "ae26beab7eec615622240eafedb7546f8a5e91d7679fa93730feeb4b0741f3c7"
+  },
+  "native_input_sent": false,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "predecessor_audit_status": "HYPOTHESIS_REJECTED_FAIL_CLOSED",
+  "predecessor_hash_integrity": {
+    "current_main_raw_sha256": "e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f",
+    "final_manifest_raw_sha256": "b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8",
+    "followup_audit_raw_sha256": "b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8",
+    "frozen_current_main_raw_sha256": "e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f",
+    "limitation": "The current-main raw blob and the identical raw in the retained predecessor branch hash to e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f. R23 SHA256SUMS.final and audit_followup.json instead claim b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8. Preserve R23 audit/outcome unchanged; R24 preflight independently checks semantic fields and records this integrity limitation.",
+    "raw_matches_followup_audit": false,
+    "raw_matches_manifest": false
+  },
+  "predecessor_raw_sha256": "e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f",
+  "predecessor_semantic_checks": {
+    "effect_and_owned_cleanup": true,
+    "independent_same_generation_q_up": true,
+    "producer_exit_and_post_callback_q_up": true,
+    "recovered_action_and_release": true,
+    "same_generation_continuation_refused_before_input": true
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "win32-supervised-standard-caller-r24-preflight-v1",
+  "source_commit": "de71908a580d9b79938031a4690c09912f17eacc",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "status": "PASS_WITH_RECORDED_PREDECESSOR_HASH_LIMITATION",
+  "tracked_tree_clean": true,
+  "utc": "2026-10-23T22:24:06.574160+00:00"
+}

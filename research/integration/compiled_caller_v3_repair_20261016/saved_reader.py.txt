@@ -1,0 +1,66 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-v3-handoff-final-v2-20261016'
+KEY='test_compiled_caller_handoff_v2.ROWS'
+def check(rows):
+    if len(rows)!=15:raise ValueError('row coverage')
+    for row in rows:
+        case=row['case'];r=row['result'];s=row['state'];core=r['compiled_execution_receipt'];publication=case in ('sink_failure','sink_release')
+        if publication != (r['compiled_receipt_publication_error'] is not None):raise ValueError('lost/invented publication error')
+        if publication and (r['compiled_receipt_publication_error']['type']!='OSError' or 'inert receipt sink failure' not in r['compiled_receipt_publication_error']['error']):raise ValueError('original sink failure')
+        if case=='execute_throws':
+            if core is not None or r['execution_progress'] is not None or r['delivery']!='delivery_uncertain' or s['verify'] or s['sink'] or len(s['execute'])!=2:raise ValueError('unreturned receipt')
+            continue
+        if len(row['raw'])!=1 or core!=row['raw'][0]:raise ValueError('receipt mutation/loss')
+        prefix=0 if case in ('release_first','preinput_refusal','admission_refused','unknown_delivery') else 1 if case in ('release_second','sink_release') else 2
+        if core['completed_transitions']!=prefix:raise ValueError('compiled prefix')
+        if case in ('release_first','release_second','sink_release'):
+            progress={'status':'safe_yield','reason':'execution_failed','completed_actions':prefix,'input_dispatched':True};delivery='delivery_uncertain';outcome='CALLER_FAILED' if publication else 'EXECUTION_INCOMPLETE';verify=0
+            if core['outcome']!='RUNTIME_FAILED':raise ValueError('release false success')
+        elif case in ('preinput_refusal','admission_refused'):
+            progress={'status':'safe_yield','reason':'execution_refused' if case=='preinput_refusal' else 'missing_symbol','completed_actions':0,'input_dispatched':False};delivery='not_attempted';outcome='EXECUTION_INCOMPLETE';verify=0
+            if r['input_authority']!='none':raise ValueError('false input authority')
+        elif case=='unknown_delivery':
+            progress={'status':'safe_yield','reason':'execution_failed','completed_actions':0};delivery='delivery_uncertain';outcome='EXECUTION_INCOMPLETE';verify=0
+        else:
+            progress={'status':'completed'};delivery='confirmed';outcome='CALLER_FAILED' if publication else 'TASK_SUCCEEDED' if row['effect']=='succeeded' else 'TASK_NOT_VERIFIED';verify=int(not publication)
+        if r['execution_progress']!=progress or r['delivery']!=delivery:raise ValueError('lost progress/delivery')
+        if r['outcome']!=outcome or s['verify']!=verify:raise ValueError('effect entry/outcome')
+        if r['task_effect']!=(row['effect'] if verify else None):raise ValueError('false effect')
+        if case=='promoted_target' and (s['admitted_references']!=['new-field','new-submit'] or s['bindings'][0]['target']!=r['selected_target']):raise ValueError('stale target binding')
+        a=r['accounting']
+        if 'model_results' in row:
+            model,=row['model_results']
+            if a['attempted_calls']!=1 or a['completed_calls']!=1 or a['usage_totals']!=model['usage'] or model['usage']['input_tokens']!=100 or model['usage']['cached_input_tokens']!=20 or r['attempt_ledger'][0]['call_id']!=model['call_id']:raise ValueError('joined model accounting')
+            if s['admitted_references']!=['field-100-200','submit-500-300'] or r['task_effect']!='unavailable':raise ValueError('joined target/effect')
+        elif a['attempted_calls']!=0:raise ValueError('unexpected model')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY]
+    result=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (result['methods'],result['failures'],result['errors'],result['skipped'],len(set(result['selected'])))!=(223,0,0,0,223):raise ValueError('suite result')
+    count=check(rows);mutations=[]
+    for name in ('lost_prefix','false_neutrality','lost_sink_error','stale_target','false_task_success','lost_joined_usage'):
+        bad=copy.deepcopy(rows)
+        if name=='lost_prefix':next(v for v in bad if v['case']=='release_second')['result']['execution_progress']['completed_actions']=0
+        elif name=='false_neutrality':next(v for v in bad if v['case']=='release_second')['result']['delivery']='confirmed_partial'
+        elif name=='lost_sink_error':next(v for v in bad if v['case']=='sink_failure')['result']['compiled_receipt_publication_error']=None
+        elif name=='stale_target':next(v for v in bad if v['case']=='promoted_target')['state']['admitted_references']=['field','submit']
+        elif name=='false_task_success':next(v for v in bad if v['effect']=='unavailable')['result']['outcome']='TASK_SUCCEEDED'
+        else:next(v for v in bad if 'model_results' in v)['result']['accounting']['usage_totals']['input_tokens']=0
+        try:check(bad)
+        except ValueError as e:mutations.append(dict(name=name,rejected=str(e)))
+        else:raise ValueError('mutation accepted')
+    controls={}
+    for control,methods,failures in [('legacy',14,15),('no_capture',14,5),('stale_builder',1,1)]:
+        meta=json.loads((OUT/f'{control}-{mode}-result.json').read_text());records=json.loads((OUT/f'{control}-{mode}-records.json').read_text())
+        if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'])!=(methods,failures,0,0):raise ValueError('control summary')
+        if control=='legacy':
+            if next(v for v in records if v['effect']=='unavailable')['result']['execution_progress'] is not None:raise ValueError('legacy counterexample missing')
+        elif control=='no_capture':
+            if next(v for v in records if v['case']=='sink_failure')['result']['execution_progress'] is not None:raise ValueError('capture counterexample missing')
+        elif records[0]['state']['admitted_references']!=['field','submit']:raise ValueError('stale target counterexample missing')
+        controls[control]=dict(methods=methods,assertion_failures=failures,errors=0)
+    report[mode]=dict(methods=223,new_rows=count,mutations=mutations,controls=controls)
+print(json.dumps(dict(scope='saved-only receipt/target/accounting consistency under inert adapters; no app/provider qualification',modes=report),indent=2))

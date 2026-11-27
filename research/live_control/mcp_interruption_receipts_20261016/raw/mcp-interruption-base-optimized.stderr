@@ -1,0 +1,136 @@
+test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered) ... 
+  test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered) (exception='KeyboardInterrupt') ... FAIL
+  test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered) (exception='SystemExit') ... FAIL
+test_previous_execution_is_not_attached_to_stop_before_dispatch (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_previous_execution_is_not_attached_to_stop_before_dispatch) ... FAIL
+test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) ... 
+  test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=False, persistence_error='OSError') ... FAIL
+  test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=False, persistence_error='SystemExit') ... FAIL
+  test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='OSError') ... FAIL
+  test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='SystemExit') ... FAIL
+test_stop_after_report_preserves_original_report_and_does_not_borrow_old_snapshot (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_stop_after_report_preserves_original_report_and_does_not_borrow_old_snapshot) ... FAIL
+test_worker_stop_retains_current_execution_and_lookup_never_replays (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_worker_stop_retains_current_execution_and_lookup_never_replays) ... FAIL
+
+======================================================================
+FAIL: test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered) (exception='KeyboardInterrupt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 68, in test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered
+    self.assertEqual(row['status'], 'runtime_interrupted', row)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'receipt_unavailable' != 'runtime_interrupted'
+- receipt_unavailable
++ runtime_interrupted
+ : {'status': 'receipt_unavailable', 'call': {'call_id': 'b429abe61a8d400e90b8a2a0d97e9ba3', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None, 'response_wait_ms': 0}, 'error': "FileNotFoundError(2, 'No such file or directory')", 'operation_invoked': False, 'replay_allowed': False}
+
+======================================================================
+FAIL: test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered) (exception='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 68, in test_pending_fatal_worker_stop_can_be_retrieved_and_explicitly_recovered
+    self.assertEqual(row['status'], 'runtime_interrupted', row)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'receipt_unavailable' != 'runtime_interrupted'
+- receipt_unavailable
++ runtime_interrupted
+ : {'status': 'receipt_unavailable', 'call': {'call_id': 'f5d648f4c5f3483b9aad5896c0251243', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None, 'response_wait_ms': 0}, 'error': "FileNotFoundError(2, 'No such file or directory')", 'operation_invoked': False, 'replay_allowed': False}
+
+======================================================================
+FAIL: test_previous_execution_is_not_attached_to_stop_before_dispatch (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_previous_execution_is_not_attached_to_stop_before_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 126, in test_previous_execution_is_not_attached_to_stop_before_dispatch
+    self.assertEqual(row['status'], 'runtime_interrupted', row)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'receipt_unavailable' != 'runtime_interrupted'
+- receipt_unavailable
++ runtime_interrupted
+ : {'status': 'receipt_unavailable', 'call': {'call_id': 'e3c208a0a0a64c1894eb661a2cd46775', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None}, 'error': "FileNotFoundError(2, 'No such file or directory')", 'operation_invoked': False, 'replay_allowed': False}
+
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=False, persistence_error='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 154, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertIn('interruption_persistence_failure', row['call'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'interruption_persistence_failure' not found in {'call_id': '505baf1b5c664e6482ab7452f48e28b9', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None}
+
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=False, persistence_error='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 154, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertIn('interruption_persistence_failure', row['call'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'interruption_persistence_failure' not found in {'call_id': '05ed960bd7ae4735bf01f791389ec5fa', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None}
+
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 153, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertEqual(row['status'], 'receipt_unavailable')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'receipt_unavailable'
+- completed
++ receipt_unavailable
+
+
+======================================================================
+FAIL: test_receipt_failure_preserves_stop_and_exposes_unavailability (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_receipt_failure_preserves_stop_and_exposes_unavailability) (after_report=True, persistence_error='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 153, in test_receipt_failure_preserves_stop_and_exposes_unavailability
+    self.assertEqual(row['status'], 'receipt_unavailable')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'receipt_unavailable'
+- completed
++ receipt_unavailable
+
+
+======================================================================
+FAIL: test_stop_after_report_preserves_original_report_and_does_not_borrow_old_snapshot (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_stop_after_report_preserves_original_report_and_does_not_borrow_old_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 174, in test_stop_after_report_preserves_original_report_and_does_not_borrow_old_snapshot
+    self.assertEqual(row['status'], 'runtime_interrupted', row)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'runtime_interrupted'
+- completed
++ runtime_interrupted
+ : {'operation': 'guarded_input', 'task_success': None, 'replay_allowed': False, 'status': 'completed', 'result': {'status': 'completed', 'admission': 'accepted', 'required_capabilities': ['input.keyboard', 'input.release_all', 'window.focus'], 'execution': {'started_ns': 331494012435300, 'ended_ns': 331494012507000, 'emissions': 4, 'program_emissions': 4, 'observations': [], 'releases': [{'keys_down': [], 'buttons_down': [], 'verified': True, 'monotonic_ns': 331494012506200}], 'waits': [], 'activations': [], 'completed_ops': [0, 1, 2]}, 'recovery_required': False, 'guard_checks': [{'stage': 'before_admission', 'observation_sequence': 2, 'eligible': True, 'status': 'VALID', 'handle': 'field', 'authority': 'resolution only; ordinary admission remains required', 'reason': 'exact_region_match', 'name': 'field', 'point': [8, 8], 'observed_box': [2, 2, 12, 12], 'binding_translation': [0, 0], 'local_translation': [0, 0], 'sequence': 2, 'valid_until_ns': 331495511500600, 'patch_sha256': '7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df', 'reference_kind': 'session_alias', 'private_registry_id_exposed': False}]}, 'feedback_status': 'not_requested', 'session': {'session_id': '03eef95eb8664f64abefc60e54596aa9', 'mode': 'guarded-x11', 'state': 'open', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': False, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': False, 'query_worker': False, 'observation_worker': False, 'window_lifecycle': False, 'observations': None, 'target_queries': None, 'target': 'app', 'observation_sequence': 2, 'review_required': False}, 'call_id': 'c58c3389304245e3935cb63a44cd2f69', 'call_directory': 'D:\\CodexData\\Temp\\tmpo3qsrk0m\\c58c3389304245e3935cb63a44cd2f69', 'retained_call': {'call_id': 'c58c3389304245e3935cb63a44cd2f69', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None}, 'operation_invoked': False}
+
+======================================================================
+FAIL: test_worker_stop_retains_current_execution_and_lookup_never_replays (runtime.cli_v1.test_mcp_interruption_receipt.InterruptionReceiptTests.test_worker_stop_retains_current_execution_and_lookup_never_replays)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_interruption_receipt.py", line 104, in test_worker_stop_retains_current_execution_and_lookup_never_replays
+    self.assertEqual(row['status'], 'runtime_interrupted', row)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'receipt_unavailable' != 'runtime_interrupted'
+- receipt_unavailable
++ runtime_interrupted
+ : {'status': 'receipt_unavailable', 'call': {'call_id': '044d6b149cf54754bb9f5f7d7137417f', 'operation': 'guarded_input', 'state': 'finished', 'arguments': {'alias': 'field', 'offset': [6, 6], 'tail': [{'op': 'key_chord', 'keys': ['CTRL', 'a']}], 'interaction': 'keyboard', 'observe_after': False}, 'backend_attempted': True, 'persistence_failure': None}, 'error': "FileNotFoundError(2, 'No such file or directory')", 'operation_invoked': False, 'replay_allowed': False}
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.381s
+
+FAILED (failures=9)

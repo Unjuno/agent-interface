@@ -1,0 +1,1075 @@
+{
+  "attempt_id": "win32-task-effect-timing-20261024-r38d-95f53e00e722477c8d8208abba20a793",
+  "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+  "cleanup": {
+    "finished_unix_ns": 1792807253663950900,
+    "fixture_exit_code": 0,
+    "foreground_after": {
+      "hwnd": 393882,
+      "is_window": true,
+      "title": "ChatGPT"
+    },
+    "foreground_before": {
+      "hwnd": 393882,
+      "is_window": true,
+      "title": "ChatGPT"
+    },
+    "foreground_restored": true
+  },
+  "ended_monotonic_ns": 498561015000000,
+  "fixture_pid": 5324,
+  "operation_id": "96909414031d414e93c2923fbe5305f5",
+  "started_monotonic_ns": 498547390000000,
+  "status": "PASS_SCOPED",
+  "steps": [
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\observe-0.json",
+          "sha256": "2f039429a1a0dc89b160a97c7419e350b875b422c4faeaa43b1f4dfd410bc725",
+          "type": "text"
+        },
+        {
+          "bytes": 1195,
+          "mimeType": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\observe-1.png",
+          "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+          "type": "image"
+        }
+      ],
+      "isError": false,
+      "name": "observation",
+      "parsed": {
+        "authority": "none",
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\server-receipts\\5ad6567ed7fd494ea06e9d525ab336f7",
+        "call_id": "5ad6567ed7fd494ea06e9d525ab336f7",
+        "image_reference": {
+          "authority": "none",
+          "capture_ns": 498549765000000,
+          "freshness": "historical referenced capture; no new observation",
+          "observation_id": "791c3fb7fc714364a1252534c49be4c7",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\server-receipts\\5ad6567ed7fd494ea06e9d525ab336f7\\images\\98adc7be6c3b4c539b4eabb5fa9b2afc.png",
+          "recorded_capture": {
+            "capture_ended_ns": 498549765000000,
+            "capture_started_ns": 498549765000000,
+            "frame": "window_client",
+            "height": 180,
+            "native_window_id": 16123204,
+            "region": [
+              0,
+              0,
+              400,
+              180
+            ],
+            "target": "fixture",
+            "width": 400
+          },
+          "relative_path": "images\\98adc7be6c3b4c539b4eabb5fa9b2afc.png",
+          "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+          "status": "image"
+        },
+        "image_status": "image",
+        "outcome_summary": {
+          "cleanup_error": null,
+          "error": null,
+          "failure_phase": null,
+          "reported_status": "returned"
+        },
+        "receipt": {
+          "authority": "none",
+          "events": [],
+          "latest_observations": [],
+          "motor_state_validation": {
+            "accepted": false,
+            "present": false,
+            "reason": "missing"
+          },
+          "omitted_from_view": 0,
+          "record_counts": {},
+          "report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1195,
+                "height": 180,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\server-receipts\\5ad6567ed7fd494ea06e9d525ab336f7\\images\\98adc7be6c3b4c539b4eabb5fa9b2afc.png",
+                "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+                "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                "timing_ns": {
+                  "converted": 498549781000000,
+                  "encoded": 498549781000000,
+                  "started": 498549765000000,
+                  "written": 498549781000000
+                },
+                "width": 400
+              },
+              "bytes": 288000,
+              "capture_ended_ns": 498549765000000,
+              "capture_started_ns": 498549765000000,
+              "frame": "window_client",
+              "height": 180,
+              "native_window_id": 16123204,
+              "region": [
+                0,
+                0,
+                400,
+                180
+              ],
+              "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+              "target": "fixture",
+              "width": 400
+            },
+            "observation_id": "791c3fb7fc714364a1252534c49be4c7",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "4beca9fbbef74e578f61c19992393811",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920",
+            "target_generation_consistency": "matched"
+          },
+          "schema": "agent-interface/receipt-view-v1",
+          "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+          "source": {
+            "bytes": 1475,
+            "kind": "received_bytes",
+            "path": null,
+            "raw_report": {
+              "input_dispatched": false,
+              "observation": {
+                "artifact": {
+                  "bytes": 1195,
+                  "height": 180,
+                  "mime_type": "image/png",
+                  "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\server-receipts\\5ad6567ed7fd494ea06e9d525ab336f7\\images\\98adc7be6c3b4c539b4eabb5fa9b2afc.png",
+                  "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+                  "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                  "timing_ns": {
+                    "converted": 498549781000000,
+                    "encoded": 498549781000000,
+                    "started": 498549765000000,
+                    "written": 498549781000000
+                  },
+                  "width": 400
+                },
+                "bytes": 288000,
+                "capture_ended_ns": 498549765000000,
+                "capture_started_ns": 498549765000000,
+                "frame": "window_client",
+                "height": 180,
+                "native_window_id": 16123204,
+                "region": [
+                  0,
+                  0,
+                  400,
+                  180
+                ],
+                "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                "target": "fixture",
+                "width": 400
+              },
+              "observation_id": "791c3fb7fc714364a1252534c49be4c7",
+              "schema": "agent-interface/runtime-observation-v1",
+              "session": {
+                "call_count": 0,
+                "mode": "supervised-win32",
+                "session_id": "4beca9fbbef74e578f61c19992393811",
+                "state": "open",
+                "synthetic_only": false,
+                "unresolved_call_ids": []
+              },
+              "side_effect_authority": false,
+              "status": "returned",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920",
+              "target_generation_consistency": "matched"
+            },
+            "sha256": "04f2b8f1983ce1f3ed6f019014ec9015dc9dbc560a055d5fa446950d582b05f5"
+          }
+        },
+        "schema": "agent-interface/review-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "4beca9fbbef74e578f61c19992393811",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        }
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\clock-0.json",
+          "sha256": "014963f880c4d0e3d02ba8094f5efcbe5ea8b86d3fe9036056a9a7515326c8cb",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "clock",
+      "parsed": {
+        "authority_granted": false,
+        "clock": "time.monotonic_ns",
+        "input_dispatched": false,
+        "lease_issued": false,
+        "monotonic_ns": 498549781000000,
+        "schema": "agent-interface/execution-clock-v1",
+        "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+        "server_instance_id": "8e6780e8b0564db08e0486442304c9cb"
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\validation-0.json",
+          "sha256": "39532b0ec9db2eea29de6cdb300ac97fe28f7b5cee20bca5f38828504d9ac74d",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "validation",
+      "parsed": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 7,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 7,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\dispatch-0.json",
+          "sha256": "c72ba783bb37ed5df5f37a4c4b202c9d229d85120834a0af41cfe05e49d1abca",
+          "type": "text"
+        }
+      ],
+      "client_timing_ns": {
+        "returned": 498559781000000,
+        "started": 498549781000000
+      },
+      "isError": false,
+      "name": "dispatch",
+      "parsed": {
+        "call": {
+          "arguments": {
+            "current_binding_revision": 1,
+            "current_observation_seq": 1,
+            "program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            }
+          },
+          "backend_attempted": true,
+          "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+          "operation": "dispatch",
+          "persistence_failure": null,
+          "response_wait_ms": 10000,
+          "state": "running"
+        },
+        "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+        "effect_status": "unknown",
+        "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result_available": false,
+        "scope": "current_server",
+        "status": "pending",
+        "task_success": null
+      }
+    },
+    {
+      "name": "read_only_results",
+      "polls": [
+        {
+          "blocks": [
+            {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\results-0-0.json",
+              "sha256": "8276122ea80f7aa32788477bafb46eed78201370e5b88e5ef8d934ec6826f188",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-r38d-timestamped-task-effect",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "96909414031d414e93c2923fbe5305f5",
+              "result": null,
+              "status": "starting",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+            },
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          }
+        },
+        {
+          "blocks": [
+            {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\results-1-0.json",
+              "sha256": "d338328ebf35f2308e77baad2ffe0858edbf8fe5abfafc95b71527e5e346f21b",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-r38d-timestamped-task-effect",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "96909414031d414e93c2923fbe5305f5",
+              "result": null,
+              "status": "running",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+            },
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          }
+        },
+        {
+          "blocks": [
+            {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\results-2-0.json",
+              "sha256": "d338328ebf35f2308e77baad2ffe0858edbf8fe5abfafc95b71527e5e346f21b",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-r38d-timestamped-task-effect",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "96909414031d414e93c2923fbe5305f5",
+              "result": null,
+              "status": "running",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+            },
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          }
+        },
+        {
+          "blocks": [
+            {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\results-3-0.json",
+              "sha256": "d338328ebf35f2308e77baad2ffe0858edbf8fe5abfafc95b71527e5e346f21b",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "metadata": {
+                "program_id": "win32-r38d-timestamped-task-effect",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "96909414031d414e93c2923fbe5305f5",
+              "result": null,
+              "status": "running",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+            },
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          }
+        },
+        {
+          "blocks": [
+            {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\results-4-0.json",
+              "sha256": "284a60ab9d9304cc9e9cf5a710a7e41097ba04263fe18e7faf6d8c342d321630",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "parsed": {
+            "action": {
+              "completion_custody": {
+                "cleanup_deadline_ns": null,
+                "completion_readback": {
+                  "neutral": true,
+                  "observed_monotonic_ns": 498560640000000,
+                  "operation_id": "96909414031d414e93c2923fbe5305f5",
+                  "producer_exit_confirmed_ns": 498560625000000,
+                  "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                },
+                "completion_release_receipt": {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 498560578000000,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      }
+                    ],
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 16123204,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 5324,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 15836
+                      }
+                    ]
+                  },
+                  "verified": true
+                },
+                "deadline_ns": 498594781000000,
+                "obligations": [
+                  "button:fixture:left",
+                  "key:fixture:CTRL",
+                  "key:fixture:S",
+                  "unicode:002D",
+                  "unicode:0031",
+                  "unicode:0033",
+                  "unicode:0034",
+                  "unicode:0035",
+                  "unicode:0036",
+                  "unicode:0037",
+                  "unicode:0038",
+                  "unicode:0061",
+                  "unicode:0063",
+                  "unicode:0064",
+                  "unicode:0065",
+                  "unicode:006B",
+                  "unicode:006C",
+                  "unicode:006F",
+                  "unicode:0072",
+                  "unicode:0073",
+                  "unicode:0074"
+                ],
+                "operation_id": "96909414031d414e93c2923fbe5305f5",
+                "phase": "completed",
+                "producer_exit_code": 0,
+                "producer_gate_state": "authorization_attempted",
+                "producer_identity": {
+                  "creation_time_100ns": 134372808424420794,
+                  "pid": 46408
+                },
+                "recovery_id": null,
+                "release_confirmed": true,
+                "replay_allowed": false,
+                "status": "completed",
+                "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920",
+                "task_success": null,
+                "uncertainty": null
+              },
+              "metadata": {
+                "program_id": "win32-r38d-timestamped-task-effect",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "96909414031d414e93c2923fbe5305f5",
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "result": {
+                "admission": "accepted",
+                "execution": {
+                  "emissions": 76,
+                  "ended_ns": 498560578000000,
+                  "observations": [],
+                  "releases": [
+                    {
+                      "buttons_down": [],
+                      "buttons_unknown": [],
+                      "keys_down": [],
+                      "keys_unknown": [],
+                      "monotonic_ns": 498560578000000,
+                      "state_query_witnesses": {
+                        "1": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          }
+                        ],
+                        "17": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          }
+                        ],
+                        "83": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 16123204,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 5324,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 15836
+                          }
+                        ]
+                      },
+                      "verified": true
+                    }
+                  ],
+                  "started_ns": 498560546000000
+                },
+                "recovery_required": false,
+                "required_capabilities": [
+                  "display.geometry",
+                  "input.keyboard",
+                  "input.pointer",
+                  "input.release_all",
+                  "input.text",
+                  "window.focus"
+                ],
+                "status": "completed"
+              },
+              "status": "completed",
+              "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920",
+              "task_success": null
+            },
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "cancellation": null,
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "replay_allowed": false,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 498594781000000,
+                "lease_id": "win32-r37b-fresh-generation-task-lease"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r38d-5845c51a6a637c5e"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-r38d-timestamped-task-effect",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null,
+            "task_success": null
+          }
+        }
+      ]
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\verify-task-0.json",
+          "sha256": "98c09b49f58cfcee76f63da2429aef1a6c139bfe5646099bc204cabdf145ce85",
+          "type": "text"
+        }
+      ],
+      "client_timing_ns": {
+        "returned": 498560859000000,
+        "started": 498560843000000
+      },
+      "isError": false,
+      "name": "task_oracle",
+      "parsed": {
+        "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "scope": "supervised_win32",
+        "status": "verified",
+        "task_effect": {
+          "receipt": {
+            "call_id": "bbf35145cf24435b8c22acf3c6d387c8",
+            "evidence_ref": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\oracle-evidence.json",
+            "observed_monotonic_ns": 498560843000000,
+            "operation_id": "96909414031d414e93c2923fbe5305f5",
+            "oracle_id": "a85ad1c2dad2db7183d41c4f953a5ebd",
+            "outcome": "success",
+            "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+          },
+          "receipt_received_monotonic_ns": 498560859000000,
+          "requested_monotonic_ns": 498560843000000,
+          "status": "verified",
+          "task_success": true
+        },
+        "task_success": true
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\close-0.json",
+          "sha256": "981da456226d2013cf7dc1ce2704bd5e1f1d51f021468fefbf764771d3772216",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "server_close",
+      "parsed": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_task_effect_timing_20261024_r38d\\run\\phase2_task\\server-receipts\\71f4fe871c1f4247a71b348f616b78e8",
+        "call_id": "71f4fe871c1f4247a71b348f616b78e8",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "4beca9fbbef74e578f61c19992393811",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      }
+    }
+  ],
+  "target_generation": "c67bfa7f92871110a365e7a3e0727fd4114187584c265f1059acd0b0367e9920"
+}

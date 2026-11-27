@@ -1,0 +1,139 @@
+{
+  "armed": {
+    "button": 1,
+    "display": ":0",
+    "focus_id": 2097152,
+    "intent_token": "8df93d949b2e49c29141d5d9421d9f24",
+    "keys": [
+      "a",
+      "d"
+    ],
+    "owner_id": "97de5e944c2a4158abd23e18c5ba2988",
+    "service_pid": 3141,
+    "service_start_ticks": 508096,
+    "type": "armed"
+  },
+  "button_down_after_recovery": false,
+  "button_down_before_kill": true,
+  "button_release_observed_in_recovery_receipt": true,
+  "candidate_invocations_allowed": 1,
+  "display": ":0",
+  "emergency_receipt_sha256": "0226523a7c5dcf959f8a886405bce4bd7828d98a12fbd666158794b408fa0ac6",
+  "focus_id": 2097152,
+  "game_or_model": false,
+  "keycodes": {
+    "a": 38,
+    "d": 40
+  },
+  "keypress_details": [
+    38,
+    40
+  ],
+  "keys_down_after_recovery": {
+    "a": false,
+    "d": false
+  },
+  "keys_down_before_kill": {
+    "a": true,
+    "d": true
+  },
+  "ledger_active_buttons": [
+    1
+  ],
+  "ledger_active_keys": [
+    "a",
+    "d"
+  ],
+  "owner_kill_signal": 9,
+  "owner_process_state_after_kill": "Z",
+  "owner_receipt_exists": false,
+  "pass": true,
+  "physical_input": false,
+  "ready_event": {
+    "display": ":0",
+    "event": "input_owner_process_ready",
+    "owner_id": "97de5e944c2a4158abd23e18c5ba2988",
+    "receipt_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a25_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json",
+    "schema": "input-owner-process-ready-v1",
+    "service_pid": 3141,
+    "service_start_ticks": 508096
+  },
+  "recovery": {
+    "active_buttons": {
+      "1": {
+        "release_event_observed": true,
+        "up_verified": true,
+        "was_down": true
+      }
+    },
+    "active_keys": {
+      "a": {
+        "keycode": 38,
+        "release_event_observed": true,
+        "up_verified": true,
+        "was_down": true
+      },
+      "d": {
+        "keycode": 40,
+        "release_event_observed": true,
+        "up_verified": true,
+        "was_down": true
+      }
+    },
+    "diagnostics": {
+      "after_buttons": {
+        "1": false
+      },
+      "after_keys": {
+        "a": false,
+        "d": false
+      },
+      "before_buttons": {
+        "1": true
+      },
+      "before_keys": {
+        "a": true,
+        "d": true
+      },
+      "release_buttons_observed": [
+        1
+      ],
+      "release_keycodes_observed": [
+        38,
+        40
+      ]
+    },
+    "display": ":0",
+    "focus_id": 2097152,
+    "ledger_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a25_20261012/results/A01/input-owner-process/input-owner-state-v1.jsonl",
+    "ledger_sha256": "b151ebfecaf3811c88f53472b87486501f5adb68e8ef26b1644648d074583502",
+    "owner_id": "97de5e944c2a4158abd23e18c5ba2988",
+    "receipt_fsynced": true,
+    "recovery_mode": "supervisor_xtest_after_owner_process_death",
+    "recovery_verified": true,
+    "release_started_ns": 5081808323723,
+    "schema": "input-owner-emergency-recovery-v1",
+    "service_pid": 3141,
+    "service_start_ticks": 508096,
+    "surface_geometry": [
+      20,
+      20,
+      300,
+      180
+    ],
+    "surface_id": 2097152,
+    "sync_returned_ns": 5081808424930
+  },
+  "release_event_details": [
+    38,
+    40
+  ],
+  "schema": "v39-v15-process-owner-xvfb-a25-raw-v1",
+  "session_alive": true,
+  "session_kill_signal": 9,
+  "session_stderr": "",
+  "session_stdout": "",
+  "xvfb_return_code": 0,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_tcp_enabled": false
+}

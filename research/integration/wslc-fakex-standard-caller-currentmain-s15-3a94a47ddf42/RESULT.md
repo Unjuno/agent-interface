@@ -1,0 +1,9 @@
+# S15 result — current-main Fake X standard caller
+
+**PASS_FAKE_X_STANDARD_CALLER_SCOPED (18/18 independent audit checks).** One fresh WSLc 3.0.3.0 isolated session ran the current-main standard-caller Fake X cancellation test with network disabled. The image ran CPython 3.12.14. The one unittest passed; its own timing was 1.781 s, and the enclosing runner measured 2.306 s. Twenty-four detailed Fake X and target-identity records were retained and re-hashed.
+
+The synthetic key press (keycode 2) was accepted and its 32-byte reply remained held. Three identity replies returned the same target generation. Cancellation returned in 124.228 ms after the owner process retired, but the fake disconnect result remained unknown, so the owner release attempt was not made. The caller reported `cleanup_status=UNKNOWN`, `release_confirmed=false`, `task_success=null`, `replay_allowed=false`, and `late_server_request_possible=true`; the terminal result was `runtime_failed` after 3.221 ms with the same UNKNOWN/no-replay state. This is the intended fail-closed result for the injected uncertainty, not proof that a real key was released or that a computer task succeeded.
+
+The exact container was deleted, the pinned image was removed from the isolated session, and the session was terminated. Requested CPU/memory settings are recorded as requests only. The test used synthetic Fake X; it did not connect to a real X server, physical desktop input, a real application, MAP01, or a model/provider. Efficiency and reliability remain unmeasured.
+
+The runner's initial JSON manifest for the 24 raw files had a trailing escaped newline and was invalid JSON. The original is preserved unchanged; `run/fake-x-raw-manifest-corrected.json` is an additive manifest independently rebuilt from the unchanged raw bytes. Its payload digest matches the hash recorded by the runner. No test was rerun for this audit correction.

@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-21",
+  "repository": "Unjuno/agent-interface",
+  "frozen_head": "9a23c57284b18a7e35f35f299f5c15e94d91ad85",
+  "host": "Windows; CPython 3.11.9",
+  "scope": "Synthetic Calc/Fake-X public MCP composition and bounded-cancel accounting",
+  "source_hashes_sha256": {
+    "runtime/cli_v1/test_mcp_owned_process.py": "046e2c71a6d1d7ca1133f8fed4b43bf48435140d7e8a99ccd802ca8bd6d49e63",
+    "research/integration/standard_mcp_task_ledger_57_v1/test_partial_input_cancel_accounting.py": "517124e43ee2e4658703b4ee26f39af739588da5dc7a51ba50c681d6d8d91b68"
+  },
+  "conditions": {
+    "provider": "FakePlanner; one fixed synthetic provider attempt; reported input/output usage",
+    "live_gui": false,
+    "live_model_or_provider": false,
+    "real_user_input": false,
+    "test_alias_freshness_ms": 5000,
+    "freshness_limit_supported_by_public_tool_ms": 5000,
+    "preparation_order": "prepare symbolic task first, then capture observation, mint aliases, and immediately submit compiled call",
+    "stale_policy": "unchanged; stale aliases remain rejected; no retries or replay",
+    "runtime_product_code_changed": false
+  },
+  "test_integrity_repairs": [
+    "Outer accounting wrapper now rethrows inner Calc test exceptions instead of silently reporting green.",
+    "If stale rejection occurs before a pending call ID exists, finally now skips terminal polling and still captures diagnostics/closes the owner.",
+    "Diagnostic mode assigns one unique run ID and server root; Fake-X state, point resolutions, cancel receipt, boundary snapshot and close receipt are collected under that run directory."
+  ],
+  "paired_runs": [
+    {
+      "mode": "normal",
+      "command": "python -m unittest -v test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+      "result": "PASS",
+      "tests": "1/1",
+      "duration_seconds": 5.807,
+      "log": "cleanup-fixed-normal.log",
+      "artifact": "artifacts-cleanup-fixed-normal/cancel-accounting-1795227339562945700"
+    },
+    {
+      "mode": "-O",
+      "command": "python -O -m unittest -v test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay",
+      "result": "PASS",
+      "tests": "1/1",
+      "duration_seconds": 5.949,
+      "log": "cleanup-fixed-optimized.log",
+      "artifact": "artifacts-cleanup-fixed-optimized/cancel-accounting-1795227356681171700"
+    }
+  ],
+  "paired_observations": {
+    "save_boundary_reached": true,
+    "owner_io_blocked_and_entered": true,
+    "cancel_terminal_status": "cancel_requested",
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "cleanup_status": "UNKNOWN",
+    "runtime_release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "independent_fake_x_readback_verified": true,
+    "independent_fake_x_keys_down": [],
+    "independent_fake_x_buttons_down": [],
+    "interface_close_status": "cleanup_failed",
+    "interface_close_verified": false,
+    "recovery_release_gate": "NOT_PASSED"
+  },
+  "earlier_valid_failure": {
+    "run": "artifacts-runid-optimized/cancel-accounting-1795226261242704500",
+    "mode": "-O",
+    "result": "STALE_PRE_DISPATCH",
+    "point_resolution": "calc_entry: STALE/expired_or_nonfresh_observation",
+    "save_state_files": 0,
+    "owner_io_entered": false,
+    "owner_close": "verified; exitcode 0"
+  },
+  "excluded_exploratory_runs": [
+    "freshness-5000-normal.log and artifacts-freshness-5000-normal: initial diagnostic edit targeted the wrong test body",
+    "freshness-5000-normal-corrected.log and artifacts-freshness-5000-normal-corrected: paired call/report/artifact association was incomplete",
+    "freshness-5000-optimized.log and artifacts-freshness-5000-optimized: not condition-matched with the normal exploratory capture",
+    "reordered-normal.log and artifacts-reordered-normal: early trial before wrapper exception propagation was repaired",
+    "reordered-optimized.log and artifacts-reordered-optimized: standalone historical run; not pooled with the final paired run",
+    "runid-optimized.log and artifacts-runid-optimized: stale pre-dispatch reproduction that led to the cleanup fix"
+  ],
+  "interpretation": "The paired test contract passes in both interpreter modes and demonstrates safe UNKNOWN/replay-denied cancellation behavior. Both retained cancellation receipts show an independent empty Fake-X readback but deliberately do not set the custody-bound release_confirmed bit. This does not pass recovery/release reliability.",
+  "next_gate": "Explain and verify the product-level evidence required to promote a post-retirement independent readback into a release receipt, or retain UNKNOWN if the missing proof is material. Then test late-operation fencing and task-effect adjudication separately.",
+  "supervisor_contract_audit": {
+    "conclusion": "empty independent readback is a stage receipt; no custody-bound release confirmation exists without queue-drain and owner-exclusive physical-state proof",
+    "test_command": "python -m unittest -v runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_owned_supervisor_capability runtime.guarded_x11_v1.test_xres_client_fence",
+    "normal": "PASS 41 tests, 7 skipped, 3.985 s",
+    "optimized": "PASS 41 tests, 7 skipped, 3.366 s",
+    "runtime_behavior_changed": false,
+    "logs": [
+      "supervisor-contract-normal.log",
+      "supervisor-contract-optimized.log"
+    ]
+  },
+  "issue_comment_id": 7055903208
+}

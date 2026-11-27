@@ -1,0 +1,29 @@
+{
+  "schema": "win32-screen-calculator-r17-conditions-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r17-c48e9d7e",
+  "frozen_utc": "2026-10-24T08:40:53.136822+00:00",
+  "host": "attached Windows PC; user-authorized native Win32 route",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "runner_sha256": "b9b873aeee86814e28659e971a2ac3beb960c7fa1dcf898cd8e944a78c4dac5c",
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b",
+  "preregistration_sha256": "a8a32d2c495c123eabde86c70de1ed0269e14558110ae16ce1aedd2360f2e499",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "baseline_display": "1043",
+  "expected_display": "1044",
+  "frame": "screen_physical_px",
+  "region": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "prior_capture_evidence": "R16 same-target read-only screen capture visibly showed 1043; R15 window_client image at 320x533 was all black",
+  "action": "one interface_dispatch focus + text +1= + release_all",
+  "oracle": "configured UIA CalculatorResults exact-value reader; max 1500ms/25ms",
+  "pending_rule": "one exact-call cancellation and read-only poll for <=4s; never replay",
+  "interaction_gate": "visually inspect actual observation image in same live session before sending one-shot PROCEED_R17 token",
+  "scope": "native Windows Calculator only"
+}

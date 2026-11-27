@@ -1,0 +1,293 @@
+{
+  "schema": "map01-v39-a07-owner-release-reconciliation-v1",
+  "allocation": "map01-v39-live-threat-guard-a07-20261009",
+  "status": "PASS_CUSTODY_RECONCILED_SCOPED",
+  "formal_pass": false,
+  "scope": "Saved X11 owner-thread release custody only. Does not establish physical key state, game consumption, threat-control efficacy, or task success.",
+  "counts": {
+    "cancellations": 10,
+    "unique_cancellation_ids": 10,
+    "passed_cancellations": 10,
+    "cancellations_with_admissions": 6,
+    "cancellations_without_admissions": 4
+  },
+  "cancellations": [
+    {
+      "id": "cover-0",
+      "pass": true,
+      "admissions": {},
+      "keys_held_acknowledgements": {},
+      "explicit_keyup_transitions": {},
+      "terminal_owner_release_accounts_for": {},
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "no_input_release_receipt_without_admission": true,
+        "no_release_transition_without_admission": true
+      }
+    },
+    {
+      "id": "cover-1",
+      "pass": true,
+      "admissions": {
+        "d": 2,
+        "space": 2,
+        "a": 2
+      },
+      "keys_held_acknowledgements": {
+        "d": 2,
+        "space": 2,
+        "a": 2
+      },
+      "explicit_keyup_transitions": {
+        "d": 2,
+        "space": 2,
+        "a": 1
+      },
+      "terminal_owner_release_accounts_for": {
+        "a": {
+          "missing_explicit_transition_count": 1,
+          "keycode": "38",
+          "verified_terminal_keyup_count": 1,
+          "owner_release_key_verified": true
+        }
+      },
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-2",
+      "pass": true,
+      "admissions": {
+        "a": 2,
+        "space": 1,
+        "d": 1
+      },
+      "keys_held_acknowledgements": {
+        "a": 2,
+        "space": 1,
+        "d": 1
+      },
+      "explicit_keyup_transitions": {
+        "a": 1,
+        "space": 1,
+        "d": 1
+      },
+      "terminal_owner_release_accounts_for": {
+        "a": {
+          "missing_explicit_transition_count": 1,
+          "keycode": "38",
+          "verified_terminal_keyup_count": 1,
+          "owner_release_key_verified": true
+        }
+      },
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-3",
+      "pass": true,
+      "admissions": {
+        "d": 2,
+        "space": 1,
+        "a": 1
+      },
+      "keys_held_acknowledgements": {
+        "d": 2,
+        "space": 1,
+        "a": 1
+      },
+      "explicit_keyup_transitions": {
+        "d": 2,
+        "space": 1,
+        "a": 1
+      },
+      "terminal_owner_release_accounts_for": {},
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-4",
+      "pass": true,
+      "admissions": {
+        "d": 2,
+        "space": 1,
+        "a": 1
+      },
+      "keys_held_acknowledgements": {
+        "d": 2,
+        "space": 1,
+        "a": 1
+      },
+      "explicit_keyup_transitions": {
+        "d": 1,
+        "space": 1,
+        "a": 1
+      },
+      "terminal_owner_release_accounts_for": {
+        "d": {
+          "missing_explicit_transition_count": 1,
+          "keycode": "40",
+          "verified_terminal_keyup_count": 1,
+          "owner_release_key_verified": true
+        }
+      },
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-5",
+      "pass": true,
+      "admissions": {
+        "d": 2,
+        "space": 2,
+        "a": 2
+      },
+      "keys_held_acknowledgements": {
+        "d": 2,
+        "space": 2,
+        "a": 2
+      },
+      "explicit_keyup_transitions": {
+        "d": 2,
+        "space": 2,
+        "a": 1
+      },
+      "terminal_owner_release_accounts_for": {
+        "a": {
+          "missing_explicit_transition_count": 1,
+          "keycode": "38",
+          "verified_terminal_keyup_count": 1,
+          "owner_release_key_verified": true
+        }
+      },
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-6",
+      "pass": true,
+      "admissions": {},
+      "keys_held_acknowledgements": {},
+      "explicit_keyup_transitions": {},
+      "terminal_owner_release_accounts_for": {},
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "no_input_release_receipt_without_admission": true,
+        "no_release_transition_without_admission": true
+      }
+    },
+    {
+      "id": "cover-7",
+      "pass": true,
+      "admissions": {},
+      "keys_held_acknowledgements": {},
+      "explicit_keyup_transitions": {},
+      "terminal_owner_release_accounts_for": {},
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "no_input_release_receipt_without_admission": true,
+        "no_release_transition_without_admission": true
+      }
+    },
+    {
+      "id": "cover-8",
+      "pass": true,
+      "admissions": {
+        "Down": 2,
+        "a": 2,
+        "d": 2
+      },
+      "keys_held_acknowledgements": {
+        "Down": 2,
+        "a": 2,
+        "d": 2
+      },
+      "explicit_keyup_transitions": {
+        "Down": 2,
+        "a": 2,
+        "d": 1
+      },
+      "terminal_owner_release_accounts_for": {
+        "d": {
+          "missing_explicit_transition_count": 1,
+          "keycode": "40",
+          "verified_terminal_keyup_count": 1,
+          "owner_release_key_verified": true
+        }
+      },
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "one_empty_verified_owner_release": true,
+        "each_missing_transition_has_terminal_keyup": true
+      }
+    },
+    {
+      "id": "cover-9",
+      "pass": true,
+      "admissions": {},
+      "keys_held_acknowledgements": {},
+      "explicit_keyup_transitions": {},
+      "terminal_owner_release_accounts_for": {},
+      "checks": {
+        "unique_matched_cancellation": true,
+        "one_empty_verified_terminal": true,
+        "no_post_cancel_admission": true,
+        "admissions_match_keys_held_acknowledgements": true,
+        "owner_explicit_keyups_match_transition_rows": true,
+        "no_input_release_receipt_without_admission": true,
+        "no_release_transition_without_admission": true
+      }
+    }
+  ]
+}

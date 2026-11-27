@@ -1,0 +1,101 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r31",
+  "boundary_spans": [
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1263339000,
+      "end_event": "exchange_return",
+      "end_ns": 487497830318200,
+      "helper_role": null,
+      "identity": "0beba5a187f54e7fa391b83efe6d27ef",
+      "pid": 39156,
+      "start_ns": 487496566780500
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1122500,
+      "end_event": "exchange_return",
+      "end_ns": 487497831767400,
+      "helper_role": null,
+      "identity": "0beba5a187f54e7fa391b83efe6d27ef",
+      "pid": 39156,
+      "start_ns": 487497830517500
+    },
+    {
+      "boundary": "recover",
+      "elapsed_ns": null,
+      "end_event": null,
+      "end_ns": null,
+      "helper_role": "recovery",
+      "identity": "0beba5a187f54e7fa391b83efe6d27ef",
+      "pid": 18384,
+      "start_ns": 487496567096000
+    },
+    {
+      "boundary": "release_all",
+      "elapsed_ns": 1261696700,
+      "end_event": "release_all_return",
+      "end_ns": 487497829720100,
+      "helper_role": "recovery",
+      "input": {},
+      "pid": 18384,
+      "start_ns": 487496567840100
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 835100,
+      "end_event": "sendinput_return",
+      "end_ns": 487497817213600,
+      "helper_role": "recovery",
+      "input": {
+        "flags": 2,
+        "key_up": true,
+        "vk": 81
+      },
+      "pid": 18384,
+      "start_ns": 487497816188900
+    }
+  ],
+  "callback_return_ns": 487497808919400,
+  "diagnostic_status": "TRACE_CAPTURED",
+  "event_count": 165,
+  "helper_processes": {
+    "18384": "recovery",
+    "25296": "observer"
+  },
+  "interpretation": "The trace locates Python helper and _send boundaries relative to the callback return. It cannot show when the OS physically applied a key-up or establish kernel causality; missing wrapper events or cross-process timestamp effects remain diagnostic limitations.",
+  "open_at_or_across_callback_return": [
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1263339000,
+      "end_event": "exchange_return",
+      "end_ns": 487497830318200,
+      "helper_role": null,
+      "identity": "0beba5a187f54e7fa391b83efe6d27ef",
+      "pid": 39156,
+      "start_ns": 487496566780500
+    },
+    {
+      "boundary": "recover",
+      "elapsed_ns": null,
+      "end_event": null,
+      "end_ns": null,
+      "helper_role": "recovery",
+      "identity": "0beba5a187f54e7fa391b83efe6d27ef",
+      "pid": 18384,
+      "start_ns": 487496567096000
+    },
+    {
+      "boundary": "release_all",
+      "elapsed_ns": 1261696700,
+      "end_event": "release_all_return",
+      "end_ns": 487497829720100,
+      "helper_role": "recovery",
+      "input": {},
+      "pid": 18384,
+      "start_ns": 487496567840100
+    }
+  ],
+  "schema": "win32-supervised-standard-caller-r31-recovery-trace-diagnosis-v1",
+  "strict_action_audit_status": "FAIL_OR_UNKNOWN"
+}

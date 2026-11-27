@@ -1,0 +1,78 @@
+{
+  "attempt_id": "map01-native-expiry-delayed-input-r199-20261116",
+  "cancellation_release_confirmed": true,
+  "candidate_terminal_gate": true,
+  "classification": "PASS_SCOPED_EXPIRY_DELAYED_OPERATION_BLOCKED",
+  "delayed_second_click_excluded": true,
+  "dispatches": 1,
+  "independent_neutral_horizon": "VERIFIED",
+  "latency": {
+    "authority_deadline_ns": 597062171000000,
+    "clock": "time.monotonic_ns",
+    "dispatch_poll_count": 163,
+    "expiry_to_release_ns": 32000000,
+    "max_expiry_to_release_ns": 1000000000,
+    "measurement": "frozen authority deadline to supervisor receipt of internally verified release; not raw SendInput latency",
+    "release_received_monotonic_ns": 597062203000000,
+    "terminal_observed_qpc_ns": 597064333254500,
+    "within_bound": true
+  },
+  "program_actions_lower_bound": 4,
+  "recoveries": 1,
+  "replay_allowed": false,
+  "scene_response": {
+    "changed_fraction": 0.0002920653907496013,
+    "changed_pixels": 293,
+    "independent_of_dispatch": true,
+    "oracle": "upper-client-pixel-change-v1",
+    "outcome": "failure",
+    "region": [
+      0,
+      0,
+      1520,
+      660
+    ],
+    "threshold_strictly_greater_than": 0.05,
+    "total_pixels": 1003200
+  },
+  "scope": "one native Win32 MAP01 in-flight lease expiry: one accepted click, 8 s wait, scheduled second click; process retirement and separate release; no replay",
+  "source_action_status": "recovered",
+  "source_release_confirmed": true,
+  "task_effect": {
+    "after": {
+      "margin": 0.23684210526315788,
+      "scope": "MAP01 current-ammo HUD; observed effect class only, not task success",
+      "scores": {
+        "47": 0.28289473684210525,
+        "48": 0.23684210526315788,
+        "49": 0.0,
+        "50": 0.5460526315789473
+      },
+      "status": "classified",
+      "value": "49"
+    },
+    "before": {
+      "margin": 0.4276315789473684,
+      "scope": "MAP01 current-ammo HUD; observed effect class only, not task success",
+      "scores": {
+        "47": 0.5131578947368421,
+        "48": 0.4276315789473684,
+        "49": 0.5460526315789473,
+        "50": 0.0
+      },
+      "status": "classified",
+      "value": "50"
+    },
+    "delayed_second_click_excluded": true,
+    "expected_ammo": "50_to_49",
+    "native_sendinput_count": 4,
+    "release_confirmed": true,
+    "schema": "map01-r187-expiry-delayed-input-effect-v1",
+    "single_click_observed": true,
+    "source_action_status": "recovered",
+    "source_operation_id": "19b9c1fb92664b2ea03a0e082317487b",
+    "target_generation": "54abc5cbd59e0286ceb19de2c1a79f1dbacb86ec6e0ac9421b091b6d89c9e8a7",
+    "task_success": null
+  },
+  "task_success": null
+}

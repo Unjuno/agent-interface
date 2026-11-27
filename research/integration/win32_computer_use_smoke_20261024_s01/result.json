@@ -1,0 +1,11 @@
+{
+  "attempt_id": "win32-calc-s01-4d9bd4a83e7b41a09182a681311db000",
+  "classification": "FAIL_TASK_EFFECT",
+  "result": "The exact expected value 42 was not reached. After the `plus` call the visible operation line was `12 =`; after the final Return the display was 30 with `30 =` above it.",
+  "input_delivery": "All six press_key calls returned and each was followed by a fresh target-window screenshot.",
+  "latency_ms": {"press_key_min":79.7553,"press_key_max":83.0104,"press_key_median":81.884},
+  "retry_count": 0,
+  "raw_final_screenshot": "raw/final-result.jpg",
+  "limits": ["The API exposed no accessibility tree for this window.","No independent OS key-up observation was available.","No blocked-I/O or recovery path was tested.","This native Windows Calculator smoke is not WSLc, MAP01, efficiency, reliability, or a product-level success result."],
+  "next_discriminating_test": "Freeze a fresh button-click-only trial to distinguish a key-symbol mapping issue from general target-window input failure; do not retry this attempt."
+}

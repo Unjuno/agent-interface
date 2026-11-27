@@ -1,0 +1,14 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-XVFB-POSTMERGE-RECHECK-20261121-R01",
+  "frozen_at_utc": "2026-11-21T06:38:00Z",
+  "source_revision": "96c3476e9c665d801d6f57814ff7241b868d5636",
+  "source_files": ["runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", "runtime/cli_v1/test_synthetic_task_oracle.py", "runtime/cli_v1/mcp_guarded.py", "runtime/cli_v1/mcp_server.py", "runtime/cli_v1/owned_guarded_session.py", "runtime/guarded_x11_v1/cancel_supervisor.py", "runtime/guarded_x11_v1/xres_client_fence.py"],
+  "source_blobs": "source-blobs.txt",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container": "ephemeral; network none; read-only root and source checkout; private tmpfs; evidence packet writable",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "decision_rule": "Recheck post-merge XRes disconnect, independent release, old task oracle, UNKNOWN/no-replay, fresh-session oracle, and final cleanup. Unit-test success does not promote the old task outcome.",
+  "limits": "Two synthetic post-merge runs only; no live MAP01, provider economics, reliability rate, or preview qualification."
+}

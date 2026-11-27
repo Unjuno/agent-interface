@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'research/live_control/*'
+      - 'research/doom/map01_overlap_controller_v39.py'
+      - 'research/doom/doom_controller_failure_cleanup_v1.py'
+      - 'research/doom/test_v39_queue_wait_budget_currentmain.py'
       - 'runtime/cli_v1/**'
       - 'runtime/host_v1/**'
       - 'runtime/motor_state_v1/**'
@@ -20,6 +23,9 @@ on:
       - main
     paths:
       - 'research/live_control/*'
+      - 'research/doom/map01_overlap_controller_v39.py'
+      - 'research/doom/doom_controller_failure_cleanup_v1.py'
+      - 'research/doom/test_v39_queue_wait_budget_currentmain.py'
       - 'runtime/cli_v1/**'
       - 'runtime/host_v1/**'
       - 'runtime/motor_state_v1/**'
@@ -61,6 +67,9 @@ jobs:
             !/research/live_control/caller_uncertain_tail_I13/*
             /research/live_control/caller_uncertain_tail_I13/LIVE_CALLER.json
             /research/live_control/caller_uncertain_tail_I13/RESPONSE3.json
+            /research/doom/map01_overlap_controller_v39.py
+            /research/doom/doom_controller_failure_cleanup_v1.py
+            /research/doom/test_v39_queue_wait_budget_currentmain.py
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -78,7 +87,7 @@ jobs:
           set -euo pipefail
           mkdir -p results-local/primary-owner
           evidence="$(mktemp -d "$PWD/results-local/primary-owner/run.XXXXXX")"
-          PRIMARY_FAILURE_EVIDENCE="$evidence" node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs runtime/host_v1/test_primary_stdio_failure_order.mjs runtime/host_v1/test_primary_output_close.mjs runtime/host_v1/test_primary_output_close_owner.mjs
+          PRIMARY_FAILURE_EVIDENCE="$evidence" node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs runtime/host_v1/test_primary_stdio_failure_order.mjs runtime/host_v1/test_primary_output_close.mjs runtime/host_v1/test_primary_output_close_owner.mjs runtime/host_v1/test_primary_startup_input_failure.mjs
       - name: Test terminal first-failure precedence without launching a host
         run: node --experimental-vm-modules --test runtime/host_v1/test_primary_terminal_failure.mjs
       - name: Run the shared local and CI integration checks

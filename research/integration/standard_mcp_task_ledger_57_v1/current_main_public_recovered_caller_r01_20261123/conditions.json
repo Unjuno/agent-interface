@@ -1,0 +1,41 @@
+{
+  "schema": "agent-interface/public-recovered-caller-task-oracle-composition-r01",
+  "frozen_source_main": "b0bc13d71fd204e39d040584c2e3e9207a7879dd",
+  "candidate_changes": [
+    "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/test_mcp_supervised_win32.py"
+  ],
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "1441fd34913c0cc3c4284ff85fc22842a59df802eba4214e286e59b61fcdf3fb",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "41088f965cd8588ca1bceaec0f10a22e9916ac702537f4c6854cc41e0d236307"
+  },
+  "python": "CPython 3.11.9",
+  "platform": "Windows 11 Pro 10.0.26300 (build 26300)",
+  "commands": [
+    "python -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+    "python -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_task_oracle_is_not_invoked_for_unknown_public_custody",
+    "python -O -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+    "python -O -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_task_oracle_is_not_invoked_for_unknown_public_custody"
+  ],
+  "scope": "one fake public-MCP recovered-caller attempt; compiled method has a finite 10-second graph budget, fixture authority expires after 30 seconds, and each MCP callback wait is capped at 8 seconds; producer records exact effect then loses completion receipt; recovery reports release and synthetic horizon; task oracle checks exact operation and generation",
+  "acceptance": [
+    "SAFE_YIELD / delivery_uncertain",
+    "zero completed graph transitions",
+    "source action remains unknown with null task_success",
+    "source release_confirmed remains false; separate recovery confirms release",
+    "exact independent oracle succeeds for task effect",
+    "replay remains denied"
+  ],
+  "negative_control": "test_task_oracle_is_not_invoked_for_unknown_public_custody passes in normal and -O modes",
+  "not_tested": [
+    "live GUI or native Win32 input",
+    "external application task effect",
+    "repeated reliability",
+    "MAP01",
+    "matched efficiency",
+    "WSLc or Docker allocation",
+    "Research Preview acceptance",
+    "distributable runtime acceptance"
+  ],
+  "other_load_during_initial_attempts": "A separate repository CI run and a Nuitka build were active on the host; initial observation callback timeouts were not causally attributed to that load. Final normal and optimized reruns passed."
+}

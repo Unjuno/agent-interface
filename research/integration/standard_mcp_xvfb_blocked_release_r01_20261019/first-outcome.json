@@ -1,0 +1,129 @@
+{
+  "cancel": null,
+  "close": {
+    "authority_granted": false,
+    "call_directory": "/tmp/mcp-xvfb-blocked-release-y8mgd0y3/mcp/524bf85b4d344c3fa8569110cc6855ab",
+    "call_id": "524bf85b4d344c3fa8569110cc6855ab",
+    "connection_close_attempted": true,
+    "release_attempted": false,
+    "release_confirmed": null,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 1,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "pid": 2777,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_process_pid": 2777,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 6291456,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "847fa04a8c174a38af85654bff5958ca",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": false
+      },
+      "targets": {
+        "app": 2097152
+      },
+      "window_lifecycle": false
+    },
+    "session_id": "847fa04a8c174a38af85654bff5958ca",
+    "status": "closed",
+    "verified": true
+  },
+  "conditions": {
+    "cancel_return_bound_ms": 3000,
+    "delayed_keypress_ms": 8000,
+    "late_keypress_outcome": "record either result; do not assume queue cancellation",
+    "terminal_result_bound_ms": 5000
+  },
+  "error": "Regex didn't match: '^[0-9a-f]{64}$' not found in ''",
+  "error_type": "AssertionError",
+  "final_cleanup": {
+    "keys_down": {
+      "a": false,
+      "b": false
+    },
+    "status": "key_release_sync_completed"
+  },
+  "independent_release_readback": null,
+  "initial_keymap": {
+    "a": false,
+    "b": false
+  },
+  "input_before_cancel": null,
+  "late_request_horizon_readback": null,
+  "observation": {
+    "pointer_binding": {
+      "focus": 2097152,
+      "geometry": [
+        40,
+        40,
+        240,
+        180
+      ],
+      "process_generation": "d0f5aa1dd08facf024fb5b7177b74dbe8b11a7a92234614e2396efa00d0d98ac",
+      "surface": 2097152
+    },
+    "process_generation": "d0f5aa1dd08facf024fb5b7177b74dbe8b11a7a92234614e2396efa00d0d98ac",
+    "sequence": 1,
+    "status": "observed",
+    "xvfb": "The X.Org Foundation"
+  },
+  "owner_release_attempt": null,
+  "schema": "agent-interface/standard-mcp-xvfb-blocked-release-v1",
+  "scope": "standard MCP caller; private Xvfb; test-injected delayed request; synthetic app",
+  "source_identity": {
+    "github_job": "x11-integration",
+    "github_run_id": "39226642774",
+    "github_sha": "73b1347d265234433a9458dc8b19d9d189fba089",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.15 (main, Oct  1 2026, 02:35:59) [GCC 13.3.0]"
+  },
+  "status": "FAIL",
+  "synthetic_application_effect": null,
+  "terminal": null,
+  "timing_ns": {
+    "observe_returned": 154632921731,
+    "observe_started": 154025342302
+  },
+  "xvfb": {
+    "package_returncode": 0,
+    "package_stderr": "",
+    "package_stdout": "xvfb=2:21.1.12-1ubuntu1.8",
+    "path": "/usr/bin/Xvfb",
+    "pid": 2699,
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "status": "captured"
+  }
+}

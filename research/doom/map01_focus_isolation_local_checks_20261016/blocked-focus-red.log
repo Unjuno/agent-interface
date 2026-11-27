@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_blocked_focus_read_does_not_prevent_cancel_cleanup (research.live_control.test_input_owner_v12_process_identity.OwnerIdentityTests.test_blocked_focus_read_does_not_prevent_cancel_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_v12_process_identity.py", line 75, in test_blocked_focus_read_does_not_prevent_cancel_cleanup
+    self.assertIsNotNone(lease.wait_interruption(.2))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.210s
+
+FAILED (failures=1)

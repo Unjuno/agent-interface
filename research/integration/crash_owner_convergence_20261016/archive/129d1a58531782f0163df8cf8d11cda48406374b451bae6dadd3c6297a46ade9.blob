@@ -1,0 +1,29 @@
+{
+  "attempts": [
+    "Attempt 01 stopped in event serialization before the fault injection; preserved in RUNNER/attempt-01-setup-failure.txt and excluded.",
+    "A01 reached the SIGKILL fault injection once and is the only candidate runtime arm."
+  ],
+  "base_sha": "668bafc28e706095ea25f9c27bdd53fd2f48c883",
+  "decision_rule": "PASS_METHOD_SCOPED requires SIGKILL return -9, a distinct owner originally spawned by the session, owner no longer parented to the killed session, kill-request < EOF < release ordering, independent pre-kill key-down and post-release KeyRelease/keymap-up, owner verified keymap-up and empty held set, fsynced receipt, clean owner/Xvfb exit, and no forced owner termination.",
+  "environment": {
+    "hard_resource_limits": "none",
+    "host": "WSL2 Ubuntu",
+    "network": "not isolated; candidate makes no network calls",
+    "physical_input_or_game": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33-2 Ubuntu package",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "experiment": "v39-session-parent-crash-owner-xvfb-a05-20261012",
+  "hypothesis": "An owner in a detached process adopted by a supervisor outside the session failure domain can recover a held X key after only the session process is SIGKILLed.",
+  "question": "Can an X input-owner service spawned by a session survive SIGKILL of that session, detect its socket EOF, release a held key, and verify recovery independently?",
+  "result": "research/doom/v39_session_parent_crash_owner_xvfb_a05_20261012/results/A01/RAW.json",
+  "schema": "v39-session-parent-crash-owner-xvfb-a05-freeze-v1",
+  "scope": "One isolated WSL2/Xvfb arm using Python Xlib/XTest, a Unix socket, one key, one session child, and one detached owner service. The service survives session death but not a separately tested supervisor death.",
+  "source_sha256": {
+    "audit_raw.py": "8f7fd3349f8ae648b7584cab10a1f03d9ac9460afef6af7fa0fa8462c78c9a66",
+    "candidate.py": "781bca02d2335e8d7994318d5733563ba5696e5161be47af27134a356e9e9256",
+    "test_audit.py": "da327efad3cbedf6cd024687e8090a45c108fe94a96ba901a8dd4a56adcb883f"
+  },
+  "unknowns": "No production session/backend RPC integration, multi-key or button recovery, supervisor death, display teardown policy, live GUI/game task success, cross-host portability, or live MAP01 allocation."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/xvfb-x11-tcp-delivery-delay-prereg-v1",
+  "study_id": "xvfb-x11-tcp-delivery-delay-800ms-replication-20261110",
+  "purpose": "Replicate R26 transport-delay ordering once with the corrected reporter boundary, checking whether a stale press reaches the fresh target before its task input.",
+  "prior_evidence": "R26 recorded proxy forwarding 414 ms after cancellation completion and an app KeyPress on the fresh target before fresh task input, while the raw reporter flag was false due to comparing against task-input start. The raw R26 result remains immutable; its timestamp audit is separately retained.",
+  "condition": {
+    "display": "parent :88 Unix; runtime owner 127.0.0.1:89 TCP proxy",
+    "xvfb": "private :88 TCP listener",
+    "proxy": "6089 -> 6088",
+    "tracked_second_keypress": true,
+    "delay_ms": 800,
+    "cancel_ack_withheld_s": 1.0,
+    "supervisor": false,
+    "network": "Docker network none; loopback only",
+    "model_calls": 0
+  },
+  "primary_discriminator": "Proxy forward timestamp vs cancellation completion; event on fresh target between fresh_session_started_ns and fresh input start; old/fresh effect counters; input keymap; UNKNOWN replay fence.",
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "d0f15a8d9a4891f7592198a83962c5ea50255935a812ef36af256e230cbc2fa4",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "stop_rule": "One replication only, no retry. Preserve cleanup/test failure; do not infer general reliability from two repetitions.",
+  "scope": "Synthetic Xvfb and authored user-space TCP proxy delay; not natural network jitter, local Unix socket, WSLc, MAP01, or model/provider."
+}

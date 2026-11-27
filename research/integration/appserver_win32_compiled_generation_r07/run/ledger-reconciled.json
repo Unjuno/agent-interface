@@ -1,0 +1,280 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "attempt_id": "appserver-win32-coordinate-r07",
+      "ended_ns": 665524812523600,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/appserver-win32-coordinate-r07.request.bin",
+          "sha256": "2b2149f47046198533b5c419e6380a0849644fba4907d5729082fe564022e0f2"
+        },
+        {
+          "path": "raw/appserver-win32-coordinate-r07.response.bin",
+          "sha256": "26911f022392d59e574d25847e9249da1d349134596916bf11fb320ca816d6c9"
+        }
+      ],
+      "response_status": "raw_retained",
+      "seq": 1,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665520969597400,
+      "status": "completed",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10273,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0,
+        "status": "reported"
+      }
+    },
+    {
+      "call_id": "compiled-observe-2",
+      "ended_ns": 665524849587900,
+      "kind": "tool_call",
+      "method": "interface_observe",
+      "model_attempt_id": "appserver-win32-coordinate-r07",
+      "raw_refs": [
+        {
+          "path": "raw/tool-767bbe91098e6efd5def9c4b288862184796ed077851a1355887682e0465fc4d.tool-request.bin",
+          "sha256": "3babd405e9ff93ff0c90733a2ead03b63f00417ffe039b1a20d3a5fbcf92f9bf"
+        },
+        {
+          "path": "raw/tool-767bbe91098e6efd5def9c4b288862184796ed077851a1355887682e0465fc4d.tool-response.bin",
+          "sha256": "5f8b5d1d9f08ce9246e2f882c81e27c24292adbf073496216746c84c4635b599"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 2,
+        "next_id": 3,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"7ef5109db4da89b8b519c48294000d1477935b207e67b0afa68e2c4210303158\", \"bytes\": 1464, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"0fb6cdc2f0ac4f0fba9412f038ad5df1\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 288000, \"sha256\": \"e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023\", \"width\": 400, \"height\": 180, \"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"capture_started_ns\": 665524828473900, \"capture_ended_ns\": 665524829370900, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\6b028c2fe93a4f509160887f54a7dabb\\\\images\\\\a12b7b8d8a5a40ba9aa69eecb302fa30.png\", \"sha256\": \"27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea\", \"bytes\": 1195, \"width\": 400, \"height\": 180, \"source_raw_sha256\": \"e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023\", \"timing_ns\": {\"started\": 665524829835100, \"converted\": 665524839739700, \"encoded\": 665524840391000, \"written\": 665524840910800}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"0fb6cdc2f0ac4f0fba9412f038ad5df1\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 288000, \"sha256\": \"e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023\", \"width\": 400, \"height\": 180, \"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"capture_started_ns\": 665524828473900, \"capture_ended_ns\": 665524829370900, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\6b028c2fe93a4f509160887f54a7dabb\\\\images\\\\a12b7b8d8a5a40ba9aa69eecb302fa30.png\", \"sha256\": \"27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea\", \"bytes\": 1195, \"width\": 400, \"height\": 180, \"source_raw_sha256\": \"e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023\", \"timing_ns\": {\"started\": 665524829835100, \"converted\": 665524839739700, \"encoded\": 665524840391000, \"written\": 665524840910800}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 665524828473900, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\6b028c2fe93a4f509160887f54a7dabb\\\\images\\\\a12b7b8d8a5a40ba9aa69eecb302fa30.png\", \"relative_path\": \"images\\\\a12b7b8d8a5a40ba9aa69eecb302fa30.png\", \"sha256\": \"27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"0fb6cdc2f0ac4f0fba9412f038ad5df1\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"width\": 400, \"height\": 180, \"capture_started_ns\": 665524828473900, \"capture_ended_ns\": 665524829370900}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\6b028c2fe93a4f509160887f54a7dabb\", \"call_id\": \"6b028c2fe93a4f509160887f54a7dabb\"}",
+              "type": "text"
+            },
+            {
+              "annotations": null,
+              "data": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAC0CAIAAAA1l+0PAAAEcklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg4vHpCQDMEiwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CAjNPB+gOftmIlkCBY9KxYCSTcDdbj8Vh9d44P8fjfzXHuz+S+wzOdnMPjycz2m0f8gXvgxYqVQEI+WPNzuDnVj5/ptXx8/bi3/XAcweL3uBWs+e/8O35DsH5mTc4E6+wg14J16nwFix8jWN8zh+/yfKC91/Mj/BEs/i3Xg3W4nA5/k7L34ec1NvNrl5eZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRJIWBWsw4U3HmE8+OSxrr21l5uzR58807OjbV/s/XihVpOHnnz9su/8TXI4/xUrgYQlwRp/zc68tTpY8zM5nMN4x/GxBp/fe7qZDNbZjYPPfFewDqdx+LXxZcVKIOFisM5+Wx7ulQvW48l4nh8M1vzHBnttX8//Y10O1tiKlUDC9WBtzdy1e3v9fLAmZzI/7CAZg2u1d6zfGay3I1wO1qnL8mzFSiDhw09Yh7uM95o/9PyYh8E6e3bz6/D585eDdedKHu61nc/4EONgTU5ma8VKIOFKsA5X5oW79uPBmn/Cuh+sbzmjm9svTGDmYt4JlicsDi0J1s3X47fmj3vtrcNgTe574eHu1LR/Z7Bm9p0cZDDhFSuBhFXB+rrntnfe3sbJW3l70OfRTo0zM5PDfV9GeDvmYPveSe0devJMBxObmcl2Am/P6O1M3k5gcM8MLtfe9FasBBJ+4q81TK5SmLRiJZCwJFgzzyxw2YqVQMKqJ6zJ/3rABStWAgn+RDKQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAxn8bDBwLeN+pzQAAAABJRU5ErkJggg==",
+              "meta": null,
+              "mimeType": "image/png",
+              "type": "image"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 665524826100200,
+        "sdk_return_ns": 665524843936100,
+        "status": "returned",
+        "tool": "interface_observe"
+      },
+      "seq": 2,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665524824447500
+    },
+    {
+      "call_id": "compiled-dispatch-3",
+      "ended_ns": 665525656447300,
+      "kind": "tool_call",
+      "method": "interface_dispatch",
+      "model_attempt_id": "appserver-win32-coordinate-r07",
+      "raw_refs": [
+        {
+          "path": "raw/tool-c395b1b4bc5c1979cff95a86e4c3b673ffd8167e006966e096d5c91b135cf201.tool-request.bin",
+          "sha256": "5c38e7b101a5714996b88619a8ce31873bab90bca70037fec1eaa8b37701f63f"
+        },
+        {
+          "path": "raw/tool-c395b1b4bc5c1979cff95a86e4c3b673ffd8167e006966e096d5c91b135cf201.tool-response.bin",
+          "sha256": "e98c4dee0dc7d230681e577e9f72e48b163f80865de5aeb9a87372152e28d9f3"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 3,
+        "next_id": 4,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"cc329a3b6a0630fd92a58690b8b4c706aea4ffde3a3fb2c86e24a44e3c77e7bb\", \"bytes\": 9035, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"clock.monotonic\", \"display.geometry\", \"event.feedback\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 665525450111300, \"ended_ns\": 665525583197100, \"emissions\": 22, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}]}, \"recovery_required\": false}, \"normalization\": null, \"compilation\": null, \"supervision\": {\"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"action\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"status\": \"completed\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"compiled-d8e69cf7ad8340b885dc687a198b6d88\"}, \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"clock.monotonic\", \"display.geometry\", \"event.feedback\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 665525450111300, \"ended_ns\": 665525583197100, \"emissions\": 22, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}]}, \"recovery_required\": false}, \"producer_timing\": {\"clock\": \"time.monotonic_ns\", \"factory_requested_monotonic_ns\": 665524867742300, \"factory_returned_monotonic_ns\": 665524868643300, \"process_start_called_monotonic_ns\": 665524868667700, \"process_start_returned_monotonic_ns\": 665524926521700, \"identity_verified_monotonic_ns\": 665524926593200, \"start_gate_authorized_monotonic_ns\": 665524927079800, \"child_ready_monotonic_ns\": 665525449139100}, \"release_confirmed\": true, \"task_success\": null, \"replay_allowed\": false, \"completion_custody\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"deadline_ns\": 665534815303700, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:S\", \"unicode:0063\", \"unicode:0065\", \"unicode:0066\", \"unicode:0069\", \"unicode:006F\"], \"status\": \"completed\", \"producer_identity\": {\"pid\": 22684, \"creation_time_100ns\": 134374478211193521}, \"producer_exit_code\": 0, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": null, \"cleanup_requested_monotonic_ns\": null, \"recovery_completed_monotonic_ns\": null, \"cleanup_latency_ns\": null, \"cleanup_requested_perf_counter_ns\": null, \"recovery_completed_perf_counter_ns\": null, \"cleanup_latency_perf_counter_ns\": null, \"recovery_id\": null, \"release_confirmed\": true, \"completion_release_receipt\": {\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}, \"completion_readback\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"producer_exit_confirmed_ns\": 665525633377800, \"observed_monotonic_ns\": 665525640160000, \"neutral\": true}, \"completion_readback_outcome\": \"verified\", \"completion_readback_attempt\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"completed\"}}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"authority\": {\"expires_at_ns\": 665534815303700, \"lease_id\": \"compiled-3f695c37ddab4332a37688e1aea7af3e\"}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 150, \"y\": 90}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"op\": \"wait_update\", \"timeout_ms\": 100}, {\"op\": \"text\", \"text\": \"office\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}], \"program_id\": \"compiled-d8e69cf7ad8340b885dc687a198b6d88\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 1, \"observation_seq\": 1, \"target_generations\": {\"fixture\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\"}}, \"terminal\": {\"release_all_required\": true}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"operation_invoked\": true, \"input_dispatched\": true, \"release_confirmed\": true, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"clock.monotonic\", \"display.geometry\", \"event.feedback\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 665525450111300, \"ended_ns\": 665525583197100, \"emissions\": 22, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}]}, \"recovery_required\": false}, \"normalization\": null, \"compilation\": null, \"supervision\": {\"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"action\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"status\": \"completed\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"compiled-d8e69cf7ad8340b885dc687a198b6d88\"}, \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"clock.monotonic\", \"display.geometry\", \"event.feedback\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 665525450111300, \"ended_ns\": 665525583197100, \"emissions\": 22, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}]}, \"recovery_required\": false}, \"producer_timing\": {\"clock\": \"time.monotonic_ns\", \"factory_requested_monotonic_ns\": 665524867742300, \"factory_returned_monotonic_ns\": 665524868643300, \"process_start_called_monotonic_ns\": 665524868667700, \"process_start_returned_monotonic_ns\": 665524926521700, \"identity_verified_monotonic_ns\": 665524926593200, \"start_gate_authorized_monotonic_ns\": 665524927079800, \"child_ready_monotonic_ns\": 665525449139100}, \"release_confirmed\": true, \"task_success\": null, \"replay_allowed\": false, \"completion_custody\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"deadline_ns\": 665534815303700, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:S\", \"unicode:0063\", \"unicode:0065\", \"unicode:0066\", \"unicode:0069\", \"unicode:006F\"], \"status\": \"completed\", \"producer_identity\": {\"pid\": 22684, \"creation_time_100ns\": 134374478211193521}, \"producer_exit_code\": 0, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": null, \"cleanup_requested_monotonic_ns\": null, \"recovery_completed_monotonic_ns\": null, \"cleanup_latency_ns\": null, \"cleanup_requested_perf_counter_ns\": null, \"recovery_completed_perf_counter_ns\": null, \"cleanup_latency_perf_counter_ns\": null, \"recovery_id\": null, \"release_confirmed\": true, \"completion_release_receipt\": {\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"1\": [{\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 42928762, \"pid\": 20192, \"thread_id\": 52236, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 665525583194400}, \"completion_readback\": {\"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"producer_exit_confirmed_ns\": 665525633377800, \"observed_monotonic_ns\": 665525640160000, \"neutral\": true}, \"completion_readback_outcome\": \"verified\", \"completion_readback_attempt\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"completed\"}}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"authority\": {\"expires_at_ns\": 665534815303700, \"lease_id\": \"compiled-3f695c37ddab4332a37688e1aea7af3e\"}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 150, \"y\": 90}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"op\": \"wait_update\", \"timeout_ms\": 100}, {\"op\": \"text\", \"text\": \"office\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}], \"program_id\": \"compiled-d8e69cf7ad8340b885dc687a198b6d88\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 1, \"observation_seq\": 1, \"target_generations\": {\"fixture\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\"}}, \"terminal\": {\"release_all_required\": true}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"operation_invoked\": true, \"input_dispatched\": true, \"release_confirmed\": true, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null, \"input_release_verified\": true, \"failure_detail\": null, \"validation_operation_index\": null, \"failed_operation_index\": null, \"failed_operation_effect\": null, \"execution_status\": \"completed\", \"execution_error\": null, \"execution_detail\": null, \"recovery_required\": false, \"failed_source_operation\": null, \"validation_source_operation\": null}, \"image_status\": \"no_observation\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\f31578a16cb54af1b41494fc47edc2f0\", \"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 665524864468800,
+        "sdk_return_ns": 665525642273300,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "seq": 3,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665524862588100
+    },
+    {
+      "call_id": "compiled-observe-4",
+      "ended_ns": 665525700049700,
+      "kind": "tool_call",
+      "method": "interface_observe",
+      "model_attempt_id": "appserver-win32-coordinate-r07",
+      "raw_refs": [
+        {
+          "path": "raw/tool-5451bea7635fb268b719e5d766484e8ea4bd0d169912d3e0b243689770b093d4.tool-request.bin",
+          "sha256": "f701875fb2c0b4d67c805db13c1b8a36732bcd59b1e6cf0891c69dc2ed309f2e"
+        },
+        {
+          "path": "raw/tool-5451bea7635fb268b719e5d766484e8ea4bd0d169912d3e0b243689770b093d4.tool-response.bin",
+          "sha256": "43640ad930f91f45c319ddec101e000fe2e5ee4bf397fa2f90cb78f144b7b259"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 4,
+        "next_id": 5,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"2eac2137ac8a295fd7efa6ad786d12800af3b9edf45037cb48c931f9ce5721e5\", \"bytes\": 1464, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"adbefe1cd50446dc90fc16d8565bc51d\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 288000, \"sha256\": \"dcaee772588c60e558c6f080ae1736eb2e9fb9fa724bb4accf4827557bf6b599\", \"width\": 400, \"height\": 180, \"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"capture_started_ns\": 665525675823800, \"capture_ended_ns\": 665525676678300, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\bdea8325ce444491a68cad257088e089\\\\images\\\\a689be3be63e4342aac8dc5212868ab9.png\", \"sha256\": \"3825f8339e1404d85b5344b5f271d3d747633011ee62845b11b864991d2f8253\", \"bytes\": 1287, \"width\": 400, \"height\": 180, \"source_raw_sha256\": \"dcaee772588c60e558c6f080ae1736eb2e9fb9fa724bb4accf4827557bf6b599\", \"timing_ns\": {\"started\": 665525677140700, \"converted\": 665525686936500, \"encoded\": 665525687630800, \"written\": 665525688004800}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"adbefe1cd50446dc90fc16d8565bc51d\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 288000, \"sha256\": \"dcaee772588c60e558c6f080ae1736eb2e9fb9fa724bb4accf4827557bf6b599\", \"width\": 400, \"height\": 180, \"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"capture_started_ns\": 665525675823800, \"capture_ended_ns\": 665525676678300, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\bdea8325ce444491a68cad257088e089\\\\images\\\\a689be3be63e4342aac8dc5212868ab9.png\", \"sha256\": \"3825f8339e1404d85b5344b5f271d3d747633011ee62845b11b864991d2f8253\", \"bytes\": 1287, \"width\": 400, \"height\": 180, \"source_raw_sha256\": \"dcaee772588c60e558c6f080ae1736eb2e9fb9fa724bb4accf4827557bf6b599\", \"timing_ns\": {\"started\": 665525677140700, \"converted\": 665525686936500, \"encoded\": 665525687630800, \"written\": 665525688004800}}}, \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 665525675823800, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\bdea8325ce444491a68cad257088e089\\\\images\\\\a689be3be63e4342aac8dc5212868ab9.png\", \"relative_path\": \"images\\\\a689be3be63e4342aac8dc5212868ab9.png\", \"sha256\": \"3825f8339e1404d85b5344b5f271d3d747633011ee62845b11b864991d2f8253\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"adbefe1cd50446dc90fc16d8565bc51d\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 42928762, \"frame\": \"window_client\", \"region\": [0, 0, 400, 180], \"width\": 400, \"height\": 180, \"capture_started_ns\": 665525675823800, \"capture_ended_ns\": 665525676678300}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"e266b754757043b6a8b9cb9eb344f678\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\compiled-win32-integration\\\\research\\\\integration\\\\appserver_win32_compiled_generation_r07\\\\run\\\\server\\\\bdea8325ce444491a68cad257088e089\", \"call_id\": \"bdea8325ce444491a68cad257088e089\"}",
+              "type": "text"
+            },
+            {
+              "annotations": null,
+              "data": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAC0CAIAAAA1l+0PAAAEzklEQVR4nO3cQZLaMBCGUe5/2twgWWWKGttSt4wG/uS9RYoBbLeN9Q3JIo/fACEe7x4AoEqwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhAjHawfsF/acfyo0uwoGTH8qPrbrAej8fuG2V8iMdfN/dzf5L7pmdanOHxpPL8zSP+wD2w5nj6xyfrdiw/uuKDVZ/h5qhvP9O1fHz9ePX8dD+hwSpeh7ody4+uW8G6+Sur6BOC9TNrshKs7k7WgtU63w8MVrfOFTuWH12C9ZoZXuX5QFeP63v4JVhnP67ZsfzoWg/WdDlN/yXl6s3Pa6zyzy7fJqnv52qSr5cqO7w66+Lz43M5Pm5dnOJFO53z+Qqcvv9xcHzbt7FPr3blsgzO4uozPXU6YfHz2rH86NoVrOnCG+9hvPPisdZeurp9u0cvnml3b8cHVz8WZ66PcedznF7V1vz1465Nfvp4x/Kja0uwxr9mKy/tDlZ9kukM4w3Hxxq8//jn+HD1safXs3LEhWBNx5j+2mhtPn2p+3ntWH50LQZr7Xb5l4L1eDKe843Bqr9tsNXxcf3DWg5Wa8L6GOORxnvesfzoWg/W0fR2GWz188EqTlLf7WABDK7V1bE+M1ine1gOVuuyDA7amnn589qx/Oh68zes1h1W2bYerOIk9UMUkzF1M1h3ruR0q+M840OMg1UcZjphfYzxSOPndyw/ulaCNf2kF+7atwdrfB+/NlgvOaObzy8MULmYd4L1Od+wTp/Zsfzo2hKsm4/HL9WPu/bSNFjFbRe+3LXG/sxgVbYt7uRVn3tx8unjHcuPrl3B+rrnjnfe1ZPFe/F40Oe9tfZTmWS67bc9nO5z8PzVSV0dunimg8EqkxwHOD2j00lOBxjcM4PLNZhwuvn4dIoDPD+/Y/nR9RP/W0NxlcIn27H86NoSrMp3FsiyY/nRtesbVvGvHpBix/Kjy3+RDMQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCDGH5+qfAeodYWsAAAAAElFTkSuQmCC",
+              "meta": null,
+              "mimeType": "image/png",
+              "type": "image"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 665525673759800,
+        "sdk_return_ns": 665525690872800,
+        "status": "returned",
+        "tool": "interface_observe"
+      },
+      "seq": 4,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665525671951200
+    },
+    {
+      "call_id": "task-oracle-00000000000000000000000000000005",
+      "ended_ns": 665525730068500,
+      "kind": "tool_call",
+      "method": "interface_verify_task",
+      "model_attempt_id": "appserver-win32-coordinate-r07",
+      "raw_refs": [
+        {
+          "path": "raw/tool-18d0f25fd36efd02db2b7f9312080985eca74d2cbf4bf890795ba4acde9ebe6d.tool-request.bin",
+          "sha256": "a084d20e7ec4c14a63b6212169806efe0fab6b0f2ce4a93c540f1f07ff57ce5f"
+        },
+        {
+          "path": "raw/tool-18d0f25fd36efd02db2b7f9312080985eca74d2cbf4bf890795ba4acde9ebe6d.tool-response.bin",
+          "sha256": "b6510fc8191f72b6e83e34758b6cd2f15c8b9f83ad2be2de992fda2a9cfff7e0"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 5,
+        "next_id": 6,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"verified\", \"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"task_effect\": {\"status\": \"verified\", \"task_success\": true, \"receipt\": {\"call_id\": \"f31578a16cb54af1b41494fc47edc2f0\", \"operation_id\": \"38045056ca6b4d199a2360130f48231c\", \"target_generation\": \"a02e81d46253b900835f4271e7fd08d705c76affbf3c75f7737b5f47c9fde63f\", \"oracle_id\": \"55f67b863a2e41bbaa0c459b5a2a0061\", \"outcome\": \"success\", \"observed_monotonic_ns\": 665525718286300, \"evidence_ref\": \"owned-win32-fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389\"}, \"requested_monotonic_ns\": 665525718044300, \"receipt_received_monotonic_ns\": 665525718429100}, \"task_success\": true, \"operation_invoked\": false, \"input_dispatched\": false, \"replay_allowed\": false, \"scope\": \"supervised_win32\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 665525717789200,
+        "sdk_return_ns": 665525718571100,
+        "status": "returned",
+        "tool": "interface_verify_task"
+      },
+      "seq": 5,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665525716205700
+    },
+    {
+      "ended_ns": 665525759401000,
+      "independent": true,
+      "kind": "task_score",
+      "raw_refs": [
+        {
+          "path": "raw/task-score.state.bin",
+          "sha256": "5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389"
+        }
+      ],
+      "scorer_id": "awcg-r07-server-task-oracle",
+      "seq": 6,
+      "session_id": "a719b81fe903489ea393c486512ddf69",
+      "started_ns": 665525759401000,
+      "state_sha256": "5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+      "task_success": true
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/appserver-win32-coordinate-r07.request.bin",
+      "sha256": "2b2149f47046198533b5c419e6380a0849644fba4907d5729082fe564022e0f2"
+    },
+    {
+      "path": "raw/appserver-win32-coordinate-r07.response.bin",
+      "sha256": "26911f022392d59e574d25847e9249da1d349134596916bf11fb320ca816d6c9"
+    },
+    {
+      "path": "raw/tool-767bbe91098e6efd5def9c4b288862184796ed077851a1355887682e0465fc4d.tool-request.bin",
+      "sha256": "3babd405e9ff93ff0c90733a2ead03b63f00417ffe039b1a20d3a5fbcf92f9bf"
+    },
+    {
+      "path": "raw/tool-767bbe91098e6efd5def9c4b288862184796ed077851a1355887682e0465fc4d.tool-response.bin",
+      "sha256": "5f8b5d1d9f08ce9246e2f882c81e27c24292adbf073496216746c84c4635b599"
+    },
+    {
+      "path": "raw/tool-c395b1b4bc5c1979cff95a86e4c3b673ffd8167e006966e096d5c91b135cf201.tool-request.bin",
+      "sha256": "5c38e7b101a5714996b88619a8ce31873bab90bca70037fec1eaa8b37701f63f"
+    },
+    {
+      "path": "raw/tool-c395b1b4bc5c1979cff95a86e4c3b673ffd8167e006966e096d5c91b135cf201.tool-response.bin",
+      "sha256": "e98c4dee0dc7d230681e577e9f72e48b163f80865de5aeb9a87372152e28d9f3"
+    },
+    {
+      "path": "raw/tool-5451bea7635fb268b719e5d766484e8ea4bd0d169912d3e0b243689770b093d4.tool-request.bin",
+      "sha256": "f701875fb2c0b4d67c805db13c1b8a36732bcd59b1e6cf0891c69dc2ed309f2e"
+    },
+    {
+      "path": "raw/tool-5451bea7635fb268b719e5d766484e8ea4bd0d169912d3e0b243689770b093d4.tool-response.bin",
+      "sha256": "43640ad930f91f45c319ddec101e000fe2e5ee4bf397fa2f90cb78f144b7b259"
+    },
+    {
+      "path": "raw/tool-18d0f25fd36efd02db2b7f9312080985eca74d2cbf4bf890795ba4acde9ebe6d.tool-request.bin",
+      "sha256": "a084d20e7ec4c14a63b6212169806efe0fab6b0f2ce4a93c540f1f07ff57ce5f"
+    },
+    {
+      "path": "raw/tool-18d0f25fd36efd02db2b7f9312080985eca74d2cbf4bf890795ba4acde9ebe6d.tool-response.bin",
+      "sha256": "b6510fc8191f72b6e83e34758b6cd2f15c8b9f83ad2be2de992fda2a9cfff7e0"
+    },
+    {
+      "path": "raw/task-score.state.bin",
+      "sha256": "5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}

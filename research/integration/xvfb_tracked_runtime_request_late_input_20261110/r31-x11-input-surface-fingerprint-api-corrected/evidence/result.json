@@ -1,0 +1,179 @@
+{
+  "comparisons": {
+    "candidate_equal_across_distinct_xvfb_servers": true,
+    "unix_vs_direct_tcp_same_server_candidate_equal": true,
+    "unix_vs_tcp_proxy_alias_same_server_candidate_equal": true
+  },
+  "connections": {
+    "tcp_direct_same_server": {
+      "client_protocol_version_requested": [
+        11,
+        0
+      ],
+      "client_resource_id_base": 4194304,
+      "client_resource_id_mask": 2097151,
+      "display_name": "127.0.0.1:88",
+      "server_setup_candidate": {
+        "bitmap_format_bit_order": 0,
+        "bitmap_format_scanline_pad": 32,
+        "bitmap_format_scanline_unit": 32,
+        "image_byte_order": 0,
+        "max_request_length": 65535,
+        "maximum_keycode": 255,
+        "minimum_keycode": 8,
+        "release_number": 12101007,
+        "roots": [
+          {
+            "height_px": 720,
+            "root_depth": 24,
+            "root_visual": 33,
+            "root_window_id": 1293,
+            "width_px": 1280
+          }
+        ],
+        "vendor": "The X.Org Foundation"
+      },
+      "server_setup_candidate_sha256": "150b3bf69fc09e69098ba6ff3dc600f288589a45d44c35767d31b73eadd2a39e",
+      "transport_local_address": [
+        "127.0.0.1",
+        50998
+      ],
+      "transport_peer_address": [
+        "127.0.0.1",
+        6088
+      ],
+      "x_resource_extension_present": true
+    },
+    "tcp_proxy_alias_same_server": {
+      "client_protocol_version_requested": [
+        11,
+        0
+      ],
+      "client_resource_id_base": 6291456,
+      "client_resource_id_mask": 2097151,
+      "display_name": "127.0.0.1:89",
+      "server_setup_candidate": {
+        "bitmap_format_bit_order": 0,
+        "bitmap_format_scanline_pad": 32,
+        "bitmap_format_scanline_unit": 32,
+        "image_byte_order": 0,
+        "max_request_length": 65535,
+        "maximum_keycode": 255,
+        "minimum_keycode": 8,
+        "release_number": 12101007,
+        "roots": [
+          {
+            "height_px": 720,
+            "root_depth": 24,
+            "root_visual": 33,
+            "root_window_id": 1293,
+            "width_px": 1280
+          }
+        ],
+        "vendor": "The X.Org Foundation"
+      },
+      "server_setup_candidate_sha256": "150b3bf69fc09e69098ba6ff3dc600f288589a45d44c35767d31b73eadd2a39e",
+      "transport_local_address": [
+        "127.0.0.1",
+        55326
+      ],
+      "transport_peer_address": [
+        "127.0.0.1",
+        6089
+      ],
+      "x_resource_extension_present": true
+    },
+    "unix_direct_distinct_server": {
+      "client_protocol_version_requested": [
+        11,
+        0
+      ],
+      "client_resource_id_base": 2097152,
+      "client_resource_id_mask": 2097151,
+      "display_name": ":90",
+      "server_setup_candidate": {
+        "bitmap_format_bit_order": 0,
+        "bitmap_format_scanline_pad": 32,
+        "bitmap_format_scanline_unit": 32,
+        "image_byte_order": 0,
+        "max_request_length": 65535,
+        "maximum_keycode": 255,
+        "minimum_keycode": 8,
+        "release_number": 12101007,
+        "roots": [
+          {
+            "height_px": 720,
+            "root_depth": 24,
+            "root_visual": 33,
+            "root_window_id": 1293,
+            "width_px": 1280
+          }
+        ],
+        "vendor": "The X.Org Foundation"
+      },
+      "server_setup_candidate_sha256": "150b3bf69fc09e69098ba6ff3dc600f288589a45d44c35767d31b73eadd2a39e",
+      "transport_local_address": "",
+      "transport_peer_address": "/tmp/.X11-unix/X90",
+      "x_resource_extension_present": true
+    },
+    "unix_direct_same_server": {
+      "client_protocol_version_requested": [
+        11,
+        0
+      ],
+      "client_resource_id_base": 2097152,
+      "client_resource_id_mask": 2097151,
+      "display_name": ":88",
+      "server_setup_candidate": {
+        "bitmap_format_bit_order": 0,
+        "bitmap_format_scanline_pad": 32,
+        "bitmap_format_scanline_unit": 32,
+        "image_byte_order": 0,
+        "max_request_length": 65535,
+        "maximum_keycode": 255,
+        "minimum_keycode": 8,
+        "release_number": 12101007,
+        "roots": [
+          {
+            "height_px": 720,
+            "root_depth": 24,
+            "root_visual": 33,
+            "root_window_id": 1293,
+            "width_px": 1280
+          }
+        ],
+        "vendor": "The X.Org Foundation"
+      },
+      "server_setup_candidate_sha256": "150b3bf69fc09e69098ba6ff3dc600f288589a45d44c35767d31b73eadd2a39e",
+      "transport_local_address": "",
+      "transport_peer_address": "/tmp/.X11-unix/X88",
+      "x_resource_extension_present": true
+    }
+  },
+  "host_process_identity": [
+    {
+      "display_number": 88,
+      "lock_file": "/tmp/.X88-lock",
+      "server_cmdline": "Xvfb :88 -screen 0 1280x720x24 -listen tcp -noreset -ac",
+      "server_pid": 8,
+      "server_start_ticks": 850344,
+      "socket_file": "/tmp/.X11-unix/X88",
+      "unix_socket_device": 130,
+      "unix_socket_inode": 193254
+    },
+    {
+      "display_number": 90,
+      "lock_file": "/tmp/.X90-lock",
+      "server_cmdline": "Xvfb :90 -screen 0 1280x720x24 -listen tcp -noreset -ac",
+      "server_pid": 9,
+      "server_start_ticks": 850344,
+      "socket_file": "/tmp/.X11-unix/X90",
+      "unix_socket_device": 130,
+      "unix_socket_inode": 193256
+    }
+  ],
+  "interpretation": "An equal candidate across distinct Xvfb processes is not a unique input-surface identity; a mismatch across aliases to server :88 means the candidate is not alias-stable.",
+  "observed_monotonic_ns": 8503740723529,
+  "schema": "agent-interface/x11-input-surface-fingerprint-r31-v1",
+  "scope": "local Xvfb only; read-only setup metadata, no input"
+}

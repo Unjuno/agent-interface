@@ -1,0 +1,32 @@
+test_cancel_during_final_generation_read_sends_no_compensating_input (runtime.cli_v1.test_mcp_win32_backend_composition.GuardedWin32BackendCompositionTests.test_cancel_during_final_generation_read_sends_no_compensating_input) ... Executing <Task pending name='Task-2' coro=<GuardedWin32BackendCompositionTests.test_cancel_during_final_generation_read_sends_no_compensating_input() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_backend_composition.py:254> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\futures.py:387, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.703 seconds
+FAIL
+
+======================================================================
+FAIL: test_cancel_during_final_generation_read_sends_no_compensating_input (runtime.cli_v1.test_mcp_win32_backend_composition.GuardedWin32BackendCompositionTests.test_cancel_during_final_generation_read_sends_no_compensating_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_backend_composition.py", line 254, in test_cancel_during_final_generation_read_sends_no_compensating_input
+    await self._run_case(accept=False, cancel_before_gate=True)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_backend_composition.py", line 173, in _run_case
+    self.assertEqual(cancellation["status"], "unknown", result)
+AssertionError: 'recovered' != 'unknown'
+- recovered
++ unknown
+ : {'call_id': '9a027fd97487475691ed52de4fc6ddbf', 'action': {'operation_id': 'dddddddddddddddddddddddddddddddd', 'target_generation': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': {'operation_id': 'f279bd17a8764798acb78d6aa1b4ef7f', 'action_operation_id': 'dddddddddddddddddddddddddddddddd', 'target_generation': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', 'status': 'recovered', 'release_confirmed': True, 'task_success': None, 'replay_allowed': False, 'result': {'operation_id': 'dddddddddddddddddddddddddddddddd', 'target_generation': 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', 'deadline_ns': 425854156000000, 'obligations': ['key:CTRL'], 'status': 'recovered', 'producer_identity': {'pid': 9340, 'creation_time_100ns': 1000009340}, 'producer_exit_code': -15, 'cleanup_deadline_ns': 425844187000000, 'recovery_id': '312c31a5da10481ea043f5b50cb002e9', 'release_confirmed': True, 'task_success': None, 'replay_allowed': False, 'uncertainty': None, 'phase': 'recovered'}, 'owner_phase': 'recovered'}, 'task_effect': None, 'operation_invoked': False, 'input_dispatched': False, 'task_success': None, 'replay_allowed': False}
+
+----------------------------------------------------------------------
+Ran 1 test in 1.861s
+
+FAILED (failures=1)

@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/chromium-public-compiled-caller-r09-readonly-recheck-v1",
+  "observed_at_utc": "2026-10-21T01:54:39.070005+00:00",
+  "method": "Copied the r09 raw inputs and auditor to a temporary directory; recomputed the audit without editing the frozen packet. Independently checked every entry in artifact-sha256-r09.txt.",
+  "run_id": "chromium-public-compiled-standard-caller-live-r09-20261021",
+  "audit_exit_code": 0,
+  "recomputed_status": "PASS_POLLING_BRANCH_SCOPED_SINGLE_TRIAL",
+  "stored_audit_identical": true,
+  "artifact_manifest_entries": 317,
+  "artifact_manifest_mismatches": [],
+  "verified_claims": {
+    "pending_events": 19,
+    "response_delay_ns": 1602359590,
+    "provider_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 13336,
+      "output_tokens": 143,
+      "reasoning_output_tokens": 0
+    },
+    "independent_score": true,
+    "runtime_task_success": null
+  },
+  "limits": [
+    "single Chromium/App Server trial",
+    "local synthetic form, not live desktop/MAP01",
+    "not a matched efficiency or reliability result",
+    "source snapshot remains dirty-worktree evidence"
+  ]
+}

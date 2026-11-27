@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_bound_source_cannot_be_relabelled_before_ordinary_send (test_owned_owner_backend_adapter.OwnedBackendTests.test_bound_source_cannot_be_relabelled_before_ordinary_send)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 175, in test_bound_source_cannot_be_relabelled_before_ordinary_send
+    self.assertIsNotNone(adapter.obligation_snapshot(),'observed malformed source must retain custody')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : observed malformed source must retain custody
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

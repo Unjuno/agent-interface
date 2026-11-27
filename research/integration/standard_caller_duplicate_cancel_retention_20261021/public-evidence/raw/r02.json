@@ -1,0 +1,174 @@
+{
+  "call_id": "CALL_R02",
+  "first_cancel": {
+    "already_requested": false,
+    "cleanup_status": "UNKNOWN",
+    "input_dispatched": false,
+    "late_server_request_possible": true,
+    "owner_client_disconnect": {
+      "elapsed_ms": 2.5,
+      "status": "disconnected",
+      "worker_retired": true
+    },
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {
+        "CTRL": 1
+      }
+    },
+    "owner_input_obligations_live_read": {
+      "obligations": {
+        "buttons": [],
+        "keys": {
+          "CTRL": 1
+        }
+      },
+      "status": "snapshot"
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_process_exitcode": -15,
+    "owner_process_retired": true,
+    "owner_release_attempt": {
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 12,
+        "verified": true
+      },
+      "status": "readback_verified"
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "review_required": true,
+    "status": "cancel_requested",
+    "task_success": null
+  },
+  "first_cancel_finished_ns": 209910484000000,
+  "first_cancel_started_ns": 209910468000000,
+  "initial_owner_keys_down": [
+    1
+  ],
+  "interpretation": {
+    "one_release_attempt": true,
+    "separate_retained_cancellation": false,
+    "stable_cancel_operation_id": false
+  },
+  "release_attempt_count": 1,
+  "second_cancel": {
+    "input_dispatched": false,
+    "release_confirmed": false,
+    "status": "not_active"
+  },
+  "second_cancel_finished_ns": 209910484000000,
+  "second_cancel_started_ns": 209910484000000,
+  "source_revision": "e892485a003a2cce62bb6ee6c4ee5bf29949b058",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "191913c48207a80a5475a75e6edf36a3e64bd52a799b348c20ca4137d4aab41e",
+    "runtime/cli_v1/mcp_server.py": "39e3d63b7eb25510ed5fadfc015f2bbc9614a0f2b32eaabbf07c57d4390a683b",
+    "runtime/cli_v1/owned_guarded_session.py": "acc9c378ddd88d75572071acfd612c76eaf282da9a918d52cb9da829b3890a1a"
+  },
+  "status": "trial_complete",
+  "terminal_interface_results": {
+    "call_directory": "<TEMP>/CALL_R02",
+    "call_id": "CALL_R02",
+    "cleanup_status": "UNKNOWN",
+    "effect_status": "unknown",
+    "error": "EOFError()",
+    "late_server_request_possible": true,
+    "operation": "guarded_input",
+    "operation_invoked": false,
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 209910468000000,
+      "pid": "OWNER_PID_R02",
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "retained_call": {
+      "arguments": {
+        "alias": "field",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          6,
+          6
+        ],
+        "tail": [
+          {
+            "keys": [
+              "CTRL",
+              "a"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "backend_attempted": true,
+      "call_id": "CALL_R02",
+      "operation": "guarded_input",
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "state": "finished"
+    },
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "<SYNTHETIC_SCOPE>",
+      "compiled_surface": "<SYNTHETIC_SURFACE>",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 2,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {
+          "CTRL": 1
+        }
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 209910468000000,
+        "pid": "OWNER_PID_R02",
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": "OWNER_PID_R02",
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": true,
+      "session_id": "SESSION_R02",
+      "state": "open",
+      "target": "<SYNTHETIC_TARGET>",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "<SYNTHETIC_TARGET>": 20
+      },
+      "window_lifecycle": false
+    },
+    "status": "runtime_failed",
+    "task_success": null
+  }
+}

@@ -51,17 +51,22 @@ def _aggregate_cost(costs, attempted_calls):
     return total
 
 class ModelFailure(RuntimeError):
-    def __init__(self, message, *, call_id=None, usage=None,
-                 visible_images_submitted=None, wait_ns=None,
+    def __init__(self, message, *, call_id=None, thread_id=None, usage=None,
+                 requested_model=None, requested_effort=None,
+                 visible_images_submitted=None, wait_ns=None, cost=None,
                  typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
         if typed_status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM",
                                 "FAILED_OUTPUT"}:
             raise ValueError("known typed model failure status required")
         self.call_id = call_id
+        self.thread_id = thread_id
+        self.requested_model = requested_model
+        self.requested_effort = requested_effort
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
+        self.cost = cost
         self.typed_status = typed_status
 
 
@@ -98,9 +103,17 @@ def _optional_count(value, name):
     return value
 
 
-def _optional_call_id(value):
+def _optional_cost(value):
+    if value is None or type(value) is bool or not isinstance(value, (int, float)):
+        return None
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    return value
+
+
+def _optional_identity(value, name):
     if value is not None and (type(value) is not str or not value):
-        raise ValueError("nonempty failure call id or unavailable required")
+        raise ValueError(f"nonempty {name} or unavailable required")
     return value
 
 
@@ -108,7 +121,7 @@ def _model_result(value):
     required = {"call_id", "output", "usage", "requested_model",
                 "requested_effort", "cost", "visible_images_submitted",
                 "wait_ns"}
-    if type(value) is not dict or set(value) != required:
+    if type(value) is not dict or set(value) not in (required, required | {"thread_id"}):
         raise ValueError("exact v3 model result fields required")
     if type(value["call_id"]) is not str or not value["call_id"]:
         raise ValueError("nonempty model call id required")
@@ -116,13 +129,11 @@ def _model_result(value):
         raise ValueError("requested model identity required")
     if type(value["requested_effort"]) is not str or not value["requested_effort"]:
         raise ValueError("requested effort required")
-    if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
-        raise ValueError("cost must be numeric or unavailable")
+    if "thread_id" in value and (type(value["thread_id"]) is not str or
+                                  not value["thread_id"]):
+        raise ValueError("nonempty thread id required when supplied")
     result = copy.deepcopy(value)
-    if type(result["cost"]) is bool:
-        result["cost"] = None
-    if isinstance(result["cost"], float) and not math.isfinite(result["cost"]):
-        result["cost"] = None
+    result["cost"] = _optional_cost(value["cost"])
     result["usage"] = _usage(value["usage"])
     result["visible_images_submitted"] = _optional_count(
         value["visible_images_submitted"], "visible_images_submitted")
@@ -215,6 +226,22 @@ def _execution_decision(value):
     return copy.deepcopy(value)
 
 
+class ExecutionReceiptError(RuntimeError):
+    """An adapter returned execution evidence before auxiliary work failed.
+
+    Trusted execute adapters may use this after obtaining a validated receipt;
+    an ordinary exception with a similarly named attribute is not evidence.
+    """
+
+    def __init__(self, execution_progress, error):
+        self._execution_progress = _execution_decision(execution_progress)
+        super().__init__('execution receipt auxiliary failure: ' + _error_text(error))
+
+    @property
+    def execution_progress(self):
+        return copy.deepcopy(self._execution_progress)
+
+
 def _effect_receipt(value):
     """Keep small, retrievable evidence references while dropping raw evidence."""
     decision = _decision(value, {"succeeded", "failed", "unavailable"})
@@ -287,6 +314,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 execute_invoked = True
             value = callback(detached_payload)
         except Exception as error:
+            if name == "execute" and isinstance(error, ExecutionReceiptError):
+                # Capture the trusted adapter's returned receipt before the
+                # failure clock/journal can themselves fail.
+                returned_execution = _execution_decision(error.execution_progress)
             ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
@@ -311,41 +342,80 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         attempt_id, started = id_factory(), clock()
         attempt = {"attempt_id": attempt_id, "stage": name, "status": "started",
                    "started_ns": started, "completed_ns": None, "call_id": None,
-                   "usage": None, "visible_images_submitted": None,
+                   "thread_id": None, "requested_model": None,
+                   "requested_effort": None, "usage": None, "cost": None,
+                   "visible_images_submitted": None,
                    "wait_ns": None, "error": None}
         attempts.append(attempt); stages[name] = {"status": "started", "reason": None}
         emit({"event": "model_attempt_started", **copy.deepcopy(attempt)})
+        raw_result = None
         try:
-            result = _model_result(_require_callable(adapters, name)(copy.deepcopy(payload)))
+            raw_result = _require_callable(adapters, name)(copy.deepcopy(payload))
+            result = _model_result(raw_result)
         except Exception as error:
-            ended = clock()
-            attempt.update(status="failed", completed_ns=ended,
-                           call_id=None,
-                           error=_error_text(error))
+            # Finalize the known failure before consulting another callback.
+            attempt.update(status="failed", completed_ns=None,
+                           call_id=None, error=_error_text(error))
             stages[name] = {"status": "failed", "reason": _error_text(error)}
-            phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
-                           "elapsed_ns": ended-started})
+            completion_clock_error = None
+            try:
+                ended = clock()
+                elapsed = ended - started
+            except Exception as timing_error:
+                completion_clock_error = timing_error
+            else:
+                attempt["completed_ns"] = ended
+                phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
+                               "elapsed_ns": elapsed})
             metadata_error = None
             try:
-                for field in ("call_id", "usage", "visible_images_submitted", "wait_ns"):
+                for field in ("call_id", "thread_id", "requested_model",
+                                  "requested_effort", "usage", "cost",
+                              "visible_images_submitted", "wait_ns"):
                     try:
-                        value = getattr(error, field, None)
-                        attempt[field] = (_optional_call_id(value) if field == "call_id" else
-                                          _usage(value) if field == "usage" else _optional_count(value, field))
+                        # A returned but malformed envelope can still contain
+                        # individually valid accounting fields. Keep them on
+                        # the failed attempt without accepting its output.
+                        value = (raw_result.get(field) if type(raw_result) is dict
+                                 else getattr(error, field, None))
+                        if field in ("call_id", "thread_id", "requested_model",
+                                     "requested_effort") and value is not None:
+                            attempt[field] = _optional_identity(value, field)
+                        elif field in ("call_id", "thread_id", "requested_model",
+                                       "requested_effort"):
+                            attempt[field] = None
+                        else:
+                            if field == "usage":
+                                attempt[field] = _usage(value)
+                            elif field == "cost":
+                                attempt[field] = _optional_cost(value)
+                            else:
+                                attempt[field] = _optional_count(value, field)
                     except ValueError as invalid_metadata:
-                        metadata_error = invalid_metadata
+                        if type(raw_result) is not dict:
+                            metadata_error = invalid_metadata
             finally:
                 emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            if completion_clock_error is not None:
+                raise completion_clock_error from error
             if metadata_error is not None:
                 raise ValueError("invalid model failure accounting") from error
             raise
-        ended = clock()
-        attempt.update(status="completed", completed_ns=ended,
+        # Preserve the returned call and its accounting before another clock
+        # or journal callback can fail. Missing timing remains explicitly None.
+        attempt.update(status="completed",
                        call_id=result["call_id"], usage=result["usage"],
+                       cost=result["cost"],
+                       requested_model=result["requested_model"],
+                       requested_effort=result["requested_effort"],
                        visible_images_submitted=result["visible_images_submitted"],
                        wait_ns=result["wait_ns"])
+        if "thread_id" in result:
+            attempt["thread_id"] = result["thread_id"]
         stages[name] = {"status": "completed", "reason": None}
         model_calls.append({"attempt_id": attempt_id, "stage": name, **result})
+        ended = clock()
+        attempt["completed_ns"] = ended
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                        "elapsed_ns": ended-started})
         emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
@@ -365,7 +435,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   for field in USAGE_FIELDS}
         image_coverage = sum(row["visible_images_submitted"] is not None for row in attempts)
         wait_coverage = sum(row["wait_ns"] is not None for row in attempts)
-        costs = [row["cost"] for row in model_calls if row["cost"] is not None]
+        costs = [row["cost"] for row in attempts if row["cost"] is not None]
         if spec["route"] == "cold" and spec["coarse_origin"] == "model_produced":
             comparison = {"class": "full_cold", "omitted_stages": [],
                           "comparable_to_full_cold": True}
@@ -394,6 +464,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
                           if wait_coverage == len(attempts) else None),
                       "model_wait_coverage": wait_coverage,
+                      "cost_coverage": len(costs),
                       "cost": _aggregate_cost(costs, len(attempts)),
                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
                   "phase_timings": phases,

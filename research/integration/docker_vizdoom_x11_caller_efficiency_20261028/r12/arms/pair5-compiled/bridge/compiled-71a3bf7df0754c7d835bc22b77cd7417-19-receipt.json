@@ -1,0 +1,113 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "map01-forward-efficiency-r1",
+  "method": "one-forward-action",
+  "method_version": "1",
+  "session_scope": "native-x11:544b0b533e3b455796ec2e93f4c4282e",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "method_complete",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 3,
+      "captured_ns": 2980858021555,
+      "evidence_ref": "observation-3",
+      "evidence_digest": "cf19fb6bdd3a1a4df7f3417100c15aee4558519ac13a516d34dfa84f4d7ca858",
+      "predicates": {
+        "ready": true,
+        "moved": false
+      },
+      "observation_started_ns": 2980857705472,
+      "observation_accepted_ns": 2980910059522
+    },
+    {
+      "sequence": 7,
+      "captured_ns": 2981689088480,
+      "evidence_ref": "observation-7",
+      "evidence_digest": "60bd552a5050b7021b9f21eae7903f6400c23e660a6d4cf559dd11cc7d9e7b63",
+      "predicates": {
+        "ready": true,
+        "moved": true
+      },
+      "observation_started_ns": 2981688738669,
+      "observation_accepted_ns": 2981766788284
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "waiting",
+      "to_state": "done",
+      "action": "forward",
+      "matched_conditions": {
+        "ready": true,
+        "moved": false
+      },
+      "observation_sequence": 3,
+      "evidence_ref": "observation-3",
+      "action_id": "action-9797cded86e04100b57f4d3a697c0a5b",
+      "effect_ref": "compiled-71a3bf7df0754c7d835bc22b77cd7417-10-execution",
+      "release_verified": true,
+      "execution_started_ns": 2980920056782,
+      "execution_accepted_ns": 2981685712534
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "waiting",
+      "outcome": "action",
+      "action": "forward",
+      "matched_conditions": {
+        "ready": true,
+        "moved": false
+      },
+      "evidence_ref": "observation-3"
+    },
+    {
+      "event": "action_terminal",
+      "action": "forward",
+      "status": "completed",
+      "action_id": "action-9797cded86e04100b57f4d3a697c0a5b",
+      "release_verified": true,
+      "execution_started_ns": 2980920056782,
+      "execution_accepted_ns": 2981685712534
+    },
+    {
+      "event": "effect_checked",
+      "action": "forward",
+      "status": "succeeded",
+      "evidence_ref": "observation-7",
+      "action_id": "action-9797cded86e04100b57f4d3a697c0a5b",
+      "execution_accepted_ns": 2981685712534,
+      "effect_observation_captured_ns": 2981689088480,
+      "effect_observation_accepted_ns": 2981766788284,
+      "effect_verification_started_ns": 2981769197435,
+      "effect_verification_accepted_ns": 2981772185126
+    },
+    {
+      "event": "branch_selected",
+      "state": "done",
+      "outcome": "complete",
+      "action": null,
+      "matched_conditions": {
+        "ready": true,
+        "moved": true
+      },
+      "evidence_ref": "observation-7"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "observation-7",
+  "pending_effect": null,
+  "started_ns": 2980857701144,
+  "ended_ns": 2981776255470,
+  "elapsed_ns": 918554326,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

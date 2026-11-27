@@ -1,0 +1,688 @@
+{
+  "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r04",
+  "caller_kind": "mcp_stdio",
+  "dispatch_attempts": 1,
+  "effect_readback": {
+    "clicked": false,
+    "saved": true,
+    "text": "PUBLIC-MCP-OK-B741"
+  },
+  "ended_utc": "2026-10-23T14:18:00.183418+00:00",
+  "fixture": {
+    "close_posted": true,
+    "effect": {
+      "clicked": false,
+      "saved": true,
+      "text": "PUBLIC-MCP-OK-B741"
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 41814302,
+        "kind": "ready"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 85,
+        "kind": "char"
+      },
+      {
+        "code": 66,
+        "kind": "char"
+      },
+      {
+        "code": 76,
+        "kind": "char"
+      },
+      {
+        "code": 73,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 77,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 79,
+        "kind": "char"
+      },
+      {
+        "code": 75,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 66,
+        "kind": "char"
+      },
+      {
+        "code": 55,
+        "kind": "char"
+      },
+      {
+        "code": 52,
+        "kind": "char"
+      },
+      {
+        "code": 49,
+        "kind": "char"
+      },
+      {
+        "clicked": false,
+        "kind": "save",
+        "saved": true,
+        "text": "PUBLIC-MCP-OK-B741"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 41814302,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 41814302,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\fixture\\fixture-meta.json",
+    "pid": 20964,
+    "target_identity": {
+      "generation": "12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14",
+      "owner": {
+        "creation_time_100ns": 134372386785543909,
+        "pid": 20964,
+        "window_thread_id": 41828
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 456448328000000,
+      "lease_id": "valid-generation-effect-r01"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "op": "text",
+        "text": "PUBLIC-MCP-OK-B741"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "valid-generation-effect-r04",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"55465a52c26410697b4c2108be2adfa42de64e1d5c281e3f82ac1ba746cbd15c\", \"bytes\": 1476, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 456388328000000, \"ended_ns\": 456388343000000, \"emissions\": 42, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 456388343000000}]}, \"recovery_required\": false}}}, \"report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 456388328000000, \"ended_ns\": 456388343000000, \"emissions\": 42, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 41814302, \"pid\": 20964, \"thread_id\": 41828, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 456388343000000}]}, \"recovery_required\": false}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null, \"input_release_verified\": true, \"failure_detail\": null, \"validation_operation_index\": null, \"failed_operation_index\": null, \"failed_operation_effect\": null, \"execution_status\": \"completed\", \"execution_error\": null, \"execution_detail\": null, \"recovery_required\": false}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_valid_generation_effect_20261023_r04\\\\run\\\\calls\\\\9763431695ce486b91d413f75ed40d4d\", \"call_id\": \"9763431695ce486b91d413f75ed40d4d\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 42,
+          "ended_ns": 456388343000000,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 456388343000000,
+              "state_query_witnesses": {
+                "17": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 41814302,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 20964,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 41828
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 41814302,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 20964,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 41828
+                  }
+                ],
+                "83": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 41814302,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 20964,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 41828
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 41814302,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 20964,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 41828
+                  }
+                ]
+              },
+              "verified": true
+            }
+          ],
+          "started_ns": 456388328000000
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9763431695ce486b91d413f75ed40d4d",
+      "call_id": "9763431695ce486b91d413f75ed40d4d",
+      "image_status": "no_observation",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "execution_detail": null,
+        "execution_error": null,
+        "execution_status": "completed",
+        "failed_operation_effect": null,
+        "failed_operation_index": null,
+        "failure_detail": null,
+        "failure_phase": null,
+        "input_release_verified": true,
+        "recovery_required": false,
+        "reported_status": "returned",
+        "validation_operation_index": null
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 42,
+              "ended_ns": 456388343000000,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 456388343000000,
+                  "state_query_witnesses": {
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 41814302,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 20964,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 41828
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 41814302,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 20964,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 41828
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 41814302,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 20964,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 41828
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 41814302,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 20964,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 41828
+                      }
+                    ]
+                  },
+                  "verified": true
+                }
+              ],
+              "started_ns": 456388328000000
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.keyboard",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1476,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 42,
+                "ended_ns": 456388343000000,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 456388343000000,
+                    "state_query_witnesses": {
+                      "17": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 41814302,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 20964,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 41828
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 41814302,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 20964,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 41828
+                        }
+                      ],
+                      "83": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 41814302,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 20964,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 41828
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 41814302,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 20964,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 41828
+                        }
+                      ]
+                    },
+                    "verified": true
+                  }
+                ],
+                "started_ns": 456388328000000
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "input.keyboard",
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "schema": "agent-interface/runtime-dispatch-result-v1",
+            "status": "returned"
+          },
+          "sha256": "55465a52c26410697b4c2108be2adfa42de64e1d5c281e3f82ac1ba746cbd15c"
+        }
+      },
+      "schema": "agent-interface/review-v1"
+    }
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"5f6530ac9fdf2eb89b74e6a68514a437ee38f75b216e5b04e14cac904439db7d\", \"bytes\": 1294, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"8f86c44b24304d2c912f8163edc2cac8\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 120000, \"sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"width\": 300, \"height\": 100, \"target\": \"fixture\", \"native_window_id\": 41814302, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"capture_started_ns\": 456388312000000, \"capture_ended_ns\": 456388312000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_valid_generation_effect_20261023_r04\\\\run\\\\calls\\\\9140f6ed95cf4f4f9bf6270abce4b93c\\\\images\\\\ed2418b0c0f148cab9b2532f089df930.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"bytes\": 869, \"width\": 300, \"height\": 100, \"source_raw_sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"timing_ns\": {\"started\": 456388312000000, \"converted\": 456388312000000, \"encoded\": 456388312000000, \"written\": 456388312000000}}}, \"target_generation\": \"12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"8f86c44b24304d2c912f8163edc2cac8\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 120000, \"sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"width\": 300, \"height\": 100, \"target\": \"fixture\", \"native_window_id\": 41814302, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"capture_started_ns\": 456388312000000, \"capture_ended_ns\": 456388312000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_valid_generation_effect_20261023_r04\\\\run\\\\calls\\\\9140f6ed95cf4f4f9bf6270abce4b93c\\\\images\\\\ed2418b0c0f148cab9b2532f089df930.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"bytes\": 869, \"width\": 300, \"height\": 100, \"source_raw_sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"timing_ns\": {\"started\": 456388312000000, \"converted\": 456388312000000, \"encoded\": 456388312000000, \"written\": 456388312000000}}}, \"target_generation\": \"12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 456388312000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_valid_generation_effect_20261023_r04\\\\run\\\\calls\\\\9140f6ed95cf4f4f9bf6270abce4b93c\\\\images\\\\ed2418b0c0f148cab9b2532f089df930.png\", \"relative_path\": \"images\\\\ed2418b0c0f148cab9b2532f089df930.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"8f86c44b24304d2c912f8163edc2cac8\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 41814302, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"width\": 300, \"height\": 100, \"capture_started_ns\": 456388312000000, \"capture_ended_ns\": 456388312000000}}, \"image_status\": \"image\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_valid_generation_effect_20261023_r04\\\\run\\\\calls\\\\9140f6ed95cf4f4f9bf6270abce4b93c\", \"call_id\": \"9140f6ed95cf4f4f9bf6270abce4b93c\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAASwAAABkCAIAAACzY5qXAAADLElEQVR4nO3cQZKbMBRFUfa/2t5BMoqLAiR9hOXXrpwzcmMQQuaa7kGy/QGitvQE4H8nQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFCmAghTIQQJkIIEyGEiRDCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFC2O0IfyBtRQlBIuT7rCgh6GmE27atXvH+KbZ/Ho7zfCbPDa+0OIdtp7L94Rk/cA8crCgh6OsjrM/h4VTjVzqXxOvH1vbhOCJc7VGE9e/mJ35DhJ+5zyoR3h1kLsJb1yvCh0T4njm8y/5Erdf1EX5E+A3mIxzeIsO/TFo77++byp8xh5nUx2nN5PVWZcDWVRe396/l/PrW4hQX7XKe+xW43H87Oe92mPblaleW5WBFCUGrIhzeTP0R+oMXzzX3Viuhu2cvXund0c4vWj9OFFg8dfH14dj6TTKc/4oSgpZE2P86rLy1OsL6TIZz6B/YP1dn/9ZTqBjh3Y2dfd4V4XAaw6/ClxUlBE1GePdbbXjU10W47fTnGYywvlvnqPPr+oc1HWHfihKC5iM8q3wSraM+H2FxJvVhOxl01qp1rt8Z4eUI0xHeWpa9FSUEhZ+Ew0P6R9VPXR9zGOHdq6vfW/v9pyN8spLDo87z6Z+iH2FxMmcrSgiaiXB4t018EvEI60/C5xG+5Yoebp+YQGUxn0ToSVjVWay7H9JEPLfOO/fWMMLisRMP4VvT/p0RVo4tDtKZ8IoSglZF+FrH82q2NhY/nvNJ96PdGqcyk+GxhxEux+xsb11U69TFK+1MrDKT8wQur+hyJpcT6NwzneVqTW9FCUGf+FcUxTsPilaUELQkwsqzBaatKCFo1ZOw+GsPTFhRQpD/3gLCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFCmAghTIQQJkIIEyGEiRDCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYX8Bin+7doxgAQEAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 869,
+          "height": 100,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9140f6ed95cf4f4f9bf6270abce4b93c\\images\\ed2418b0c0f148cab9b2532f089df930.png",
+          "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+          "source_raw_sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+          "timing_ns": {
+            "converted": 456388312000000,
+            "encoded": 456388312000000,
+            "started": 456388312000000,
+            "written": 456388312000000
+          },
+          "width": 300
+        },
+        "bytes": 120000,
+        "capture_ended_ns": 456388312000000,
+        "capture_started_ns": 456388312000000,
+        "frame": "window_client",
+        "height": 100,
+        "native_window_id": 41814302,
+        "region": [
+          0,
+          0,
+          300,
+          100
+        ],
+        "sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+        "target": "fixture",
+        "width": 300
+      },
+      "observation_id": "8f86c44b24304d2c912f8163edc2cac8",
+      "schema": "agent-interface/runtime-observation-v1",
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9140f6ed95cf4f4f9bf6270abce4b93c",
+      "call_id": "9140f6ed95cf4f4f9bf6270abce4b93c",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 456388312000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "8f86c44b24304d2c912f8163edc2cac8",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9140f6ed95cf4f4f9bf6270abce4b93c\\images\\ed2418b0c0f148cab9b2532f089df930.png",
+        "recorded_capture": {
+          "capture_ended_ns": 456388312000000,
+          "capture_started_ns": 456388312000000,
+          "frame": "window_client",
+          "height": 100,
+          "native_window_id": 41814302,
+          "region": [
+            0,
+            0,
+            300,
+            100
+          ],
+          "target": "fixture",
+          "width": 300
+        },
+        "relative_path": "images\\ed2418b0c0f148cab9b2532f089df930.png",
+        "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 869,
+              "height": 100,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9140f6ed95cf4f4f9bf6270abce4b93c\\images\\ed2418b0c0f148cab9b2532f089df930.png",
+              "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+              "source_raw_sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+              "timing_ns": {
+                "converted": 456388312000000,
+                "encoded": 456388312000000,
+                "started": 456388312000000,
+                "written": 456388312000000
+              },
+              "width": 300
+            },
+            "bytes": 120000,
+            "capture_ended_ns": 456388312000000,
+            "capture_started_ns": 456388312000000,
+            "frame": "window_client",
+            "height": 100,
+            "native_window_id": 41814302,
+            "region": [
+              0,
+              0,
+              300,
+              100
+            ],
+            "sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+            "target": "fixture",
+            "width": 300
+          },
+          "observation_id": "8f86c44b24304d2c912f8163edc2cac8",
+          "schema": "agent-interface/runtime-observation-v1",
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1294,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 869,
+                "height": 100,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_valid_generation_effect_20261023_r04\\run\\calls\\9140f6ed95cf4f4f9bf6270abce4b93c\\images\\ed2418b0c0f148cab9b2532f089df930.png",
+                "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+                "source_raw_sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+                "timing_ns": {
+                  "converted": 456388312000000,
+                  "encoded": 456388312000000,
+                  "started": 456388312000000,
+                  "written": 456388312000000
+                },
+                "width": 300
+              },
+              "bytes": 120000,
+              "capture_ended_ns": 456388312000000,
+              "capture_started_ns": 456388312000000,
+              "frame": "window_client",
+              "height": 100,
+              "native_window_id": 41814302,
+              "region": [
+                0,
+                0,
+                300,
+                100
+              ],
+              "sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+              "target": "fixture",
+              "width": 300
+            },
+            "observation_id": "8f86c44b24304d2c912f8163edc2cac8",
+            "schema": "agent-interface/runtime-observation-v1",
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "12d844e08516ac93dc2e354bed774072073da094d9f5e64184a54f1036576d14",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "5f6530ac9fdf2eb89b74e6a68514a437ee38f75b216e5b04e14cac904439db7d"
+        }
+      },
+      "schema": "agent-interface/review-v1"
+    }
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 4, \"expanded_operation_count\": 4, \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 4,
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 4,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    }
+  },
+  "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03",
+  "started_utc": "2026-10-23T14:17:58.552401+00:00",
+  "status": "PASS",
+  "tools": [
+    "interface_clock",
+    "interface_dispatch",
+    "interface_observe",
+    "interface_results",
+    "interface_validate"
+  ]
+}

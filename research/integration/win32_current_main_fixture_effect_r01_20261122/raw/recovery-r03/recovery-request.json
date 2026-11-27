@@ -1,0 +1,48 @@
+{
+  "tool": "interface_recover_orphaned_input",
+  "source_operation_id": "1ec97b426fa34de8a070d913e73b8c6d",
+  "source_target_generation": "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+  "recovery_target_generation": "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+  "obligations": [
+    "key:fixture:A:virtual_key"
+  ],
+  "source_custody_record": {
+    "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+    "operation_id": "1ec97b426fa34de8a070d913e73b8c6d",
+    "target_generation": "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "do_not_replay": true,
+    "observed_producer_live": false,
+    "late_server_request_possible": true,
+    "dispatch": {
+      "input_dispatched": null,
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false
+    },
+    "producer_identity": {
+      "pid": 11112,
+      "creation_time_100ns": 134397606232219899
+    },
+    "producer_absence_check": {
+      "foreground_hwnd": 19795702,
+      "fixture_pid": 45488,
+      "foreground_verified": true,
+      "observed_process": null,
+      "expected_creation_time_100ns": "134397606232219899",
+      "process_found": false,
+      "fixture_creation_time": "2026-11-22T03:50:06.469529+09:00",
+      "query": "Win32_Process by exact PID",
+      "exact_producer_absent": true,
+      "expected_pid": 11112,
+      "checked_at_utc": "2026-11-21T19:01:57.0092587Z",
+      "fixture_hwnd": 19795702,
+      "foreground_title": "Agent Interface Win32 Fixture"
+    },
+    "source_dispatch_report_sha256": "9cbc97742eef154feb8a393d92af7211dad94e1d8912f2716adb889da1d54ebb",
+    "source_producer_report_sha256": "168105f4cd81c209c8ac2809d1b5bea7c05107457cc642031ecb2daecff7bc5b"
+  },
+  "retry_count": 0
+}

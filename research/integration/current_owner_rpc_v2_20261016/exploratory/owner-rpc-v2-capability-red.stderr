@@ -1,0 +1,29 @@
+test_actual_strict_owner_roundtrip_and_eof_releases (__main__.OwnerRpcTests.test_actual_strict_owner_roundtrip_and_eof_releases) ... ok
+test_blocked_release_keeps_transport_close_and_owner_stop_unverified (__main__.OwnerRpcTests.test_blocked_release_keeps_transport_close_and_owner_stop_unverified) ... ok
+test_changed_generation_is_refused_by_remote_current_owner (__main__.OwnerRpcTests.test_changed_generation_is_refused_by_remote_current_owner) ... ok
+test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel (__main__.OwnerRpcTests.test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel) ... ok
+test_duplicate_id_and_lease_rebinding_close_before_second_input (__main__.OwnerRpcTests.test_duplicate_id_and_lease_rebinding_close_before_second_input) ... ok
+test_expired_or_malformed_local_source_does_not_consume_request_identity (__main__.OwnerRpcTests.test_expired_or_malformed_local_source_does_not_consume_request_identity) ... ok
+test_inconsistent_close_receipt_is_not_a_release_certificate (__main__.OwnerRpcTests.test_inconsistent_close_receipt_is_not_a_release_certificate) ... ok
+test_interrupted_close_keeps_an_unverified_repeatable_local_result (__main__.OwnerRpcTests.test_interrupted_close_keeps_an_unverified_repeatable_local_result) ... ok
+test_module_available (__main__.OwnerRpcTests.test_module_available) ... ok
+test_readiness_is_bound_to_exact_service_before_any_input (__main__.OwnerRpcTests.test_readiness_is_bound_to_exact_service_before_any_input) ... 
+  test_readiness_is_bound_to_exact_service_before_any_input (__main__.OwnerRpcTests.test_readiness_is_bound_to_exact_service_before_any_input) (fault='bad-capabilities') ... FAIL
+test_service_owner_reacts_while_rpc_idle_and_explicit_cancel_is_transferred (__main__.OwnerRpcTests.test_service_owner_reacts_while_rpc_idle_and_explicit_cancel_is_transferred) ... ok
+test_successful_raw_close_call_retires_the_same_client (__main__.OwnerRpcTests.test_successful_raw_close_call_retires_the_same_client) ... ok
+test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (__main__.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) ... ok
+test_window_source_rejected_before_send_without_canonical_service_contract (__main__.OwnerRpcTests.test_window_source_rejected_before_send_without_canonical_service_contract) ... ok
+
+======================================================================
+FAIL: test_readiness_is_bound_to_exact_service_before_any_input (__main__.OwnerRpcTests.test_readiness_is_bound_to_exact_service_before_any_input) (fault='bad-capabilities')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 274, in test_readiness_is_bound_to_exact_service_before_any_input
+    self.assertTrue(refused,'Non-boolean readiness capability must not be accepted')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Non-boolean readiness capability must not be accepted
+
+----------------------------------------------------------------------
+Ran 14 tests in 4.780s
+
+FAILED (failures=1)

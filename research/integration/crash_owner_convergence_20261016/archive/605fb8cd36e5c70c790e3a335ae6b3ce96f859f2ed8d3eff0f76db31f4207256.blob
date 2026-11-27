@@ -1,0 +1,42 @@
+{
+  "schema": "v39-x11-shared-key-source-a34-audit-v1",
+  "allocation_id": "V39-X11-SHARED-KEY-SOURCE-A34-20261012-01",
+  "status": "STOP_UNFROZEN_INVOCATION_AND_MISSING_EXTERNAL_PRESS_OBSERVATION",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "candidate_recorded_pass": true,
+  "frozen_before_invocation": false,
+  "freeze_file_sha256": "8dace4b74c04c4037a7c00a58261d50d11d20d52516cf423ab8c37c717c7e5a4",
+  "raw_sha256": "83927e6b7c3df96d9961ccac3d0541ff43f59024e5108931971ca3fd5e1320c7",
+  "owner_receipt_sha256": "05821bc91dad520f01e3caecdb929ece40bace834443f66d199385d97193467a",
+  "observations": {
+    "keymap_down_after_external_press": true,
+    "key_release_observer_events": 1,
+    "external_client_keypress_issued": true,
+    "keymap_down_after_owner_press": true,
+    "keymap_down_after_owner_release": false,
+    "owner_receipt_verified": true,
+    "owner_release_keyup_verified": true,
+    "external_press_observer_events": 0,
+    "external_client_logical_hold_test_flag": true,
+    "initial_keymap_down": false
+  },
+  "decision": "Do not accept candidate PASS: the frozen candidate was not verified before its sole invocation, and no external-client KeyPress was observed by the observer. The remaining server keymap values are recorded as exploratory evidence only; no repeat of A34.",
+  "scope": "Xvfb/core XTest path only; no physical keyboard, game, or model.",
+  "dependency_hashes_checked_after_execution": true,
+  "dependency_hashes_match": true,
+  "dependency_hash_checks": [
+    {
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "path": "research/live_control/input_owner_process_v1.py",
+      "match": true,
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050"
+    },
+    {
+      "expected": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "path": "research/live_control/lease_release_v1.py",
+      "match": true,
+      "actual": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+    }
+  ]
+}

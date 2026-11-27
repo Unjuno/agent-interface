@@ -1,0 +1,45 @@
+{
+  "sequence": 13,
+  "cue": "unknown",
+  "reason": "current-image cue; not saved-workbook completion",
+  "started_ns": 5343583641,
+  "command": [
+    "tesseract",
+    "stdin",
+    "stdout",
+    "--psm",
+    "11",
+    "tsv"
+  ],
+  "extra_capture": false,
+  "input_dispatched": false,
+  "source_context_verified": true,
+  "artifact_sha256": "6c43db103fd8a9a72a7ab80ff098597849b1a112284fa056d790828b3d87b71b",
+  "crop_attempts": [
+    {
+      "cell": "A1",
+      "box": [
+        95,
+        144,
+        126,
+        159
+      ],
+      "sha256": "01d6f2c97fa61809dadc0adaa3ee8a36517cde367feeb22a47581738a9a60fc3",
+      "timeout_seconds": 1.0,
+      "returncode": 0
+    },
+    {
+      "cell": "A2",
+      "box": [
+        95,
+        161,
+        126,
+        176
+      ],
+      "sha256": "191dfdbc81707aa6a4105f0803db1fc19eca69cea7f19fa7896f8cb653bb17ec",
+      "timeout_seconds": 1.0,
+      "returncode": 0
+    }
+  ],
+  "ended_ns": 5472853880
+}

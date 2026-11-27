@@ -1,0 +1,57 @@
+{
+  "attempt_id": "issue57-r90-a01",
+  "audit_errors": [
+    "missing_or_invalid:compiled-result.json:[Errno 2] No such file or directory: '/evidence/r90-a01/compiled-result.json'",
+    "missing_or_invalid:artifact-read-before-close.json:[Errno 2] No such file or directory: '/evidence/r90-a01/artifact-read-before-close.json'",
+    "missing_or_invalid:verify-task.json:[Errno 2] No such file or directory: '/evidence/r90-a01/verify-task.json'"
+  ],
+  "details": {
+    "artifact_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+    "crop": [
+      0,
+      126,
+      1218,
+      742
+    ],
+    "crop_diagnostics": {},
+    "crop_observations": [],
+    "limitations": [
+      "one scripted Docker/Xvfb Calc attempt; no provider/model usage",
+      "crop rectangle was selected from r87 posthoc review and tested only once prospectively",
+      "no integrated efficiency, broad reliability, WSLc, MAP01 or product completion claim"
+    ],
+    "method_outcome": null,
+    "method_reason": null,
+    "task_cells": null
+  },
+  "failed_gates": [
+    "two_enter_save_transitions_released",
+    "save_effect_callback_and_request_timing",
+    "save_request_bound_to_call_attempt_and_generations",
+    "final_observations_have_expected_calc_predicates",
+    "r87_candidate_crop_identical_with_full_frames_retained",
+    "preclose_fods_exact_task",
+    "parent_verifier_matches_preclose_artifact_and_request",
+    "close_verified_neutral_release",
+    "exact_target_launcher_clean_exit",
+    "no_replay_and_task_success",
+    "raw_fods_matches_independent_parent_hash",
+    "live_container_exit_zero"
+  ],
+  "gates": {
+    "close_verified_neutral_release": false,
+    "exact_target_launcher_clean_exit": false,
+    "final_observations_have_expected_calc_predicates": false,
+    "live_container_exit_zero": false,
+    "no_replay_and_task_success": false,
+    "parent_verifier_matches_preclose_artifact_and_request": false,
+    "preclose_fods_exact_task": false,
+    "r87_candidate_crop_identical_with_full_frames_retained": false,
+    "raw_fods_matches_independent_parent_hash": false,
+    "save_effect_callback_and_request_timing": false,
+    "save_request_bound_to_call_attempt_and_generations": false,
+    "two_enter_save_transitions_released": false
+  },
+  "schema": "agent-interface/issue57-r90-crop-live-audit-v1",
+  "status": "FAIL_OR_UNKNOWN"
+}

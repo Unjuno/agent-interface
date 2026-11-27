@@ -1,0 +1,211 @@
+"""Admission wrapper connecting runtime core v1 to the Win32 backend."""
+from __future__ import annotations
+import threading
+from typing import Any
+
+from runtime.core_v1.contract import admit_program
+from .backend import Win32Backend, Win32BackendError, Win32ExecutionError
+
+
+class Win32RuntimeSession:
+    def __init__(self, backend: Win32Backend):
+        self.backend = backend
+        # A new binding or direct backend cleanup is not session recovery.
+        self.recovery_required = False
+        self._state_lock = threading.Lock()
+        self._dispatch_inflight = False
+        self._recovery_inflight = False
+        self._recovery_requested_during_dispatch = False
+
+    def _record_release(self, releases):
+        verified = isinstance(releases, list) and bool(releases) and all(
+            isinstance(row, dict) and row.get("verified") is True
+            and row.get("keys_down") == [] and row.get("buttons_down") == []
+            and row.get("keys_unknown") == [] and row.get("buttons_unknown") == []
+            for row in releases
+        )
+        with self._state_lock:
+            if verified and self._recovery_requested_during_dispatch:
+                # The in-flight producer has returned and its terminal
+                # release/readback proves neutral state after the request.
+                self.recovery_required = False
+                self._recovery_requested_during_dispatch = False
+            else:
+                self.recovery_required = self.recovery_required or not verified
+        return verified
+
+    def recover_input(self):
+        """Attempt neutralization once; never replay the failed program."""
+        with self._state_lock:
+            if self._dispatch_inflight:
+                self.recovery_required = True
+                self._recovery_requested_during_dispatch = True
+                return {"status": "pending", "error": "INPUT_PRODUCER_UNRESOLVED",
+                        "release_attempted": False, "recovery_required": True,
+                        "task_success": None, "replay_allowed": False}
+            if self._recovery_inflight:
+                return {"status": "pending", "error": "INPUT_RECOVERY_IN_PROGRESS",
+                        "release_attempted": False, "recovery_required": True,
+                        "task_success": None, "replay_allowed": False}
+            if not self.recovery_required:
+                return {"status": "refused", "error": "INPUT_RECOVERY_NOT_REQUIRED",
+                        "release_attempted": False, "recovery_required": False}
+            self._recovery_inflight = True
+        try:
+            try:
+                release = self.backend.release_all()
+            except Exception as error:
+                return {"status": "recovery_failed", "error": repr(error),
+                        "release_attempted": True, "recovery_required": True}
+            verified = self._record_release([release])
+            with self._state_lock:
+                if verified:
+                    self.recovery_required = False
+                required = self.recovery_required
+            return {"status": "input_recovered" if verified else "recovery_failed",
+                    "release_attempted": True, "release": release,
+                    "recovery_required": required,
+                    "task_success": None, "replay_allowed": False}
+        finally:
+            with self._state_lock:
+                self._recovery_inflight = False
+
+    def dispatch(
+        self,
+        program: dict[str, Any],
+        *,
+        current_observation_seq: int,
+        current_binding_revision: int,
+        now_ns: int | None = None,
+    ) -> dict[str, Any]:
+        with self._state_lock:
+            if self._recovery_inflight:
+                return {"status": "pending", "error": "INPUT_RECOVERY_IN_PROGRESS",
+                        "release_attempted": False, "input_dispatched": False,
+                        "recovery_required": True, "task_success": None,
+                        "replay_allowed": False}
+            if self._dispatch_inflight:
+                self.recovery_required = True
+                self._recovery_requested_during_dispatch = True
+                return {
+                    "status": "pending",
+                    "error": "INPUT_PRODUCER_UNRESOLVED",
+                    "release_attempted": False,
+                    "input_dispatched": False,
+                    "recovery_required": True,
+                    "task_success": None,
+                    "replay_allowed": False,
+                }
+            self._dispatch_inflight = True
+        try:
+            return self._dispatch(
+                program,
+                current_observation_seq=current_observation_seq,
+                current_binding_revision=current_binding_revision,
+                now_ns=now_ns,
+            )
+        finally:
+            with self._state_lock:
+                self._dispatch_inflight = False
+
+    def _dispatch(
+        self,
+        program: dict[str, Any],
+        *,
+        current_observation_seq: int,
+        current_binding_revision: int,
+        now_ns: int | None = None,
+    ) -> dict[str, Any]:
+        if self.recovery_required:
+            return {"status": "refused", "error": "INPUT_RECOVERY_REQUIRED",
+                    "recovery_required": True, "input_dispatched": False,
+                    "required_capabilities": [], "backend_emissions": self.backend.emissions}
+        now_ns = self.backend.monotonic_ns() if now_ns is None else now_ns
+        admission = admit_program(
+            program,
+            self.backend.manifest(),
+            now_ns=now_ns,
+            current_observation_seq=current_observation_seq,
+            current_binding_revision=current_binding_revision,
+        )
+        if not admission.accepted:
+            return {
+                "status": "refused",
+                "error": admission.error,
+                "required_capabilities": list(admission.required_capabilities),
+                "backend_emissions": self.backend.emissions,
+            }
+        pending = (getattr(self.backend, "held_keys", None) or
+                   getattr(self.backend, "held_buttons", None) or
+                   getattr(self.backend, "pending_unicode_ups", None))
+        if pending and any(op["op"] != "release_all" for op in program["ops"]):
+            # A new session wrapper is not recovery of backend-owned custody.
+            self.recovery_required = True
+            return {"status": "refused", "error": "INPUT_RECOVERY_REQUIRED",
+                    "recovery_required": True, "input_dispatched": False,
+                    "required_capabilities": list(admission.required_capabilities),
+                    "backend_emissions": self.backend.emissions}
+        try:
+            self.backend.preflight(program)
+        except Win32BackendError as error:
+            try:
+                release = self.backend.release_all()
+            except Exception as cleanup_error:
+                self.recovery_required = True
+                return {
+                    "status": "execution_failed",
+                    "error": "BACKEND_CLEANUP",
+                    "preflight_error": str(error),
+                    "cleanup_error": {"type": type(cleanup_error).__name__,
+                                      "detail": str(cleanup_error)},
+                    "required_capabilities": list(admission.required_capabilities),
+                    "backend_emissions": self.backend.emissions,
+                    "release": {"verified": False},
+                    "input_dispatched": False,
+                    "recovery_required": True,
+                    "task_success": None,
+                    "replay_allowed": False,
+                }
+            self._record_release([release])
+            return {
+                "status": "refused",
+                "error": "BACKEND_CONSTRAINT",
+                "detail": str(error),
+                "required_capabilities": list(admission.required_capabilities),
+                "backend_emissions": self.backend.emissions,
+                "release": release,
+                "recovery_required": self.recovery_required,
+            }
+        try:
+            result = self.backend.execute(program)
+        except Win32BackendError as error:
+            release = getattr(error, "release_receipt", None)
+            cleanup_error = getattr(error, "cleanup_error", None)
+            if isinstance(error, Win32ExecutionError):
+                if release is not None and cleanup_error is None:
+                    self._record_release([release])
+                else:
+                    self.recovery_required = True
+            # A plain Win32BackendError from execute is its repeated preflight
+            # refusal. The backend raises it before the operation loop emits input.
+            return {
+                "status": "execution_failed",
+                "error": "BACKEND_EXECUTION",
+                "release": release,
+                "cleanup_error": cleanup_error,
+                "detail": str(error),
+                "backend_emissions": self.backend.emissions,
+                "recovery_required": self.recovery_required,
+            }
+        except Exception:
+            self.recovery_required = True
+            raise
+        releases = result.get("releases", []) if isinstance(result, dict) else None
+        verified = self._record_release(releases)
+        return {
+            "status": "completed" if verified else "release_unverified",
+            "admission": "accepted",
+            "required_capabilities": list(admission.required_capabilities),
+            "execution": result,
+            "recovery_required": self.recovery_required,
+        }

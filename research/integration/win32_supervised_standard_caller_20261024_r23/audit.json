@@ -1,0 +1,301 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r23",
+  "checks": [
+    {
+      "evidence": {
+        "cancellation": "recovered",
+        "dispatch_attempts": 1,
+        "source_commit": "dc78ace44de7027ef63b0e83ff012fe0d01099e7",
+        "tracked_clean": true
+      },
+      "name": "frozen_source_and_one_cancelled_dispatch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "producer": {
+          "creation_time_100ns": 134372666613798191,
+          "observed_monotonic_ns": 484370304426500,
+          "pid": 24384,
+          "status": "exited",
+          "wait_started_monotonic_ns": 484370304172100
+        },
+        "q_down": {
+          "callback_entry_ns": 484370055889800,
+          "callback_return_ns": 484370304244500,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        "q_up": {
+          "callback_entry_ns": 484370308743400,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      },
+      "name": "producer_retired_and_hook_forwarded",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_release": null,
+        "cancel_release": true,
+        "readback": {
+          "exit_code": 0,
+          "expected_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "generation_after": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "generation_before": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "pid": 48508,
+          "process_retired": true,
+          "q_down": false,
+          "returned_monotonic_ns": 484370550950500,
+          "started_monotonic_ns": 484370550389900,
+          "state_witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 145885460,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 8940,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 26784
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 145885460,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 8940,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 26784
+            }
+          ],
+          "status": "observed"
+        }
+      },
+      "name": "independent_same_generation_release",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-PRECANCEL-20261024-R23"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-PRECANCEL-20261024-R23"
+        }
+      },
+      "name": "pre_cancel_effect_is_distinct",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation_before": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+        "observation": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1568,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r23\\run\\calls\\7bf5067d140a43b68c829a9ce7522eac\\images\\c958c6d7507b43a79ca185d33ba0ec34.png",
+              "sha256": "6e3728dc693a0e73d27284b08f400ae656ba1853731cb6562a814d1dc982d8e9",
+              "source_raw_sha256": "db028c1621ddd5fe5a5e837c08f0fdf03a124bfffe14cf856af4ddc4f1ac39d8",
+              "timing_ns": {
+                "converted": 484370562000000,
+                "encoded": 484370562000000,
+                "started": 484370546000000,
+                "written": 484370562000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 484370546000000,
+            "capture_started_ns": 484370546000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 145885460,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "db028c1621ddd5fe5a5e837c08f0fdf03a124bfffe14cf856af4ddc4f1ac39d8",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "601ea9532eee49b9a2b74a0159b35d5e",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "c5665bf16160460bad106f2c95b66974",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "target_generation_consistency": "matched"
+        }
+      },
+      "name": "fresh_post_recovery_observation_matches_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "first_call_id": "4e0fdcf099c04cb09570c2d4b5984e7d",
+        "new_call_id": null,
+        "program": {
+          "authority": {
+            "expires_at_ns": 484460562000000,
+            "lease_id": "supervised-standard-post-recovery-r23"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "A"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "text",
+              "text": "SUPERVISED-MCP-POSTRECOVER-20261024-R23"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-post-recovery-r23",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 2,
+            "target_generations": {
+              "fixture": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        }
+      },
+      "name": "new_program_lease_and_dispatch_identity",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action": {},
+        "top_status": null
+      },
+      "name": "fresh_action_completed_after_recovery",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": {},
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-POSTRECOVER-20261024-R23"
+        }
+      },
+      "name": "post_recovery_effect_is_exact_and_persisted",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "first_task_success": null,
+        "second_result": null,
+        "second_task_success": null
+      },
+      "name": "task_success_is_not_inferred",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close": {
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "closed",
+          "task_success": null
+        },
+        "emergency_q_up": null,
+        "fixture_exit": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_exited": true,
+        "window_exists_after_exit": false
+      },
+      "name": "cleanup_and_no_emergency_input",
+      "passed": true
+    }
+  ],
+  "claims_excluded": [
+    "indefinite native blocking",
+    "hard real-time bound beyond the frozen finite windows",
+    "atomic capture-to-input fencing",
+    "runtime-integrated task_success (must remain null)",
+    "MAP01",
+    "matched efficiency",
+    "broad reliability",
+    "release while the callback remains blocked",
+    "task effect after recovery (the frozen effect precedes the cancellation point)",
+    "runtime-integrated task_success (must remain null)",
+    "MAP01",
+    "matched efficiency",
+    "broad reliability",
+    "WSLc/Docker portability",
+    "replay of the canceled program"
+  ],
+  "passed": 6,
+  "raw_sha256": "b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8",
+  "schema": "win32-supervised-standard-caller-r23-audit-v1",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 10
+}

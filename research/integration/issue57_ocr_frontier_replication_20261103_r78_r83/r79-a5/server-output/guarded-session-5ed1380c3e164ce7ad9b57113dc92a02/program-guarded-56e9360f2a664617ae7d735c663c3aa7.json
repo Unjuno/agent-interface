@@ -1,0 +1,84 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-56e9360f2a664617ae7d735c663c3aa7",
+  "source": {
+    "observation_seq": 3,
+    "binding_revision": 1
+  },
+  "authority": {
+    "lease_id": "native-x11-1ec9db0bc3254fc3bc703a97769ac83f",
+    "expires_at_ns": 5005584266644
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "calc"
+    },
+    {
+      "op": "text",
+      "text": "7"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 1
+    },
+    {
+      "op": "text",
+      "text": "3"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 1
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Return"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "8"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 1
+    },
+    {
+      "op": "text",
+      "text": "6"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 1
+    },
+    {
+      "op": "text",
+      "text": "4"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Return"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

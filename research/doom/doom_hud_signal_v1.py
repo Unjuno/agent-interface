@@ -98,6 +98,13 @@ class DoomStatusNumberReader:
             patch = Image.fromarray(_render_patch(lumps[name], palette))
             resized = np.asarray(patch.resize(glyph_size, Image.Resampling.NEAREST))
             self.templates.append((resized[:, :, :3], resized[:, :, 3] > 0))
+        # A leading unrecognized digit must not be assumed blank. Compare it
+        # with the hash-bound status-bar background for this exact viewport.
+        if "STBAR" not in lumps:
+            raise ValueError("STBAR background required")
+        bar = Image.fromarray(_render_patch(lumps["STBAR"], palette)).convert("RGB")
+        self._status_bar = np.asarray(bar.resize((640, 76), Image.Resampling.NEAREST))
+        self._status_bar_top = 404
         self.wad_sha256 = expected_wad_sha256
         self.signal_id = signal_id
         self.local_anchor = local_anchor
@@ -159,6 +166,8 @@ class DoomStatusNumberReader:
                 digit is not None for digit in digits[:first]):
             return self._unknown("invalid_right_aligned_number", sequence, capture_ns, binding,
                                  {"slots": slots})
+        if not self._leading_blanks_match_background(number, first):
+            return self._unknown("unverified_leading_blank", sequence, capture_ns, binding)
         value = int("".join(str(digit) for digit in digits[first:]))
         return {
             "format": "observable-signal-v1", "status": "observed",
@@ -168,6 +177,20 @@ class DoomStatusNumberReader:
             "evidence": "hash-bound WAD glyph foreground exact-match",
             "wad_sha256": self.wad_sha256,
         }
+
+    def _leading_blanks_match_background(self, number, first):
+        width, height = self.glyph_size
+        local_x, local_y = self.local_anchor
+        y = local_y - self._status_bar_top
+        for index in range(first):
+            x = local_x + index * width
+            if x < 0 or y < 0 or x + width > self._status_bar.shape[1] or y + height > self._status_bar.shape[0]:
+                return False
+            expected = self._status_bar[y:y + height, x:x + width]
+            actual = number[:, index * width:(index + 1) * width]
+            if actual.shape != expected.shape or float(np.all(actual == expected, axis=2).mean()) < 0.95:
+                return False
+        return True
 
     def _unknown(self, reason, sequence, capture_ns, binding, detail=None):
         row = {

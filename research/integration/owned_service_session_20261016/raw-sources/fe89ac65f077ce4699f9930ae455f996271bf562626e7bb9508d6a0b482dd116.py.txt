@@ -1,0 +1,454 @@
+"""Explicit private-socket boundary for the current process-aware input owner.
+
+No socket/process/display is created here. Window observer transfer, durable
+crash recovery and production session selection remain separate qualifications.
+"""
+import copy
+import json
+import math
+import socket
+import sys
+import threading
+import time
+
+from lease_release_v1 import Lease
+from target_process_identity_v1 import valid_source
+
+SCHEMA = 'input-owner-rpc-v2'
+READY = 'input-owner-rpc-ready-v2'
+RESPONSE = 'input-owner-rpc-response-v2'
+MAX_FRAME = 1_048_576
+MAX_REQUESTS = 256
+MAX_LEASES = 64
+OPERATIONS = frozenset({'down', 'up', 'up_batch', 'release', 'input_state', 'surface_context', 'close'})
+KEYS = frozenset({'Left', 'Right', 'Up', 'Down', 'a', 'd', 'e', 'space', 'Shift_L'})
+LEASE_FIELDS = frozenset({'deadline_ns', 'intent_token', 'expected_focus', 'expected_surface',
+    'expected_geometry', 'cancel_requested', 'focus_invalid', 'target_process_identity',
+    'target_window_identity'})
+
+
+class RpcOutcomeUnknown(RuntimeError):
+    def __init__(self, message, *, records=None, remote_error=None):
+        super().__init__(message)
+        self.records = copy.deepcopy(records)
+        self.remote_error = copy.deepcopy(remote_error)
+
+
+class RpcQuarantined(RuntimeError):
+    pass
+
+
+class RpcBusy(RuntimeError):
+    pass
+
+
+def _timeout(value):
+    if type(value) not in (int, float) or not math.isfinite(value) or not 0 < value <= 30:
+        raise ValueError('finite socket timeout in (0, 30] required')
+    return float(value)
+
+
+def _identity(value):
+    if type(value) is not str or not value or len(value) > 128:
+        raise ValueError('explicit bounded service/display identity required')
+    return value
+
+
+def _source(value, surface, deadline, *, optional=False):
+    if value is None and optional:
+        return None
+    source = tuple(value) if type(value) is list else value
+    if not valid_source(source) or source[1] != surface or source[3] != deadline:
+        raise ValueError('original source surface/deadline binding required')
+    return source
+
+
+def encode_lease(lease):
+    if lease is None:
+        return None
+    cancel = getattr(lease, 'cancel', None)
+    if not callable(getattr(cancel, 'is_set', None)):
+        raise ValueError('lease cancellation event required')
+    dto = dict(deadline_ns=getattr(lease, 'deadline', None),
+        intent_token=getattr(lease, 'intent_token', None),
+        expected_focus=getattr(lease, 'expected_focus', None),
+        expected_surface=getattr(lease, 'expected_surface', None),
+        expected_geometry=copy.deepcopy(getattr(lease, 'expected_geometry', None)),
+        cancel_requested=cancel.is_set(), focus_invalid=getattr(lease, 'focus_invalid', False),
+        target_process_identity=getattr(lease, 'target_process_identity', None),
+        target_window_identity=getattr(lease, 'target_window_identity', None))
+    # Validate before any transport write; JSON projection is an explicit wire copy.
+    dto = json.loads(json.dumps(dto, allow_nan=False))
+    _validate_lease(dto)
+    return dto
+
+
+def _validate_lease(dto):
+    if type(dto) is not dict or set(dto) != LEASE_FIELDS:
+        raise ValueError('exact v2 lease fields required')
+    deadline = dto['deadline_ns']
+    if type(deadline) is not int or deadline <= 0:
+        raise ValueError('positive original lease deadline required')
+    _identity(dto['intent_token'])
+    for field in ('expected_focus', 'expected_surface'):
+        if type(dto[field]) is not int or dto[field] <= 1:
+            raise ValueError('observed client focus and surface required')
+    geometry = dto['expected_geometry']
+    if (type(geometry) is not list or len(geometry) != 4 or any(type(v) is not int for v in geometry)
+            or geometry[2] <= 0 or geometry[3] <= 0):
+        raise ValueError('observed nonempty surface geometry required')
+    if type(dto['cancel_requested']) is not bool or type(dto['focus_invalid']) is not bool:
+        raise ValueError('boolean lease state required')
+    process = _source(dto['target_process_identity'], dto['expected_surface'], deadline)
+    window = _source(dto['target_window_identity'], dto['expected_surface'], deadline, optional=True)
+    if window is not None and window[:2] != process[:2]:
+        raise ValueError('window/process observation sequence must match')
+    return process, window
+
+
+def decode_lease(dto, leases):
+    process, window = _validate_lease(dto)
+    token = dto['intent_token']
+    fingerprint = (dto['deadline_ns'], dto['expected_focus'], dto['expected_surface'],
+                   tuple(dto['expected_geometry']), process, window)
+    lease = leases.get(token)
+    if lease is None:
+        if len(leases) >= MAX_LEASES:
+            raise ValueError('service lease inventory exhausted')
+        lease = Lease(dto['deadline_ns'])
+        lease.intent_token = token
+        lease.expected_focus = dto['expected_focus']
+        lease.expected_surface = dto['expected_surface']
+        lease.expected_geometry = list(dto['expected_geometry'])
+        lease.target_process_identity = process
+        lease.target_window_identity = window
+        lease._rpc_source_binding = fingerprint
+        leases[token] = lease
+    elif lease._rpc_source_binding != fingerprint:
+        raise ValueError('same-intent source binding changed')
+    if dto['cancel_requested']:
+        lease.cancel.set()
+    lease.focus_invalid = bool(getattr(lease, 'focus_invalid', False) or dto['focus_invalid'])
+    return lease
+
+
+def _pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('duplicate JSON member')
+        result[key] = value
+    return result
+
+
+def _reject_constant(value):
+    raise ValueError('non-finite JSON value')
+
+
+def _send_frame(sock, value, deadline):
+    data = (json.dumps(value, allow_nan=False, separators=(',', ':'))+'\n').encode('utf-8')
+    if len(data) > MAX_FRAME:
+        raise ValueError('RPC frame exceeds limit')
+    remaining = deadline-time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError('RPC send deadline')
+    sock.settimeout(remaining)
+    sock.sendall(data)
+
+
+def _read_frame(sock, buffer, deadline):
+    while True:
+        newline = buffer.find(b'\n')
+        if newline >= 0:
+            if newline+1 > MAX_FRAME:
+                raise ValueError('RPC frame exceeds limit')
+            data = bytes(buffer[:newline]); del buffer[:newline+1]
+            return json.loads(data.decode('utf-8'), object_pairs_hook=_pairs, parse_constant=_reject_constant)
+        if len(buffer) >= MAX_FRAME:
+            raise ValueError('unterminated RPC frame exceeds limit')
+        remaining = deadline-time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError('RPC receive deadline')
+        sock.settimeout(remaining)
+        data = sock.recv(min(65536, MAX_FRAME-len(buffer)))
+        if not data:
+            if buffer:
+                raise ValueError('partial RPC frame at EOF')
+            raise EOFError('RPC peer closed')
+        buffer.extend(data)
+
+
+def _capabilities():
+    return dict(process_identity=True, window_lifecycle=False, operations=sorted(OPERATIONS))
+
+
+def _request(value, expected_id, service_id):
+    if (type(value) is not dict or set(value) != {'schema', 'service_id', 'request_id', 'op', 'lease', 'key'}
+            or value['schema'] != SCHEMA or value['service_id'] != service_id
+            or type(value['request_id']) is not int or value['request_id'] != expected_id
+            or not 1 <= expected_id <= MAX_REQUESTS):
+        raise ValueError('RPC request identity/schema invalid')
+    op, dto, key = value['op'], value['lease'], value['key']
+    if type(op) is not str or op not in OPERATIONS:
+        raise ValueError('unsupported RPC operation')
+    if op in ('down', 'up', 'up_batch', 'release'):
+        _validate_lease(dto)
+    elif dto is not None:
+        _validate_lease(dto)
+    if dto is not None and dto['target_window_identity'] is not None:
+        raise ValueError('window observer transfer is not qualified')
+    if op in ('down', 'up'):
+        if type(key) is not str or key not in KEYS:
+            raise ValueError('key not allowlisted')
+    elif op == 'up_batch':
+        if (type(key) is not list or not key or any(type(k) is not str or k not in KEYS for k in key)
+                or len(key) != len(set(key))):
+            raise ValueError('unique allowlisted key batch required')
+    elif op=='surface_context':
+        if dto is not None or type(key) is not int or not 1<key<2**32:
+            raise ValueError('read-only non-root client XID and no lease required')
+    elif key is not None:
+        raise ValueError('unexpected key payload')
+    if op == 'close' and dto is not None:
+        raise ValueError('close accepts no lease')
+    if op == 'down' and (dto['deadline_ns'] <= time.perf_counter_ns()
+            or dto['cancel_requested'] or dto['focus_invalid']):
+        raise ValueError('expired/cancelled/invalid input admission')
+    return op
+
+
+def _validate_close_result(result, records, display, service_id):
+    fields = {'schema', 'display', 'service_id', 'verified', 'owner_thread_stopped',
+              'close_error', 'protocol_error', 'release_records', 'physical_verification_authoritative'}
+    if (type(result) is not dict or set(result) != fields
+            or result['schema'] != 'input-owner-service-close-v2'
+            or result['display'] != display or result['service_id'] != service_id
+            or type(result['verified']) is not bool or type(result['owner_thread_stopped']) is not bool
+            or result['physical_verification_authoritative'] is not False
+            or any(result[k] is not None and type(result[k]) is not str for k in ('close_error','protocol_error'))
+            or type(result['release_records']) is not list
+            or result['release_records'] != [r for r in records if r.get('event') == 'owner_release']):
+        raise ValueError('close receipt identity/history invalid')
+    releases = result['release_records']
+    verified = (result['close_error'] is None and result['owner_thread_stopped'] and bool(releases)
+        and releases[-1].get('reason') == 'close'
+        and all(r.get('verified') is True and all(r.get(k) == [] for k in (
+            'keys_down','buttons_down','keys_unknown','key_state_errors')) for r in releases))
+    if result['verified'] is not verified:
+        raise ValueError('close receipt verification contradicts release/stop evidence')
+
+
+def _run_cleanups(*closers):
+    """Run every owned cleanup, retaining primary and secondary failures."""
+    primary=sys.exception();failures=[]
+    for close in closers:
+        try:close()
+        except BaseException as error:failures.append(error)
+    if failures:
+        if primary is not None and all(error is not primary for error in failures):failures.insert(0,primary)
+        if len(failures)==1:raise failures[0]
+        raise BaseExceptionGroup('owned cleanup failures',failures)
+
+
+def _detach_socket(sock):
+    primary = sys.exception()
+    failures = []
+    try: sock.shutdown(socket.SHUT_RDWR)
+    except OSError: pass
+    except BaseException as error: failures.append(error)
+    try: sock.close()
+    except BaseException as error: failures.append(error)
+    if failures:
+        if primary is not None and all(error is not primary for error in failures):
+            failures.insert(0, primary)
+        if len(failures) == 1:
+            raise failures[0]
+        raise BaseExceptionGroup('RPC failure and transport detachment failed', failures)
+
+
+class OwnerRpcClient:
+    def __init__(self, sock, *, display, service_id, timeout=2):
+        self.display, self.service_id = _identity(display), _identity(service_id)
+        self.timeout = _timeout(timeout)
+        self._sock, self._buffer = sock, bytearray()
+        self._gate = threading.Lock()
+        self._records = []
+        self._next_id = 1
+        self._quarantined = False
+        self._closed = False
+        self._close_result = None
+        try:
+            ready = _read_frame(sock, self._buffer, time.monotonic()+self.timeout)
+            if (type(ready) is not dict or set(ready) != {'schema', 'display', 'service_id', 'capabilities'}
+                    or ready['schema'] != READY or ready['display'] != self.display
+                    or ready['service_id'] != self.service_id or ready['capabilities'] != _capabilities()
+                    or type(ready['capabilities']) is not dict
+                    or ready['capabilities'].get('process_identity') is not True
+                    or ready['capabilities'].get('window_lifecycle') is not False):
+                raise ValueError('strict process-owner readiness mismatch')
+            if self._buffer:
+                raise ValueError('unsolicited bytes after owner readiness')
+        except BaseException:
+            self._quarantined = True
+            self._detach()
+            raise
+
+    @property
+    def records(self):
+        return copy.deepcopy(self._records)
+
+    def call(self, op, lease=None, key=None):
+        deadline = time.monotonic()+self.timeout
+        if not self._gate.acquire(timeout=self.timeout):
+            raise RpcBusy('RPC caller slot deadline; no request sent')
+        try:
+            if self._closed or self._quarantined:
+                raise RpcQuarantined('RPC retired; no further request may be sent')
+            if self._buffer:
+                self._quarantined = True
+                raise RpcQuarantined('unsolicited buffered reply; no request sent')
+            request = dict(schema=SCHEMA, service_id=self.service_id, request_id=self._next_id,
+                           op=op, lease=encode_lease(lease), key=copy.deepcopy(key))
+            _request(request, self._next_id, self.service_id)
+            # Consume identity before an uncertain send. No retry on this connection.
+            self._next_id += 1
+            try:
+                _send_frame(self._sock, request, deadline)
+                response = _read_frame(self._sock, self._buffer, deadline)
+                if self._buffer:
+                    raise ValueError('unsolicited bytes after RPC response')
+                fields = {'schema', 'service_id', 'request_id', 'ok', 'result', 'records', 'error'}
+                if (type(response) is not dict or set(response) != fields or response['schema'] != RESPONSE
+                        or response['service_id'] != self.service_id
+                        or type(response['request_id']) is not int or response['request_id'] != request['request_id']
+                        or type(response['ok']) is not bool or type(response['records']) is not list
+                        or any(type(r) is not dict for r in response['records'])
+                        or response['records'][:len(self._records)] != self._records):
+                    raise ValueError('RPC response identity/history invalid')
+                self._records = copy.deepcopy(response['records'])
+                if not response['ok'] or response['error'] is not None:
+                    raise RpcOutcomeUnknown('remote operation failed; input/cleanup may be partial',
+                                            records=self._records, remote_error=response['error'])
+                if op=='surface_context':
+                    geometry=response['result']
+                    if (type(geometry) is not list or len(geometry)!=4
+                            or any(type(v) is not int for v in geometry) or geometry[2]<=0 or geometry[3]<=0):
+                        raise ValueError('read-only surface geometry invalid')
+                if op == 'close':
+                    _validate_close_result(response['result'], self._records, self.display, self.service_id)
+                    self._close_result = self._unverified_close_result()
+                    self._closed = True
+                    self._detach()
+                    self._close_result = copy.deepcopy(response['result'])
+                return copy.deepcopy(response['result'])
+            except BaseException as exc:
+                self._quarantined = True
+                if not isinstance(exc, Exception) or isinstance(exc, RpcOutcomeUnknown):
+                    raise
+                raise RpcOutcomeUnknown('RPC outcome unknown; client quarantined', records=self._records) from exc
+        finally:
+            self._gate.release()
+
+    def _unverified_close_result(self):
+        return dict(verified=False, service_id=self.service_id, display=self.display,
+                    reason='transport detached; independent owner release evidence required')
+
+    def _detach(self):
+        return _detach_socket(self._sock)
+
+    def close(self):
+        if self._closed:
+            return copy.deepcopy(self._close_result)
+        result = None
+        # Install the conservative result before any interruptible transport work.
+        self._close_result = self._unverified_close_result()
+        try:
+            if not self._quarantined:
+                result = self.call('close')
+                if (type(result) is not dict or result.get('schema') != 'input-owner-service-close-v2'
+                        or result.get('service_id') != self.service_id or result.get('display') != self.display):
+                    raise ValueError('close receipt identity invalid')
+        except Exception:
+            self._quarantined = True
+            result = None
+        finally:
+            if not self._closed:
+                self._closed = True
+                self._detach()
+        if result is not None:
+            self._close_result = copy.deepcopy(result)
+        return copy.deepcopy(self._close_result)
+
+
+def _close_owner(owner, native, display, service_id, protocol_error):
+    error = None
+    try: owner.close()
+    except BaseException as exc: error = type(exc).__name__+': '+str(exc)
+    try: records = copy.deepcopy(owner.records)
+    except BaseException as exc:
+        records = []; error = error or type(exc).__name__+': '+str(exc)
+    releases = [r for r in records if type(r) is dict and r.get('event') == 'owner_release']
+    stopped = native.stopped.is_set()
+    verified = (error is None and stopped and bool(releases) and releases[-1].get('reason') == 'close'
+        and all(r.get('verified') is True and all(r.get(k) == [] for k in (
+            'keys_down', 'buttons_down', 'keys_unknown', 'key_state_errors')) for r in releases))
+    return dict(schema='input-owner-service-close-v2', display=display, service_id=service_id,
+        verified=verified, owner_thread_stopped=stopped, close_error=error,
+        protocol_error=protocol_error, release_records=releases,
+        physical_verification_authoritative=False)
+
+
+def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None):
+    """Serve one explicitly supplied strict owner; EOF closes that same owner.
+
+    Return value must be retained by an external supervisor for recovery. This
+    function alone supplies no durable receipt or cross-process death policy.
+    """
+    from input_owner_v12 import InputOwner
+    native = getattr(owner, '_inner', owner)
+    if (not isinstance(native, InputOwner) or native.identity_reader is None
+            or native.window_reader is not None):
+        raise ValueError('current process-aware owner without window observer required')
+    display, service_id = _identity(display), _identity(service_id)
+    idle_timeout = _timeout(idle_timeout)
+    if native.display_name != display:
+        raise ValueError('owner/display identity mismatch')
+    buffer, leases, next_id = bytearray(), {}, 1
+    receipt = None
+    protocol_error = None
+    try:
+        _send_frame(sock, dict(schema=READY, display=display, service_id=service_id,
+                              capabilities=_capabilities()), time.monotonic()+idle_timeout)
+        while True:
+            request = _read_frame(sock, buffer, time.monotonic()+idle_timeout)
+            op = _request(request, next_id, service_id)
+            next_id += 1
+            lease = ((lease_registry.decode(request['lease']) if lease_registry is not None
+                      else decode_lease(request['lease'], leases)) if request['lease'] is not None else None)
+            error = None
+            if op == 'close':
+                receipt = _close_owner(owner, native, display, service_id, None)
+                result = receipt
+            else:
+                try: result = owner.call(op, lease, request['key'])
+                except Exception as exc:
+                    error = dict(type=type(exc).__name__, message=str(exc)[:1000])
+                    result = None
+            _send_frame(sock, dict(schema=RESPONSE, service_id=service_id,
+                request_id=request['request_id'], ok=error is None, result=result,
+                records=copy.deepcopy(owner.records), error=error), time.monotonic()+idle_timeout)
+            if op == 'close':
+                return receipt
+            if error is not None:
+                # A caller cannot continue after partial operation failure.
+                protocol_error = 'owner operation failed'
+                break
+    except EOFError:
+        pass
+    except Exception as exc:
+        protocol_error = type(exc).__name__+': '+str(exc)
+    finally:
+        if receipt is None:
+            receipt = _close_owner(owner, native, display, service_id, protocol_error)
+        _detach_socket(sock)
+    return receipt

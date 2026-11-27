@@ -1,0 +1,54 @@
+{
+  "schema": "wslc-local-runtime-smoke-s03-v1",
+  "attempt_id": "wslc-local-runtime-smoke-20261024-s03",
+  "preregistered_utc": "2026-10-23T23:21:53.8282241Z",
+  "source_commit": "64543a8ac5b01ac8acff3910e4fc2e0458276f6c",
+  "session_name": "agent-interface-wslc-s03-ae04b8be36f14cc3b7dd3cfd82f76092",
+  "session_storage_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_smoke_20261024_s03\\run\\wslc-session-storage",
+  "session_storage_path_exists_before_start": true,
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "probe_sha256": "8c42f0728a5f852d35a4a209ce97446e66ed70a7e79508fdf4d53899c306d099",
+  "sentinel_sha256": "b6226bcdfb1e25639d1b443906d7cc227c81fbac974fbb1d2c9d058795b0c14d",
+  "question": "Can a fresh isolated WSLc session execute this pinned Python image with networking disabled and a read-only bind mount that rejects writes?",
+  "success_criteria": [
+    "session starts with pre-created attempt-owned storage path",
+    "exact pinned image is pulled once and inspect succeeds",
+    "one container run emits JSON PASS and exits 0",
+    "full CID receipt exists",
+    "exact-CID query reports no matching container",
+    "only this session is terminated successfully"
+  ],
+  "failure_criteria": [
+    "any timeout, missing or malformed receipt, nonzero command, failed assertion, unexpected cleanup result, or session termination ambiguity => HOLD/UNKNOWN; no retry"
+  ],
+  "operations": [
+    "read versions and resource facts",
+    "start one named session via wslc system session enter, keep shell open",
+    "inspect exact image, perform one explicit pull in that named session",
+    "perform one run with --pull never --network none --memory 512M --cpus 1 --volume <probe-dir>:/probe:ro --rm --name <unique> --cidfile <unique-path>",
+    "query only exact CID after receipt",
+    "remove only exact pinned image in this session after verified container absence",
+    "exit only this named session"
+  ],
+  "prohibitions": [
+    "no Docker; no global container/session inventory; no foreign state access/cleanup; no run network; no retries; no GUI/provider/input-release/recovery/task-effect claims"
+  ],
+  "limits": {
+    "pull_timeout_seconds": 600,
+    "inspect_timeout_seconds": 20,
+    "run_timeout_seconds": 90,
+    "cleanup_timeout_seconds": 20,
+    "outer_process_timeout_seconds": 620,
+    "requested_memory": "512M (hard enforcement unverified)",
+    "requested_cpus": 1,
+    "network": "none",
+    "container_run_count": 1,
+    "pull_count": 1
+  },
+  "nonclaims": [
+    "no Windows GUI input or release evidence",
+    "no environment response/recovery/task-success evidence",
+    "does not establish resource hard-enforcement",
+    "single sample does not establish reliability"
+  ]
+}

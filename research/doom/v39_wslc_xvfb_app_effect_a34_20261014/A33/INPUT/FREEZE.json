@@ -1,0 +1,41 @@
+{
+  "allocation": "A33 distinct one-shot; A30-A32 preserved pre-dispatch HOLD/STOP",
+  "app_response_bound_ns": 200000000,
+  "auditor_sha256": "245b5f852b5240ca1ef33af937d37a3a19245a62886f31d4a817796494295933",
+  "candidate_sha256": "6abbaf73f4cd26c1bca8120f332c204642df830015ce235763748058b573a34c",
+  "display": "Unix-domain X11 socket :143; TCP disabled",
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A33-20261014-01",
+  "image": {
+    "architecture": "amd64",
+    "id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "name": "a09-owner-close-xvfb:20261012",
+    "os": "linux",
+    "pull": "never",
+    "python": "3.14.8"
+  },
+  "intent_token": "MAP01-V39-WSLC-A33-20261014-01",
+  "lease_ns": 300000000,
+  "recovery_bound_ns": 1000000000,
+  "runner_file": "run-a33.sh",
+  "runner_sha256": "e229b660da9d1fe913c1141b468e0efd166ccdb9929391f5134599fde114b676",
+  "runtime_debs_sha256": {
+    "libfontenc1_1%3a1.1.8-1build1_amd64.deb": "0c5d57211cac9659e7f4c856f5e1922c4a522fe8bcf5776e9707b2811f965702",
+    "libxfont2_1%3a2.0.6-1+deb13u1build0.24.04.2_amd64.deb": "e2ed49a20ccff6ffa52719a6cd118538e24c434d9035acd7fb736e7e4f8d6485",
+    "libxkbfile1_1%3a1.1.0-1build4_amd64.deb": "22ac5b7dca740e606261cebdfaf1a07738e92ad3d123570694374ddb4d5afea2",
+    "python3-xlib_0.33-2_all.deb": "affdff5765d5ea3f1824a46bf83cb07666e8f0b94a90deea240c02a6083657c9",
+    "x11-xkb-utils_7.7+8build2_amd64.deb": "69df4191e165f8b89d067f6234fcce89a4923d27d1e66dd92e6d63d6da93cdb0",
+    "xserver-common_2%3a21.1.12-1ubuntu1.8_all.deb": "5720e7995c3b546927046f63bb4a344773b27850379c4b2694edf279025ad772",
+    "xvfb_2%3a21.1.12-1ubuntu1.8_amd64.deb": "712429d9342c7d6cef63afb33ccfcd2bd477a69371b5c9941a9c6dde31a4cd3c"
+  },
+  "runtime_root": "D:\\codex-research\\v39-xvfb-a09-env-20261012",
+  "schema": "map01-v39-wslc-a30-freeze-v1",
+  "scope": "synthetic X11 application effect and lease-expiry release; no game, model, physical input, or desktop control",
+  "source_main": "014bd4279a716d376f167e14fadc418f57e558f7",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "map01_overlap_controller_v39.py": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7"
+  }
+}

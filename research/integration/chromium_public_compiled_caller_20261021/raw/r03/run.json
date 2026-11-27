@@ -1,0 +1,284 @@
+{
+  "browser_version": "Google Chrome for Testing 156.0.8078.4",
+  "cleanup": {
+    "appserver_closed": true,
+    "browser_exitcode": 0,
+    "fixture_server_closed": true
+  },
+  "close": {
+    "release_confirmed": true,
+    "returned_ns": 398317423254,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cancellation_supervisor": {
+        "status": "not_started"
+      },
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+      "compiled_surface": "x11-window-4194306",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 20,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 398315684078,
+        "pid": 587,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 12582912
+      },
+      "owner_process_pid": 587,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 12582912,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": true,
+      "session_id": "7a738d417bc04e45a003f9fb59b4e74e",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": false
+      },
+      "targets": {
+        "app": 4194306
+      },
+      "window_lifecycle": true
+    },
+    "started_ns": 398153508588,
+    "status": "closed"
+  },
+  "display": ":96",
+  "error": "RuntimeError('compiled method did not reach TASK_SUCCEEDED')",
+  "error_type": "RuntimeError",
+  "grounded_points": {
+    "field": [
+      340,
+      327
+    ],
+    "source_sequence": 1,
+    "submit": [
+      684,
+      327
+    ]
+  },
+  "independent_score": {
+    "expected_token": "uictrl-20261021-b1e7",
+    "runtime_task_success": null,
+    "scorer": "independent test-harness parser over captured HTTP POST body",
+    "submission_count": 0,
+    "submitted_values": null,
+    "success": false
+  },
+  "input_attempted": true,
+  "local_fixture_origin": "http://127.0.0.1:39997/form",
+  "model": {
+    "effort": "medium",
+    "requested": "gpt-6.1-sol"
+  },
+  "page_render_readiness": {
+    "receipt": {
+      "body_bytes": 0,
+      "client_address": "127.0.0.1",
+      "event": "render_ready",
+      "path": "/ready",
+      "received_monotonic_ns": 388362662558
+    },
+    "signal": "local page POST after two requestAnimationFrame callbacks",
+    "wait_returned_ns": 388366329955,
+    "wait_started_ns": 388252651077
+  },
+  "post_model_recheck": {
+    "compiled_scope_same": true,
+    "compiled_surface_same": true,
+    "field_probe_rgb": [
+      224,
+      232,
+      255
+    ],
+    "fill_cue_rgb": [
+      244,
+      0,
+      255
+    ],
+    "returned_ns": 397268191951,
+    "saved_cue_rgb": [
+      255,
+      255,
+      255
+    ],
+    "source_sequence": 2,
+    "started_ns": 397215505873,
+    "submit_probe_rgb": [
+      53,
+      89,
+      213
+    ]
+  },
+  "provider_attempt": {
+    "answer_eligible": true,
+    "requested_effort": "medium",
+    "requested_model": "gpt-6.1-sol",
+    "result_path": "provider-call-01/result.json",
+    "thread_id": "01a15b6f-8fc6-7cb0-a174-771d2f1c5824",
+    "turn_id": "01a15b6f-906e-73e1-bbad-1cd0e079a88c",
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 13449,
+      "output_tokens": 141,
+      "reasoning_output_tokens": 26
+    },
+    "visible_images_submitted": 1,
+    "wait_ns": 7112572842
+  },
+  "public_call": {
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/repository-cleanup-plan-r01-20261020/research/integration/chromium_public_compiled_caller_20261021/raw/r03/mcp/570abb0ffc914ed0b4c3d42213730458",
+    "call_id": "570abb0ffc914ed0b4c3d42213730458",
+    "method_receipt": {
+      "completed_transitions": 0,
+      "critical_events": [
+        {
+          "action": "enter_token",
+          "event": "branch_selected",
+          "evidence_ref": "observation-3",
+          "matched_conditions": {
+            "field_pixels_changed": false,
+            "field_target_present": true
+          },
+          "outcome": "action",
+          "state": "empty"
+        },
+        {
+          "action": "enter_token",
+          "action_id": "action-6d1f25072f01424684c78f0b6ece4129",
+          "event": "action_terminal",
+          "execution_accepted_ns": 398129595307,
+          "execution_started_ns": 397378990585,
+          "release_verified": true,
+          "status": "execution_failed"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "execution_failed"
+        }
+      ],
+      "elapsed_ns": 791424726,
+      "ended_ns": 398132141654,
+      "format": "compiled-gui-runtime-receipt-v1",
+      "frontier_model_resumptions": 0,
+      "input_authority": "admission_per_action_only",
+      "interface_id": "chromium-public-caller-live-r01",
+      "latest_evidence_ref": "observation-3",
+      "method": "enter_then_submit",
+      "method_version": "1",
+      "observations": [
+        {
+          "captured_ns": 397341605980,
+          "evidence_digest": "71a6494fac75ae5d82f75862f41a24cc922bab5a1381d489febe4a1c7cc699b8",
+          "evidence_ref": "observation-3",
+          "observation_accepted_ns": 397370389422,
+          "observation_started_ns": 397340725734,
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 3
+        }
+      ],
+      "outcome": "SAFE_YIELD",
+      "pending_effect": null,
+      "raw_evidence_retention": "adapter_responsibility_unverified",
+      "reason": "execution_failed",
+      "session_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+      "started_ns": 397340716928,
+      "transitions": []
+    },
+    "owner_timing": {
+      "clock": "time.monotonic_ns",
+      "completed_ns": 398137482545,
+      "effect_status": null,
+      "elapsed_ns": 804822491,
+      "error_type": null,
+      "method_outcome": "SAFE_YIELD",
+      "replay_allowed": false,
+      "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+      "scope": "run_compiled method entry through graph, feedback and session snapshot",
+      "started_ns": 397332660054,
+      "status": "returned"
+    },
+    "replay_allowed": false,
+    "returned_ns": 398147549613,
+    "started_ns": 397318766984,
+    "status": null,
+    "task_success": null
+  },
+  "run_id": "chromium-public-compiled-standard-caller-live-r03-20261021",
+  "schema": "agent-interface/chromium-public-compiled-caller-live-v1",
+  "source_observation": {
+    "call_returned_ns": 389598463764,
+    "call_started_ns": 388434561788,
+    "compiled_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+    "compiled_surface": "x11-window-4194306",
+    "image_sha256": "d0622a7a2f4d927ef810a3fffbc8c82756c086c25741a7a2604ad689532c2648",
+    "image_size": [
+      1024,
+      768
+    ],
+    "source_sequence": 1
+  },
+  "status": "FAIL_PRESERVED_NO_RETRY",
+  "target_window": {
+    "candidate_windows": [
+      {
+        "height": 767,
+        "id": 4194306,
+        "pid": 421,
+        "title": "",
+        "width": 1023,
+        "xres_local_client_pids": [
+          421
+        ]
+      }
+    ],
+    "height": 767,
+    "id": 4194306,
+    "pid": 421,
+    "title": "",
+    "width": 1023,
+    "xres_local_client_pids": [
+      421
+    ]
+  },
+  "timeline_ns": {
+    "browser_window_ready": 388252650263,
+    "failed_ns": 398153507232,
+    "model_returned": 397215490323,
+    "model_started": 390094661368,
+    "public_call_returned": 398147549613,
+    "public_call_started": 397318766984
+  },
+  "token": "uictrl-20261021-b1e7"
+}

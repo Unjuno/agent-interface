@@ -1,0 +1,17 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a32-freeze-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A32-20261012-01",
+  "source_commit": "22852c6bcbf28e4af74184670de01f03a58ba3ce",
+  "candidate_invocations_allowed": 1,
+  "retries": 0,
+  "hashes": {
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/candidate.py": "c3a0abc3c40cd97fc0d00d00e5124bcdb7526c682dafabe91caf697523454524",
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/PLAN.md": "fc2e033a8769e60e7e908940467abb6f903aea48e26221f78504085ea74767ef",
+    "research/doom/v39_v15_process_owner_xvfb_a32_20261012/run_candidate.sh": "1ee698c7c2cf08c4e3fae9a6bf3397023c25426aeb0df693d746233d588ecc1d",
+    "research/doom/doom_controller_failure_cleanup_v1.py": "71090a40848f5bc2dff39f50cd114669d67255fb2852046fb71280fe1154bc46",
+    "research/live_control/input_owner_process_v1.py": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418"
+  },
+  "decision_rule": "PASS only if the actual outer cleanup class completes every gate with process exit 0, stdout reader retirement, matching generation-bound normal owner receipt, synthetic scorer/owner-event fixtures, display reuse allowed, and controlled Xvfb exit 0. Preserve all raw stdout lines and events."
+}

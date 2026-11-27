@@ -1,0 +1,382 @@
+{
+  "mode": "optimized",
+  "case": "positive",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "verified_effect",
+  "task_effect": "succeeded",
+  "delivery": "confirmed",
+  "comparison_class": "injected_subpath",
+  "accounting": {
+    "attempted_calls": 1,
+    "completed_calls": 1,
+    "duplicate_call_ids": [],
+    "usage_totals": {
+      "input_tokens": 1234,
+      "cached_input_tokens": 234,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 56,
+      "reasoning_output_tokens": 12
+    },
+    "usage_coverage": {
+      "input_tokens": 1,
+      "cached_input_tokens": 1,
+      "cache_write_input_tokens": 1,
+      "output_tokens": 1,
+      "reasoning_output_tokens": 1
+    },
+    "visible_images_submitted": 1,
+    "visible_image_coverage": 1,
+    "model_wait_ns": 908000,
+    "model_wait_coverage": 1,
+    "cost_coverage": 0,
+    "cost": null,
+    "cached_input_semantics": "subset of input_tokens; never added to input total"
+  },
+  "attempt_ledger": [
+    {
+      "attempt_id": "25a47eedd21142cfbc53fe7d1081d00f",
+      "stage": "anchor_model",
+      "status": "completed",
+      "started_ns": 499074687667700,
+      "completed_ns": 499074690519100,
+      "call_id": "turn-ledger-1",
+      "thread_id": "thread-ledger-1",
+      "requested_model": "synthetic-model",
+      "requested_effort": "medium",
+      "usage": {
+        "input_tokens": 1234,
+        "cached_input_tokens": 234,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 56,
+        "reasoning_output_tokens": 12
+      },
+      "cost": null,
+      "visible_images_submitted": 1,
+      "wait_ns": 908000,
+      "error": null
+    }
+  ],
+  "model_call_ledger": [
+    {
+      "attempt_id": "25a47eedd21142cfbc53fe7d1081d00f",
+      "stage": "anchor_model",
+      "call_id": "turn-ledger-1",
+      "thread_id": "thread-ledger-1",
+      "output": {
+        "status": "target_reference",
+        "target": {
+          "field_point": [
+            10,
+            20
+          ],
+          "submit_point": [
+            30,
+            40
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 1234,
+        "cached_input_tokens": 234,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 56,
+        "reasoning_output_tokens": 12
+      },
+      "requested_model": "synthetic-model",
+      "requested_effort": "medium",
+      "cost": null,
+      "visible_images_submitted": 1,
+      "wait_ns": 908000
+    }
+  ],
+  "compiled_receipt": {
+    "format": "compiled-gui-runtime-receipt-v1",
+    "interface_id": "provider-grounded-92bd61f081938870",
+    "method": "two-step-form",
+    "method_version": "1",
+    "session_scope": "synthetic-private-session",
+    "outcome": "TASK_SUCCEEDED",
+    "reason": "method_complete",
+    "completed_transitions": 2,
+    "frontier_model_resumptions": 0,
+    "observations": [
+      {
+        "sequence": 1,
+        "captured_ns": 499074694081000,
+        "evidence_ref": "fixture://optimized/frame-1",
+        "evidence_digest": "36f7671ca5755a5b22d29850925cf50ef689931c24ea5a448268919fbfc7a99e",
+        "predicates": {
+          "phase": 0,
+          "submit_present": true
+        },
+        "observation_started_ns": 499074694077800,
+        "observation_accepted_ns": 499074694099900
+      },
+      {
+        "sequence": 2,
+        "captured_ns": 499074695833300,
+        "evidence_ref": "fixture://optimized/frame-2",
+        "evidence_digest": "333d9157ccf067a74ce4f2a6af68208ed05eeba6bce721495c32a6d2041a60b1",
+        "predicates": {
+          "phase": 1,
+          "submit_present": true
+        },
+        "observation_started_ns": 499074695830200,
+        "observation_accepted_ns": 499074695859300
+      },
+      {
+        "sequence": 3,
+        "captured_ns": 499074697814200,
+        "evidence_ref": "fixture://optimized/frame-3",
+        "evidence_digest": "672a0b52e02ce1aac5be754b14a0e5d7204eb0ddf0ece8e1bf92aba3ef704fd1",
+        "predicates": {
+          "phase": 2,
+          "submit_present": true
+        },
+        "observation_started_ns": 499074697813100,
+        "observation_accepted_ns": 499074697832300
+      }
+    ],
+    "transitions": [
+      {
+        "from_state": "editing",
+        "to_state": "ready",
+        "action": "enter",
+        "matched_conditions": {
+          "phase": 0
+        },
+        "observation_sequence": 1,
+        "evidence_ref": "fixture://optimized/frame-1",
+        "action_id": "action-1",
+        "effect_ref": "fixture://optimized/effect-1",
+        "release_verified": true,
+        "execution_started_ns": 499074695202800,
+        "execution_accepted_ns": 499074695210600
+      },
+      {
+        "from_state": "ready",
+        "to_state": "submitted",
+        "action": "submit",
+        "matched_conditions": {
+          "phase": 1,
+          "submit_present": true
+        },
+        "observation_sequence": 2,
+        "evidence_ref": "fixture://optimized/frame-2",
+        "action_id": "action-2",
+        "effect_ref": "fixture://optimized/effect-2",
+        "release_verified": true,
+        "execution_started_ns": 499074697352900,
+        "execution_accepted_ns": 499074697360400
+      }
+    ],
+    "critical_events": [
+      {
+        "event": "branch_selected",
+        "state": "editing",
+        "outcome": "action",
+        "action": "enter",
+        "matched_conditions": {
+          "phase": 0
+        },
+        "evidence_ref": "fixture://optimized/frame-1"
+      },
+      {
+        "event": "action_terminal",
+        "action": "enter",
+        "status": "completed",
+        "action_id": "action-1",
+        "release_verified": true,
+        "execution_started_ns": 499074695202800,
+        "execution_accepted_ns": 499074695210600
+      },
+      {
+        "event": "effect_checked",
+        "action": "enter",
+        "status": "succeeded",
+        "evidence_ref": "fixture://optimized/frame-2",
+        "action_id": "action-1",
+        "execution_accepted_ns": 499074695210600,
+        "effect_observation_captured_ns": 499074695833300,
+        "effect_observation_accepted_ns": 499074695859300,
+        "effect_verification_started_ns": 499074696344900,
+        "effect_verification_accepted_ns": 499074696362100,
+        "effect_verification_clock_domain": "graph"
+      },
+      {
+        "event": "branch_selected",
+        "state": "ready",
+        "outcome": "action",
+        "action": "submit",
+        "matched_conditions": {
+          "phase": 1,
+          "submit_present": true
+        },
+        "evidence_ref": "fixture://optimized/frame-2"
+      },
+      {
+        "event": "action_terminal",
+        "action": "submit",
+        "status": "completed",
+        "action_id": "action-2",
+        "release_verified": true,
+        "execution_started_ns": 499074697352900,
+        "execution_accepted_ns": 499074697360400
+      },
+      {
+        "event": "effect_checked",
+        "action": "submit",
+        "status": "succeeded",
+        "evidence_ref": "fixture://optimized/frame-3",
+        "action_id": "action-2",
+        "execution_accepted_ns": 499074697360400,
+        "effect_observation_captured_ns": 499074697814200,
+        "effect_observation_accepted_ns": 499074697832300,
+        "effect_verification_started_ns": 499074698263400,
+        "effect_verification_accepted_ns": 499074698277300,
+        "effect_verification_clock_domain": "graph"
+      },
+      {
+        "event": "branch_selected",
+        "state": "submitted",
+        "outcome": "complete",
+        "action": null,
+        "matched_conditions": {
+          "phase": 2
+        },
+        "evidence_ref": "fixture://optimized/frame-3"
+      },
+      {
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "completed_transitions": 2
+      }
+    ],
+    "latest_evidence_ref": "fixture://optimized/frame-3",
+    "pending_effect": null,
+    "started_ns": 499074694073800,
+    "ended_ns": 499074699201300,
+    "elapsed_ns": 5127500,
+    "input_authority": "admission_per_action_only",
+    "raw_evidence_retention": "adapter_responsibility_unverified"
+  },
+  "independent_score_calls": [
+    {
+      "phase": 2,
+      "actions": [
+        "enter_value",
+        "submit"
+      ]
+    }
+  ],
+  "actions": [
+    "enter_value",
+    "submit"
+  ],
+  "admissions": [
+    "enter",
+    "submit"
+  ],
+  "release_receipts": [
+    {
+      "verified": true,
+      "keys_down": [],
+      "buttons_down": []
+    },
+    {
+      "verified": true,
+      "keys_down": [],
+      "buttons_down": []
+    }
+  ],
+  "local_effect_checks": [
+    "enter",
+    "submit"
+  ],
+  "protocol_usage_events": [
+    {
+      "method": "thread/tokenUsage/updated",
+      "params": {
+        "threadId": "thread-ledger-1",
+        "turnId": "turn-ledger-1",
+        "tokenUsage": {
+          "last": {
+            "inputTokens": 1234,
+            "cachedInputTokens": 234,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 56,
+            "reasoningOutputTokens": 12
+          }
+        }
+      }
+    }
+  ],
+  "durable_audit": {
+    "status": "audited",
+    "allocation_id": "synthetic-optimized-positive",
+    "outcome": "TASK_SUCCEEDED",
+    "event_count": 29,
+    "attempt_ledger": [
+      {
+        "attempt_id": "25a47eedd21142cfbc53fe7d1081d00f",
+        "call_id": "turn-ledger-1",
+        "completed_ns": 499074690519100,
+        "cost": null,
+        "error": null,
+        "requested_effort": "medium",
+        "requested_model": "synthetic-model",
+        "stage": "anchor_model",
+        "started_ns": 499074687667700,
+        "status": "completed",
+        "thread_id": "thread-ledger-1",
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 234,
+          "input_tokens": 1234,
+          "output_tokens": 56,
+          "reasoning_output_tokens": 12
+        },
+        "visible_images_submitted": 1,
+        "wait_ns": 908000
+      }
+    ],
+    "accounting": {
+      "attempted_calls": 1,
+      "cached_input_semantics": "subset of input_tokens; never added to input total",
+      "completed_calls": 1,
+      "cost": null,
+      "cost_coverage": 0,
+      "duplicate_call_ids": [],
+      "model_wait_coverage": 1,
+      "model_wait_ns": 908000,
+      "usage_coverage": {
+        "cache_write_input_tokens": 1,
+        "cached_input_tokens": 1,
+        "input_tokens": 1,
+        "output_tokens": 1,
+        "reasoning_output_tokens": 1
+      },
+      "usage_totals": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 234,
+        "input_tokens": 1234,
+        "output_tokens": 56,
+        "reasoning_output_tokens": 12
+      },
+      "visible_image_coverage": 1,
+      "visible_images_submitted": 1
+    },
+    "receipt_persisted": true,
+    "effect_receipt_persisted": true
+  },
+  "durable_allocation": "optimized\\positive\\allocation\\synthetic-optimized-positive",
+  "caller_journal_event_count": 13,
+  "compiled_journal_event_count": 11
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-820633627e4e4092b8269ac82682bcc6",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-36bd1f53e2be46a4aa12ae8e5b98b579",
+    "expires_at_ns": 64245191692
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "terminal"
+    },
+    {
+      "op": "text",
+      "text": "record a1"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Return"
+      ]
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

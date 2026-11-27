@@ -1,0 +1,46 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-caller-handoff-20261016'
+CASES={'healthy','failed_effect','unavailable_effect','sink_failure','unknown_release_first','unknown_release_second'}
+def check(rows):
+    if len(rows)!=12 or {(r['version'],r['case']) for r in rows}!={(v,c) for v in ('existing_v2','v3_import_swap_control') for c in CASES}:raise ValueError('coverage')
+    verdicts=[]
+    for row in rows:
+        case=row['case'];v3=row['version']=='v3_import_swap_control';s=row['state'];core=row['compiled'];r=row['caller'];unknown=case.startswith('unknown_release');n=1 if case=='unknown_release_first' else 2
+        if len(s['execute'])!=n or s['sink']!=1 or s['verify']!=int(not unknown and case!='sink_failure'):raise ValueError('execution/verification count')
+        if core['completed_transitions']!=(n-1 if unknown else 2) or core['outcome']!=('RUNTIME_FAILED' if unknown else 'TASK_SUCCEEDED'):raise ValueError('core prefix')
+        terminals=[e for e in core['critical_events'] if e['event']=='action_terminal']
+        if len(terminals)!=n or terminals[-1]['release_verified'] is unknown:raise ValueError('release state')
+        if unknown:
+            if r['outcome']!='EXECUTION_INCOMPLETE' or r['delivery']!='failed' or r['execution_progress']!={'status':'failed'} or r['task_effect'] is not None:raise ValueError('unknown release result')
+            gap='failed release loses prefix and unresolved current delivery'
+        elif case=='sink_failure':
+            if r['outcome']!='CALLER_FAILED' or r['delivery']!=('delivery_uncertain' if v3 else None) or r['execution_progress'] is not None or r['task_effect'] is not None:raise ValueError('sink failure result')
+            gap='known completed receipt lost before execute return'
+        elif case in ('failed_effect','unavailable_effect'):
+            effect=case.split('_')[0]
+            if r['outcome']!='TASK_NOT_VERIFIED' or r['delivery']!='confirmed' or r['task_effect']!=effect:raise ValueError('outer effect result')
+            if r['execution_progress']!=({'status':'completed'} if v3 else None):raise ValueError('effect receipt progress')
+            if v3 and r['effect_receipt']!={'status':effect,'evidence_ref':'inert-independent-effect-reference'}:raise ValueError('effect reference')
+            gap=None if v3 else 'known completed receipt lost after unverified effect'
+        else:
+            if r['outcome']!='TASK_SUCCEEDED' or r['execution_progress']!={'status':'completed'}:raise ValueError('healthy control')
+            gap=None
+        if r['accounting']['attempted_calls']!=0 or r['model_call_ledger']:raise ValueError('unexpected model calls')
+        verdicts.append(dict(version=row['version'],case=case,known_completed_prefix=core['completed_transitions'],composition_gate='FAIL' if gap else 'PASS_INERT_CONTROL_ONLY',gap=gap))
+    return verdicts
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-rows.json').read_text());verdicts=check(rows);mutations=[]
+    for name in ('hidden_input','invented_prefix','false_neutrality','false_success'):
+        bad=copy.deepcopy(rows)
+        if name=='hidden_input':bad[0]['state']['execute'].pop()
+        elif name=='invented_prefix':next(r for r in bad if r['case']=='unknown_release_second')['compiled']['completed_transitions']=2
+        elif name=='false_neutrality':
+            row=next(r for r in bad if r['case']=='unknown_release_first');next(e for e in row['compiled']['critical_events'] if e['event']=='action_terminal')['release_verified']=True
+        else:next(r for r in bad if r['case']=='sink_failure')['caller']['outcome']='TASK_SUCCEEDED'
+        try:check(bad)
+        except ValueError as e:mutations.append(dict(name=name,rejected=str(e)))
+        else:raise ValueError('mutation accepted '+name)
+    report[mode]=dict(rows=12,composition_failures=sum(v['gap'] is not None for v in verdicts),verdicts=verdicts,mutations=mutations)
+print(json.dumps(dict(scientific_disposition='FAIL_CURRENT_COMPOSITION',runtime_adopted=False,scope='local core/helper/caller evidence custody; no native release or independent app effect',modes=report),indent=2))

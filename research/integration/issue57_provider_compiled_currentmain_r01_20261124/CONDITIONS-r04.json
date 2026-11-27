@@ -1,0 +1,65 @@
+{
+  "schema": "issue57-provider-compiled-composition-conditions-r04",
+  "frozen_utc": "2026-11-24T00:00:00Z",
+  "base_main_sha": "844f18ae601e31caa13527c495d4548ebe8f40cb",
+  "python": "3.13.14",
+  "purpose": "Join provider usage custody to a compiled GUI caller, per-action release and durable outcome/effect receipts in a finite synthetic experiment.",
+  "question": "Does the current-main integration path preserve provider call identity/usage, compiled execution outcome and durable effect custody, while stopping before a second action when an intermediate dependency changes?",
+  "hypotheses": [
+    "Synthetic positive case joins exactly one provider attempt and token event to a two-transition compiled execution and independently scored durable task effect.",
+    "Synthetic changed-intermediate case joins the same provider accounting to a one-transition partial execution, releases input, performs no second admission/action, and persists no task-effect receipt."
+  ],
+  "design": {
+    "cases": [
+      "positive",
+      "changed-intermediate"
+    ],
+    "modes": [
+      "normal",
+      "optimized (-O)"
+    ],
+    "provider": "local deterministic Codex App Server JSONL peer; no external provider",
+    "interface": "existing current-main runtime/core_v1 compiled GUI path",
+    "task": "deterministic synthetic form with independent state-based task scorer",
+    "calls_per_case": 1,
+    "retries": 0,
+    "coarse_candidate": "caller-provided fixture; this is not a cold-route economics comparison",
+    "live_allocations": 0
+  },
+  "pass_criteria": [
+    "Both interpreter modes exit zero and emit one passing test.",
+    "Each case has one token-usage protocol event, joined by provider turn and thread identifiers to the caller attempt ledger; exact synthetic usage vector agrees with caller totals.",
+    "Positive case executes enter_value and submit with two eligible admissions and verified all-input-released receipts, then stores compiled execution and independent task-effect receipts; durable audit status is audited.",
+    "Changed-intermediate case stops after enter_value, has no submit admission/action, reports EXECUTION_INCOMPLETE / unknown_state / confirmed_partial, stores execution receipt and has no independent score or effect receipt.",
+    "Independent auditor rechecks frozen source hashes, raw output hashes, protocol joins, scenario summaries and durable allocation audits."
+  ],
+  "stop_rules": [
+    "Any unexpected action/admission, missing release proof, stale dependency not stopping continuation, duplicate provider call, mismatched usage/call/thread identity, missing custody receipt, source drift, or process/audit failure means this packet does not pass; preserve artifacts and diagnose without retrying this frozen attempt."
+  ],
+  "limits": [
+    "Synthetic-only. No physical GUI, user desktop, external model/provider, WSLc, Docker, runtime packaging, MAP01, delayed stale input injection or recovery reliability was exercised.",
+    "No prices/cost/latency comparison or matched economics conclusion.",
+    "Two fixture cases in two Python modes do not establish product acceptance or research-preview graduation."
+  ],
+  "source_sha256": {
+    "research/live_control/adaptive_acquisition_caller_v3.py": "0a3b05a8708c6aa8385f0d93fe36e89f26cba7b608e73cd9cf3dca90de163874",
+    "research/live_control/v3_persistent_grounding_adapter_v1.py": "1255816bd12c8b1797c00028b19f2486d1ae6d144efdd184a1e51f02e6c15bd6",
+    "research/live_control/integrated_efficiency_app_server_model_v1.py": "a77dba12ce7b8e0b0f68d2e17553b8be4475e283ebbc6609e6f72e5192897f37",
+    "research/live_control/codex_app_server_client_v2.py": "1a7ce3f606b237d02a8b8af256bd959ca3d3cc619d9a3e7e5070a153b22d720f",
+    "research/live_control/persistent_planner_adapter_v2.py": "77b372cb3557501f16287a363fe687ec1089459df4baad4b6f5c862754173698",
+    "research/live_control/compiled_form_grounding_v1.py": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+    "research/live_control/compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+    "research/live_control/compiled_form_grounding_responder_v1.txt": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+    "research/live_control/integrated_efficiency_compiled_execution_v2.py": "cfaca241b679dfc82ec6cf16fa840684457ef6d29728f0052255dd06a0cd4198",
+    "research/live_control/calc_durable_allocation_v1.py": "d39afe1accdbc51338bb78b48a25d3877de5864b69b21d2a95bc958666b6ce14",
+    "runtime/core_v1/compiled_gui.py": "f117733b583a381c871709525a21ecf370595c936cd1476bc80bd547165e549c",
+    "runtime/core_v1/contract.py": "1bf182e0f2a1b4adaabab4168631e87d54832970bf0454dd2804eef835a4fa2f",
+    "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+    "research/live_control/test_adaptive_acquisition_compiled_gui_v1.py": "4f0b83942f7962a06d2664ab19d15b30daef085009eb65ac21e9e2f0a8487bee",
+    "research/live_control/test_grounding_appserver_usage_transport.py": "4645236e24c7b673ad93582ae9928e61f8d608c98d8fab3f794568bdc29be17a",
+    "research/integration/issue57_provider_compiled_currentmain_r01_20261124/test_provider_compiled_composition.py": "e30819b57dcf57f1cb7f1254080c34f8d57e29b368beea7a85135a5306fe57d9",
+    "research/integration/issue57_provider_compiled_currentmain_r01_20261124/run_experiment.py": "dfd139c1b74507c91a33262b46be57475969707631bff01cfb58a06d2129dc16",
+    "research/integration/issue57_provider_compiled_currentmain_r01_20261124/audit_evidence.py": "c3b41c818160a7103459bedb2d3c90129c7d95be5900536f688552607a95921c"
+  },
+  "revision_note": "R04 assigns fresh raw-r04/attempts-r04 output roots so earlier preflight records remain immutable. R01-R03 did not launch scenarios; all failures are retained in raw/. R04 is the first conditionset with a viable runner. Auditor selects the R04 output roots and R04 conditions document. Auditor repository-root lookup corrected after its first invocation failed before evidence evaluation; no evidence was modified by that invocation. Auditor conditions-file selector corrected after initial audit invocation; it had evaluated the R01 conditions instead of R04. Raw experiment outputs remain unchanged. Auditor durable-allocation path resolution corrected: scenario paths are relative to attempts-r04 root. Initial audit stopped before evaluating any allocation."
+}

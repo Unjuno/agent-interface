@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "accepted_before_keypress_and_key_was_down": true,
+    "cancelled_terminal_has_verified_owner_keyup": true,
+    "candidate_complete_no_errors_clean_xvfb": true,
+    "candidate_hash_match": true,
+    "executor_and_owner_stopped": true,
+    "frozen_inputs_match": true,
+    "frozen_sources_match": true,
+    "hard_invalidation_cancel_matched": true,
+    "independent_keyrelease_before_planner_return": true,
+    "planner_ineligible_final_admission_rejected": true,
+    "watcher_started_before_acceptance": true
+  },
+  "decision": "PASS_METHOD_SCOPED",
+  "schema": "v39-executor-cancel-active-key-xvfb-a02-audit-v1",
+  "timing_ns": {
+    "executor_accepted": 18625778697,
+    "keyup_to_planner_margin": 412411,
+    "planner_return": 18633693664,
+    "watcher_started": 18623805567,
+    "x_keypress_observed": 18626496204,
+    "x_keyrelease_observed": 18633281253
+  }
+}

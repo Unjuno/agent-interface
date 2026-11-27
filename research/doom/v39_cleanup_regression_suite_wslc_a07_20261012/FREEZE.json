@@ -1,0 +1,20 @@
+{
+  "experiment": "A07",
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "candidate_commit": "6195600931fa6de4ecf1a5012cb83b549addb5af",
+  "main_source_blob": "50c63fa83969ed518a91e39c08d1ee52064eb636",
+  "candidate_source_blob": "576d481a3503e8be4d8ceded8a6371b3fe8850fc",
+  "candidate_test_blob": "0bad8e47bb1a78798ad982fbd6be63c09d834742",
+  "blobs": {
+    "main/controller.py": {"commit":"f185a9059d485a4f8d5a65e9e7f6782897f67eae","path":"research/doom/doom_controller_failure_cleanup_v1.py","blob":"50c63fa83969ed518a91e39c08d1ee52064eb636","bytes":11316},
+    "candidate/controller.py": {"commit":"6195600931fa6de4ecf1a5012cb83b549addb5af","path":"research/doom/doom_controller_failure_cleanup_v1.py","blob":"576d481a3503e8be4d8ceded8a6371b3fe8850fc","bytes":12206},
+    "candidate/test_controller_failure_cleanup_v39.py": {"commit":"6195600931fa6de4ecf1a5012cb83b549addb5af","path":"research/doom/test_controller_failure_cleanup_v39.py","blob":"0bad8e47bb1a78798ad982fbd6be63c09d834742","bytes":4187}
+  },
+  "test_count": 5,
+  "modes": ["normal", "-O"],
+  "test_runtime": "Ubuntu WSL, CPython 3.12.3",
+  "wslc_attempted_image": "python:latest",
+  "wslc_image_id": "sha256:16cfda0e6a1d9077709d0cbcd378562b025bb82d8243de633da2ab31d6489cb7",
+  "wslc_repo_digest": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "scope": "CONSTRUCTION_ONLY"
+}

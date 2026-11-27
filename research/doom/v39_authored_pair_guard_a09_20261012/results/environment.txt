@@ -1,0 +1,10 @@
+Image inspect: a09-authored-pair-guard:20261012
+Image ID: sha256:647eb2c46f1ef9fbb6b9b2f6d5872e06d3a8d140d7da7579e816d732190e9684
+Base image manifest: python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd
+Python version from image inspection/probe: 3.14.8
+WSLc: 3.0.1.0
+Platform: Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41
+Observed cgroup probe (separate, non-test container): cpu.max=100000 100000
+Observed cgroup probe (separate, non-test container): memory.max=536870912
+WSLc warning on both commands: kernel does not support swap limit capabilities (or cgroup is not mounted); requested memory was limited without swap.
+The WSLc commands were network-disabled, requested one CPU, and requested 512 MiB. No claim is made beyond the observed cgroup values.

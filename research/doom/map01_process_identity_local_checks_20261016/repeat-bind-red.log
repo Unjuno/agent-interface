@@ -1,0 +1,36 @@
+F....
+======================================================================
+FAIL: test_accepted_callback_cannot_rebind_existing_lease_to_new_observation (research.doom.test_map01_process_identity_backend.ProcessBackendTests.test_accepted_callback_cannot_rebind_existing_lease_to_new_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 114, in test_accepted_callback_cannot_rebind_existing_lease_to_new_observation
+    executor.submit('pinned', [{'op': 'hold', 'keys': ['a'], 'duration_ms': 5}],
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    backend.sequence, time.perf_counter_ns() + 1_000_000_000)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v13.py", line 24, in submit
+    super().submit(identifier, steps, expected_sequence, valid_until_ns)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 85, in submit
+    self.emit({"event": "accepted", "id": identifier,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               "steps": len(copied), "program_sha256": attestation,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               "intent_token": lease.intent_token,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               "valid_until_ns": valid_until_ns,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               "accepted_ns": time.perf_counter_ns()})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 47, in _emit_with_release_barrier
+    self._external_emit(event)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 110, in emit
+    with self.assertRaises(DecisionRequired):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: DecisionRequired not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.068s
+
+FAILED (failures=1)

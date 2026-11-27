@@ -1,0 +1,67 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r29",
+  "audited_utc": "2026-10-24T15:52:38.724438+00:00",
+  "checks": {
+    "caller_preserved_unknown_and_replay_fence": true,
+    "completion_receipt_arrived_after_deadline": true,
+    "conditions_hash_pinned_before_run": true,
+    "deadline_failure_is_the_asserted_test_failure": true,
+    "exact_owned_container_deleted": true,
+    "exact_pinned_image_deleted": true,
+    "exact_requested_2950ms_pause_resumed_by_pidfd": true,
+    "exact_session_terminated": true,
+    "exact_storage_removed_only_after_termination": true,
+    "exact_three_second_transaction_window": true,
+    "harness_exit_one_matches_preserved_test_failure": true,
+    "input_free_identity_preflight_passed": true,
+    "no_task_or_independent_success_oracle_claimed": true,
+    "pinned_harness_binary_hash_matches": true,
+    "pinned_stage_manifest_hash_matches": true,
+    "public_test_source_hash_matches": true,
+    "release_worker_expired_at_transaction_deadline": true,
+    "runner_hash_matches": true,
+    "server_resumed_before_deadline": true,
+    "single_vhdx_hash_manifest_retained": true,
+    "source_commit_is_current_main_freeze": true,
+    "test_final_cleanup_observed_all_keys_up": true,
+    "test_started_after_preflight": true,
+    "xres_identity_source_hash_matches": true
+  },
+  "classification": "COUNTEREXAMPLE_SCOPED_TRANSACTION_DEADLINE",
+  "counts": {
+    "passed": 24,
+    "total": 24
+  },
+  "limitations": [
+    "one synthetic private-Xvfb WSLc boundary trial",
+    "independent release readback and old/fresh task oracles did not run after the deadline assertion",
+    "does not establish Windows desktop/MAP01 behavior, efficiency or broad reliability",
+    "runtime custody remains UNKNOWN; replay denied"
+  ],
+  "observations": {
+    "cancel_response_ms": 305.943975,
+    "completion_after_deadline_ms": 2.765003,
+    "final_cleanup_keys_up": {
+      "a": false,
+      "b": false,
+      "c": false
+    },
+    "harness_exit_code": 1,
+    "pause_ms": 2950.257517,
+    "release_worker_reason": "transaction_deadline",
+    "release_worker_status": "unknown",
+    "resume_before_deadline_ms": 101.596841,
+    "runtime_cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "test_exit_code": 1
+  },
+  "raw_inputs": [
+    "CONDITIONS.json",
+    "PREREGISTRATION.json",
+    "output/result.json",
+    "output/runner.stderr.txt",
+    "HARNESS-INVOCATION.log",
+    "output/session-storage-manifest.json"
+  ],
+  "schema": "wslc-standard-caller-xvfb-r29-audit-v1"
+}

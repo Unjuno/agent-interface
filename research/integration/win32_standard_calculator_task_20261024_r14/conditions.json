@@ -1,0 +1,39 @@
+{
+  "schema": "win32-standard-calculator-r14-conditions-v1",
+  "attempt_id": "win32-standard-calculator-task-20261024-r14-7454b896",
+  "frozen_utc": "2026-10-24T08:35:13.3667587Z",
+  "host": "attached Windows PC; user-authorized native Win32 route",
+  "main_merge_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "runner_sha256": "403acc357ac46eb951ef2041bbf1267888a80d1f991e3e3f12875414e689ed67",
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b",
+  "preregistration_sha256": "f2d1d5f3c80ca25a4043c360b3c1eb38fba045a142efa3841681cda4d4076ddb",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "measured_client_rect_px": [
+    0,
+    0,
+    320,
+    533
+  ],
+  "observation_frame": "window_client",
+  "observation_region": [
+    0,
+    0,
+    320,
+    533
+  ],
+  "baseline_display": "1042",
+  "baseline_expression": "式は 314 + 728= です",
+  "expected_display": "1043",
+  "action": "one public supervised-win32 interface_dispatch using focus, text +1=, release_all",
+  "oracle": "server-configured UIA CalculatorResults exact-value reader; max 1500ms/25ms polling",
+  "max_dispatch_wait_ms": 10000,
+  "pending_rule": "one exact-call cancel and read-only poll at most 4s; never replay",
+  "success_gate": "same call/operation/generation, task_success=true, exact UIA display 1043 after dispatch, terminal verified release and neutral completion readback",
+  "failure_policy": "retain first failure/unknown, never replay input",
+  "scope": "native Windows only; not WSLc, MAP01, blocked-I/O recovery, matched efficiency, or reliability",
+  "prior_nearby_evidence": "PR #9498 R05: action/release/display effect pass but runtime task_success null; R13: observation stopped before input because stale outer-window geometry exceeded client bounds"
+}

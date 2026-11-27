@@ -1,0 +1,115 @@
+{
+  "conditions": {
+    "cancel_return_bound_ms": 3000,
+    "child_cancel_ack_withheld_s": 1.0,
+    "delayed_keypress_ms": 8000,
+    "late_keypress_outcome": "record either result; do not assume queue cancellation",
+    "owner_process_method_trace": true,
+    "prestarted_cancel_supervisor": false,
+    "terminal_result_bound_ms": 5000
+  },
+  "job": "x11-integration",
+  "outcome": {
+    "cancel_elapsed_ms": 301.267907,
+    "cleanup_status": "UNKNOWN",
+    "independent_release_readback": {
+      "keys_down": {
+        "a": false,
+        "b": false
+      },
+      "observed_ns": 122282690164,
+      "owner_release_attempt": {
+        "elapsed_ms": 603.4850429999921,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 122152264920,
+          "verified": true
+        },
+        "status": "readback_verified",
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "reader": "separate parent X client"
+    },
+    "independent_task_oracle": {
+      "checks": {
+        "final_effect_exact": true,
+        "horizon_readback_all_up": true,
+        "initial_effect_exact": true,
+        "release_readback_all_up": true
+      },
+      "expected_effect": [
+        1
+      ],
+      "measurements": {
+        "final_effect": [
+          1
+        ],
+        "horizon_readback": {
+          "a": false,
+          "b": false
+        },
+        "initial_effect": [
+          1
+        ],
+        "release_readback": {
+          "a": false,
+          "b": false
+        }
+      },
+      "reader": "synthetic app property plus independent parent keymap",
+      "scope": "synthetic Xvfb task only; runtime task_success remains null",
+      "status": "pass",
+      "task_definition": "one initial a effect; no delayed b effect; both keys up after release and at the delayed-request horizon",
+      "task_success": true
+    },
+    "late_request_horizon_readback": {
+      "keys_down": {
+        "a": false,
+        "b": false
+      },
+      "late_keypress_b_observed": false,
+      "ms_after_cancel_start": 8501.456443,
+      "observed_ns": 129791885024,
+      "reader": "separate parent X client"
+    },
+    "owner_release_attempt": {
+      "elapsed_ms": 603.4850429999921,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 122152264920,
+        "verified": true
+      },
+      "status": "readback_verified",
+      "worker_exitcode": 0,
+      "worker_retired": true
+    },
+    "prestarted_cancel_supervisor": false,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN",
+    "task_success": null
+  },
+  "pr_head_sha": "b1108350518a9a18f4227b8240d77fbc68cd0304",
+  "run_id": 39669924300,
+  "source_identity": {
+    "github_job": "x11-integration",
+    "github_run_id": "39669924300",
+    "github_sha": "b64e799e8dfdee1e26c9fa3f5ccbe7ceb57815ed",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.43",
+    "python": "3.12.15 (main, Oct  1 2026, 02:36:28) [GCC 15.2.0]"
+  },
+  "workflow": "Runtime X11 v1 Integration",
+  "workflow_merge_sha": "b64e799e8dfdee1e26c9fa3f5ccbe7ceb57815ed",
+  "xvfb": {
+    "package_returncode": 0,
+    "package_stderr": "",
+    "package_stdout": "xvfb=2:21.1.22-1ubuntu1.3",
+    "path": "/usr/bin/Xvfb",
+    "pid": 2690,
+    "sha256": "97623d8c3972051fa29db5a91f64439b418a1ebc63ce449193556fc33900048e",
+    "status": "captured"
+  }
+}

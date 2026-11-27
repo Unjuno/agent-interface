@@ -1,0 +1,10 @@
+{
+  "kind": "construction-only first test outcome",
+  "allocation": "FAILURE-DETECTOR-5531-REGIME-TRACE-A01-CONSTRUCTION-01",
+  "test": "test_heartbeat_sequence_rejects_gap_duplicate_and_boolean_alias",
+  "command": "python -B -m unittest discover -s research/analysis/failure_detector_5531_regime_trace_a01_20261005 -p test_audit.py -v",
+  "exit_code": 1,
+  "failure": "contiguous_zero_based([False, 1]) returned True because Python bool compares equal to int 0",
+  "raw_console_stream": "not redirected to a file; the initial failure is preserved here as a structured summary from the tool output",
+  "disposition": "construction defect found before formal freeze; fixed by requiring exact int types"
+}

@@ -1,0 +1,3 @@
+# R11b preregistration — corrected usage comparison replication
+
+R11 remains immutable. R11b repeats its one-shot bounded held-SHIFT recovery followed by a new-generation, AppServer-grounded, one-action fixture task. It uses fresh fixture processes and a new independent oracle ID. The runner corrects R11's wrapper/journal usage comparison by requiring reported status and equality for every usage field present in the retained AppServer journal. It otherwise preserves R11's frozen gates, stopping rules, model, effort, coordinate bounds, task, and public-caller route. No retry or replay is allowed. The first outcome is retained.

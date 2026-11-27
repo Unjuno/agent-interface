@@ -1,0 +1,97 @@
+{
+  "schema": "wslc-map01-r281-expiry-fresh-task-audit-v1",
+  "allocation": "R281",
+  "main_sha": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "source_git_blobs": {
+    "count": 41,
+    "all_match": true
+  },
+  "baseline": {
+    "sequence": 1,
+    "ammo": 50,
+    "health": 100
+  },
+  "old_intent": {
+    "id": "R281-one-shot",
+    "steps_started": [
+      {
+        "step": 0,
+        "operation": "hold"
+      }
+    ],
+    "admitted_keys": [
+      "Right",
+      "space"
+    ],
+    "delayed_space_step_started": false,
+    "expiry_receipt": {
+      "event": "owner_release",
+      "reason": "expired",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "verified_ns": 213730102104346,
+      "valid_until_ns": 213730101020188
+    },
+    "receipt_before_terminal": true,
+    "terminal": {
+      "status": "expired",
+      "steps_completed": 0,
+      "release_verified": true,
+      "neutral": true
+    },
+    "admitted_keys_before_expiry_terminal": [
+      "Right"
+    ]
+  },
+  "recovery": {
+    "id": "R281-recovery",
+    "accepted": true,
+    "observe_sequence": 4,
+    "ammo": 50,
+    "health": 100,
+    "terminal": {
+      "status": "completed",
+      "steps_completed": 1,
+      "release_verified": true
+    }
+  },
+  "new_task": {
+    "id": "R281-live-effect",
+    "accepted": true,
+    "admitted_attack_count": 1,
+    "attack_observation": {
+      "sequence": 7,
+      "ammo": 49,
+      "health": 100
+    },
+    "terminal": {
+      "status": "completed",
+      "steps_completed": 2,
+      "release_verified": true
+    },
+    "admitted_keys_after_recovery_terminal": [
+      "space"
+    ]
+  },
+  "owner_close_neutral": true,
+  "standalone_expiry_release_events": 0,
+  "score": {
+    "map_exit": false,
+    "player_alive": true,
+    "wall_control_ns": 644264041
+  },
+  "process": {
+    "alive": false,
+    "returncode": 0
+  },
+  "result": "VERIFIED_EXPIRY_SUPPRESS_RECOVER_REOBSERVE_AND_TASK_EFFECT",
+  "limits": [
+    "single bounded live trial",
+    "not MAP01 completion or broader reliability",
+    "not integrated token-efficiency comparison",
+    "expiry owner release is not a standalone input_released event; it is independently in owner journal and embedded terminal"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "attempt_id": "win32-task-effect-timing-20261024-r38d-95f53e00e722477c8d8208abba20a793",
+  "attempt_limit": {
+    "dispatches": 1,
+    "fixtures": 1,
+    "observations": 1,
+    "oracle_calls": 1,
+    "replays": 0,
+    "retries": 0,
+    "validations": 1
+  },
+  "frozen_files": {
+    "audit.py": "6257ae95f3db6b950f9df6ad9501aff0c3fce09498c82f4186bbb683783e9636",
+    "fixture_app_timed.py": "d2b0c77d1472a79d715af0d1366bc7670535480bac10b38ad4040fd55d724c29",
+    "preflight.py": "9d4380f3796c1bce8fb850c06b56d2c2c32a91aa88890092d0d2664c9773aff6",
+    "server_with_oracle.py": "4e0d156f95dfc13d5a43a631b49751cd679178463476d8867dfe9cccd88d306d",
+    "task_probe.py": "dace86b69e75e47872cdbe67aeb85f0dd7438f28af8a6ff767725cc2face77e6"
+  },
+  "host_scope": "user-authorized local native Windows PC",
+  "measurement": {
+    "clock": "time.monotonic_ns on one Windows host, shared by fixture, server and client",
+    "oracle_observation": "observed_monotonic_ns sampled before reading exact effect and timestamped save event",
+    "reported_latency": "[oracle_observed - save_write_completed, oracle_observed - save_write_started]; exact interior effect transition is not observable",
+    "save_effect_interval": "save_write_started_monotonic_ns <= fixture effect write completion <= save_write_completed_monotonic_ns"
+  },
+  "nonclaims": [
+    "MAP01",
+    "matched efficiency",
+    "broad reliability",
+    "real-app transfer",
+    "WSLc control",
+    "exact sub-write physical transition",
+    "hard realtime guarantee"
+  ],
+  "phase2_protocol": {
+    "dispatch_response_wait_ms": 10000,
+    "dispatches": 1,
+    "exact_program": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "task-oracle-r38d-5845c51a6a637c5e"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "fixture_instances": 1,
+    "max_attempt_total_seconds": 60,
+    "public_observations": 1,
+    "read_only_results_wait_max_seconds": 25,
+    "replays": 0,
+    "retries": 0,
+    "validations": 1,
+    "verification_calls": 1
+  },
+  "phase2_task": {
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "task-oracle-r38d-5845c51a6a637c5e"
+    },
+    "oracle_id": "a85ad1c2dad2db7183d41c4f953a5ebd",
+    "token": "task-oracle-r38d-5845c51a6a637c5e"
+  },
+  "predecessor": {
+    "artifacts": [
+      "../win32_task_effect_timing_20261024_r38c/run/phase2_task/result.json",
+      "../win32_task_effect_timing_20261024_r38c/DECISION.json"
+    ],
+    "attempt_id": "win32-task-effect-timing-20261024-r38c-5b54735428624e2e848201a6da9be5cd",
+    "decision_sha256": "d2a5a45a8805468c14f465393e01fbe21fd3408aca43d535e1423099e4856a23",
+    "reason": "the stdio server launch omitted the packet event-log argument; fixture auto-exited with only its ready event; successor passes the event path and supports immediate or pending dispatch result shapes",
+    "status": "FAIL_OR_UNKNOWN_PRE_MCP_INPUT"
+  },
+  "runtime_hashes": {
+    "runtime/cli_v1/mcp_server.py": "92f25890d65fae4b0d80c2bb5929f2a8ec54437a4d9bc61c510594a9419d4285",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600"
+  },
+  "schema": "win32-task-effect-timing-r38-v1",
+  "source_commit": "3ce70e742abf47f5f7c39a09df0c97f58fe62c26",
+  "wslc_or_docker_used": false
+}

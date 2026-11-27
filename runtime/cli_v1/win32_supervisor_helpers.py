@@ -1,0 +1,368 @@
+"""Native Win32 recovery and readback helpers for the supervised caller."""
+from __future__ import annotations
+
+import multiprocessing
+import time
+
+
+def _parse_obligations(obligations):
+    if type(obligations) not in (list, tuple):
+        raise ValueError("input obligations must be a sequence")
+    parsed = {"keys": [], "buttons": [], "unicode": []}
+    for item in obligations:
+        if type(item) is not str:
+            raise ValueError("input obligation must be a string")
+        parts = item.split(":")
+        if (len(parts) == 3 and parts[0] == "key"
+                and parts[1] and parts[2]):
+            # Historical three-part obligations mean the Win32 default.
+            target, key, encoding = parts[1], parts[2], "virtual_key"
+            parsed["keys"].append((target, key, encoding))
+        elif (len(parts) >= 4 and parts[0] == "key"
+                and parts[-1] in {"virtual_key", "scan_code"}):
+            # Target names are configured identifiers and may contain ':';
+            # the key and encoding are the two fixed trailing components.
+            target, key, encoding = ":".join(parts[1:-2]), parts[-2], parts[-1]
+            if not target or not key:
+                raise ValueError("unsupported input obligation")
+            parsed["keys"].append((target, key, encoding))
+        elif len(parts) >= 3 and parts[0] == "button" and parts[-1]:
+            target, button = ":".join(parts[1:-1]), parts[-1]
+            if not target:
+                raise ValueError("unsupported input obligation")
+            parsed["buttons"].append((target, button))
+        elif len(parts) == 2 and parts[0] == "unicode":
+            try:
+                unit = int(parts[1], 16)
+            except ValueError as error:
+                raise ValueError("invalid Unicode obligation") from error
+            if not 0 <= unit <= 0xFFFF:
+                raise ValueError("invalid Unicode obligation")
+            parsed["unicode"].append(unit)
+        else:
+            raise ValueError("unsupported input obligation")
+    if len(set(obligations)) != len(obligations):
+        raise ValueError("duplicate input obligation")
+    return parsed
+
+
+def _generation_matches(backend, targets, generation):
+    return all(backend.target_generation(target) == generation for target in targets)
+
+
+def _new_backend(targets):
+    from runtime.backends.win32_v1.backend import Win32Backend
+    return Win32Backend(targets)
+
+
+def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
+             configured_targets=None):
+    required = {"operation_id", "target_generation", "recovery_id", "deadline_ns",
+                "obligations"}
+    if type(request) is not dict or not required <= set(request):
+        raise ValueError("recovery request schema mismatch")
+    parsed = _parse_obligations(request["obligations"])
+    source_generation = request.get("source_target_generation",
+        request["target_generation"])
+    if (type(source_generation) is not str or len(source_generation) != 64
+            or any(char not in "0123456789abcdef" for char in source_generation)):
+        raise ValueError("source target generation is invalid")
+    targets = {item[0] for item in parsed["keys"] + parsed["buttons"]}
+    configured_targets = configured_targets or {}
+    if not targets and len(configured_targets) == 1 and parsed["unicode"]:
+        targets = set(configured_targets)
+    if not targets:
+        raise ValueError("native recovery requires an attributable input obligation")
+    if clock_ns() >= request["deadline_ns"]:
+        raise TimeoutError("recovery deadline expired before backend setup")
+    configured_targets = configured_targets or {target: target for target in targets}
+    if any(target not in configured_targets for target in targets):
+        raise ValueError("obligation target is not configured")
+    backend = backend_factory({target: configured_targets[target] for target in targets})
+    try:
+        if not _generation_matches(backend, targets, request["target_generation"]):
+            raise RuntimeError("TARGET_GENERATION_CHANGED")
+        focus_required = request.get("focus_target_before_release", False)
+        if type(focus_required) is not bool:
+            raise ValueError("focus requirement must be boolean")
+        if len(targets) != 1:
+            raise ValueError("orphan recovery requires one attributable target")
+        recovery_target = next(iter(targets))
+        if focus_required:
+            focus = getattr(backend, "focus", None)
+            if not callable(focus):
+                raise RuntimeError("FOREGROUND_FOCUS_UNAVAILABLE")
+            focus(next(iter(targets)))
+            if clock_ns() >= request["deadline_ns"]:
+                raise TimeoutError("recovery deadline expired after target focus")
+            if not _generation_matches(backend, targets, request["target_generation"]):
+                raise RuntimeError("TARGET_GENERATION_CHANGED")
+        # Do not focus a window during automatic recovery, but require the
+        # exact target to already own the foreground before any global UP.
+        # Win32Backend repeats this check immediately before each SendInput.
+        require_foreground = getattr(backend, "_require_foreground", None)
+        if not callable(require_foreground):
+            raise RuntimeError("FOREGROUND_RECEIVER_CHECK_UNAVAILABLE")
+        require_foreground(recovery_target)
+        backend._recovery_target = recovery_target
+        from runtime.backends.win32_v1.backend import virtual_key
+        key_encodings = {}
+        for target, key, encoding in parsed["keys"]:
+            key_encodings.setdefault((target, key), set()).add(encoding)
+        release_key_up_attempts = []
+        send_key = backend._send_key
+        def record_key_up(vk, down, encoding=None):
+            if down is False:
+                require_foreground(recovery_target)
+                attempt = {"virtual_key": vk,
+                    "encoding": encoding or "virtual_key",
+                    "status": "attempting"}
+                release_key_up_attempts.append(attempt)
+                try:
+                    result = (send_key(vk, down) if encoding is None else
+                        send_key(vk, down, encoding))
+                except Exception as error:
+                    attempt["status"] = "raised"
+                    attempt["error_type"] = type(error).__name__
+                    raise
+                attempt["status"] = "returned"
+                return result
+            return (send_key(vk, down) if encoding is None else
+                send_key(vk, down, encoding))
+        backend._send_key = record_key_up
+        for (target, key), encodings in key_encodings.items():
+            ordered_encodings = sorted(encodings)
+            # The ordinary backend ledger has one slot per key name. If an
+            # interrupted program used one logical key with multiple encodings,
+            # emit each distinct UP and retain one for release_all's readback.
+            for encoding in ordered_encodings[:-1]:
+                try:
+                    backend._send_key(virtual_key(key), False, encoding)
+                except Exception:
+                    # One encoding's failed insertion must not prevent trying
+                    # the remaining encodings or the ledger-backed final UP.
+                    # Keep the raised attempt in the receipt; final neutral
+                    # readback decides whether recovery was actually accepted.
+                    continue
+            backend.held_keys[key] = virtual_key(key)
+            if not hasattr(backend, "held_key_encodings"):
+                backend.held_key_encodings = {}
+            backend.held_key_encodings[key] = ordered_encodings[-1]
+            backend.held_key_targets[key] = target
+        for target, button in parsed["buttons"]:
+            from runtime.backends.win32_v1.backend import BUTTON_FLAGS
+            if button not in BUTTON_FLAGS:
+                raise ValueError("unsupported button obligation")
+            backend.held_buttons.add(button)
+            backend.held_button_targets[button] = target
+        backend.pending_unicode_ups.update(parsed["unicode"])
+        if clock_ns() >= request["deadline_ns"]:
+            raise TimeoutError("recovery deadline expired before release")
+        release_error = None
+        try:
+            release = backend.release_all()
+        except Exception as error:
+            release = None
+            release_error = error
+        post_release_error = None
+        post_release_reason = None
+        try:
+            if clock_ns() >= request["deadline_ns"]:
+                post_release_error = TimeoutError(
+                    "recovery deadline expired after release")
+                post_release_reason = "deadline_expired_after_release"
+            elif not _generation_matches(backend, targets,
+                                         request["target_generation"]):
+                post_release_error = RuntimeError("TARGET_GENERATION_CHANGED")
+                post_release_reason = "target_generation_changed_after_release"
+        except Exception as error:
+            post_release_error = error
+            post_release_reason = "post_release_validation_failed"
+        if post_release_error is not None:
+            return {"status": "unknown", "reason": post_release_reason,
+                "error_type": type(post_release_error).__name__,
+                "operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
+                "target_generation": request["target_generation"],
+                "recovery_id": request["recovery_id"],
+                "release_accepted": False,
+                "release_receipt": release,
+                "release_error_type": (type(release_error).__name__
+                    if release_error is not None else None),
+                "release_key_up_attempts": release_key_up_attempts,
+                "pending_unicode_ups": sorted(backend.pending_unicode_ups)}
+        return {"operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
+                "target_generation": request["target_generation"],
+                "recovery_id": request["recovery_id"],
+                "release_accepted": (release_error is None and type(release) is dict
+                    and release.get("verified") is True
+                    and all(type(release.get(field)) is list and release[field] == []
+                            for field in ("keys_down", "buttons_down",
+                                          "keys_unknown", "buttons_unknown"))
+                    and not backend.pending_unicode_ups),
+                "release_receipt": release,
+                "release_error_type": (type(release_error).__name__
+                    if release_error is not None else None),
+                "release_key_up_attempts": release_key_up_attempts,
+                "pending_unicode_ups": sorted(backend.pending_unicode_ups)}
+    finally:
+        backend.close()
+
+
+def _observe(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
+             configured_targets=None):
+    required = {"operation_id", "target_generation", "recovery_id", "deadline_ns",
+                "obligations"}
+    if type(request) is not dict or not required <= set(request):
+        raise ValueError("observer request schema mismatch")
+    parsed = _parse_obligations(request["obligations"])
+    source_generation = request.get("source_target_generation",
+        request["target_generation"])
+    if (type(source_generation) is not str or len(source_generation) != 64
+            or any(char not in "0123456789abcdef" for char in source_generation)):
+        raise ValueError("source target generation is invalid")
+    targets = {item[0] for item in parsed["keys"] + parsed["buttons"]}
+    configured_targets = configured_targets or {}
+    # An empty obligation set is still observable when there is exactly one
+    # configured target: bind the neutral, empty state sample to its generation.
+    if not targets and len(configured_targets) == 1:
+        targets = set(configured_targets)
+    if not targets:
+        raise ValueError("native observation requires an attributable input obligation")
+    if clock_ns() >= request["deadline_ns"]:
+        raise TimeoutError("observer deadline expired before backend setup")
+    configured_targets = configured_targets or {target: target for target in targets}
+    if any(target not in configured_targets for target in targets):
+        raise ValueError("obligation target is not configured")
+    backend = backend_factory({target: configured_targets[target] for target in targets})
+    try:
+        if not _generation_matches(backend, targets, request["target_generation"]):
+            raise RuntimeError("TARGET_GENERATION_CHANGED")
+        from runtime.backends.win32_v1.backend import BUTTON_FLAGS, virtual_key
+        key_states = {}
+        for target, key, _encoding in parsed["keys"]:
+            identity = (target, key)
+            if identity not in key_states:
+                key_states[identity] = backend._key_down_state(
+                    virtual_key(key), target)
+        states = [key_states[(target, key)]
+                  for target, key, _encoding in parsed["keys"]]
+        for target, button in parsed["buttons"]:
+            if button not in BUTTON_FLAGS:
+                raise ValueError("unsupported button obligation")
+            states.append(backend._key_down_state(BUTTON_FLAGS[button][2], target))
+        observed_ns = clock_ns()
+        if observed_ns >= request["deadline_ns"]:
+            raise TimeoutError("observer deadline expired during readback")
+        if not _generation_matches(backend, targets, request["target_generation"]):
+            raise RuntimeError("TARGET_GENERATION_CHANGED")
+        return {"operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
+                "target_generation": request["target_generation"],
+                "recovery_id": request["recovery_id"],
+                "neutral": all(state is False for state in states),
+                "observed_monotonic_ns": observed_ns,
+                "key_button_states": states,
+                # Unicode injection is an ordered event pair. It has no
+                # persistent virtual-key state for GetAsyncKeyState to query.
+                "unicode_event_units": len(parsed["unicode"])}
+    finally:
+        backend.close()
+
+
+def _helper_main(kind, targets, connection):
+    connection.send({"status": "ready", "helper": kind})
+    while True:
+        request = connection.recv()
+        if request is None:
+            return
+        try:
+            operation = (_recover(request, configured_targets=targets)
+                if kind == "recovery" else
+                _observe(request, configured_targets=targets))
+        except BaseException as error:
+            operation = {"operation_id": request.get("operation_id"),
+                "target_generation": request.get("target_generation"),
+                "recovery_id": request.get("recovery_id"),
+                "error_type": type(error).__name__, "error": str(error)[:256],
+                "release_accepted": False}
+        connection.send(operation)
+        connection.send({"control": "operation_complete",
+                         "request_id": request.get("request_id")})
+
+
+def create_native_win32_components(targets, output_directory, *, context=None,
+                                   process_identity_reader=None,
+                                   late_input_horizon_ns=0):
+    """Construct the opt-in native owner, supervisor helpers and producer."""
+    import os
+    if os.name != "nt":
+        raise OSError("supervised Win32 mode requires Windows")
+    from runtime.backends.win32_v1.backend import Win32Backend
+    from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
+    from runtime.cli_v1.win32_custody_fence import Win32CustodyFence
+    from runtime.cli_v1.win32_standard_producer import NativeWin32StandardProducerFactory
+    from runtime.guarded_win32_v1.operation_owner import OperationOwner
+    from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
+    from runtime.guarded_win32_v1.win32_process_identity import Win32ProcessIdentityReader
+
+    if (type(targets) is not dict or len(targets) != 1
+            or any(type(name) is not str or not name or type(hwnd) is not int or hwnd <= 0
+                   for name, hwnd in targets.items())):
+        raise ValueError("one explicit target name and HWND are required")
+    if (type(late_input_horizon_ns) is not int
+            or late_input_horizon_ns < 0):
+        raise ValueError("late input horizon must be a nonnegative integer")
+    process_identity_reader = process_identity_reader or Win32ProcessIdentityReader()
+    custody_fence = Win32CustodyFence.for_current_logon()
+    operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+        process_identity_reader=process_identity_reader)
+    helper_factory = NativeWin32SupervisorHelperFactory(targets, context=context)
+    try:
+        supervisor = OperationCancellationSupervisor(operation_owner,
+            recovery_process_factory=lambda: helper_factory("recovery"),
+            observer_process_factory=lambda: helper_factory("observer"),
+            process_identity_reader=process_identity_reader,
+            late_input_horizon_ns=late_input_horizon_ns)
+    except BaseException:
+        custody_fence.close()
+        raise
+    owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+        synthetic_only=False, custody_fence=custody_fence)
+
+    def current_generation():
+        backend = Win32Backend(targets)
+        try:
+            return backend.target_generation(next(iter(targets)))
+        finally:
+            backend.close()
+
+    try:
+        owner.bind_target_generation_reader(current_generation)
+        producer = NativeWin32StandardProducerFactory(targets,
+            output_directory, context=context,
+            process_identity_reader=process_identity_reader,
+            prestarted=True)
+    except BaseException:
+        owner.close()
+        raise
+    return owner, producer
+
+
+class NativeWin32SupervisorHelperFactory:
+    """Create persistent spawned helpers ready before any producer admission."""
+
+    def __init__(self, targets, *, context=None):
+        if type(targets) is not dict or not targets:
+            raise ValueError("explicit target map required")
+        self._targets = dict(targets)
+        self._context = context or multiprocessing.get_context("spawn")
+
+    def __call__(self, kind):
+        if kind not in ("recovery", "observer"):
+            raise ValueError("unknown Win32 supervisor helper")
+        parent, child = self._context.Pipe(duplex=True)
+        process = self._context.Process(target=_helper_main,
+            args=(kind, self._targets, child), daemon=True)
+        return process, parent

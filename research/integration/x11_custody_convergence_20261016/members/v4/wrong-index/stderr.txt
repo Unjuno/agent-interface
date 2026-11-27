@@ -1,0 +1,52 @@
+test_actual_query_version_wrapper_signature (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_actual_query_version_wrapper_signature) ... ok
+test_duplicate_inventory_refuses_to_clear_custody (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_duplicate_inventory_refuses_to_clear_custody) ... ok
+test_healthy_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_healthy_side_buttons) ... ok
+test_real_decoder_side_button_indices (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_real_decoder_side_button_indices) ... ok
+test_real_query_device_reply_shape (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_real_query_device_reply_shape) ... ok
+test_second_master_stubborn_state_is_not_neutral (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_second_master_stubborn_state_is_not_neutral) ... FAIL
+test_stubborn_left_control (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_left_control) ... ok
+test_stubborn_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_side_buttons) ... 
+  test_stubborn_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_side_buttons) (button='x1') ... FAIL
+  test_stubborn_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_side_buttons) (button='x2') ... FAIL
+test_unknown_xi_preserves_owned_custody (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_unknown_xi_preserves_owned_custody) ... ok
+
+======================================================================
+FAIL: test_second_master_stubborn_state_is_not_neutral (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_second_master_stubborn_state_is_not_neutral)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\x11-sidebutton-source-01a0ff2c\sources\wrong_index\runtime\backends\x11_v1\test_sidebutton_ledger.py", line 138, in test_second_master_stubborn_state_is_not_neutral
+    self.assertEqual(r['status'],'release_unverified');self.assertEqual(b.held_buttons,{'x2'});self.assertTrue(s.recovery_required)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_stubborn_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_side_buttons) (button='x1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\x11-sidebutton-source-01a0ff2c\sources\wrong_index\runtime\backends\x11_v1\test_sidebutton_ledger.py", line 109, in test_stubborn_side_buttons
+    b,s=self.make(True);r=self.record(b,s,button,'stubborn',lambda:self.dispatch(s,button));self.assertEqual(r['status'],'release_unverified');self.assertEqual(b.held_buttons,{button});self.assertTrue(s.recovery_required)
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_stubborn_side_buttons (runtime.backends.x11_v1.test_sidebutton_ledger.SideButtonTests.test_stubborn_side_buttons) (button='x2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\x11-sidebutton-source-01a0ff2c\sources\wrong_index\runtime\backends\x11_v1\test_sidebutton_ledger.py", line 109, in test_stubborn_side_buttons
+    b,s=self.make(True);r=self.record(b,s,button,'stubborn',lambda:self.dispatch(s,button));self.assertEqual(r['status'],'release_unverified');self.assertEqual(b.held_buttons,{button});self.assertTrue(s.recovery_required)
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.006s
+
+FAILED (failures=3)

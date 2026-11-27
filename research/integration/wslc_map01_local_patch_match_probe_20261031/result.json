@@ -1,0 +1,189 @@
+{
+  "radius": 48,
+  "patch": [
+    8,
+    8
+  ],
+  "distinct_distance": 8,
+  "posthoc_margin": 4,
+  "score_limit": 32,
+  "results": [
+    {
+      "run": "ee02",
+      "source_sha256": "e1e5c631eae60a0ee33ae131ae267efb243b9fee0f56c35a2560f9779996a7ea",
+      "fresh_sha256": "8b11387a2eae3520a699da63576dfffab0f650c6bda1b2cd0e3c5318368cbfc7",
+      "source_point": [
+        673,
+        520
+      ],
+      "previous_difference": 46.854166666666664,
+      "fresh": {
+        "best_mad": 7.5625,
+        "dx": -6,
+        "dy": 48,
+        "second_distinct_mad": 9.1875,
+        "margin": 1.625,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "search_boundary",
+          "ambiguous"
+        ]
+      },
+      "fresh_16": {
+        "best_mad": 9.4609375,
+        "dx": -5,
+        "dy": 48,
+        "second_distinct_mad": 10.5390625,
+        "margin": 1.078125,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "search_boundary",
+          "ambiguous"
+        ]
+      },
+      "fresh_24": {
+        "best_mad": 13.408564814814815,
+        "dx": 46,
+        "dy": -40,
+        "second_distinct_mad": 16.05439814814815,
+        "margin": 2.645833333333334,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "ambiguous"
+        ]
+      },
+      "same_frame": {
+        "best_mad": 0.0,
+        "dx": 0,
+        "dy": 0,
+        "second_distinct_mad": 2.9791666666666665,
+        "margin": 2.9791666666666665,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "ambiguous"
+        ]
+      },
+      "synthetic_shift_5_minus3": {
+        "best_mad": 0.0,
+        "dx": 5,
+        "dy": -3,
+        "second_distinct_mad": 2.9791666666666665,
+        "margin": 2.9791666666666665,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "ambiguous"
+        ]
+      },
+      "blank": {
+        "best_mad": 10.895833333333334,
+        "dx": -48,
+        "dy": -48,
+        "second_distinct_mad": 10.895833333333334,
+        "margin": 0.0,
+        "best_ties": 9409,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "search_boundary",
+          "ambiguous"
+        ]
+      }
+    },
+    {
+      "run": "ff01",
+      "source_sha256": "f56139835607d9ee3488955cca00da0d470341416f493b13522d09541316f506",
+      "fresh_sha256": "1923c913aac86e135c6b375b86f5ebdc35ad316ca71e5847bad2f43dd23d032e",
+      "source_point": [
+        644,
+        508
+      ],
+      "previous_difference": 48.25,
+      "fresh": {
+        "best_mad": 22.25,
+        "dx": -6,
+        "dy": 48,
+        "second_distinct_mad": 28.791666666666668,
+        "margin": 6.541666666666668,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "search_boundary"
+        ]
+      },
+      "fresh_16": {
+        "best_mad": 25.598958333333332,
+        "dx": 35,
+        "dy": 14,
+        "second_distinct_mad": 25.619791666666668,
+        "margin": 0.020833333333335702,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "ambiguous"
+        ]
+      },
+      "fresh_24": {
+        "best_mad": 23.71759259259259,
+        "dx": 35,
+        "dy": 16,
+        "second_distinct_mad": 24.618055555555557,
+        "margin": 0.9004629629629655,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "ambiguous"
+        ]
+      },
+      "same_frame": {
+        "best_mad": 0.0,
+        "dx": 0,
+        "dy": 0,
+        "second_distinct_mad": 13.75,
+        "margin": 13.75,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "candidate_only",
+        "reasons": []
+      },
+      "synthetic_shift_5_minus3": {
+        "best_mad": 0.0,
+        "dx": 5,
+        "dy": -3,
+        "second_distinct_mad": 13.75,
+        "margin": 13.75,
+        "best_ties": 1,
+        "candidates": 9409,
+        "review": "candidate_only",
+        "reasons": []
+      },
+      "blank": {
+        "best_mad": 80.16666666666667,
+        "dx": -48,
+        "dy": -48,
+        "second_distinct_mad": 80.16666666666667,
+        "margin": 0.0,
+        "best_ties": 9409,
+        "candidates": 9409,
+        "review": "refuse",
+        "reasons": [
+          "search_boundary",
+          "ambiguous",
+          "poor_match"
+        ]
+      }
+    }
+  ]
+}

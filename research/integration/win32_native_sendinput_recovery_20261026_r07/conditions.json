@@ -1,0 +1,23 @@
+{
+  "attempt_id": "win32-native-sendinput-r07-20261026",
+  "source_commit": "f2f7dbb2e043919e0773655e5fab543cc3682fcd",
+  "host_scope": "user-authorized Windows workstation; two sequential repository-owned disposable Win32 fixture processes",
+  "question": "After bounded recovery on a blocked producer, does the standard compiled public caller refuse the old target generation and independently verify a task effect on a fresh target generation?",
+  "sequence": [
+    "Phase 1 repeats the frozen R06 held-SHIFT recovery fault on one owned fixture and must pass before phase 2 starts.",
+    "Retire the first supervised session and fixture process.",
+    "Start a distinct fixture process and supervised session; require a different native generation.",
+    "Submit one focus-only standard program bound to the old generation; require TARGET_GENERATION_CHANGED and input_dispatched=false.",
+    "Observe the new generation through public MCP, then run one compiled caller transition: click x=100,y=60, type office, Ctrl+S, release_all.",
+    "Require a post-dispatch observation and an independent server-configured task oracle bound to the exact call, operation and fresh generation."
+  ],
+  "task_effect": {"saved": true, "text": "office", "clicked": true},
+  "oracle_id": "r07-fresh-generation-effect-v1",
+  "limits": [
+    "The producer fault is injected before native SendInput; it does not simulate an OS/kernel hang.",
+    "No AppServer model call, matched efficiency, WSLc allocation, MAP01, or reliability estimate is included.",
+    "One trial; first failure is immutable and is not replayed."
+  ],
+  "wslc_used": false,
+  "docker_used": false
+}

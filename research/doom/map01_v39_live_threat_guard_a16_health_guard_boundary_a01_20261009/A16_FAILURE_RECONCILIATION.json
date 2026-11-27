@@ -1,0 +1,116 @@
+{
+  "schema": "map01-v39-live-threat-guard-a16-health-guard-boundary-failure-result-v1",
+  "allocation": "map01-v39-live-threat-guard-a16-health-guard-boundary-20261009",
+  "status": "STOP",
+  "original_audit_status_preserved": "STOP",
+  "provenance_checks_passed": true,
+  "terminal_input_checks_passed": true,
+  "independent_cancellation_custody_passed": true,
+  "owner_event_log_reconciled_by_event_schema": {
+    "closed": true,
+    "close_receipt_count": 1,
+    "final_event_is_close": true,
+    "explicit_keyup_count": 32,
+    "expected_explicit_keyup_count": 32,
+    "explicit_keyup_count_matches_custody": true,
+    "verified_explicit_keyups": 32,
+    "owner_release_count": 21,
+    "verified_empty_owner_releases": 21,
+    "physical_key_state_authoritative": false
+  },
+  "source_refresh_zero_health_matches_typed_event": true,
+  "signal_domain_source": {
+    "path": "research/doom/doom_signal_value_domain_v1.py",
+    "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "configured_health_domain": [
+      1,
+      200
+    ]
+  },
+  "observed_health_zero": {
+    "sequence": 325,
+    "typed_sample_count": 14,
+    "matches_refused_refresh_sequence": true,
+    "refresh_rejection": "invalid_observed_health"
+  },
+  "final_model_decision": {
+    "decision_index": 11,
+    "prompt_health": 4,
+    "prompt_sha256": "8a52024818fab7748e5d4206d73f30689b178b2bcd10184c7c62d70f41dbe681",
+    "response": {
+      "assessment": "Active; health is critically low at 4 with a close enemy on the right. Execute an immediate emergency retreat while firing and strafe left.",
+      "commands": [
+        "retreat_fire:pulse",
+        "strafe_left:pulse"
+      ],
+      "next_cover_validity": {
+        "critical_health_minimum": 1,
+        "maximum_health_loss": 3
+      },
+      "action_validity": {
+        "critical_health_minimum": 1,
+        "maximum_health_loss": 3
+      }
+    },
+    "interpretation": "The model requested emergency retreat at health 4, while both authored validity bounds allowed health down to 1. The next typed observation reported health 0. This documents the policy boundary and subsequent refusal; it does not establish that a stricter threshold would have prevented death."
+  },
+  "decision_report_present": false,
+  "source_refresh_failure": {
+    "iteration": 12,
+    "source_sequence": 338,
+    "reason": "invalid_observed_health"
+  },
+  "controller_failure": {
+    "type": "SourceRefreshRefused",
+    "stage": "source_refresh",
+    "cleanup_complete": false,
+    "input_terminals_complete": true,
+    "input_releases_verified_empty": false,
+    "owner_events_closed": false
+  },
+  "hard_health_guard_count": 0,
+  "useful_events_during_pending_model": 0,
+  "recovery_classification": "not_applicable_no_hard_health_guard_and_no_decision_report",
+  "custody": {
+    "matched_cancellations": 12,
+    "accounted_cancellations": 12,
+    "unaccounted_cancellations": 0,
+    "per_key_release_transitions": 32,
+    "owner_keyups_matching_key_and_token": 32,
+    "terminals": 16,
+    "terminals_with_verified_empty_release": 16
+  },
+  "episode": {
+    "health_min": 0,
+    "health_max": 97,
+    "ammo_min": 40,
+    "ammo_max": 48,
+    "kill_count": 1,
+    "death_count": 1,
+    "player_dead": true,
+    "map_exit": false,
+    "episode_finished": true
+  },
+  "runtime": {
+    "model_turns_started": 12,
+    "model_turns_completed": 12,
+    "guest_exit": 1,
+    "app_server_exit": 0,
+    "retry_count": 0,
+    "elapsed_seconds": 70.96014070899764
+  },
+  "interpretation": "The first A16 outcome is preserved. The final model prompt reported health 4; its response requested emergency retreat but set both policy bounds to 1, allowing that policy down to health 1. The next typed sample reported health 0 at sequence 325. A later source refresh at sequence 338 was refused as outside the configured 1..200 signal domain (source SHA is recorded). This sequence does not establish that a stricter threshold would have prevented death. The frozen audit records 16/16 empty terminal releases and the independent custody audit accounts for all cancellations and per-key releases, while the controller's generic top-level cleanup receipt is incomplete. The event-schema read confirms the owner log's verified close, key-ups, and empty owner releases; it does not establish hardware key state. No authored-cover hard-health guard was exposed. Missing report.json prevents action-level recovery classification; this result is STOP, not a retry or success claim.",
+  "input_sha256": {
+    "FREEZE.json": "ffafbeaaa2b0c55f1c4e51edc159486ade3e56a552b57cd98ad7d4ac66bfb83b",
+    "HOST.json": "c25534b684e5e023ae769abe389859df2daa76f55d2571cc3054b6a465e169f7",
+    "AUDIT.json": "a5b7fbb6d0c16886021f65498e7ef89046b5e06ec72897c4110ff91b801430ca",
+    "A16_CUSTODY_INDEPENDENT.json": "159d33348a4b295bd26da82c95fac677e6d167544ad9081e28e03a49981d9a55",
+    "A16_AUDIT_RECONCILIATION_V2_1.json": "8d0cd238404528997b091e27613a18418d51b6d47edf0dcb0c8b16be49c34228",
+    "A16_AUDIT_RECONCILIATION_V3.json": "8231eaf92dd66df328824d3a36e531898488a6adac52c7bdbc90d6cb5e98a988",
+    "episode/controller-failure.json": "44c8184f6f2c65991208650a97b737545647e25a0c27092611c06363247895ad",
+    "episode/runtime/score.json": "3d481b3392205c52db598ab16d456d4f8fd785051ff6dda8f38a4a8c78c37b0a",
+    "episode/source-refreshes.json": "4de1b7af309d492bc025c9ad219182af44a54d177e97ad9ab78f1b45d767457b",
+    "episode/runtime/events.jsonl": "1ef05f702dd2a13e6332e740209041495a7782dfb4268028e083d0373c59e2dc",
+    "episode/runtime/owner-events.json": "958eab67e367d91a25c1e523cbd4371fc92ec99905735170ed5ae41a3f01c445"
+  }
+}

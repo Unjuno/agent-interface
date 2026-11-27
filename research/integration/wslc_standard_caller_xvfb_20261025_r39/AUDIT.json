@@ -1,0 +1,223 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r39",
+  "audited_utc": "2026-10-24T16:43:12.519490+00:00",
+  "checks": {
+    "attempt_source_pins_match": true,
+    "docker_container_removed": true,
+    "exact_4s_transaction": true,
+    "fresh_task_exact_once_pass": true,
+    "independent_readback_5s": true,
+    "late_horizon_clear": true,
+    "mounts_readonly_except_output": true,
+    "no_network_resource_limits": true,
+    "old_task_oracle_pass": true,
+    "old_unknown_fence_preserved": true,
+    "pinned_image_digest": true,
+    "preflight_before_trial": true,
+    "public_cancel_bound": true,
+    "release_readback_before_deadline": true,
+    "requested_pause_pidfd_resume": true,
+    "runtime_unknown_not_upgraded": true,
+    "source_commit_blob_runtime_cli_v1_mcp_server.py": true,
+    "source_commit_blob_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "source_commit_blob_runtime_guarded_x11_v1_process_identity.py": true,
+    "source_raw_sha_runtime_cli_v1_mcp_server.py": true,
+    "source_raw_sha_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "source_raw_sha_runtime_guarded_x11_v1_process_identity.py": true,
+    "stage_manifest_all_files_match": true,
+    "test_and_runner_exit_zero": true,
+    "tmpfs_exec": true,
+    "xkb_materialization_all_files_match": true,
+    "xvfb_stopped": true
+  },
+  "classification": "PASS_SCOPED_4S_TRANSACTION_3700MS",
+  "counts": {
+    "passed": 27,
+    "total": 27
+  },
+  "failed_checks": [],
+  "limitations": [
+    "single synthetic Xvfb container run",
+    "not Windows desktop, MAP01, or a real application",
+    "runtime cancellation remains UNKNOWN and replay denied",
+    "one result is not a reliability or efficiency estimate"
+  ],
+  "observations": {
+    "cancel_response_ms": 312.772938,
+    "container_removed": true,
+    "fresh_input_invocation_to_effect_readback_completed_ms": 48.03759,
+    "fresh_task": "pass",
+    "independent_release_readback_ms_after_cancel_start": 3950.512384,
+    "late_horizon_ms": 8501.818028,
+    "observed_pause_ms": 3700.30609,
+    "old_task": "pass",
+    "release_deadline_margin_ms": 176.864654,
+    "requested_pause_ms": 3700,
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_task_success": null,
+    "transaction_elapsed_ms": 3830.296278
+  },
+  "raw_files": [
+    {
+      "bytes": 11844,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/audit_r39.py",
+      "sha256": "1ab9b7cb4aecbbf93c3f923ff6f4c04be2282cdb7fb9b51b2b1203cac1a35ffc"
+    },
+    {
+      "bytes": 1133,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/CONDITIONS.json",
+      "sha256": "eacc42e6a55b38fa628861de1e1c0382347bdf5aa984b19c3cf2d5cc2027f6a1"
+    },
+    {
+      "bytes": 418,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/container-init.sh",
+      "sha256": "58a56e29f1828de871e895bad183895be9c1adb397c1c0e41842b6ad89ff487f"
+    },
+    {
+      "bytes": 650,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/INVOCATION-METADATA.json",
+      "sha256": "2154eef20a3479230c38ac6236939c219139f1342c77186fe6fca5b30509dcef"
+    },
+    {
+      "bytes": 49,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-absent-after-cleanup.txt",
+      "sha256": "d558e688407fa5dd1f6ee2ae0270acbe999252a2114246cc8079fd723864b974"
+    },
+    {
+      "bytes": 3,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-inspect-after-cleanup-exit-code.txt",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    },
+    {
+      "bytes": 100,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-inspect-after-cleanup.txt",
+      "sha256": "4222cfbf8cf20bc61dac05a7b0541404ed60ae682289ccb3c2222ffc03115c2f"
+    },
+    {
+      "bytes": 99,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-logs.log",
+      "sha256": "25453de290fdff65c19d7f77c10ffcbbf64f31fcc9dec04772ce1514c02bad5b"
+    },
+    {
+      "bytes": 107,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-mounts-before-cleanup.txt",
+      "sha256": "96160ef5520d7715e9558b734b2be7cc23588c7009b0296d31db2e8a45521835"
+    },
+    {
+      "bytes": 107,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-setup.json",
+      "sha256": "23f6d10fbef957fd1baa1c8e58a001d09a4e3b7cac0ab0636bd9d8170935bb84"
+    },
+    {
+      "bytes": 235,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/container-state-before-cleanup.txt",
+      "sha256": "f7ed44a5ed45030693c1f60cd6fe2cfb38f8a3c0da7cacb7b6e89cf840e09934"
+    },
+    {
+      "bytes": 3,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/docker-cleanup-exit-code.txt",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "bytes": 3,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/docker-run-exit-code.txt",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "bytes": 99,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/docker-run-raw.log",
+      "sha256": "25453de290fdff65c19d7f77c10ffcbbf64f31fcc9dec04772ce1514c02bad5b"
+    },
+    {
+      "bytes": 80,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/pinned-image-inspect.txt",
+      "sha256": "129ce3f5a41275e8e57d6c653eb506806478e2eee0a817eae6686acc79d00908"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/preflight-status.txt",
+      "sha256": "9f56e761d79bfdb34304a012586cb04d16b435ef6130091a97702e559260a2f2"
+    },
+    {
+      "bytes": 44321,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/result.json",
+      "sha256": "6ba82e090183398449821f5f7c981cb49798e23d109d1fa5fdc09e640b9a4c97"
+    },
+    {
+      "bytes": 3029,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/result.observation.png",
+      "sha256": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef"
+    },
+    {
+      "bytes": 927,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/runner.stderr.txt",
+      "sha256": "84668637356b136321bdb4765b49c08766c1dadab62b52f5c819a5ac66d83839"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/runner.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/test-exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "bytes": 65,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/trial-started.txt",
+      "sha256": "eaf7994667f897116ad7922137b73add2152065a6e9a46cca2aac508e32bed67"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xauth.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xauth.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 291,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb-argv.json",
+      "sha256": "daa9798ac4b4eff80035b1fb0ca3550f9599892afbf8b7e91bd5eb32d95b35d9"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb-pid.txt",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb-process-absent-after-run.txt",
+      "sha256": "a9ac0c3ac83c40e1b4c3416066d63d324ee9f8c144641dfeed72d140b6557245"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb-process-identity-preflight.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 85,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb-process-identity-preflight.txt",
+      "sha256": "4962b62c8c23370909fb8cd363f8ec114d61d6836231ea9b43d4386ea2a1acf3"
+    },
+    {
+      "bytes": 3522,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/output/xvfb.log",
+      "sha256": "f55e2a6894d1dfbec3e5fcb281a8d1d729dfe04923cdfe02ca3a4e801739b3f2"
+    },
+    {
+      "bytes": 1951,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/PREREGISTRATION.json",
+      "sha256": "1c9a1d64b5f8d20eb1ea6482b793893c73e1482bf805ee771a7c382ffa0d601c"
+    },
+    {
+      "bytes": 4514,
+      "path": "research/integration/wslc_standard_caller_xvfb_20261025_r39/run-container.py",
+      "sha256": "a6a5a4e091c450eb193b504b94e7aa556695f2f97c35be4f0f773d6ca3dc4549"
+    }
+  ],
+  "schema": "wslc-standard-caller-xvfb-r39-audit-v1"
+}

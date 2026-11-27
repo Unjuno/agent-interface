@@ -1,0 +1,96 @@
+{
+  "schema": "win32-screen-calculator-r17-audit-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r17-c48e9d7e",
+  "frozen_manifest_matches": true,
+  "observation": {
+    "status": "returned",
+    "frame": "screen_physical_px",
+    "region": [
+      48,
+      32,
+      320,
+      533
+    ],
+    "dimensions": [
+      320,
+      533
+    ],
+    "image_sha256": "5c0c3c1d8e43e41818e8ad7ba9f7a9c21a98c46fdaaec46e4aa284fdbf386de8",
+    "all_black": false,
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "input_dispatched": false
+  },
+  "dispatch": {
+    "wrapper_status": null,
+    "report_status": "returned",
+    "call_id": "b26e261c1cbf4a8e9bc981ee6be123f9",
+    "operation_id": "095235d667784d3f9cca602e02322179",
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "input_dispatched": true,
+    "action_status": "completed",
+    "release_confirmed": true,
+    "release_receipt": {
+      "buttons_down": [],
+      "buttons_unknown": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "monotonic_ns": 522581359000000,
+      "state_query_witnesses": {},
+      "verified": true
+    },
+    "completion_readback": {
+      "neutral": true,
+      "observed_monotonic_ns": 522581406000000,
+      "operation_id": "095235d667784d3f9cca602e02322179",
+      "producer_exit_confirmed_ns": 522581406000000,
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+    },
+    "replay_allowed": false
+  },
+  "effect": {
+    "uia_before": "1043",
+    "uia_during_verifier": "1044",
+    "uia_after": "1044",
+    "expected": "1044"
+  },
+  "task_verifier": {
+    "status": "unknown",
+    "task_success": null,
+    "uncertainty": "independent_task_oracle_receipt_invalid: ValueError('independent task-effect receipt has an invalid schema')",
+    "receipt_keys": [
+      "call_id",
+      "evidence_ref",
+      "observed_monotonic_ns",
+      "operation_id",
+      "oracle_end_monotonic_ns",
+      "oracle_id",
+      "oracle_start_monotonic_ns",
+      "outcome",
+      "target_generation",
+      "uia"
+    ],
+    "required_receipt_keys": [
+      "call_id",
+      "evidence_ref",
+      "observed_monotonic_ns",
+      "operation_id",
+      "oracle_id",
+      "outcome",
+      "target_generation"
+    ],
+    "extra_keys": [
+      "oracle_end_monotonic_ns",
+      "oracle_start_monotonic_ns",
+      "uia"
+    ],
+    "retry_allowed": false
+  },
+  "close": {
+    "status": "closed",
+    "close_release_confirmed": false,
+    "session_state": "closed",
+    "unresolved_call_ids": []
+  },
+  "disposition": "HOLD_NOT_PASS: UIA read observed 1044, but server rejected the oracle receipt because the callback included extra diagnostic keys; one-use verification is immutable and was not retried.",
+  "scope": "One native Calculator transition only; no replay, WSLc, MAP01, blocked-I/O recovery, efficiency, or reliability claim."
+}

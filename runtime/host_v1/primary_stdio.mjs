@@ -1,10 +1,12 @@
 /** Sequential line transport for the existing primary exchange. No action queue. */
 import {createInterface} from 'node:readline';
 import {readFile} from 'node:fs/promises';
-import {pathToFileURL} from 'node:url';
+import {fileURLToPath} from 'node:url';
+import {realpathSync} from 'node:fs';
 import {TextDecoder} from 'node:util';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
 import {createPrimaryExchange} from './primary_exchange.mjs';
+import {parseUniqueJson} from './json_unique.mjs';
 
 const schema='agent-interface/primary-stdio-v1';
 const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
@@ -80,7 +82,7 @@ async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=
   input.on('error',failed);
   async function perform(line) {
     let request;
-    try {request=JSON.parse(line);}
+    try {request=parseUniqueJson(line);}
     catch(error){
       await emit(output,{schema,status:'refused',operation_invoked:false,
         next_id:exchange.state().next_id,error:String(error)});return;
@@ -170,7 +172,13 @@ export async function runPrimaryStdio(config,{input=process.stdin,output=process
   }
 }
 
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
+function isMainModule() {
+  if (!process.argv[1]) return false;
+  try { return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); }
+  catch { return false; }
+}
+
+if(isMainModule()) {
   try {
     if(process.argv.length!==4||process.argv[2]!=='--config')
       throw TypeError('Usage: node primary_stdio.mjs --config /absolute/config.json');

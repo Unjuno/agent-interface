@@ -1,0 +1,77 @@
+{
+  "schema": "publication-reconciliation-v1",
+  "original_pr": 7981,
+  "original_pr_head": "e60145152d7ef7883ad04cdbc3eea50c5e6632b2",
+  "origin": "unchanged local retained originals, preserved and ZIP/SHA-256 verified before index repair",
+  "files_checked": 58,
+  "differing_publication_or_checkout_files": [
+    {
+      "path": "COMMANDS.md",
+      "expected_sha256": "f24853cc3ea105721acc4a7d5dbdb3d7f1776f54230d4027663e62d310476ae3",
+      "prior_pr_sha256": "e8449a3c8f70eb8e0eea08494f19dc320b67cf28c3e7c2ce2d5584da8901f9e7",
+      "prior_checkout_sha256": "e8449a3c8f70eb8e0eea08494f19dc320b67cf28c3e7c2ce2d5584da8901f9e7",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "FREEZE.json",
+      "expected_sha256": "40590965588ec210b01548132e3951e65e4d38d723d3b2113f4a9ec2baff9766",
+      "prior_pr_sha256": "96296befec624566df419839091d15fcc31312322e1397dbdffa808ff3c60da0",
+      "prior_checkout_sha256": "96296befec624566df419839091d15fcc31312322e1397dbdffa808ff3c60da0",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "PLAN.md",
+      "expected_sha256": "ad4f593bc6107e4a7b870ac1185823a6c4982ccc2fb84a921a5b932b5b1aad21",
+      "prior_pr_sha256": "b1d5e82546b3e323a1b1b63690f9f8603a5fbcbf41f37839c5fdcc97563d7e25",
+      "prior_checkout_sha256": "b1d5e82546b3e323a1b1b63690f9f8603a5fbcbf41f37839c5fdcc97563d7e25",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "README.md",
+      "expected_sha256": "118ed3fde9fbb43e57c6a7f594ca09f27386ac7b637907341c426155e75409d1",
+      "prior_pr_sha256": "6773ba15d0935e67031739876ec2cebff81da014cafe2088f92dc21ef52c11cc",
+      "prior_checkout_sha256": "6773ba15d0935e67031739876ec2cebff81da014cafe2088f92dc21ef52c11cc",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "RUN_RESULT.md",
+      "expected_sha256": "be8abe16f39d4e9b085b9539b73e6506411e164d600ad7d1188e21dd5725ebe8",
+      "prior_pr_sha256": "0a1ea4a1b966d937307c4cd8f15bbd2a0226da8fc376889b42d39e74eee38b5a",
+      "prior_checkout_sha256": "0a1ea4a1b966d937307c4cd8f15bbd2a0226da8fc376889b42d39e74eee38b5a",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "SETUP_ATTEMPTS.md",
+      "expected_sha256": "48f7514bf93c50635fb00ece24cbff05927db60f385817e429df622a7e713ecc",
+      "prior_pr_sha256": "6acfa11600784250a2e7003d957a6fe2dc6cd0fed26f7cedef95a2fef66240ad",
+      "prior_checkout_sha256": "6acfa11600784250a2e7003d957a6fe2dc6cd0fed26f7cedef95a2fef66240ad",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "results/a01/AUDIT_COMMAND_OUTPUT.json",
+      "expected_sha256": "aa0108503b98a7d48e1e8319bec089d0ca3560354ffadc9e86190a662bcd286e",
+      "prior_pr_sha256": "9c2b2309938d153f5fb43215ec84a63d0d467bf147bafe5c3d8dc433b8e8d5de",
+      "prior_checkout_sha256": "9c2b2309938d153f5fb43215ec84a63d0d467bf147bafe5c3d8dc433b8e8d5de",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    },
+    {
+      "path": "results/a01/RUNNER_WRAPPER_DISCREPANCY.json",
+      "expected_sha256": "835a3c03e8d4b764e95f7a54af6555da1b211a56043df9af58e1d0f5ef7399e4",
+      "prior_pr_sha256": "9b8d8bdb58ab7624f21763bac36a0afa27798e4b428078c1086dde621e54ea42",
+      "prior_checkout_sha256": "9b8d8bdb58ab7624f21763bac36a0afa27798e4b428078c1086dde621e54ea42",
+      "prior_pr_matches": false,
+      "prior_pr_equal_after_newline_normalization": true
+    }
+  ],
+  "scientific_outcome": "FAIL_CROSS_CLIENT_ISOLATION",
+  "candidate_rerun": false,
+  "prior_raw_and_audit_overwritten": false,
+  "action": "Restore intended frozen bytes in integration; original PR commit remains in merge history. No scientific relabeling."
+}

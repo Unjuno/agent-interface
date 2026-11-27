@@ -1,0 +1,44 @@
+{
+  "schema": "agent-interface/wslc-s33-independent-audit-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s33-b87c4e2f9a16",
+  "audited_utc": "2026-10-25T11:18:17.3794232+00:00",
+  "checks": {
+    "preregistration_matches_source_freeze": true,
+    "sdk_pull_returned": true,
+    "pinned_image_pull_completed": true,
+    "single_container_created": true,
+    "test_body_started": true,
+    "test_exit_zero": true,
+    "owner_release_receipt_verified": true,
+    "owner_release_within_4000ms": true,
+    "independent_readback_all_up": true,
+    "independent_readback_within_5000ms": true,
+    "delayed_horizon_at_least_8500ms": true,
+    "delayed_horizon_all_up": true,
+    "old_task_oracle_pass": true,
+    "fresh_task_oracle_pass": true,
+    "old_runtime_state_preserved_unknown": true,
+    "exact_container_deleted": true,
+    "image_deleted": true,
+    "session_terminated": true,
+    "harness_failure_null": true,
+    "container_process_exit_zero": true,
+    "raw_mirrors_present": true
+  },
+  "metrics": {
+    "delayed_horizon_ms": 8503.074,
+    "container_exit": 0,
+    "test_exit": 0,
+    "independent_readback_latency_ms": 4023.879,
+    "public_cancel_response_ms": 306.642,
+    "owner_release_latency_ms": 3953.343
+  },
+  "decision": "PASS_SCOPED",
+  "failed": [],
+  "limitations": [
+    "synthetic private Xvfb only",
+    "not physical Windows input, MAP01 or live application",
+    "old runtime cancellation remains UNKNOWN with replay denied and task_success=null",
+    "one replicate; not reliability or matched efficiency evidence"
+  ]
+}

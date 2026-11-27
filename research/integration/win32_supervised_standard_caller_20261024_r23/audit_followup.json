@@ -1,0 +1,243 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r23",
+  "checks": [
+    {
+      "evidence": {
+        "expected": "dc78ace44de7027ef63b0e83ff012fe0d01099e7",
+        "source": "dc78ace44de7027ef63b0e83ff012fe0d01099e7",
+        "tracked_clean": true
+      },
+      "name": "frozen_source_and_preflight",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_return": "pending",
+        "dispatch_attempts": 1
+      },
+      "name": "single_cancelled_dispatch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "producer_exit": {
+          "creation_time_100ns": 134372666613798191,
+          "observed_monotonic_ns": 484370304426500,
+          "pid": 24384,
+          "status": "exited",
+          "wait_started_monotonic_ns": 484370304172100
+        },
+        "q_down": {
+          "callback_entry_ns": 484370055889800,
+          "callback_return_ns": 484370304244500,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        "q_up": {
+          "callback_entry_ns": 484370308743400,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      },
+      "name": "callback_forward_and_exact_producer_exit",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_result": {
+          "effect_status": "unknown",
+          "input_dispatched": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "task_success": null
+        },
+        "action_status": "recovered",
+        "cancel_release": true,
+        "cancel_status": "recovered"
+      },
+      "name": "recovery_confirmed_in_action_and_cancel",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "readback": {
+          "exit_code": 0,
+          "expected_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "generation_after": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "generation_before": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "pid": 48508,
+          "process_retired": true,
+          "q_down": false,
+          "returned_monotonic_ns": 484370550950500,
+          "started_monotonic_ns": 484370550389900,
+          "state_witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 145885460,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 8940,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 26784
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 145885460,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 8940,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 26784
+            }
+          ],
+          "status": "observed"
+        }
+      },
+      "name": "independent_same_generation_q_up",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-PRECANCEL-20261024-R23"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-PRECANCEL-20261024-R23"
+        }
+      },
+      "name": "pre_cancel_fixture_effect",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "post_observation": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1568,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r23\\run\\calls\\7bf5067d140a43b68c829a9ce7522eac\\images\\c958c6d7507b43a79ca185d33ba0ec34.png",
+              "sha256": "6e3728dc693a0e73d27284b08f400ae656ba1853731cb6562a814d1dc982d8e9",
+              "source_raw_sha256": "db028c1621ddd5fe5a5e837c08f0fdf03a124bfffe14cf856af4ddc4f1ac39d8",
+              "timing_ns": {
+                "converted": 484370562000000,
+                "encoded": 484370562000000,
+                "started": 484370546000000,
+                "written": 484370562000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 484370546000000,
+            "capture_started_ns": 484370546000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 145885460,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "db028c1621ddd5fe5a5e837c08f0fdf03a124bfffe14cf856af4ddc4f1ac39d8",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "601ea9532eee49b9a2b74a0159b35d5e",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "c5665bf16160460bad106f2c95b66974",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+          "target_generation_consistency": "matched"
+        },
+        "target_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62"
+      },
+      "name": "fresh_observe_same_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "accepted_call_id": null,
+        "attempts": 1,
+        "response": {
+          "error": "fresh target generation required after cancellation",
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "c5665bf16160460bad106f2c95b66974",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "invalid_request",
+          "task_success": null
+        }
+      },
+      "name": "same_generation_fresh_action_refused_before_input",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "post_effect": null,
+        "task_success": null
+      },
+      "name": "no_post_recovery_effect_or_task_success_claim",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close": {
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "closed",
+          "task_success": null
+        },
+        "emergency_q_up": null,
+        "fixture_exit": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_exited": true,
+        "window_exists_after_exit": false
+      },
+      "name": "owned_cleanup_and_no_emergency_input",
+      "passed": true
+    }
+  ],
+  "hypothesis_accepted": false,
+  "interpretation": "Recovery and independent same-generation release passed. A separately observed and newly leased action was rejected because it used the same target generation as the recovered operation. The refusal occurred before invocation and input (operation_invoked=false, input_dispatched=false); no action call ID was accepted and no post-recovery fixture effect occurred. This confirms a fail-closed same-generation reuse gate, not post-recovery task continuation. The frozen R23 continuation hypothesis is rejected. A new-generation/new-session path remains a separate untested attempt.",
+  "passed": 10,
+  "raw_sha256": "b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8",
+  "schema": "win32-supervised-standard-caller-r23-followup-audit-v1",
+  "status": "HYPOTHESIS_REJECTED_FAIL_CLOSED",
+  "total": 10
+}

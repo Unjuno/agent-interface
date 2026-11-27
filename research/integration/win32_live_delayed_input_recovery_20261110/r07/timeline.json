@@ -1,0 +1,1011 @@
+[
+  {
+    "utc": "2026-11-10T11:54:41.854723+00:00",
+    "operation": "dispatch",
+    "response": {
+      "status": "pending",
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "call": {
+        "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+        "operation": "dispatch",
+        "state": "running",
+        "arguments": {
+          "program": {
+            "schema": "agent-interface/program-v1",
+            "program_id": "win32-live-fixture-r07",
+            "source": {
+              "observation_seq": 1,
+              "binding_revision": 1,
+              "target_generations": {
+                "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+              }
+            },
+            "authority": {
+              "lease_id": "win32-live-fixture-r07",
+              "expires_at_ns": 76344500000000
+            },
+            "terminal": {
+              "release_all_required": true
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "op": "key_chord",
+                "keys": [
+                  "A"
+                ]
+              },
+              {
+                "op": "release_all"
+              }
+            ]
+          },
+          "current_observation_seq": 1,
+          "current_binding_revision": 1
+        },
+        "backend_attempted": true,
+        "persistence_failure": null,
+        "response_wait_ms": 10000
+      },
+      "scope": "current_server",
+      "result_available": false,
+      "release_confirmed": false,
+      "effect_status": "unknown",
+      "task_success": null,
+      "replay_allowed": false,
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:42.117746+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:42.379406+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:42.631573+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:42.893460+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:43.159103+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:43.424849+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:43.688992+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:43.954542+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:44.217188+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:44.483648+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:44.751869+00:00",
+    "operation": "results",
+    "action_status": "running",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "running",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": null,
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000
+        }
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:45.020133+00:00",
+    "operation": "results",
+    "action_status": "completed",
+    "response": {
+      "call_id": "e91e87af030f4ce8962799a4b95db7fa",
+      "action": {
+        "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+        "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+        "status": "completed",
+        "metadata": {
+          "source": "interface_dispatch",
+          "program_id": "win32-live-fixture-r07"
+        },
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 76295531000000,
+            "ended_ns": 76295531000000,
+            "emissions": 3,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "state_query_witnesses": {
+                  "65": [
+                    {
+                      "target": "fixture",
+                      "hwnd": 37161566,
+                      "pid": 56624,
+                      "thread_id": 38392,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "desktop_hookcontrol_opened": true,
+                      "probe_integrity_rid": 8192,
+                      "target_integrity_rid": 8192
+                    },
+                    {
+                      "target": "fixture",
+                      "hwnd": 37161566,
+                      "pid": 56624,
+                      "thread_id": 38392,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "desktop_hookcontrol_opened": true,
+                      "probe_integrity_rid": 8192,
+                      "target_integrity_rid": 8192
+                    }
+                  ]
+                },
+                "verified": true,
+                "monotonic_ns": 76295531000000
+              }
+            ]
+          },
+          "recovery_required": false
+        },
+        "producer_timing": {
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 76284515000000,
+          "factory_returned_monotonic_ns": 76284531000000,
+          "process_start_called_monotonic_ns": 76284531000000,
+          "process_start_returned_monotonic_ns": 76284531000000,
+          "identity_verified_monotonic_ns": 76284531000000,
+          "start_gate_authorized_monotonic_ns": 76284546000000,
+          "child_ready_monotonic_ns": 76295531000000
+        },
+        "release_confirmed": true,
+        "task_success": null,
+        "replay_allowed": false,
+        "completion_custody": {
+          "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+          "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+          "deadline_ns": 76344500000000,
+          "obligations": [
+            "key:fixture:A"
+          ],
+          "status": "completed",
+          "producer_identity": {
+            "pid": 31552,
+            "creation_time_100ns": 134387852718671262
+          },
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "cleanup_deadline_ns": null,
+          "cleanup_requested_monotonic_ns": null,
+          "recovery_completed_monotonic_ns": null,
+          "cleanup_latency_ns": null,
+          "cleanup_requested_perf_counter_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "recovery_id": null,
+          "late_input_horizon_ns": 2000000000,
+          "late_input_max_sample_gap_ns": 100000000,
+          "late_input_observation_count": 77,
+          "late_input_release_received_ns": null,
+          "late_input_observation_start_ns": 76295593000000,
+          "late_input_observation_end_ns": 76297593000000,
+          "late_input_max_observed_gap_ns": 32000000,
+          "late_input_validation_error": null,
+          "release_confirmed": true,
+          "completion_release_receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "state_query_witnesses": {
+              "65": [
+                {
+                  "target": "fixture",
+                  "hwnd": 37161566,
+                  "pid": 56624,
+                  "thread_id": 38392,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "desktop_hookcontrol_opened": true,
+                  "probe_integrity_rid": 8192,
+                  "target_integrity_rid": 8192
+                },
+                {
+                  "target": "fixture",
+                  "hwnd": 37161566,
+                  "pid": 56624,
+                  "thread_id": 38392,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "desktop_hookcontrol_opened": true,
+                  "probe_integrity_rid": 8192,
+                  "target_integrity_rid": 8192
+                }
+              ]
+            },
+            "verified": true,
+            "monotonic_ns": 76295531000000
+          },
+          "completion_readback": {
+            "operation_id": "ae85e254af734a8fb222bb2b2ea6ae66",
+            "target_generation": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa",
+            "producer_exit_confirmed_ns": 76295593000000,
+            "observed_monotonic_ns": 76295593000000,
+            "neutral": true,
+            "late_input_horizon_ns": 2000000000,
+            "late_input_horizon_verified": true,
+            "late_input_observation_count": 77,
+            "late_input_observation_start_monotonic_ns": 76295593000000,
+            "late_input_observation_end_monotonic_ns": 76297593000000,
+            "late_input_max_observed_gap_ns": 32000000,
+            "late_input_max_sample_gap_ns": 100000000
+          },
+          "completion_readback_outcome": "verified",
+          "completion_readback_attempt": null,
+          "task_success": null,
+          "replay_allowed": false,
+          "uncertainty": null,
+          "phase": "completed"
+        },
+        "input_dispatched": true
+      },
+      "cancellation": null,
+      "task_effect": null,
+      "standard_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "win32-live-fixture-r07",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1,
+          "target_generations": {
+            "fixture": "0d67bba49f747dc6c1d89e774ed6d990cd21c06c65429427dd9eaf94920290fa"
+          }
+        },
+        "authority": {
+          "lease_id": "win32-live-fixture-r07",
+          "expires_at_ns": 76344500000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "A"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "operation_invoked": false,
+      "input_dispatched": false,
+      "task_success": null,
+      "replay_allowed": false
+    }
+  },
+  {
+    "utc": "2026-11-10T11:54:48.951606+00:00",
+    "operation": "post_horizon_effect_poll",
+    "terminal_seen_monotonic_ns": 76297671000000,
+    "poll_started_monotonic_ns": 76297671000000,
+    "poll_ended_monotonic_ns": 76301609000000,
+    "effect": {
+      "effect_delay_ms": 6000,
+      "effect_observed_ns": 76301546000000,
+      "key_down_accepted_ns": 76295531000000,
+      "text": "a",
+      "verified": true
+    }
+  }
+]

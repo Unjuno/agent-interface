@@ -1,0 +1,57 @@
+{
+  "schema": "agent-interface/primary-mint-sparse-current-main-verification-v1",
+  "tdd_red": {
+    "passed": 20,
+    "result": "EXPECTED_RED",
+    "raw": "TDD-RED.tap",
+    "tests": 26,
+    "failure_class": "sparse holes in single-mint point and region accepted by .every",
+    "failed": 6,
+    "command": "node --test --test-reporter=tap runtime/host_v1/test_primary_mint_sparse.mjs"
+  },
+  "initial_full_suite": {
+    "passed": 269,
+    "result": "ENVIRONMENT_SETUP_FAILURE",
+    "raw": "FULL-SUITE-ENV-FAILURES.tap.gz",
+    "cause": "Missing PRIMARY_FAILURE_EVIDENCE root, omitted sparse-checkout runtime/integration_checks helper, and missing --experimental-vm-modules for SourceTextModule",
+    "tests": 282,
+    "failed": 13,
+    "command": "node --test --test-reporter=tap runtime/host_v1/test_*.mjs",
+    "raw_compression": "gzip; decompression byte-matched the original TAP output",
+    "raw_sha256_uncompressed": "e8b3c88ea4ee685cc50cf685a88b6d664d4bb8b3d2ffeebbd81c34e5f4dc8384",
+    "raw_sha256_compressed": "b781e50f0a3886f22e9390b21493257ef5da9338ab8daae05575ff5c48a0419b"
+  },
+  "final_full_suite": {
+    "failed": 0,
+    "result": "PASS",
+    "environment": "Fresh PRIMARY_FAILURE_EVIDENCE root, PYTHONPATH set to repo root, runtime/integration_checks included in sparse checkout",
+    "raw": "FULL-SUITE-GREEN.tap.gz",
+    "tests": 287,
+    "command": "node --experimental-vm-modules --test --test-reporter=tap runtime/host_v1/test_*.mjs",
+    "passed": 287,
+    "skipped": 0,
+    "raw_compression": "gzip; decompression byte-matched the original TAP output",
+    "raw_sha256_uncompressed": "9f8ec6d319ee0df9e0cc10fc8e8d91f6f6822466d1bf06141db60aa1c2791215",
+    "raw_sha256_compressed": "e63c88e05a511b2e2d03818ec4567652a0064e4cc3ce23c8e4a750382bfa91de"
+  },
+  "original_evidence_preserved": {
+    "files": {
+      "EVIDENCE.base64-gzip-json.txt": "33eb1a54b01ddee2419207e23c135fa23cfd7b7da4c8c5f285c3637c7df58651",
+      "CUSTODY.json": "282120d17c5f7ed41acbfeb347cec44f7067a4dccdc3d0e3b0e35a4482356590",
+      "README.md": "c2ddc8be4fd66668189a41adbe5aa99b58b082b6c3ba1535ae9961bd201a6e2b"
+    },
+    "source": "PR #8354 head 31f52fedfc26182e58960dcc8ec5a5ecc3577c38",
+    "checksums_verified_against_git_blobs": true
+  },
+  "policy": {
+    "repository_branch_protection": "none (404)",
+    "related_issue": "#57 reference only; no close keyword",
+    "repository_rulesets": 0,
+    "fixed_reviewer_quorum_required": false
+  },
+  "limitations": [
+    "does not establish live target/effect behavior",
+    "does not replay original scientific allocation",
+    "does not establish physical input, WSLc, MAP01, reliability, or efficiency"
+  ]
+}

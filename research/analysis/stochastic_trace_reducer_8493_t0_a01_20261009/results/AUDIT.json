@@ -1,0 +1,434 @@
+{
+  "cases": [
+    {
+      "block_decision": "PASS_ALL_BLOCKS_NONINFERIOR",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 202,
+            "competitor_rows": 19,
+            "gains": 0,
+            "losses": 8,
+            "n": 256,
+            "reduced_target": 194
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.03125,
+            "lower": -0.08316942892400044,
+            "upper": 0.021185350837489465
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 208,
+            "competitor_rows": 15,
+            "gains": 0,
+            "losses": 8,
+            "n": 256,
+            "reduced_target": 200
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.03125,
+            "lower": -0.08316942892400044,
+            "upper": 0.021185350837489465
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "stable_no_shift",
+      "pooled": {
+        "counts": {
+          "base_target": 410,
+          "competitor_rows": 34,
+          "gains": 0,
+          "losses": 16,
+          "n": 512,
+          "reduced_target": 394
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.03125,
+          "lower": -0.0643053824174819,
+          "upper": 0.002250274509737424
+        }
+      },
+      "role": "negative_control"
+    },
+    {
+      "block_decision": "FAIL_BLOCK_NONINFERIORITY",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 900,
+            "competitor_rows": 70,
+            "gains": 0,
+            "losses": 14,
+            "n": 1024,
+            "reduced_target": 886
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.013671875,
+            "lower": -0.02972600207362469,
+            "upper": 0.0023335498760108167
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 187,
+            "competitor_rows": 26,
+            "gains": 0,
+            "losses": 147,
+            "n": 256,
+            "reduced_target": 40
+          },
+          "decision": "FAIL_NONINFERIORITY",
+          "interval": {
+            "delta": -0.57421875,
+            "lower": -0.6726235194775495,
+            "upper": -0.4431306714483717
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "abrupt_shift_masked_pooled",
+      "pooled": {
+        "counts": {
+          "base_target": 1087,
+          "competitor_rows": 96,
+          "gains": 0,
+          "losses": 161,
+          "n": 1280,
+          "reduced_target": 926
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.12578125,
+          "lower": -0.15821557372719547,
+          "upper": -0.09191920181447427
+        }
+      },
+      "role": "planted_harmful_regime"
+    },
+    {
+      "block_decision": "FAIL_BLOCK_NONINFERIORITY",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 885,
+            "competitor_rows": 73,
+            "gains": 0,
+            "losses": 14,
+            "n": 1024,
+            "reduced_target": 871
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.013671875,
+            "lower": -0.02972600207362469,
+            "upper": 0.0023335498760108167
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 392,
+            "competitor_rows": 63,
+            "gains": 0,
+            "losses": 34,
+            "n": 512,
+            "reduced_target": 358
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.06640625,
+            "lower": -0.10931097762823189,
+            "upper": -0.02187103620524393
+          },
+          "kind": "identified",
+          "window_id": "middle"
+        },
+        {
+          "counts": {
+            "base_target": 176,
+            "competitor_rows": 16,
+            "gains": 0,
+            "losses": 134,
+            "n": 256,
+            "reduced_target": 42
+          },
+          "decision": "FAIL_NONINFERIORITY",
+          "interval": {
+            "delta": -0.5234375,
+            "lower": -0.6242894801051722,
+            "upper": -0.39282769261481454
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "gradual_shift_masked_pooled",
+      "pooled": {
+        "counts": {
+          "base_target": 1453,
+          "competitor_rows": 152,
+          "gains": 0,
+          "losses": 182,
+          "n": 1792,
+          "reduced_target": 1271
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.1015625,
+          "lower": -0.1265050288545317,
+          "upper": -0.07579485978499485
+        }
+      },
+      "role": "planted_harmful_regime"
+    },
+    {
+      "block_decision": "UNKNOWN_INSUFFICIENT_BLOCK_SUPPORT",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 866,
+            "competitor_rows": 75,
+            "gains": 0,
+            "losses": 17,
+            "n": 1024,
+            "reduced_target": 849
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.0166015625,
+            "lower": -0.03376502862254999,
+            "upper": 0.0005805923112921947
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 19,
+            "competitor_rows": 2,
+            "gains": 0,
+            "losses": 16,
+            "n": 24,
+            "reduced_target": 3
+          },
+          "decision": "UNKNOWN_INTERVAL_OVERLAPS_MARGIN",
+          "interval": {
+            "delta": -0.6666666666666666,
+            "lower": -0.9139652917819793,
+            "upper": -0.06027960859568504
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "sparse_late_block",
+      "pooled": {
+        "counts": {
+          "base_target": 885,
+          "competitor_rows": 77,
+          "gains": 0,
+          "losses": 33,
+          "n": 1048,
+          "reduced_target": 852
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.03148854961832061,
+          "lower": -0.05284480462077396,
+          "upper": -0.009829188345623168
+        }
+      },
+      "role": "insufficient_support_control"
+    },
+    {
+      "block_decision": "UNKNOWN_TRANSITION_WINDOW",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 851,
+            "competitor_rows": 91,
+            "gains": 0,
+            "losses": 20,
+            "n": 1024,
+            "reduced_target": 831
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.01953125,
+            "lower": -0.03770857553400415,
+            "upper": -0.0012727585634007546
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 107,
+            "competitor_rows": 5,
+            "gains": 0,
+            "losses": 42,
+            "n": 128,
+            "reduced_target": 65
+          },
+          "decision": "UNKNOWN_INTERVAL_OVERLAPS_MARGIN",
+          "interval": {
+            "delta": -0.328125,
+            "lower": -0.472890167525711,
+            "upper": -0.1471155979600797
+          },
+          "kind": "ambiguous",
+          "window_id": "transition"
+        },
+        {
+          "counts": {
+            "base_target": 90,
+            "competitor_rows": 8,
+            "gains": 0,
+            "losses": 67,
+            "n": 128,
+            "reduced_target": 23
+          },
+          "decision": "FAIL_NONINFERIORITY",
+          "interval": {
+            "delta": -0.5234375,
+            "lower": -0.6651365622727984,
+            "upper": -0.3230389844470331
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "ambiguous_transition_window",
+      "pooled": {
+        "counts": {
+          "base_target": 1048,
+          "competitor_rows": 104,
+          "gains": 0,
+          "losses": 129,
+          "n": 1280,
+          "reduced_target": 919
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.10078125,
+          "lower": -0.13062323814863194,
+          "upper": -0.06980773789526964
+        }
+      },
+      "role": "transition_ambiguity_control"
+    },
+    {
+      "block_decision": "PASS_ALL_BLOCKS_NONINFERIOR",
+      "blocks": [
+        {
+          "counts": {
+            "base_target": 205,
+            "competitor_rows": 19,
+            "gains": 0,
+            "losses": 7,
+            "n": 256,
+            "reduced_target": 198
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.02734375,
+            "lower": -0.077352876480625,
+            "upper": 0.022885450759118693
+          },
+          "kind": "identified",
+          "window_id": "early"
+        },
+        {
+          "counts": {
+            "base_target": 205,
+            "competitor_rows": 18,
+            "gains": 0,
+            "losses": 10,
+            "n": 256,
+            "reduced_target": 195
+          },
+          "decision": "PASS_NONINFERIOR",
+          "interval": {
+            "delta": -0.0390625,
+            "lower": -0.09445464319018833,
+            "upper": 0.017415299408222756
+          },
+          "kind": "identified",
+          "window_id": "late"
+        }
+      ],
+      "case_id": "competing_fingerprint_no_shift",
+      "pooled": {
+        "counts": {
+          "base_target": 410,
+          "competitor_rows": 37,
+          "gains": 0,
+          "losses": 17,
+          "n": 512,
+          "reduced_target": 393
+        },
+        "decision": "PASS_NONINFERIOR",
+        "interval": {
+          "delta": -0.033203125,
+          "lower": -0.06693852787544191,
+          "upper": 0.0010488459758482681
+        }
+      },
+      "role": "fingerprint_identity_control"
+    }
+  ],
+  "competing_fingerprint_rows": 500,
+  "errors": [],
+  "fixture_sha256": "c935dcfb4c8d6d02ce3fa5c1cdfeae0273affa91b039565b20389e32320f5dde",
+  "mutation_controls": {
+    "controls": [
+      {
+        "name": "drop_raw_row",
+        "rejected": true
+      },
+      {
+        "name": "relabel_temporal_window",
+        "rejected": true
+      },
+      {
+        "name": "remove_mandatory_release",
+        "rejected": true
+      },
+      {
+        "name": "forge_target_fingerprint",
+        "rejected": true
+      },
+      {
+        "name": "accept_sparse_block",
+        "rejected": true
+      },
+      {
+        "name": "erase_competing_identity",
+        "rejected": true
+      }
+    ],
+    "rejected": 6,
+    "total": 6
+  },
+  "pooled_false_assurance_cases": [
+    "abrupt_shift_masked_pooled",
+    "gradual_shift_masked_pooled"
+  ],
+  "rows_reconstructed": 6424,
+  "schema": "unjuno.issue8493.independent-audit.v1",
+  "valid": true
+}

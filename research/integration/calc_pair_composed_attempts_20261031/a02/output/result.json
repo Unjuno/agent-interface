@@ -1,0 +1,216 @@
+{
+  "window": [
+    6292258,
+    "blank.fods - LibreOffice Calc",
+    2
+  ],
+  "initial_observation": {
+    "sequence": 1,
+    "observation_id": "abf29ae3a4984fa7af5fa9f0e0f4f925",
+    "binding_revision": 0,
+    "capture_ns": 4536784770,
+    "image_source": "exact_capture_rgb_handoff",
+    "pointer_binding": {
+      "focus": 6292258,
+      "surface": 6292258,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "native": {
+      "bytes": 4096000,
+      "sha256": "4bc6b7332b6b7c73bfabd108dd93b180c9de2f063b5d3a80bdda0f2736d42072",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 6292258,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 4536784770,
+      "capture_ended_ns": 4542182233,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/out/owner/guarded-session-1f21878ebe5a45eea3856423949bee5f/images/f9aa7308a32a4cd987e1c192b38a0abe.png",
+        "sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+        "bytes": 55566,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "4bc6b7332b6b7c73bfabd108dd93b180c9de2f063b5d3a80bdda0f2736d42072",
+        "timing_ns": {
+          "started": 4543897568,
+          "converted": 4545108590,
+          "encoded": 4567779834,
+          "written": 4569009980,
+          "hashed": 4570729168
+        }
+      }
+    },
+    "timing_ns": {
+      "started": 4536543714,
+      "public_returned": 4570824661,
+      "binding_checked": 4572493660,
+      "artifact_verified": 4573734489,
+      "decoded": 4573739670
+    }
+  },
+  "method": {
+    "method_receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-entry-checked-save",
+      "method": "enter-check-request-save",
+      "method_version": "1",
+      "session_scope": "native-x11:e3d884e6c24249fba257e91b6e253da5",
+      "outcome": "SAFE_YIELD",
+      "reason": "execution_failed",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 2,
+          "captured_ns": 4600966946,
+          "evidence_ref": "observation-2",
+          "evidence_digest": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+          "predicates": {
+            "context_ok": true,
+            "blank": true,
+            "cells_filled": "unknown"
+          },
+          "observation_started_ns": 4600689057,
+          "observation_accepted_ns": 4807265622
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "initial",
+          "outcome": "action",
+          "action": "enter",
+          "matched_conditions": {
+            "context_ok": true,
+            "blank": true
+          },
+          "evidence_ref": "observation-2"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter",
+          "status": "execution_failed",
+          "action_id": "action-d3c8f6c488764e1cbdfa692ea47351d7",
+          "release_verified": true,
+          "execution_started_ns": 4811871669,
+          "execution_accepted_ns": 5065816834
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "execution_failed",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "observation-2",
+      "pending_effect": null,
+      "started_ns": 4600684597,
+      "ended_ns": 5066861457,
+      "elapsed_ns": 466176860,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "feedback": {
+      "image_status": "needs_review",
+      "image": null,
+      "error": "ValueError('final graph observation no longer matches this owner')",
+      "replay_allowed": false,
+      "scope": "Method receipt retained; final feedback unavailable. No replay."
+    },
+    "session": {
+      "session_id": "1f21878ebe5a45eea3856423949bee5f",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 6292258
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": false,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:e3d884e6c24249fba257e91b6e253da5",
+      "compiled_surface": "x11-window-6292258",
+      "observations": null,
+      "target_queries": null,
+      "target": "app",
+      "observation_sequence": 9,
+      "review_required": true
+    },
+    "owner_timing": {
+      "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+      "clock": "time.monotonic_ns",
+      "scope": "run_compiled method entry through graph, feedback and session snapshot",
+      "status": "returned",
+      "started_ns": 4584580426,
+      "completed_ns": 5069200160,
+      "elapsed_ns": 484619734,
+      "method_outcome": "SAFE_YIELD",
+      "effect_status": null,
+      "error_type": null,
+      "replay_allowed": false
+    },
+    "owner_timing_retention": {
+      "status": "recorded"
+    },
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "close": {
+    "status": "closed",
+    "session_id": "1f21878ebe5a45eea3856423949bee5f",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 5075320233
+    }
+  },
+  "keys_down": [],
+  "buttons": 0,
+  "saved_score": {
+    "pass_effect": false,
+    "populated": [],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "731",
+        "731",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "864",
+        "864",
+        null
+      ]
+    ]
+  }
+}

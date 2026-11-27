@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/local-fakex-public-bystander-refusal-v1",
+  "run_date": "2026-10-22",
+  "source_commit": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+  "origin_main": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+  "test": "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prestarted_supervisor_public_path_preserves_bystander_refusal",
+  "test_source_sha256": "b6cd8774fec60390f0da41f2d050119cac13f5c6bc7bb80498066967dbb5810f",
+  "host": "Windows host",
+  "python": "CPython 3.11.9",
+  "modes": [
+    "python -m unittest",
+    "python -O -m unittest"
+  ],
+  "scope": "public MCP caller composed with synthetic Fake X bystander resource-base reuse",
+  "expected": {
+    "effects": [],
+    "fake_x_key_state": "held/down",
+    "replay_allowed": false,
+    "owner_disconnect": "unknown; resource_base_reused_by_unrelated_client",
+    "release_attempt": "not_attempted",
+    "cleanup": "UNKNOWN",
+    "task_success": null
+  },
+  "wslc_used": false,
+  "docker_used": false
+}

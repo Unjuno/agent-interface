@@ -1,0 +1,7 @@
+# Fake Win32 supervisor blocked-send boundary
+
+The current supervisor calculates a cutoff before calling the helper connection's synchronous `send`. This inert probe blocks `send` on an event, sets a 100 ms cutoff, and observes the caller after 200 ms. The saved output reports the caller still blocked at 203 ms. Once the fake send is released, the method returns `TimeoutError` and the probe thread terminates. The helper and process are fakes; retirement is stubbed. This demonstrates the send call is not bounded by the method cutoff under this schedule, not that any real Win32 pipe or physical input was blocked.
+
+Source: `runtime/guarded_win32_v1/process_cancellation.py` at main `01e29698c90837c8355332045759364f57174196`, SHA-256 `4e41c7f9bb1e99f6c28a0c2f6e5836a55abcae6434a33e5a286a0db9666b9609`. An exploratory run on an older local source also showed the boundary; the saved output here is the subsequent current-main run.
+
+Run from the repository root with `python -B -m research.integration.win32_recovery_blocked_send_20261027_r01.probe`. It creates no GUI, input, model, container, or helper process. The fake block has a two-second safety limit and is released in `finally`; no runtime result is promoted. Output, stderr, exit code and SHA-256 manifest are preserved. The next fix needs bounded transport or isolated, safely retired I/O; timing out a thread alone does not prove the helper or input is retired.

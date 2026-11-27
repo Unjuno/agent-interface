@@ -1,0 +1,14 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+  "callback_return_ns": 490582093578900,
+  "event_count": 40,
+  "exact_q_up_sendinput_spans": [],
+  "helper_processes": {
+    "32188": "recovery",
+    "48160": "observer"
+  },
+  "interpretation": "R35 contains no public interface_cancel result or cancel call artifact. These VK_Q key-up calls are part of the normally completed producer action and terminal release_all. The timed intervals and same-generation state samples describe normal terminal-release behavior during a held low-level callback, not cancellation recovery. The wrapper records entry/return around SendInput; this is not a physical application-time or cancel-causality claim.",
+  "schema": "win32-supervised-standard-caller-r35-trace-analysis-v1",
+  "spans_overlapping_or_open_at_callback": [],
+  "strict_action_audit_status": "FAIL_OR_UNKNOWN"
+}

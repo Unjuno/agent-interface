@@ -1,0 +1,29 @@
+test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb) ... FAIL
+
+======================================================================
+FAIL: test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/primary-mint-sparse/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", line 684, in test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb
+    self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
+AssertionError: 'unknown' != 'disconnected'
+- unknown
++ disconnected
+ : {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'resource_base_reused', 'observed_pid': 439, 'expected_pid': 436, 'supervisor_status': 'unknown', 'supervisor_reason': 'stale_owner_identity'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'stale_owner_identity', 'worker_retired': True, 'worker_exitcode': 0}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True, 'operation_id': '89484db6eec34ff291d992d71fe879e8', 'cancellation': {'operation_id': '89484db6eec34ff291d992d71fe879e8', 'status': 'completed', 'admitted_monotonic_ns': 151588940695, 'caller_response_deadline_monotonic_ns': 151888940695, 'transaction_deadline_monotonic_ns': 154588940695, 'owner_generation': {'session_id': '42b9dd340c3445b0b1d179602b2c6a7b', 'child_pid': 436, 'x_resource_base': 6291456, 'binding_revision': 0}, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'result': {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'resource_base_reused', 'observed_pid': 439, 'expected_pid': 436, 'supervisor_status': 'unknown', 'supervisor_reason': 'stale_owner_identity'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'stale_owner_identity', 'worker_retired': True, 'worker_exitcode': 0}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True}, 'completed_monotonic_ns': 151621338532}}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.837s
+
+FAILED (failures=1)

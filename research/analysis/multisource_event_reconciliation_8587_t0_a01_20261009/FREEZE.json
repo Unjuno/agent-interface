@@ -1,0 +1,46 @@
+{
+  "allocation_id": "8587-T0-A01-20261009",
+  "branch": "research/8587-multisource-event-a01-20261009",
+  "commands": {
+    "auditor": "python3 -B auditor.py model.json oracle.json FREEZE.json results/candidate.raw.json",
+    "candidate": "python3 -B candidate.py model.json FREEZE.json"
+  },
+  "decision_gate": "PROTOCOL.md#pass-gate",
+  "decision_summary": {
+    "auditor_mutation_controls": 5,
+    "benign_controls": 5,
+    "cases": 15,
+    "expected_baseline_localized_faults": {
+      "CLIENT_LEDGER_ONLY": 1,
+      "FINAL_STATE_ONLY": 0
+    },
+    "identifiable_faults": 8,
+    "unknown_cases": 2
+  },
+  "environment": {
+    "implementation": "CPython",
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "evidence_path": "research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/",
+  "formal_invocations_before_run": {
+    "auditor": 0,
+    "candidate": 0,
+    "retry": 0
+  },
+  "input_sha256": {
+    "model.json": "e9f05a3ce007753512f5150d9a84421c0d53872eafa15cda988056bdb598c164",
+    "oracle.json": "c0adbd9807c54cbe548a0efa37fc070331e1daf806c50acd2d6da5609190d3be"
+  },
+  "main_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "schema": "multisource-event-freeze-v1",
+  "source_sha256": {
+    "PROTOCOL.md": "9af5e8dcf974242347e2052d1ecdb6a75faf2a6560345db90b55fa464b9a217c",
+    "auditor.py": "d154e4ca8e3670b7a0bbfc3cb09cd8354b03922ed3232f13f2fb5371c0b80027",
+    "candidate.py": "a9e5c98d13dce0b6cb4af75f7d24ba2b82c8872ba074e2c3942ac160741db0a9",
+    "fixture_builder.py": "62c1413adb50d965d360e15a9d2f1d6d8107a7b1739567138c43ce6631fa50db",
+    "test_construction.py": "e3296f7c07d8c273e037a4978a0c003cb9d3ef14c5fca2ad67e8e528154d44cc"
+  },
+  "status": "FROZEN_NOT_EXECUTED"
+}

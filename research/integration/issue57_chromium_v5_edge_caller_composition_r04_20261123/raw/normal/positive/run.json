@@ -1,0 +1,829 @@
+{
+  "case": "positive",
+  "invalidate_after_entry": false,
+  "outcome": "EXECUTION_INCOMPLETE",
+  "result": {
+    "outcome": "EXECUTION_INCOMPLETE",
+    "reason": "effect_failed",
+    "task_effect": null,
+    "effect_receipt": null,
+    "delivery": "confirmed_partial",
+    "execution_progress": {
+      "status": "safe_yield",
+      "reason": "effect_failed",
+      "completed_actions": 1,
+      "input_dispatched": true
+    },
+    "selected_target": {
+      "field": "field",
+      "submit": "submit"
+    },
+    "cache_update": {
+      "field": "field",
+      "submit": "submit"
+    },
+    "repair_path": "none",
+    "route": "reuse",
+    "repair_trace": [
+      {
+        "stage": "reuse_revalidate",
+        "status": "revalidated"
+      }
+    ],
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "warm_reuse",
+      "omitted_stages": [
+        "observe_source",
+        "coarse_model",
+        "acquire_anchor",
+        "anchor_model"
+      ],
+      "comparable_to_full_cold": false
+    },
+    "stages": {
+      "observe_source": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "coarse_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_anchor": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "anchor_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "reuse_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "local_repair": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_expansion": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "expanded_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_observe": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "final_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "execute": {
+        "status": "completed",
+        "reason": null
+      },
+      "verify_effect": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      }
+    },
+    "attempt_ledger": [],
+    "model_call_ledger": [],
+    "accounting": {
+      "attempted_calls": 0,
+      "completed_calls": 0,
+      "duplicate_call_ids": [],
+      "usage_totals": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "usage_coverage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "visible_images_submitted": 0,
+      "visible_image_coverage": 0,
+      "model_wait_ns": 0,
+      "model_wait_coverage": 0,
+      "cost_coverage": 0,
+      "cost": 0,
+      "cached_input_semantics": "subset of input_tokens; never added to input total"
+    },
+    "phase_timings": [
+      {
+        "stage": "reuse_revalidate",
+        "started_ns": 470375929753300,
+        "ended_ns": 470376025097600,
+        "elapsed_ns": 95344300
+      },
+      {
+        "stage": "final_revalidate",
+        "started_ns": 470376025116000,
+        "ended_ns": 470376140811900,
+        "elapsed_ns": 115695900
+      },
+      {
+        "stage": "execute",
+        "started_ns": 470376140839300,
+        "ended_ns": 470376625124800,
+        "elapsed_ns": 484285500
+      }
+    ],
+    "input_authority": "consumed_by_recorded_execute_stage",
+    "compiled_execution_receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "chromium-v5-edge-form",
+      "method": "enter_verify_exact_value_then_submit",
+      "method_version": "2",
+      "session_scope": "edge-v5-caller-v3-local-session",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 6,
+          "captured_ns": 470376260759200,
+          "evidence_ref": "edge-v5-frame-6",
+          "evidence_digest": "8d9076d06ca83dcdb754aa84fb29ce4e9cd6f52ef96857c07cccf0139ec3717e",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 470376141100300,
+          "observation_accepted_ns": 470376383279700
+        },
+        {
+          "sequence": 7,
+          "captured_ns": 470376561583300,
+          "evidence_ref": "edge-v5-frame-7",
+          "evidence_digest": "114a19a9b8f0ad396d6204352383d3276d19c1c8177a6ab16e3aa03046b32a29",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 470376458179800,
+          "observation_accepted_ns": 470376624858700
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "empty",
+          "to_state": "verify_value",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "observation_sequence": 6,
+          "evidence_ref": "edge-v5-frame-6",
+          "action_id": "edge-action-1",
+          "effect_ref": "edge-effect-1",
+          "release_verified": true,
+          "execution_started_ns": 470376383418600,
+          "execution_accepted_ns": 470376458149300
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "empty",
+          "outcome": "action",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-6"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter_token",
+          "status": "completed",
+          "action_id": "edge-action-1",
+          "release_verified": true,
+          "execution_started_ns": 470376383418600,
+          "execution_accepted_ns": 470376458149300,
+          "input_dispatched": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter_token",
+          "status": "failed",
+          "evidence_ref": "edge-v5-frame-7",
+          "verifier": "compiled_predicate_condition",
+          "action_id": "edge-action-1",
+          "execution_accepted_ns": 470376458149300,
+          "effect_observation_captured_ns": 470376561583300,
+          "effect_observation_accepted_ns": 470376624858700,
+          "effect_verification_started_ns": null,
+          "effect_verification_accepted_ns": null
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_failed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "edge-v5-frame-7",
+      "pending_effect": {
+        "action": "enter_token",
+        "expected_effect": {
+          "field_value_matches_task": true
+        },
+        "effect_ref": "edge-effect-1"
+      },
+      "started_ns": 470376141096600,
+      "ended_ns": 470376624914300,
+      "elapsed_ns": 483817700,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "compiled_receipt_publication_error": null
+  },
+  "minted_handles": {
+    "field": {
+      "alias": "field",
+      "offset": [
+        32,
+        14
+      ],
+      "source_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_exact": true,
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    "submit": {
+      "alias": "submit",
+      "offset": [
+        24,
+        14
+      ],
+      "source_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_exact": true,
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  },
+  "mint_events": [
+    {
+      "event": "target_handle_minted_from_point",
+      "id": "mint-field",
+      "step": 0,
+      "minted_ns": 470375585304600,
+      "handle": "field",
+      "name": "field",
+      "status": "VALID",
+      "created_sequence": 2,
+      "expires_ns": 470405585304600,
+      "allowed_transformations": [
+        "window_translation"
+      ],
+      "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "authority": "observational reference only; grants no input authority",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false,
+      "derivation": "centered_region_from_model_point",
+      "source_point": [
+        190,
+        121
+      ],
+      "source_sequence": 1,
+      "fresh_sequence": 2,
+      "derived_box": [
+        158,
+        107,
+        64,
+        28
+      ],
+      "derived_offset": [
+        32,
+        14
+      ],
+      "source_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_exact": true
+    },
+    {
+      "event": "target_handle_minted_from_point",
+      "id": "mint-submit",
+      "step": 0,
+      "minted_ns": 470375669167000,
+      "handle": "submit",
+      "name": "submit",
+      "status": "VALID",
+      "created_sequence": 3,
+      "expires_ns": 470405669167000,
+      "allowed_transformations": [
+        "window_translation"
+      ],
+      "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "authority": "observational reference only; grants no input authority",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false,
+      "derivation": "centered_region_from_model_point",
+      "source_point": [
+        545,
+        121
+      ],
+      "source_sequence": 1,
+      "fresh_sequence": 3,
+      "derived_box": [
+        521,
+        107,
+        48,
+        28
+      ],
+      "derived_offset": [
+        24,
+        14
+      ],
+      "source_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_exact": true
+    }
+  ],
+  "observations": [
+    {
+      "sequence": 6,
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form",
+      "ocr_field": "ー Enter code",
+      "ocr_submit": "save",
+      "value_state": false,
+      "page_ocr": "VaIUe Enter code Save",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_value_matches_task": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "evidence_digest": "8d9076d06ca83dcdb754aa84fb29ce4e9cd6f52ef96857c07cccf0139ec3717e"
+    },
+    {
+      "sequence": 7,
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form",
+      "ocr_field": "t991025",
+      "ocr_submit": "save",
+      "value_state": false,
+      "page_ocr": "VaIUe t991025 ・ 4 Save",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_value_matches_task": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "evidence_digest": "114a19a9b8f0ad396d6204352383d3276d19c1c8177a6ab16e3aa03046b32a29"
+    }
+  ],
+  "admissions": [
+    {
+      "stage": "caller_revalidation",
+      "resolutions": [
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            190,
+            121
+          ],
+          "observed_box": [
+            158,
+            107,
+            64,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 470381022188300,
+          "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "submit",
+          "point": [
+            545,
+            121
+          ],
+          "observed_box": [
+            521,
+            107,
+            48,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 470381022188300,
+          "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    {
+      "stage": "caller_revalidation",
+      "resolutions": [
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            190,
+            121
+          ],
+          "observed_box": [
+            158,
+            107,
+            64,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 470381138054000,
+          "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "submit",
+          "point": [
+            545,
+            121
+          ],
+          "observed_box": [
+            521,
+            107,
+            48,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 470381138054000,
+          "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    {
+      "stage": "compiled_admission",
+      "alias": "field",
+      "status": "VALID",
+      "reason": "exact_region_match",
+      "point": [
+        190,
+        121
+      ],
+      "sequence": 6
+    }
+  ],
+  "dispatched_operations": [
+    "enter_exact_token"
+  ],
+  "core_effect_checks": [],
+  "outer_scores": [],
+  "server_posts": [],
+  "receipts": [
+    {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "chromium-v5-edge-form",
+      "method": "enter_verify_exact_value_then_submit",
+      "method_version": "2",
+      "session_scope": "edge-v5-caller-v3-local-session",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 6,
+          "captured_ns": 470376260759200,
+          "evidence_ref": "edge-v5-frame-6",
+          "evidence_digest": "8d9076d06ca83dcdb754aa84fb29ce4e9cd6f52ef96857c07cccf0139ec3717e",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 470376141100300,
+          "observation_accepted_ns": 470376383279700
+        },
+        {
+          "sequence": 7,
+          "captured_ns": 470376561583300,
+          "evidence_ref": "edge-v5-frame-7",
+          "evidence_digest": "114a19a9b8f0ad396d6204352383d3276d19c1c8177a6ab16e3aa03046b32a29",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 470376458179800,
+          "observation_accepted_ns": 470376624858700
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "empty",
+          "to_state": "verify_value",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "observation_sequence": 6,
+          "evidence_ref": "edge-v5-frame-6",
+          "action_id": "edge-action-1",
+          "effect_ref": "edge-effect-1",
+          "release_verified": true,
+          "execution_started_ns": 470376383418600,
+          "execution_accepted_ns": 470376458149300
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "empty",
+          "outcome": "action",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-6"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter_token",
+          "status": "completed",
+          "action_id": "edge-action-1",
+          "release_verified": true,
+          "execution_started_ns": 470376383418600,
+          "execution_accepted_ns": 470376458149300,
+          "input_dispatched": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter_token",
+          "status": "failed",
+          "evidence_ref": "edge-v5-frame-7",
+          "verifier": "compiled_predicate_condition",
+          "action_id": "edge-action-1",
+          "execution_accepted_ns": 470376458149300,
+          "effect_observation_captured_ns": 470376561583300,
+          "effect_observation_accepted_ns": 470376624858700,
+          "effect_verification_started_ns": null,
+          "effect_verification_accepted_ns": null
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_failed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "edge-v5-frame-7",
+      "pending_effect": {
+        "action": "enter_token",
+        "expected_effect": {
+          "field_value_matches_task": true
+        },
+        "effect_ref": "edge-effect-1"
+      },
+      "started_ns": 470376141096600,
+      "ended_ns": 470376624914300,
+      "elapsed_ns": 483817700,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    }
+  ],
+  "journal": [
+    {
+      "event": "stage_started",
+      "stage": "reuse_revalidate",
+      "started_ns": 470375929753300
+    },
+    {
+      "event": "stage_completed",
+      "stage": "reuse_revalidate",
+      "ended_ns": 470376025097600
+    },
+    {
+      "event": "stage_started",
+      "stage": "final_revalidate",
+      "started_ns": 470376025116000
+    },
+    {
+      "event": "stage_completed",
+      "stage": "final_revalidate",
+      "ended_ns": 470376140811900
+    },
+    {
+      "event": "stage_started",
+      "stage": "execute",
+      "started_ns": 470376140839300
+    },
+    {
+      "event": "observation_recorded",
+      "state": "empty",
+      "sequence": 6,
+      "evidence_ref": "edge-v5-frame-6"
+    },
+    {
+      "event": "branch_selected",
+      "state": "empty",
+      "outcome": "action",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_value_matches_task": false,
+        "field_target_present": true
+      },
+      "evidence_ref": "edge-v5-frame-6"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter_token",
+      "status": "completed",
+      "action_id": "edge-action-1",
+      "release_verified": true,
+      "execution_started_ns": 470376383418600,
+      "execution_accepted_ns": 470376458149300,
+      "input_dispatched": true
+    },
+    {
+      "event": "observation_recorded",
+      "state": "verify_value",
+      "sequence": 7,
+      "evidence_ref": "edge-v5-frame-7"
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter_token",
+      "status": "failed",
+      "evidence_ref": "edge-v5-frame-7",
+      "verifier": "compiled_predicate_condition",
+      "action_id": "edge-action-1",
+      "execution_accepted_ns": 470376458149300,
+      "effect_observation_captured_ns": 470376561583300,
+      "effect_observation_accepted_ns": 470376624858700,
+      "effect_verification_started_ns": null,
+      "effect_verification_accepted_ns": null
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1
+    },
+    {
+      "event": "stage_completed",
+      "stage": "execute",
+      "ended_ns": 470376625124800
+    },
+    {
+      "event": "adaptive_route_finished",
+      "outcome": "EXECUTION_INCOMPLETE",
+      "reason": "effect_failed",
+      "repair_path": "none",
+      "attempted_calls": 0
+    }
+  ],
+  "browser_frames": [
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    },
+    {
+      "frame_id": "8796411F8ED0F3EFA8377806B2FA59B6",
+      "loader_id": "49B03BB20A54A05E9361FDF89638B699",
+      "url": "http://127.0.0.1:57167/form"
+    }
+  ],
+  "edge_version": {
+    "Browser": "Edg/157.0.4341.60",
+    "File-Path-Style": "windows",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+    "V8-Version": "15.7.11.7",
+    "WebKit-Version": "537.36 (@fbcb2989a6c61b72a4919fe1028e58e70131cd46)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:57168/devtools/browser/55f637a0-132a-4972-88a4-e88c3d12860b"
+  },
+  "profile_cleaned": false,
+  "conditions_sha256": "90a5fdfefa383c42f2a5360ed1bb1559939c045c6fd33b093f7139274bb158b7",
+  "python": "3.11.9",
+  "optimization": false,
+  "errors": [
+    {
+      "type": "AssertionError",
+      "error": "'EXECUTION_INCOMPLETE' != 'TASK_SUCCEEDED'\n- EXECUTION_INCOMPLETE\n+ TASK_SUCCEEDED\n : {'outcome': 'EXECUTION_INCOMPLETE', 'reason': 'effect_failed', 'task_effect': None, 'effect_receipt': None, 'delivery': 'confirmed_partial', 'execution_progress': {'status': 'safe_yield', 'reason': 'effect_failed', 'completed_actions': 1, 'input_dispatched': True}, 'selected_target': {'field': 'field', 'submit': 'submit'}, 'cache_update': {'field': 'field', 'submit': 'submit'}, 'repair_path': 'none', 'route': 'reuse', 'repair_trace': [{'stage': 'reuse_revalidate', 'status': 'revalidated'}], 'coarse_origin': 'caller_provided', 'comparison': {'class': 'warm_reuse', 'omitted_stages': ['observe_source', 'coarse_model', 'acquire_anchor', 'anchor_model'], 'comparable_to_full_cold': False}, 'stages': {'observe_source': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'coarse_model': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'acquire_anchor': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'anchor_model': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'reuse_revalidate': {'status': 'completed', 'reason': None}, 'local_repair': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'acquire_expansion': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'expanded_model': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'post_model_observe': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'post_model_revalidate': {'status': 'skipped', 'reason': 'branch_not_reached'}, 'final_revalidate': {'status': 'completed', 'reason': None}, 'execute': {'status': 'completed', 'reason': None}, 'verify_effect': {'status': 'skipped', 'reason': 'branch_not_reached'}}, 'attempt_ledger': [], 'model_call_ledger': [], 'accounting': {'attempted_calls': 0, 'completed_calls': 0, 'duplicate_call_ids': [], 'usage_totals': {'input_tokens': 0, 'cached_input_tokens': 0, 'cache_write_input_tokens': 0, 'output_tokens': 0, 'reasoning_output_tokens': 0}, 'usage_coverage': {'input_tokens': 0, 'cached_input_tokens': 0, 'cache_write_input_tokens': 0, 'output_tokens': 0, 'reasoning_output_tokens': 0}, 'visible_images_submitted': 0, 'visible_image_coverage': 0, 'model_wait_ns': 0, 'model_wait_coverage': 0, 'cost_coverage': 0, 'cost': 0, 'cached_input_semantics': 'subset of input_tokens; never added to input total'}, 'phase_timings': [{'stage': 'reuse_revalidate', 'started_ns': 470375929753300, 'ended_ns': 470376025097600, 'elapsed_ns': 95344300}, {'stage': 'final_revalidate', 'started_ns': 470376025116000, 'ended_ns': 470376140811900, 'elapsed_ns': 115695900}, {'stage': 'execute', 'started_ns': 470376140839300, 'ended_ns': 470376625124800, 'elapsed_ns': 484285500}], 'input_authority': 'consumed_by_recorded_execute_stage', 'compiled_execution_receipt': {'format': 'compiled-gui-runtime-receipt-v1', 'interface_id': 'chromium-v5-edge-form', 'method': 'enter_verify_exact_value_then_submit', 'method_version': '2', 'session_scope': 'edge-v5-caller-v3-local-session', 'outcome': 'SAFE_YIELD', 'reason': 'effect_failed', 'completed_transitions': 1, 'frontier_model_resumptions': 0, 'observations': [{'sequence': 6, 'captured_ns': 470376260759200, 'evidence_ref': 'edge-v5-frame-6', 'evidence_digest': '8d9076d06ca83dcdb754aa84fb29ce4e9cd6f52ef96857c07cccf0139ec3717e', 'predicates': {'field_pixels_changed': False, 'field_value_matches_task': False, 'field_target_present': True, 'submit_target_present': True, 'submission_pixels_changed': False}, 'observation_started_ns': 470376141100300, 'observation_accepted_ns': 470376383279700}, {'sequence': 7, 'captured_ns': 470376561583300, 'evidence_ref': 'edge-v5-frame-7', 'evidence_digest': '114a19a9b8f0ad396d6204352383d3276d19c1c8177a6ab16e3aa03046b32a29', 'predicates': {'field_pixels_changed': True, 'field_value_matches_task': False, 'field_target_present': True, 'submit_target_present': True, 'submission_pixels_changed': False}, 'observation_started_ns': 470376458179800, 'observation_accepted_ns': 470376624858700}], 'transitions': [{'from_state': 'empty', 'to_state': 'verify_value', 'action': 'enter_token', 'matched_conditions': {'field_value_matches_task': False, 'field_target_present': True}, 'observation_sequence': 6, 'evidence_ref': 'edge-v5-frame-6', 'action_id': 'edge-action-1', 'effect_ref': 'edge-effect-1', 'release_verified': True, 'execution_started_ns': 470376383418600, 'execution_accepted_ns': 470376458149300}], 'critical_events': [{'event': 'branch_selected', 'state': 'empty', 'outcome': 'action', 'action': 'enter_token', 'matched_conditions': {'field_value_matches_task': False, 'field_target_present': True}, 'evidence_ref': 'edge-v5-frame-6'}, {'event': 'action_terminal', 'action': 'enter_token', 'status': 'completed', 'action_id': 'edge-action-1', 'release_verified': True, 'execution_started_ns': 470376383418600, 'execution_accepted_ns': 470376458149300, 'input_dispatched': True}, {'event': 'effect_checked', 'action': 'enter_token', 'status': 'failed', 'evidence_ref': 'edge-v5-frame-7', 'verifier': 'compiled_predicate_condition', 'action_id': 'edge-action-1', 'execution_accepted_ns': 470376458149300, 'effect_observation_captured_ns': 470376561583300, 'effect_observation_accepted_ns': 470376624858700, 'effect_verification_started_ns': None, 'effect_verification_accepted_ns': None}, {'event': 'runtime_finished', 'outcome': 'SAFE_YIELD', 'reason': 'effect_failed', 'completed_transitions': 1}], 'latest_evidence_ref': 'edge-v5-frame-7', 'pending_effect': {'action': 'enter_token', 'expected_effect': {'field_value_matches_task': True}, 'effect_ref': 'edge-effect-1'}, 'started_ns': 470376141096600, 'ended_ns': 470376624914300, 'elapsed_ns': 483817700, 'input_authority': 'admission_per_action_only', 'raw_evidence_retention': 'adapter_responsibility_unverified'}, 'compiled_receipt_publication_error': None}"
+    },
+    {
+      "cleanup_type": "PermissionError",
+      "cleanup_error": "Edge profile remained locked after 16 cleanup attempts: C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\issue57-chromium-v5-compiled-adapter-r01-20261123\\research\\live_control\\interface-edge-submit-9a7b9ce980152a69"
+    }
+  ]
+}

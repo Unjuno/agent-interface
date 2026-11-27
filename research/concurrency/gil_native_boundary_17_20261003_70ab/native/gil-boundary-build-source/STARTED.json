@@ -1,0 +1,23 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-build-source",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "mkdir /root/17-gil-native-boundary-c02-70ab/source /root/17-gil-native-boundary-c02-70ab/output && tar -xf - -C /root/17-gil-native-boundary-c02-70ab/source && docker inspect 17-gil-native-build-70ab --format \"{{json .State}}\" && docker commit 17-gil-native-build-70ab research-17-gil-native-compiler:70ab"
+  ],
+  "launcher_pid": 36336,
+  "start_utc": "2026-10-03T15:01:51.180367+00:00",
+  "start_ns": 50676047226458,
+  "stdin": {
+    "path": "work/gil-native-boundary-17-70ab/BUILD_INPUT.tar",
+    "bytes": 10240,
+    "sha256": "a00153ad872fff6bb03ec930debdbde1c8904e1abce913c8637ffafcb1d3d840"
+  },
+  "pid": 36344
+}

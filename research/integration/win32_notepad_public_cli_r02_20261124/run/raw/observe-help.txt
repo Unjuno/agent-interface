@@ -1,0 +1,24 @@
+usage: agent-interface observe [-h] --targets TARGETS --target TARGET --frame
+                               {window_client,screen_physical_px} --region X Y
+                               W H [--capture-directory CAPTURE_DIRECTORY]
+                               [--run-directory RUN_DIRECTORY]
+                               [--retention-timings] [--display DISPLAY]
+                               [--review] [--compact] [--report-refs]
+
+options:
+  -h, --help            show this help message and exit
+  --targets TARGETS
+  --target TARGET
+  --frame {window_client,screen_physical_px}
+  --region X Y W H
+  --capture-directory CAPTURE_DIRECTORY
+  --run-directory RUN_DIRECTORY
+                        reserve a fresh directory for request, raw result and
+                        images
+  --retention-timings   measure retention phases; requires --run-directory
+  --display DISPLAY
+  --review              return result and captured image together
+  --compact             use smaller reversible receipt references with
+                        --review
+  --report-refs         allow v3 report references; requires --compact and a
+                        compatible decoder

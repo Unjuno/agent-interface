@@ -33,14 +33,15 @@ def records(path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
-def preflight_call(arm, contract):
+def preflight_call(arm, contract, *, model=None):
     root = OUT / "preflight" / arm
     workspace = OUT / "workspaces" / arm
     workspace.mkdir(parents=True, exist_ok=False)
     schema = CONTRACTS[contract][0]
+    options = {} if model is None else {"model": model}
     gate = require_compatible(
         [{"name": contract + "-form-grounding", "schema": schema}],
-        root / "fresh-cache", root / "gate", workspace)
+        root / "fresh-cache", root / "gate", workspace, **options)
     result = gate["results"][0]["result"]
     events = records(root / "gate" / (contract + "-form-grounding") /
                      "model-call" / "events.jsonl")
@@ -231,6 +232,9 @@ def run_arm(arm, seed, workspace, model_call=call_model):
             # later fail-closed reuse validation must not erase the prior
             # task's adaptive outcome or evidence.
             dump(OUT / "arms" / arm / "task-details.partial.json", details)
+            # An incomplete operation or unverified input release ends the arm.
+            if row["typed_outcome"] != "completed" or row.get("releases_verified") is not True:
+                break
         independent = client.finish("finish-integrated-live-01-" + arm)
         final_history = records(client.runtime / "submission-history.jsonl")
         for row, detail in zip(rows, details):
@@ -258,6 +262,17 @@ def main():
     for arm in ARMS:
         arms[arm], independent[arm] = run_arm(
             arm, plan["seed"], OUT / "workspaces" / arm)
+        if (len(arms[arm]) != 6
+                or any(row["typed_outcome"] != "completed" for row in arms[arm])
+                or independent[arm].get("success") is not True):
+            dump(OUT / "incomplete-report.json", {
+                "schema": "integrated_efficiency_incomplete_v1",
+                "failed_arm": arm, "arms": arms,
+                "independent_evaluations": independent,
+                "preflight_calls": preflights,
+                "reason": "arm_incomplete_or_independent_effect_failed",
+            })
+            raise RuntimeError("integrated arm incomplete; retained partial report")
     trace = {"schema": "integrated_efficiency_trace_v1", "arms": arms,
              "preflight_calls": preflights,
              "integration_discoveries": json.loads(

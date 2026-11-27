@@ -1,0 +1,14 @@
+{
+  "schema": "agent-interface/inert-prestarted-helper-conditions-v1",
+  "source_main": "0c20307cc43579c382eb31dae2ac9f593ea0f1d1",
+  "host_os": "Windows",
+  "python": "CPython 3.11.9",
+  "test_command": "python -m unittest research.integration.win32_prestarted_helper_experiment_20261022_r01.test_operation_owner -v",
+  "optimized_test_command": "python -O -m unittest research.integration.win32_prestarted_helper_experiment_20261022_r01.test_operation_owner -v",
+  "process_start_method": "multiprocessing spawn",
+  "native_api_calls": 0,
+  "desktop_input_events": 0,
+  "wslc_or_docker_operations": 0,
+  "artifact_directory": "research/integration/win32_prestarted_helper_experiment_20261022_r01/raw/r01",
+  "outcome_policy": "helper failure, timeout, missing completion acknowledgement, or unconfirmed producer retirement never upgrades operation/task success or permits replay"
+}

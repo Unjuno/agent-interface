@@ -20,6 +20,11 @@ The arrows show research lineage only. They do not rewrite the retained decision
 
 ## Indexed studies
 
+[PR #7109 convergence](xlib_boundary_consolidation_20261016/README.md) preserves
+the original GIL/Xlib studies and adds a saved-only, mutation-checked qualification
+of server-global stop and socket-timeout boundaries. These qualify historical
+read-only fixtures, not the current input transport or physical release.
+
 | Study | Retained disposition | What it establishes | What remains open |
 |---|---|---|---|
 | [`phase_tail_overlap_r0/`](phase_tail_overlap_r0/) | `PASS_PHASE_LEVEL_OVERLAP_SCOPED` | Under the frozen deterministic model, one serialized input actuator does not require whole-intent serialization when effect/verification tails are independent; longest-tail-first is optimal for the stated objective. | Real GUI applicability, unknown/shared resources, models/tokens, and production scheduling. |

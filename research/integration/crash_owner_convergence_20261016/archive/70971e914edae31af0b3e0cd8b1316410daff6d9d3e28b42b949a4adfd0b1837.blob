@@ -1,0 +1,592 @@
+{
+  "arms": {
+    "health_drop_invalidates": {
+      "answer_eligible": false,
+      "cancel_result": {
+        "outcome": "requested",
+        "response": {
+          "turn": {
+            "status": "interrupt_requested"
+          }
+        }
+      },
+      "client_window": 2097152,
+      "executor_protocol_events": [
+        "cancel_write",
+        "cancel_flushed",
+        "owner_keyup_verified_before_terminal",
+        "terminal_observed"
+      ],
+      "executor_terminal": {
+        "event": "terminal",
+        "id": "active-cover-a01",
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "owner_transitions": [
+            {
+              "cancel_requested_after_sync": false,
+              "cancel_requested_at_request": false,
+              "event": "input_release_transition",
+              "focus_invalid_at_request": false,
+              "grants_input_authority": false,
+              "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+              "key": "a",
+              "lease_time_valid_at_request": true,
+              "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+              "operation": "up",
+              "ordinary_release_candidate": true,
+              "owner_cleanup_intervened": false,
+              "owner_explicit_keyup_failure": null,
+              "owner_id": "17076958440448a28e0f6b1bf63d7f32",
+              "owner_release_history_complete": true,
+              "owner_thread_keyup_history_complete": true,
+              "owner_thread_keyup_receipt": {
+                "cancel_requested_after_sync": false,
+                "event": "owner_explicit_keyup",
+                "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+                "key": "a",
+                "key_state_source": "x11_query_keymap",
+                "keycode": 38,
+                "operation": "up",
+                "owner_id": "17076958440448a28e0f6b1bf63d7f32",
+                "owner_keymap_sampled_ns": 35560165814,
+                "owner_keyrelease_started_ns": 35560040256,
+                "owner_sync_returned_ns": 35560116474,
+                "physical_verification_authoritative": false,
+                "release_batch_initial_up_count": 1,
+                "release_batch_key_order": [
+                  "a"
+                ],
+                "server_key_down_after_keyup": false,
+                "server_keyup_attempt_count": 1,
+                "server_keyup_attempts": [
+                  {
+                    "attempt": 1,
+                    "keymap_after_error": null,
+                    "keymap_before_error": null,
+                    "keymap_sampled_ns": 35560165814,
+                    "keyrelease_error": null,
+                    "keyrelease_started_ns": 35560040256,
+                    "server_key_down_after": false,
+                    "server_key_down_before": true,
+                    "sync_error": null,
+                    "sync_returned_ns": 35560116474
+                  }
+                ],
+                "server_keyup_verified": true,
+                "server_sync_completed": true,
+                "valid_until_ns": 55556723322
+              },
+              "owner_thread_keyup_receipt_count": 1,
+              "owner_thread_keyup_verified": true,
+              "owner_transition_verified": true,
+              "release_call_bracket_ns": 321692,
+              "release_call_returned_ns": 35560212500,
+              "release_call_started_ns": 35559890808,
+              "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+              "transition_schema": "input-release-transition-v3",
+              "valid_until_ns": 55556723322
+            }
+          ],
+          "verified": true
+        },
+        "status": "cancelled"
+      },
+      "final_admission": {
+        "action_validity": null,
+        "controller_decided_ns": 35560524560,
+        "executor_admission": null,
+        "grants_input_authority": false,
+        "input_authority_admitted": false,
+        "planner_terminal": {
+          "answer_eligible": false,
+          "status": "completed",
+          "terminal_observed_ns": 35560524559,
+          "turn_id": "active-turn-a01"
+        },
+        "policy_invalidation": {
+          "event": "paired_signal_invalidation",
+          "grants_input_authority": false,
+          "monitor_received_ns": 35559820938,
+          "outcome": {
+            "current_value": 80,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-active-cancel-a01",
+            "hard_minimum": 89,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "health",
+            "source_age_ms": 356.487971,
+            "source_value": 97,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          },
+          "outcome_evaluated_ns": 35559866321,
+          "outcomes": {
+            "ammo": {
+              "current_value": 48,
+              "format": "observable-signal-guard-outcome-v1",
+              "grants_input_authority": false,
+              "guard_id": "map01-active-cancel-a01-ammo",
+              "hard_minimum": 1,
+              "keep_existing_policy": true,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "reason": "signal_unchanged",
+              "requires_new_decision": false,
+              "semantic_change_identified": false,
+              "signal_id": "ammo",
+              "source_age_ms": 356.487971,
+              "source_value": 48,
+              "status": "UNCHANGED",
+              "task_success_verified": false
+            },
+            "health": {
+              "current_value": 80,
+              "format": "observable-signal-guard-outcome-v1",
+              "grants_input_authority": false,
+              "guard_id": "map01-active-cancel-a01",
+              "hard_minimum": 89,
+              "keep_existing_policy": false,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "reason": "below_hard_minimum",
+              "requires_new_decision": true,
+              "semantic_change_identified": true,
+              "signal_id": "health",
+              "source_age_ms": 356.487971,
+              "source_value": 97,
+              "status": "HARD_INVALIDATED",
+              "task_success_verified": false
+            }
+          },
+          "reason": "health:below_hard_minimum",
+          "requires_new_decision": true,
+          "sequence": 3,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "focus": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ],
+                "surface": 6291472
+              },
+              "capture_ns": 55502319672480,
+              "format": "observable-signal-v1",
+              "sequence": 3,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 48,
+              "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+            },
+            "health": {
+              "binding": {
+                "focus": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ],
+                "surface": 6291472
+              },
+              "capture_ns": 55502319672480,
+              "format": "observable-signal-v1",
+              "sequence": 3,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 80,
+              "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+            }
+          }
+        },
+        "reason": "below_hard_minimum",
+        "revocation": null,
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED"
+      },
+      "health_guard_outcome": {
+        "current_value": 80,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-active-cancel-a01",
+        "hard_minimum": 89,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 356.487971,
+        "source_value": 97,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "health_value": 80,
+      "input_admission": {
+        "admitted_ns": 35558878272,
+        "event": "input_admission",
+        "input_ack_ns": 35558980562,
+        "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+        "key": "a",
+        "keycode": 38,
+        "valid_until_ns": 55556723322
+      },
+      "key_down_after_cancel": false,
+      "key_down_before_observation": true,
+      "key_press_event": {
+        "keycode": 38,
+        "observed_ns": 35559150983,
+        "type": 2,
+        "window": 2097152
+      },
+      "key_release_event": {
+        "keycode": 38,
+        "observed_ns": 35560295646,
+        "type": 3,
+        "window": 2097152
+      },
+      "keycode": 38,
+      "monitor_invalidation": {
+        "event": "paired_signal_invalidation",
+        "grants_input_authority": false,
+        "monitor_received_ns": 35559820938,
+        "outcome": {
+          "current_value": 80,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-active-cancel-a01",
+          "hard_minimum": 89,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 356.487971,
+          "source_value": 97,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        },
+        "outcome_evaluated_ns": 35559866321,
+        "outcomes": {
+          "ammo": {
+            "current_value": 48,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-active-cancel-a01-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "ammo",
+            "source_age_ms": 356.487971,
+            "source_value": 48,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 80,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-active-cancel-a01",
+            "hard_minimum": 89,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "health",
+            "source_age_ms": 356.487971,
+            "source_value": 97,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          }
+        },
+        "reason": "health:below_hard_minimum",
+        "requires_new_decision": true,
+        "sequence": 3,
+        "signals": {
+          "ammo": {
+            "binding": {
+              "focus": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ],
+              "surface": 6291472
+            },
+            "capture_ns": 55502319672480,
+            "format": "observable-signal-v1",
+            "sequence": 3,
+            "signal_id": "ammo",
+            "status": "observed",
+            "value": 48,
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "health": {
+            "binding": {
+              "focus": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ],
+              "surface": 6291472
+            },
+            "capture_ns": 55502319672480,
+            "format": "observable-signal-v1",
+            "sequence": 3,
+            "signal_id": "health",
+            "status": "observed",
+            "value": 80,
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          }
+        }
+      },
+      "observer_key_up_after_cleanup": true,
+      "owner_close_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 55556723322,
+        "verified": true,
+        "verified_ns": 35560836753
+      },
+      "owner_closed": true,
+      "owner_stopped": true,
+      "owner_thread_alive": false,
+      "planner_cancellation_requested": true,
+      "planner_events": [
+        "planner_turn_started",
+        "new_typed_observation_delivered_while_turn_pending",
+        "paired_policy_invalidated",
+        "planner_interrupt_transport_called",
+        "planner_interrupted_after_executor_cancel"
+      ],
+      "release_transitions": [
+        {
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owner_cleanup_intervened": false,
+          "owner_explicit_keyup_failure": null,
+          "owner_id": "17076958440448a28e0f6b1bf63d7f32",
+          "owner_release_history_complete": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "v39-active-invalidation-key-release-a01:health_drop_invalidates",
+            "key": "a",
+            "key_state_source": "x11_query_keymap",
+            "keycode": 38,
+            "operation": "up",
+            "owner_id": "17076958440448a28e0f6b1bf63d7f32",
+            "owner_keymap_sampled_ns": 35560165814,
+            "owner_keyrelease_started_ns": 35560040256,
+            "owner_sync_returned_ns": 35560116474,
+            "physical_verification_authoritative": false,
+            "release_batch_initial_up_count": 1,
+            "release_batch_key_order": [
+              "a"
+            ],
+            "server_key_down_after_keyup": false,
+            "server_keyup_attempt_count": 1,
+            "server_keyup_attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 35560165814,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 35560040256,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 35560116474
+              }
+            ],
+            "server_keyup_verified": true,
+            "server_sync_completed": true,
+            "valid_until_ns": 55556723322
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_transition_verified": true,
+          "release_call_bracket_ns": 321692,
+          "release_call_returned_ns": 35560212500,
+          "release_call_started_ns": 35559890808,
+          "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 55556723322
+        }
+      ]
+    },
+    "health_unchanged_control": {
+      "answer_eligible": true,
+      "cancel_result": null,
+      "client_window": 2097153,
+      "executor_protocol_events": [],
+      "executor_terminal": null,
+      "final_admission": {
+        "action_validity": null,
+        "controller_decided_ns": 35563727528,
+        "executor_admission": null,
+        "grants_input_authority": false,
+        "input_authority_admitted": false,
+        "planner_terminal": {
+          "answer_eligible": true,
+          "status": "completed",
+          "terminal_observed_ns": 35563727527,
+          "turn_id": "active-turn-a01"
+        },
+        "policy_invalidation": null,
+        "reason": "planner_complete_and_policy_current_requires_fresh_action_check",
+        "revocation": null,
+        "schema": "final-action-admission-v2",
+        "status": "READY_FOR_ACTION_VALIDITY"
+      },
+      "health_guard_outcome": null,
+      "health_value": 97,
+      "input_admission": {
+        "admitted_ns": 35563037504,
+        "event": "input_admission",
+        "input_ack_ns": 35563100177,
+        "intent_token": "v39-active-invalidation-key-release-a01:health_unchanged_control",
+        "key": "a",
+        "keycode": 38,
+        "valid_until_ns": 55561288368
+      },
+      "key_down_after_cancel": true,
+      "key_down_before_observation": true,
+      "key_press_event": {
+        "keycode": 38,
+        "observed_ns": 35563217092,
+        "type": 2,
+        "window": 2097153
+      },
+      "key_release_event": {
+        "keycode": 38,
+        "observed_ns": 35564324429,
+        "type": 3,
+        "window": 2097153
+      },
+      "keycode": 38,
+      "monitor_invalidation": null,
+      "observer_key_up_after_cleanup": true,
+      "owner_close_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "v39-active-invalidation-key-release-a01:health_unchanged_control",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 35563932399,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 35563826779,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 35563885576
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              35563826779,
+              35563932399
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 55561288368,
+        "verified": true,
+        "verified_ns": 35564173334
+      },
+      "owner_closed": true,
+      "owner_stopped": true,
+      "owner_thread_alive": false,
+      "planner_cancellation_requested": false,
+      "planner_events": [
+        "planner_turn_started",
+        "new_typed_observation_delivered_while_turn_pending",
+        "policy_preserved"
+      ],
+      "release_transitions": null
+    }
+  },
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "display": ":133",
+  "errors": [
+    "RuntimeError: unchanged control did not preserve policy and normal cleanup"
+  ],
+  "input_pair": {
+    "current_frame_rgb_sha256": "0e06f6960654027e75d6a9f2904890fc12fa2ab773537e0d562d21ebb76d71c8",
+    "current_png_sha256": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+    "current_sequence": 3,
+    "pointer_binding_equal": true,
+    "retained_health_ammo": [
+      [
+        97,
+        48
+      ],
+      [
+        97,
+        48
+      ]
+    ],
+    "source_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+    "source_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+    "source_sequence": 2
+  },
+  "schema": "v39-active-invalidation-key-release-xvfb-raw-a01-v1",
+  "scope": "synthetic paired health guard invalidation through current V39 cancel helper to actual Xvfb keyup; no game/model/physical input",
+  "status": "STOP"
+}

@@ -1,0 +1,46 @@
+{
+  "authority_never_granted": true,
+  "candidate_rows_independently_reconstructed": true,
+  "checks": [
+    {
+      "age_ms": 828.707193,
+      "independently_reconstructed": true,
+      "sequence": 96,
+      "signal_id": "ammo",
+      "status": "SOFT_CHANGED"
+    },
+    {
+      "age_ms": 1524.789823,
+      "independently_reconstructed": true,
+      "sequence": 99,
+      "signal_id": "health",
+      "status": "UNKNOWN"
+    },
+    {
+      "age_ms": 577.914788,
+      "independently_reconstructed": true,
+      "sequence": 160,
+      "signal_id": "ammo",
+      "status": "SOFT_CHANGED"
+    },
+    {
+      "age_ms": 2133.932983,
+      "independently_reconstructed": true,
+      "sequence": 170,
+      "signal_id": "health",
+      "status": "UNKNOWN"
+    }
+  ],
+  "invalidation_sequences": [
+    99,
+    170
+  ],
+  "limitation": "The retained report exposes selected latest soft rows, not every row behind its cumulative soft count.",
+  "reported_cumulative_soft_count": 3,
+  "schema": "wslc-typed-policy-replay-independent-audit-v1",
+  "selected_soft_rows": 2,
+  "soft_event_rows": [
+    96,
+    160
+  ]
+}

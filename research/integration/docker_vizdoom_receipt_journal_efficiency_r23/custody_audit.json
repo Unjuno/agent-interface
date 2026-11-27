@@ -1,0 +1,97 @@
+{
+  "schema": "agent-interface/r23-custody-readback-audit-v1",
+  "audited_utc": "2026-10-28T18:06:01.7205271Z",
+  "raw_packet_path": "../../private-packets/docker_vizdoom_native_retention_confirmatory_20261029_r23",
+  "indexed_files": 758,
+  "checksum_mismatches": [],
+  "source_commit": "3a615907cbfaa493761c7634502ab451e56678f3",
+  "trial_id": "docker_vizdoom_native_retention_confirmatory_20261029_r23",
+  "pretrial_entries_rechecked": 198,
+  "pretrial_hashes_match": true,
+  "arm_count": 18,
+  "all_18_passed_all_scoped_gates": true,
+  "journal_audit_runs": 6,
+  "journal_references": 222.0,
+  "route_stats": {
+    "compiled-files": {
+      "all_arms_passed": true,
+      "mean_ms": 921.742,
+      "median_ms": 920.741,
+      "n": 6,
+      "range_ms": [
+        918.023,
+        925.952
+      ]
+    },
+    "compiled-journal": {
+      "all_arms_passed": true,
+      "mean_ms": 871.079,
+      "median_ms": 871.644,
+      "n": 6,
+      "range_ms": [
+        857.494,
+        883.813
+      ]
+    },
+    "direct-files": {
+      "all_arms_passed": true,
+      "mean_ms": 875.531,
+      "median_ms": 875.896,
+      "n": 6,
+      "range_ms": [
+        869.62,
+        880.236
+      ]
+    }
+  },
+  "matched_comparisons": [
+    {
+      "a_faster_pairs": 0,
+      "comparison": "compiled_files_minus_direct",
+      "max_delta_ms": 48.604,
+      "mean_delta_ms": 46.211,
+      "median_delta_ms": 47.06,
+      "min_delta_ms": 41.341,
+      "paired_deltas_ms": [
+        48.604,
+        45.716,
+        41.341,
+        48.403,
+        44.723,
+        48.481
+      ]
+    },
+    {
+      "a_faster_pairs": 3,
+      "comparison": "compiled_journal_minus_direct",
+      "max_delta_ms": 4.789,
+      "mean_delta_ms": -4.452,
+      "median_delta_ms": -0.575,
+      "min_delta_ms": -21.575,
+      "paired_deltas_ms": [
+        4.789,
+        3.577,
+        -21.575,
+        -3.319,
+        2.17,
+        -12.352
+      ]
+    },
+    {
+      "a_faster_pairs": 6,
+      "comparison": "journal_minus_compiled_files",
+      "max_delta_ms": -42.139,
+      "mean_delta_ms": -50.663,
+      "median_delta_ms": -47.768,
+      "min_delta_ms": -62.916,
+      "paired_deltas_ms": [
+        -43.815,
+        -42.139,
+        -62.916,
+        -51.722,
+        -42.553,
+        -60.833
+      ]
+    }
+  ]
+}

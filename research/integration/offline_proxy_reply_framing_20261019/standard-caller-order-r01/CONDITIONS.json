@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/offline-test-receipt-conditions-v1",
+  "run_id": "standard-caller-order-r01",
+  "date": "2026-10-24",
+  "source_commit": "752e9ad0c215ab0a6adf7d99fd587ea30fc85116",
+  "source_state": "working-tree candidate changes; exact modified sources are hash-bound in SHA256SUMS",
+  "environment": {
+    "os": "Windows host",
+    "python": "CPython 3.11.9",
+    "execution": "local unittest; no WSL distro command used to execute tests",
+    "fake_x": true,
+    "real_x_server": false,
+    "native_input": false,
+    "model_or_provider": false,
+    "wslc_allocation_id": null,
+    "wslc": "NOT USED",
+    "docker": "NOT USED"
+  },
+  "commands": [
+    "python -m unittest discover -s runtime/cli_v1 -t .",
+    "python -m unittest research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay runtime.cli_v1.test_mcp_relay_composition runtime.cli_v1.test_mcp_supervised_win32 runtime.cli_v1.test_mcp_window_lifecycle",
+    "python -O -m unittest research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay runtime.cli_v1.test_mcp_relay_composition runtime.cli_v1.test_mcp_supervised_win32 runtime.cli_v1.test_mcp_window_lifecycle"
+  ],
+  "outcomes": {
+    "full_cli_normal": "PASS: 593 tests, 8 skipped, 149.996 seconds",
+    "focused_normal": "PASS: 48 tests, 14.086 seconds",
+    "focused_optimized": "PASS: 48 tests, 13.993 seconds"
+  },
+  "scope": "Offline test and parser-candidate verification only. No live control, WSLc portability, MAP01 effect, population reliability, or efficiency claim."
+}

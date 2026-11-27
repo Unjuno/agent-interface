@@ -1,0 +1,34 @@
+{
+  "attempt_id": "win32-public-mcp-effect-timing-20261024-r02",
+  "caller": "actual runtime.cli_v1.mcp_server stdio process; public interface_observe then interface_dispatch",
+  "cleanup": "close only the owned fixture HWND/process; preserve raw report if its state is uncertain",
+  "dispatch": "one finite program: focus, click/down+up, known text, Ctrl+S, wait, observe, release_all; source.target_generations is copied from the immediately preceding public observe receipt",
+  "frozen_files": {
+    "audit.py": "e9e5c41bbb343fa1c88c50c552786aed11f63121f62ee1b33ca3d0da08c3d1b4",
+    "probe.py": "75486b08045dad6f73162a154e92f4232530ff15ff71a52a824b77580d1da80c",
+    "timed_fixture_app.py": "152671cc0d3964e643fbb16550a4710fe936046470b073a67d94713c6d6417ad"
+  },
+  "input_scope": "visible foreground window is the owned fixture; no other target is configured or acted on",
+  "nonclaims": [
+    "atomic target fencing",
+    "blocked-I/O release bound",
+    "supervisor recovery",
+    "model/token efficiency",
+    "MAP01",
+    "broad reliability"
+  ],
+  "platform": "Windows local desktop; user-authorized host use",
+  "release_pass": "public report has final release receipt verified=true, no keys/buttons down, and no unknown keys/buttons",
+  "retry_policy": "one dispatch only; unknown/timeout never retried",
+  "schema": "win32-public-mcp-effect-timing-conditions-v1",
+  "source_commit": "82f42b47e1701fa975c654d1d9d53312eef399a6",
+  "target": "one fresh process-owned Agent Interface Win32 fixture window; exact configured HWND only",
+  "target_generation_claim": "one live positive path forwards the immediately preceding matching Win32 observation generation through the standard caller and completes admission",
+  "task": {
+    "effect": "fixture writes one JSON record with saved=true, exact text, clicked=true",
+    "independent_oracle": "read fixture effect file and JSONL event journal after the public MCP call; use monotonic_ns for event, file commit, public call and readback boundaries",
+    "text": "MCP-LIVE-R07-TIMING-R02"
+  },
+  "task_pass": "independent effect JSON exactly matches the frozen task and event journal has exact character count plus one save",
+  "timing_claim": "one descriptive sample of public observation/dispatch, fixture input/save, independent file readback, and release receipt observation; no matched comparison or general latency claim"
+}

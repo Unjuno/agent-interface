@@ -1,0 +1,152 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r45-5f1e0c03c59e4455bcec72ca3dbf6797",
+  "checks": [
+    {
+      "evidence": {
+        "source_count": 9
+      },
+      "name": "frozen_packet_source_hashes_match",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "conditions_id_matches_schema": true,
+        "foreground_markers_absent_before_attempt": true,
+        "frozen_packet_hashes_match": true,
+        "hook_timeout_registry_matches": true,
+        "instrumentation_loaded_without_input": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "input_free_preflight_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_attempt_count": 1,
+        "dispatch_attempts": 1
+      },
+      "name": "one_dispatch_and_one_cancel",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "73f0d3b9abe50799cc0d1c3b73aedf9027a04568f6dc7413068edb6e7f6cf7ca",
+        "pre_cancel": {
+          "exit_code": 0,
+          "expected_generation": "73f0d3b9abe50799cc0d1c3b73aedf9027a04568f6dc7413068edb6e7f6cf7ca",
+          "generation_after": "73f0d3b9abe50799cc0d1c3b73aedf9027a04568f6dc7413068edb6e7f6cf7ca",
+          "generation_before": "73f0d3b9abe50799cc0d1c3b73aedf9027a04568f6dc7413068edb6e7f6cf7ca",
+          "pid": 40732,
+          "process_retired": true,
+          "q_down": true,
+          "returned_monotonic_ns": 507633241970300,
+          "started_monotonic_ns": 507633241507700,
+          "state_witness": [],
+          "status": "observed"
+        }
+      },
+      "name": "same_generation_q_down_confirmed_before_cancel",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "callback_hold": {
+          "after_cancel_ms": 1245.0446,
+          "callback_entry_ns": 507633055077800,
+          "callback_return_ns": 507634499671500,
+          "cancel_return_ns": 507633254626900,
+          "required_ms": 1250
+        },
+        "failed_checks": [
+          "callback_held_for_full_1250ms_after_cancel_response"
+        ],
+        "passed": 10,
+        "total": 11
+      },
+      "name": "strict_release_gate_failed_only_on_frozen_hold_minimum",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "eligible_q_up_sample_count": 59,
+        "recovery_deadline_ms": 2500,
+        "recovery_q_up_sendinput_returns": [
+          {
+            "elapsed_ns": 308428600,
+            "event": "sendinput_return",
+            "flags": 2,
+            "input_type": 1,
+            "key_up": true,
+            "monotonic_ns": 507633872275800,
+            "pid": 16900,
+            "scan_code": 0,
+            "vk": 81
+          }
+        ]
+      },
+      "name": "same_generation_q_up_observed_during_held_callback",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close": {
+          "call_directory": "[LOCAL_PATH_REDACTED]",
+          "call_id": "a9c2a4d357a4437eab7303571682c166",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "a3a13ce6fdf844849acf08ce2504978c",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        },
+        "fixture_exit": 0,
+        "foreground_restored": true,
+        "hook_exited": true,
+        "producer_exit": {
+          "creation_time_100ns": 134372899250807572,
+          "observed_monotonic_ns": 507634499842600,
+          "pid": 24244,
+          "status": "exited",
+          "wait_started_monotonic_ns": 507634499612000
+        },
+        "window_exists": false
+      },
+      "name": "owned_producer_and_fixture_cleanup_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase2_started": null,
+        "phase2_status": {
+          "phase1_exit_code": 0,
+          "phase1_release_status": "FAIL_OR_UNKNOWN",
+          "phase1_strict_release_gate_passed": false,
+          "status": "NOT_STARTED_PHASE1_GATE_FAILED"
+        }
+      },
+      "name": "phase2_not_started_after_gate_failure",
+      "passed": true
+    }
+  ],
+  "checks_passed": 8,
+  "checks_total": 8,
+  "phase1_gate_passed": false,
+  "phase1_strict_status": "FAIL_OR_UNKNOWN",
+  "phase2_status": "NOT_STARTED_PHASE1_GATE_FAILED",
+  "schema": "win32-r45-posthoc-first-outcome-audit-v1",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "status": "FAIL_OR_UNKNOWN",
+  "task_success": null
+}

@@ -1,0 +1,42 @@
+{
+  "condition": {
+    "candidate_fingerprint_fields": [
+      "X setup vendor",
+      "release number",
+      "protocol major/minor",
+      "screen root XID, pixel geometry, root visual and depth"
+    ],
+    "client_paths": [
+      ":88 Unix socket",
+      "127.0.0.1:88 direct TCP",
+      "127.0.0.1:89 TCP proxy to server A 127.0.0.1:6088",
+      ":90 Unix socket"
+    ],
+    "input_events": 0,
+    "model_calls": 0,
+    "network": "Docker network none; loopback only",
+    "proxy": "existing research x11_delivery_proxy, transparent forwarding; no delay armed",
+    "record_separately": [
+      "requested display name",
+      "socket local/peer address",
+      "per-client resource ID base/mask",
+      "X-Resource extension presence",
+      "out-of-band Xvfb PID/start ticks and Unix socket inode for local servers"
+    ],
+    "server_a": "Xvfb :88, 1280x720x24, TCP enabled",
+    "server_b": "independent Xvfb :90 with identical launch arguments"
+  },
+  "decision_rule": "Do not use an advertised setup fingerprint as an admission-fence key unless it is alias-stable and distinguishes the independent X server. This experiment does not authorize an implementation or establish a Windows desktop identity.",
+  "primary_discriminator": "Candidate fingerprint matches for all three paths to server A and differs for independent server B. A collision across A/B means advertised setup fields are not a unique surface identity; a mismatch between A aliases means the fingerprint is not alias-stable.",
+  "purpose": "Determine whether X11 server setup metadata can stably identify one shared input surface across direct Unix, direct TCP, and a TCP proxy display alias, while distinguishing a second Xvfb server.",
+  "schema": "agent-interface/x11-input-surface-fingerprint-prereg-v1",
+  "scope": "Synthetic Xvfb protocol metadata only; not WSLg, Windows, native GUI, MAP01, or production admission.",
+  "source_commit": "052132a7a25c2b68cb930c5b6b58227e14617593",
+  "source_sha256": {
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r29-x11-input-surface-fingerprint/probe.py": "d96fd085f30015b7a17d647e61f49070d64f5c4adbf10356f5512d9972970a1c",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r29-x11-input-surface-fingerprint/run.sh": "485dab6430dbb0d5e33260c2c0ee8949a9bd26a06b2c97edb39656c208590cdd",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90"
+  },
+  "stop_rule": "One read-only probe run; no retries or task inputs.",
+  "study_id": "x11-input-surface-fingerprint-20261110-r29"
+}

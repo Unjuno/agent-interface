@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\model_economics_convergence_20261016\read_saved.py", line 92, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\model_economics_convergence_20261016\read_saved.py", line 61, in main
+    need(sha(saved[path])==digest.lower(),'original multiverse checksum '+name)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\model_economics_convergence_20261016\read_saved.py", line 6, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: original multiverse checksum RUN.json

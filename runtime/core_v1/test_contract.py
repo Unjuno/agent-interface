@@ -71,6 +71,38 @@ FULL = OFFICE_FLOOR
 
 
 class ProgramTests(unittest.TestCase):
+    def test_key_chord_accepts_explicit_scan_code_encoding(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_chord", "keys": ["TAB"], "encoding": "scan_code"},
+            {"op": "release_all"},
+        ]
+
+        self.assertEqual(validate_program(row), row)
+
+    def test_key_chord_rejects_unknown_encoding(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_chord", "keys": ["TAB"], "encoding": "scancode"},
+            {"op": "release_all"},
+        ]
+
+        with self.assertRaises(ContractError):
+            validate_program(row)
+
+    def test_key_state_rejects_release_encoding_different_from_press(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_state", "key": "TAB", "down": True,
+             "encoding": "scan_code"},
+            {"op": "key_state", "key": "TAB", "down": False,
+             "encoding": "virtual_key"},
+            {"op": "release_all"},
+        ]
+
+        with self.assertRaisesRegex(ContractError, "different encoding"):
+            validate_program(row)
+
     def test_activation_requires_explicit_optional_capability(self):
         row = program()
         row['ops'] = [{'op': 'activate', 'target': 'app', 'timeout_ms': 250},
@@ -108,6 +140,19 @@ class ProgramTests(unittest.TestCase):
 
     def test_valid_program(self):
         self.assertEqual(validate_program(program()), program())
+
+    def test_optional_target_generation_map_is_strictly_validated(self):
+        row = program()
+        row["source"]["target_generations"] = {"window-1": "a" * 64}
+        self.assertEqual(validate_program(row), row)
+        for mapping in ({"window 1": "a" * 64}, {"window-1": "A" * 64},
+                        {"window-1": True}, [], {"window-1": "a" * 63},
+                        {"window-1": "a" * 64, "window-2": "b" * 63}):
+            with self.subTest(mapping=mapping):
+                malformed = program()
+                malformed["source"]["target_generations"] = mapping
+                with self.assertRaises(ContractError):
+                    validate_program(malformed)
 
     def test_required_capabilities(self):
         required = set(required_capabilities(program()))

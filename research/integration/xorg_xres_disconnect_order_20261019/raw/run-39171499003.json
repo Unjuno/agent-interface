@@ -1,0 +1,143 @@
+{
+  "before_cleanup_after_kill_ms": 145.561271,
+  "cleanup_status": "key_release_sync_completed",
+  "delay_event_horizon_after_kill_ms": 8500.106548,
+  "delayed_keypress_ms": 8000,
+  "disconnect_after_delay_horizon": {
+    "elapsed_ms": 80.09075799999721,
+    "expected_pid": 2752,
+    "observed_pid": 2712,
+    "observer_pid": 2759,
+    "observer_resource_base": 6291456,
+    "resource_base": 4194304,
+    "status": "disconnected",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "disconnect_before_cleanup": {
+    "elapsed_ms": 71.44918400000222,
+    "expected_pid": 2752,
+    "observed_pid": 2756,
+    "observer_pid": 2756,
+    "observer_resource_base": 4194304,
+    "resource_base": 4194304,
+    "status": "disconnected",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "disconnect_before_delay_horizon": {
+    "elapsed_ms": 72.71346000000278,
+    "expected_pid": 2752,
+    "observed_pid": 2754,
+    "observer_pid": 2754,
+    "observer_resource_base": 4194304,
+    "resource_base": 4194304,
+    "status": "disconnected",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "early_probe_after_kill_ms": 73.902767,
+  "final_cleanup_status": "key_release_sync_completed",
+  "final_key_down": {
+    "a": false,
+    "b": false
+  },
+  "idle_control": {
+    "pid": 2747,
+    "resource_base": 4194304,
+    "returncode": -15
+  },
+  "idle_control_disappeared_within_2s": true,
+  "idle_control_disconnect_after_kill": {
+    "elapsed_ms": 153.49940499999093,
+    "expected_pid": 2747,
+    "observed_pid": 2750,
+    "observer_pid": 2750,
+    "observer_resource_base": 4194304,
+    "resource_base": 4194304,
+    "status": "disconnected",
+    "worker_exitcode": 0,
+    "worker_retired": true
+  },
+  "idle_resource_base_reused": true,
+  "key_down_after_cleanup": {
+    "a": false,
+    "b": false
+  },
+  "key_down_after_delay_horizon": {
+    "a": false,
+    "b": false
+  },
+  "key_down_after_disconnect": {
+    "a": false,
+    "b": false
+  },
+  "key_down_after_extended_probe": {
+    "a": false,
+    "b": false
+  },
+  "key_down_before": {
+    "a": false,
+    "b": false
+  },
+  "key_down_before_cleanup": {
+    "a": false,
+    "b": false
+  },
+  "key_down_before_delay_horizon": {
+    "a": false,
+    "b": false
+  },
+  "keycodes": {
+    "a": 38,
+    "b": 56
+  },
+  "kill_after_flush_ms": 150,
+  "late_input_observed": false,
+  "late_input_observed_after_extended_probe": false,
+  "old_idle_pid_matches_current_base": false,
+  "owner": {
+    "keycodes": {
+      "a": 38,
+      "b": 56
+    },
+    "pid": 2752,
+    "queued_ns": 78787568680,
+    "resource_base": 4194304,
+    "returncode": -15
+  },
+  "owner_returncode": -15,
+  "owner_stderr": "",
+  "post_horizon_xres_probe_after_kill_ms": 8580.509338,
+  "post_horizon_xres_timeout_s": 10.0,
+  "post_late_cleanup_status": "key_release_sync_completed",
+  "queued_to_kill_ms": 151.320078,
+  "server_build_provenance": {
+    "packages": {
+      "xserver-xorg-core": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xserver-xorg-core="
+      },
+      "xvfb": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "xvfb=2:21.1.12-1ubuntu1.8"
+      }
+    },
+    "path": "/usr/bin/Xvfb",
+    "resolved_path": "/usr/bin/Xvfb",
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84"
+  },
+  "server_display": ":88",
+  "server_release_number": 12101011,
+  "server_vendor": "The X.Org Foundation",
+  "xres_version": [
+    1,
+    2
+  ],
+  "xtest_version": [
+    2,
+    2
+  ]
+}

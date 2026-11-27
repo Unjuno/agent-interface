@@ -1,0 +1,10 @@
+{
+  "schema": "runner-wrapper-discrepancy-a01-v1",
+  "formal_candidate_invocations": 1,
+  "candidate_exit": 0,
+  "inner_run_wrapper_exit": 0,
+  "outer_run_sh_exit": 1,
+  "outer_error": "cp: cannot create directory '/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-6/outputs/x11-xtest-device-cross-client-a01/results/a01/': No such file or directory",
+  "cause": "The frozen shell wrapper copied completed raw evidence into a Windows-side directory it had not created. The candidate and private Xvfb had already exited; raw.json was recovered from the private Linux results directory and its source hash is checked separately.",
+  "candidate_was_not_reinvoked": true
+}

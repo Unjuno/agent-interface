@@ -1,0 +1,21 @@
+{
+  "schema": "agent-interface/xvfb-cancel-timestamp-classification-confirmation-v1",
+  "study_id": "xvfb-cancel-timestamp-classification-confirmation-enabled-20261110",
+  "purpose": "Confirm the corrected integration recorder emits timestamp-based cancellation classification with explicit private-Xvfb test activation.",
+  "supersedes_nothing": "This is not a retry of the skipped r18 invocation; r18 had no executed test case and is retained as a harness-activation miss.",
+  "source_commit": "1f041b86ebf622f7fa71706885fc6bcee318928f",
+  "source_sha256": "dfe70183d72c5a80d87ff1b800e1768c963cd47d5e973921b2a760e0acb28410",
+  "condition": {
+    "delay_ms": 250,
+    "tracked_delayed_second_press": true,
+    "prestarted_cancel_supervisor": false,
+    "cancel_ack_withheld_s": 1.0,
+    "private_display": ":88",
+    "integration_test_enabled": true,
+    "network": "none",
+    "model_calls": 0
+  },
+  "prediction": "A completed action after cancellation admission and before cancellation completion is labeled OBSERVED_XVFB_OPERATION_COMPLETED_AFTER_CANCEL_ADMISSION; operation_completed_after_cancel_admission=true; operation_completed_before_cancel_terminal=true; owner_snapshot_conflicts_with_retirement_at_observation=false.",
+  "analysis_rule": "One run; no retry. Diagnostic only; do not merge into R10-R17 repetition counts or infer reliability/speed.",
+  "scope": "Private synthetic Xvfb in cached Docker image on WSL2; not WSLc, MAP01, real GUI, provider/model, or real socket/network delay."
+}

@@ -1,0 +1,63 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-observation-cancellation-final-20261016'
+KEY='test_compiled_observation_cancellation.ROWS'
+CHORD=[[2,1],[2,2],[3,2],[3,1]]
+def check(rows):
+    if len(rows)!=6 or {(r['isolated'],r['trigger']) for r in rows}!={(i,t) for i in (True,False) for t in ('none','cancel','expiry')}:raise ValueError('coverage')
+    for row in rows:
+        isolated,trigger=row['isolated'],row['trigger'];result=row['result'];core=result['compiled_execution_receipt']
+        stable=trigger=='none';prefix=2 if stable else 1
+        if row['emissions']!=(CHORD*2 if stable else CHORD+[[2,1],[3,1]]) or row['down'] or row['errors']:raise ValueError('input custody')
+        if core['completed_transitions']!=prefix or result['outcome']!=('TASK_NOT_VERIFIED' if stable else 'EXECUTION_INCOMPLETE'):raise ValueError('prefix/effect')
+        if not row['guard_restored'] or row['pending_authorizations']:raise ValueError('guard custody')
+        terminals=[e for e in core['critical_events'] if e['event']=='action_terminal']
+        if len(terminals)!=2 or not all(e['release_verified'] for e in terminals):raise ValueError('release evidence')
+        if len(row['outer_checks'])!=(1 if stable else 0):raise ValueError('outer check')
+        files={n:json.loads(bytes.fromhex(v)) for n,v in row['files_hex'].items() if n.endswith('.json')}
+        native_terminals={v['action_id']:v for n,v in files.items() if n.endswith('-terminal.json')}
+        for terminal in terminals:
+            actual=native_terminals[terminal['action_id']]
+            if actual['status']!=terminal['status'] or actual['release']['verified'] is not True:raise ValueError('native terminal join')
+            raw=files['bridge/'+actual['effect_ref']+'.json']['result']
+            if not raw.get('execution',{}).get('releases') or not all(v['verified'] for v in raw['execution']['releases']):raise ValueError('raw release')
+        if isolated and (not row['observation_worker']['retired'] or row['observation_worker']['thread_alive']):raise ValueError('reader closure')
+        if stable:
+            if row['before_resume'] is not None:raise ValueError('stable gate')
+            continue
+        before=row['before_resume'];events=row['timeline']
+        stamp=lambda name:next(e['real_monotonic_ns'] for e in events if e['event']==name)
+        release=next(e['real_monotonic_ns'] for e in events if e['event']=='fake_emission' and e['phase']==1 and e['kind']==3 and e['code']==1)
+        if not (stamp('callback_entered')<=stamp('control_requested')<=stamp('callback_resume_requested')<=stamp('callback_resumed')):raise ValueError('control order')
+        if before['resume_set']:raise ValueError('early resume')
+        if isolated:
+            if before['writer_alive'] or before['down'] or before['results']!=[result] or before['emissions']!=row['emissions']:raise ValueError('isolated pre-resume evidence')
+            if not before['observation_worker']['retired'] or not before['observation_worker']['thread_alive'] or not before['observation_worker']['pending']:raise ValueError('blocked reader handle')
+            if not (stamp('control_requested')<=release<=stamp('caller_returned')<=stamp('callback_resume_requested')):raise ValueError('isolated order')
+            if row['writer_thread'] in row['callback_threads']:raise ValueError('callback isolation')
+        else:
+            if not before['writer_alive'] or before['down']!=[1] or before['results'] or before['emissions']!=CHORD+[[2,1]]:raise ValueError('synchronous blocked control')
+            if not (stamp('callback_resume_requested')<=release<=stamp('caller_returned')):raise ValueError('sync order')
+            if set(row['callback_threads'])!={row['writer_thread']}:raise ValueError('sync callback thread')
+        refused=row['reused_admission']
+        if refused['eligible'] or refused['authorization'] is not None or refused['status']!='association_changed':raise ValueError('revived authority')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY];count=check(rows)
+    meta=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'],len(set(meta['selected'])))!=(391,0,0,0,391):raise ValueError('suite')
+    rejected=[]
+    for name in ('hidden_release','lost_prefix','early_resume','returned_before_release','revived_authority','lost_sync_control'):
+        bad=copy.deepcopy(rows);row=next(r for r in bad if r['isolated'] and r['trigger']=='cancel')
+        if name=='hidden_release':row['emissions']=CHORD
+        elif name=='lost_prefix':row['result']['compiled_execution_receipt']['completed_transitions']=0
+        elif name=='early_resume':row['before_resume']['resume_set']=True
+        elif name=='returned_before_release':next(e for e in row['timeline'] if e['event']=='caller_returned')['real_monotonic_ns']=0
+        elif name=='revived_authority':row['reused_admission']['eligible']=True
+        else:next(r for r in bad if not r['isolated'] and r['trigger']=='cancel')['before_resume']['writer_alive']=False
+        try:check(bad)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('mutant accepted')
+    report[mode]=dict(methods=391,new_rows=count,mutations=rejected)
+print(json.dumps(dict(scope='saved-only composed cancellation/receipt/event order; Fake X readback, not physical time or app score',modes=report),indent=2))

@@ -1,0 +1,18 @@
+{
+  "schema": "issue57-v3-prospective-full-trace-r06",
+  "status": "PASS_SYNTHETIC_COMPLETE_18_ASSIGNMENT_TRACE",
+  "normal": {"tests": 6, "passed": 6, "exit_code": 0},
+  "optimized": {"tests": 6, "passed": 6, "exit_code": 0},
+  "custody_audited": 18,
+  "projected_rows": 18,
+  "missing_assignments": 0,
+  "dispatch_enabled": false,
+  "evaluator_disposition": "RETAIN",
+  "synthetic_metrics_only": true,
+  "arms": {
+    "plain": {"input_tokens": 6010, "planner_generations": 7, "elapsed_ns": 6000},
+    "ephemeral": {"input_tokens": 7210, "planner_generations": 7, "elapsed_ns": 6000},
+    "persistent": {"input_tokens": 30, "planner_generations": 3, "elapsed_ns": 1800}
+  },
+  "provider_or_gui_used": false
+}

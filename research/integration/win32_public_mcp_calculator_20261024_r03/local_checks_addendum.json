@@ -1,0 +1,24 @@
+{
+  "schema": "win32-public-mcp-calculator-r03-local-checks-v1",
+  "recorded_at_utc": "2026-10-24T02:38:13.384658+00:00",
+  "source_commit": "35bbc613e6a6b70aeadcd3f9db86ac3fc5182d12",
+  "checks": [
+    {
+      "command": "python -m py_compile research/integration/win32_public_mcp_calculator_20261024_r03/run_probe.py",
+      "result": "PASS"
+    },
+    {
+      "command": "python -m unittest runtime.cli_v1.test_mcp_supervised_win32",
+      "result": "PASS 14/14"
+    },
+    {
+      "command": "python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32",
+      "result": "PASS 14/14"
+    },
+    {
+      "command": "python research/integration/win32_public_mcp_calculator_20261024_r03/audit_r03.py",
+      "result": "17/19; two frozen gate failures: late follow-up beyond 90 seconds, mislabeled program_id"
+    }
+  ],
+  "scope": "local preparation and post-run reconciliation only; these tests do not qualify blocked I/O or broader reliability"
+}

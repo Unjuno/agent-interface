@@ -1,0 +1,35 @@
+image_id=sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425
+network=none; memory=4g; memory+swap=4g; cpus=2; pids=256
+exit=0
+command=python3 -m unittest runtime.cli_v1.test_mcp_guarded && python3 -O -m unittest runtime.cli_v1.test_mcp_guarded
+--- output ---
+........................Executing <Task pending name='Task-123' coro=<GuardedMCPTests.test_public_observation_keeps_current_rgb_across_capture_directory_changes() running at /workspace/runtime/cli_v1/test_mcp_guarded.py:391> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.105 seconds
+.execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=54 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=54 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+............................
+----------------------------------------------------------------------
+Ran 53 tests in 1.904s
+
+OK
+........................Executing <Task pending name='Task-123' coro=<GuardedMCPTests.test_public_observation_keeps_current_rgb_across_capture_directory_changes() running at /workspace/runtime/cli_v1/test_mcp_guarded.py:391> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.125 seconds
+.execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=117 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=117 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+............................
+----------------------------------------------------------------------
+Ran 53 tests in 1.976s
+
+OK

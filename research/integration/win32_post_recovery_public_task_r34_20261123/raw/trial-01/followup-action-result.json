@@ -1,0 +1,124 @@
+{
+  "authority": "none",
+  "call_directory": "\\\\wsl.localhost\\Ubuntu\\home\\user\\agent-interface-preview-main-r06-20261123\\research\\integration\\win32_post_recovery_public_task_r34_20261123\\raw\\trial-01\\task-mcp\\ccb06d9704604048be24a3061bf91c5b",
+  "call_id": "ccb06d9704604048be24a3061bf91c5b",
+  "image_status": "no_observation",
+  "operation_invoked": false,
+  "outcome_summary": {
+    "cleanup_error": null,
+    "error": "CUSTODY_FENCE_TARGET_GENERATION_FENCED",
+    "execution_detail": null,
+    "execution_error": null,
+    "execution_status": null,
+    "failed_operation_effect": null,
+    "failed_operation_index": null,
+    "failure_detail": null,
+    "failure_phase": null,
+    "input_release_verified": null,
+    "recovery_required": null,
+    "reported_status": "invalid_request",
+    "validation_operation_index": null
+  },
+  "receipt": {
+    "authority": "none",
+    "events": [],
+    "latest_observations": [],
+    "motor_state_validation": {
+      "accepted": false,
+      "present": false,
+      "reason": "missing"
+    },
+    "omitted_from_view": 0,
+    "record_counts": {},
+    "report": {
+      "error": "CUSTODY_FENCE_TARGET_GENERATION_FENCED",
+      "input_dispatched": false,
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "1e505facacc64ee6a85058b4346883b9",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "invalid_request",
+      "task_success": null
+    },
+    "schema": "agent-interface/receipt-view-v1",
+    "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+    "source": {
+      "bytes": 443,
+      "kind": "received_bytes",
+      "path": null,
+      "raw_report": {
+        "error": "CUSTODY_FENCE_TARGET_GENERATION_FENCED",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "1e505facacc64ee6a85058b4346883b9",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "invalid_request",
+        "task_success": null
+      },
+      "sha256": "80caa3dc7210dcc452368a57cfc7b80491bc8a78f7f89122fbd9367235c09248"
+    }
+  },
+  "retained_call": {
+    "arguments": {
+      "current_binding_revision": 1,
+      "current_observation_seq": 1,
+      "program": {
+        "authority": {
+          "expires_at_ns": 444123765000000,
+          "lease_id": "r34-31080d5fad264de0add3d30f94f19af0"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "keys": [
+              "B"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "r34-bd4329eab974423bb478e3d572c48872",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      }
+    },
+    "backend_attempted": true,
+    "call_id": "ccb06d9704604048be24a3061bf91c5b",
+    "operation": "dispatch",
+    "persistence_failure": null,
+    "response_wait_ms": 10000,
+    "state": "finished"
+  },
+  "schema": "agent-interface/review-v1"
+}

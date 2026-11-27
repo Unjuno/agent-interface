@@ -1,0 +1,188 @@
+{
+  "request": {
+    "action": "persist_document",
+    "operation": "request_save",
+    "authorization": "1d74cc85cdbc4d089702f2e636d7b5b1",
+    "expected_sequence": 14,
+    "valid_until_ns": 171155328000000
+  },
+  "action_id": "action-be591f1820c447d9b5fe15f6e793f0df",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 171150468000000,
+      "ended_ns": 171150687000000,
+      "emissions": 20,
+      "program_emissions": 4,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 171150687000000
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 100,
+          "started_ns": 171150578000000,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 171150687000000
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 15,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save_fresh",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save_fresh",
+        "point": [
+          200,
+          205
+        ],
+        "observed_box": [
+          192,
+          199,
+          16,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 15,
+        "valid_until_ns": 171155421000000,
+        "patch_sha256": "cedb239000efa7ac3013aade4c7c2cd60e1122b4418d83dbd886f2fa8bcf3150",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 16,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save_fresh",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save_fresh",
+        "point": [
+          200,
+          205
+        ],
+        "observed_box": [
+          192,
+          199,
+          16,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 16,
+        "valid_until_ns": 171155468000000,
+        "patch_sha256": "cedb239000efa7ac3013aade4c7c2cd60e1122b4418d83dbd886f2fa8bcf3150",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:s",
+        "observation_sequence": 17,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save_fresh",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save_fresh",
+        "point": [
+          200,
+          205
+        ],
+        "observed_box": [
+          192,
+          199,
+          16,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 17,
+        "valid_until_ns": 171155515000000,
+        "patch_sha256": "cedb239000efa7ac3013aade4c7c2cd60e1122b4418d83dbd886f2fa8bcf3150",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 15,
+        "scope": "native-x11:21cea6bfc20e493a93cce6a566fe8bb5",
+        "binding_revision": 0,
+        "started_ns": 171150453000000,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 171150468000000
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 16,
+        "scope": "native-x11:21cea6bfc20e493a93cce6a566fe8bb5",
+        "binding_revision": 0,
+        "started_ns": 171150500000000,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 171150515000000
+      },
+      {
+        "stage": "before_key_press:s",
+        "observation_sequence": 17,
+        "scope": "native-x11:21cea6bfc20e493a93cce6a566fe8bb5",
+        "binding_revision": 0,
+        "started_ns": 171150546000000,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 171150562000000
+      }
+    ]
+  }
+}

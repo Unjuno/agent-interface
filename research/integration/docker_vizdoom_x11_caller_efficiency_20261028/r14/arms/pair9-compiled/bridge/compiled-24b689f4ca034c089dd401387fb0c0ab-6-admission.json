@@ -1,0 +1,34 @@
+{
+  "request": {
+    "interface_id": "map01-forward-efficiency-r1",
+    "session_scope": "native-x11:02bfa39dccbc4c68b187e480063ac296",
+    "action": "forward",
+    "operation": "move_forward_600ms",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "forward_target",
+      "identity_predicate": "ready",
+      "dependencies": [
+        "ready"
+      ]
+    },
+    "observation": {
+      "sequence": 3,
+      "captured_ns": 3097810935248,
+      "surface": "x11-window-2097168",
+      "predicates": {
+        "ready": true,
+        "moved": false
+      },
+      "evidence_ref": "observation-3",
+      "evidence_digest": "f6613d03d8f40a25ffa6af4f27efed397d69e2bbfc5b2bdef922243fe221d391"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "2c7e6f0503954d09a7ab6b70662728f3",
+    "expected_sequence": 3,
+    "valid_until_ns": 3099310935248
+  }
+}

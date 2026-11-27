@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-21",
+  "repository": "Unjuno/agent-interface",
+  "frozen_head": "3db800fe9de4f08660f1832f6d790ff4a2ea43b2",
+  "platform": "Windows; CPython 3.11.9",
+  "scope": "Existing synthetic public guarded-X11 cancellation test; late queued old-owner press adversarial sequence",
+  "test": "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_cancel_keeps_unknown_after_release_readback_then_late_down",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_owned_process.py": "046e2c71a6d1d7ca1133f8fed4b43bf48435140d7e8a99ccd802ca8bd6d49e63"
+  },
+  "conditions": {
+    "owner_input_blocked": true,
+    "old_owner_queued_press": {
+      "code": 1,
+      "kind": "KeyPress"
+    },
+    "supervisor_disconnect_receipt": "disconnected with exact owner PID",
+    "prequeued_cleanup_readback": {
+      "buttons_down": [],
+      "keys_down": [],
+      "verified": true
+    },
+    "old_owner_delayed_queue_applied_after_readback": true,
+    "post_application_fake_x_keys_down": [
+      1
+    ],
+    "cancel_release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "late_server_request_possible": true,
+    "task_success": null,
+    "replay_allowed": false,
+    "runtime_product_changed": false
+  },
+  "runs": [
+    {
+      "log": "late-operation-normal.log",
+      "result": "PASS",
+      "log_sha256": "03ac7fe67a3b694ca2ba17048f90c8cc7aa9a8c2c9b3ca3528b140ed6252f509",
+      "duration_seconds": 1.058,
+      "command": "python -m unittest -v runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_cancel_keeps_unknown_after_release_readback_then_late_down",
+      "tests": "1/1",
+      "mode": "normal"
+    },
+    {
+      "log": "late-operation-optimized.log",
+      "result": "PASS",
+      "log_sha256": "0e0a71f588b2471d521699bd2aad7c543262af53c75c8d4568a293903547e249",
+      "duration_seconds": 2.093,
+      "command": "python -O -m unittest -v runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_cancel_keeps_unknown_after_release_readback_then_late_down",
+      "tests": "1/1",
+      "mode": "-O"
+    }
+  ],
+  "interpretation": "Existing regression intentionally applies one already-queued old-owner KeyPress after a separate cleanup client observed empty keys/buttons. The caller reports UNKNOWN, release unconfirmed, late request possible and replay denied. This demonstrates why independent empty readback cannot prove old-queue drainage; it does not show bounded late-operation exclusion or task-effect recovery.",
+  "gate": "LATE_OPERATION_EXCLUSION_NOT_PASSED",
+  "issue_comment_id": 7055986970
+}

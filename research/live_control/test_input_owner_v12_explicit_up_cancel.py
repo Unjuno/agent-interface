@@ -293,6 +293,17 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "release pending"):
                 owner.call("down", lease, "A")
             self.assertEqual(display_instance.down, {38})
+
+            # Terminal cleanup retries the key but must preserve the original
+            # failed explicit-up receipt in the owner's event history.
+            display_instance.drop_keyreleases = 0
+            cleanup = owner.call("release", lease)
+            self.assertTrue(cleanup["verified"])
+            self.assertEqual(cleanup["keys_down"], [])
+            self.assertEqual(display_instance.down, set())
+            self.assertIn(failed_receipt, owner.records)
+            self.assertFalse(failed_receipt["server_keyup_verified"])
+            self.assertEqual(len(cleanup["key_release_attempts"]["38"]["attempts"]), 1)
         finally:
             if owner is not None:
                 owner.close()
@@ -446,6 +457,10 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.focus_invalid = False
             display_instance.drop_keyreleases = 1
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -589,6 +604,10 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.focus_invalid = False
             display_instance.drop_keyreleases = 12
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -733,6 +752,10 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.expected_focus = 41
             lease.focus_invalid = False
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease

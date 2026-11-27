@@ -1,0 +1,30 @@
+{
+  "redaction_scope": "privacy-only; no experiment outcomes or timing values changed",
+  "redactions": [
+    {
+      "path": "run/app-server/protocol.jsonl",
+      "original_sha256": "fb7c68eb298f64bf9ed34d0d7ee554d0927aed891faf996a86fe7ae98eb30069",
+      "redacted_sha256": "2b2bdaefb3927f008d125a03e83ea065ac3cd0f2c75ceab89f3e3d31727402b7",
+      "fields": [
+        "serverName",
+        "installationId"
+      ]
+    },
+    {
+      "path": "run/server/guarded-session-2e11c56e60894947bc3061a58d43384c/compiled-71eacd22caa44ed9acea92bfac805ea1-10-execution.json",
+      "original_sha256": "3a3129d68abf67c1cf899ae324ed36d331d2ff626d58469ea0cf5260f2384205",
+      "redacted_sha256": "8dab94e35ec64fab33fce4070ef3069f256c8278b6ab2fc70ad10d840d3d3658",
+      "fields": [
+        "authorization"
+      ]
+    },
+    {
+      "path": "run/server/guarded-session-2e11c56e60894947bc3061a58d43384c/compiled-71eacd22caa44ed9acea92bfac805ea1-6-admission.json",
+      "original_sha256": "d1161b1f4199ab598b9328320a06d7ae8f6b9469776b46af1b1a354f6a8ca96a",
+      "redacted_sha256": "7b273427819eddf049ffe76de331c5b058e3c7a8a58e69fddbc8072435610eb5",
+      "fields": [
+        "authorization"
+      ]
+    }
+  ]
+}

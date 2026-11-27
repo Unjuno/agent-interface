@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "scope:no_live_allocation": true,
+    "source:research/doom/doom_controller_failure_cleanup_v1.py": true,
+    "source:research/doom/test_controller_failure_cleanup_v1.py": true,
+    "test_log:normal-tests.txt:all_pass": true,
+    "test_log:normal-tests.txt:bounded_reader_case": false,
+    "test_log:normal-tests.txt:stderr_retention_case": false,
+    "test_log:optimized-tests.txt:all_pass": true,
+    "test_log:optimized-tests.txt:bounded_reader_case": false,
+    "test_log:optimized-tests.txt:stderr_retention_case": false
+  },
+  "formal_pass": false,
+  "schema": "v39-child-stderr-custody-audit-v1",
+  "scope": "bounded local child-stderr retention only; no live control evidence",
+  "status": "FAIL_AUDIT"
+}

@@ -1,0 +1,20 @@
+{
+  "environment": {
+    "mcp_module": "present",
+    "python": "3.14.8 (main, Oct  6 2026, 04:36:55) [GCC 14.2.0]",
+    "xauthority": "/dev/null",
+    "xvfb": "/usr/bin/Xvfb"
+  },
+  "error": "timed out waiting for owner_reply_held.json",
+  "error_type": "TimeoutError",
+  "schema": "agent-interface/standard-caller-blocked-x11-a03-run-v1",
+  "status": "FAIL_FIRST_OUTCOME_RETAINED",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py\", line 567, in main\n    trial = await _run_trial(arm, index)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py\", line 439, in _run_trial\n    held = _wait_for(marker_dir / 'owner_reply_held.json', seconds=8.0)\n  File \"/repo/research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py\", line 263, in _wait_for\n    raise TimeoutError(f'timed out waiting for {path.name}')\nTimeoutError: timed out waiting for owner_reply_held.json\n",
+  "trials": [
+    {
+      "arm": "healthy",
+      "status": "PASS_HEALTHY_CONTROL",
+      "trial_id": "healthy-01"
+    }
+  ]
+}

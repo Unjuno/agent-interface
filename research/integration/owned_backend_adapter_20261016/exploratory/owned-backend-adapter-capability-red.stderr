@@ -1,0 +1,41 @@
+FFFF
+======================================================================
+FAIL: test_full_program_rejects_remote_unsupported_keys_before_authority (test_owned_owner_backend_adapter.OwnedBackendTests.test_full_program_rejects_remote_unsupported_keys_before_authority) (step={'op': 'key', 'key': 'q'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 156, in test_full_program_rejects_remote_unsupported_keys_before_authority
+    with self.subTest(step=step),self.assertRaises(ValueError):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_full_program_rejects_remote_unsupported_keys_before_authority (test_owned_owner_backend_adapter.OwnedBackendTests.test_full_program_rejects_remote_unsupported_keys_before_authority) (step={'op': 'hold', 'keys': ['q'], 'duration_ms': 5})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 156, in test_full_program_rejects_remote_unsupported_keys_before_authority
+    with self.subTest(step=step),self.assertRaises(ValueError):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_full_program_rejects_remote_unsupported_keys_before_authority (test_owned_owner_backend_adapter.OwnedBackendTests.test_full_program_rejects_remote_unsupported_keys_before_authority) (step={'op': 'chord', 'modifier': 'Control_L', 'key': 'a'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 156, in test_full_program_rejects_remote_unsupported_keys_before_authority
+    with self.subTest(step=step),self.assertRaises(ValueError):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_full_program_rejects_remote_unsupported_keys_before_authority (test_owned_owner_backend_adapter.OwnedBackendTests.test_full_program_rejects_remote_unsupported_keys_before_authority) (step={'op': 'text', 'text': 'a/q'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 156, in test_full_program_rejects_remote_unsupported_keys_before_authority
+    with self.subTest(step=step),self.assertRaises(ValueError):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=4)

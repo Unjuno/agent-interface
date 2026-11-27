@@ -1,0 +1,8 @@
+Command: docker context ls
+Selected context: orbstack (unix:///Users/taka/.orbstack/run/docker.sock)
+
+Command: docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+Outcome: STOP before container creation.
+Error: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported
+
+No image pull, container creation, or engine repair was attempted. The narrow predicate regression and projector suite ran on host Python 3; no container result is claimed.

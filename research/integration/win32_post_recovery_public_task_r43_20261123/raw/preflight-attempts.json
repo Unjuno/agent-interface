@@ -1,0 +1,54 @@
+{
+  "schema": "agent-interface/r43-preflight-attempts-v1",
+  "source_main": "612b857d7c1c6a951d3f055862a5141dbc9c7637",
+  "attempts": [
+    {
+      "id": "R01-normal",
+      "observations": 0,
+      "status": "FAIL_SETUP",
+      "exit": 1,
+      "cause": "missing preflight-targets.json, preflight-state.json, preflight-events.jsonl",
+      "dispatches": 0
+    },
+    {
+      "id": "R01-optimized",
+      "observations": 0,
+      "status": "FAIL_SETUP",
+      "exit": 1,
+      "cause": "missing preflight-targets.json, preflight-state.json, preflight-events.jsonl",
+      "dispatches": 0
+    },
+    {
+      "id": "R02-normal",
+      "observations": 0,
+      "status": "FAIL_SETUP",
+      "exit": 1,
+      "cause": "target id 0 rejected; explicit positive native id mapping required",
+      "dispatches": 0
+    },
+    {
+      "id": "R02-optimized",
+      "observations": 0,
+      "status": "FAIL_SETUP",
+      "exit": 1,
+      "cause": "target id 0 rejected; explicit positive native id mapping required",
+      "dispatches": 0
+    },
+    {
+      "id": "R03-normal",
+      "observations": 0,
+      "status": "PASS_HANDSHAKE_AND_TASK_ORACLE_REGISTERED",
+      "exit": 0,
+      "tools": 12,
+      "dispatches": 0
+    },
+    {
+      "id": "R03-optimized",
+      "observations": 0,
+      "status": "PASS_HANDSHAKE_AND_TASK_ORACLE_REGISTERED",
+      "exit": 0,
+      "tools": 12,
+      "dispatches": 0
+    }
+  ]
+}

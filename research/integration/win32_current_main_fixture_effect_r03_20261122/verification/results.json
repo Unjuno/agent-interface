@@ -1,0 +1,33 @@
+{
+  "checked_at_utc": "2026-11-21T19:24:22.842650+00:00",
+  "source_commit": "6d15df538cff4467a6c72a84a93cfc4557917551",
+  "tests": [
+    {
+      "mode": "normal",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests",
+        "runtime.cli_v1.test_win32_standard_producer"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "OK"
+    },
+    {
+      "mode": "optimized-O",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests",
+        "runtime.cli_v1.test_win32_standard_producer"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "OK"
+    }
+  ]
+}

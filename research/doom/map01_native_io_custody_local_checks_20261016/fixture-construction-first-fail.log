@@ -1,0 +1,37 @@
+..E.........E.........
+======================================================================
+ERROR: test_actual_executor_stale_cover_ack_reuses_observation_received_during_wait (research.doom.test_map01_v39_pending_observation_drain.PendingObservationDrainTests.test_actual_executor_stale_cover_ack_reuses_observation_received_during_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_pending_observation_drain.py", line 623, in test_actual_executor_stale_cover_ack_reuses_observation_received_during_wait
+    recovered = submit_initial_cover_with_recovery(
+        submit_stale_cover, identifier="stale-plan",
+    ...<3 lines>...
+            "sequence 12 was already consumed by the ACK wait"),
+        observation_monitor=monitor)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 1084, in submit_initial_cover_with_recovery
+    ack = submit(consumed_events)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_pending_observation_drain.py", line 610, in submit_stale_cover
+    executor.submit("stale-plan", [{"op": "observe"}], 11, deadline)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 83, in submit
+    if self._release_obligation is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Executor' object has no attribute '_release_obligation'
+
+======================================================================
+ERROR: test_late_invalidation_after_empty_sample_is_fenced_before_executor_input (research.doom.test_map01_v39_pending_observation_drain.PendingObservationDrainTests.test_late_invalidation_after_empty_sample_is_fenced_before_executor_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_pending_observation_drain.py", line 500, in test_late_invalidation_after_empty_sample_is_fenced_before_executor_input
+    executor.submit("stale-plan", [{"op": "observe"}], 11, 10**30)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 83, in submit
+    if self._release_obligation is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Executor' object has no attribute '_release_obligation'
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.005s
+
+FAILED (errors=2)

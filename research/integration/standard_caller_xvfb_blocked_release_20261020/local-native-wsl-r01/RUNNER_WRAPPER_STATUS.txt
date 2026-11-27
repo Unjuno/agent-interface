@@ -1,0 +1,1 @@
+The unit-test command itself returned status 0 (the output contains “Ran 1 test” and “OK”, and exit-code.txt stores 0). The outer Bash wrapper then exited status 1 because a carriage return from the PowerShell here-string was included in its exit argument. No test was rerun; result.json and the independent raw audit are the decision evidence.

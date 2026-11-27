@@ -1,0 +1,1 @@
+Construction retry r2: PENDING, one invocation. Prior r1 construction failed both tests because begin_model_turn received literal ammo=6 while the frozen fixture asserted prompt ammo 4. The first run, output, freeze and image are preserved in ../v39_pending_ammo_recovery_a17_20261013 and prior-failed-construction/. No scientific/live allocation was consumed.

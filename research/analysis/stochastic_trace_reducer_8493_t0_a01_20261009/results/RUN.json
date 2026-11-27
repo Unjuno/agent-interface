@@ -1,0 +1,56 @@
+{
+  "allocation": "UNJUNO-8493-T0-A01-20261009",
+  "audit_sha256": "fe55490421f802e241269f62ba0f2f63ed7488b2c1a87ec367c0b0413af1a633",
+  "auditor": {
+    "argv": [
+      "/run/current-system/sw/bin/python3.12",
+      "-B",
+      "audit.py",
+      "--raw",
+      "results/candidate.raw.json",
+      "--output",
+      "results/AUDIT.json",
+      "--freeze-digest",
+      "387eba724dfd549dd2d4264ffc2e6add6e4dea6153f458aac68114da2a1ac50a"
+    ],
+    "attempted": true,
+    "completed_utc": "2026-10-08T23:15:46.858938+00:00",
+    "exit_code": 0,
+    "process_started": true,
+    "started_utc": "2026-10-08T23:15:45.106752+00:00",
+    "timed_out": false
+  },
+  "auditor_invocations": 1,
+  "base_commit": "6ceb8552df13a188f6aad9cbfed88eba6eb70689",
+  "candidate": {
+    "argv": [
+      "/run/current-system/sw/bin/python3.12",
+      "-B",
+      "candidate.py",
+      "--output",
+      "results/candidate.raw.json",
+      "--freeze-digest",
+      "387eba724dfd549dd2d4264ffc2e6add6e4dea6153f458aac68114da2a1ac50a"
+    ],
+    "attempted": true,
+    "completed_utc": "2026-10-08T23:15:45.106177+00:00",
+    "exit_code": 0,
+    "process_started": true,
+    "started_utc": "2026-10-08T23:15:44.794466+00:00",
+    "timed_out": false
+  },
+  "candidate_invocations": 1,
+  "candidate_raw_sha256": "41590c50e615697f16225296b4234ecfd96d6b05cac4aef4ef1bbf6b192f16dc",
+  "finalized_utc": "2026-10-08T23:15:46.890210+00:00",
+  "freeze_commit": "6b7be8a8ada5412162d93131491c8748ab6d05db",
+  "freeze_sha256": "387eba724dfd549dd2d4264ffc2e6add6e4dea6153f458aac68114da2a1ac50a",
+  "host": {
+    "architecture": "arm64",
+    "container": false,
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "python_executable": "/run/current-system/sw/bin/python3.12",
+    "system": "macOS-27.0.1-arm64-arm-64bit"
+  },
+  "retries": 0,
+  "schema": "unjuno.issue8493.formal-run.v1"
+}

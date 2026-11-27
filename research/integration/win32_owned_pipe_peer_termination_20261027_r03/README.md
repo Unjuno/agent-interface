@@ -1,0 +1,7 @@
+# Owned Windows separate-peer pipe termination R03
+
+This fresh successor to R01 and R02 used an independent watchdog parent, a Windows Job Object with kill-on-close, and a gated worker that could start its peer only after job assignment. The worker closed its own read handle, started an 8 MiB `multiprocessing.Pipe.send_bytes`, and observed the send still blocked while the peer held the read endpoint without reading. It then terminated that owned peer. The saved trace records peer exit and the blocked sender returning `BrokenPipeError`; the worker exited 0 without watchdog timeout. A subsequent process inventory found no worker or peer PID remaining.
+
+The trace records one observed schedule on Windows CPython; it does not prove a hard termination bound, that a real supervisor request cannot be delivered before termination, or that a helper cannot perform a late effect. This probe sends arbitrary bytes, not the supervisor protocol, and it performs no GUI, game, model, keyboard/mouse input, WSLc or Docker work. Job kill-on-close and source/provenance are part of the probe, not a production fix.
+
+The exact source, environment, result, flushed stage traces, empty stdout/stderr, and hashes are retained. The operator used the recorded worker and peer PIDs only to confirm absence after exit. A future change must verify process identity and exact retirement before allowing another input owner; timeouts alone remain UNKNOWN. A rerun requires a fresh output directory and creates a new result.

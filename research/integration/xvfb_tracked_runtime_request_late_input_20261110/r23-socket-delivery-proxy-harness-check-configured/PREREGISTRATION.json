@@ -1,0 +1,21 @@
+{
+  "schema": "agent-interface/user-space-socket-delivery-proxy-self-check-v1",
+  "study_id": "socket-delivery-proxy-harness-check-configured-20261110",
+  "purpose": "Check the proxy mechanic independently of X11: a selected loopback TCP client closes while its next bytes are held; upstream receives those bytes only after the configured delay.",
+  "attempt_history": "r22 did not reach socket setup because the evidence directory environment variable was absent; preserved and excluded. This is a separately preregistered run with that variable set.",
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "condition": {
+    "delay_ms": 250,
+    "network": "none",
+    "transport": "loopback TCP inside Docker",
+    "model_calls": 0,
+    "evidence_directory": "/evidence"
+  },
+  "prediction": "Upstream receives prefix+held payload; client EOF is observed before delayed forwarding; hold >=240 ms.",
+  "rule": "Run once, no retry. Validates only proxy mechanics, not X11 or product task effects. Preserve all outputs.",
+  "scope": "Local synthetic loopback test in the cached Docker image; not network impairment or product runtime behavior."
+}

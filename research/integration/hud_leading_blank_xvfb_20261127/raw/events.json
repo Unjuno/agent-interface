@@ -1,0 +1,149 @@
+[
+  {
+    "event": "key_admission",
+    "ack": {
+      "event": "input_admission",
+      "key": "w",
+      "keycode": 25,
+      "admitted_ns": 249813152233371,
+      "input_ack_ns": 249813152384325,
+      "valid_until_ns": 249821148235122
+    }
+  },
+  {
+    "event": "source_signal",
+    "signal": {
+      "format": "observable-signal-v1",
+      "status": "observed",
+      "signal_id": "health",
+      "value": 100,
+      "sequence": 1,
+      "capture_ns": 249813145390444,
+      "binding": {
+        "focus": 2097152,
+        "surface": 2097152,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "slots": [
+        {
+          "slot": 0,
+          "digit": 1,
+          "best_digit": 1,
+          "best_score": 0.9591078066914498,
+          "second_score": 0.1736842105263158
+        },
+        {
+          "slot": 1,
+          "digit": 0,
+          "best_digit": 0,
+          "best_score": 0.9510869565217391,
+          "second_score": 0.29873417721518986
+        },
+        {
+          "slot": 2,
+          "digit": 0,
+          "best_digit": 0,
+          "best_score": 0.9483695652173914,
+          "second_score": 0.3291139240506329
+        }
+      ],
+      "evidence": "hash-bound WAD glyph foreground exact-match",
+      "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    }
+  },
+  {
+    "event": "candidate_signal",
+    "signal": {
+      "format": "observable-signal-v1",
+      "status": "unknown",
+      "reason": "unverified_leading_blank",
+      "signal_id": "health",
+      "value": null,
+      "sequence": 2,
+      "capture_ns": 249813216149240,
+      "binding": {
+        "focus": 2097152,
+        "surface": 2097152,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    }
+  },
+  {
+    "event": "guard_outcome",
+    "outcome": {
+      "format": "observable-signal-guard-outcome-v1",
+      "guard_id": "owned-hud",
+      "signal_id": "health",
+      "status": "UNKNOWN",
+      "reason": "signal_unavailable",
+      "source_value": 100,
+      "current_value": null,
+      "hard_minimum": 80,
+      "source_age_ms": null,
+      "keep_existing_policy": false,
+      "requires_new_decision": true,
+      "grants_input_authority": false,
+      "may_only_preserve_or_reduce_existing_authority": true,
+      "semantic_change_identified": false,
+      "task_success_verified": false
+    }
+  },
+  {
+    "event": "owner_interruption",
+    "receipt": {
+      "intent_token": "94b39cd5af6c42bdb760d5c909a19d6f",
+      "record": {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "key_state_errors": [],
+        "verified_ns": 249813240146062,
+        "valid_until_ns": 249821148235122,
+        "intent_token": "94b39cd5af6c42bdb760d5c909a19d6f",
+        "key_release_attempts": {
+          "25": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keyrelease_started_ns": 249813239670382,
+                "sync_returned_ns": 249813239790128,
+                "keymap_sampled_ns": 249813239868600,
+                "server_key_down_before": true,
+                "server_key_down_after": false,
+                "keymap_before_error": null,
+                "keymap_after_error": null,
+                "keyrelease_error": null,
+                "sync_error": null
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "keycode": 25,
+            "interval_ns": [
+              249813239670382,
+              249813239868600
+            ]
+          }
+        ],
+        "key_state_source": "x11_query_keymap"
+      }
+    }
+  }
+]

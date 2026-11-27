@@ -1,0 +1,9 @@
+# R05 result: FAIL_OR_UNKNOWN before the hook stimulus
+
+The one frozen R05 attempt did not reach the native stimulus. Public observation and static validation passed, and exactly one `interface_dispatch` request was accepted into the server call directory. The hook saw no injected Q-down in its 10-second window; the fixture journal contains only its ready event and no effect file. Consequently the runner did not issue `interface_cancel`, did not claim producer exit/recovery/readback, and did not retry. The dispatch report was not persisted before the runner unwound its stdio session; the retained request remains under `run/calls/8fb4e6d8d9a24e9b85542601b8786966/request.json`.
+
+The runner terminated with `ExceptionGroup: unhandled errors in a TaskGroup` while the dispatch tool call was still outstanding. On stdio teardown, the two prestarted helper processes reported EOF. The fixture exited with code 0, its HWND was destroyed, the hook thread exited, and the previous foreground HWND was restored. A process inventory found no remaining fixture or MCP server process. The frozen audit records 6/16 checks; the pass count only covers setup facts and is not evidence of a partial successful operation.
+
+This is a construction failure, not a negative result for cancellation efficacy. The dispatch caller waited on the tool call while simultaneously waiting for hook entry; its response wait and hook-entry timeout were both 10 seconds. This left no returned dispatch receipt available to drive cancellation if setup or scheduling exceeded that window. The next attempt must use the standard caller's zero-wait pending response to capture the call ID first, then wait for the hook and issue exactly one cancellation in a later MCP request. R05 itself is immutable and must not be rerun.
+
+Raw, request/observation records, frozen conditions, preflight, and the read-only audit are retained with SHA-256 manifests. No WSLc or Docker allocation was used.

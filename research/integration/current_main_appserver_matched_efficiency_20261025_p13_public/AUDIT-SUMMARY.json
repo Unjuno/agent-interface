@@ -1,0 +1,177 @@
+{
+  "attempt": "current-main-appserver-matched-efficiency-20261025-p13",
+  "audited_utc": "2026-10-25T12:31:19.165678+00:00",
+  "auditor_sha256": "3f9fd54fd1eed351f361522286e44cce78b88e7a3c0ab2f0b1b51aa59faee898",
+  "cells": {
+    "p13-compiled_public_caller": {
+      "arm": "compiled_public_caller",
+      "checks": {
+        "attempt_ledger_complete": true,
+        "exactly_one_owner_click_and_effect": true,
+        "image_sent_matches_public_observation": true,
+        "independent_effect_pixel_matches": true,
+        "no_physical_or_wslc_input": true,
+        "post_redaction_manifest_matches": true,
+        "protocol_provider_terminal_usage_agrees": true,
+        "provider_completed_once": true,
+        "public_release_verified": true,
+        "raw_ledger_not_redacted": true,
+        "raw_references_resolve_and_hash": true,
+        "route_has_expected_transition_count": true,
+        "runner_classified_scoped_pass": true,
+        "runtime_task_success_stays_unasserted": true,
+        "selected_point_and_owner_click_match_in_target": true
+      },
+      "compiled_transition_count": 1,
+      "ledger_error": null,
+      "pair": "p13",
+      "passed": 15,
+      "public_tool_call_count": 5,
+      "raw_ref_count": 9,
+      "task_success": true,
+      "timing": {
+        "observation_to_action_return_ms": 11446.0977,
+        "provider_turn_ms": 11179.7524,
+        "total_trial_ms": 12087.3521
+      },
+      "total": 15,
+      "usage": {
+        "input_tokens": 10194,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 57
+      }
+    },
+    "p13-direct_public_input": {
+      "arm": "direct_public_input",
+      "checks": {
+        "attempt_ledger_complete": true,
+        "exactly_one_owner_click_and_effect": true,
+        "image_sent_matches_public_observation": true,
+        "independent_effect_pixel_matches": true,
+        "no_physical_or_wslc_input": true,
+        "post_redaction_manifest_matches": true,
+        "protocol_provider_terminal_usage_agrees": true,
+        "provider_completed_once": true,
+        "public_release_verified": true,
+        "raw_ledger_not_redacted": true,
+        "raw_references_resolve_and_hash": true,
+        "route_has_expected_transition_count": true,
+        "runner_classified_scoped_pass": true,
+        "runtime_task_success_stays_unasserted": true,
+        "selected_point_and_owner_click_match_in_target": true
+      },
+      "compiled_transition_count": 0,
+      "ledger_error": null,
+      "pair": "p13",
+      "passed": 15,
+      "public_tool_call_count": 5,
+      "raw_ref_count": 9,
+      "task_success": true,
+      "timing": {
+        "observation_to_action_return_ms": 10389.5365,
+        "provider_turn_ms": 10143.0173,
+        "total_trial_ms": 11184.8634
+      },
+      "total": 15,
+      "usage": {
+        "input_tokens": 10188,
+        "output_tokens": 117,
+        "reasoning_output_tokens": 98
+      }
+    }
+  },
+  "classification": "PASS_SCOPED_MATCHED_FAKE_X_COMPARISON",
+  "evidence_checks": {
+    "all_attempts_are_synthetic_fake_x_only": true,
+    "all_preregistered_runner_hashes_match": true,
+    "all_preregistered_runtime_source_hashes_match": true,
+    "both_cells_have_15_of_15_checks": true,
+    "both_raw_ledgers_reconcile": true,
+    "one_completed_pair": true
+  },
+  "limits": [
+    "n=1 matched pair; descriptive only, not a population reliability estimate",
+    "Synthetic Fake X effects and XTEST only; no live desktop/application or MAP01",
+    "No WSLc, Docker, blocked-I/O recovery, or physical input",
+    "Codex App Server token usage is provider-reported and protocol/ledger reconciled; upstream billing is not independently available",
+    "Runtime task_success remains null; separate independent scorer reports the synthetic task effect"
+  ],
+  "paired_differences_direct_minus_compiled": {
+    "p13": {
+      "input_tokens_direct_minus_compiled": -6,
+      "observation_to_action_return_ms_direct_minus_compiled": -1056.5612,
+      "output_tokens_direct_minus_compiled": 41,
+      "provider_turn_ms_direct_minus_compiled": -1036.7350999999999,
+      "reasoning_output_tokens_direct_minus_compiled": 41,
+      "total_trial_ms_direct_minus_compiled": -902.4886999999999
+    }
+  },
+  "per_arm": {
+    "compiled_public_caller": {
+      "compiled_transitions": [
+        1
+      ],
+      "confidence_interval": null,
+      "median_timing_ms": {
+        "observation_to_action_return_ms": 11446.0977,
+        "provider_turn_ms": 11179.7524,
+        "total_trial_ms": 12087.3521
+      },
+      "median_usage_tokens": {
+        "input_tokens": 10194,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 57
+      },
+      "success_rate": 1.0,
+      "successes": 1,
+      "tool_calls": [
+        5
+      ],
+      "trials": 1
+    },
+    "direct_public_input": {
+      "compiled_transitions": [
+        0
+      ],
+      "confidence_interval": null,
+      "median_timing_ms": {
+        "observation_to_action_return_ms": 10389.5365,
+        "provider_turn_ms": 10143.0173,
+        "total_trial_ms": 11184.8634
+      },
+      "median_usage_tokens": {
+        "input_tokens": 10188,
+        "output_tokens": 117,
+        "reasoning_output_tokens": 98
+      },
+      "success_rate": 1.0,
+      "successes": 1,
+      "tool_calls": [
+        5
+      ],
+      "trials": 1
+    }
+  },
+  "runner_hash_checks": {
+    "fake_factory.py": true,
+    "preflight_appserver.py": true,
+    "privacy_redact.py": true,
+    "run_arm.py": true,
+    "test_fake_factory.py": true,
+    "test_privacy_redact.py": true,
+    "test_standard_caller.py": true
+  },
+  "schema": "agent-interface/appserver-matched-efficiency-p13-audit-v1",
+  "source_hash_checks": {
+    "research/integration/standard_mcp_task_ledger_57_v1/app_server_provider_to_public_mcp_v1.py": true,
+    "research/integration/standard_mcp_task_ledger_57_v1/ledger.py": true,
+    "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py": true,
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py": true,
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_public_mcp_caller_v1.py": true,
+    "research/live_control/codex_app_server_client_v2.py": true,
+    "research/live_control/persistent_planner_adapter_v2.py": true,
+    "runtime/cli_v1/mcp_relay.py": true,
+    "runtime/cli_v1/mcp_server.py": true,
+    "runtime/cli_v1/test_mcp_owned_process.py": true
+  }
+}

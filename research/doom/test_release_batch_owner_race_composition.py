@@ -14,20 +14,19 @@ LIVE = ROOT / "research" / "live_control"
 sys.path[:0] = [str(DOOM), str(LIVE)]
 
 
-class Lease:
+from lease_release_v1 import Lease as RuntimeLease
+
+
+class Lease(RuntimeLease):
     def __init__(self):
-        self.intent_token = "composition-test"
-        self.deadline = 2**62
-        self.cancel = threading.Event()
+        super().__init__(time.perf_counter_ns() + 5_000_000_000)
         self.expected_focus = 41
         self.focus_invalid = False
         self.interrupted = threading.Event()
         self.interruptions = []
 
-    def check(self):
-        pass
-
     def record_interruption(self, row):
+        super().record_interruption(row)
         self.interruptions.append(row)
         self.interrupted.set()
 
@@ -86,6 +85,18 @@ class BaseBackend:
 
 class ReleaseBatchOwnerRaceTests(unittest.TestCase):
     def test_cleanup_winning_inside_up_batch_is_joined_through_backend(self):
+        self._exercise_owner_race(expire=False)
+
+    def test_expiry_winning_inside_up_batch_remains_unverified(self):
+        self._exercise_owner_race(expire=True)
+
+    def test_executor_terminal_retains_expiry_and_unverified_release(self):
+        self._exercise_owner_race(expire=True, via_executor=True)
+
+    def test_submitted_executor_expiry_retains_release_uncertainty(self):
+        self._exercise_owner_race(expire=True, via_submit=True)
+
+    def _exercise_owner_race(self, *, expire, via_executor=False, via_submit=False):
         xlib_names = (
             "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
             "Xlib.ext", "Xlib.ext.xtest",
@@ -162,12 +173,18 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
 
             class RequestGate:
                 def put(self, request):
+                    nonlocal lease
+                    if via_submit:
+                        lease = backend.lease
                     original_requests.put(request)
                     if request[0] == "up_batch":
                         raced.append(request[0])
                         race_clock["enqueued_ns"] = time.perf_counter_ns()
                         queued_before_cancel.set()
-                        lease.cancel.set()
+                        if expire:
+                            lease.deadline = time.perf_counter_ns() - 1
+                        else:
+                            lease.cancel.set()
                         race_clock["cancel_requested_ns"] = time.perf_counter_ns()
                         cancel_after_enqueue.set()
 
@@ -192,20 +209,91 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             gate_owner_dequeue.set()
             execution_error = []
 
+            executor = None
+            if via_executor or via_submit:
+                from executor_v12 import Executor
+                executor = Executor(backend, emitted.append)
+
             def run_execute():
                 try:
-                    backend.execute({}, lease.cancel, "program-race", 0)
+                    if via_executor:
+                        executor._run("program-race", [{"op": "synthetic"}], lease)
+                    else:
+                        backend.execute({}, lease.cancel, "program-race", 0)
                 except BaseException as exc:
                     execution_error.append(exc)
 
-            worker = threading.Thread(target=run_execute)
-            worker.start()
+            if via_submit:
+                backend.sequence = 1
+                backend.validate = lambda _steps: None
+                def bind_source(active_lease, _sequence):
+                    active_lease.expected_focus = 41
+                    active_lease.focus_invalid = False
+                backend.bind_lease_source = bind_source
+                executor.submit("program-race", [{"op": "synthetic"}], 1,
+                                time.perf_counter_ns() + 5_000_000_000)
+                lease = backend.lease
+                worker = executor.active[2]
+            else:
+                worker = threading.Thread(target=run_execute)
+                if via_executor:
+                    executor.active = ("program-race", lease, worker)
+                worker.start()
             self.assertTrue(queued_before_cancel.wait(1), "up_batch was not enqueued")
             self.assertTrue(owner_waiting_before_dequeue.wait(1),
                             "owner did not reach the controlled dequeue boundary")
-            self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
+            if via_submit:
+                self.assertIsNotNone(lease.wait_interruption(1))
+            else:
+                self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
             worker.join(2)
             self.assertFalse(worker.is_alive(), "backend execution did not finish")
+
+            if via_executor or via_submit:
+                self.assertEqual(execution_error, [])
+                rows = [e for e in emitted if e.get("event") == "input_release_transition"]
+                terminals = [e for e in emitted if e.get("event") == "terminal"]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(len(terminals), 1)
+                if via_submit:
+                    accepted = [e for e in emitted if e.get("event") == "accepted"]
+                    self.assertEqual(len(accepted), 1)
+                    self.assertEqual(accepted[0]["intent_token"], lease.intent_token)
+                    self.assertLess(emitted.index(accepted[0]), emitted.index(rows[0]))
+                self.assertEqual(rows[0]["release_batch_call_outcome"], "unknown_no_retry")
+                self.assertIs(rows[0]["owner_transition_verified"], False)
+                self.assertEqual(terminals[0]["status"], "expired")
+                self.assertEqual(terminals[0]["steps_completed"], 0)
+                self.assertEqual(terminals[0]["interruption"]["record"]["reason"], "expired")
+                self.assertIs(terminals[0]["release"]["verified"], True)
+                self.assertLess(emitted.index(rows[0]), emitted.index(terminals[0]))
+                self.assertEqual(display.keyrelease_attempts, 1)
+                self.assertEqual(display.down, set())
+                from project_v39_release_measurement_v1 import project
+                self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+                return
+
+            if expire:
+                self.assertEqual(len(execution_error), 1)
+                from lease import Expired
+                self.assertIs(type(execution_error[0]), Expired)
+                self.assertEqual(lease.interruptions[-1]["reason"], "expired")
+                snapshot = lease.interruption_snapshot()
+                self.assertEqual(snapshot["record"]["reason"], "expired")
+                self.assertEqual(snapshot["intent_token"], lease.intent_token)
+                self.assertEqual(display.keyrelease_attempts, 1)
+                self.assertIs(lease.interruptions[-1]["verified"], True)
+                self.assertEqual(display.down, set())
+                rows = [row for row in emitted
+                        if row.get("event") == "input_release_transition"]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["release_batch_disposition"], "step_exception")
+                self.assertIs(rows[0]["owner_transition_verified"], False)
+                self.assertIs(rows[0]["physical_verification_authoritative"], False)
+                self.assertEqual(rows[0]["release_batch_call_outcome"], "unknown_no_retry")
+                from project_v39_release_measurement_v1 import project
+                self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+                return
 
             self.assertFalse(execution_error, execution_error)
 
@@ -220,10 +308,26 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             rows = [row for row in emitted if row.get("event") == "input_release_transition"]
             self.assertEqual(len(rows), 1)
             row = rows[0]
+            admissions = [event for event in emitted
+                          if event.get("event") == "input_admission"]
+            self.assertEqual(len(admissions), 1)
+            self.assertEqual(admissions[0]["key"], "W")
+            self.assertEqual(row["admission_receipt"]["event"], "input_admission")
+            self.assertEqual(row["admission_receipt"]["key"], admissions[0]["key"])
+            self.assertEqual(row["admission_receipt"]["owner_id"],
+                             admissions[0]["owner_id"])
+            self.assertEqual(row["admission_receipt"]["intent_token"],
+                             admissions[0]["intent_token"])
+            self.assertTrue(row["admission_receipt_valid"])
             self.assertTrue(row["owner_cleanup_release_verified"])
             self.assertTrue(row["owner_cleanup_intervened"])
             self.assertFalse(row["owner_thread_keyup_verified"])
             self.assertFalse(row["ordinary_release_candidate"])
+            self.assertFalse(row["owner_transition_verified"])
+            self.assertFalse(row["physical_verification_authoritative"])
+            from project_v39_release_measurement_v1 import project
+            self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+
             self.assertFalse(row["grants_input_authority"])
             cleanup_verified_ns = row["owner_cleanup_record"]["verified_ns"]
             self.assertLess(race_clock["enqueued_ns"], race_clock["cancel_requested_ns"])

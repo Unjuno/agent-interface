@@ -1,0 +1,88 @@
+{
+  "task": {
+    "evidence": "owned fixture effect.json, read by server-side oracle after terminal action",
+    "expected_effect": {
+      "saved": true,
+      "text": "task-oracle-r01-33e2bb0e5e46",
+      "clicked": true
+    },
+    "token": "task-oracle-r01-33e2bb0e5e46",
+    "oracle_id": "28ef6b2830e54324816228c613e21313"
+  },
+  "environment": {
+    "runtime": "native Win32 supervised standard caller",
+    "wslc": false,
+    "python": "CPython 3.11.9",
+    "host": "user-authorized local Windows PC"
+  },
+  "source_commit": "5e378a416bd083609f1a9f5b4b9ade3fad9a584d",
+  "decision": {
+    "fail": "Any mismatched generation, invalid receipt, wrong/missing effect, timeout, duplicate attempt, or missing cleanup is FAIL_OR_UNKNOWN; no retry.",
+    "pass": [
+      "public observation returns a 64-hex target_generation and exact program binds it",
+      "validation succeeds and one dispatch reaches completed",
+      "fixture effect exactly matches frozen click/save/token tuple",
+      "interface_verify_task returns verified task_success=true with exact call, operation and target_generation",
+      "all resources close and foreground restoration is confirmed"
+    ]
+  },
+  "schema": "win32-live-task-oracle-r01-v1",
+  "attempt_id": "win32-live-task-oracle-r01-1f49f22e35114886a648bab26d2f9344",
+  "protocol": {
+    "validations": 1,
+    "max_attempt_total_seconds": 60,
+    "exact_program": [
+      {
+        "target": "fixture",
+        "op": "focus"
+      },
+      {
+        "op": "pointer_move",
+        "y": 70,
+        "x": 70,
+        "frame": "window_client"
+      },
+      {
+        "op": "pointer_button",
+        "down": true,
+        "button": "left"
+      },
+      {
+        "op": "pointer_button",
+        "down": false,
+        "button": "left"
+      },
+      {
+        "text": "task-oracle-r01-33e2bb0e5e46",
+        "op": "text"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "fixture_instances": 1,
+    "dispatches": 1,
+    "retries": 0,
+    "public_observations": 1,
+    "replays": 0,
+    "verification_calls": 1
+  },
+  "frozen_at_utc": "2026-10-24T01:04:33Z",
+  "exclusions": [
+    "blocked-platform-I/O release",
+    "recovery under cancellation",
+    "independent OS key-up readback",
+    "MAP01",
+    "matched efficiency",
+    "reliability estimate",
+    "WSLc GUI behavior"
+  ],
+  "question": "Does the current public supervised Win32 path carry the generation from live observation through validation/dispatch/results into a server-configured independent task oracle that can verify one exact fixture save?"
+}

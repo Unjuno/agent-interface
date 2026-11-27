@@ -1,0 +1,21 @@
+{
+  "schema":"v39-v15-process-owner-xvfb-a25-freeze-v1",
+  "allocation_id":"V39-V15-PROCESS-OWNER-XVFB-A25-20261012-01",
+  "successor_of":"V39-V15-PROCESS-OWNER-XVFB-A24-20261012-01",
+  "base_commit":"47e2a914ef7d81d07b69205d333f79f4151bc338",
+  "candidate_invocations_allowed":1,"auditor_invocations_allowed":1,"retries_allowed":0,
+  "source_sha256":{
+    "research/live_control/input_owner_process_v1.py":"0a8b42ccc926ad5763bad4558603e4f5bdd258a6b7a153409fbd6e0f30c0c726",
+    "research/doom/doom_controller_failure_cleanup_v1.py":"445e2f68379de511cf667ca32032e212bd102e6253d6743901e021d1924426a3",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py":"51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/v39_v15_process_owner_xvfb_a25_20261012/PLAN.md":"93b75a3353be4df07c83391d02257af68b8293eeb624564e1e9f239ac76619da",
+    "research/doom/v39_v15_process_owner_xvfb_a25_20261012/candidate.py":"4aceeb86faf4cffb5b18226b0b40b4d5808a1e905078caf1e2a690bf8cdaf097",
+    "research/doom/v39_v15_process_owner_xvfb_a25_20261012/run_candidate.sh":"605cc4c538ffdf8263caf8820ea7da2f40f20953c133e20767ccf6edb121b210"
+  },
+  "environment":{"host":"WSL2 Ubuntu","python":"CPython 3.12.3","xvfb":"TCP disabled","physical_input":false,"game_or_model":false,"network_calls":0},
+  "hypothesis":"With a strict same-display/focus observer check and refusal of an existing emergency receipt, owner-death recovery remains correct for two keys and Button1, producing independent release evidence and verified empty input state.",
+  "scope":"Private isolated Xvfb recovery primitive and cleanup boundary only.",
+  "decision_rule":"PASS requires independent down and up events and key/button up state, exact dead service generation, exactly a/d and Button1 reconstructed, ledger-bound durable receipt, normal receipt absent, session alive, and clean Xvfb teardown. Otherwise preserve failure.",
+  "command":"unshare --user --map-root-user --mount --fork bash research/doom/v39_v15_process_owner_xvfb_a25_20261012/run_candidate.sh",
+  "output":"research/doom/v39_v15_process_owner_xvfb_a25_20261012/results/A01"
+}

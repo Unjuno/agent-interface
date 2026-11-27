@@ -21,6 +21,10 @@ SOURCE_FILES = (
     "runtime/guarded_x11_v1/handles_texture.py",
     "runtime/guarded_x11_v1/handles.py",
     "runtime/guarded_x11_v1/bridge.py",
+    "runtime/guarded_x11_v1/process_identity.py",
+    "runtime/guarded_x11_v1/target_queries.py",
+    "runtime/guarded_x11_v1/observation_worker.py",
+    "runtime/guarded_x11_v1/receipt_journal.py",
     "runtime/guarded_x11_v1/history.py",
     "runtime/guarded_x11_v1/form.py",
     "runtime/guarded_x11_v1/compiled.py",
@@ -60,6 +64,7 @@ SOURCE_FILES = (
     "runtime/backends/x11_v1/session.py",
     "runtime/backends/win32_v1/__init__.py",
     "runtime/backends/win32_v1/backend.py",
+    "runtime/backends/win32_v1/capture_artifacts.py",
     "runtime/backends/win32_v1/session.py",
     "runtime/guarded_win32_v1/__init__.py",
     "runtime/guarded_win32_v1/bridge.py",
@@ -73,6 +78,31 @@ SOURCE_FILES = (
     "runtime/backends/quartz_v1/__init__.py",
     "runtime/backends/quartz_v1/backend.py",
     "runtime/backends/quartz_v1/session.py",
+    "runtime/cli_v1/mcp_win32.py",
+    "runtime/cli_v1/owned_guarded_session.py",
+    "runtime/cli_v1/owned_win32_session.py",
+    "runtime/cli_v1/win32_custody_fence.py",
+    "runtime/cli_v1/win32_standard_producer.py",
+    "runtime/cli_v1/win32_supervisor_helpers.py",
+    "runtime/guarded_win32_v1/input_obligations.py",
+    "runtime/guarded_win32_v1/operation_owner.py",
+    "runtime/guarded_win32_v1/process_cancellation.py",
+    "runtime/guarded_win32_v1/win32_pipe_send.py",
+    "runtime/guarded_win32_v1/win32_process_identity.py",
+    "runtime/guarded_x11_v1/calc_effect_v1.py",
+    "runtime/guarded_x11_v1/calc_g10_artifact_v1.py",
+    "runtime/guarded_x11_v1/calc_g10_formula_effect_v1.py",
+    "runtime/guarded_x11_v1/calc_g10_profile_v1.py",
+    "runtime/guarded_x11_v1/calc_launcher_v1.py",
+    "runtime/guarded_x11_v1/calc_process_group_v1.py",
+    "runtime/guarded_x11_v1/calc_profile_v1.py",
+    "runtime/guarded_x11_v1/calc_symbolic_plan_v1.py",
+    "runtime/guarded_x11_v1/calc_task_artifact_v1.py",
+    "runtime/guarded_x11_v1/cancel_supervisor.py",
+    "runtime/guarded_x11_v1/owned_xlib_connector.py",
+    "runtime/guarded_x11_v1/pidfd_transfer.py",
+    "runtime/guarded_x11_v1/pixel_profile.py",
+    "runtime/guarded_x11_v1/xres_client_fence.py",
 )
 
 GENERATED = {
@@ -93,6 +123,15 @@ if len(sys.argv) > 1 and sys.argv[1] in ("mcp", "relay"):
         raise SystemExit(2)
 else:
     from runtime.cli_v1.__main__ import main
+    if sys.argv[1:] in (["-h"], ["--help"]):
+        try:
+            main()
+        except SystemExit as error:
+            if error.code != 0:
+                raise
+        print()
+        print("Optional stdio modes: mcp and relay (require mcp==1.30.0).")
+        raise SystemExit(0)
 raise SystemExit(main())
 ''',
 }
@@ -147,7 +186,7 @@ def _info(name: str) -> zipfile.ZipInfo:
     return info
 
 
-HOST_SOURCE_FILES = ("runtime/host_v1/relay_client.mjs", "runtime/host_v1/relay_host.mjs", "runtime/host_v1/primary_caller.mjs", "runtime/host_v1/primary_exchange.mjs", "runtime/host_v1/primary_stdio.mjs", "runtime/host_v1/README.md", "runtime/host_v1/FEEDBACK.md")
+HOST_SOURCE_FILES = ("runtime/host_v1/json_unique.mjs", "runtime/host_v1/relay_client.mjs", "runtime/host_v1/relay_host.mjs", "runtime/host_v1/primary_caller.mjs", "runtime/host_v1/primary_exchange.mjs", "runtime/host_v1/primary_stdio.mjs", "runtime/host_v1/README.md", "runtime/host_v1/FEEDBACK.md")
 
 
 def build(root: Path, out: Path, manifest_out: Path, sums_out: Path, *, host_directory: Path | None = None) -> dict:

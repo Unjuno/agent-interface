@@ -1,0 +1,8 @@
+{
+  "attempt_id": "win32-r13-cua-foreground-state-readback-20261122",
+  "effective_postrun_interpretation": "conditions.effective-postrun.json",
+  "execution_inputs_were_not_modified": "true",
+  "finding": "conditions.json frozen before execution has a literal backslash-n suffix and is invalid JSON",
+  "impact": "physical readback observations are retained; formal precondition audit acceptance is withheld because the frozen condition artifact is malformed",
+  "original_preserved_as": "conditions.json"
+}

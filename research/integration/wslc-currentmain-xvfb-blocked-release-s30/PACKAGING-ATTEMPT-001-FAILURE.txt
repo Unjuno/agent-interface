@@ -1,0 +1,1 @@
+Initial raw-evidence packaging stopped when PowerShell Get-Content -Raw returned null for an empty stderr/stdout file. No external receipt was changed. Packaging was corrected to use .NET ReadAllText, which preserves empty files as empty strings; hashes are calculated from original and redacted bytes.

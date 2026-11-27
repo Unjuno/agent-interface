@@ -1,0 +1,66 @@
+{
+  "schema": "wslc-compiled-core-r01-v1",
+  "attempt_id": "wslc-compiled-core-r01-02faf8b639904e55861f7bf8dd8160ba",
+  "frozen_at_utc": "2026-10-24T01:13:29.7381040Z",
+  "source_commit": "5e378a416bd083609f1a9f5b4b9ade3fad9a584d",
+  "source_sha256": {
+    "test_compiled_gui_py": "d6b5e024b63487b796600e9adaf45c35fb7eeacd91381f53213d4ff31af480fb",
+    "test_compiled_release_recovery_01a0ff35_py": "9d8dcd345e44cfb896c50d2e8dbc764198ffb18ca5fb7301f26e1bfa8166acd6",
+    "compiled_gui_py": "77a866cdc5a715053d5117511a72a834cf4a3dc74cfcdf62abb0f69e7553d2e1",
+    "wslc_bounded_process_psm1": "6ca4ecb44f692ebf4afc9ee42840bc7c23e342aef4634f923e3a611330a3e617",
+    "run_wslc_ps1": "20ca86734677d303a76104c9b15430c383ad47c721549bd659b6a7f001f3c0eb"
+  },
+  "environment": {
+    "runtime": "WSLc isolated Linux container",
+    "wslc_version": "3.0.3.0",
+    "image_tag": "a09-owner-close-xvfb:20261012",
+    "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "python": "CPython 3.14.8 per image metadata",
+    "network": "none",
+    "source_mount": "read-only",
+    "results_mount": "attempt-scoped writable raw directory",
+    "wslc_executable": "C:\\Program Files\\WSL\\wslc.exe"
+  },
+  "test": {
+    "unittest_selectors": [
+      "runtime.core_v1.test_compiled_gui",
+      "runtime.core_v1.test_compiled_release_recovery_01a0ff35"
+    ],
+    "purpose": "cross-runtime verification of compiled GUI sequencing, effect receipts, release handling, and conservative malformed-release recovery; built-in Python dependencies only"
+  },
+  "allocation": {
+    "container_name": "agent-interface-wslc-compiled-core-r01-d06be6426ab14c70bc3146619f2db98b",
+    "containers": 1,
+    "image_pull": "never",
+    "unique_container_name": true,
+    "automatic_cleanup": "--rm",
+    "exact_cid_followup_query": true,
+    "retry": 0,
+    "network_none": true
+  },
+  "limits": {
+    "run_timeout_seconds": 60,
+    "cleanup_query_timeout_seconds": 15,
+    "requested_cpus": 1,
+    "requested_memory": "768M requested; enforcement not inferred"
+  },
+  "decision": {
+    "pass": [
+      "all frozen unittest cases exit 0",
+      "source files match frozen hashes",
+      "full CID recorded and exact-CID query confirms automatic cleanup"
+    ],
+    "fail": "Any test failure, timeout, unexpected source/image, missing CID/cleanup, or duplicate run is FAIL_OR_UNKNOWN; no retry"
+  },
+  "exclusions": [
+    "MCP transport or mcp Python SDK",
+    "Fake X/server composition",
+    "native Win32 GUI",
+    "physical desktop input",
+    "WSLc GUI",
+    "MAP01",
+    "real application task success",
+    "matched efficiency",
+    "reliability estimate"
+  ]
+}

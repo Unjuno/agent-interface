@@ -1,0 +1,15 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-XVFB-BLOCKED-RELEASE-RECHECK-20261121-R01",
+  "frozen_at_utc": "2026-11-21T06:13:30Z",
+  "source_revision": "f6ab37afc5276689b32a01fe6799aed51b601a8c",
+  "source_files": ["runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", "runtime/cli_v1/test_synthetic_task_oracle.py", "runtime/cli_v1/mcp_guarded.py", "runtime/cli_v1/mcp_server.py", "runtime/cli_v1/owned_guarded_session.py", "runtime/guarded_x11_v1/cancel_supervisor.py"],
+  "source_blobs": "source-blobs.txt",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container": "ephemeral; --network none; root filesystem read-only; private tmpfs /tmp; source checkout read-only; evidence packet writable",
+  "xvfb": "private display :88; no host display socket mounted; CI-equivalent Xvfb invocation",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "decision_rule": "Pass only if test exit is zero and retained report confirms standard-caller cancellation, owned-child retirement and XRes disconnect, independent release, fresh-session task effect, bounded delayed-input horizon, terminal result, and final cleanup. Preserve source task success as unknown where the independent oracle does not establish it.",
+  "limits": "Single synthetic Xvfb task; no MAP01, live provider, matched efficiency, reliability rate, or research-preview acceptance."
+}

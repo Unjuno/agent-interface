@@ -1,0 +1,13 @@
+# Issue discovery batch B20 — routing receipt (2026-10-19)
+
+B20 is the final slice of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv), rows 476–491. It contains 16 Issues (the queue has 491 rows, not 500). Live reads found all 16 OPEN and unassigned; every one already has a direct entry in `IDEAS_AND_OUTCOMES.md`. No duplicate index rows were added.
+
+Issues: #8903, #8904, #8905, #8907, #8908, #8909, #8911, #8912, #8913, #8914, #8915, #8916, #8917, #8919, #8920, and #9004.
+
+| Routing family | Issues | Current evidence and boundary |
+|---|---|---|
+| Unverified research proposals | #8903, #8904, #8905, #8907, #8908, #8909, #8911, #8912, #8914, #8915, #8916, #8917, #8919, #8920 | No latest comments were present in this intake. Their direct curated rows are navigation only; no result, assignment, priority or live-resource eligibility is inferred. Before parallel work, check current source, family overlap, PR/worktree owner, unique output path and one decision-changing discriminator. |
+| WSLc process deviation and ownership | #8913 | This attached-session note records successful read-only WSLc `info`, image-list and container-list calls, then discovers the existing #8685 no-inventory/no-run ownership gate. It classifies those calls as a process deviation, `HOLD_SHARED_RUNTIME_AND_SOURCE_OWNERSHIP_UNVERIFIED`, and says not to repeat or expand them. The note is not an experiment, migration result, permission, or new WSLc allocation; it does not establish resource enforcement, ownership clearance, or memory/latency benefit. This intake made no WSLc calls. |
+| Completed scoped result with an explicit null increment | #9004 | The consumed T0 A01 is `PASS_METHOD_SCOPED` for the frozen synthetic trace, but `NO_INCREMENTAL_AGREEMENT_VALUE`; `formal_pass=false`. Its independent raw-only auditor reconstructed 40/40 rows and the normal/optimized 5/5 controls passed. Median synthetic inter-action gap was one tick in all arms and the 20% improvement gate was not met. Merged PR #9009 retains raw, audit, hashes and report. No retry, live latency, model/GUI/input, game, or product claim. |
+
+No Issue/PR state, allocation, raw packet, or WSLc state changed. Across B01–B20, the immutable queue's 491 entries are routed (B01–B19: 25 each; B20: 16). This completes navigation coverage of the r51 gap, not semantic resolution of all 491 questions, the 1,675-issue repository, or the open-PR inventory. Use each receipt to pick distinct bounded work; do not close proposals merely because they are indexed. The next step is a fresh live inventory and family/PR disposition pass, not another stale-queue batch.

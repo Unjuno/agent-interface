@@ -1,0 +1,193 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "calc-entry-checked-save",
+    "session_scope": "native-x11:4722d4302c3b4f8ab56b65e8d7c07612",
+    "surface": "x11-window-6292258",
+    "predicates": [
+      "context_ok",
+      "blank",
+      "cells_filled"
+    ],
+    "symbols": {
+      "entry": {
+        "kind": "target_reference",
+        "target_reference": "entry",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok"
+        ]
+      },
+      "save": {
+        "kind": "target_reference",
+        "target_reference": "sheet",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok",
+          "cells_filled"
+        ]
+      }
+    },
+    "actions": {
+      "enter": {
+        "target_symbol": "entry",
+        "operation": "enter_pair",
+        "expected_effect": {
+          "cells_filled": true
+        }
+      },
+      "save": {
+        "target_symbol": "save",
+        "operation": "request_xlsx_save",
+        "expected_effect": {
+          "cells_filled": true
+        }
+      }
+    },
+    "method": {
+      "name": "enter-check-request-save",
+      "version": "1",
+      "initial_state": "initial",
+      "max_transitions": 2,
+      "max_runtime_ms": 5000,
+      "states": {
+        "initial": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true,
+                "blank": true
+              },
+              "outcome": "action",
+              "action": "enter",
+              "next_state": "filled",
+              "reason": null
+            }
+          ]
+        },
+        "filled": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true,
+                "cells_filled": true
+              },
+              "outcome": "action",
+              "action": "save",
+              "next_state": "handoff",
+              "reason": null
+            }
+          ]
+        },
+        "handoff": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true
+              },
+              "outcome": "yield",
+              "action": null,
+              "next_state": null,
+              "reason": "effect_unavailable"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bindings": {
+    "enter": {
+      "interaction": "keyboard",
+      "offset": [
+        15,
+        7
+      ],
+      "tail": [
+        {
+          "op": "text",
+          "text": "731",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "864",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    },
+    "save": {
+      "interaction": "keyboard",
+      "offset": [
+        15,
+        7
+      ],
+      "tail": [
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    }
+  },
+  "refs": {
+    "entry_alias": "entry",
+    "entry_offset": [
+      15,
+      7
+    ],
+    "save_alias": "sheet",
+    "save_offset": [
+      15,
+      7
+    ],
+    "cell_regions": [
+      [
+        37,
+        143,
+        126,
+        159
+      ],
+      [
+        37,
+        159,
+        126,
+        176
+      ]
+    ],
+    "context_region": [
+      350,
+      20,
+      370,
+      35
+    ]
+  },
+  "primary_blank_review_sequence": 1,
+  "save_is_request_not_persistence": true
+}

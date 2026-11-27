@@ -1,0 +1,36 @@
+{
+  "schema": "agent_interface_retained_demo_audit_v1",
+  "passed": false,
+  "source_mismatches": [
+    "run_integrated_efficiency_live_v1.py",
+    "integrated_efficiency_protocol_v1.py",
+    "integrated_efficiency_client_v1.py",
+    "integrated_efficiency_model_v1.py",
+    "adaptive_acquisition_caller_v2.py",
+    "schema_preflight_v1.py",
+    "coordinate_frame_transform_v1.py"
+  ],
+  "disposition": "RETAIN",
+  "exact_tasks": {
+    "plain": 6,
+    "ephemeral": 6,
+    "persistent": 6
+  },
+  "input_tokens": {
+    "plain": 63128,
+    "ephemeral": 63779,
+    "persistent": 26563
+  },
+  "planner_generations": {
+    "plain": 7,
+    "ephemeral": 7,
+    "persistent": 3
+  },
+  "elapsed_ms": {
+    "plain": 56412.291157,
+    "ephemeral": 73238.112924,
+    "persistent": 44131.281228
+  },
+  "observed_break_even_task": 2,
+  "scope": "one finite same-model three-arm allocation; no population success rate, generality, human-speed, product-completion or DOOM claim"
+}

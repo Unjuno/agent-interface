@@ -1,0 +1,44 @@
+{
+  "attempt_id": "research-preview-retained-source-audit-r01-20261122",
+  "base_main": "128c33f22a042b83a51351debdc32ef3ae5bfa4b",
+  "candidate_branch": "codex/preview-retained-audit-source-r02-20261122",
+  "host": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "scope": "Verify retained benchmark source against byte-frozen source archive; preserve current-main drift as diagnostic; ensure preview bundle closure includes archive.",
+  "live_mode": false,
+  "model_calls": false,
+  "gui_actions": false,
+  "allocation": false,
+  "task_actions": false,
+  "dependency_install": false,
+  "commands": [
+    [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.test_golden_desktop_demo_v3"
+    ],
+    [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.test_golden_desktop_demo_v3"
+    ],
+    [
+      "python",
+      "release/preview_bundle_v1/test_build_preview.py"
+    ],
+    [
+      "python",
+      "-O",
+      "release/preview_bundle_v1/test_build_preview.py"
+    ],
+    [
+      "python",
+      "runtime/golden_desktop_demo.py",
+      "audit-retained"
+    ]
+  ],
+  "candidate_code_commit": "2552fe76eaffe8abd85328fe115b2f1f3df91d63"
+}

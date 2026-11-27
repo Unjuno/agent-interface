@@ -1,0 +1,44 @@
+{
+  "appserver_journal_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 10260,
+    "output_tokens": 19,
+    "reasoning_output_tokens": 0
+  },
+  "appserver_reported_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 10260,
+    "output_tokens": 19,
+    "reasoning_output_tokens": 0,
+    "status": "reported"
+  },
+  "attempt_id": "win32-appserver-recovery-r11-20261026",
+  "audit_pass": true,
+  "checks": {
+    "action_release_and_independent_native_neutral_readback": true,
+    "cleanup_and_no_unapproved_runtime": true,
+    "compiled_action_uses_model_coordinate_once": true,
+    "fresh_post_action_observation_and_exact_fixture_effect": true,
+    "independent_task_oracle_exactly_bound": true,
+    "new_pid_and_target_generation": true,
+    "one_real_appserver_turn_and_bounded_model_coordinate": true,
+    "phase1_recovery_and_same_generation_readback": true,
+    "provider_usage_fields_match_retained_appserver_journal": true,
+    "same_grounded_generation_after_model_wait": true,
+    "stale_generation_refused_before_input": true
+  },
+  "classification": "PASS_SCOPED_APP_SERVER_RECOVERY_FRESH_GENERATION_TASK",
+  "interpretation": "The frozen runner compared wrapper usage (which adds status=reported) to the AppServer usage dict by exact dictionary equality. The original runner classification is unchanged. This supplement compares every reported token field present in the AppServer journal; the R11 task gates are independently recomputed below.",
+  "model_latency_ns": 5092090900,
+  "original_runner_classification_preserved": "FAIL_OR_UNKNOWN_FIRST_OUTCOME_RETAINED",
+  "pretrial_hash_audit": {
+    "entries": 5,
+    "failures": []
+  },
+  "raw_hash_audit": {
+    "entries": 50,
+    "failures": []
+  }
+}

@@ -1,0 +1,33 @@
+EE
+======================================================================
+ERROR: test_interrupted_press_releases_and_requires_explicit_recovery_and_review (runtime.cli_v1.test_guarded_interrupt_custody.GuardedInterruptTests.test_interrupted_press_releases_and_requires_explicit_recovery_and_review) (failed_readback=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_guarded_interrupt_custody.py", line 17, in test_interrupted_press_releases_and_requires_explicit_recovery_and_review
+    bridge = NativeHandleBridge(':fake', {'app': 20}, 'app', td)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\bridge.py", line 139, in __init__
+    self.out.mkdir(parents=True, exist_ok=False)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileExistsError: [WinError 183] ���ɑ��݂���t�@�C�����쐬���邱�Ƃ͂ł��܂���B: 'D:\\CodexData\\Temp\\tmp31q6ezdm'
+
+======================================================================
+ERROR: test_interrupted_press_releases_and_requires_explicit_recovery_and_review (runtime.cli_v1.test_guarded_interrupt_custody.GuardedInterruptTests.test_interrupted_press_releases_and_requires_explicit_recovery_and_review) (failed_readback=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_guarded_interrupt_custody.py", line 17, in test_interrupted_press_releases_and_requires_explicit_recovery_and_review
+    bridge = NativeHandleBridge(':fake', {'app': 20}, 'app', td)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\guarded_x11_v1\bridge.py", line 139, in __init__
+    self.out.mkdir(parents=True, exist_ok=False)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileExistsError: [WinError 183] ���ɑ��݂���t�@�C�����쐬���邱�Ƃ͂ł��܂���B: 'D:\\CodexData\\Temp\\tmpfjod54uz'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=2)

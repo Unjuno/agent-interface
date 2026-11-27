@@ -1,0 +1,8 @@
+# Split-view evidence detection — #8912
+
+- **Status:** Unverified finite-method transfer proposal; no result, equivocation incident, or production vulnerability is claimed.
+- **Source:** Open [Issue #8912](https://github.com/Unjuno/agent-interface/issues/8912).
+- **Idea:** Test whether independently managed recipients can detect incompatible signed histories for the same evidence log and scope. Compare local-chain-only checks, comparison only at commit handshakes, and asynchronous witness gossip. Distinct authorized scopes are not forks; an absent comparison or partition must remain `UNKNOWN/UNOBSERVED`, never be reported as consistent.
+- **Overlap:** #6013 concerns pre-outcome evidence commitments and scoped disclosure; #5441 models protocol-relative acknowledgement; #5314 models verifier failure domains; #5332 structures assurance cases. #8912 isolates cross-recipient detection of conflicting histories from one producer.
+- **Proposed gate:** Exhaustively test small asynchronous schedules against an independent fork oracle. Detect every incompatible same-scope head once both views reach an honest witness; accept valid extensions and scope separation; reject malformed proof/scope mutations; preserve UNKNOWN when views have not met. Measure detection delay and communication cost under declared delivery and honest-witness assumptions.
+- **Boundary:** Detection depends on witness honesty, scope identity, and eventual communication. A signed checkpoint or fork receipt proves neither semantic truth nor complete capture, and grants no action authority. No deployed cryptographic or operational security result is claimed.

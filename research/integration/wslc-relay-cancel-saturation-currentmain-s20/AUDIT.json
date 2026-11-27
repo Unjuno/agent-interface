@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "name": "current_main_source_commit_and_critical_blobs",
+      "passed": true
+    },
+    {
+      "name": "all_31_wheels_hash_verified_before_run",
+      "passed": true
+    },
+    {
+      "name": "WSLc_3_0_3_and_new_session_closed",
+      "passed": true
+    },
+    {
+      "name": "exact_generated_name_query_only",
+      "passed": true
+    },
+    {
+      "name": "one_pinned_network_disabled_container_and_cleanup",
+      "passed": true
+    },
+    {
+      "name": "exact_single_unittest_pass",
+      "passed": true
+    },
+    {
+      "name": "saturated_public_relay_cancel_order",
+      "passed": true
+    },
+    {
+      "name": "caller_release_readback_precedes_stdout_resume",
+      "passed": true
+    },
+    {
+      "name": "bounded_cancel_and_readback_timing",
+      "passed": true
+    },
+    {
+      "name": "unknown_no_replay_and_no_task_success",
+      "passed": true
+    },
+    {
+      "name": "raw_manifest_matches_raw_bytes",
+      "passed": true
+    },
+    {
+      "name": "isolated_session_storage_hash_matches",
+      "passed": true
+    }
+  ],
+  "checks_passed": 12,
+  "checks_total": 12,
+  "preserved_run_files": 13,
+  "raw_files": 1,
+  "scope": "one WSLc synthetic Fake X public relay/caller composition test; no real OS or GUI input",
+  "status": "PASS_SCOPED",
+  "timing_ms": {
+    "cancel_admission_to_cancel_return": 115.289,
+    "cancel_admission_to_fake_release_readback": 1.697,
+    "readback_before_stdout_resume": 114.244
+  }
+}

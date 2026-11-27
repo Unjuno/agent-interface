@@ -1,0 +1,9 @@
+# WSLc model-grounded task pilot
+
+One predeclared task in a network-isolated WSLc Chromium fixture used the checked caller and one host-side `gpt-6.1-sol` low-effort grounding turn. The container wrote a freshly observed image to a dedicated shared exchange; the host verified its SHA-256, requested field and submit points with the restricted app-server, and returned the result. The container checked the image digest and created fresh target aliases before input. Credentials and model configuration were not mounted into the container. The exchange is an exploratory single-use bridge, not a hardened adversarial IPC boundary.
+
+The model returned field [234,402] and submit [386,402]; the checked caller completed the task and independent submission history contained exactly one correct task-1 record. All eight program release receipts were verified empty. The six-task evaluator remained false because five tasks were not attempted. The provider reported 12,255 input tokens, 113 output tokens, zero cached input and zero reasoning-output subset; the measured grounding call was 4.908083939 seconds. One turn-started, turn-completed and usage event were observed.
+
+Both host and container exited 0; the exact container was absent on inspection, image hashes agreed, all 2029 mounted source hashes matched, and the raw ZIP passed integrity verification. Raw container and model-call evidence, scripts, conditions and exchange are retained. The full app-server protocol remains local because it contains local paths; its hash and length are retained. Source and the model adapter are tied to main `0de39bbea707e0b80cccf5a6dbaf1f39f10fd8b0`, with the container client explicitly selecting installed Chromium.
+
+This is one model-grounded task, not a matched comparison, automatic recovery, general reliability or MAP01 completion. Token and latency figures do not establish a speedup.

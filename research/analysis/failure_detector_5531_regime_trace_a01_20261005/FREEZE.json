@@ -1,0 +1,49 @@
+{
+  "schema": "failure-detector-5531-regime-trace-freeze-v1",
+  "allocation": "FAILURE-DETECTOR-5531-REGIME-TRACE-A01-20261005-01",
+  "recorded_at_utc": "2026-10-04T18:48:59Z",
+  "issue": 5531,
+  "refinement": "prospective authenticated, incarnation-bound monotonic heartbeat trace with external host-regime measurement",
+  "source_main_sha": "ad7a6d5a6dcc0d990af5a2beef32d59b31fbaa04",
+  "source_sha256": {
+    "README.md": "a3e85e81ccd64473193e09cade1ecf28007cfca5c11dd3a2078e642052971257",
+    "CONSTRUCTION.md": "1c4def016521b445cc505833ca08fa4eda0cc1b92bd71eb91da0888cfc103d47",
+    "collect.py": "476363252bdc34a11a93bdff1bdc5bec5b4da2e5cc92f935a727eacb008ce00c",
+    "audit.py": "9ec1f0852cae9b33f167e26ebab016f81fea61273fbe9ae872b77eae4dd192a5",
+    "test_audit.py": "230f14239ddaa0acb245ae00549453abf348a91fefee9dc6df74b29e468021cf"
+  },
+  "candidate": {
+    "command": "python -B collect.py --duration-seconds 600 --period-ms 100",
+    "invocations": 1,
+    "retries": 0,
+    "heartbeat_period_ms": 100,
+    "duration_seconds": 600,
+    "progress_every_heartbeats": 10,
+    "host_counter": "Windows GetSystemTimes sampled by observer at approximately 1Hz",
+    "host_regime": "ordinary if aggregate busy_pct < 50.0; elevated if >= 50.0",
+    "regime_coverage_floor": {
+      "intervals_per_regime_total": 200,
+      "intervals_per_regime_per_chronological_half": 100
+    },
+    "output": "results/a01/",
+    "no_overwrite": true
+  },
+  "auditor": {
+    "command": "python -B audit.py",
+    "invocations": 1,
+    "candidate_import": false,
+    "input": "results/a01/ raw files and frozen source hashes"
+  },
+  "scope": "One controlled healthy local child process. Trace-capture feasibility only; no detector comparison or performance inference.",
+  "resource_limits": {
+    "children": 1,
+    "heartbeat_rate_hz": 10,
+    "memory_stress": false,
+    "gpu": false,
+    "model_provider": false,
+    "gui_or_input": false,
+    "external_network": false,
+    "container": false
+  },
+  "stopping_rule": "Stop at 600 seconds or immediately on candidate/sensor failure; retain the first outcome. No retry, threshold tuning, or replacement allocation."
+}

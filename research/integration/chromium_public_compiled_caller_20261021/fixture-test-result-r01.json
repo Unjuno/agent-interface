@@ -1,0 +1,51 @@
+{
+  "schema": "agent-interface/chromium-fixture-construction-test-v1",
+  "run_id": "chromium-public-caller-fixture-helper-r01-20261021",
+  "observed_at_utc": "2026-10-20T22:06:43.6895655Z",
+  "source_revision": "ef768ac74517d70c43c7b673b6ea4319db87d4f4",
+  "working_tree_changes_present": true,
+  "environment": {
+    "os": "Windows",
+    "python": "3.13.14",
+    "network_scope": "127.0.0.1 loopback only"
+  },
+  "sources": {
+    "research/integration/chromium_public_compiled_caller_20261021/run_public_caller_r01.py": "5081c057b23394e06e9539abe931fe2c50e549cc62dab80d9de18355f72e0280",
+    "research/integration/chromium_public_compiled_caller_20261021/test_fixture_server.py": "5f5fc9eda2d40f02e0b5ae03b883524670a1885091d6debd996d8576302934d6"
+  },
+  "checks": [
+    {
+      "command": "py -3.13 -m unittest research.integration.chromium_public_compiled_caller_20261021.test_fixture_server",
+      "tests": 2,
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.13 -O -m unittest research.integration.chromium_public_compiled_caller_20261021.test_fixture_server",
+      "tests": 2,
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.13 -m py_compile run_public_caller_r01.py test_fixture_server.py",
+      "result": "PASS"
+    },
+    {
+      "check": "render-ready gate precedes MCP and provider startup; exact-one readiness receipt required",
+      "result": "PASS"
+    }
+  ],
+  "scope": {
+    "fixture_render_ready_receipt": true,
+    "exact_form_post_recording": true,
+    "browser_started": false,
+    "model_calls": 0,
+    "gui_actions": 0,
+    "wslc_allocation_used": false,
+    "formal_experiment_run": false
+  },
+  "disposition": "PASS_FIXTURE_CONSTRUCTION_ONLY",
+  "limits": [
+    "Does not prove Chromium rendering or real GUI target grounding.",
+    "Does not prove standard-caller task completion, task success, release, recovery, target-generation behavior, efficiency, or reliability.",
+    "Does not satisfy the Issue #57 live mechanics gate."
+  ]
+}

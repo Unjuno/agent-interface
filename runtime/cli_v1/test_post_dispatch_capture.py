@@ -226,9 +226,12 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 args={'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after_region':region}
                 if target is not None:args['inspect_after']=target
                 if any(type(v) is not int for v in region):
-                    from mcp.server.fastmcp.exceptions import ToolError
-                    with self.assertRaises(ToolError):
-                        await server.call_tool('interface_dispatch',args)
+                    reply=await server.call_tool('interface_dispatch',args)
+                    self.assertTrue(reply.isError)
+                    refusal=json.loads(reply.content[0].text)
+                    self.assertEqual(refusal['error'],'tool arguments failed schema validation')
+                    self.assertFalse(refusal['operation_invoked'])
+                    self.assertFalse(refusal['input_dispatched'])
                 else:
                     reply=await server.call_tool('interface_dispatch',args)
                     self.assertTrue(reply.isError)

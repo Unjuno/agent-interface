@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_xvfb_queued_release_receipt",
+      "runtime.cli_v1.test_xvfb_pause_cleanup",
+      "runtime.cli_v1.test_synthetic_task_oracle",
+      "runtime.backends.x11_v1.test_single_key_chord_reply_boundary",
+      "-q"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_xvfb_queued_release_receipt",
+      "runtime.cli_v1.test_xvfb_pause_cleanup",
+      "runtime.cli_v1.test_synthetic_task_oracle",
+      "runtime.backends.x11_v1.test_single_key_chord_reply_boundary",
+      "-q"
+    ],
+    "exit_code": 0
+  }
+]

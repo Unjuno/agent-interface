@@ -1,0 +1,24 @@
+test_complete_synthetic_three_arm_run_audits_all_18_custodians (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_complete_synthetic_three_arm_run_audits_all_18_custodians) ... ok
+test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_failed_turn_without_usage_stays_unknown_in_prospective_custody) ... ok
+test_jsonl_provider_success_joins_durable_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_provider_success_joins_durable_prospective_custody) ... ok
+test_jsonl_success_without_usage_is_held_from_comparison_projection (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_success_without_usage_is_held_from_comparison_projection) ... ok
+test_jsonl_timeout_with_observed_usage_reaches_durable_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_timeout_with_observed_usage_reaches_durable_custody) ... ERROR
+test_provider_failure_usage_joins_prospective_task_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_provider_failure_usage_joins_prospective_task_custody) ... ok
+test_provider_transport_failure_is_retained_in_durable_g10_allocation (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_provider_transport_failure_is_retained_in_durable_g10_allocation) ... ok
+test_successful_effect_and_receipts_project_into_prospective_task (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_successful_effect_and_receipts_project_into_prospective_task) ... ok
+test_thread_and_turn_identity_with_usage_reach_failed_attempt_ledger (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_thread_and_turn_identity_with_usage_reach_failed_attempt_ledger) ... ok
+test_unknown_usage_and_deferred_attempts_reach_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_unknown_usage_and_deferred_attempts_reach_prospective_custody) ... ok
+
+======================================================================
+ERROR: test_jsonl_timeout_with_observed_usage_reaches_durable_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_timeout_with_observed_usage_reaches_durable_custody)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "\\wsl.localhost\Ubuntu\home\user\agent-interface-postrecovery-r42-20261123\research\live_control\test_grounding_appserver_usage_transport.py", line 957, in test_jsonl_timeout_with_observed_usage_reaches_durable_custody
+    with patch.object(model.planner, "await_turn", side_effect=short_wait):
+         ^^^^^
+NameError: name 'patch' is not defined. Did you mean: 'Path'?
+
+----------------------------------------------------------------------
+Ran 10 tests in 40.453s
+
+FAILED (errors=1)

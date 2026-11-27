@@ -1,0 +1,41 @@
+FFFF
+======================================================================
+FAIL: test_stalled_native_io_retains_obligation_and_refuses_new_admission (research.doom.test_map01_unverified_release_custody.UnverifiedReleaseTests.test_stalled_native_io_retains_obligation_and_refuses_new_admission) (mode='press_send')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_unverified_release_custody.py", line 61, in test_stalled_native_io_retains_obligation_and_refuses_new_admission
+    with self.assertRaisesRegex(RuntimeError, 'unverified'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stalled_native_io_retains_obligation_and_refuses_new_admission (research.doom.test_map01_unverified_release_custody.UnverifiedReleaseTests.test_stalled_native_io_retains_obligation_and_refuses_new_admission) (mode='release_send')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_unverified_release_custody.py", line 61, in test_stalled_native_io_retains_obligation_and_refuses_new_admission
+    with self.assertRaisesRegex(RuntimeError, 'unverified'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stalled_native_io_retains_obligation_and_refuses_new_admission (research.doom.test_map01_unverified_release_custody.UnverifiedReleaseTests.test_stalled_native_io_retains_obligation_and_refuses_new_admission) (mode='release_sync')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_unverified_release_custody.py", line 61, in test_stalled_native_io_retains_obligation_and_refuses_new_admission
+    with self.assertRaisesRegex(RuntimeError, 'unverified'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stalled_native_io_retains_obligation_and_refuses_new_admission (research.doom.test_map01_unverified_release_custody.UnverifiedReleaseTests.test_stalled_native_io_retains_obligation_and_refuses_new_admission) (mode='release_readback')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_unverified_release_custody.py", line 61, in test_stalled_native_io_retains_obligation_and_refuses_new_admission
+    with self.assertRaisesRegex(RuntimeError, 'unverified'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 8.357s
+
+FAILED (failures=4)

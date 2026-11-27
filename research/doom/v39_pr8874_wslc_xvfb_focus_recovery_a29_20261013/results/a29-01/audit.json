@@ -1,0 +1,72 @@
+{
+  "schema": "a29-independent-audit-v1",
+  "experiment_decision": "FAIL_PREREGISTERED_FOCUS_STATE_GATE",
+  "audit_decision": "PASS_METHOD_SCOPED_AUDIT",
+  "checks": {
+    "all_frozen_sources_match": true,
+    "no_candidate_error": true,
+    "focus_out_observed": true,
+    "matching_keypress_on_old_window": true,
+    "matching_keyrelease_on_new_window": true,
+    "independent_current_focus_query_recorded": false,
+    "keymap_down_then_up": true,
+    "admission_link_valid": true,
+    "owner_keyup_sync_verified": true,
+    "terminal_release_verified_empty": true,
+    "admission_cache_empty": true,
+    "owner_stopped": true,
+    "xvfb_exit_zero": true,
+    "container_removed": true,
+    "analyzer_accepts_one_hold": true
+  },
+  "focus_to_owner_sync_ms": 0.292139,
+  "event_windows": {
+    "keypress": 2097152,
+    "expected_old_window": 2097152,
+    "keyup": 2097153,
+    "new_window": 2097153
+  },
+  "source_audit": [
+    {
+      "path": "research/doom/__pycache__/analyze_map01_direct_retained_input_v2.cpython-311.pyc",
+      "ok": true
+    },
+    {
+      "path": "research/doom/analyze_map01_direct_retained_input_v2.py",
+      "ok": true
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "ok": true
+    },
+    {
+      "path": "research/doom/experiment_candidate.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "ok": true
+    }
+  ],
+  "interpretation": "The retained raw verifies input event routing to the new window, owner-bound explicit release, server keymap up, terminal cleanup, and one analyzer-accepted hold. The frozen decision also required an independently recorded current-focus query; the candidate did not retain that value, so the run remains FAIL under its preregistration. Virtual X11 only."
+}

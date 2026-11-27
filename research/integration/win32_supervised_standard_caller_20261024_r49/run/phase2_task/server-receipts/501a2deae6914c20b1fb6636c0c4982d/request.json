@@ -1,0 +1,75 @@
+{
+  "operation": "dispatch",
+  "arguments": {
+    "program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "win32-r49-fresh-generation-task",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1,
+        "target_generations": {
+          "fixture": "ed2f39d5e0d93a285c97f68656e263ff5d8e6d7357717ce2d714d9d2ab594928"
+        }
+      },
+      "authority": {
+        "lease_id": "win32-r49-fresh-generation-task-lease",
+        "expires_at_ns": 512970418410900
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "text",
+          "text": "task-oracle-r49-b8abd9ff3168"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord",
+          "text": "task-oracle-r49-b8abd9ff3168"
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "current_observation_seq": 1,
+    "current_binding_revision": 1
+  },
+  "targets": {
+    "fixture": 7472494
+  },
+  "display_name": null,
+  "response_wait_ms": 10000,
+  "session": {
+    "session_id": "53a0d5cd4df145dc9447472670b10a58",
+    "mode": "supervised-win32",
+    "state": "open",
+    "synthetic_only": false,
+    "call_count": 0,
+    "unresolved_call_ids": []
+  }
+}

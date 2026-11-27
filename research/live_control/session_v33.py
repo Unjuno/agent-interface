@@ -77,6 +77,14 @@ class Backend(Previous):
             self._refuse_point_mint(identifier, index, "focus_or_surface_changed",
                                     source_sequence=source["sequence"],
                                     current_sequence=current["sequence"])
+        for generation_field in ("process_generation", "window_generation"):
+            if current_binding.get(generation_field) != source_binding.get(generation_field):
+                self._refuse_point_mint(
+                    identifier, index, generation_field + "_changed",
+                    source_sequence=source["sequence"],
+                    current_sequence=current["sequence"],
+                    source_generation=source_binding.get(generation_field),
+                    current_generation=current_binding.get(generation_field))
         try:
             delta = translation(step["coordinate_frame"], source_binding["geometry"],
                                 current_binding["geometry"])

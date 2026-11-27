@@ -1,0 +1,6 @@
+Attempt 01 did not reach the registered fault injection. It stopped while serializing the first observed X KeyPress because python-xlib KeyPress objects expose `window`, not `event`:
+
+AttributeError: event
+  candidate.py, wait_event: event.event
+
+The session was terminated only by the harness finally block; this is not a session-parent SIGKILL result and is excluded from the experiment decision. The adapter now records `event.window.id`, covered by `test_x_event_record_uses_window_id_without_server_event_attribute`.

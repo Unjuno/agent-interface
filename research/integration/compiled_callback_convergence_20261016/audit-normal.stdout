@@ -1,0 +1,111 @@
+{
+  "scope": "saved-only callback failure/prefix/witness custody; no candidate import or durable app score",
+  "modes": {
+    "normal": {
+      "methods": 463,
+      "rows": {
+        "core_rows": 6,
+        "caller_rows": 4
+      },
+      "controls": {
+        "baseline": {
+          "control": "baseline",
+          "methods": 14,
+          "failures": 8,
+          "errors": 3,
+          "skips": 0,
+          "pid": 46308,
+          "optimize": 0
+        },
+        "miss_terminal_failure": {
+          "control": "miss_terminal_failure",
+          "methods": 14,
+          "failures": 2,
+          "errors": 0,
+          "skips": 0,
+          "pid": 48616,
+          "optimize": 0
+        }
+      },
+      "mutations": [
+        {
+          "name": "lost_prefix",
+          "reason": "core prefix"
+        },
+        {
+          "name": "false_release",
+          "reason": "release"
+        },
+        {
+          "name": "lost_second_failure",
+          "reason": "failure causes/private custody"
+        },
+        {
+          "name": "false_success",
+          "reason": "false success"
+        },
+        {
+          "name": "sink_retry",
+          "reason": "journal retry"
+        },
+        {
+          "name": "lost_witness",
+          "reason": "memory witness"
+        }
+      ]
+    },
+    "optimized": {
+      "methods": 463,
+      "rows": {
+        "core_rows": 6,
+        "caller_rows": 4
+      },
+      "controls": {
+        "baseline": {
+          "control": "baseline",
+          "methods": 14,
+          "failures": 8,
+          "errors": 3,
+          "skips": 0,
+          "pid": 49968,
+          "optimize": 1
+        },
+        "miss_terminal_failure": {
+          "control": "miss_terminal_failure",
+          "methods": 14,
+          "failures": 2,
+          "errors": 0,
+          "skips": 0,
+          "pid": 788,
+          "optimize": 1
+        }
+      },
+      "mutations": [
+        {
+          "name": "lost_prefix",
+          "reason": "core prefix"
+        },
+        {
+          "name": "false_release",
+          "reason": "release"
+        },
+        {
+          "name": "lost_second_failure",
+          "reason": "failure causes/private custody"
+        },
+        {
+          "name": "false_success",
+          "reason": "false success"
+        },
+        {
+          "name": "sink_retry",
+          "reason": "journal retry"
+        },
+        {
+          "name": "lost_witness",
+          "reason": "memory witness"
+        }
+      ]
+    }
+  }
+}

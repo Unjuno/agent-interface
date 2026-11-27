@@ -1,0 +1,7 @@
+# Issue #57 post-merge prospective custody recheck
+
+On main `f6d67599aa6294309b163a2431bab5164b80ab2c` (including PR #10549), the existing `research.live_control.test_grounding_appserver_usage_transport` module passed 11/11 on Windows Python 3.13.14, both normally and with `-O`. The synthetic complete three-arm case retained all 18 custodians, no missing assignments, and dispatch disabled. See the separate raw stdout/stderr and conditions-and-results.json. The synthetic token and time values in stdout are fixture inputs, not measurements.
+
+An initial exploratory run with the default Windows Python 3.11.9 ran 11 tests with five errors and three skips because bounded App Server pipe sends require Python 3.12 or later on Windows; its complete raw output was not retained. It was not a passing result. The recorded runs used the supported locally installed Python 3.13 and no installation.
+
+This suite tests the separate `research.live_control` prospective custody path. It does not establish an end-to-end join from PR #10549's `research/integration/standard_mcp_task_ledger_57_v1` recorder into this 18-assignment path. The peer, task effects, and usage are synthetic, and the allocation verifier is injected. No live provider, GUI, input, WSLc allocation, or model was used. Live all-attempt accounting, independently measured effect and release, recovery, and matched efficiency remain open.

@@ -1,0 +1,33 @@
+{
+  "base_commit": "07b36d24b8bdb63e7d47e2a305ca90f5ae0d1d37",
+  "conditions": "After a fresh observation was minted, a 20 ms simulated provider-wait interval elapsed and the Fake X title metadata changed; a second MCP observation superseded the reviewed sequence. No actual provider call was sent.",
+  "enforcement": "MCP parent compares reviewed_sequence against owner snapshot before worker admission. A known stale source returns invalid_request/CALC_REVIEW_SOURCE_STALE, operation_invoked=false, input_dispatched=false, release_confirmed=null, task_success=null, replay_allowed=false. Child-side current-source validation remains for races after preflight.",
+  "limits": "Synthetic Fake X and Fake Planner; no live provider, actual model wait, physical Calc, WSLc, MAP01, or efficiency result.",
+  "results": [
+    {
+      "command": "py -3.11 -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_rejects_stale_review_after_model_wait",
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.11 -O -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_rejects_stale_review_after_model_wait",
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.11 -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases",
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.11 -O -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases",
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.11 -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+      "result": "PASS"
+    },
+    {
+      "command": "py -3.11 -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+      "result": "PASS"
+    }
+  ],
+  "schema": "agent-interface/issue57-stale-review-mcp-boundary-v1"
+}

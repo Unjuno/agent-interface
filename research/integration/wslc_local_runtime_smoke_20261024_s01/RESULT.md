@@ -1,0 +1,5 @@
+# WSLc S01 result — pinned image unavailable; no container started
+
+The retained one-shot runner invoked the digest-pinned Python image with `--pull never`, `--network none`, a read-only bind, and bounded run/cleanup calls. WSLc returned `WSLC_E_IMAGE_NOT_FOUND` / exit 1 before writing the requested full CID. No application code executed, and the unique-name follow-up query returned exit 0 with no matching container. There was no CID to verify or target for cleanup; no container mutation or global inventory query was made. The raw run stderr/stdout, generated unique name, missing-CID outcome, exact-name query, conditions, and source hashes are preserved in this packet.
+
+Disposition: **HOLD/UNKNOWN**, not a WSLc PASS. The unique-name query shows no matching container at query time, but it does not establish a full-CID cleanup receipt or prove the state of other WSLc allocations. It does not test computer input, release, recovery, task effects, MAP01, or efficiency. The pinned image remains absent from this host cache, so no WSLc application experiment is feasible without an explicitly authorized image acquisition step.

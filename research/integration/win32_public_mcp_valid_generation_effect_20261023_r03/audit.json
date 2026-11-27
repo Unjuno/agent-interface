@@ -1,0 +1,383 @@
+{
+  "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r03",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-public-mcp-valid-generation-effect-20261023-r03",
+        "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03"
+      },
+      "name": "schema_attempt_and_frozen_source",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "hwnd": 86575380,
+        "owner": {
+          "creation_time_100ns": 134372386065316976,
+          "pid": 48860,
+          "window_thread_id": 15096
+        },
+        "pid": 48860
+      },
+      "name": "one_owned_fixture_process",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "consistency": "matched",
+        "target_generation": "b499f2923e90985766ab7b3869c5785553fa016330c8d6eb7f7f437c3225acea"
+      },
+      "name": "public_observation_returned_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observed": "b499f2923e90985766ab7b3869c5785553fa016330c8d6eb7f7f437c3225acea",
+        "owned": "b499f2923e90985766ab7b3869c5785553fa016330c8d6eb7f7f437c3225acea"
+      },
+      "name": "observed_generation_matches_native_owner",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 4,
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 4,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "public_validation_accepted",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture": "b499f2923e90985766ab7b3869c5785553fa016330c8d6eb7f7f437c3225acea"
+      },
+      "name": "program_supplied_observed_generation",
+      "passed": true
+    },
+    {
+      "evidence": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "op": "text",
+          "text": "PUBLIC-MCP-OK-9C17"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "name": "exact_frozen_program",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "error": false
+      },
+      "name": "single_public_dispatch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admission": "accepted",
+        "recovery_required": false,
+        "status": "completed"
+      },
+      "name": "dispatch_completed_and_admitted",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "buttons_down": [],
+        "buttons_unknown": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "monotonic_ns": 456316281000000,
+        "state_query_witnesses": {
+          "17": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 86575380,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 48860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 15096
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 86575380,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 48860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 15096
+            }
+          ],
+          "83": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 86575380,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 48860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 15096
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 86575380,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 48860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 15096
+            }
+          ]
+        },
+        "verified": true
+      },
+      "name": "verified_release_all",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "after_close": {
+          "clicked": false,
+          "saved": true,
+          "text": "PUBLIC-MCP-OK-9C17"
+        },
+        "expected": {
+          "clicked": false,
+          "saved": true,
+          "text": "PUBLIC-MCP-OK-E5F0"
+        },
+        "readback": {
+          "clicked": false,
+          "saved": true,
+          "text": "PUBLIC-MCP-OK-9C17"
+        }
+      },
+      "name": "independent_task_effect_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": [
+          {
+            "hwnd": 86575380,
+            "kind": "ready"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 66,
+            "kind": "char"
+          },
+          {
+            "code": 76,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 57,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 49,
+            "kind": "char"
+          },
+          {
+            "code": 55,
+            "kind": "char"
+          },
+          {
+            "clicked": false,
+            "kind": "save",
+            "saved": true,
+            "text": "PUBLIC-MCP-OK-9C17"
+          }
+        ],
+        "expected": [
+          {
+            "hwnd": 86575380,
+            "kind": "ready"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 66,
+            "kind": "char"
+          },
+          {
+            "code": 76,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 53,
+            "kind": "char"
+          },
+          {
+            "code": 70,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "clicked": false,
+            "kind": "save",
+            "saved": true,
+            "text": "PUBLIC-MCP-OK-E5F0"
+          }
+        ]
+      },
+      "name": "independent_event_journal_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "close_posted": true,
+        "exit_code": 0,
+        "window_exists_after_exit": false
+      },
+      "name": "clean_fixture_shutdown",
+      "passed": true
+    }
+  ],
+  "passed": 11,
+  "schema": "win32-public-mcp-valid-generation-effect-audit-v1",
+  "source_commit": "0f12402e73a802f4aec6dbec435216f0ec13ed03",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 13
+}

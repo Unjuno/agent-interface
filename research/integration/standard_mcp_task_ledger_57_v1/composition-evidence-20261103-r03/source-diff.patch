@@ -1,0 +1,121 @@
+diff --git a/.gitattributes b/.gitattributes
+index dcefc7d961a..2318f02018e 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -104,3 +104,5 @@ research/integration/mcp_relay_cancel_lookahead_20261028_r01/** -text -whitespac
+ 
+ \r\n
+ research/integration/issue57_calc_public_profile_plan_20261103/post-close-exit-wait-live-validation-20261103-r75/** -text
++research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261103-r03/** -text
++research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261103-r03/** whitespace=cr-at-eol,-blank-at-eol
+diff --git a/research/integration/issue57_calc_public_profile_plan_20261103/README.md b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+index f42b267b098..aa017a652c8 100644
+--- a/research/integration/issue57_calc_public_profile_plan_20261103/README.md
++++ b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+@@ -33,7 +33,7 @@ This profile does not claim a general Calc controller or a successful transfer.
+ 
+ | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
+ | --- | --- | --- |
+-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown OCR path below | Add an ambiguous OCR case and model-wait dependency mutation through the composed registered profile. |
++| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | Add model-wait dependency mutation through the composed registered profile. |
+ | #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
+ | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
+ | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
+@@ -55,11 +55,17 @@ summary remains complete while token totals stay unknown because the timeout
+ usage is unavailable. The injected planner echoes supplied arguments and
+ reports synthetic usage, so this proves a local composition contract only.
+ 
+-Remaining offline work is the composed ambiguous-OCR case, dependency
+-invalidation after provider wait, and one bounded new-attempt repair case with
+-all receipts joined. Existing direct-owner, Fake X and recorder tests cover
+-parts separately; they do not establish these combined Calc-profile paths. No
+-real provider reconciliation or live efficiency comparison exists.
++The composed wrong/unknown OCR cases now also include duplicate high-confidence
++cell output after one input transition. The parser marks that ambiguous OCR
++unknown; the registered profile yields after the partial effect, records the
++input release, leaves Save undispatched, and denies replay. This is still a
++Fake X regression, not an application-level ambiguity result.
++
++Remaining offline work is dependency invalidation after provider wait and one
++bounded new-attempt repair case with all receipts joined. Existing direct-owner,
++Fake X and recorder tests cover parts separately; they do not establish these
++combined Calc-profile paths. No real provider reconciliation or live efficiency
++comparison exists.
+ 
+ ## Gate before any new live comparison
+ 
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+index aadf034925f..544daf7a658 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+@@ -1319,18 +1319,20 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
+                 await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+                 negative_case = calc_tests.OwnedProcessMCPTests(
+-                    "test_registered_calc_profile_stops_on_wrong_or_unknown_ocr")
+-                await negative_case.test_registered_calc_profile_stops_on_wrong_or_unknown_ocr()
++                    "test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr")
++                await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr()
+ 
+-            self.assertEqual(counts["successful_generation"], 3)
+-            self.assertEqual(counts["provider_attempts"], 4)
++            self.assertEqual(counts["successful_generation"], 4)
++            self.assertEqual(counts["provider_attempts"], 5)
+             self.assertGreater(counts["tool"], 1)
+             self.assertEqual(set(observed["negative_profile_results"]), {
+                 "calc-offline-wrong-after-input",
+-                "calc-offline-unknown-after-input"})
++                "calc-offline-unknown-after-input",
++                "calc-offline-ambiguous-after-input"})
+             for attempt_id, expected_reason in (
+                     ("calc-offline-wrong-after-input", "effect_failed"),
+-                    ("calc-offline-unknown-after-input", "effect_unavailable")):
++                    ("calc-offline-unknown-after-input", "effect_unavailable"),
++                    ("calc-offline-ambiguous-after-input", "effect_unavailable")):
+                 negative = observed["negative_profile_results"][attempt_id]
+                 self.assertEqual(negative["method_receipt"]["outcome"],
+                                  "SAFE_YIELD", negative)
+@@ -1359,7 +1361,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+             receipt = recorder.reconcile()
+             summary = summarize(receipt["events"])
+             self.assertTrue(receipt["complete"])
+-            self.assertEqual(summary["model_attempt_count"], 4)
++            self.assertEqual(summary["model_attempt_count"], 5)
+             self.assertEqual(summary["tool_call_count"], counts["tool"])
+             self.assertEqual(summary["usage_status"], "incomplete")
+             self.assertIsNone(summary["input_tokens"])
+diff --git a/runtime/cli_v1/test_mcp_owned_process.py b/runtime/cli_v1/test_mcp_owned_process.py
+index b94330b21ec..f7020593d1d 100644
+--- a/runtime/cli_v1/test_mcp_owned_process.py
++++ b/runtime/cli_v1/test_mcp_owned_process.py
+@@ -439,12 +439,16 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
+         low_once = (mode == 'settle-after-low-confidence'
+                     and fake.calc_state['both_entered']
+                     and not (root/'post-release-settle-observed').exists())
++        ambiguous_after_input = (mode == 'ambiguous-after-input'
++                                 and fake.calc_state['both_entered'])
+         stdout = (header if not filled or mode == 'unknown-after-input' else
+                   header +
+                   (b'5\t8\t4\t44\t24\t70\t731\n5\t8\t38\t44\t24\t70\t864\n'
+                    if low_once else
+                    b'5\t8\t4\t44\t24\t95\t731\n' +
+-                   (b'5\t8\t38\t44\t24\t95\t863\n'
++                   (b'5\t8\t4\t44\t24\t95\t731\n'
++                    if ambiguous_after_input else
++                    b'5\t8\t38\t44\t24\t95\t863\n'
+                     if mode == 'wrong-after-input' else
+                     b'5\t8\t38\t44\t24\t95\t864\n')))
+         evidence=(root/'fake-ocr-observations.jsonl')
+@@ -1339,9 +1343,10 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+                 closed=metadata(await server.call_tool('interface_close',{}))
+                 self.assertTrue(closed['release_confirmed'],closed)
+ 
+-    async def test_registered_calc_profile_stops_on_wrong_or_unknown_ocr(self):
++    async def test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr(self):
+         for mode,expected_reason in (('wrong-after-input','effect_failed'),
+-                                     ('unknown-after-input','effect_unavailable')):
++                                     ('unknown-after-input','effect_unavailable'),
++                                     ('ambiguous-after-input','effect_unavailable')):
+             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
+                 root=Path(td)
+                 (root/'calc-profile-mode').write_text(mode,encoding='utf-8')

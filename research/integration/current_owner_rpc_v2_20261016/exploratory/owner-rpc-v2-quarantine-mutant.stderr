@@ -1,0 +1,67 @@
+test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) ... 
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='drop') ... FAIL
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='wrong-id') ... FAIL
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='invalid-records') ... FAIL
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='partial') ... ERROR
+
+======================================================================
+ERROR: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='partial')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\owner-rpc-v2-quarantine-mutant.py.txt", line 229, in call
+    response = _read_frame(self._sock, self._buffer, deadline)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\owner-rpc-v2-quarantine-mutant.py.txt", line 140, in _read_frame
+    return json.loads(data.decode('utf-8'), object_pairs_hook=_pairs, parse_constant=_reject_constant)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 365, in loads
+    return cls(**kw).decode(s)
+           ~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 23 (char 22)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 139, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+                                              ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\owner-rpc-v2-quarantine-mutant.py.txt", line 246, in call
+    raise RpcOutcomeUnknown('RPC outcome unknown; client quarantined', records=self._records) from exc
+input_owner_rpc_v2.RpcOutcomeUnknown: RPC outcome unknown; client quarantined
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='drop')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 139, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='wrong-id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 139, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='invalid-records')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 139, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.355s
+
+FAILED (failures=3, errors=1)

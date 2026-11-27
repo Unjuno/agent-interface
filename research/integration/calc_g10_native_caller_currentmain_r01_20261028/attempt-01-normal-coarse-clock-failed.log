@@ -1,0 +1,18 @@
+test_success_uses_fresh_native_alias_and_publishes_task_receipt_once (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_success_uses_fresh_native_alias_and_publishes_task_receipt_once) ... FAIL
+test_unknown_first_effect_keeps_prefix_and_skips_second_input_and_outer_score (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_unknown_first_effect_keeps_prefix_and_skips_second_input_and_outer_score) ... ok
+
+======================================================================
+FAIL: test_success_uses_fresh_native_alias_and_publishes_task_receipt_once (research.integration.test_calc_g10_native_caller_composition_v1.G10NativeCallerCompositionTests.test_success_uses_fresh_native_alias_and_publishes_task_receipt_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\CodexData\Temp\agent-interface-calc-error-receipt-r01\research\integration\test_calc_g10_native_caller_composition_v1.py", line 150, in test_success_uses_fresh_native_alias_and_publishes_task_receipt_once
+    self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
+AssertionError: 'EXECUTION_INCOMPLETE' != 'TASK_SUCCEEDED'
+- EXECUTION_INCOMPLETE
++ TASK_SUCCEEDED
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.054s
+
+FAILED (failures=1)

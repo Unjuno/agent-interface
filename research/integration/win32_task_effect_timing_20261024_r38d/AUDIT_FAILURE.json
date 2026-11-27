@@ -1,0 +1,20 @@
+{
+  "attempt_id": "win32-task-effect-timing-20261024-r38d-95f53e00e722477c8d8208abba20a793",
+  "failures": [
+    {
+      "cause": "read effect object from wrong level in oracle-evidence",
+      "exception": "KeyError: actual",
+      "script": "audit.py",
+      "status": "AUDIT_SCRIPT_FAILED_POST_RUN"
+    },
+    {
+      "cause": "retained action subobject omits parent call_id; call identity is returned separately in action envelope",
+      "exception": "KeyError: call_id",
+      "script": "audit_followup.py",
+      "status": "ADDITIVE_AUDIT_SCRIPT_FAILED"
+    }
+  ],
+  "no_live_replay": true,
+  "raw_unchanged": true,
+  "schema": "win32-task-effect-timing-r38d-audit-failures-v1"
+}

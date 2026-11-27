@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/r33-progress-v1",
+  "completed_trials": 1,
+  "trials": [
+    {
+      "schema": "agent-interface/r33-stop-v1",
+      "experiment": "win32-post-recovery-public-task-r33",
+      "outcome": "STOP_FIXTURE_DLL_NAME_TYPO_BEFORE_WINDOW",
+      "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+      "fixture_process_started": false,
+      "fixture_window_created": false,
+      "public_observations": 0,
+      "public_dispatches": 0,
+      "orphan_recovery_calls": 0,
+      "followup_dispatches": 0,
+      "task_verifications": 0,
+      "runner_process_remaining": false,
+      "durable_fence_clear": true,
+      "fixture_error_excerpt": "Traceback (most recent call last):\n  File \"\\\\wsl.localhost\\Ubuntu\\home\\user\\agent-interface-preview-main-r06-20261123\\research\\integration\\win32_post_recovery_public_task_r33_20261123\\source\\fixture_app.py\", line 15, in <module>\n    user33 = ctypes.WinDLL(\"user33\", use_last_error=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ctypes\\__init__.py\", line 376, in __init__\n    self._handle = _dlopen(self._name, mode)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: Could not find module 'user33' (or one of its dependencies). Try using the full path with constructor syntax.\n",
+      "root_cause": "Mechanical lowercase r32\u2192r33 replacement corrupted ctypes.WinDLL(\"user32\") to user33 in the copied fixture source; fixture exited during module import before creating a window."
+    }
+  ]
+}

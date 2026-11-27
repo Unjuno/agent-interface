@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_secondary_channel_cleanup_cannot_skip_primary_channel (test_input_owner_cancel_v4.CancelRelayTests.test_secondary_channel_cleanup_cannot_skip_primary_channel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 89, in test_secondary_channel_cleanup_cannot_skip_primary_channel
+    self.assertTrue(main.closed,'primary transport still must close')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : primary transport still must close
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

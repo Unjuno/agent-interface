@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "D:\CodexData\Temp\issue57-prospective-r02.py", line 17, in <module>
+    run=ProspectiveRun(allocation_path,evidence,source_root=repo,allocation_verifier=lambda *_:True)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\issue57_v3_prospective_run_v1.py", line 119, in __init__
+    "source_files": self._source_hashes(),
+                    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\issue57_v3_prospective_run_v1.py", line 155, in _source_hashes
+    return {name: _sha256(self.source_root / name) for name in names}
+                  ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\issue57_v3_prospective_run_v1.py", line 46, in _sha256
+    with path.open("rb") as stream:
+         ~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\research\\live_control\\run_integrated_efficiency_live_v1.py'

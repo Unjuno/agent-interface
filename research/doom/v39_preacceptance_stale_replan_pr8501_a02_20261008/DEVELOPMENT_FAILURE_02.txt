@@ -1,0 +1,10 @@
+Harness-development stop 02 (not a scientific result)
+
+Command:
+  python research/doom/v39_preacceptance_stale_replan_a01_20261008/run.py
+
+After resolving the missing import, the source-refresh helper control stopped in the fixture's stub signal reader:
+
+  KeyError: 'health'
+
+The controller's full observation artifact does not contain a `health` field; the HUD reader derives values from the image. The stub was corrected to return the preregistered sequence-bound signal values independently of the full artifact row. No candidate case completed in this attempt, and no production source was edited.

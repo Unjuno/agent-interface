@@ -1,0 +1,3 @@
+# A26 procedural STOP
+
+The candidate unexpectedly ran and raw output was captured, but the intended preregistration write failed with `UnicodeEncodeError` under the host's cp932 default before the WSLc command. PowerShell continued after the native Python error. This run is therefore **STOP_UNFROZEN_PREREGISTRATION** and is excluded from scientific acceptance; it is not relabeled as preregistered PASS. Candidate was not rerun under A26. The raw remains at `results/a26-01/raw.json` (SHA-256 `16bc2deff012ddf5d5505a1b18462c804a80ae083581dc59f7968877e8d7616a`) and shows cancellation release in 2.141 ms, but consult only as procedural diagnostic. A27 is the separate properly preregistered run.

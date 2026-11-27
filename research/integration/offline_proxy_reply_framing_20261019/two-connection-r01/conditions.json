@@ -1,0 +1,50 @@
+{
+  "experiment_id": "offline-x11-same-pid-two-connection-relay-r01",
+  "test_checkout_head": "62524c37ce7142ff5661e60c01b9c71cd73a87c3",
+  "equivalent_main_merge": "0ded57765d6de80f2c42370a5f1e6454f4959496",
+  "execution": "local Windows socketpair and Fake X transport only",
+  "owner_pid_model": 77,
+  "connections": ["identity-connection", "input-connection"],
+  "input_and_identity_reply_sequence": 3,
+  "identity_reply_condition": "same synthetic PID, identity connection, no preceding XTEST KeyPress; must forward",
+  "input_reply_condition": "input connection's negotiated XTEST KeyPress, then GetPointerControl, matching action-bound independent synthetic KeyPress receipt; hold and retire at 150ms test deadline",
+  "suites": {
+    "protocol_and_relay": [
+      "research.integration.offline_proxy_reply_framing_20261019.test_reply_gate",
+      "research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate",
+      "research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay",
+      "research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay"
+    ],
+    "standard_caller_composition": [
+      "runtime.cli_v1.test_mcp_relay_composition"
+    ]
+  },
+  "standard_caller_identity_query_path": {
+    "caller_component": "TargetQueryWorker process_identity read used by the guarded MCP caller",
+    "reader": "real X11TargetQueries.read and read_linux_x11_process_identity, backed by shaped synthetic XRes client-ID replies and synthetic /proc stat",
+    "transport": "separate FakeSocketRelay carries synthetic NoOperation/GetPointerControl transaction markers; these do not encode the XRes operation",
+    "identity_reply_sequences_before_input": [3, 5, 7],
+    "stale_generation_case": "fixture PID changes from 123 to 124; real generation hash changes and caller refuses before KeyPress",
+    "not_exercised": ["XRes wire encoding/decoding", "server PID discovery", "live X server ordering", "physical release"]
+  },
+  "commands": [
+    "python -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay",
+    "python -O -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay",
+    "python -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
+    "python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition"
+  ],
+  "caller_identity_discriminator_commands": [
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action"
+  ],
+  "python": "invoked from the isolated agent-interface-x11 environment; runtime version recorded in the runner receipt",
+  "allocation": null,
+  "wslc_used": false,
+  "docker_used": false,
+  "live_x_server_used": false,
+  "network_used_by_tests": false,
+  "physical_release_claim": false,
+  "task_success_claim": false
+}

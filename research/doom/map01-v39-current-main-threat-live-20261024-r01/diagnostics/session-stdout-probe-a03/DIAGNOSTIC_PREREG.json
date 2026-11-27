@@ -1,0 +1,24 @@
+{
+  "schema": "map01-v39-session-stdout-probe-prereg-v1",
+  "status": "FROZEN_BEFORE_RUN",
+  "diagnostic_id": "map01-v39-session-stdout-probe-a03",
+  "created_utc": "2026-10-24T09:36:47.822456+00:00",
+  "repository_commit": "26c383a983782be25d6a1ae33814f7c551d88d63",
+  "diagnostic_script_sha256": "741a8e6f42ba17d4f93454c6096abb02d1b5a81ea37ad4c2d627dd08c55a7391",
+  "source_sha256": {
+    "research/real_apps_v1/real_app_suite_v1.py": "a3ff42d543fac03524bd3b8684e59a3458804ddb931490b0028798d634de06d8",
+    "research/observation_gating/gui_suite.py": "b7aec705c80ac22db2fe01ab871b51da8830c8f43ad9d476f5fb99aeb57bbee3",
+    "research/doom/session_map01_v15.py": "dd75cc1f760e0ba212dcbb74a63d772735745e902ee975eaf25720bbb26eea32",
+    "research/doom/session_map01_v12.py": "ce4310e8acab0712ada1412a6342090f97b2381300492a1a9b4b24aec52dfa80",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": "37a1b3bdcabdc77ac6f1d32951f9db1e40e31dcee85f349ee963b9291ebf2857",
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "research/doom/fixtures/map01-threat-contact-v2/source.png": "70723e24d671fd656fa3ba40294b4cd28272493a9ffcacf93843cd86f13ab16d"
+  },
+  "fixture_manifest_sha256": "37a1b3bdcabdc77ac6f1d32951f9db1e40e31dcee85f349ee963b9291ebf2857",
+  "fixture_save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+  "fixture_source_frame_sha256": "70723e24d671fd656fa3ba40294b4cd28272493a9ffcacf93843cd86f13ab16d",
+  "seed": 20261026,
+  "model_calls": 0,
+  "output": "diagnostics/session-stdout-probe-a03/raw",
+  "acceptance": "Capture every stdout line; require zero non-JSON lines, initial observation, post-control score, child exit 0, and V15 final verified-empty owner state. No planner/app-server/model calls."
+}

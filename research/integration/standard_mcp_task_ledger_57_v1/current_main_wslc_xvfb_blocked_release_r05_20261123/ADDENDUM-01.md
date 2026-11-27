@@ -1,0 +1,3 @@
+# Addendum 01 — capture-wrapper terminator correction
+
+The frozen normal-mode invocation ran the unittest successfully (`runs/normal/exit-code.txt` is `0`; test log ends `OK`) and emitted its full result JSON. The outer `wslc run` exited 2 because the frozen shell script had a stray terminal carriage return after `exit "$rc"`; Bash rejected `0\r` as an exit argument. This is an evidence-capture wrapper defect, not a unittest or product result. Preserve the original raw unchanged. The optimized attempt uses `run_probe-fixed.sh`, byte-identical in test logic and with LF termination. It is one optimized attempt; no test retry is authorized. WSLc also warned the kernel cannot enforce swap limit; memory limit only is evidenced.

@@ -1,0 +1,16 @@
+{
+  "schema": "map01-v39-partial-record-drain-race-freeze-v1",
+  "date": "2026-10-05",
+  "current_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "candidate_pr": "#7805",
+  "candidate_head": "8ed40fcbc52a9ffd2da1fa14b9b9b2a22f4111a3",
+  "hypothesis": "A mutable partial owner-release record can be consumed before aggregate verification, leaving the bridge held set stale after the owner later mutates the record to verified-empty.",
+  "probe_command": "python run_probe.py",
+  "tests": 4,
+  "runtime": "Windows CPython 3.12.10",
+  "container": {
+    "route": "WSLc",
+    "disposition": "HOLD_NOT_RUN",
+    "reason": "WSLc image inventory remained nonresponsive while multiple shared clients, including an active image pull, were observed. No WSLc container was launched."
+  }
+}

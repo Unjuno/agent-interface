@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/wslc-s32-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s32-36a51eb610b0",
+  "preregistered_utc": "2026-10-25T11:12:19.261Z",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "question": "Using only the newly created WSLc SDK session handle, does the current-main 3935 ms standard-caller private-Xvfb task satisfy the frozen release, neutral-readback, delayed-horizon and task-effect bounds?",
+  "session_name": "agent-interface-wslc-s32-36a51eb610b0",
+  "container_name": "ai-control-wslc-s32-36a51eb610b0",
+  "runtime": "WSLc 3.0.3; one new SDK-created named session with fresh absent storage path",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "condition": "Same source, immutable runtime/dependency/stage/XKB/runner assets, 3935 ms pause, 4000 ms transaction bound, 5000 ms independent readback bound and 8500 ms delayed-event horizon as S29-S31.",
+  "allocation_evidence": "Unique 12-hex nonce in the session name, container name, and new storage path; session.Start() is called on a new Session object. The storage path is checked absent before launch. No existing session is opened or enumerated.",
+  "container_route": "Create and operate the sole container through the same newly returned SDK session handle. Do not call wslc.exe --session or any global inventory.",
+  "execution": "One container/test-body run only; no retry; SDK cleanup acts only on the uniquely named S32 container/image/session.",
+  "host_authority": "User explicitly confirmed this Windows PC may be used for WSLc experiments in this turn.",
+  "decision_rule": "PASS_SCOPED only if both task oracles pass; old canceled call remains UNKNOWN/replay-denied/task_success=null; release <=4000 ms; independent all-up readback <=5000 ms; delayed horizon >=8500 ms remains all-up; test exits zero; and SDK confirms exact container/image/session cleanup.",
+  "failure_rule": "Any failure before trial-started is HOLD, any post-input bound miss is FAIL, and any uncertain cleanup is UNKNOWN/HOLD. Do not retry this allocation.",
+  "limitations": [
+    "one synthetic private-Xvfb replicate",
+    "not physical Windows input",
+    "not MAP01 or a live application",
+    "not a reliability estimate or stable threshold",
+    "not model/provider economics",
+    "does not resolve unrelated pre-existing WSLc ownership"
+  ]
+}

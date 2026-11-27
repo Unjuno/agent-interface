@@ -1,0 +1,44 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'v39-current-cancel-final-r2-20261016'
+def check(rows):
+ ordinary=[r for r in rows if 'control' not in r]
+ if len(rows)!=10 or len(ordinary)!=9:raise ValueError('coverage')
+ for r in ordinary:
+  if r['latest']!=r['recovered'] or r['latest']['sequence']!=12:raise ValueError('fresh full source')
+  if r['old_monitor_soft_count']!=0:raise ValueError('old monitor reactivated')
+  final=r['final']
+  if final['status']!='REJECTED_POLICY_INVALIDATED' or final['policy_invalidation']!=r['invalidation']:raise ValueError('lost invalidation')
+  if final['input_authority_admitted'] is not False or final['grants_input_authority'] is not False or final['executor_admission'] is not None or final['action_validity'] is not None:raise ValueError('authority')
+  if r['fresh']['status']!='admitted' or (r['fresh_source']['source_sequence'],r['fresh_source']['source_value'])!=(12,96):raise ValueError('fresh monitor seed')
+  ops=[e['op'] for e in r['events']]
+  if ops[:2]!=['invalidate','cancel'] or r['events'][1]['command']!={'op':'cancel','id':'cover-0'}:raise ValueError('cancel order')
+  if r['fault'] is None:
+   if ops!=['invalidate','cancel','flush','interrupt'] or r['error'] is not None:raise ValueError('verified closure order')
+   if r['returned'][1]['release']!=dict(event='owner_release',verified=True,keys_down=[],buttons_down=[],keys_unknown=[],key_state_errors=[]):raise ValueError('release')
+  else:
+   receipt=r['error']['receipt']
+   if ops[-1]!='abort' or receipt['input_recovery_required'] is not True or receipt['physical_input_state']!='unverified' or receipt['grants_input_authority'] is not False:raise ValueError('failure quarantine')
+   if r['fault']!='cancel-write' and 'interrupt' in ops:raise ValueError('interrupt before release closure')
+ control=next(r for r in rows if 'control' in r)['final']
+ if control['status']!='READY_FOR_ACTION_VALIDITY' or control['input_authority_admitted'] is not False:raise ValueError('positive control')
+report={}
+for mode in ('normal','optimized'):
+ raw=json.loads((OUT/('current-'+mode)/'RAW.json').read_text());check(raw['rows'])
+ if (raw['tests'],raw['failures'],raw['errors'],raw['skips'])!=(44,0,0,0) or len(set(raw['method_ids']))!=44 or raw['optimize']!=(mode=='optimized'):raise ValueError('suite')
+ rejected=[]
+ for name in ('admit_old','restore_monitor','stale_source','lost_abort','authority','reorder_cancel'):
+  bad=copy.deepcopy(raw['rows']);r=next(r for r in bad if r.get('fault') is None and 'control' not in r)
+  if name=='admit_old':r['final']['status']='READY_FOR_ACTION_VALIDITY'
+  elif name=='restore_monitor':r['old_monitor_soft_count']=1
+  elif name=='stale_source':r['latest']['sequence']=10
+  elif name=='lost_abort':next(r for r in bad if r.get('fault')=='unverified')['events'].pop()
+  elif name=='authority':r['final']['input_authority_admitted']=True
+  else:r['events'][0],r['events'][1]=r['events'][1],r['events'][0]
+  try:check(bad)
+  except ValueError as error:rejected.append(dict(name=name,reason=str(error)))
+  else:raise ValueError('contradiction accepted')
+ control=json.loads((OUT/('drop-invalidation-'+mode)/'RAW.json').read_text())
+ if control['failures']!=9 or control['errors']!=0 or sum(r['final']['status']=='READY_FOR_ACTION_VALIDITY' for r in control['rows'])!=10:raise ValueError('directed control')
+ report[mode]=dict(tests=44,rows=10,contradictions=rejected,control_assertion_failures=9)
+print(json.dumps(report,indent=2))

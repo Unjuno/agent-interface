@@ -32,8 +32,10 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
             rows=[json.loads(line) for line in stdout.splitlines()]
             self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
             self.assertIn('interface_guarded_input',{t['name'] for t in rows[1]['result']['tools']})
-            # Public clock is additive; the legacy research relay's own allowlist stays frozen.
-            self.assertLessEqual({t['name'] for t in rows[1]['result']['tools']},set(PUBLIC_TOOLS) | {'interface_clock', 'interface_guarded_activate_window'})
+            # These guarded-server additions do not change the legacy relay allowlist.
+            self.assertLessEqual({t['name'] for t in rows[1]['result']['tools']},
+                set(PUBLIC_TOOLS) | {'interface_clock', 'interface_guarded_activate_window',
+                                     'interface_guarded_recover_input'})
             self.assertEqual(rows[2]['status'],'returned')
             self.assertTrue(rows[2]['result']['isError'])
             self.assertIn('references',rows[2]['result']['content'][0]['text'])

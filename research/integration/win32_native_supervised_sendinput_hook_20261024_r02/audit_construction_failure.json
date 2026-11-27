@@ -1,0 +1,10 @@
+{
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r02",
+  "disposition": "AUDIT_CONSTRUCTION_FAILED_READ_ONLY",
+  "command": "python research/integration/win32_native_supervised_sendinput_hook_20261024_r02/audit.py",
+  "exception": "FileNotFoundError while resolving source files relative to packet instead of repository root",
+  "native_action_reexecuted": false,
+  "raw_overwritten": false,
+  "original_auditor_preserved_as": "audit-failed-r01.py",
+  "repair": "Resolve immutable runtime source bindings from the repository root and rerun only the read-only audit."
+}

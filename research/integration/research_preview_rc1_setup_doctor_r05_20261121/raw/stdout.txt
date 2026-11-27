@@ -1,0 +1,116 @@
+Collecting Pillow==10.2.0 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 1))
+  Using cached pillow-10.2.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+Collecting numpy==1.26.4 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 2))
+  Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Collecting python-xlib==0.33 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 3))
+  Using cached python_xlib-0.33-py2.py3-none-any.whl.metadata (6.2 kB)
+Collecting jsonschema==4.10.3 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 4))
+  Using cached jsonschema-4.10.3-py3-none-any.whl.metadata (8.0 kB)
+Collecting openpyxl==3.1.2 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 5))
+  Using cached openpyxl-3.1.2-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting et-xmlfile==1.1.0 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 6))
+  Using cached et_xmlfile-1.1.0-py3-none-any.whl.metadata (1.8 kB)
+Collecting attrs==26.1.0 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 7))
+  Using cached attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting pyrsistent==0.20.0 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 8))
+  Using cached pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (27 kB)
+Collecting six==1.17.0 (from -r /home/user/agent-interface-rp-rc1-doctor-r05-20261121/runtime/requirements-golden.txt (line 9))
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Using cached pillow-10.2.0-cp312-cp312-manylinux_2_28_x86_64.whl (4.5 MB)
+Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
+Using cached python_xlib-0.33-py2.py3-none-any.whl (182 kB)
+Using cached jsonschema-4.10.3-py3-none-any.whl (81 kB)
+Using cached openpyxl-3.1.2-py2.py3-none-any.whl (249 kB)
+Using cached et_xmlfile-1.1.0-py3-none-any.whl (4.7 kB)
+Using cached attrs-26.1.0-py3-none-any.whl (67 kB)
+Using cached pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (122 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: six, pyrsistent, Pillow, numpy, et-xmlfile, attrs, python-xlib, openpyxl, jsonschema
+Successfully installed Pillow-10.2.0 attrs-26.1.0 et-xmlfile-1.1.0 jsonschema-4.10.3 numpy-1.26.4 openpyxl-3.1.2 pyrsistent-0.20.0 python-xlib-0.33 six-1.17.0
+{
+  "schema": "agent_interface_golden_doctor_v2",
+  "passed": false,
+  "checks": [
+    {
+      "name": "linux",
+      "passed": true,
+      "detail": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+    },
+    {
+      "name": "wslpath",
+      "passed": true,
+      "detail": "/usr/bin/wslpath"
+    },
+    {
+      "name": "display",
+      "passed": true,
+      "detail": ":0"
+    },
+    {
+      "name": "python:PIL",
+      "passed": true,
+      "detail": "PIL"
+    },
+    {
+      "name": "python:numpy",
+      "passed": true,
+      "detail": "numpy"
+    },
+    {
+      "name": "python:Xlib",
+      "passed": true,
+      "detail": "Xlib"
+    },
+    {
+      "name": "python:jsonschema",
+      "passed": true,
+      "detail": "jsonschema"
+    },
+    {
+      "name": "windows_python",
+      "passed": true,
+      "detail": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe"
+    },
+    {
+      "name": "windows_node",
+      "passed": true,
+      "detail": "/mnt/c/Program Files/nodejs/node.exe"
+    },
+    {
+      "name": "windows_cli",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "chromium",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "x11_connection",
+      "passed": true,
+      "detail": "connected"
+    },
+    {
+      "name": "codex_cli",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "python:openpyxl",
+      "passed": true,
+      "detail": "3.1.2"
+    },
+    {
+      "name": "python:et_xmlfile",
+      "passed": true,
+      "detail": "1.1.0"
+    }
+  ],
+  "configuration": {
+    "windows_python": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe",
+    "windows_node": "/mnt/c/Program Files/nodejs/node.exe",
+    "windows_cli": null,
+    "chromium": null
+  }
+}

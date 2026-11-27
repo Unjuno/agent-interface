@@ -1,0 +1,132 @@
+{
+  "arm": "A02",
+  "display": ":208",
+  "observer": {
+    "key_press_ns": 587163453177,
+    "key_release_ns": 587164749011,
+    "keymap_down_before_kill": true,
+    "keymap_up_after_release": true
+  },
+  "owner": {
+    "admitted": {
+      "admitted_ns": 587162660935,
+      "event": "input_admission",
+      "input_ack_ns": 587162805738,
+      "intent_token": "a06-session-kill-intent",
+      "key": "a",
+      "keycode": 38,
+      "valid_until_ns": 607162250372
+    },
+    "close_error": null,
+    "close_finished_ns": 587164794227,
+    "close_started_ns": 587163943128,
+    "eof_ns": 587163934346,
+    "expected_focus": 2097152,
+    "forced_kill": false,
+    "intent_token": "a06-session-kill-intent",
+    "owner_id": "6bb46ad4a49740b8bd790ce9c78c14ad",
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "a06-session-kill-intent",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 587164320603,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 587164136435,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 587164249262
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              587164136435,
+              587164320603
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 607162250372,
+        "verified": true,
+        "verified_ns": 587164599277
+      }
+    ],
+    "pid": 404,
+    "ppid_at_eof": 398,
+    "receipt_fsynced": true,
+    "release_record": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "a06-session-kill-intent",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 587164320603,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 587164136435,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 587164249262
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            587164136435,
+            587164320603
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 607162250372,
+      "verified": true,
+      "verified_ns": 587164599277
+    },
+    "release_record_count": 1,
+    "returncode": 0,
+    "schema": "v39-v15-inputowner-process-receipt-a06-v1",
+    "session_pid_at_start": 403,
+    "thread_stopped": true
+  },
+  "schema": "v39-v15-inputowner-process-xvfb-a06-raw-v1",
+  "session": {
+    "kill_requested_ns": 587163552613,
+    "killed_by_sigkill": true,
+    "pid": 403,
+    "returncode": -9,
+    "wait_return_ns": 587164692763
+  },
+  "xvfb": {
+    "returncode": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "attempt_id": "win32-appserver-recovery-r11-20261026",
+  "source_commit": "6d769848fd576332a2939c618347076a72c00d27",
+  "host_scope": "user-authorized Windows workstation; two sequential repository-owned disposable Win32 fixture processes",
+  "python_runtime": "Python 3.13.14 (required by bounded AppServer pipe client on Windows)",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "procedure": "Run the R09 held-SHIFT blocked-producer recovery gate under Python 3.13.14. Only after its bounded recovery and same-generation native UP readback pass, retire the old fixture/session. Refuse the old generation on a new fixture before input. Capture a fresh public observation of the new fixture and pass its image to one AppServer model decision. Before input, obtain a new public observation and require its generation to match the model-grounding generation. Use the model-selected point for exactly one standard compiled caller action; type only office and save only in the disposable fixture. Require retained action release, neutral native readback, fresh post-action observation, exact event/effect, and independent task oracle bound to exact call/operation/generation. Preserve the first outcome; no replay.",
+  "task": {
+    "instruction": "From the supplied screenshot of the owned fixture window, choose one point inside the fixture client area, within x=24..300 and y=24..150, that safely marks the fixture as clicked. Return only integer x and y. The caller will type the fixed harmless word office and save only inside the fixture process.",
+    "effect": {"saved": true, "text": "office", "clicked": true},
+    "oracle_id": "b07a3d94556e40b8ae6d171a83da7ce2",
+    "allowed_model_coordinate": {"x": [24, 300], "y": [24, 150]}
+  },
+  "required_checks": [
+    "phase-1 real SHIFT-down witness, one public cancel, bounded retained recovery and same-generation native key-up",
+    "old fixture retired before a fresh distinct process and target generation start",
+    "old-generation public probe refused before any task input",
+    "exactly one fresh public observation image is consumed by one real AppServer model turn",
+    "AppServer usage matches the adapter's retained protocol-journal usage and coordinate stays in frozen bounds",
+    "first standard compiled-caller observation after model completion preserves the model-grounded target generation",
+    "exactly one standard compiled action uses the returned coordinate and confirms release",
+    "independent native readback finds tracked keys and button up",
+    "fresh post-dispatch observation follows action response; fixture effect and event sequence match exactly",
+    "independent task oracle verifies exact call, operation, oracle and fresh generation",
+    "both fixtures and AppServer close cleanly, original foreground restores, and raw/pretrial hashes reconcile"
+  ],
+  "limits": [
+    "The blocked callable is held before native SendInput; this is not an OS/kernel SendInput hang or arbitrary-I/O guarantee.",
+    "One real AppServer decision can qualify only one owned fixture action; no production application, MAP01, or reliability-rate claim.",
+    "AppServer usage is its reported last-turn usage joined to the retained protocol journal; this is not independent upstream billing evidence, and image-input token accounting may be unavailable.",
+    "No WSLc allocation or Docker operation is used."
+  ],
+  "wslc_used": false,
+  "docker_used": false
+}

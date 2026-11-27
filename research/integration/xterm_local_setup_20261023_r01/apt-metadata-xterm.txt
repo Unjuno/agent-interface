@@ -1,0 +1,46 @@
+Package: xterm
+Architecture: amd64
+Version: 390-1ubuntu3
+Multi-Arch: foreign
+Priority: optional
+Section: universe/x11
+Origin: Ubuntu
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 2445
+Provides: x-terminal-emulator
+Depends: xbitmaps, libc6 (>= 2.34), libfontconfig1 (>= 2.12.6), libfreetype6 (>= 2.2.1), libice6 (>= 1:1.0.0), libtinfo6 (>= 6), libutempter0 (>= 1.1.5), libx11-6, libxaw7 (>= 2:1.0.14), libxext6, libxft2 (>> 2.1.1), libxinerama1 (>= 2:1.1.4), libxmu6 (>= 2:1.1.3), libxpm4, libxt6t64
+Recommends: luit | x11-utils (<< 7.7+6~)
+Suggests: xfonts-cyrillic
+Filename: pool/universe/x/xterm/xterm_390-1ubuntu3_amd64.deb
+Size: 883484
+MD5sum: 54dbfb9de8c541faeb48d6be3815785e
+SHA1: fd71c391de6269d4f3ced86f99ad1431d72b7475
+SHA256: 3541b6956d6c4be71db7b66ec91985bd5eb128fb130e806f1c879f9d94a97c72
+SHA512: 8717016919c760410e1d583f051a7aa9d401fc785cf3660a71c3efd1038677d2a7cebe74005372826570b1006efc444c7606d7e6b935b0e9d9b8a2ebd7f072ed
+Homepage: https://invisible-island.net/xterm/xterm.html
+Description-en: X terminal emulator
+ xterm is a terminal emulator for the X Window System.  It provides DEC VT102
+ and Tektronix 4014 compatible terminals for programs that cannot use the
+ window system directly.  This version implements ISO/ANSI colors and most of
+ the control sequences used by DEC VT220 terminals.
+ .
+ This package provides four commands: xterm, which is the traditional
+ terminal emulator; uxterm, which is a wrapper around xterm that is
+ intelligent about locale settings (especially those which use the UTF-8
+ character encoding), but which requires the luit program from the luit
+ package; koi8rxterm, a wrapper similar to uxterm for locales that use the
+ KOI8-R character set; and lxterm, a simple wrapper that chooses which of the
+ previous commands to execute based on the user's locale settings.
+ .
+ A complete list of control sequences supported by the X terminal emulator
+ is provided in /usr/share/doc/xterm.
+ .
+ The xterm program uses bitmap images provided by the xbitmaps package.
+ .
+ Those interested in using koi8rxterm will likely want to install the
+ xfonts-cyrillic package as well.
+Description-md5: 964ff106395a61e65ddd87f3f34da00d
+Task: xubuntu-minimal, xubuntu-desktop, ubuntu-mate-core, ubuntu-mate-desktop, ubuntu-unity-desktop
+

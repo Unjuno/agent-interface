@@ -1,0 +1,229 @@
+{
+  "attempt_id": "win32-public-live-generation-20261023-r02",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-public-live-generation-20261023-r02",
+        "source_commit": "8f4aa65163dee86024371f8ad1e46888ef04de2f"
+      },
+      "name": "attempt_and_source_pinned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "platform": "win32",
+        "resource_commands": [],
+        "scope": "one public guarded-win32 call on registered create_server tools; two owned fixture_app HWND generations; no input dispatch"
+      },
+      "name": "windows_only_no_shared_resources",
+      "passed": true
+    },
+    {
+      "evidence": [
+        {
+          "close_posted": true,
+          "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\effect.json",
+          "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\events.jsonl",
+          "exit_code": 0,
+          "hwnd": 55118154,
+          "label": "generation-a",
+          "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture.log",
+          "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture-meta.json",
+          "pid": 25772,
+          "window_exists_after_exit": false
+        },
+        {
+          "close_posted": true,
+          "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\effect.json",
+          "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\events.jsonl",
+          "exit_code": 0,
+          "hwnd": 54527848,
+          "label": "generation-b",
+          "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture.log",
+          "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture-meta.json",
+          "pid": 25152,
+          "window_exists_after_exit": false
+        }
+      ],
+      "name": "two_owned_fixture_generations",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "a": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+        "b": "37feae2ee110121942435c8ba4e72e974e37d0ecf93d8226f75180d235fcc00f"
+      },
+      "name": "actual_generation_changed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admit": {
+          "action": {
+            "metadata": {
+              "source": "synthetic_public_mcp_admission"
+            },
+            "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "result": null,
+            "status": "admitted",
+            "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+          },
+          "call_id": "30e09f1b85194dfeb605759a8d612226",
+          "cancellation": null,
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "replay_allowed": false,
+          "scope": "synthetic_only",
+          "status": "admitted",
+          "task_effect": null,
+          "task_success": null
+        },
+        "bind": {
+          "expires_in_ms": 60000,
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "bound",
+          "target_binding_id": "05a3ed36f77247529e0cb52328fe1354",
+          "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+          "task_success": null,
+          "visual_observation": false
+        }
+      },
+      "name": "public_bind_and_admit_pin_generation_a",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action": {
+          "metadata": {
+            "source": "synthetic_public_mcp_admission"
+          },
+          "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "result": {
+            "error": "target_generation_changed_before_start",
+            "replay_allowed": false,
+            "status": "unknown",
+            "task_success": null
+          },
+          "status": "unknown",
+          "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+        },
+        "producer_factory_calls": [],
+        "start": {
+          "action": {
+            "metadata": {
+              "source": "synthetic_public_mcp_admission"
+            },
+            "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "result": {
+              "error": "target_generation_changed_before_start",
+              "replay_allowed": false,
+              "status": "unknown",
+              "task_success": null
+            },
+            "status": "unknown",
+            "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+          },
+          "call_id": "30e09f1b85194dfeb605759a8d612226",
+          "cancellation": null,
+          "input_dispatched": false,
+          "operation_invoked": true,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "scope": "synthetic_only",
+          "status": "unknown",
+          "task_effect": null,
+          "task_success": null
+        }
+      },
+      "name": "public_start_fails_closed_before_producer",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "owner": {
+          "cleanup_deadline_ns": null,
+          "deadline_ns": 458298421000000,
+          "obligations": [
+            "key:CTRL"
+          ],
+          "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "phase": "unknown",
+          "producer_exit_code": null,
+          "producer_gate_state": "closed",
+          "producer_identity": null,
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "unknown",
+          "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5",
+          "task_success": null,
+          "uncertainty": "target_generation_changed_before_start"
+        },
+        "retained": {
+          "action": {
+            "metadata": {
+              "source": "synthetic_public_mcp_admission"
+            },
+            "operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "result": {
+              "error": "target_generation_changed_before_start",
+              "replay_allowed": false,
+              "status": "unknown",
+              "task_success": null
+            },
+            "status": "unknown",
+            "target_generation": "c3aa596e15b80fad4b47e6a2c5be7bdf3760c1653628e930f0500a43ac30d8b5"
+          },
+          "call_id": "30e09f1b85194dfeb605759a8d612226",
+          "cancellation": null,
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "replay_allowed": false,
+          "task_effect": null,
+          "task_success": null
+        }
+      },
+      "name": "interface_results_and_owner_retain_unknown",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "cleanup_errors": [],
+        "fixtures": [
+          {
+            "close_posted": true,
+            "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\effect.json",
+            "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\events.jsonl",
+            "exit_code": 0,
+            "hwnd": 55118154,
+            "label": "generation-a",
+            "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture.log",
+            "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-a\\fixture-meta.json",
+            "pid": 25772,
+            "window_exists_after_exit": false
+          },
+          {
+            "close_posted": true,
+            "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\effect.json",
+            "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\events.jsonl",
+            "exit_code": 0,
+            "hwnd": 54527848,
+            "label": "generation-b",
+            "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture.log",
+            "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_live_generation_20261023_r02\\run\\generation-b\\fixture-meta.json",
+            "pid": 25152,
+            "window_exists_after_exit": false
+          }
+        ]
+      },
+      "name": "cleanup_and_no_input",
+      "passed": true
+    }
+  ],
+  "passed": 6,
+  "schema": "win32-public-live-generation-audit-v1",
+  "source_commit": "8f4aa65163dee86024371f8ad1e46888ef04de2f",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 8
+}

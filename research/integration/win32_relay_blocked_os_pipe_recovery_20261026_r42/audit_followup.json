@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-public-relay-os-pipe-r42-20261026",
+  "classification": "FAIL_OR_UNKNOWN_FIRST_OUTCOME_RETAINED",
+  "docker_used": false,
+  "error": "SHIFT-down was not independently observed before pipe pressure",
+  "fixture_exit_code": 0,
+  "followup_test": {
+    "green": "passed with the 30-test owner suite; related supervised 20-test and composition 1-test suites passed normal and optimized",
+    "name": "runtime.cli_v1.test_owned_win32_session.OwnedWin32SessionTests.test_generation_refusal_without_producer_returns_retained_action",
+    "red": "failed with ValueError: unknown caller action or producer"
+  },
+  "original_foreground_restored": true,
+  "pretrial_hashes": {
+    "all_pass": true,
+    "count": 10,
+    "passed": 10
+  },
+  "pretrial_scope_limit": {
+    "not_preregistered": true,
+    "omitted_relevant_source": "runtime/cli_v1/owned_win32_session.py",
+    "qualification": "Do not treat the listed 10/10 frozen hashes as complete source freeze coverage.",
+    "retrospective_git_blob_sha256": "6a8b878f1582be4c8f686708973ed10cc8b628c203644088d6c629c6f309a51d",
+    "source_commit": "51f4652e59acdfcf3709916340f584ab083a7a82"
+  },
+  "raw_hashes": {
+    "all_pass": true,
+    "count": 17,
+    "passed": 17
+  },
+  "wslc_used": false
+}

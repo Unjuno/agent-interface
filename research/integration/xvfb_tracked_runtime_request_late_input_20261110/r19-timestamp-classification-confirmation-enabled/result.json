@@ -1,0 +1,50 @@
+{
+  "cancel": null,
+  "conditions": {
+    "cancel_return_bound_ms": 3000,
+    "cancellation_transaction_timeout_s": 4.0,
+    "child_cancel_ack_withheld_s": 1.0,
+    "continue_after_nonneutral_release": false,
+    "delayed_keypress_ms": 250,
+    "effect_multiplicity_evidence": "per-handler CARDINAL count; separate X-client readback",
+    "fresh_session_same_x_server": true,
+    "fresh_target_is_distinct_window": true,
+    "fresh_task_expected_effect": [
+      3
+    ],
+    "fresh_task_key": "c",
+    "input_obligation_publisher_trace": true,
+    "late_keypress_outcome": "record either result; do not assume queue cancellation",
+    "owner_process_method_trace": true,
+    "prestarted_cancel_supervisor": false,
+    "terminal_result_bound_ms": 5000,
+    "tracked_delayed_second_press": true,
+    "xvfb_server_pause_ms": 0
+  },
+  "error": "Can't connect to display \":88\": [Errno 111] Connection refused",
+  "error_type": "DisplayConnectionError",
+  "final_cleanup": null,
+  "independent_release_readback": null,
+  "independent_task_oracle": null,
+  "input_before_cancel": null,
+  "late_request_horizon_readback": null,
+  "owner_release_attempt": null,
+  "partial_application_event_trace": [],
+  "schema": "agent-interface/standard-mcp-xvfb-blocked-release-v2",
+  "scope": "standard MCP caller; private Xvfb; runtime-tracked delayed second press; synthetic app",
+  "source_identity": {
+    "github_job": null,
+    "github_run_id": null,
+    "github_sha": null,
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.2 (main, May 12 2026, 05:17:27) [GCC 12.2.0]"
+  },
+  "status": "FAIL",
+  "synthetic_application_effect": null,
+  "terminal": null,
+  "timing_ns": {},
+  "xvfb": {
+    "reason": "xvfb_pid_not_supplied",
+    "status": "unavailable"
+  }
+}

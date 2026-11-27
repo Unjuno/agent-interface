@@ -1,0 +1,9 @@
+{
+  "run_id": "AI-XVFB-CALL-EFFECT-TIMING-20261022-R01",
+  "test_command_exit_code": 0,
+  "test_stdout_summary": "Ran 1 test in 9.363s; OK",
+  "wsl_test_wrapper_exit_code": 1,
+  "post_trial_noop_command": "wsl.exe -d Ubuntu -e bash -lc 'set -euo pipefail; printf diagnostic-noop=ok; exit 0'",
+  "post_trial_noop_wrapper_exit_code": 1,
+  "interpretation": "The WSL host wrapper reports exit 1 even for a no-op bash exit 0. Preserve both statuses; use the inner timeout/test status and raw unittest output for test disposition, while recording the outer wrapper as unreliable."
+}

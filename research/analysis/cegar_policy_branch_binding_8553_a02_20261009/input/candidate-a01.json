@@ -1,0 +1,232 @@
+{
+  "cases": [
+    {
+      "case_id": "spurious_loss_safe_separator",
+      "cegar": {
+        "policy": {
+          "action": "inspect",
+          "branches": [
+            {
+              "observation": [
+                "blue"
+              ],
+              "policy": {
+                "action": "right",
+                "branches": [
+                  {
+                    "observation": [],
+                    "policy": {
+                      "action": "GOAL",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "observation": [
+                "red"
+              ],
+              "policy": {
+                "action": "left",
+                "branches": [
+                  {
+                    "observation": [],
+                    "policy": {
+                      "action": "GOAL",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "predicates_used": [
+          "p_color"
+        ],
+        "refinements": [
+          {
+            "added": "p_color",
+            "verdict": "RECOVERABLE"
+          }
+        ],
+        "verdict": "RECOVERABLE"
+      },
+      "coarse": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      },
+      "concrete_validation_verdict": "RECOVERABLE",
+      "fixed_fine": {
+        "policy": {
+          "action": "inspect",
+          "branches": [
+            {
+              "observation": [
+                "blue",
+                "early",
+                "same"
+              ],
+              "policy": {
+                "action": "right",
+                "branches": [
+                  {
+                    "observation": [],
+                    "policy": {
+                      "action": "GOAL",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "observation": [
+                "red",
+                "early",
+                "same"
+              ],
+              "policy": {
+                "action": "left",
+                "branches": [
+                  {
+                    "observation": [],
+                    "policy": {
+                      "action": "GOAL",
+                      "branches": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "verdict": "RECOVERABLE"
+      }
+    },
+    {
+      "case_id": "spurious_recovery_unsafe_only_separator",
+      "cegar": {
+        "policy": null,
+        "predicates_used": [],
+        "refinements": [
+          {
+            "counterexample": "concrete-validation",
+            "result": "spurious-recovery"
+          }
+        ],
+        "verdict": "UNKNOWN"
+      },
+      "coarse": {
+        "policy": {
+          "action": "go",
+          "branches": [
+            {
+              "observation": [],
+              "policy": {
+                "action": "GOAL",
+                "branches": []
+              }
+            }
+          ]
+        },
+        "verdict": "RECOVERABLE"
+      },
+      "concrete_validation_verdict": "NOT_RECOVERABLE",
+      "fixed_fine": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      }
+    },
+    {
+      "case_id": "genuine_nonrecoverable",
+      "cegar": {
+        "policy": null,
+        "predicates_used": [],
+        "refinements": [],
+        "verdict": "NOT_RECOVERABLE"
+      },
+      "coarse": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      },
+      "concrete_validation_verdict": "NOT_RECOVERABLE",
+      "fixed_fine": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      }
+    },
+    {
+      "case_id": "action_equivalent_aliases",
+      "cegar": {
+        "policy": {
+          "action": "recover",
+          "branches": [
+            {
+              "observation": [],
+              "policy": {
+                "action": "GOAL",
+                "branches": []
+              }
+            }
+          ]
+        },
+        "predicates_used": [],
+        "refinements": [],
+        "verdict": "RECOVERABLE"
+      },
+      "coarse": {
+        "policy": {
+          "action": "recover",
+          "branches": [
+            {
+              "observation": [],
+              "policy": {
+                "action": "GOAL",
+                "branches": []
+              }
+            }
+          ]
+        },
+        "verdict": "RECOVERABLE"
+      },
+      "concrete_validation_verdict": "RECOVERABLE",
+      "fixed_fine": {
+        "policy": {
+          "action": "recover",
+          "branches": [
+            {
+              "observation": [],
+              "policy": {
+                "action": "GOAL",
+                "branches": []
+              }
+            }
+          ]
+        },
+        "verdict": "RECOVERABLE"
+      }
+    },
+    {
+      "case_id": "deadline_exhaustion",
+      "cegar": {
+        "policy": null,
+        "predicates_used": [],
+        "refinements": [],
+        "verdict": "NOT_RECOVERABLE"
+      },
+      "coarse": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      },
+      "concrete_validation_verdict": "NOT_RECOVERABLE",
+      "fixed_fine": {
+        "policy": null,
+        "verdict": "NOT_RECOVERABLE"
+      }
+    }
+  ],
+  "fixture_sha256": "3ee208ae8d06e5608206b93be0f996fcc2f81e9ece6beead1d6ae86b69699306",
+  "schema": "recovery-abstraction-candidate-v1"
+}

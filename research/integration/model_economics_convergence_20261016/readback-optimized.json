@@ -1,0 +1,56 @@
+{
+  "decision": "RETAIN_ADOPTION_COUNTEREXAMPLES_AND_MANIFEST_GAP",
+  "probe": [
+    {
+      "mode": 0,
+      "cells": 4,
+      "current_contract_methods_passed": 9,
+      "legacy_contract_control_methods_passed": 2,
+      "expected_wholesale_candidate_failures": 2,
+      "expected_current_legacy_subtest_errors": 6,
+      "current_and_candidate_rows": 20,
+      "rejected_mutants": [
+        "false-candidate-pass",
+        "lost-current-turn",
+        "zero-unknown-usage",
+        "false-task-success",
+        "missing-cell"
+      ]
+    },
+    {
+      "mode": 1,
+      "cells": 4,
+      "current_contract_methods_passed": 9,
+      "legacy_contract_control_methods_passed": 2,
+      "expected_wholesale_candidate_failures": 2,
+      "expected_current_legacy_subtest_errors": 6,
+      "current_and_candidate_rows": 20,
+      "rejected_mutants": [
+        "false-candidate-pass",
+        "lost-current-turn",
+        "zero-unknown-usage",
+        "false-task-success",
+        "missing-cell"
+      ]
+    }
+  ],
+  "multiverse": {
+    "saved_raw_audit": "PASS_METHOD_SCOPED",
+    "original_manifest": "HOLD_RUN_DIGEST_MISMATCH",
+    "mismatches": [
+      {
+        "path": "results/formal-01/RUN.json",
+        "expected": "66dadc1690c9954f4c5b39c32062db924fb7efb6f4c8d5f3ca0c64d78321b685",
+        "actual": "5d83cec36c284605475eba54f169055d4ff07d6cbfa04196ff232ae8402f42df"
+      }
+    ],
+    "byte_reconciliation": "removing exactly one final LF matches the original RUN hash; JSON payload unchanged; published file retained unchanged",
+    "cohorts": 5,
+    "rejected_mutants": [
+      "drop-cohort",
+      "change-allocation",
+      "change-registry"
+    ]
+  },
+  "scope": "inert protocol accounting and saved synthetic method only; no provider/token price/live route effect or performance qualification"
+}

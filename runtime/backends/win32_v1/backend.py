@@ -7,12 +7,40 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+import json
+import secrets
 import sys
 import time
 from ctypes import wintypes
+from contextvars import ContextVar
 from typing import Any
 
 from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate_backend_manifest
+
+
+_execution_target = ContextVar("win32_execution_target", default=None)
+_cleanup_active = ContextVar("win32_cleanup_active", default=False)
+_program_emissions = ContextVar("win32_program_emissions", default=None)
+_program_operation_receipt = ContextVar("win32_program_operation_receipt", default=None)
+_release_attempt_context = ContextVar("win32_release_attempt_context", default=None)
+_task_authority_deadline = ContextVar("win32_task_authority_deadline", default=None)
+
+
+def _program_operation_set_phase(phase: int) -> None:
+    context = _program_operation_receipt.get()
+    if context is None or _cleanup_active.get():
+        return
+    receipts, operation_index = context
+    receipts[operation_index * 4] = phase
+
+
+def _program_operation_increment(field: int, amount: int = 1) -> None:
+    context = _program_operation_receipt.get()
+    if context is None or _cleanup_active.get():
+        return
+    receipts, operation_index = context
+    slot = operation_index * 4 + field
+    receipts[slot] = int(receipts[slot]) + amount
 
 
 class Win32BackendError(RuntimeError):
@@ -21,15 +49,18 @@ class Win32BackendError(RuntimeError):
 
 class Win32ExecutionError(Win32BackendError):
     """Owned envelope retaining execution and cleanup evidence."""
-    def __init__(self, original_error, release_receipt, cleanup_error):
+    def __init__(self, original_error, release_receipt, cleanup_error,
+                 program_emissions=None):
         super().__init__(str(original_error))
         self.original_error = original_error
         self.release_receipt = release_receipt
         self.cleanup_error = cleanup_error
+        self.program_emissions = program_emissions
 
 
 
 SW_RESTORE = 9
+GA_ROOT = 2
 PW_CLIENTONLY = 0x00000001
 SRCCOPY = 0x00CC0020
 DIB_RGB_COLORS = 0
@@ -38,6 +69,9 @@ INPUT_MOUSE = 0
 INPUT_KEYBOARD = 1
 KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_UNICODE = 0x0004
+KEYEVENTF_SCANCODE = 0x0008
+KEYEVENTF_EXTENDEDKEY = 0x0001
+MAPVK_VK_TO_VSC_EX = 4
 MOUSEEVENTF_LEFTDOWN = 0x0002
 MOUSEEVENTF_LEFTUP = 0x0004
 MOUSEEVENTF_RIGHTDOWN = 0x0008
@@ -63,6 +97,14 @@ VK_UP = 0x26
 VK_RIGHT = 0x27
 VK_DOWN = 0x28
 VK_DELETE = 0x2E
+UOI_NAME = 2
+UOI_IO = 6
+DESKTOP_READOBJECTS = 0x0001
+DESKTOP_HOOKCONTROL = 0x0008
+PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+TOKEN_QUERY = 0x0008
+TOKEN_INTEGRITY_LEVEL = 25
+TARGET_INCARNATION_PROPERTY = "Unjuno.AgentInterface.Win32TargetIncarnation.v1"
 
 KEY_ALIASES = {
     "CTRL": VK_CONTROL, "CONTROL": VK_CONTROL, "SHIFT": VK_SHIFT,
@@ -70,6 +112,12 @@ KEY_ALIASES = {
     "TAB": VK_TAB, "ESC": VK_ESCAPE, "ESCAPE": VK_ESCAPE,
     "SPACE": VK_SPACE, "BACKSPACE": VK_BACK, "DELETE": VK_DELETE,
     "LEFT": VK_LEFT, "RIGHT": VK_RIGHT, "UP": VK_UP, "DOWN": VK_DOWN,
+}
+EXTENDED_ARROW_SCAN_CODES = {
+    VK_LEFT: 0x4B,
+    VK_UP: 0x48,
+    VK_RIGHT: 0x4D,
+    VK_DOWN: 0x50,
 }
 BUTTON_FLAGS = {
     "left": (MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP, VK_LBUTTON),
@@ -114,6 +162,11 @@ class RECT(ctypes.Structure):
                 ("right", wintypes.LONG), ("bottom", wintypes.LONG)]
 
 
+class FILETIME(ctypes.Structure):
+    _fields_ = [("dwLowDateTime", wintypes.DWORD),
+                ("dwHighDateTime", wintypes.DWORD)]
+
+
 class BITMAPINFOHEADER(ctypes.Structure):
     _fields_ = [("biSize", wintypes.DWORD), ("biWidth", wintypes.LONG),
                 ("biHeight", wintypes.LONG), ("biPlanes", wintypes.WORD),
@@ -153,12 +206,15 @@ def virtual_key(key: str) -> int:
 
 
 class Win32Backend:
-    def __init__(self, targets: dict[str, int]):
+    def __init__(self, targets: dict[str, int], *,
+                 program_emission_counter=None,
+                 program_operation_receipts=None):
         if sys.platform != "win32":
             raise Win32BackendError("Win32 backend requires Windows")
         self.user32 = ctypes.WinDLL("user32", use_last_error=True)
         self.gdi32 = ctypes.WinDLL("gdi32", use_last_error=True)
         self.kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        self.advapi32 = ctypes.WinDLL("advapi32", use_last_error=True)
         self._configure_api()
         try:
             self.user32.SetProcessDPIAware()
@@ -169,13 +225,36 @@ class Win32Backend:
             if not self.user32.IsWindow(hwnd):
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
+        self.held_key_encodings: dict[str, str | None] = {}
+        self.held_key_targets: dict[str, str | None] = {}
         self.held_buttons: set[str] = set()
+        self.held_button_targets: dict[str, str | None] = {}
+        self.focused_target: str | None = None
+        self._last_state_query_witness: list[dict[str, Any]] = []
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
+        if (program_emission_counter is not None
+                and (type(program_emission_counter) is not ctypes.c_long
+                     or ctypes.addressof(program_emission_counter) % 4 != 0)):
+            raise Win32BackendError("invalid program emission counter")
+        self._program_emission_counter = program_emission_counter
+        self._program_operation_receipts = program_operation_receipts
+        self.capture_artifacts = None
+        self._target_incarnation_bindings: dict[tuple[str, int], dict[str, Any]] = {}
+        self._closed = False
+        self._close_report = None
 
     def _configure_api(self) -> None:
         self.user32.IsWindow.argtypes = [wintypes.HWND]
         self.user32.IsWindow.restype = wintypes.BOOL
+        self.user32.SetPropW.argtypes = [wintypes.HWND, wintypes.LPCWSTR,
+                                         wintypes.HANDLE]
+        self.user32.SetPropW.restype = wintypes.BOOL
+        self.user32.GetPropW.argtypes = [wintypes.HWND, wintypes.LPCWSTR]
+        self.user32.GetPropW.restype = wintypes.HANDLE
+        self.user32.GetWindowThreadProcessId.argtypes = [
+            wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
+        self.user32.GetWindowThreadProcessId.restype = wintypes.DWORD
         self.user32.GetClientRect.argtypes = [wintypes.HWND, ctypes.POINTER(RECT)]
         self.user32.GetClientRect.restype = wintypes.BOOL
         self.user32.ClientToScreen.argtypes = [wintypes.HWND, ctypes.POINTER(POINT)]
@@ -186,12 +265,29 @@ class Win32Backend:
         self.user32.BringWindowToTop.restype = wintypes.BOOL
         self.user32.ShowWindow.argtypes = [wintypes.HWND, ctypes.c_int]
         self.user32.GetForegroundWindow.restype = wintypes.HWND
+        self.user32.GetCursorPos.argtypes = [ctypes.POINTER(POINT)]
+        self.user32.GetCursorPos.restype = wintypes.BOOL
+        self.user32.WindowFromPoint.argtypes = [POINT]
+        self.user32.WindowFromPoint.restype = wintypes.HWND
+        self.user32.GetAncestor.argtypes = [wintypes.HWND, wintypes.UINT]
+        self.user32.GetAncestor.restype = wintypes.HWND
         self.user32.SetCursorPos.argtypes = [ctypes.c_int, ctypes.c_int]
         self.user32.SetCursorPos.restype = wintypes.BOOL
         self.user32.SendInput.argtypes = [wintypes.UINT, ctypes.POINTER(INPUT), ctypes.c_int]
         self.user32.SendInput.restype = wintypes.UINT
+        self.user32.MapVirtualKeyW.argtypes = [wintypes.UINT, wintypes.UINT]
+        self.user32.MapVirtualKeyW.restype = wintypes.UINT
         self.user32.GetAsyncKeyState.argtypes = [ctypes.c_int]
         self.user32.GetAsyncKeyState.restype = wintypes.SHORT
+        self.user32.OpenInputDesktop.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+        self.user32.OpenInputDesktop.restype = wintypes.HANDLE
+        self.user32.GetUserObjectInformationW.argtypes = [wintypes.HANDLE, ctypes.c_int,
+            wintypes.LPVOID, wintypes.DWORD, ctypes.POINTER(wintypes.DWORD)]
+        self.user32.GetUserObjectInformationW.restype = wintypes.BOOL
+        self.user32.GetThreadDesktop.argtypes = [wintypes.DWORD]
+        self.user32.GetThreadDesktop.restype = wintypes.HANDLE
+        self.user32.CloseDesktop.argtypes = [wintypes.HANDLE]
+        self.user32.CloseDesktop.restype = wintypes.BOOL
         self.user32.GetDC.argtypes = [wintypes.HWND]
         self.user32.GetDC.restype = wintypes.HDC
         self.user32.ReleaseDC.argtypes = [wintypes.HWND, wintypes.HDC]
@@ -216,6 +312,23 @@ class Win32Backend:
                                       ctypes.c_int, ctypes.c_int, wintypes.HDC,
                                       ctypes.c_int, ctypes.c_int, wintypes.DWORD]
         self.gdi32.BitBlt.restype = wintypes.BOOL
+        self.kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL,
+                                              wintypes.DWORD]
+        self.kernel32.OpenProcess.restype = wintypes.HANDLE
+        self.kernel32.GetProcessTimes.argtypes = [
+            wintypes.HANDLE, ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME),
+            ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME)]
+        self.kernel32.GetProcessTimes.restype = wintypes.BOOL
+        self.kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+        self.kernel32.CloseHandle.restype = wintypes.BOOL
+        self.kernel32.GetCurrentThreadId.restype = wintypes.DWORD
+        self.kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        self.advapi32.OpenProcessToken.argtypes = [wintypes.HANDLE, wintypes.DWORD,
+                                                   ctypes.POINTER(wintypes.HANDLE)]
+        self.advapi32.OpenProcessToken.restype = wintypes.BOOL
+        self.advapi32.GetTokenInformation.argtypes = [wintypes.HANDLE, ctypes.c_int,
+            wintypes.LPVOID, wintypes.DWORD, ctypes.POINTER(wintypes.DWORD)]
+        self.advapi32.GetTokenInformation.restype = wintypes.BOOL
 
     def manifest(self) -> dict[str, Any]:
         row = capability_manifest(
@@ -237,6 +350,158 @@ class Win32Backend:
             raise Win32BackendError(f"unknown or stale target {name}")
         return hwnd
 
+    def process_identity(self, target: str) -> dict[str, int]:
+        """Return the HWND owner's PID and process creation time, fail closed.
+
+        The process handle is opened only for PROCESS_QUERY_LIMITED_INFORMATION.
+        The HWND-to-PID/TID association is sampled again after GetProcessTimes
+        to reject an observed owner change during the query. This is a
+        generation discriminator, not an atomic guarantee against later change.
+        """
+        hwnd = self._target(target)
+        identity = self._window_owner_identity_for_hwnd(hwnd)
+        return {"pid": identity["pid"],
+                "creation_time_100ns": identity["creation_time_100ns"]}
+
+    def _window_owner_identity_for_hwnd(self, hwnd: int) -> dict[str, int]:
+        """Read process and GUI-thread identity for one resolved HWND."""
+        pid = wintypes.DWORD()
+        thread_id = self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+        if not thread_id or not pid.value:
+            raise Win32BackendError("GetWindowThreadProcessId failed")
+        owner = self.kernel32.OpenProcess(0x1000, False, pid.value)
+        if not owner:
+            raise Win32BackendError("OpenProcess for target identity failed")
+        try:
+            creation, exited, kernel, user = FILETIME(), FILETIME(), FILETIME(), FILETIME()
+            if not self.kernel32.GetProcessTimes(
+                    owner, ctypes.byref(creation), ctypes.byref(exited),
+                    ctypes.byref(kernel), ctypes.byref(user)):
+                raise Win32BackendError("GetProcessTimes for target identity failed")
+            confirmed_pid = wintypes.DWORD()
+            confirmed_thread_id = self.user32.GetWindowThreadProcessId(
+                hwnd, ctypes.byref(confirmed_pid))
+            if (not confirmed_thread_id or confirmed_thread_id != thread_id
+                    or confirmed_pid.value != pid.value):
+                raise Win32BackendError("target owner changed during identity query")
+            created_100ns = ((int(creation.dwHighDateTime) << 32)
+                             | int(creation.dwLowDateTime))
+            if created_100ns <= 0:
+                raise Win32BackendError("invalid target process creation time")
+            return {"pid": int(pid.value),
+                    "creation_time_100ns": created_100ns,
+                    "window_thread_id": int(thread_id)}
+        finally:
+            self.kernel32.CloseHandle(owner)
+
+    def target_generation(self, target: str) -> str:
+        """Return a fail-closed SHA-256 discriminator for the configured HWND.
+
+        The digest binds the numeric HWND to its GUI thread, owner PID, and
+        process creation time and a per-window-lifetime property. A reused
+        numeric HWND without the original property is refused for this backend.
+        The property read is not an atomic fence against destruction immediately
+        after the check.
+        """
+        if getattr(self, "_closed", False):
+            raise Win32BackendError("target generation unavailable after backend close")
+        hwnd = self._target(target)
+        identity = self._window_owner_identity_for_hwnd(hwnd)
+        if self._target(target) != hwnd:
+            raise Win32BackendError("target HWND changed during generation query")
+        cookie = self._target_incarnation_cookie(target, hwnd, identity)
+        if self._target(target) != hwnd:
+            raise Win32BackendError("target HWND changed during generation query")
+        payload = [hwnd, identity["window_thread_id"], identity["pid"],
+                   identity["creation_time_100ns"], cookie]
+        return hashlib.sha256(json.dumps(
+            payload, separators=(",", ":")).encode("ascii")).hexdigest()
+
+    def _target_incarnation_cookie(self, target: str, hwnd: int,
+                                   identity: dict[str, int]) -> int:
+        bindings = getattr(self, "_target_incarnation_bindings", None)
+        if bindings is None:
+            bindings = self._target_incarnation_bindings = {}
+        key = (target, hwnd)
+        binding = bindings.get(key)
+        try:
+            current = self._handle_value(self.user32.GetPropW(
+                hwnd, TARGET_INCARNATION_PROPERTY))
+        except Exception as error:
+            raise Win32BackendError("target incarnation property read failed") from error
+        if binding is not None:
+            if (binding["identity"] != identity or
+                    current != binding["cookie"]):
+                raise Win32BackendError("target HWND incarnation property changed")
+            return current
+        if current:
+            cookie = current
+        else:
+            cookie = secrets.randbits(ctypes.sizeof(ctypes.c_void_p) * 8 - 1) or 1
+            ctypes.set_last_error(0)
+            try:
+                set_ok = self.user32.SetPropW(
+                    hwnd, TARGET_INCARNATION_PROPERTY, wintypes.HANDLE(cookie))
+                error_code = ctypes.get_last_error()
+            except Exception as error:
+                raise Win32BackendError("target incarnation property set failed") from error
+            if not set_ok:
+                raise Win32BackendError(
+                    f"target incarnation property set failed error={error_code}")
+            try:
+                current = self._handle_value(self.user32.GetPropW(
+                    hwnd, TARGET_INCARNATION_PROPERTY))
+            except Exception as error:
+                raise Win32BackendError(
+                    "target incarnation property readback failed") from error
+            if current != cookie:
+                raise Win32BackendError("target incarnation property readback mismatch")
+        bindings[key] = {"hwnd": hwnd, "identity": dict(identity),
+                         "cookie": cookie}
+        return cookie
+
+    @staticmethod
+    def _handle_value(value) -> int:
+        if value is None:
+            return 0
+        if type(value) is int:
+            return value
+        return int(ctypes.cast(value, ctypes.c_void_p).value or 0)
+
+    def close(self) -> dict[str, Any]:
+        """Close this backend while leaving HWND-lifetime markers to Windows.
+
+        A property can be shared by multiple backend instances. Win32 has no
+        compare-and-remove operation, so deleting it here could invalidate a
+        concurrent session or remove a marker another session just replaced.
+        Windows destroys the property with its HWND.
+        """
+        if getattr(self, "_closed", False):
+            return self._close_report
+        results = []
+        for binding in getattr(self, "_target_incarnation_bindings", {}).values():
+            row = {"hwnd": binding["hwnd"],
+                   "status": "retained_until_window_destroyed"}
+            try:
+                if not self.user32.IsWindow(binding["hwnd"]):
+                    row["status"] = "window_destroyed"
+                else:
+                    current = self._handle_value(self.user32.GetPropW(
+                        binding["hwnd"], TARGET_INCARNATION_PROPERTY))
+                    if current == 0:
+                        row["status"] = "property_missing"
+                    elif current != binding["cookie"]:
+                        row["status"] = "property_value_changed"
+            except Exception as error:
+                row["error"] = repr(error)
+            results.append(row)
+        self._close_report = {
+            "status": "closed",
+            "property_cleanup": results,
+        }
+        self._closed = True
+        return self._close_report
+
     def geometry(self, target: str) -> dict[str, int]:
         hwnd = self._target(target)
         rect = RECT()
@@ -253,13 +518,21 @@ class Win32Backend:
         hwnd = self._target(target)
         self.user32.ShowWindow(hwnd, SW_RESTORE)
         self.user32.BringWindowToTop(hwnd)
-        self.user32.SetForegroundWindow(hwnd)
+        set_foreground_result = bool(self.user32.SetForegroundWindow(hwnd))
         deadline = time.monotonic() + 1.0
         while time.monotonic() < deadline:
-            if int(self.user32.GetForegroundWindow() or 0) == hwnd:
+            observed = self._handle_value(self.user32.GetForegroundWindow())
+            if observed == hwnd or (observed and self._handle_value(
+                    self.user32.GetAncestor(observed, GA_ROOT)) == hwnd):
+                self.focused_target = target
                 return
             time.sleep(0.01)
-        raise Win32BackendError("foreground focus verification failed")
+        observed_foreground_hwnd = self._handle_value(
+            self.user32.GetForegroundWindow())
+        raise Win32BackendError(
+            "foreground focus verification failed "
+            f"(SetForegroundWindow={set_foreground_result}, "
+            f"observed_foreground_hwnd={observed_foreground_hwnd})")
 
     def _root_point(self, target: str, frame: str, x: int, y: int) -> tuple[int, int]:
         if frame == "screen_physical_px":
@@ -269,23 +542,248 @@ class Win32Backend:
             return g["x"] + x, g["y"] + y
         raise Win32BackendError(f"unsupported frame {frame}")
 
-    def _send(self, item: INPUT) -> None:
-        array = (INPUT * 1)(item)
-        sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
-        if sent != 1:
-            raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
-        self.emissions += 1
+    def _require_foreground(self, target: str) -> None:
+        hwnd = self._target(target)
+        try:
+            foreground = self._handle_value(self.user32.GetForegroundWindow())
+            root = (self._handle_value(self.user32.GetAncestor(foreground, GA_ROOT))
+                    if foreground and foreground != hwnd else 0)
+        except Exception as error:
+            raise Win32BackendError("foreground focus could not be verified") from error
+        if foreground != hwnd and root != hwnd:
+            raise Win32BackendError("foreground focus changed")
 
-    def _send_key(self, vk: int, down: bool) -> None:
+    def _send(self, item: INPUT) -> None:
+        target = _execution_target.get()
+        recovery_target = getattr(self, "_recovery_target", None)
+        is_key_up = item.type == INPUT_KEYBOARD and bool(item.ki.dwFlags & KEYEVENTF_KEYUP)
+        is_mouse_up = (item.type == INPUT_MOUSE and item.mi.dwFlags in
+                       (MOUSEEVENTF_LEFTUP, MOUSEEVENTF_RIGHTUP, MOUSEEVENTF_MIDDLEUP))
+        deadline_ns = _task_authority_deadline.get()
+        if (deadline_ns is not None and not _cleanup_active.get()
+                and not (is_key_up or is_mouse_up)
+                and time.monotonic_ns() >= deadline_ns):
+            _program_operation_set_phase(6)
+            raise Win32BackendError("LEASE_EXPIRED_DURING_EXECUTION")
+        if recovery_target is not None:
+            # Orphan recovery uses global SendInput. Verify its receiver for
+            # every event, including UP and cleanup events, because an UP can
+            # otherwise affect whichever unrelated window owns the foreground.
+            Win32Backend._require_foreground(self, recovery_target)
+        elif target is not None and not _cleanup_active.get() and not (is_key_up or is_mouse_up):
+            Win32Backend._require_foreground(self, target)
+        array = (INPUT * 1)(item)
+        _program_operation_set_phase(3)
+        _program_operation_increment(1)
+        attempt = _release_attempt_context.get()
+        if isinstance(attempt, dict):
+            attempt["sendinput_call_started"] = True
+        try:
+            sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
+        except Exception as error:
+            _program_operation_set_phase(7)
+            if isinstance(attempt, dict):
+                attempt["sendinput_error_type"] = type(error).__name__
+            raise
+        if isinstance(sent, int) and sent > 0:
+            _program_operation_increment(2, int(sent))
+        _program_operation_set_phase(4)
+        if isinstance(attempt, dict):
+            attempt["sendinput_return_count"] = (
+                int(sent) if isinstance(sent, int) else None)
+        if sent != 1:
+            _program_operation_set_phase(7)
+            get_last_error = getattr(ctypes, "get_last_error", None)
+            error_code = get_last_error() if callable(get_last_error) else None
+            raise Win32BackendError(f"SendInput failed error={error_code}")
+        Win32Backend._record_emission(self)
+
+    def _record_emission(self) -> None:
+        self.emissions += 1
+        count = _program_emissions.get()
+        if count is not None and not _cleanup_active.get():
+            _program_emissions.set(count + 1)
+            counter = getattr(self, "_program_emission_counter", None)
+            if counter is not None:
+                # This is a single-writer aligned 32-bit shared value. Avoid a
+                # process-owned lock that could remain held on forced exit. If
+                # exit interrupts this read-modify-write, the count stays low.
+                counter.value += 1
+
+    def _record_action(self) -> None:
+        """Count a confirmed OS input action, including SetCursorPos moves."""
+        count = _program_emissions.get()
+        if count is not None and not _cleanup_active.get():
+            _program_operation_increment(3)
+            _program_operation_set_phase(9)
+            self.emissions += 1
+            _program_emissions.set(count + 1)
+            counter = getattr(self, "_program_emission_counter", None)
+            if counter is not None:
+                counter.value += 1
+
+    def _send_key(self, vk: int, down: bool, encoding: str | None = None) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
-        item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
+        flags = 0 if down else KEYEVENTF_KEYUP
+        if encoding == "scan_code":
+            mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+            scan_code = mapped & 0xFF
+            if not scan_code:
+                raise Win32BackendError(f"key {vk} has no scan code")
+            prefix = (mapped >> 8) & 0xFF
+            flags |= KEYEVENTF_SCANCODE
+            if prefix in {0xE0, 0xE1}:
+                flags |= KEYEVENTF_EXTENDEDKEY
+            item.ki = KEYBDINPUT(0, scan_code, flags, 0, 0)
+            self._send(item)
+            return
+        if encoding not in {None, "virtual_key"}:
+            raise Win32BackendError(f"unsupported key encoding {encoding!r}")
+        scan_code = EXTENDED_ARROW_SCAN_CODES.get(vk)
+        if scan_code is None:
+            item.ki = KEYBDINPUT(vk, 0, flags, 0, 0)
+        else:
+            item.ki = KEYBDINPUT(
+                0, scan_code,
+                flags | KEYEVENTF_SCANCODE | KEYEVENTF_EXTENDEDKEY, 0, 0,
+            )
         self._send(item)
 
-    def _key_is_down(self, vk: int) -> bool:
+    def _desktop_name(self, handle) -> str | None:
+        needed = wintypes.DWORD()
+        self.user32.GetUserObjectInformationW(handle, UOI_NAME, None, 0,
+                                              ctypes.byref(needed))
+        if not needed.value:
+            return None
+        buffer = ctypes.create_unicode_buffer(
+            needed.value // ctypes.sizeof(wintypes.WCHAR) + 2)
+        if not self.user32.GetUserObjectInformationW(
+                handle, UOI_NAME, buffer, ctypes.sizeof(buffer), ctypes.byref(needed)):
+            return None
+        return buffer.value
+
+    def _process_integrity_rid(self, process_handle) -> int | None:
+        token = wintypes.HANDLE()
+        if not self.advapi32.OpenProcessToken(process_handle, TOKEN_QUERY,
+                                             ctypes.byref(token)):
+            return None
         try:
-            return bool(self.user32.GetAsyncKeyState(vk) & 0x8000)
+            needed = wintypes.DWORD()
+            self.advapi32.GetTokenInformation(token, TOKEN_INTEGRITY_LEVEL,
+                None, 0, ctypes.byref(needed))
+            if not needed.value:
+                return None
+            buffer = ctypes.create_string_buffer(needed.value)
+            if not self.advapi32.GetTokenInformation(token, TOKEN_INTEGRITY_LEVEL,
+                    buffer, needed.value, ctypes.byref(needed)):
+                return None
+            sid = ctypes.c_void_p.from_buffer(buffer).value
+            if not sid:
+                return None
+            count = ctypes.c_ubyte.from_address(sid + 1).value
+            if not count:
+                return None
+            return ctypes.c_uint32.from_address(sid + 8 + 4 * (count - 1)).value
+        finally:
+            self.kernel32.CloseHandle(token)
+
+    def _async_key_state_query_witness(self, target: str | None):
+        """Return evidence that a zero GetAsyncKeyState sample means key-up here.
+
+        A zero sample is ambiguous unless this target is the foreground window
+        on the active input desktop, the caller can open that desktop with
+        hook-control rights, and the caller is at least as privileged as the
+        target. Any unavailable fact leaves the input obligation UNKNOWN.
+        """
+        targets = getattr(self, "targets", {})
+        if target not in targets:
+            return None
+        desktop = None
+        process = None
+        try:
+            hwnd = int(self.user32.GetForegroundWindow() or 0)
+            if hwnd != targets[target]:
+                return None
+            pid = wintypes.DWORD()
+            thread_id = int(self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)))
+            if not thread_id or not pid.value:
+                return None
+            desktop = self.user32.OpenInputDesktop(
+                0, False, DESKTOP_READOBJECTS | DESKTOP_HOOKCONTROL)
+            if not desktop:
+                return None
+            is_input = wintypes.DWORD()
+            needed = wintypes.DWORD()
+            if not self.user32.GetUserObjectInformationW(
+                    desktop, UOI_IO, ctypes.byref(is_input), ctypes.sizeof(is_input),
+                    ctypes.byref(needed)) or not is_input.value:
+                return None
+            input_name = self._desktop_name(desktop)
+            probe_desktop = self.user32.GetThreadDesktop(
+                self.kernel32.GetCurrentThreadId())
+            target_desktop = self.user32.GetThreadDesktop(thread_id)
+            probe_name = self._desktop_name(probe_desktop) if probe_desktop else None
+            target_name = self._desktop_name(target_desktop) if target_desktop else None
+            if not input_name or input_name != probe_name or input_name != target_name:
+                return None
+            process = self.kernel32.OpenProcess(
+                PROCESS_QUERY_LIMITED_INFORMATION, False, pid.value)
+            if not process:
+                return None
+            probe_rid = self._process_integrity_rid(self.kernel32.GetCurrentProcess())
+            target_rid = self._process_integrity_rid(process)
+            if probe_rid is None or target_rid is None or probe_rid < target_rid:
+                return None
+            # Recheck that the same configured foreground target still owns
+            # the active input desktop after the access and token queries.
+            if int(self.user32.GetForegroundWindow() or 0) != hwnd:
+                return None
+            return {"target": target, "hwnd": hwnd, "pid": int(pid.value),
+                    "thread_id": thread_id, "input_desktop": input_name,
+                    "input_desktop_active": True,
+                    "desktop_hookcontrol_opened": True,
+                    "probe_integrity_rid": probe_rid,
+                    "target_integrity_rid": target_rid}
+        except Exception:
+            return None
+        finally:
+            if process:
+                self.kernel32.CloseHandle(process)
+            if desktop:
+                self.user32.CloseDesktop(desktop)
+
+    def _key_down_state(self, vk: int, target: str | None = None) -> bool | None:
+        self._last_state_query_witness = []
+        try:
+            state = int(self.user32.GetAsyncKeyState(vk)) & 0x8001
         except Exception as error:
             raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
+        if state & 0x8000:
+            return True
+        if state & 1:
+            return False
+        before = self._async_key_state_query_witness(target)
+        if before is None:
+            return None
+        try:
+            confirmed = int(self.user32.GetAsyncKeyState(vk)) & 0x8001
+        except Exception as error:
+            raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
+        if confirmed & 0x8000:
+            return True
+        if confirmed & 1:
+            return False
+        after = self._async_key_state_query_witness(target)
+        if before is not None and after is not None and before == after:
+            self._last_state_query_witness = [before, after]
+            return False
+        return None
+
+    def _key_is_down(self, vk: int, target: str | None = None) -> bool:
+        state = self._key_down_state(vk, target)
+        if state is None:
+            raise Win32BackendError(f"key state is unknown for {vk}")
+        return state
 
     def _send_unicode_unit(self, unit: int, down: bool) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
@@ -293,22 +791,36 @@ class Win32Backend:
         item.ki = KEYBDINPUT(0, unit, flags, 0, 0)
         self._send(item)
 
-    def key_state(self, key: str, down: bool) -> None:
+    def key_state(self, key: str, down: bool, encoding: str | None = None) -> None:
         vk = virtual_key(key)
-        self._send_key(vk, down)
+        if down:
+            self._send_key(vk, True, encoding) if encoding is not None else self._send_key(vk, True)
+        else:
+            held_encoding = getattr(self, "held_key_encodings", {}).get(key)
+            if encoding is not None and held_encoding != encoding:
+                raise Win32BackendError(f"key UP encoding differs from held DOWN: {key}")
+            effective_encoding = held_encoding if encoding is None else encoding
+            self._send_key(vk, False, effective_encoding) if effective_encoding is not None else self._send_key(vk, False)
         if down:
             self.held_keys[key] = vk
-        elif self._key_is_down(vk):
+            if not hasattr(self, "held_key_encodings"):
+                self.held_key_encodings = {}
+            self.held_key_encodings[key] = encoding
+            if not hasattr(self, "held_key_targets"):
+                self.held_key_targets = {}
+            self.held_key_targets[key] = getattr(self, "focused_target", None)
+        elif self._key_is_down(vk, getattr(self, "held_key_targets", {}).get(
+                key, getattr(self, "focused_target", None))):
             # Do not let later operations run while an explicit UP remains
             # unresolved. The enclosing execute path will retain custody and
             # attempt cleanup before returning the failure.
             raise Win32BackendError(f"key UP unverified: {key}")
 
-    def key_chord(self, keys: list[str]) -> None:
+    def key_chord(self, keys: list[str], encoding: str | None = None) -> None:
         for key in keys:
-            self.key_state(key, True)
+            self.key_state(key, True, encoding) if encoding is not None else self.key_state(key, True)
         for key in reversed(keys):
-            self.key_state(key, False)
+            self.key_state(key, False, encoding) if encoding is not None else self.key_state(key, False)
 
     def text(self, value: str) -> None:
         if self.pending_unicode_ups:
@@ -320,10 +832,13 @@ class Win32Backend:
             self.pending_unicode_ups.remove(unit)
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
+        if not _cleanup_active.get():
+            Win32Backend._require_foreground(self, target)
         rx, ry = self._root_point(target, frame, x, y)
+        _program_operation_set_phase(8)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
-        self.emissions += 1
+        Win32Backend._record_action(self)
 
     def pointer_button(self, button: str, down: bool) -> None:
         if button not in BUTTON_FLAGS:
@@ -334,8 +849,32 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        elif self._key_is_down(BUTTON_FLAGS[button][2]):
+            if not hasattr(self, "held_button_targets"):
+                self.held_button_targets = {}
+            self.held_button_targets[button] = getattr(self, "focused_target", None)
+        elif self._key_is_down(BUTTON_FLAGS[button][2],
+                               getattr(self, "held_button_targets", {}).get(
+                                   button, getattr(self, "focused_target", None))):
             raise Win32BackendError(f"button UP unverified: {button}")
+
+    def _require_pointer_target(self, target: str) -> None:
+        """Refuse a global mouse-down when another top-level window owns the cursor."""
+        target_hwnd = self._target(target)
+        point = POINT()
+        if not self.user32.GetCursorPos(ctypes.byref(point)):
+            raise Win32BackendError("POINTER_TARGET_CHECK_CURSOR_UNAVAILABLE")
+        hit_hwnd = self._handle_value(self.user32.WindowFromPoint(point))
+        if not hit_hwnd:
+            raise Win32BackendError("POINTER_TARGET_CHECK_HIT_UNAVAILABLE")
+        root_hwnd = self._handle_value(
+            self.user32.GetAncestor(hit_hwnd, GA_ROOT))
+        if not root_hwnd:
+            raise Win32BackendError("POINTER_TARGET_CHECK_ROOT_UNAVAILABLE")
+        if root_hwnd != target_hwnd:
+            raise Win32BackendError(
+                "POINTER_TARGET_OCCLUDED "
+                f"(expected_hwnd={target_hwnd}, hit_hwnd={hit_hwnd}, "
+                f"root_hwnd={root_hwnd}, cursor=({point.x},{point.y}))")
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -397,6 +936,10 @@ class Win32Backend:
         self._target(target)
         return self.capture(target, frame, *region)
 
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
+        from .capture_artifacts import CaptureArtifacts
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
+
     def capture_pixels(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> bytes:
         if w <= 0 or h <= 0:
@@ -423,27 +966,22 @@ class Win32Backend:
 
     def capture(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> dict[str, Any]:
-        if w <= 0 or h <= 0:
-            raise Win32BackendError("capture dimensions must be positive")
-        if frame == "window_client":
-            hwnd = self._target(target)
-            g = self.geometry(target)
-            if x < 0 or y < 0 or x + w > g["width"] or y + h > g["height"]:
-                raise Win32BackendError("capture outside client bounds")
-            full = self._capture_hdc(hwnd, 0, 0, g["width"], g["height"],
-                                     print_window=True)
-            stride = g["width"] * 4
-            raw = b"".join(
-                full[(y + row) * stride + x * 4:
-                     (y + row) * stride + (x + w) * 4]
-                for row in range(h)
-            )
-        elif frame == "screen_physical_px":
-            raw = self._capture_hdc(0, x, y, w, h, print_window=False)
-        else:
-            raise Win32BackendError(f"unsupported capture frame {frame}")
-        return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
-                "width": w, "height": h}
+        started_ns = time.monotonic_ns()
+        raw = self.capture_pixels(target, frame, x, y, w, h)
+        ended_ns = time.monotonic_ns()
+        row = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
+               "width": w, "height": h}
+        artifacts = getattr(self, "capture_artifacts", None)
+        if artifacts is not None:
+            row.update(target=target, native_window_id=self.targets[target],
+                       frame=frame, region=[x, y, w, h],
+                       capture_started_ns=started_ns, capture_ended_ns=ended_ns)
+            try:
+                row["artifact"] = artifacts.write(raw, w, h)
+            except Exception as error:
+                # Keep the capture result even when PNG presentation fails.
+                row["artifact_error"] = repr(error)
+        return row
 
     def preflight(self, program: dict[str, Any], *, bound_target=None, guard=None) -> None:
         if bound_target is not None:
@@ -455,6 +993,9 @@ class Win32Backend:
         current_target: str | None = bound_target
         for op in program["ops"]:
             kind = op["op"]
+            if current_target is None and (kind in {"key_chord", "text", "scroll"} or
+                    (kind in {"key_state", "pointer_button"} and op.get("down") is True)):
+                raise Win32BackendError(f"{kind} requires focused target")
             if kind == "focus":
                 self._target(op["target"])
                 current_target = op["target"]
@@ -472,84 +1013,287 @@ class Win32Backend:
             elif kind == "text":
                 utf16_units(op["text"])
             elif kind == "key_chord":
+                encoding = op.get("encoding")
+                if encoding not in {None, "virtual_key", "scan_code"}:
+                    raise Win32BackendError(f"unsupported key encoding {encoding!r}")
                 for key in op["keys"]:
-                    virtual_key(key)
+                    vk = virtual_key(key)
+                    if encoding == "scan_code":
+                        mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+                        if not (mapped & 0xFF):
+                            raise Win32BackendError(f"key {key} has no scan code")
             elif kind == "key_state":
-                virtual_key(op["key"])
+                encoding = op.get("encoding")
+                if encoding not in {None, "virtual_key", "scan_code"}:
+                    raise Win32BackendError(f"unsupported key encoding {encoding!r}")
+                vk = virtual_key(op["key"])
+                if encoding == "scan_code":
+                    mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+                    if not (mapped & 0xFF):
+                        raise Win32BackendError(f"key {op['key']} has no scan code")
             elif kind == "pointer_button" and op["button"] not in BUTTON_FLAGS:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
     def release_all(self) -> dict[str, Any]:
+        token = _cleanup_active.set(True)
+        try:
+            return self._release_all_unchecked()
+        finally:
+            _cleanup_active.reset(token)
+
+    def _release_all_unchecked(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
-        unicode_error = None
+        release_errors = []
+        release_exceptions = []
+        release_attempts = []
+
+        def send_release_attempt(details, sender):
+            attempt = {"ordinal": len(release_attempts), **details,
+                "sendinput_call_started": False,
+                "sendinput_return_count": None,
+                "sendinput_error_type": None,
+                "outcome": "in_progress", "error_type": None}
+            release_attempts.append(attempt)
+            token = _release_attempt_context.set(attempt)
+            try:
+                sender()
+            except Exception as error:
+                attempt["outcome"] = "raised"
+                attempt["error_type"] = type(error).__name__
+                raise
+            else:
+                attempt["outcome"] = "returned"
+            finally:
+                _release_attempt_context.reset(token)
+
         for unit in sorted(getattr(self, "pending_unicode_ups", ())):
             try:
-                self._send_unicode_unit(unit, False)
+                send_release_attempt({"domain": "unicode_up", "unit": unit},
+                    lambda unit=unit: self._send_unicode_unit(unit, False))
             except Exception as error:
-                unicode_error = unicode_error or error
+                release_exceptions.append(error)
+                release_errors.append({"domain": "unicode_up", "unit": unit,
+                    "error_type": type(error).__name__})
             else:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
-        for vk in list(self.held_keys.values()):
-            self._send_key(vk, False)
+        target_sets: dict[int, set[str | None]] = {}
+        key_targets = getattr(self, "held_key_targets", {})
+        key_encodings = getattr(self, "held_key_encodings", {})
+        button_targets = getattr(self, "held_button_targets", {})
+        for name, vk in tracked_keys.items():
+            target_sets.setdefault(vk, set()).add(key_targets.get(name))
+        for button in tracked_buttons:
+            target_sets.setdefault(BUTTON_FLAGS[button][2], set()).add(
+                button_targets.get(button))
+        sent_key_ups = set()
+        for name, vk in tracked_keys.items():
+            encoding = key_encodings.get(name)
+            marker = (vk, encoding)
+            if marker in sent_key_ups:
+                continue
+            sent_key_ups.add(marker)
+            try:
+                key_names = sorted(key for key, key_vk in tracked_keys.items()
+                    if key_vk == vk and key_encodings.get(key) == encoding)
+                send_release_attempt({"domain": "key_up", "virtual_key": vk,
+                    "key_names": key_names, "encoding": encoding},
+                    lambda vk=vk, encoding=encoding: (
+                        self._send_key(vk, False) if encoding is None else
+                        self._send_key(vk, False, encoding)))
+            except Exception as error:
+                release_exceptions.append(error)
+                release_errors.append({"domain": "key_up", "virtual_key": vk,
+                    "encoding": encoding, "error_type": type(error).__name__})
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
-            self._send(item)
+            try:
+                send_release_attempt({"domain": "button_up", "button": button},
+                    lambda item=item: self._send(item))
+            except Exception as error:
+                release_exceptions.append(error)
+                release_errors.append({"domain": "button_up", "button": button,
+                    "error_type": type(error).__name__})
         time.sleep(0.01)
-        keys = sorted(name for name, vk in tracked_keys.items()
-                      if self._key_is_down(vk))
-        buttons = sorted(button for button in tracked_buttons
-                         if self._key_is_down(BUTTON_FLAGS[button][2]))
-        # A sent UP is not neutral-state evidence. Keep unverified obligations;
-        # an incomplete state read leaves the entire previous ledger intact.
-        if unicode_error is not None:
-            raise unicode_error
+        # Aliases share one sample: querying the same VK twice can consume the
+        # unreliable legacy low bit and create an artificial zero ambiguity.
+        state_targets = {vk: next(iter(targets)) if len(targets) == 1 else None
+                         for vk, targets in target_sets.items()}
+        states = {}
+        button_states = {}
+        state_witnesses = {}
+        for vk in sorted(set(tracked_keys.values())):
+            try:
+                states[vk] = self._key_down_state(vk, state_targets.get(vk))
+            except Exception as error:
+                release_exceptions.append(error)
+                states[vk] = None
+                release_errors.append({"domain": "key_state", "virtual_key": vk,
+                    "error_type": type(error).__name__})
+            if self._last_state_query_witness:
+                state_witnesses[str(vk)] = self._last_state_query_witness
+        for button in tracked_buttons:
+            vk = BUTTON_FLAGS[button][2]
+            try:
+                button_states[button] = self._key_down_state(
+                    vk, state_targets.get(vk))
+            except Exception as error:
+                release_exceptions.append(error)
+                button_states[button] = None
+                release_errors.append({"domain": "button_state", "button": button,
+                    "virtual_key": vk, "error_type": type(error).__name__})
+            if self._last_state_query_witness:
+                state_witnesses[str(vk)] = self._last_state_query_witness
+        keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is True)
+        buttons = sorted(button for button in tracked_buttons if button_states[button] is True)
+        unknown_keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is None)
+        unknown_buttons = sorted(button for button in tracked_buttons if button_states[button] is None)
+        # UP insertion is not neutral-state evidence. Retire each key/button
+        # only from its own successful neutral readback, even when an unrelated
+        # obligation failed; retaining confirmed-neutral entries would send a
+        # duplicate UP on the next recovery attempt. Unicode has no state query,
+        # so its obligation is removed only when its own UP helper returned.
         for name in tracked_keys:
-            if name not in keys:
+            if states[tracked_keys[name]] is False:
                 self.held_keys.pop(name, None)
-        self.held_buttons.difference_update(tracked_buttons - set(buttons))
+                getattr(self, "held_key_encodings", {}).pop(name, None)
+                getattr(self, "held_key_targets", {}).pop(name, None)
+        self.held_buttons.difference_update(button for button in tracked_buttons
+                                            if button_states[button] is False)
+        for button in tracked_buttons:
+            if button_states[button] is False:
+                getattr(self, "held_button_targets", {}).pop(button, None)
+        # Keep the established exception contract, but only after every finite
+        # release and readback attempt has run. The complete ledger remains
+        # available for retry whenever any attempt was inconclusive or failed.
+        if release_exceptions:
+            error = release_exceptions[0]
+            attempt_receipt = {"verified": False, "keys_down": keys,
+                "buttons_down": buttons, "keys_unknown": unknown_keys,
+                "buttons_unknown": unknown_buttons,
+                "state_query_witnesses": state_witnesses,
+                "release_errors": release_errors,
+                "release_attempts": release_attempts,
+                "monotonic_ns": time.monotonic_ns(),
+                "perf_counter_ns": time.perf_counter_ns()}
+            try:
+                error.release_attempt_errors = release_errors
+                error.release_attempt_receipt = attempt_receipt
+            except Exception:
+                pass
+            raise error
         return {"keys_down": keys, "buttons_down": buttons,
-                "verified": not keys and not buttons,
-                "monotonic_ns": time.monotonic_ns()}
+                "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
+                "state_query_witnesses": state_witnesses,
+                "release_errors": release_errors,
+                "release_attempts": release_attempts,
+                "verified": (not release_errors and not keys and not buttons
+                    and not unknown_keys and not unknown_buttons),
+                "monotonic_ns": time.monotonic_ns(),
+                "perf_counter_ns": time.perf_counter_ns()}
 
     def execute(self, program: dict[str, Any], *, bound_target=None, guard=None, preflight_guard=None) -> dict[str, Any]:
         if bound_target is None:
             self.preflight(program)
         else:
             self.preflight(program, bound_target=bound_target, guard=guard if preflight_guard is None else preflight_guard)
+        source = program.get("source")
+        source = source if isinstance(source, dict) else {}
+        authority = program.get("authority")
+        authority = authority if isinstance(authority, dict) else {}
+        deadline_ns = authority.get("expires_at_ns")
+        if type(deadline_ns) is not int:
+            # Public dispatch preflight rejects malformed authority. Keep the
+            # backend's isolated operation fixtures usable when they bypass
+            # that contract deliberately.
+            deadline_ns = None
+        expected_generations = source.get("target_generations")
+        expected_generations = expected_generations if isinstance(expected_generations, dict) else {}
+
+        def check_target_generation(target):
+            if not isinstance(target, str) or target not in expected_generations:
+                return
+            reader = getattr(self, "target_generation", None)
+            if not callable(reader):
+                raise Win32BackendError("TARGET_GENERATION_UNAVAILABLE")
+            if reader(target) != expected_generations[target]:
+                raise Win32BackendError("TARGET_GENERATION_CHANGED")
+
         current_target: str | None = bound_target
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
         started = time.monotonic_ns()
+        execution_token = _execution_target.set(current_target)
+        program_emissions_token = _program_emissions.set(0)
+        operation_receipt_token = _program_operation_receipt.set(None)
+        deadline_token = _task_authority_deadline.set(deadline_ns)
         try:
-            for op in program["ops"]:
+            operation_receipts = getattr(self, "_program_operation_receipts", None)
+            if (operation_receipts is not None
+                    and len(operation_receipts) < len(program["ops"]) * 4):
+                raise Win32BackendError("invalid program operation receipt buffer")
+            for operation_index, op in enumerate(program["ops"]):
+                if operation_receipts is not None:
+                    _program_operation_receipt.set((operation_receipts, operation_index))
+                    _program_operation_set_phase(1)
                 kind = op["op"]
+                # Admission and the parent start gate may happen well before a
+                # delayed producer reaches its next task operation. Recheck the
+                # absolute lease at every operation boundary. Terminal release
+                # is cleanup and must remain available after task authority ends.
+                if (deadline_ns is not None and kind != "release_all"
+                        and self.monotonic_ns() >= deadline_ns):
+                    _program_operation_set_phase(6)
+                    raise Win32BackendError("LEASE_EXPIRED_DURING_EXECUTION")
                 if bound_target is not None and kind != "release_all" and guard() is not True:
                     raise Win32BackendError("bound execution guard refused before operation")
+                _program_operation_set_phase(2)
                 if kind == "focus":
-                    current_target = op["target"]
-                    self.focus(current_target)
+                    next_target = op["target"]
+                    check_target_generation(next_target)
+                    self.focus(next_target)
+                    current_target = next_target
+                    _execution_target.set(current_target)
+                    # Focus is a visible side effect; pin the same HWND owner
+                    # again before any later input can reach the foreground.
+                    check_target_generation(current_target)
                 elif kind == "key_chord":
-                    self.key_chord(op["keys"])
+                    check_target_generation(current_target)
+                    self.key_chord(op["keys"], encoding=op["encoding"]) if "encoding" in op else self.key_chord(op["keys"])
                 elif kind == "key_state":
-                    self.key_state(op["key"], op["down"])
+                    check_target_generation(current_target)
+                    self.key_state(op["key"], op["down"], encoding=op["encoding"]) if "encoding" in op else self.key_state(op["key"], op["down"])
                 elif kind == "text":
+                    check_target_generation(current_target)
                     self.text(op["text"])
                 elif kind == "pointer_move":
                     if current_target is None:
                         raise Win32BackendError("pointer_move requires focused target")
+                    check_target_generation(current_target)
                     self.pointer_move(current_target, op["frame"], op["x"], op["y"])
                 elif kind == "pointer_button":
+                    check_target_generation(current_target)
+                    if op["down"] is True:
+                        if current_target is None:
+                            raise Win32BackendError(
+                                "pointer_button down requires focused target")
+                        self._require_pointer_target(current_target)
                     self.pointer_button(op["button"], op["down"])
                 elif kind == "scroll":
+                    check_target_generation(current_target)
+                    if current_target is None:
+                        raise Win32BackendError(
+                            "scroll requires focused target")
+                    self._require_pointer_target(current_target)
                     self.scroll(op["dx"], op["dy"])
                 elif kind == "observe":
                     if current_target is None:
                         raise Win32BackendError("observe requires focused target")
+                    check_target_generation(current_target)
                     observations.append(self.capture(
                         current_target, op["frame"], op["x"], op["y"],
                         op["w"], op["h"],
@@ -562,20 +1306,45 @@ class Win32Backend:
                     releases.append(self.release_all())
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
+                _program_operation_set_phase(5)
+            program_emissions = _program_emissions.get()
         except Exception as error:
+            # Snapshot before cleanup: release_all may itself emit UP events,
+            # which must not be attributed to the failed task program.
+            program_emissions = _program_emissions.get()
             try:
                 release = self.release_all()
             except Exception as cleanup_error:
-                if isinstance(error, Win32BackendError):
+                cleanup = {"type": type(cleanup_error).__name__,
+                            "detail": str(cleanup_error)}
+                attempt_errors = getattr(cleanup_error,
+                    "release_attempt_errors", None)
+                attempt_receipt = getattr(cleanup_error,
+                    "release_attempt_receipt", None)
+                if type(attempt_errors) is list:
+                    cleanup["release_attempt_errors"] = attempt_errors
+                if type(attempt_receipt) is dict:
+                    cleanup["release_attempt_receipt"] = attempt_receipt
+                if isinstance(error, Win32BackendError) or program_emissions > 0:
                     raise Win32ExecutionError(
-                        error, None, {"type": type(cleanup_error).__name__,
-                                      "detail": str(cleanup_error)}
+                        error, None, cleanup,
+                        program_emissions=program_emissions,
                     ) from error
                 raise
             releases.append(release)
-            if isinstance(error, Win32BackendError):
-                raise Win32ExecutionError(error, release, None) from error
+            if isinstance(error, Win32BackendError) or program_emissions > 0:
+                raise Win32ExecutionError(
+                    error, release, None,
+                    program_emissions=program_emissions,
+                ) from error
             raise
+        finally:
+            _task_authority_deadline.reset(deadline_token)
+            _program_operation_receipt.reset(operation_receipt_token)
+            _program_emissions.reset(program_emissions_token)
+            _execution_target.reset(execution_token)
         return {"started_ns": started, "ended_ns": time.monotonic_ns(),
-                "emissions": self.emissions, "observations": observations,
+                "emissions": self.emissions,
+                "program_emissions": program_emissions,
+                "observations": observations,
                 "releases": releases}

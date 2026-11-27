@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/Xlib/protocol/rq.py", line 1293, in __getattr__
+    return self._data[attr]
+           ~~~~~~~~~~^^^^^^
+KeyError: 'protocol_major_version'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r30-x11-input-surface-fingerprint-corrected/probe.py", line 130, in <module>
+    main()
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r30-x11-input-surface-fingerprint-corrected/probe.py", line 92, in main
+    conn, row = inspect_connection(label, display_name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/r30-x11-input-surface-fingerprint-corrected/probe.py", line 43, in inspect_connection
+    'protocol_major_version': int(setup.protocol_major_version),
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/Xlib/protocol/rq.py", line 1297, in __getattr__
+    raise AttributeError(attr)
+AttributeError: protocol_major_version

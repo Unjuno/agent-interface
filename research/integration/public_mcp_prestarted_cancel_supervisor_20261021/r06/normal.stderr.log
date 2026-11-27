@@ -1,0 +1,64 @@
+.....................Executing <Task finished name='Task-100' coro=<OwnedProcessMCPTests.test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown() done, defined at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\primary-mint-sparse\runtime\cli_v1\test_mcp_owned_process.py:1822> exception=PermissionError(13, '�v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B') created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.000 seconds
+E.......................................execute program 'C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe': <_WindowsSubprocessTransport pid=31716 running stdin=<_ProactorWritePipeTransport fd=1156 read=<_OverlappedFuture pending cb=[_ProactorWritePipeTransport._pipe_closed()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:479>> stdout=<_ProactorReadPipeTransport fd=1364 read=<_OverlappedFuture pending cb=[_ProactorReadPipeTransport._loop_reading()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:502>>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_WindowsSubprocessTransport pid=31716 running stdin=<_ProactorWritePipeTransport closed> stdout=<_ProactorReadPipeTransport closed>> exited with return code 0
+..............................................
+======================================================================
+ERROR: test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\primary-mint-sparse\runtime\cli_v1\test_mcp_owned_process.py", line 1831, in test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown
+    self.assertTrue(cancel['owner_process_retired'], cancel)
+                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'owner_process_retired'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\tmpoem4p5u3\\0f040c24eba8467bbe7ca709f41e4806\\.cancellation.json.tmp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\primary-mint-sparse\runtime\cli_v1\test_mcp_owned_process.py", line 1823, in test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown
+    with tempfile.TemporaryDirectory() as td:
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 943, in __exit__
+    self.cleanup()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\tmpoem4p5u3\\0f040c24eba8467bbe7ca709f41e4806\\.cancellation.json.tmp'
+
+----------------------------------------------------------------------
+Ran 107 tests in 45.180s
+
+FAILED (errors=1)

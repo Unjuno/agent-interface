@@ -1,0 +1,9 @@
+# R10 outcome: cancellation stimulus followed the finite gate
+
+The one-shot public stdio-MCP run returned one pending call ID, passed static validation, completed the exact fixture program, and saved `SUPERVISED-MCP-OK-20261024-R10`. The independent fresh-process readback observed Q up on the same target generation; the fixture exited, the prior foreground window was restored, and the hook and session closed.
+
+The 100-second hook-entry gate began at monotonic 476851661220800 ns. Injected Q-down reached the hook at 476952441473600 ns, 100.780 s after the gate began and 103.483 s after hook readiness. The gate had expired about 0.780 s earlier, so the callback returned in 12.1 microseconds and was not held. The probe did not call `interface_cancel`; cancel timing, producer-exit-before-recovery-UP, and cancellation recovery were not measured. Session close reported `release_confirmed=false`; later independent Q-up does not change that result.
+
+The frozen audit is `FAIL_OR_UNKNOWN` (9/17). R06, R07, R09, and R10 show Q-down reaching the hook about 0.75–0.79 seconds after each runner's finite hook wait ends (10, 45, 75, and 100 seconds). The repeated offset is consistent with delayed work progress at the end of the runner's wait, but does not prove its cause. The next experiment should poll `interface_results` for the same call during the finite hook window, recording each status and timing, rather than simply extending the window again. Keep the hook-entry, same-call-running, and single-cancel barriers intact.
+
+This is one preserved no-cancel normal-completion/effect sample, not cancellation evidence. Do not replay R10. Raw, fixture journal, effect, public call records, frozen conditions and source, and auditor are retained here. `SHA256SUMS.freeze` binds pre-run inputs and `SHA256SUMS.final` binds the completed packet. No WSLc or Docker allocation was used.

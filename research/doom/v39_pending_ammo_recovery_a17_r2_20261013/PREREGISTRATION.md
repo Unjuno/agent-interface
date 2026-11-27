@@ -1,0 +1,1 @@
+A17 r2 repairs only the failed fixture parameter; the test hypothesis, source closure, thresholds and PASS/FAIL gates are unchanged. The r1 immutable failure is retained. No candidate invocation in r2 has occurred. This is a construction retry, not a fresh formal/live allocation.

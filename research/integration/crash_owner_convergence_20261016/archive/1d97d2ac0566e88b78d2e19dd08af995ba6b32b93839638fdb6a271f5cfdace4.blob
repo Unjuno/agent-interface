@@ -1,0 +1,6 @@
+Two candidate launches failed before a scored session-kill arm.
+
+1. The first failed before the harness preserved child stderr. It was excluded; no raw or scored result was produced.
+2. The second is preserved in `setup-attempt-02-focus-rejection.txt`. The owner correctly rejected `expected_focus` because the session CLI argument was a string instead of an integer. The decoder remained strict; the runner now serializes the observed X window ID as an integer.
+
+The third invocation reached the session SIGKILL and the independent observer saw recovery, but the candidate then failed while inspecting the InputOwner wrapper chain and did not persist an owner receipt. It is scored as A01 `STOP`; its child stderr is `A01-owner-receipt-error.txt`. The wrapper chain is corrected for the successor A02. A02 is the first invocation eligible to satisfy the full method gate.

@@ -1,0 +1,65 @@
+{
+  "arm": {
+    "armed_monotonic_ns": 6915424712906,
+    "delay_ms": 250,
+    "source_port": 51114,
+    "status": "armed"
+  },
+  "client_closed_before_forward": true,
+  "hold_elapsed_ms": 250.058284,
+  "proxy_events": [
+    {
+      "event": "proxy_ready",
+      "listen_port": 36487,
+      "monotonic_ns": 6915411096115,
+      "upstream_host": "127.0.0.1",
+      "upstream_port": 48935
+    },
+    {
+      "event": "client_connected",
+      "monotonic_ns": 6915419491153,
+      "peer_host": "127.0.0.1",
+      "peer_port": 51114
+    },
+    {
+      "armed_monotonic_ns": 6915424712906,
+      "delay_ms": 250,
+      "event": "arm_request",
+      "monotonic_ns": 6915424714837,
+      "source_port": 51114,
+      "status": "armed"
+    },
+    {
+      "bytes_held": 4,
+      "delay_ms": 250,
+      "event": "delivery_hold_started",
+      "hold_started_ns": 6915428123154,
+      "monotonic_ns": 6915428125485,
+      "peer_port": 51114
+    },
+    {
+      "event": "client_eof_while_held",
+      "held_bytes": 4,
+      "monotonic_ns": 6915433133251,
+      "peer_port": 51114
+    },
+    {
+      "bytes_forwarded": 4,
+      "client_closed_before_forward": true,
+      "delay_ms": 250,
+      "event": "delivery_forwarded",
+      "forward_completed_ns": 6915678219000,
+      "forward_started_ns": 6915678181438,
+      "hold_started_ns": 6915428123154,
+      "monotonic_ns": 6915678221916,
+      "peer_port": 51114
+    },
+    {
+      "event": "server_eof",
+      "monotonic_ns": 6915680248370,
+      "peer_port": 51114
+    }
+  ],
+  "received_bytes_hex": "7072656c617465",
+  "status": "passed"
+}

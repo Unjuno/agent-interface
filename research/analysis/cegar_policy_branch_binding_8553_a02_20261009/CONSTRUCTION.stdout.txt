@@ -1,0 +1,28 @@
+test_swapped_observation_routes_are_rejected (test_construction.PolicyBranchBindingTests.test_swapped_observation_routes_are_rejected) ... ok
+test_unchanged_candidate_replays_every_recoverable_policy (test_construction.PolicyBranchBindingTests.test_unchanged_candidate_replays_every_recoverable_policy) ... ok
+test_unsupported_observation_values_are_rejected (test_construction.PolicyBranchBindingTests.test_unsupported_observation_values_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+test_swapped_observation_routes_are_rejected (test_construction.PolicyBranchBindingTests.test_swapped_observation_routes_are_rejected) ... ok
+test_unchanged_candidate_replays_every_recoverable_policy (test_construction.PolicyBranchBindingTests.test_unchanged_candidate_replays_every_recoverable_policy) ... ok
+test_unsupported_observation_values_are_rejected (test_construction.PolicyBranchBindingTests.test_unsupported_observation_values_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+
+Container applicability check (read-only; no container was started):
+$ docker image ls
+Error response from daemon: rpc error: code = Unknown desc = blob sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916: operation not supported
+
+This audit is stdlib-only file replay and has no container-specific dependency. No image pull or daemon restart was attempted.
+
+One pre-freeze construction CLI diagnostic (separate from formal allocation):
+legacy_probe.py against the immutable A01 fixture/raw and the unchanged saved audit returned exit 0.
+The frozen A01 audit exactly matched its saved audit output and also accepted both in-memory diagnostics: unsupported branch values and swapped observation routes. No formal raw output path was used.
+
+The frozen formal runner was invoked once before commit only to validate its precondition guard; it stopped with `freeze has not been committed` before creating results or starting either diagnostic process.

@@ -1,0 +1,27 @@
+import datetime, hashlib, json, os, pathlib, subprocess, sys, time
+root=pathlib.Path('work/cancel-wake-17-intake/operations'); root.mkdir(parents=True,exist_ok=True)
+name=sys.argv[1]; argv=sys.argv[2:]; stdin_path=None
+if argv[:1]==['--stdin']:
+    stdin_path=pathlib.Path(argv[1]);argv=argv[2:]
+p=root/name; p.mkdir(exist_ok=False)
+record={'argv':argv,'launcher_pid':os.getpid(),'start_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'start_ns':time.monotonic_ns()}
+(p/'INTENT.json').write_text(json.dumps(record,indent=2)+'\n')
+if stdin_path is not None:
+    record['stdin']={'path':str(stdin_path),'bytes':stdin_path.stat().st_size,'sha256':hashlib.sha256(stdin_path.read_bytes()).hexdigest()}
+with (p/'stdout').open('xb') as o,(p/'stderr').open('xb') as e:
+    inp=stdin_path.open('rb') if stdin_path else subprocess.DEVNULL
+    proc=subprocess.Popen(argv,stdin=inp,stdout=o,stderr=e); record['pid']=proc.pid
+    (p/'STARTED.json').write_text(json.dumps(record,indent=2)+'\n')
+    try: code=proc.wait(timeout=60)
+    except subprocess.TimeoutExpired:
+        proc.terminate()
+        try: code=proc.wait(timeout=5)
+        except subprocess.TimeoutExpired: proc.kill();code=proc.wait()
+        record['guard']='HOST_COMMAND_TIMEOUT; remote state requires reconciliation'
+record.update(exit_code=code,end_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),end_ns=time.monotonic_ns(),source_sha256=hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest())
+record['outputs']={f:{'bytes':(p/f).stat().st_size,'sha256':hashlib.sha256((p/f).read_bytes()).hexdigest()} for f in ['stdout','stderr']}
+(p/'RECEIPT.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps(record))
+raw=(p/'stdout').read_bytes()
+if b'\0' not in raw[:1024]:print(raw.decode(errors='replace')[:2500])
+print((p/'stderr').read_text(errors='replace')[:1000]);sys.exit(code)

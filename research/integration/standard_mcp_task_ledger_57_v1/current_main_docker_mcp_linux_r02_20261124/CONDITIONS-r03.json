@@ -1,0 +1,52 @@
+{
+  "schema": "issue57-current-main-docker-mcp-linux-r03-conditions",
+  "frozen_utc": "2026-11-24T00:00:00Z",
+  "base_main_sha": "b65b617361efd94494bb472f167f6c966a48464c",
+  "previous_packet": "current_main_docker_mcp_linux_r01_20261123",
+  "question": "On current main, does the updated cross-thread asyncio event coordination prevent the combined optimized public-MCP contract suite from reproducing R01\u2019s two-second worker-entry timeout in the same cached Linux container image?",
+  "hypothesis": "The current test change from threading.Event.wait via asyncio.to_thread to asyncio.Event with loop.call_soon_threadsafe removes the combined -O test-harness timing HOLD; production runtime sources are unchanged from R01.",
+  "design": {
+    "image": "issue57-calc-appserver-r88:local",
+    "image_id": "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+    "created": "2026-11-03T13:48:56.815772469Z",
+    "platform": "linux/amd64",
+    "docker_server_version": "29.8.1",
+    "network": "none",
+    "source_mount": "read-only bind at /workspace",
+    "container_python": "CPython 3.11.2 expected; verified by preflight",
+    "modules": [
+      "runtime.cli_v1.test_mcp_server",
+      "runtime.cli_v1.test_mcp_guarded"
+    ],
+    "modes": [
+      "normal",
+      "optimized (-O)"
+    ],
+    "attempts_per_mode": 1,
+    "retries": 0,
+    "live_gui": false,
+    "model_or_provider": false
+  },
+  "pass_criteria": [
+    "Preflight returns zero and reports Python 3.11.2.",
+    "Both combined module runs complete all 87 tests with exit code 0 and unittest reports OK.",
+    "Raw outputs and source hashes verify independently."
+  ],
+  "stop_rules": [
+    "Source/main/image mismatch: stop before tests.",
+    "Any runtime test failure remains retained as HOLD; no retry in this frozen packet."
+  ],
+  "interpretation_limits": [
+    "The runtime source module is unchanged from R01, while test_mcp_server.py changed to asyncio event coordination; results do not isolate causality beyond this version change.",
+    "No GUI, user input, live model/provider, task effect, WSLc allocation, recovery reliability, or integrated efficiency was tested.",
+    "A passing suite is local contract evidence only, not a product reliability estimate."
+  ],
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "037776f2e918342aac71b54dc0344d09416df56b2ef8e873c10297698e7b35e7",
+    "runtime/cli_v1/test_mcp_server.py": "323dec980701262d14167de840d0c989607e79373cc571441fda8881091fa4ed",
+    "runtime/cli_v1/test_mcp_guarded.py": "2ad896b3aca9fa8b1f42c91ca8105d02c7ee0fee1f5692fb6ea963ca97623986",
+    "research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/run_experiment.py": "011d1edf94507d621b4186a5a1eef39738abe2844361beeb3fdc7f4a56190d6e",
+    "research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/audit_evidence.py": "910c0e2889a69d08ff2deecf12c6d4d5da9481232c592208930775938c10877e"
+  },
+  "revision_note": "R03 fixes a runner preflight field-path error from R02. R02 stopped before creating output roots and before launching Docker; the preflight error is retained under raw-preflight/. R03 uses a separate raw-r03 output root."
+}

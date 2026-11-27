@@ -1,0 +1,7 @@
+# A07 historical owner-release timing boundary
+
+Synthetic mutations of the existing owner-release fixture show that `audit_a07_owner_release_reconciliation.py` returns `PASS_CUSTODY_RECONCILED_SCOPED` when both admission/cancellation timestamps are absent, and when admission timestamps equal the cancellation timestamp. Its post-cancel check only rejects numeric admissions strictly greater than the cancellation time. This does not establish that an admission actually occurred late, invalidate the saved A07 record, or prove any physical input effect; the saved raw was not read or rerun.
+
+The additive v5 and v6 auditors require integer admission time strictly before cancellation time, but require explicit matching release transitions and do not reconcile the separate terminal owner-cleanup path. The historical owner-release auditor handles that path but also has the previously documented token-reuse boundary. Combining these results does not establish a single audit that satisfies both conditions. A successor needs explicit, non-reused identity for terminal cleanup, strictly ordered time evidence with justified clock provenance, and fail-closed behavior for ambiguous records. Keep the historical auditor and original result unchanged.
+
+`python -B -m unittest test_owner_release_timing_boundary` uses only temporary in-memory fixture mutations; no live input, allocation, game or model is used.

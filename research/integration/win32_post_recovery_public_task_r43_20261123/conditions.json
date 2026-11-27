@@ -1,0 +1,248 @@
+{
+  "allocation": {
+    "unknown_source_dispatches": 5,
+    "recovery_calls_per_source": 1,
+    "followup_public_dispatches": 5,
+    "task_verifications": 5,
+    "fresh_fixtures": 10,
+    "retries": 0
+  },
+  "experiment": "win32-post-recovery-public-task-r43-current-main-five-attempt-cohort",
+  "computer_use_activation": "activate exact returned window; verify title/HWND/PID and foreground; send no pointer or key input",
+  "frozen_at_utc": "2026-11-23T12:50:12.2699721Z",
+  "model": "none",
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "parent_packet_snapshot": "R42 code-only template; no R42 raw copied. R43 corrects position-condition mismatch by launching at frozen coordinates and retaining GetWindowRect receipts.",
+  "pre_live_qualification": {
+    "python": "Windows CPython 3.11.9",
+    "display": "1920x1080",
+    "position_receipts": "GetWindowRect retained by foreground probe and checked against each frozen x/y before dispatch",
+    "ast_parse": "run all six Python inputs normally and under -O",
+    "normal_task_server_handshake": "must pass with 12 tools, zero observations, zero dispatches",
+    "optimized_task_server_handshake": "must pass with 12 tools, zero observations, zero dispatches",
+    "title_config_consistency": "top-level trial exactly equals trials[0]",
+    "retries": 0,
+    "win32_dll_allowlist": [
+      "user32",
+      "gdi32",
+      "kernel32"
+    ]
+  },
+  "provider": "none",
+  "schema": "agent-interface/win32-post-recovery-public-task-r43-v1",
+  "source_hashes": {
+    "run_cohort.py": "0a39a1d971d586452ed5d746fa3675c7b0d72d845e12feb72820675e70b2611a",
+    "task_oracle_server.py": "ed1750699580f4af82e7628cc03d23863110e8d4c53a3139c6eb358ce2d2b4dd",
+    "source/fixture_app.py": "efc473b6dbfccf72d199add58b14311b23ae50ce6d56746856b52617f97b5936",
+    "source/foreground_probe.py": "947bba3fb1c710d8a06e1dfeb786d055e17398e920d98208b0156b57872568b9",
+    "source/handshake_smoke.py": "58dccd6e81611c5dbc53787f0e570e75b8f599808fe1f7469dad976571b253a7",
+    "source/scorer.py": "37b2bed670ec331cc543f87bcab5d13cfd782c9318551125831c040c552b6eb4"
+  },
+  "source_main": "612b857d7c1c6a951d3f055862a5141dbc9c7637",
+  "stop_rules": [
+    "Each trial uses one fresh owned source fixture and, only after verified recovery, one separately created follow-up fixture; preserve every failure and allow zero retries.",
+    "Source dispatch is one focused A chord with 2 s authority; never replay, regardless of source outcome.",
+    "If source action is not UNKNOWN with release unconfirmed, stop before recovery/followup and preserve result.",
+    "Verify exact producer absence before at most one public orphan recovery. Keep old action UNKNOWN, task_success null, replay denied.",
+    "Stop and retain fixture/fence on any target identity, foreground, recovery release, neutral readback, 2 s horizon, or fence uncertainty.",
+    "After recovery, require new Computer Use exact-window activation, expected-title HWND/PID foreground probe, fresh observation and fresh target generation before one distinct B action.",
+    "Only followup B may pass the independent task oracle; it must be tied to exact followup call/operation/generation and a char-B event within that dispatch interval, with fixture state ab.",
+    "Close fixture only after followup action release and task effect are independently verified; otherwise preserve it and report STOP.",
+    "No model/provider, efficiency, MAP01, general reliability, preview graduation, or original-action task-success claim.",
+    "Follow-up target must be a separately-created process/window with distinct HWND, PID, and generation; never reuse fenced source generation.",
+    "Freeze exactly five attempts; run once in order; any attempt failure or STOP ends the cohort without replacement.",
+    "The frozen source and follow-up window positions must match GetWindowRect receipts before any dispatch; mismatch stops before dispatch for source and before follow-up dispatch for the fresh target.",
+    "Each trial must start with the durable custody fence clear; preserve pending/uncertain fence and stop all later attempts."
+  ],
+  "trial": {
+    "authority_lease_ms": 2000,
+    "capture_frame": "window_client",
+    "capture_region": [
+      0,
+      0,
+      400,
+      180
+    ],
+    "effect_delay_ms": 6000,
+    "followup_lease_id": "r43-8d48c0f62d3a4a1b9df21a5a4a57050b",
+    "followup_program_id": "r43-9eab3b63c5a94b38ac91898fe1e9c87e",
+    "followup_task": "After recovered A in trial 1, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+    "followup_window_position": [
+      950,
+      600
+    ],
+    "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 1 Fresh Task",
+    "horizon_ms": 2000,
+    "lease_id": "r43-14e3355bea3a4d48af5b2566288d920d",
+    "max_horizon_gap_ms": 100,
+    "ordinal": 1,
+    "program_id": "r43-11dbef0d39ae4e95846112185ee1e939",
+    "source_window_position": [
+      1400,
+      600
+    ],
+    "trial_id": "r43-cf0c358c16f943f387b53aff8938a326",
+    "window_title": "Agent Interface Win32 Fixture R43 Trial 1 Source"
+  },
+  "trials": [
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r43-8d48c0f62d3a4a1b9df21a5a4a57050b",
+      "followup_program_id": "r43-9eab3b63c5a94b38ac91898fe1e9c87e",
+      "followup_task": "After recovered A in trial 1, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+      "followup_window_position": [
+        950,
+        600
+      ],
+      "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 1 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r43-14e3355bea3a4d48af5b2566288d920d",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 1,
+      "program_id": "r43-11dbef0d39ae4e95846112185ee1e939",
+      "source_window_position": [
+        1400,
+        600
+      ],
+      "trial_id": "r43-cf0c358c16f943f387b53aff8938a326",
+      "window_title": "Agent Interface Win32 Fixture R43 Trial 1 Source"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r43-63ce89ce108a4085af2c7241991692a0",
+      "followup_program_id": "r43-0c1225977c894575b9c5b47fdee10d18",
+      "followup_task": "After recovered A in trial 2, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+      "followup_window_position": [
+        950,
+        600
+      ],
+      "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 2 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r43-42736946d60743d8a5dc92f11482b4af",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 2,
+      "program_id": "r43-d56c0754e5b44b3e9c23560d9300b3f5",
+      "source_window_position": [
+        1400,
+        600
+      ],
+      "trial_id": "r43-567da69db31f4a068f6ddacb0111b7b5",
+      "window_title": "Agent Interface Win32 Fixture R43 Trial 2 Source"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r43-4dd60420cafb4c6db4122cd1f8faed51",
+      "followup_program_id": "r43-630fe6555620473a842a241fc31ce29b",
+      "followup_task": "After recovered A in trial 3, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+      "followup_window_position": [
+        950,
+        600
+      ],
+      "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 3 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r43-22813c24a98f479a96b337b36c3d0b9b",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 3,
+      "program_id": "r43-06eabf5c9a3a48d1be7dd9dbc472822b",
+      "source_window_position": [
+        1400,
+        600
+      ],
+      "trial_id": "r43-3aeb17a0d860448b867f531b1bc9752a",
+      "window_title": "Agent Interface Win32 Fixture R43 Trial 3 Source"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r43-0267202f30574f2caa979948642db33e",
+      "followup_program_id": "r43-7ac1fd8a75124f24bdb88d1dc5031cac",
+      "followup_task": "After recovered A in trial 4, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+      "followup_window_position": [
+        950,
+        600
+      ],
+      "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 4 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r43-b4987f3b16c24d71b2adce515dab2571",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 4,
+      "program_id": "r43-ed18c72a703c49f88820ebe1667248c7",
+      "source_window_position": [
+        1400,
+        600
+      ],
+      "trial_id": "r43-4622464fdd0545189a8cc03485469416",
+      "window_title": "Agent Interface Win32 Fixture R43 Trial 4 Source"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "followup_lease_id": "r43-fa2e5c6982684fec970f956f80a17dd5",
+      "followup_program_id": "r43-bb20dc202203420fad21d1beecf8252e",
+      "followup_task": "After recovered A in trial 5, one public B task on a new R43 generation. Oracle matches B event time to exact dispatch interval; state must be b.",
+      "followup_window_position": [
+        950,
+        600
+      ],
+      "followup_window_title": "Agent Interface Win32 Fixture R43 Trial 5 Fresh Task",
+      "horizon_ms": 2000,
+      "lease_id": "r43-efb31e4728cc4e6cbeecda6be4c6ef1c",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 5,
+      "program_id": "r43-be7d9070016f4704b8efa3c469c7b999",
+      "source_window_position": [
+        1400,
+        600
+      ],
+      "trial_id": "r43-df8c108d5d894acdb422f539f7bd042c",
+      "window_title": "Agent Interface Win32 Fixture R43 Trial 5 Source"
+    }
+  ],
+  "window_title": "Agent Interface Win32 Fixture R43 Trial 1 Source",
+  "workload": "Five sequential independent fixture pairs. Each source A action expires at 2 s with delayed factual effect, then one public orphan recovery verifies release/neutral readback/2 s horizon, then a distinct fresh process/window receives one independently scored public B action.",
+  "runtime_tree_oid": "a8101de9d6bc868a523e412ec3a98d40d6a8649e"
+}

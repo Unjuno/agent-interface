@@ -1,0 +1,378 @@
+{
+  "case": {
+    "case_id": "wake-18",
+    "load": "full",
+    "policy": "level_flag_nonblocking",
+    "repeat": 3
+  },
+  "end_ns": 39120882135780,
+  "end_utc": "2026-10-03T12:01:49.746814+00:00",
+  "errors": [],
+  "events": [
+    {
+      "event": "sender_start",
+      "ns": 39120850410481,
+      "pid": 7,
+      "seq": 0,
+      "thread": "wake-sender",
+      "tid": 42,
+      "utc": "2026-10-03T12:01:49.715091+00:00"
+    },
+    {
+      "event": "level_published",
+      "ns": 39120850449939,
+      "pid": 7,
+      "seq": 1,
+      "thread": "wake-sender",
+      "tid": 42,
+      "utc": "2026-10-03T12:01:49.715129+00:00"
+    },
+    {
+      "event": "wake_attempt",
+      "ns": 39120850466397,
+      "pid": 7,
+      "seq": 2,
+      "thread": "wake-sender",
+      "tid": 42,
+      "utc": "2026-10-03T12:01:49.715145+00:00"
+    },
+    {
+      "bytes": 0,
+      "end_ns": 39120850499106,
+      "errno": 11,
+      "event": "wake_return",
+      "ns": 39120850508356,
+      "pid": 7,
+      "seq": 3,
+      "start_ns": 39120850477022,
+      "status": "eagain",
+      "thread": "wake-sender",
+      "tid": 42,
+      "utc": "2026-10-03T12:01:49.715187+00:00"
+    },
+    {
+      "event": "sender_done",
+      "ns": 39120850528856,
+      "pid": 7,
+      "seq": 4,
+      "thread": "wake-sender",
+      "tid": 42,
+      "utc": "2026-10-03T12:01:49.715207+00:00"
+    },
+    {
+      "event": "preconsumer",
+      "flag": true,
+      "ns": 39120879563936,
+      "pid": 7,
+      "sender_done": true,
+      "seq": 5,
+      "thread": "MainThread",
+      "tid": 7,
+      "unread": 4096,
+      "utc": "2026-10-03T12:01:49.744248+00:00",
+      "write_status": "eagain",
+      "writer_flags": 2049
+    },
+    {
+      "event": "consumer_start",
+      "ns": 39120881307693,
+      "pid": 7,
+      "seq": 6,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "utc": "2026-10-03T12:01:49.745992+00:00"
+    },
+    {
+      "counts": {
+        "C": 0,
+        "N": 0
+      },
+      "event": "cancel_seen",
+      "ns": 39120881408861,
+      "pid": 7,
+      "reason": "level_state",
+      "seq": 7,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "unread": 4096,
+      "utc": "2026-10-03T12:01:49.746088+00:00"
+    },
+    {
+      "after": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "before": {
+        "dev": 15,
+        "fd": 5,
+        "fifo": true,
+        "flags": 0,
+        "ino": 245428,
+        "mode": 4480
+      },
+      "event": "fd_closed",
+      "label": "target_r",
+      "ns": 39120881508153,
+      "phase": "cancel",
+      "pid": 7,
+      "seq": 8,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "utc": "2026-10-03T12:01:49.746187+00:00"
+    },
+    {
+      "after": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "before": {
+        "dev": 15,
+        "fd": 6,
+        "fifo": true,
+        "flags": 1,
+        "ino": 245428,
+        "mode": 4480
+      },
+      "event": "fd_closed",
+      "label": "target_w",
+      "ns": 39120881667028,
+      "phase": "cancel",
+      "pid": 7,
+      "seq": 9,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "utc": "2026-10-03T12:01:49.746347+00:00"
+    },
+    {
+      "event": "cancel_complete",
+      "ns": 39120881721195,
+      "pid": 7,
+      "seq": 10,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "unread": 4096,
+      "utc": "2026-10-03T12:01:49.746400+00:00"
+    },
+    {
+      "event": "consumer_done",
+      "ns": 39120881740320,
+      "pid": 7,
+      "seq": 11,
+      "thread": "wake-consumer",
+      "tid": 43,
+      "utc": "2026-10-03T12:01:49.746418+00:00"
+    },
+    {
+      "counts": {
+        "C": 0,
+        "N": 0
+      },
+      "event": "primary_checkpoint",
+      "flag": true,
+      "ns": 39120881898779,
+      "pid": 7,
+      "seq": 12,
+      "target_r": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "target_w": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "thread": "MainThread",
+      "tid": 7,
+      "unread": 4096,
+      "utc": "2026-10-03T12:01:49.746578+00:00"
+    },
+    {
+      "event": "fixture_cleanup_start",
+      "ns": 39120881936113,
+      "pid": 7,
+      "seq": 13,
+      "thread": "MainThread",
+      "tid": 7,
+      "utc": "2026-10-03T12:01:49.746614+00:00"
+    },
+    {
+      "after": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "before": {
+        "dev": 15,
+        "fd": 3,
+        "fifo": true,
+        "flags": 2048,
+        "ino": 245427,
+        "mode": 4480
+      },
+      "event": "fd_closed",
+      "label": "wake_r",
+      "ns": 39120881978946,
+      "phase": "fixture_cleanup",
+      "pid": 7,
+      "seq": 14,
+      "thread": "MainThread",
+      "tid": 7,
+      "utc": "2026-10-03T12:01:49.746665+00:00"
+    },
+    {
+      "after": {
+        "errno": 9,
+        "state": "ERROR"
+      },
+      "before": {
+        "dev": 15,
+        "fd": 4,
+        "fifo": true,
+        "flags": 2049,
+        "ino": 245427,
+        "mode": 4480
+      },
+      "event": "fd_closed",
+      "label": "wake_w",
+      "ns": 39120882067780,
+      "phase": "fixture_cleanup",
+      "pid": 7,
+      "seq": 15,
+      "thread": "MainThread",
+      "tid": 7,
+      "utc": "2026-10-03T12:01:49.746747+00:00"
+    },
+    {
+      "event": "fixture_cleanup_complete",
+      "ns": 39120882121530,
+      "pid": 7,
+      "seq": 16,
+      "thread": "MainThread",
+      "tid": 7,
+      "utc": "2026-10-03T12:01:49.746800+00:00"
+    }
+  ],
+  "final_fds": {
+    "target_r": {
+      "errno": 9,
+      "state": "ERROR"
+    },
+    "target_w": {
+      "errno": 9,
+      "state": "ERROR"
+    },
+    "wake_r": {
+      "errno": 9,
+      "state": "ERROR"
+    },
+    "wake_w": {
+      "errno": 9,
+      "state": "ERROR"
+    }
+  },
+  "initial_fds": {
+    "target_r": {
+      "dev": 15,
+      "fd": 5,
+      "fifo": true,
+      "flags": 0,
+      "ino": 245428,
+      "mode": 4480
+    },
+    "target_w": {
+      "dev": 15,
+      "fd": 6,
+      "fifo": true,
+      "flags": 1,
+      "ino": 245428,
+      "mode": 4480
+    },
+    "wake_r": {
+      "dev": 15,
+      "fd": 3,
+      "fifo": true,
+      "flags": 2048,
+      "ino": 245427,
+      "mode": 4480
+    },
+    "wake_w": {
+      "dev": 15,
+      "fd": 4,
+      "fifo": true,
+      "flags": 2049,
+      "ino": 245427,
+      "mode": 4480
+    }
+  },
+  "joins": {
+    "consumer": true,
+    "sender": true
+  },
+  "pid": 7,
+  "pipe_size": 4096,
+  "preconsumer": {
+    "event": "preconsumer",
+    "flag": true,
+    "ns": 39120879563936,
+    "pid": 7,
+    "sender_done": true,
+    "seq": 5,
+    "thread": "MainThread",
+    "tid": 7,
+    "unread": 4096,
+    "utc": "2026-10-03T12:01:49.744248+00:00",
+    "write_status": "eagain",
+    "writer_flags": 2049
+  },
+  "prefill": {
+    "bytes": 4096,
+    "ns": 39120849998895,
+    "unread": 4096
+  },
+  "primary": {
+    "counts": {
+      "C": 0,
+      "N": 0
+    },
+    "event": "primary_checkpoint",
+    "flag": true,
+    "ns": 39120881898779,
+    "pid": 7,
+    "seq": 12,
+    "target_r": {
+      "errno": 9,
+      "state": "ERROR"
+    },
+    "target_w": {
+      "errno": 9,
+      "state": "ERROR"
+    },
+    "thread": "MainThread",
+    "tid": 7,
+    "unread": 4096,
+    "utc": "2026-10-03T12:01:49.746578+00:00"
+  },
+  "probe": {
+    "bytes": 0,
+    "end_ns": 39120849974687,
+    "errno": 11,
+    "start_ns": 39120849947687,
+    "status": "eagain"
+  },
+  "sender_wchan": {
+    "unavailable_errno": 2
+  },
+  "start_ns": 39120849655352,
+  "start_utc": "2026-10-03T12:01:49.714290+00:00",
+  "status": "OBSERVED",
+  "tids": {
+    "consumer": 43,
+    "sender": 42
+  },
+  "write": {
+    "bytes": 0,
+    "end_ns": 39120850499106,
+    "errno": 11,
+    "start_ns": 39120850477022,
+    "status": "eagain"
+  },
+  "writer_flags": 2049
+}

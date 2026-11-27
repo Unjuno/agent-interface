@@ -1,0 +1,143 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r22",
+  "claims_excluded": [
+    "indefinite native blocking",
+    "hard real-time bound beyond the frozen finite windows",
+    "atomic capture-to-input fencing",
+    "runtime-integrated task_success (must remain null)",
+    "MAP01",
+    "matched efficiency",
+    "broad reliability",
+    "release while the callback remains blocked",
+    "task effect after recovery (the frozen effect precedes the cancellation point)"
+  ],
+  "decision": {
+    "fail_or_unknown": "Preserve FAIL_OR_UNKNOWN if the callback entry, ordering, exact producer retirement, public recovered receipt, independent same-generation post-callback Q-up, exact effect, or cleanup is missing; if release remains unknown; or if emergency Q-up is needed. No retry. A Q-up sample before callback return is not release evidence.",
+    "pass": "Exactly one public dispatch and one public cancel. The callback remains held for the frozen 250ms post-cancel window and forwards the original injected Q-down on return. The exact producer retires, public cancellation reports recovered with release_confirmed=true within 3500ms, and an independent same-generation readback reports Q-up after callback return and before any emergency cleanup. The exact R22 fixture effect and fixture/hook/foreground cleanup are verified. Any emergency Q-up is cleanup-only and disqualifies product recovery PASS."
+  },
+  "environment": {
+    "attempt_id": "R22; no WSLc or Docker",
+    "container_or_wslc": false,
+    "low_level_hooks_timeout_registry": "HKCU\\Control Panel\\Desktop value absent (read-only check)",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32",
+    "windows": "Windows 11 Pro build 26300; LowLevelHooksTimeout not configured (read-only)."
+  },
+  "host": "user-authorized local Windows PC; one owned fixture process/window",
+  "hypothesis": "For one standard public Win32 MCP action canceled while the owned low-level hook holds the injected Q-down for a bounded 250ms after cancel, the caller can retire the exact producer, complete same-generation recovery and independently prove Q-up after callback return within 3500ms, while preserving an independently checked pre-cancel fixture effect.",
+  "resource_boundary": "Only the user-authorized local Windows PC and one owned fixture process/window; one public dispatch and one cancel; one injected Q-down held at most 2000ms by fail-safe and released by the probe after a 250ms post-cancel window. No WSLc, Docker, other application windows, registry changes, replay, or retry. Emergency Q-up is attempted only after exact producer retirement, same-generation confirmation, and fixture foreground confirmation; it is cleanup-only.",
+  "retry_policy": "one validation and at most one public dispatch; retrieve its call ID from the zero-wait response; issue one cancel only after hook entry and a same-call running readback; no fallback input, replay, retry, or rerun",
+  "schema": "win32-supervised-standard-caller-conditions-v8",
+  "source_commit": "e5e63a305a18ed638dd3ba3bf8a1554d3e83281c",
+  "source_sha256": {
+    "audit.py": "f725141bf460b8cbec457859fcc3e724364ecc15d06d6b62d3160c0c0737c994",
+    "preflight.py": "1eef0ea810e428eb252b70c83d0e556f8cca254b58620f1e5a4e3d75c9f94f6e",
+    "probe.py": "7ab3442ff7393ac9d1298cf54e314c1d33599250d619a348e499cf926330b499",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 90,
+    "cancel_response": 1,
+    "close_drain": 4,
+    "close_response": 1,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "hook_entry": 30,
+    "independent_readback": 8,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "owned_process_terminate": 2,
+    "poll_response": 0.5,
+    "pre_cancel_readback": 0.5,
+    "producer_exit": 2.5,
+    "recovery_deadline_ms": 2500,
+    "recovery_up_observation": 4,
+    "result_readback": 12,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "caller": "public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_cancel/interface_results/interface_close",
+    "cancel": "one public interface_cancel for the exact dispatch call_id; no second cancel",
+    "close_retry_interval_ms": 100,
+    "effect_order": "Fixture click, sentinel text, and CTRL+S save precede the Q-down cancellation point. The exact fixture effect is checked independently; runtime task_success remains null.",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "SUPERVISED-MCP-OK-20261024-R22"
+    },
+    "hook_status_poll_interval_ms": 250,
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-cancel-r22",
+    "native_stimulus": {
+      "event": "first injected VK_Q WM_KEYDOWN only; after the 250ms post-cancel hold, forward it normally",
+      "hook": "one WH_KEYBOARD_LL hook in the probe process",
+      "max_callback_hold_ms": 2000,
+      "release": "Retain the exact callback for up to 250ms after the single public cancel, then forward the original Q-down through CallNextHookEx; the callback has a 2000ms fail-safe bound.",
+      "suppress_first_q_down_after_hold": false
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R22"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "post_cancel_hook_hold_ms": 250,
+    "pre_cancel_readback": "After hook entry, interface_results must show action status running before one interface_cancel call.",
+    "program_id": "supervised-standard-cancel-effect-r22",
+    "recovery_deadline_ms": 3500,
+    "target": "one fresh owned fixture process/window; exact call_id obtained from the public zero-wait pending-or-terminal dispatch response",
+    "text_effect": "SUPERVISED-MCP-OK-20261024-R22",
+    "unknown_terminal_bound_ms": 3500,
+    "wait_for_result_ms": 0
+  }
+}

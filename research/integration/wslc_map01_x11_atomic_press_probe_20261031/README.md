@@ -1,0 +1,13 @@
+# X11 same-connection visual check and short-grab key down
+
+This isolated WSLc research probe extends #9901; it does not modify or invoke the agent-interface runtime. One X11 client grabs its private Xvfb server, captures a known HUD crop, compares it with a pre-grab baseline, and, if equal, emits and synchronizes `f` down on the same connection before ungrabbing. After ungrab it holds the key for at least 85 ms and releases it. A second X11 client owns an 8x8 magenta child window inside the crop. In `queued`, its map request is flushed after the grab is confirmed and before the checked capture; in `preexisting`, it is mapped and synchronized before the grab; `short` has no overlay. Screenshots before, during and after the grab and evaluator-only game ammo are retained.
+
+| Runs | Condition | Guard | Result | Later ammo |
+| --- | --- | --- | --- | --- |
+| ab01, ab06 | no overlay | equal | key down/up | 50 → 49 |
+| ab02, ab05 | map request flushed during grab | equal | key down/up; overlay visible after ungrab | 50 → 49 |
+| ab03, ab04 | overlay already visible | different | no key press | 50 → 50 |
+
+The queued runs show that in this setup the sampled crop remained unchanged through the same-client check and key-down request, while the other client's overlay became visible after ungrab. The preexisting-overlay controls refused the press. These observations support exploring a short server-grab boundary, but do not prove general atomicity or application semantics: server state can change immediately after ungrab, non-X state is outside this boundary, and the key deliberately remains held after ungrab. A crash, blocked server, or process-identity failure still needs independent custody and verified cleanup. The simple crop equality check has the semantic and spoofing limits documented in #9896. No production integration, model action, hit, kill, crash recovery or MAP01 completion is claimed.
+
+Six fresh network-none WSLc containers used a private Xvfb, Freedoom2 MAP01 ASYNC_SPECTATOR at 35 tics/s, seed 991031, skill 1, one CPU, 1 GiB, image sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25 and a 20-second external timeout. Order was short/queued/preexisting/preexisting/queued/short; main was e423d98f184f5f7d135e181669b56e4c89143ae5. Grab intervals were about 1.2–1.7 ms in these runs; this is not a bound. The telemetry is never used by the guard. ZIPs retain exact source, images, conditions, event timings and samples. `python audit.py` checks screenshot crop hashes, overlay pixels, decision and ordering, key states, controls, and ammo observations.

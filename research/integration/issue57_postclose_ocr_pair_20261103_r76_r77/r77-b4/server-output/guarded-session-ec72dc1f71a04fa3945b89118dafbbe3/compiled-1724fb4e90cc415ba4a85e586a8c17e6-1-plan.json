@@ -1,0 +1,160 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "calc-ocr-save-v1",
+    "session_scope": "native-x11:991be17a278d4b9bb1a26755f1a22326",
+    "surface": "x11-window-8389410",
+    "predicates": [
+      "context_ok",
+      "blank",
+      "cells_filled"
+    ],
+    "symbols": {
+      "entry": {
+        "kind": "target_reference",
+        "target_reference": "calc_entry",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok"
+        ]
+      },
+      "save": {
+        "kind": "target_reference",
+        "target_reference": "calc_save",
+        "identity_predicate": "context_ok",
+        "dependencies": [
+          "context_ok",
+          "cells_filled"
+        ]
+      }
+    },
+    "actions": {
+      "enter": {
+        "target_symbol": "entry",
+        "operation": "enter_pair",
+        "expected_effect": {
+          "cells_filled": true
+        }
+      },
+      "save": {
+        "target_symbol": "save",
+        "operation": "request_save",
+        "expected_effect": {
+          "cells_filled": true
+        }
+      }
+    },
+    "method": {
+      "name": "calc-ocr-save-v1",
+      "version": "1",
+      "initial_state": "initial",
+      "max_transitions": 2,
+      "max_runtime_ms": 10000,
+      "states": {
+        "initial": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true,
+                "blank": true
+              },
+              "outcome": "action",
+              "action": "enter",
+              "next_state": "filled",
+              "reason": null
+            }
+          ]
+        },
+        "filled": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true,
+                "cells_filled": true
+              },
+              "outcome": "action",
+              "action": "save",
+              "next_state": "handoff",
+              "reason": null
+            }
+          ]
+        },
+        "handoff": {
+          "branches": [
+            {
+              "when": {
+                "context_ok": true
+              },
+              "outcome": "yield",
+              "action": null,
+              "next_state": null,
+              "reason": "effect_unavailable"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bindings": {
+    "enter": {
+      "interaction": "keyboard",
+      "offset": [
+        12,
+        8
+      ],
+      "tail": [
+        {
+          "op": "text",
+          "text": "731",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "864",
+          "gap_ms": 1
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Return"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    },
+    "save": {
+      "interaction": "keyboard",
+      "offset": [
+        12,
+        8
+      ],
+      "tail": [
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        }
+      ]
+    }
+  },
+  "scope": "trusted caller-owned read-only perception/effect callbacks; not independent task scoring"
+}

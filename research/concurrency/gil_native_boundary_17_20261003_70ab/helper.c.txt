@@ -1,0 +1,18 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdint.h>
+#include <time.h>
+#include <errno.h>
+uint64_t native_now_ns(void) {
+    struct timespec t;
+    if (clock_gettime(CLOCK_MONOTONIC, &t) != 0) return 0;
+    return (uint64_t)t.tv_sec * UINT64_C(1000000000) + (uint64_t)t.tv_nsec;
+}
+int marked_wait(unsigned usec, uint64_t *bounds) {
+    struct timespec request = {usec / 1000000, (long)(usec % 1000000) * 1000};
+    bounds[0] = native_now_ns();
+    if (!bounds[0]) return -2;
+    int rc;
+    do { rc = nanosleep(&request, &request); } while (rc < 0 && errno == EINTR);
+    bounds[1] = native_now_ns();
+    return !bounds[1] ? -3 : rc;
+}

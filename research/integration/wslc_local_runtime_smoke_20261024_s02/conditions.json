@@ -1,0 +1,39 @@
+{
+  "schema": "wslc-local-runtime-smoke-s02-conditions-v1",
+  "attempt_id": "wslc-local-runtime-smoke-20261024-s02",
+  "source_commit": "9cd878dec80e4a3d7e8a524815f4a8a4cc18f5c2",
+  "host": "user-authorized attached Windows PC; local WSLc 3.0.3.0",
+  "allocation": {
+    "no_global_inventory": true,
+    "container_name": "agent-interface-goal-20261024-288fe2e44ce141cd8d87acb0b901386a",
+    "no_foreign_container_access": true,
+    "allocation_preflight": "preflight.json",
+    "one_attempt": true
+  },
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "image_setup": {
+    "retries": 0,
+    "timeout_seconds": 180,
+    "operation": "pull exact digest before one-shot runtime smoke"
+  },
+  "runtime": {
+    "postcondition": "query exact full CID only and require no match",
+    "bind_mount": "packet/run:/probe:ro",
+    "run_timeout_seconds": 90,
+    "memory": "512M requested, not an established hard ceiling",
+    "cpus": 1,
+    "pull_during_run": "never",
+    "cid_receipt": "run/container.cid",
+    "run_removal": "--rm",
+    "cleanup_query_timeout_seconds": 15,
+    "network": "none"
+  },
+  "task": {
+    "expected_read": "exact",
+    "expected_write": "EROFS",
+    "sentinel_bytes": "wslc-readonly-probe",
+    "application_code": "none beyond read-only mount probe"
+  },
+  "scope": "WSLc runtime compatibility only; no computer-control, release, task-effect, MAP01, performance, or memory-enforcement claim",
+  "prior_s01": "HOLD/UNKNOWN preserved; pinned image was absent; no application code ran"
+}

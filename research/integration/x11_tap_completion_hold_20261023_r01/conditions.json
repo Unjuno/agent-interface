@@ -1,0 +1,41 @@
+{
+  "run_id": "AI-LOCAL-WSL2-X11-TAP-COMPLETION-HOLD-20261023-R01",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "source_commit": "b51e427268b82bab38cea2da1f065eee893bfbe6",
+  "frozen_at_utc": "2026-10-23T10:59:16.157684+00:00",
+  "base_main": "e0d0cdb5108460842f3c5901f6cd2b501bc26cf4",
+  "baseline_methods_ref": "6e7f88d2dc389ebb96b7e6921fb5cd0e84da71ec:runtime/backends/x11_v1/backend.py",
+  "method_difference": "Current caller/guards/fixture in both arms; substitute only the exact prior key_state and key_chord function ASTs for baseline. Candidate uses current methods. No production file is rewritten.",
+  "H": "During a held client-facing sync completion after a real X roundtrip, prior single-key chord leaves the key down; repaired chord has already queued/processed UP and has one effect. Both retain possible-DOWN custody until completion returns and finish neutral.",
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "T": "Four fresh owned authenticated Xvfb servers sequentially; public guarded observe/mint/input/close. First sync after target DOWN performs actual sync, then withholds caller completion. Independent app-first-event signal and separate X client sample initial/held-start/held-end/final count and full keymap; hold sample interval1000ms. No repeat settings changed; record exact controls.",
+  "D": "PASS_COMPLETION_HOLD_DISCRIMINATOR_SCOPED only if all four planned arms observed without execution/cleanup errors, matching keyboard controls, baseline prefix DOWN vs candidate DOWN/UP before hold, baseline down and candidate up during hold, candidate count1 during hold, event/property count agreement, final full keymap neutral, public input/close completed and owned exit/absence verified. Baseline count increase is an outcome, not required a priori. No success/latency claim beyond this discriminator.",
+  "stop": "Stop on first execution/cleanup error; otherwise collect all four scientific outcomes then audit. No rerun of an arm or whole attempt.",
+  "authority": "User-selected PC; native WSL2/private authenticated Xvfb; no WSLc allocation or Docker/Windows desktop input",
+  "C": "Injected completion hold occurs AFTER actual sync reply. It is not network reply loss or blocked send, no prior delayed server request. Fixed ABBA reduces simple drift but not all confounding; two samples/method only.",
+  "U": "No hard deadline, arbitrary exactly-once effects, production speedup, MAP01, provider/model efficiency or broad reliability. No model calls.",
+  "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+  "limits": {
+    "jobs": 1,
+    "cpu_affinity_count": 2,
+    "nice_increment": 10,
+    "hold_gate_timeout_seconds": 3,
+    "host_timeout_seconds": 90,
+    "max_result_polls": 60,
+    "package_install_during_trial": false
+  },
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--",
+    "/home/user/.cache/agent-interface/xvfb-observation-20261023-r01-venv/bin/python",
+    "-B",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_tap_completion_hold_20261023_r01/run_probe.py"
+  ]
+}

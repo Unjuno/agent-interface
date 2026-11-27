@@ -1,0 +1,34 @@
+{
+  "schema": "wslc-local-runtime-smoke-s02-preflight-v1",
+  "observed_at_utc": "2026-10-24T00:46:08.2136881Z",
+  "source_commit": "9cd878dec80e4a3d7e8a524815f4a8a4cc18f5c2",
+  "allocation": {
+    "active_wslc_process_count": 0,
+    "name_query_stderr": "",
+    "global_inventory_used": false,
+    "name_query_stdout": "",
+    "container_name": "agent-interface-goal-20261024-288fe2e44ce141cd8d87acb0b901386a",
+    "name_query_timed_out": false,
+    "name_query_exit": 0
+  },
+  "image": {
+    "inspect_stdout": "[]\r\n",
+    "inspect_timed_out": false,
+    "inspect_stderr": "オブジェクトが見つかりません: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f\r\n",
+    "inspect_exit": 1,
+    "reference": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+  },
+  "wsl": {
+    "exit": 0,
+    "stdout": "WSL バージョン: 3.0.3.0\r\nカーネル バージョン: 6.18.54.1-1\r\nWSLg バージョン: 1.0.79\r\nMSRDC バージョン: 1.2.7391\r\nDirect3D バージョン: 1.611.1-81528511\r\nDXCore バージョン: 10.0.26100.1-240331-1435.ge-release\r\nWindows バージョン: 10.0.26300.9711\r\n",
+    "stderr": "",
+    "timed_out": false
+  },
+  "wslc": {
+    "exit": 0,
+    "stdout": "wslc 3.0.3.0\r\n",
+    "stderr": "",
+    "timed_out": false
+  },
+  "decision": "UNIQUE_NAME_CLEAR_IMAGE_MISSING"
+}

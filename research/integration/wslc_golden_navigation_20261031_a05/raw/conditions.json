@@ -1,0 +1,22 @@
+{
+  "allocation": "wslc-golden-probe-20261031-a05",
+  "main": "8a502c6556b57dbc76b4c8f0f554946ffe362b8c",
+  "image": "sha256:9841e60e91b1c037a8e7de6a7cb9737558352b15f052912d92af819487fe02ba",
+  "scope": "single no-model browser navigation through checked runtime; no submission and no efficiency comparison",
+  "pythonpath": [
+    "/source/research/live_control",
+    "/source/research/observation_gating",
+    "/source/research/observation_tiles",
+    "/source/research/real_apps_v1",
+    "/source"
+  ],
+  "network": "none",
+  "cpu": 1,
+  "memory": "1g",
+  "stop": "one attempt; preserve all outputs and exact-container inspection",
+  "predecessor": "a04 failed import; preflight a02 passed",
+  "changes": [
+    "add pinned runtime Python sources"
+  ],
+  "timeout_s": 90
+}

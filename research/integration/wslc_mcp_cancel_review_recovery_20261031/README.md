@@ -1,0 +1,7 @@
+# MCP cancellation, review and distinct continuation
+
+Base `62846a0448223f3fa7a336f3488dd46e224c055b`; WSLc, pinned Calc image, one CPU, no network, isolated Xvfb. This follows the paired review-gate controls in PR #9875. In fresh allocation a10, Calc was stopped after entry of A1=731 and A2=864, then a guarded Ctrl+S / 2 s wait / F2 program was cancelled. The old alias was refused while review was required; the pending save appeared only after Calc resumed.
+
+An explicit `interface_guarded_review_window` then returned a fresh source and image and advanced the binding revision. The old alias was refused as MISSING before input. A separate alias minted from the reviewed source was used for a distinct action, typing A3=975 and saving. The final file contains 731, 864 and 975; the prior file contained only the first two values. Both cancellation and new-action receipts verify input release. The review image hash matches the returned artifact. The test uses a predetermined point and known fixture; it does not establish model grounding, general app recovery, or that queued effects cannot appear later.
+
+`a10.zip` contains conditions, runner, screenshot, top-level receipts and file snapshots. Nested private receipt journals remain local and are represented by size and SHA-256. `python audit.py` checks the recorded transitions and parses the FODS independently. This single observation is not a reliability estimate or MAP01 completion.

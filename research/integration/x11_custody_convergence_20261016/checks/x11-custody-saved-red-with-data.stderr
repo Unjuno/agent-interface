@@ -1,0 +1,68 @@
+FFFFFFF
+======================================================================
+FAIL: test_changed_and_truncated_capsules_are_rejected (__main__.SavedPublicationTests.test_changed_and_truncated_capsules_are_rejected) (change='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 59, in test_changed_and_truncated_capsules_are_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_changed_and_truncated_capsules_are_rejected (__main__.SavedPublicationTests.test_changed_and_truncated_capsules_are_rejected) (change='truncated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 59, in test_changed_and_truncated_capsules_are_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_changed_or_missing_public_member_is_rejected (__main__.SavedPublicationTests.test_changed_or_missing_public_member_is_rejected) (change='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 39, in test_changed_or_missing_public_member_is_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_changed_or_missing_public_member_is_rejected (__main__.SavedPublicationTests.test_changed_or_missing_public_member_is_rejected) (change='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 39, in test_changed_or_missing_public_member_is_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_complete_publication_keeps_omissions_and_historical_scope (__main__.SavedPublicationTests.test_complete_publication_keeps_omissions_and_historical_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 24, in test_complete_publication_keeps_omissions_and_historical_scope
+    self.assertEqual(report['public_members'], 391)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 391
+
+======================================================================
+FAIL: test_extra_member_or_fabricated_omission_is_rejected (__main__.SavedPublicationTests.test_extra_member_or_fabricated_omission_is_rejected) (name='unexpected.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 49, in test_extra_member_or_fabricated_omission_is_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_extra_member_or_fabricated_omission_is_rejected (__main__.SavedPublicationTests.test_extra_member_or_fabricated_omission_is_rejected) (name='continuation33/COPYING')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 49, in test_extra_member_or_fabricated_omission_is_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.014s
+
+FAILED (failures=7)

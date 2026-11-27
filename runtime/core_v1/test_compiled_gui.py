@@ -30,9 +30,127 @@ class Driver:
  def verify(self,p):
   self.record('verify_effect',p);return {'status':'succeeded','evidence_ref':p['observation']['evidence_ref']}
  def journal(self,p):self.record('journal',p)
- def run(self,spec=None):return run(spec or interface(),{'observe':self.observe,'admit':self.admit,'execute':self.execute,'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal},clock=lambda:self.now)
+ def run(self,spec=None,clock=None,effect_clock=None,effect_clock_domain="graph"):
+  adapters={'observe':self.observe,'admit':self.admit,'execute':self.execute,
+   'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal}
+  unchanged=getattr(self,'verify_unchanged_effect',None)
+  if unchanged is not None:adapters['verify_unchanged_effect']=unchanged
+  return run(spec or interface(),adapters,clock=clock or (lambda:self.now),
+             effect_clock=effect_clock,effect_clock_domain=effect_clock_domain)
 
 class CompiledBoundaryTests(unittest.TestCase):
+
+ def test_effect_verification_can_use_the_callback_clock_domain(self):
+  graph_time=[0];effect_time=[5000];request_times=[]
+  d=Driver()
+  def next_effect_time():
+   effect_time[0]+=1
+   return effect_time[0]
+  def verify(request):
+   request_times.append(next_effect_time())
+   return d.verify(request)
+  adapters={'observe':d.observe,'admit':d.admit,'execute':d.execute,
+   'verify_effect':verify,'cancelled':lambda:False,'journal':d.journal}
+  receipt=run(interface(),adapters,clock=lambda:graph_time[0],
+              effect_clock=next_effect_time,effect_clock_domain="synthetic-effect-clock")
+  checks=[event for event in receipt['critical_events']
+          if event.get('event')=='effect_checked']
+  self.assertEqual(len(checks),2)
+  self.assertEqual(checks[0]['effect_verification_clock_domain'],
+                   "synthetic-effect-clock")
+  self.assertLess(checks[0]['effect_verification_started_ns'],request_times[0])
+  self.assertLess(request_times[0],checks[0]['effect_verification_accepted_ns'])
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
+
+ def test_unchanged_frame_uses_explicit_nonvisual_effect_verifier(self):
+  d=Driver();base=d.observe
+  def observe(request):
+   row=base(request)
+   if len(d.calls['observe'])==3:
+    row['evidence_digest']='digest2'
+   return row
+  d.observe=observe
+  d.verify_unchanged_effect=d.verify
+  receipt=d.run()
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
+  self.assertEqual(receipt['completed_transitions'],2)
+  self.assertEqual(len(d.calls['verify_effect']),2)
+  self.assertEqual(receipt['critical_events'][-1]['reason'],'method_complete')
+
+ def test_unchanged_effect_verifier_does_not_start_at_expired_deadline(self):
+  def unchanged_driver():
+   d=Driver();base=d.observe
+   def observe(request):
+    row=base(request)
+    if len(d.calls['observe'])==3:row['evidence_digest']='digest2'
+    return row
+   d.observe=observe;d.verify_unchanged_effect=d.verify
+   s=interface();s['method']['max_runtime_ms']=1
+   return d,s
+
+  calibration,calibration_spec=unchanged_driver()
+  calibration_reads=[0];reads_at_callback=[]
+  def calibration_clock():
+   calibration_reads[0]+=1
+   return 0
+  def calibrated_verifier(request):
+   reads_at_callback.append(calibration_reads[0])
+   return calibration.verify(request)
+  calibration.verify_unchanged_effect=calibrated_verifier
+  baseline=calibration.run(calibration_spec,clock=calibration_clock,
+                           effect_clock=lambda:0)
+  self.assertEqual(baseline['outcome'],'TASK_SUCCEEDED')
+  self.assertEqual(len(reads_at_callback),1)
+
+  d,spec=unchanged_driver();reads=[0]
+  deadline_read=reads_at_callback[0]
+  def deadline_clock():
+   reads[0]+=1
+   return 1_000_000 if reads[0]==deadline_read else 0
+  receipt=d.run(spec,clock=deadline_clock,effect_clock=lambda:0,
+                effect_clock_domain="different-clock")
+  self.assertEqual((receipt['outcome'],receipt['reason']),('SAFE_YIELD','budget_exhausted'))
+  self.assertEqual(receipt['completed_transitions'],2)
+  self.assertEqual(receipt['pending_effect']['action'],'save')
+  self.assertEqual(len(d.calls['verify_effect']),1)
+
+ def test_receipt_times_bound_observation_execution_and_effect_confirmation(self):
+  now=[0];observations=[]
+  def clock():now[0]+=10;return now[0]
+  def observe(_request):
+   now[0]+=2;i=len(observations)+1
+   row={'sequence':i,'captured_ns':now[0],'surface':'form',
+        'predicates':{'phase':i-1},'evidence_ref':f'frame{i}',
+        'evidence_digest':f'digest{i}'}
+   observations.append(row);return row
+  def admit(request):
+   return {'eligible':True,'status':'revalidated','authorization':'one-use',
+           'expected_sequence':request['observation']['sequence'],
+           'valid_until_ns':1_000_000_000}
+  def execute(_request):
+   now[0]+=3
+   return {'status':'completed','action_id':'a1','effect_ref':'e1',
+           'release':{'verified':True,'keys_down':[],'buttons_down':[]}}
+  def verify_effect(request):
+   now[0]+=5
+   return {'status':'succeeded','evidence_ref':request['observation']['evidence_ref']}
+  receipt=run(interface(),{'observe':observe,'admit':admit,'execute':execute,
+      'verify_effect':verify_effect,'cancelled':lambda:False},clock=clock)
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
+  observed=receipt['observations']
+  transition=receipt['transitions'][0]
+  terminal=next(event for event in receipt['critical_events'] if event['event']=='action_terminal')
+  checked=next(event for event in receipt['critical_events'] if event['event']=='effect_checked')
+  self.assertLessEqual(observed[0]['observation_started_ns'],observed[0]['captured_ns'])
+  self.assertLessEqual(observed[0]['captured_ns'],observed[0]['observation_accepted_ns'])
+  self.assertLessEqual(transition['execution_started_ns'],transition['execution_accepted_ns'])
+  self.assertEqual(terminal['execution_accepted_ns'],transition['execution_accepted_ns'])
+  self.assertEqual(checked['action_id'],transition['action_id'])
+  self.assertLessEqual(transition['execution_accepted_ns'],checked['effect_observation_captured_ns'])
+  self.assertLessEqual(checked['effect_observation_captured_ns'],checked['effect_observation_accepted_ns'])
+  self.assertLessEqual(checked['effect_observation_accepted_ns'],checked['effect_verification_started_ns'])
+  self.assertLessEqual(checked['effect_verification_started_ns'],checked['effect_verification_accepted_ns'])
+  self.assertEqual(checked['effect_verification_accepted_ns']-checked['effect_verification_started_ns'],15)
 
  def test_cross_type_predicate_cannot_select_action_or_complete(self):
   for expected, observed in ((0,False),(False,0),(1,True),(True,1)):
@@ -159,13 +277,15 @@ class CompiledBoundaryTests(unittest.TestCase):
    with self.subTest(status=status):
     d=Driver(terminal=status,released=False);base=d.execute
     d.execute=lambda p:dict(base(p),input_dispatched=False)
-    with self.assertRaises(ValueError):d.run()
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+    self.assertIsNone(r['unresolved_execution']['input_dispatched'])
  def test_input_dispatched_requires_strict_boolean(self):
   for value in (0,1,None,'false'):
    with self.subTest(value=value):
     d=Driver(terminal='refused',released=False);base=d.execute
     d.execute=lambda p:dict(base(p),input_dispatched=value)
-    with self.assertRaises(ValueError):d.run()
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+    self.assertIsNone(r['unresolved_execution']['input_dispatched'])
  def test_dispatch_or_held_input_cannot_be_downgraded_to_abstention(self):
   for flag,keys in ((True,[]),(False,['CTRL'])):
    with self.subTest(flag=flag,keys=keys):
@@ -173,4 +293,41 @@ class CompiledBoundaryTests(unittest.TestCase):
     def execute(p):
      r=base(p);r['input_dispatched']=flag;r['release']['keys_down']=keys;return r
     d.execute=execute;r=d.run();self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+ def test_admission_callback_exception_returns_completed_prefix(self):
+  d=Driver();base=d.admit
+  def admit(payload):
+   if len(d.calls['admit'])==1:
+    d.record('admit',payload)
+    raise TimeoutError('admission timeout')
+   return base(payload)
+  d.admit=admit
+  receipt=d.run()
+  self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+  self.assertEqual(receipt['completed_transitions'],1)
+  self.assertEqual(len(d.calls['execute']),1)
+  self.assertEqual(len(d.calls['admit']),2)
+  self.assertEqual(receipt['critical_events'][-2]['event'],'admission_failed')
+
+ def test_execution_callback_exception_preserves_prefix_and_unknown_delivery(self):
+  d=Driver();base=d.execute
+  def execute(payload):
+   result=base(payload)
+   if len(d.calls['execute'])==2:
+    raise TimeoutError('execution receipt lost after possible input')
+   return result
+  d.execute=execute
+  receipt=d.run()
+  self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+  self.assertEqual(receipt['completed_transitions'],1)
+  self.assertEqual(len(d.calls['execute']),2)
+  self.assertEqual(len(d.calls['observe']),2)
+  self.assertEqual(len(d.calls['verify_effect']),1)
+  unresolved=receipt['unresolved_execution']
+  self.assertEqual(unresolved['action'],'save')
+  self.assertIsNone(unresolved['input_dispatched'])
+  self.assertFalse(unresolved['release_verified'])
+  terminals=[event for event in receipt['critical_events'] if event['event']=='action_terminal']
+  terminal=terminals[-1]
+  self.assertNotIn('input_dispatched',terminal)
+  self.assertFalse(terminal['release_verified'])
 if __name__=='__main__':unittest.main()

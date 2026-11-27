@@ -1,0 +1,89 @@
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/README.md b/research/integration/standard_mcp_task_ledger_57_v1/README.md
+index 9155d1262..ea0969b65 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/README.md
++++ b/research/integration/standard_mcp_task_ledger_57_v1/README.md
+@@ -325,16 +325,3 @@ generation receipts with actual provider request/response and usage logs. The
+ bridge tests do not establish real provider retries or usage accounting. A live
+ comparison still requires a separately verified eligible allocation; #7924
+ remains STOP/HOLD.
+-
+-## Post-authority task-effect attribution probe (2026-11-21)
+-
+-[`post_authority_effect_attribution_v1`](post_authority_effect_attribution_v1/RESULT.md)
+-reconstructs the saved R149 timing boundary through the current standard task
+-ledger. The ledger currently produces the same factual `task_success=true`
+-summary for an in-authority effect and an R149 effect observed after authority
+-expiry, confirmed release, and the neutral horizon. A separate research
+-adjudicator retains factual score but marks that late effect ineligible as
+-authorized task success. Its six tests and the existing 13 ledger tests pass
+-normally and under `-O`. This is a measurement-contract finding and candidate
+-seam; it is not yet connected to the frozen comparator or public caller, and
+-does not add live/provider/MAP01 evidence.
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/late_spool_usage_sidecar_20261104/commands.txt b/research/integration/standard_mcp_task_ledger_57_v1/late_spool_usage_sidecar_20261104/commands.txt
+index 3a250bbb2..3162bf317 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/late_spool_usage_sidecar_20261104/commands.txt
++++ b/research/integration/standard_mcp_task_ledger_57_v1/late_spool_usage_sidecar_20261104/commands.txt
+@@ -6,4 +6,4 @@ Normal:
+ 
+ Optimized:
+   py -3.11 -O -m unittest -q test_app_server_spool_worker_v1 test_app_server_file_spool_v1 test_codex_app_server_client_v1 test_app_server_provider_to_public_mcp_v1
+-  py -3.11 -O -m unittest -q test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp
++  py -3.11 -O -m unittest -q test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_file_spool_v1.py b/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_file_spool_v1.py
+index 16ad5c63e..c77de4659 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_file_spool_v1.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/test_app_server_file_spool_v1.py
+@@ -117,16 +117,13 @@ class AppServerFileSpoolTests(unittest.TestCase):
+ 
+     def test_file_planner_joins_start_and_terminal_receipts(self):
+         planner = FileSpoolPlanner(self.root, model="gpt-6.1-sol", effort="medium",
+-            expected_schema_sha256=self.schema_sha256, start_timeout=5)
++            expected_schema_sha256=self.schema_sha256, start_timeout=1)
+         started = threading.Event()
+         finish = threading.Event()
+         failures = []
+ 
+         def host_once():
+-            # This fake host runs in a thread. Give it more scheduling slack
+-            # than the planner's receipt wait so host startup cannot race the
+-            # test deadline under a busy runner.
+-            deadline = time.monotonic() + 10
++            deadline = time.monotonic() + 1
+             request = None
+             while request is None and time.monotonic() < deadline:
+                 request = claim_next(self.root, expected_model="gpt-6.1-sol",
+@@ -140,7 +137,7 @@ class AppServerFileSpoolTests(unittest.TestCase):
+             publish_stage(self.root, attempt_id, "started", {
+                 "thread_id": "thread-live", "turn_id": "turn-live"})
+             started.set()
+-            if not finish.wait(timeout=5):
++            if not finish.wait(timeout=1):
+                 failures.append("consumer did not complete begin_turn")
+                 return
+             publish_stage(self.root, attempt_id, "completed", {
+@@ -154,18 +151,13 @@ class AppServerFileSpoolTests(unittest.TestCase):
+ 
+         host = threading.Thread(target=host_once)
+         host.start()
+-        try:
+-            handle = planner.begin_turn("Plan one action.", output_schema=self.schema,
+-                image_path=self.image)
+-            self.assertTrue(started.is_set())
+-            self.assertEqual((handle.thread_id, handle.turn_id), ("thread-live", "turn-live"))
+-            finish.set()
+-            result = planner.await_turn(handle, timeout=1)
+-        finally:
+-            # Never let a failed assertion leave the publisher racing with
+-            # TemporaryDirectory cleanup on Windows.
+-            finish.set()
+-            host.join(timeout=10)
++        handle = planner.begin_turn("Plan one action.", output_schema=self.schema,
++            image_path=self.image)
++        self.assertTrue(started.is_set())
++        self.assertEqual((handle.thread_id, handle.turn_id), ("thread-live", "turn-live"))
++        finish.set()
++        result = planner.await_turn(handle, timeout=1)
++        host.join(timeout=1)
+         self.assertFalse(host.is_alive())
+         self.assertEqual(failures, [])
+         self.assertTrue(result.answer_eligible)

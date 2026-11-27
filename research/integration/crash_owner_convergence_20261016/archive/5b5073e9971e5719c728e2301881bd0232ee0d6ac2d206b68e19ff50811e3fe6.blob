@@ -1,0 +1,146 @@
+{
+  "format": "controller-failure-cleanup-v1",
+  "primary_error_type": "RuntimeError",
+  "failed_stage": "controller_setup",
+  "stages": [
+    {
+      "stage": "child_poll_before",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "finish_send",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "post_control_score_wait",
+      "status": "returned",
+      "result": {
+        "event": "post_control_score",
+        "fixture": "synthetic"
+      }
+    },
+    {
+      "stage": "child_wait",
+      "status": "returned",
+      "result": 0
+    },
+    {
+      "stage": "child_stdin_close_worker_start",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "child_stdin_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "child_poll_after",
+      "status": "returned",
+      "result": 0
+    },
+    {
+      "stage": "planner_close_worker_start",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "planner_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "atexit_unregister",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "stdout_reader_join",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "stdout_reader_alive",
+      "status": "returned",
+      "result": false
+    },
+    {
+      "stage": "score_file_presence",
+      "status": "returned",
+      "result": true
+    },
+    {
+      "stage": "owner_events_presence",
+      "status": "returned",
+      "result": true
+    }
+  ],
+  "input_release_verified": false,
+  "input_releases_verified_empty": true,
+  "scope": "owned child process only; no physical release or scorer certificate",
+  "owner_process_recovery_required": true,
+  "owner_process_recovery_verified": true,
+  "owner_process_emergency_recovery_verified": false,
+  "display_reuse_allowed": true,
+  "child_exit_code": 0,
+  "stdout_reader_retired": true,
+  "stdout_reader_errors": [],
+  "input_terminals_complete": true,
+  "input_release_verified_empty": true,
+  "scorer_terminal_observed": true,
+  "score_file_present": true,
+  "owner_events_present": true,
+  "owner_events_closed": true,
+  "owner_recovery_receipt": {
+    "close_error": null,
+    "closed_ns": 6221829079482,
+    "display": ":77",
+    "event_publisher_errors": [],
+    "owner_id": "3baddef6830947e5b69872bdd1fcbdcd",
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 6221817460947
+      }
+    ],
+    "owner_thread_stopped": true,
+    "receipt_fsynced": true,
+    "recovery_verified": true,
+    "release_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 6221817460947
+      }
+    ],
+    "schema": "input-owner-recovery-v1",
+    "service_pid": 4314,
+    "service_start_ticks": 622161,
+    "trigger": "requested_close",
+    "recovery_mode": "owner_process_verified_receipt"
+  },
+  "cleanup_complete": true
+}

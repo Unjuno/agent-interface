@@ -1,0 +1,116 @@
+{
+  "result": "PASS_SAVED_C05_ALTERNATE_METADATA_AND_CONTRAST",
+  "original_raw_sha256": "e1cf715e69f3fb119ddad8f3c58f9fa6e5981e58306d4cce727695cd2fd139e3",
+  "original_raw_changed": false,
+  "rows": [
+    {
+      "case": 0,
+      "mode": "thread_cdll",
+      "cancel_after_to_first_owned_up_observation_ns": 2989600,
+      "native_duration_ns": 302320610,
+      "first_case_fd_count": [
+        7,
+        10
+      ]
+    },
+    {
+      "case": 1,
+      "mode": "thread_pydll",
+      "cancel_after_to_first_owned_up_observation_ns": 252422171,
+      "native_duration_ns": 300445475,
+      "first_case_fd_count": [
+        10,
+        10
+      ]
+    },
+    {
+      "case": 2,
+      "mode": "process_pydll",
+      "cancel_after_to_first_owned_up_observation_ns": 4041522,
+      "native_duration_ns": 304705581,
+      "first_case_fd_count": [
+        10,
+        10
+      ]
+    },
+    {
+      "case": 3,
+      "mode": "process_pydll",
+      "cancel_after_to_first_owned_up_observation_ns": 478170,
+      "native_duration_ns": 301895941,
+      "first_case_fd_count": [
+        10,
+        10
+      ]
+    },
+    {
+      "case": 4,
+      "mode": "thread_pydll",
+      "cancel_after_to_first_owned_up_observation_ns": 243836749,
+      "native_duration_ns": 301104895,
+      "first_case_fd_count": [
+        10,
+        10
+      ]
+    },
+    {
+      "case": 5,
+      "mode": "thread_cdll",
+      "cancel_after_to_first_owned_up_observation_ns": 12641278,
+      "native_duration_ns": 300821435,
+      "first_case_fd_count": [
+        10,
+        10
+      ]
+    }
+  ],
+  "copied_full_inputs": [
+    {
+      "copy": "wrong_press_key",
+      "frozen_checker_accepted": true,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "press_marked_release",
+      "frozen_checker_accepted": true,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "missing_press_call",
+      "frozen_checker_accepted": true,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "wrong_cleanup_key",
+      "frozen_checker_accepted": true,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "cleanup_marked_press",
+      "frozen_checker_accepted": true,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "wrong_safety_pid",
+      "frozen_checker_accepted": false,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "lost_arm_ack",
+      "frozen_checker_accepted": false,
+      "new_checker_rejected": true
+    },
+    {
+      "copy": "invented_child_exit",
+      "frozen_checker_accepted": false,
+      "new_checker_rejected": true
+    }
+  ],
+  "old_frozen_checker_gap": "press/cleanup call key/held/count metadata unchecked; first five copied contradictions accepted by frozen checker, not corruption found in original raw",
+  "formal_replays": 0,
+  "producer_backend_imports": 0,
+  "own_saved_verify_function_executed": true,
+  "scientific_first_result_changed": false,
+  "FD_leak_freedom": "unproven, first7->10 then10->10 retained",
+  "scope": "alternate checker only; source/freeze/producer first six untouched; no physical/model/harddeadline/reliability/production/fleet fencing claim"
+}

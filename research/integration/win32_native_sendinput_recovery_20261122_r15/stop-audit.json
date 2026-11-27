@@ -1,0 +1,28 @@
+{
+  "attempt_id": "win32-native-sendinput-r15-20261122",
+  "checks": {
+    "dispatch_refused_by_preexisting_durable_fence": true,
+    "exact_source_and_attempt": true,
+    "fixture_cleanup_and_foreground_restore": true,
+    "frozen_pretrial_and_raw_hashes": true,
+    "no_new_input_or_task_effect": true,
+    "no_retry_or_admitted_dispatch": true,
+    "original_producer_reported_stopped": true,
+    "phase1_activation_and_neutral_native_preflight": true,
+    "public_observation_without_input": true,
+    "source_fence_matches_R14_unknown_action": true
+  },
+  "custody_and_exclusion_audit_pass": true,
+  "disposition": "STOPPED_BY_DURABLE_CUSTODY_FENCE",
+  "durable_fence_sha256": "56a898e0e371895a029bfe0e17262aeef5bf71ab5cf1ab83a5e591cd4f7e3110",
+  "experiment_acceptance_pass": false,
+  "note": "No R15 input was admitted. The repository-preserved R14 source action remains UNKNOWN in the protected per-logon fence; only the documented one-shot orphan-recovery route may resolve it.",
+  "pretrial_hash_audit": {
+    "entries": 19,
+    "errors": []
+  },
+  "raw_hash_audit": {
+    "entries": 15,
+    "errors": []
+  }
+}

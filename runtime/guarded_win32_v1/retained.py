@@ -1,5 +1,5 @@
 """Private caller-owned Win32 image observation, without input authority."""
-import copy, hashlib, io, pathlib, time, uuid
+import copy, hashlib, io, json, pathlib, time, uuid
 from PIL import Image
 from runtime.guarded_x11_v1.history import ObservationHistory
 
@@ -18,7 +18,18 @@ class RetainedWin32Observation:
         self._initial = self._binding()
 
     def _binding(self):
-        return {'surface': self.backend._target(self.target), 'geometry': copy.deepcopy(self.backend.geometry(self.target))}
+        identity = self.backend.process_identity(self.target)
+        if (type(identity) is not dict or set(identity) != {'pid', 'creation_time_100ns'}
+                or type(identity['pid']) is not int or identity['pid'] <= 0
+                or type(identity['creation_time_100ns']) is not int
+                or identity['creation_time_100ns'] <= 0):
+            raise RuntimeError('target process identity unavailable')
+        process_generation = hashlib.sha256(json.dumps(
+            [identity['pid'], identity['creation_time_100ns']],
+            separators=(',', ':')).encode('ascii')).hexdigest()
+        return {'surface': self.backend._target(self.target),
+                'process_generation': process_generation,
+                'geometry': copy.deepcopy(self.backend.geometry(self.target))}
 
     def observe(self, region):
         if self.review_required:

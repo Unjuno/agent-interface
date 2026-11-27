@@ -1,0 +1,26 @@
+test_cancel_ack_revokes_alias_before_writer_resumes (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_ack_revokes_alias_before_writer_resumes) ... FAIL
+
+======================================================================
+FAIL: test_cancel_ack_revokes_alias_before_writer_resumes (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_cancel_ack_revokes_alias_before_writer_resumes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\release-expiry-queued-press-mcp-20261018\runtime\cli_v1\test_mcp_transport_cancellation.py", line 164, in test_cancel_ack_revokes_alias_before_writer_resumes
+    self.assertTrue(row['before_resume']['cancel_review_required'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 2.074s
+
+FAILED (failures=1)

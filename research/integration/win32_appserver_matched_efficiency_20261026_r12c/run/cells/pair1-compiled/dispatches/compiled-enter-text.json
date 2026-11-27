@@ -1,0 +1,84 @@
+{
+  "body": {
+    "error": "INVALID_RESPONSE_WAIT",
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "status": "invalid_request"
+  },
+  "raw_report": {
+    "error": "INVALID_RESPONSE_WAIT",
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "status": "invalid_request"
+  },
+  "receipt": {
+    "call_id": null,
+    "kind": "dispatch",
+    "label": "compiled-enter-text",
+    "operation_id": null,
+    "program": {
+      "authority": {
+        "expires_at_ns": 667914642439300,
+        "lease_id": "compiled-50c1cd4c957748d3973068ad92f522ea"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 120,
+          "y": 90
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "office"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "compiled-678116dca8a7416b9552bb72b2c55fa9",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "3884b91ccc27f904349414857692378163fed59383c3e1b12a533b2b9e433e99"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "release_confirmed": null,
+    "returned_monotonic_ns": 667904665697400,
+    "started_monotonic_ns": 667904665464700,
+    "status": "invalid_request",
+    "target_generation": null
+  },
+  "retained_result": {
+    "calls": [],
+    "note": "Win32 action receipt lookup requires its exact call_id.",
+    "operation_invoked": false,
+    "scope": "current_server",
+    "status": "call_list",
+    "total_calls": 0
+  }
+}

@@ -1,0 +1,1177 @@
+import time
+import unittest
+
+from runtime.cli_v1.supervised_win32_compiled import (
+    _recovery_attempts_match_obligations, _terminal, run_public_compiled)
+
+
+class SupervisedWin32CompiledCallerTests(unittest.TestCase):
+    def test_recovery_attempt_receipt_matches_key_obligations(self):
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x57,
+                "encoding": "scan_code", "status": "returned"}]))
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["key:fixture:W"], [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "raised",
+                "error_type": "OSError"}]))
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["button:fixture:left", "unicode:0041"], []))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], None))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], []))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "returned"}]))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x41,
+                "encoding": "scan_code", "status": "returned"}]))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:invalid"], [{"virtual_key": 0x57,
+                "encoding": "scan_code", "status": "returned"}]))
+
+    def test_retrieved_dispatch_requires_exact_call_and_generation(self):
+        call_id = "a" * 32
+        generation = "b" * 64
+        retrieved = {"call_id": call_id,
+            # interface_results describes its own read as no input; the
+            # nested action retains the original dispatch's delivery state.
+            "input_dispatched": False,
+            "action": {"operation_id": "c" * 32,
+                "target_generation": generation, "status": "completed",
+                "input_dispatched": True, "release_confirmed": True,
+                "completion_custody": {"release_confirmed": True,
+                    "completion_readback_outcome": "verified"},
+                "result": {"status": "completed",
+                    "input_dispatched": True, "release_confirmed": True}}}
+
+        accepted = _terminal(retrieved, "move", expected_call_id=call_id,
+            expected_generation=generation)
+        self.assertEqual(accepted["status"], "completed")
+        self.assertIs(accepted["release"]["verified"], True)
+        self.assertIs(accepted["input_dispatched"], True)
+
+        # The public interface_results action keeps the canonical release
+        # confirmation on the action/custody row. Its nested runtime result
+        # records the verified release receipt but omits a redundant boolean.
+        public_result_shape = {**retrieved, "action": {
+            **retrieved["action"], "result": {"status": "completed",
+                "execution": {"releases": [{"verified": True,
+                    "keys_down": [], "buttons_down": []}]}}}}
+        public_result_terminal = _terminal(public_result_shape, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(public_result_terminal["status"], "completed")
+        self.assertIs(public_result_terminal["release"]["verified"], True)
+
+        wrong_call = _terminal(retrieved, "move",
+            expected_call_id="d" * 32, expected_generation=generation)
+        self.assertEqual(wrong_call["status"], "uncertain")
+        self.assertIs(wrong_call["release"]["verified"], False)
+
+        wrong_generation = _terminal(retrieved, "move",
+            expected_call_id=call_id, expected_generation="e" * 64)
+        self.assertEqual(wrong_generation["status"], "uncertain")
+        self.assertIs(wrong_generation["release"]["verified"], False)
+
+        recovered = {**retrieved, "action": {**retrieved["action"],
+            "status": "recovered", "completion_custody": None,
+            "result": {"status": "recovered",
+                "input_dispatched": True, "release_confirmed": True}}}
+        recovered_terminal = _terminal(recovered, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(recovered_terminal["status"], "uncertain")
+        self.assertIs(recovered_terminal["release"]["verified"], False)
+
+    def test_recovered_dispatch_requires_joined_complete_cancellation_horizon(self):
+        call_id = "a" * 32
+        operation_id = "c" * 32
+        recovery_id = "d" * 32
+        generation = "b" * 64
+        release_ns = 10_000_000_000
+        horizon_ns = 2_000_000_000
+        result = {"operation_id": operation_id,
+            "target_generation": generation, "status": "recovered",
+            "phase": "recovered", "release_confirmed": True,
+            "replay_allowed": False, "producer_exit_code": -15,
+            "producer_identity": {"pid": 1234,
+                "creation_time_100ns": 987654321},
+            "late_input_horizon_ns": horizon_ns,
+            "late_input_max_sample_gap_ns": 100_000_000,
+            "late_input_max_observed_gap_ns": 32_000_000,
+            "late_input_observation_count": 77,
+            "late_input_release_received_ns": release_ns,
+            "late_input_observation_start_ns": release_ns,
+            "late_input_observation_end_ns": release_ns + horizon_ns,
+            "late_input_validation_error": None, "recovery_id": recovery_id,
+            "recovery_release_key_up_attempts": [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "returned"}],
+            "obligations": ["key:fixture:W"],
+            "readback": {"operation_id": operation_id,
+                "target_generation": generation, "recovery_id": recovery_id,
+                "neutral": True,
+                "observed_monotonic_ns": release_ns + horizon_ns,
+                "key_button_states": [False], "unicode_event_units": 0}}
+        recovered = {"call_id": call_id, "input_dispatched": False,
+            "action": {"operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "obligations": ["key:fixture:W"],
+                "release_confirmed": True,
+                "result": {"status": "recovered",
+                    "input_dispatched": None,
+                    "release_confirmed": True}},
+            "cancellation": {"operation_id": "e" * 32,
+                "action_operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "owner_phase": "recovered", "release_confirmed": True,
+                "replay_allowed": False, "result": result}}
+
+        accepted = _terminal(recovered, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(accepted["status"], "delivery_uncertain")
+        self.assertIs(accepted["release"]["verified"], True)
+        self.assertNotIn("input_dispatched", accepted)
+
+        # A separately verified automatic cleanup keeps the source action
+        # UNKNOWN while still proving that its input obligations were released.
+        automatic_unknown = {**recovered,
+            "action": {**recovered["action"], "status": "unknown",
+                "release_confirmed": False, "input_dispatched": True,
+                "task_success": None, "replay_allowed": False,
+                "result": {"status": "unknown", "input_dispatched": True,
+                    "release_confirmed": False,
+                    "error": "COMPLETION_EVIDENCE_UNCONFIRMED",
+                    "error_type": "RuntimeError", "task_success": None,
+                    "replay_allowed": False}},
+            "cancellation": {**recovered["cancellation"],
+                "automatic_completion_recovery": True,
+                "completion_error_type": "RuntimeError"}}
+        automatic_terminal = _terminal(automatic_unknown, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(automatic_terminal["status"], "delivery_uncertain")
+        self.assertIs(automatic_terminal["release"]["verified"], True)
+        self.assertIs(automatic_terminal["input_dispatched"], True)
+
+        # The native results projection can omit action.obligations while
+        # retaining standard_program and the cancellation receipt. Re-derive
+        # the exact button obligation and join it before trusting recovery.
+        button_program = {"schema": "agent-interface/program-v1",
+            "source": {"target_generations": {"fixture": generation}},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "pointer_button", "button": "left", "down": True},
+                {"op": "pointer_button", "button": "left", "down": False}]}
+        button_result = {**result, "obligations": ["button:fixture:left"],
+            "recovery_release_key_up_attempts": [],
+            "readback": {**result["readback"],
+                "key_button_states": [False], "unicode_event_units": 0}}
+        button_action = {key: value for key, value
+            in automatic_unknown["action"].items() if key != "obligations"}
+        button_receipt = {**automatic_unknown,
+            "standard_program": button_program,
+            "action": button_action,
+            "cancellation": {**automatic_unknown["cancellation"],
+                "result": button_result}}
+        button_terminal = _terminal(button_receipt, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(button_terminal["status"], "delivery_uncertain")
+        self.assertIs(button_terminal["release"]["verified"], True)
+        self.assertIs(button_terminal["input_dispatched"], True)
+
+        wrong_program = {**button_receipt, "standard_program": {
+            **button_program, "ops": [button_program["ops"][0],
+                {"op": "pointer_button", "button": "right", "down": True}]}}
+        wrong_program_terminal = _terminal(wrong_program, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(wrong_program_terminal["status"], "uncertain")
+        self.assertIs(wrong_program_terminal["release"]["verified"], False)
+        stale_program = {**button_receipt, "standard_program": {
+            **button_program, "source": {"target_generations": {
+                "fixture": "e" * 64}}}}
+        stale_program_terminal = _terminal(stale_program, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(stale_program_terminal["status"], "uncertain")
+        self.assertIs(stale_program_terminal["release"]["verified"], False)
+
+        direct_dispatch = {"schema": "agent-interface/runtime-dispatch-result-v1",
+            "status": "returned", "call_id": call_id,
+            "operation_id": operation_id, "target_generation": generation,
+            "operation_invoked": True, "input_dispatched": True,
+            "release_confirmed": True, "task_success": None,
+            "replay_allowed": False,
+            "result": automatic_unknown["action"]["result"],
+            "supervision": {"call_id": call_id,
+                "action": automatic_unknown["action"],
+                "cancellation": automatic_unknown["cancellation"]}}
+        direct_terminal = _terminal(direct_dispatch, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(direct_terminal["status"], "delivery_uncertain")
+        self.assertIs(direct_terminal["release"]["verified"], True)
+        self.assertIs(direct_terminal["input_dispatched"], True)
+
+        invalid_automatic = {**automatic_unknown, "cancellation": {
+            **automatic_unknown["cancellation"],
+            "automatic_completion_recovery": False}}
+        invalid_automatic_terminal = _terminal(invalid_automatic, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(invalid_automatic_terminal["status"], "uncertain")
+        self.assertIs(invalid_automatic_terminal["release"]["verified"], False)
+
+        invalid_receipts = []
+        wrong_call = {**recovered, "call_id": "e" * 32}
+        invalid_receipts.append(wrong_call)
+        wrong_operation = {**recovered, "cancellation": {
+            **recovered["cancellation"], "action_operation_id": "f" * 32}}
+        invalid_receipts.append(wrong_operation)
+        wrong_generation = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "target_generation": "e" * 64}}}
+        invalid_receipts.append(wrong_generation)
+        short_horizon = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_observation_end_ns":
+                    release_ns + horizon_ns - 1}}}
+        invalid_receipts.append(short_horizon)
+        unobserved_initial_gap = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result,
+                "late_input_observation_start_ns": release_ns +
+                    result["late_input_max_sample_gap_ns"] + 1,
+                "late_input_observation_end_ns": release_ns +
+                    result["late_input_max_sample_gap_ns"] + 1 + horizon_ns}}}
+        invalid_receipts.append(unobserved_initial_gap)
+        bad_sampling = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_max_observed_gap_ns":
+                    result["late_input_max_sample_gap_ns"] + 1}}}
+        invalid_receipts.append(bad_sampling)
+        insufficient_sampling = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_observation_count": 2}}}
+        invalid_receipts.append(insufficient_sampling)
+        for field, value in (
+                ("operation_id", "f" * 32),
+                ("target_generation", "e" * 64),
+                ("recovery_id", "f" * 32),
+                ("neutral", False),
+                ("observed_monotonic_ns", release_ns + horizon_ns - 1),
+                ("key_button_states", [True]),
+                ("unicode_event_units", 1)):
+            invalid_readback = {**recovered, "cancellation": {
+                **recovered["cancellation"], "result": {
+                    **result, "readback": {**result["readback"], field: value}}}}
+            invalid_receipts.append(invalid_readback)
+        for obligations in (["unknown:fixture"],
+                            ["key:fixture:W", "key:fixture:W"]):
+            invalid_obligations = {**recovered, "cancellation": {
+                **recovered["cancellation"], "result": {
+                    **result, "obligations": obligations}}}
+            invalid_receipts.append(invalid_obligations)
+        boolean_unicode_count = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "obligations": ["unicode:A"],
+                "readback": {**result["readback"],
+                    "key_button_states": [],
+                    "unicode_event_units": True}}}}
+        invalid_receipts.append(boolean_unicode_count)
+        missing_action_obligations = {**recovered, "action": {
+            key: value for key, value in recovered["action"].items()
+            if key != "obligations"}}
+        invalid_receipts.append(missing_action_obligations)
+        mismatched_action_obligations = {**recovered, "action": {
+            **recovered["action"], "obligations": ["key:fixture:A"]}}
+        invalid_receipts.append(mismatched_action_obligations)
+        empty_obligations = {**recovered,
+            "action": {**recovered["action"], "obligations": []},
+            "cancellation": {**recovered["cancellation"], "result": {
+                **result, "obligations": [],
+                "recovery_release_key_up_attempts": [],
+                "readback": {**result["readback"],
+                    "key_button_states": [],
+                    "unicode_event_units": 0}}}}
+        empty_terminal = _terminal(empty_obligations, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(empty_terminal["status"], "delivery_uncertain")
+        self.assertIs(empty_terminal["release"]["verified"], True)
+        missing_readback = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                key: value for key, value in result.items()
+                if key != "readback"}}}
+        invalid_receipts.append(missing_readback)
+        custody_only = {**recovered, "cancellation": None, "action": {
+            **recovered["action"], "completion_custody": {
+                "release_confirmed": True,
+                "completion_readback_outcome": "verified"}}}
+        invalid_receipts.append(custody_only)
+        for invalid in invalid_receipts:
+            with self.subTest(invalid=invalid):
+                terminal = _terminal(invalid, "move",
+                    expected_call_id=call_id,
+                    expected_generation=generation)
+                self.assertEqual(terminal["status"], "uncertain")
+                self.assertIs(terminal["release"]["verified"], False)
+
+    def test_pending_dispatch_joins_same_call_id_readback_before_task_verification(self):
+        generation = "b" * 64
+        dispatch_id = "a" * 32
+        operation_id = "c" * 32
+        observations = []
+        dispatches = []
+        resolutions = []
+        task_calls = []
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "pending-public-win32-dispatch",
+            "session_scope": "test-session",
+            "surface": "fixture-window",
+            "predicates": ["ready", "moved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"moved": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True},
+                        "outcome": "action", "action": "move",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"moved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"},
+                {"op": "release_all"}]}
+
+        def observe(target, frame, region):
+            observations.append((target, frame, region))
+            index = len(observations)
+            return {"status": "returned", "call_id": f"{index:032x}",
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{index}",
+                "predicates": {"ready": True,
+                    "moved": index > 1}}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatches.append(True)
+            return {"status": "pending", "call_id": dispatch_id,
+                "operation_invoked": True, "input_dispatched": None,
+                "release_confirmed": False, "replay_allowed": False}
+
+        def resolve_pending(call_id, pending_reply):
+            resolutions.append((call_id, pending_reply["status"]))
+            return {"call_id": call_id,
+                "action": {"operation_id": operation_id,
+                    "target_generation": generation, "status": "completed",
+                    "input_dispatched": True, "release_confirmed": True,
+                    "completion_custody": {"release_confirmed": True,
+                        "completion_readback_outcome": "verified"},
+                    "result": {"status": "completed",
+                        "input_dispatched": True,
+                        "release_confirmed": True}}}
+
+        def verify_task(call_id):
+            task_calls.append(call_id)
+            requested = time.monotonic_ns()
+            observed = time.monotonic_ns()
+            accepted = time.monotonic_ns()
+            receipt = {"call_id": call_id, "operation_id": operation_id,
+                "target_generation": generation, "oracle_id": "e" * 32,
+                "outcome": "success", "observed_monotonic_ns": observed,
+                "evidence_ref": "pixel-proof"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": receipt, "requested_monotonic_ns": requested,
+                    "receipt_received_monotonic_ns": accepted}}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "succeeded", "evidence_ref": "pixel-proof"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(result["outcome"], "TASK_SUCCEEDED", result)
+        self.assertEqual(dispatches, [True])
+        self.assertEqual(resolutions, [(dispatch_id, "pending")])
+        self.assertEqual(result["standard_action_call_ids"], [dispatch_id])
+        self.assertEqual(result["task_verification"]["action_call_id"], dispatch_id)
+        self.assertTrue(result["task_verification"]["valid"])
+        self.assertIs(result["task_success"], True)
+        self.assertEqual(task_calls, [dispatch_id])
+        dispatch_evidence = result["standard_target_evidence"][1]
+        self.assertEqual(dispatch_evidence["call_id"], dispatch_id)
+        self.assertEqual(dispatch_evidence["action_id"], operation_id)
+        self.assertTrue(dispatch_evidence["release_verified"])
+
+    def test_recovered_dispatch_scores_task_effect_without_completing_graph(self):
+        generation = "b" * 64
+        dispatch_id = "a" * 32
+        operation_id = "c" * 32
+        verify_calls = []
+        include_attempt_receipt = [True]
+        automatic_unknown_source = [False]
+        omit_action_obligations = [False]
+        dispatched_programs = []
+        resolved_rows = []
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "recovered-effect-is-independent-of-graph",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready", "moved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"moved": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True},
+                        "outcome": "action", "action": "move",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"moved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"},
+                {"op": "release_all"}]}
+
+        def observe(target, frame, region):
+            return {"status": "returned", "call_id": "1" * 32,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": "recovered-observation",
+                "predicates": {"ready": True, "moved": False}}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatched_programs.append(_program)
+            return {"status": "pending", "call_id": dispatch_id,
+                "operation_invoked": True, "input_dispatched": None,
+                "release_confirmed": False, "replay_allowed": False}
+
+        def resolve_pending(call_id, _pending_reply):
+            self.assertEqual(call_id, dispatch_id)
+            release_ns = time.monotonic_ns() - 2_100_000_000
+            observation_start_ns = release_ns + 10_000_000
+            observation_end_ns = observation_start_ns + 2_000_000_000
+            cancellation_result = {"operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "phase": "recovered", "release_confirmed": True,
+                "replay_allowed": False, "producer_exit_code": -15,
+                "producer_identity": {"pid": 1234,
+                    "creation_time_100ns": 987654321},
+                "recovery_id": "d" * 32,
+                "late_input_horizon_ns": 2_000_000_000,
+                "late_input_max_sample_gap_ns": 100_000_000,
+                "late_input_max_observed_gap_ns": 32_000_000,
+                "late_input_observation_count": 77,
+                "late_input_release_received_ns": release_ns,
+                "late_input_observation_start_ns": observation_start_ns,
+                "late_input_observation_end_ns": observation_end_ns,
+                "late_input_validation_error": None,
+                **({"recovery_release_key_up_attempts": [{
+                    "virtual_key": 0x57, "encoding": "scan_code",
+                    "status": "returned"}]}
+                    if include_attempt_receipt[0] else {}),
+                "obligations": ["key:fixture:W:scan_code"],
+                "readback": {"operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": "d" * 32, "neutral": True,
+                    "observed_monotonic_ns": observation_end_ns,
+                    "key_button_states": [False],
+                    "unicode_event_units": 0}}
+            source_status = ("unknown" if automatic_unknown_source[0]
+                else "recovered")
+            source_release = not automatic_unknown_source[0]
+            source_result = {"status": source_status,
+                "input_dispatched": True if automatic_unknown_source[0] else None,
+                "release_confirmed": source_release,
+                "task_success": None, "replay_allowed": False}
+            if automatic_unknown_source[0]:
+                source_result.update(error="COMPLETION_EVIDENCE_UNCONFIRMED",
+                    error_type="RuntimeError")
+            action_receipt = {"operation_id": operation_id,
+                "target_generation": generation, "status": source_status,
+                "input_dispatched": source_result["input_dispatched"],
+                "release_confirmed": source_release, "task_success": None,
+                "replay_allowed": False, "result": source_result}
+            if not omit_action_obligations[0]:
+                action_receipt["obligations"] = ["key:fixture:W:scan_code"]
+            resolved = {"call_id": call_id, "input_dispatched": False,
+                "action": action_receipt,
+                "cancellation": {"operation_id": "e" * 32,
+                    "action_operation_id": operation_id,
+                    "target_generation": generation, "status": "recovered",
+                    "owner_phase": "recovered", "release_confirmed": True,
+                    "replay_allowed": False, "result": cancellation_result}}
+            if omit_action_obligations[0]:
+                resolved["standard_program"] = dispatched_programs[-1]
+            if automatic_unknown_source[0]:
+                resolved["cancellation"].update(
+                    automatic_completion_recovery=True,
+                    completion_error_type="RuntimeError")
+            resolved_rows.append(resolved)
+            return resolved
+
+        def verify_task(call_id):
+            verify_calls.append(call_id)
+            requested_ns = time.monotonic_ns()
+            observed_ns = time.monotonic_ns()
+            received_ns = time.monotonic_ns()
+            task_receipt = {"call_id": call_id, "operation_id": operation_id,
+                "target_generation": generation, "oracle_id": "f" * 32,
+                "outcome": "success", "observed_monotonic_ns": observed_ns,
+                "evidence_ref": "saved-effect-proof"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": task_receipt,
+                    "requested_monotonic_ns": requested_ns,
+                    "receipt_received_monotonic_ns": received_ns}}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(result["outcome"], "SAFE_YIELD", result)
+        self.assertEqual(result["reason"], "delivery_uncertain")
+        self.assertEqual(result["completed_transitions"], 0)
+        self.assertEqual(verify_calls, [dispatch_id])
+        self.assertTrue(result["task_verification"]["valid"], result)
+        self.assertIs(result["task_success"], True)
+
+        automatic_unknown_source[0] = True
+        automatic_result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(automatic_result["outcome"], "SAFE_YIELD",
+            automatic_result)
+        self.assertEqual(automatic_result["reason"], "delivery_uncertain")
+        self.assertEqual(automatic_result["completed_transitions"], 0)
+        self.assertTrue(automatic_result["task_verification"]["valid"])
+        self.assertIs(automatic_result["task_success"], True)
+        self.assertEqual(resolved_rows[-1]["action"]["status"], "unknown")
+        self.assertFalse(resolved_rows[-1]["action"]["release_confirmed"])
+        self.assertTrue(resolved_rows[-1]["cancellation"]["release_confirmed"])
+        automatic_evidence = automatic_result["standard_target_evidence"][1]
+        self.assertEqual(automatic_evidence["status"], "delivery_uncertain")
+        self.assertTrue(automatic_evidence["release_verified"])
+
+        automatic_unknown_source[0] = True
+        omit_action_obligations[0] = True
+        projected_result = run_public_compiled(interface,
+            {"move": program}, target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(projected_result["outcome"], "SAFE_YIELD",
+            projected_result)
+        self.assertEqual(projected_result["reason"], "delivery_uncertain")
+        self.assertTrue(projected_result["task_verification"]["valid"])
+        self.assertIs(projected_result["task_success"], True)
+        projected_row = resolved_rows[-1]
+        self.assertEqual(projected_row["action"]["status"], "unknown")
+        self.assertFalse(projected_row["action"]["release_confirmed"])
+        self.assertIsNone(projected_row["action"]["task_success"])
+        self.assertFalse(projected_row["action"]["replay_allowed"])
+        self.assertTrue(projected_row["cancellation"]["release_confirmed"])
+        self.assertNotIn("obligations", projected_row["action"])
+        self.assertEqual(projected_row["standard_program"],
+            dispatched_programs[-1])
+        projected_evidence = projected_result["standard_target_evidence"][1]
+        self.assertEqual(projected_evidence["status"], "delivery_uncertain")
+        self.assertTrue(projected_evidence["release_verified"])
+
+        automatic_unknown_source[0] = False
+        omit_action_obligations[0] = False
+        include_attempt_receipt[0] = False
+        receipt_missing_attempt = run_public_compiled(interface,
+            {"move": program}, target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(receipt_missing_attempt["outcome"], "RUNTIME_FAILED")
+        self.assertIsNone(receipt_missing_attempt["task_verification"])
+        self.assertFalse(receipt_missing_attempt["standard_target_evidence"][1][
+            "release_verified"])
+        self.assertEqual(verify_calls, [dispatch_id, dispatch_id, dispatch_id])
+
+    def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
+        generation = "c" * 64
+        def call_id(number): return f"{number:032x}"
+        observation_calls = []
+        dispatch_calls = []
+        effect_checks = []
+        dispatch_completed_ns = None
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "public-win32-fresh-effect-check",
+            "session_scope": "test-session",
+            "surface": "fixture-window",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 2000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True,
+                        "saved": False}, "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 7,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+
+        def observe(target, frame, region):
+            index = len(observation_calls) + 1
+            observation_call_id = call_id(index)
+            observation_calls.append((target, frame, region, observation_call_id))
+            return {"status": "returned", "call_id": observation_call_id,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{index}"}
+
+        def dispatch(sent_program, sequence, binding_revision):
+            nonlocal dispatch_completed_ns
+            dispatch_completed_ns = time.monotonic_ns()
+            action_index = len(dispatch_calls) + 1
+            dispatch_calls.append((sent_program, sequence, binding_revision))
+            return {"status": "completed", "call_id": call_id(100 + action_index),
+                "action_id": f"{action_index:032x}",
+                "effect_ref": f"effect-{action_index}",
+                "input_dispatched": True,
+                "release": {"verified": True, "keys_down": [],
+                    "buttons_down": []}}
+
+        def verify_effect(request, report, reply):
+            effect_checks.append((request, report, reply))
+            return {"status": "succeeded", "evidence_ref": "score-observation-2"}
+
+        receipt = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], capture_frame="screen_physical_px",
+            observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, cancelled=lambda: False)
+
+        self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
+        self.assertEqual(receipt["completed_transitions"], 1)
+        self.assertIsNone(receipt["task_success"])
+        self.assertEqual(receipt["standard_observation_call_ids"],
+            [call_id(1), call_id(2)])
+        self.assertEqual([row[1] for row in observation_calls],
+            ["screen_physical_px", "screen_physical_px"])
+        self.assertEqual(receipt["standard_action_call_ids"], [call_id(101)])
+        evidence = receipt["standard_target_evidence"]
+        self.assertEqual([row["kind"] for row in evidence],
+            ["observation", "dispatch", "observation"])
+        self.assertEqual([row["call_id"] for row in evidence],
+            [call_id(1), call_id(101), call_id(2)])
+        self.assertTrue(all(row["target_generation"] == generation
+            for row in evidence))
+        self.assertEqual(receipt["bound_target_generation"], generation)
+        self.assertEqual(evidence[0]["target_generation_consistency"], "matched")
+        self.assertEqual(evidence[2]["observation_id"], "observation-2")
+        self.assertTrue(evidence[0]["compiled_observation_accepted"])
+        self.assertTrue(evidence[2]["compiled_observation_accepted"])
+        self.assertEqual(evidence[2]["observation_sequence"], 2)
+        self.assertEqual(evidence[1]["observation_sequence"], 1)
+        self.assertEqual(evidence[1]["binding_revision"], 7)
+        self.assertEqual(evidence[1]["action_id"], f"{1:032x}")
+        self.assertTrue(evidence[1]["release_verified"])
+        self.assertEqual(len(observation_calls), 2)
+        self.assertEqual(len(dispatch_calls), 1)
+        sent_program, sequence, binding_revision = dispatch_calls[0]
+        self.assertEqual(sent_program["source"]["target_generations"],
+            {"fixture": generation})
+        self.assertEqual(sent_program["source"]["observation_seq"], sequence)
+        self.assertEqual(binding_revision, 7)
+        self.assertEqual(len(effect_checks), 1)
+        request, effect_report, effect_reply = effect_checks[0]
+        self.assertEqual(request["observation"]["sequence"], 2)
+        self.assertGreaterEqual(request["observation"]["captured_ns"],
+            dispatch_completed_ns)
+        self.assertEqual(effect_report["observation_id"], "observation-2")
+        self.assertEqual(effect_reply["call_id"], call_id(2))
+
+        def task_oracle(call_id, verdict=True, echoed_call_id=None,
+                        echoed_generation=None, without_receipt=False,
+                        echoed_operation_id=None, stale=False, future=False):
+            task_calls.append(call_id)
+            status = "unknown" if verdict is None else "verified"
+            requested_ns = time.monotonic_ns()
+            observed_ns = time.monotonic_ns()
+            received_ns = time.monotonic_ns()
+            if stale:
+                requested_ns, observed_ns, received_ns = 1, 2, 3
+            if future:
+                requested_ns += 10**12
+                observed_ns += 10**12
+                received_ns += 10**12
+            outcome = ("success" if verdict is True else
+                "failure" if verdict is False else "unknown")
+            oracle_receipt = {"call_id": call_id,
+                "operation_id": echoed_operation_id or f"{len(dispatch_calls):032x}",
+                "target_generation": echoed_generation or generation,
+                "oracle_id": "d" * 32,
+                "outcome": outcome, "observed_monotonic_ns": observed_ns,
+                "evidence_ref": "oracle-effect-proof"}
+            effect = {"status": status, "task_success": verdict,
+                "receipt": None if without_receipt else oracle_receipt,
+                "requested_monotonic_ns": requested_ns}
+            if not without_receipt:
+                effect["receipt_received_monotonic_ns"] = received_ns
+            else:
+                effect["uncertainty"] = "independent_task_oracle_response_timeout"
+            return {"status": status,
+                "call_id": echoed_call_id or call_id,
+                "task_effect": effect,
+                "task_success": verdict, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32"}
+
+        task_calls = []
+        passed = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True), cancelled=lambda: False)
+        self.assertEqual(passed["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(passed["task_verification"]["valid"])
+        self.assertIs(passed["task_success"], True)
+        self.assertEqual(passed["task_verification"]["action_call_id"],
+            call_id(102))
+        self.assertEqual(passed["task_verification"]["target_generation"], generation)
+        task_timing = passed["task_verification"]
+        self.assertLessEqual(task_timing["oracle_requested_ns"],
+            task_timing["oracle_observed_ns"])
+        self.assertLessEqual(task_timing["oracle_observed_ns"],
+            task_timing["oracle_receipt_accepted_ns"])
+        self.assertEqual(task_timing["oracle_outcome"], "success")
+        self.assertEqual(task_timing["effect_evidence_ref"], "oracle-effect-proof")
+
+        stale = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, stale=True), cancelled=lambda: False)
+        self.assertFalse(stale["task_verification"]["valid"])
+        self.assertIsNone(stale["task_success"])
+
+        future = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, future=True), cancelled=lambda: False)
+        self.assertFalse(future["task_verification"]["valid"])
+        self.assertIsNone(future["task_success"])
+
+        failed = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, False), cancelled=lambda: False)
+        self.assertEqual(failed["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(failed["task_verification"]["valid"])
+        self.assertIs(failed["task_success"], False)
+
+        unknown = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, None), cancelled=lambda: False)
+        self.assertTrue(unknown["task_verification"]["valid"])
+        self.assertEqual(unknown["task_verification"]["status"], "unknown")
+        self.assertIsNone(unknown["task_success"])
+
+        timed_out = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, None, without_receipt=True),
+            cancelled=lambda: False)
+        self.assertTrue(timed_out["task_verification"]["valid"])
+        self.assertEqual(timed_out["task_verification"]["status"], "unknown")
+        self.assertIsNone(timed_out["task_verification"]["oracle_observed_ns"])
+        self.assertIsNone(timed_out["task_success"])
+
+        mismatched = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, "wrong-call-id"), cancelled=lambda: False)
+        self.assertFalse(mismatched["task_verification"]["valid"])
+        self.assertIsNone(mismatched["task_success"])
+
+        generation_mismatch = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, echoed_generation="f" * 64),
+            cancelled=lambda: False)
+        self.assertFalse(generation_mismatch["task_verification"]["valid"])
+        self.assertIsNone(generation_mismatch["task_success"])
+
+        operation_mismatch = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, echoed_operation_id="f" * 32),
+            cancelled=lambda: False)
+        self.assertFalse(operation_mismatch["task_verification"]["valid"])
+        self.assertIsNone(operation_mismatch["task_success"])
+        self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
+            call_id(105), call_id(106), call_id(107), call_id(108), call_id(109),
+            call_id(110)])
+
+    def test_observation_busy_retries_are_bounded_and_never_dispatch(self):
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "bounded-observation-busy",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"ready": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {"before": {"branches": [{"when": {"ready": True},
+                    "outcome": "action", "action": "move",
+                    "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"ready": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "busy-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": "b" * 64}},
+            "authority": {"lease_id": "busy-template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"}, {"op": "release_all"}]}
+        observe_calls, dispatch_calls = [], []
+
+        def observe(*_args):
+            observe_calls.append(True)
+            return {"status": "busy", "operation_invoked": False,
+                "input_dispatched": False}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe,
+            dispatch=lambda *_args: dispatch_calls.append(True),
+            perceive=lambda *_args: {"ready": True},
+            verify_effect=lambda *_args: {"status": "succeeded",
+                "evidence_ref": "unused"}, cancelled=lambda: False,
+            observation_busy_retries=2, observation_busy_retry_delay_ms=0)
+
+        self.assertEqual(result["outcome"], "SAFE_YIELD")
+        self.assertEqual(result["reason"], "association_changed")
+        self.assertEqual(len(observe_calls), 3)
+        self.assertEqual(dispatch_calls, [])
+        busy = result["standard_target_evidence"]
+        self.assertEqual([row["kind"] for row in busy],
+            ["observation_busy"] * 3)
+        self.assertEqual([row["attempt"] for row in busy], [1, 2, 3])
+        self.assertTrue(all(row["operation_invoked"] is False
+            and row["input_dispatched"] is False for row in busy))
+
+    def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
+        generation = "a" * 64
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "final-dispatch-oracle-identity",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-twice", "version": "1",
+                "initial_state": "before", "max_transitions": 2,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True,
+                        "saved": False}, "outcome": "action", "action": "save",
+                        "next_state": "middle", "reason": None}]},
+                    "middle": {"branches": [{"when": {"ready": True,
+                        "saved": True}, "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "two-dispatch-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "two-dispatch-lease",
+                "expires_at_ns": time.monotonic_ns() + 10_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+        observations = 0
+        dispatches = []
+        oracle_calls = []
+
+        def observe(target, frame, region):
+            nonlocal observations
+            observations += 1
+            call_id = f"{observations:032x}"
+            return {"status": "returned", "call_id": call_id,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{observations}"}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatches.append(len(dispatches) + 1)
+            reply = {"status": "completed",
+                "action_id": f"action-{dispatches[-1]}",
+                "effect_ref": f"effect-{dispatches[-1]}",
+                "input_dispatched": True,
+                "release": {"verified": True, "keys_down": [],
+                    "buttons_down": []}}
+            if dispatches[-1] == 1:
+                reply["call_id"] = "b" * 32
+            return reply
+
+        def verify_task(call_id):
+            oracle_calls.append(call_id)
+            now = time.monotonic_ns()
+            receipt = {"call_id": call_id, "operation_id": "c" * 32,
+                "target_generation": generation, "oracle_id": "d" * 32,
+                "outcome": "success", "observed_monotonic_ns": now,
+                "evidence_ref": "prior-action-effect"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": receipt, "requested_monotonic_ns": now - 1,
+                    "receipt_received_monotonic_ns": now + 1}}
+
+        receipt = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _report, _reply: {"ready": True,
+                "saved": observations >= 2},
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "succeeded", "evidence_ref": "effect"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
+        self.assertEqual(receipt["completed_transitions"], 2)
+        self.assertEqual(dispatches, [1, 2])
+        self.assertIsNone(receipt["task_success"])
+        self.assertIsNone(receipt["task_verification"])
+        self.assertEqual(oracle_calls, [])
+
+    def test_generation_change_from_standard_observation_stops_compiled_suffix(self):
+        generation = "a" * 64
+        observations = 0
+        dispatches = []
+        forced_generation = None
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "public-win32-generation-check",
+            "session_scope": "test-session",
+            "surface": "fixture-window",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True,
+                        "saved": False}, "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 7,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+
+        def observe(_target, _frame, _region):
+            nonlocal observations, generation
+            observations += 1
+            if observations == 1 and forced_generation is not None:
+                generation = forced_generation
+            elif observations == 2:
+                generation = "b" * 64
+            return {"status": "returned",
+                "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": "fixture",
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observe-{observations}"}
+
+        def dispatch(program, sequence, binding_revision):
+            dispatches.append((program, sequence, binding_revision))
+            return {"status": "completed", "action_id": "action-1",
+                "effect_ref": "effect-1", "input_dispatched": True,
+                "release": {"verified": True, "keys_down": [],
+                    "buttons_down": []}}
+
+        grounded_generation = generation
+        forced_generation = "b" * 64
+        after_model_wait = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, _reply: {"ready": True, "saved": False},
+            verify_effect=lambda _request, _row, _reply: {
+                "status": "succeeded", "evidence_ref": "unused"},
+            expected_generation=grounded_generation, cancelled=lambda: False)
+        self.assertEqual(after_model_wait["outcome"], "SAFE_YIELD")
+        self.assertEqual(after_model_wait["reason"], "association_changed")
+        self.assertEqual(after_model_wait["completed_transitions"], 0)
+        self.assertEqual(after_model_wait["observations"], [])
+        self.assertIsNone(after_model_wait["bound_target_generation"])
+        self.assertEqual(after_model_wait["standard_target_evidence"], [])
+        self.assertEqual(observations, 1)
+        self.assertEqual(dispatches, [])
+
+        observations = 0
+        generation = grounded_generation
+        forced_generation = None
+        task_oracle_calls = []
+        receipt = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1],
+            observe=observe, dispatch=dispatch,
+            perceive=lambda _row, _reply: {"ready": True,
+                "saved": observations > 1},
+            verify_effect=lambda _request, _row, _reply: {
+                "status": "succeeded", "evidence_ref": "effect-observation"},
+            verify_task=lambda call_id: task_oracle_calls.append(call_id),
+            cancelled=lambda: False)
+
+        self.assertEqual(receipt["outcome"], "SAFE_YIELD", receipt)
+        self.assertEqual(receipt["reason"], "association_changed")
+        self.assertEqual(task_oracle_calls, [])
+        self.assertEqual(len(dispatches), 1)
+        self.assertEqual(receipt["bound_target_generation"], "a" * 64)
+        self.assertEqual([row["kind"] for row in receipt["standard_target_evidence"]],
+            ["observation", "dispatch"])
+        self.assertTrue(all(row["target_generation"] == "a" * 64
+            for row in receipt["standard_target_evidence"]))
+        sent_program, sequence, binding_revision = dispatches[0]
+        self.assertEqual(sent_program["source"]["target_generations"],
+            {"fixture": "a" * 64})
+        self.assertEqual(sent_program["source"]["observation_seq"], sequence)
+        self.assertEqual(binding_revision, 7)
+        self.assertFalse(receipt.get("task_success", False))
+
+
+if __name__ == "__main__":
+    unittest.main()

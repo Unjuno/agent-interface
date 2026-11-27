@@ -1,0 +1,70 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r30",
+  "audited_utc": "2026-10-24T16:03:27.567169+00:00",
+  "checks": {
+    "XRes_source_hash_matches": true,
+    "Xvfb_absent": true,
+    "cancel_return_under_3s": true,
+    "cancel_unknown_fence_retained": true,
+    "checked_out_commit_matches_preregistration": true,
+    "comparison_packet_readme_hash_matches": true,
+    "condition_hash_matches_preregistration": true,
+    "container_test_exit_zero": true,
+    "delayed_key_absent_at_horizon": true,
+    "delayed_release_regression_source_hash_matches": true,
+    "exact_2950ms_boundary_condition": true,
+    "exact_container_deleted": true,
+    "exact_session_terminated": true,
+    "exact_storage_removed_after_termination": true,
+    "final_keys_up": true,
+    "four_second_transaction_budget": true,
+    "fresh_task_effect_count_exactly_one": true,
+    "fresh_task_exact_effect_pass_and_old_fence_preserved": true,
+    "harness_exit_zero": true,
+    "independent_release_keys_up": true,
+    "mcp_server_timeout_source_hash_matches": true,
+    "old_task_exact_effect_pass": true,
+    "parameterized_runner_hash_matches": true,
+    "pause_exactly_requested_and_pidfd_resumed": true,
+    "preregistered_release_readback_within_5s": true,
+    "result_caller_test_exit_zero": true,
+    "runner_binary_hash_matches": true,
+    "session_image_deleted": true,
+    "source_commit_and_parent_pinned": true,
+    "stage_manifest_hash_matches": true,
+    "storage_manifest_single_file_and_hash": true,
+    "supervisor_release_before_transaction_deadline": true,
+    "test_source_hash_matches": true
+  },
+  "classification": "PASS_SCOPED_4S_TRANSACTION_RECOVERY",
+  "counts": {
+    "passed": 33,
+    "protocol_passed": 33,
+    "protocol_total": 33,
+    "total": 33
+  },
+  "limitations": [
+    "synthetic private Xvfb only",
+    "not Win32 desktop or MAP01",
+    "one patched-branch WSLc 2950ms transaction-budget trial; synthetic Xvfb only; not Windows desktop or MAP01",
+    "runtime cancellation custody remains UNKNOWN; replay denied",
+    "R30 preregistered independent release readback <=5000 ms; one patched trial cannot establish reliability"
+  ],
+  "observations": {
+    "cancel_elapsed_ms": 307.931015,
+    "fresh_input_to_effect_readback_ms": 266.965788,
+    "independent_release_readback_ms_after_cancel_start": 3164.534817,
+    "late_horizon_ms": 8502.3567,
+    "release_deadline_margin_ms": 995.383821,
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_task_success": null
+  },
+  "raw_inputs": [
+    "CONDITIONS.json",
+    "PREREGISTRATION.json",
+    "output/result.json",
+    "HARNESS-INVOCATION.log",
+    "output/session-storage-manifest.json"
+  ],
+  "schema": "wslc-standard-caller-xvfb-r30-audit-v1"
+}

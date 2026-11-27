@@ -1,0 +1,35 @@
+{
+  "schema": "wslc-standard-caller-xvfb-r41-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r41",
+  "source_commit": "e4e34a163e1f288d8841d300ae719abcf9e58223",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "question": "Does the unchanged public standard caller release and independently verify input on a fresh repeat of the 3800 ms private-Xvfb pause under a 4000 ms cancellation transaction deadline?",
+  "preregistered_local_date": "2026-10-25",
+  "prior_independent_trial": "R40 passed at 3800 ms with 76.372 ms release margin; R41 repeats the same pause in a fresh container and attempt.",
+  "pause_ms": 3800,
+  "transaction_deadline_ms": 4000,
+  "public_cancel_response_bound_ms": 3000,
+  "independent_readback_ms": 5000,
+  "late_event_horizon_ms": 8500,
+  "retries": 0,
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "network": "none",
+  "cpu": 2,
+  "memory_mb": 2048,
+  "gpu": false,
+  "pids_limit": 128,
+  "tmpfs": "/tmp rw,exec,nosuid,nodev,mode=1777,size=512m",
+  "read_only_mounts": [
+    "repo",
+    "deps",
+    "stage",
+    "xkb"
+  ],
+  "write_mount": "output",
+  "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+  "decision": "PASS only if local XRes preflight passes before input; public caller and harness exit 0; release/readback completes before the 4 s transaction deadline; independent all-up readback <= 5 s; all keys up and no delayed b at >= 8.5 s; old and fresh-generation exact task oracles pass; old UNKNOWN/replay denial remains; exact container cleanup succeeds. Otherwise preserve first outcome and do not retry."
+}

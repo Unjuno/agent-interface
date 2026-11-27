@@ -1,0 +1,9 @@
+# R09 outcome: cancellation stimulus arrived just after its finite gate
+
+The one-shot public stdio-MCP run returned a pending call ID, passed static validation, executed the exact fixture program, and saved the expected sentinel `SUPERVISED-MCP-OK-20261024-R09`. The independent fresh-process readback observed the same target generation with Q up; fixture shutdown and restoration of the prior foreground window succeeded.
+
+The cancellation experiment did not reach its predeclared barrier. The hook wait began at monotonic 476639091133600 ns and expired after 75 seconds. Injected Q-down reached the hook at 476714879093200 ns, 75.788 s after wait start and 78.482 s after hook readiness, about 0.788 s after the gate expired. The callback therefore returned in 12.6 microseconds; it was not held. The runner did not call `interface_cancel`, so there is no cancel-latency, producer-exit-before-recovery-UP, or cancellation-recovery evidence. Session close reported `release_confirmed=false`; the later independent Q-up readback does not change that custody status.
+
+The frozen audit is `FAIL_OR_UNKNOWN` (9/17). This is a preserved normal-completion/effect sample and a failed cancellation-timing attempt, not a cancellation pass. It was run once and must not be replayed. Raw, fixture journal, effect, call reports, frozen inputs, source hashes, and the auditor are retained in this directory. The original `SHA256SUMS.freeze` binds the pre-run inputs; `SHA256SUMS.final` binds the completed packet. No WSLc or Docker allocation was used.
+
+The next finite trial should keep the same hook-confirmed running-call barrier and single-cancel rule, while extending the hook-entry gate to 100 seconds and the authority lease to 180 seconds. This provides over 20 seconds beyond the observed 78.482-second readiness-to-Q delay without making the wait unbounded.

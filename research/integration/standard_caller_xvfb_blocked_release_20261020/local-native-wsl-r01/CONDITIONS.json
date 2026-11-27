@@ -1,0 +1,32 @@
+{
+  "conditions": {
+    "cancel_return_bound_ms": 3000,
+    "child_cancel_ack_withheld_s": 1.0,
+    "delayed_keypress_ms": 8000,
+    "display": ":88 private local server",
+    "listen_tcp": false,
+    "owner_process_method_trace": true,
+    "screen": "1024x768x24",
+    "terminal_result_bound_ms": 5000,
+    "test_enabled": true,
+    "trials": 1
+  },
+  "environment": {
+    "distribution": "Ubuntu 24.04.3 LTS",
+    "mcp": "1.30.0",
+    "numpy": "1.26.4",
+    "pillow": "10.2.0",
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "runtime": "native Ubuntu WSL distro; no WSLc container or Docker",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8"
+  },
+  "fail_rule": "Any assertion failure, timeout, missing/inconsistent receipt, synthetic task-oracle failure, or cleanup failure. Preserve raw as failure; no retry in this run ID.",
+  "kind": "single local Linux/Xvfb integration validation; not a MAP01 episode, model run, or WSLc allocation",
+  "pass_rule": "Test completes; retained report shows the liveness snapshot precedes cancel return or reports dead afterward; caller terminal remains conservative (release_confirmed=false, cleanup_status=UNKNOWN, task_success=null, replay_allowed=false); independent synthetic task oracle and cleanup fields are retained.",
+  "qualification": "This run checks the timestamp-order correction in one native WSL/Xvfb environment. Ubuntu Xvfb package patch version differs from the prior Ubuntu runner by one packaging revision (1ubuntu1.8 vs 1ubuntu1.9). No general release, server-stop, physical desktop, MAP01, reliability, or efficiency inference.",
+  "run_id": "native-wsl-xvfb-blocked-release-r01-20261020",
+  "source_commit": "108b2717289611b4be84b897b2c56ef14a3f6032",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "test_git_blob": "fbc9339a69996d06519d511231b4276dca60122b"
+}

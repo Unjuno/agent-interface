@@ -1,0 +1,43 @@
+{
+  "allocation": "A36 new one-shot; A35 predispatch STOP preserved and not retried",
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A36-20261015-01",
+  "intent_token": "MAP01-V39-WSLC-V10-A36-20261015-01",
+  "source_main": "d82033921f9c2cd5a4c27f9971c46ffa0e781fb2",
+  "source_tree": "c51b9a2ff758ae78fbc31451a175ce90864d81d7",
+  "scope": "V10 X11 input-owner release evidence and separate synthetic app task effect; no Doom, model, Windows desktop, or physical input",
+  "evidence_transport": "app.events.jsonl in output volume; app stdout and stderr retained as separate files",
+  "display": "Unix-domain X11 socket :178; TCP disabled",
+  "lease_ns": 300000000,
+  "app_response_bound_ns": 200000000,
+  "recovery_bound_ns": 1000000000,
+  "runner_file": "run-a36.sh",
+  "runtime_root": "D:\\codex-research\\v39-xvfb-a09-env-20261012",
+  "output_parent": "D:\\codex-research\\v39-xvfb-a09-a36-output",
+  "image": {
+    "name": "a09-owner-close-xvfb:20261012",
+    "id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "os": "linux",
+    "architecture": "amd64",
+    "python": "3.14.8",
+    "pull": "never"
+  },
+  "resources": {
+    "requested_cpus": 1,
+    "requested_memory": "1G",
+    "network": "none",
+    "swap_limit_enforcement": "unknown until WSLc reports"
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+    "map01_overlap_controller_v39.py": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+    "doom_controller_failure_cleanup_v1.py": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b"
+  },
+  "artifact_sha256": {
+    "app_probe.py": "67cb8516fce4eaf0b30fae2aa8c3917ebb3cfb1f85296fe32d13473002b2e2c0",
+    "candidate.py": "6c75fb9a8db297fd669929f2ece16e3e4558a0606d18e2a3d1deb8996e932da1",
+    "auditor.py": "72ac74fbefaf141b15cf96dca3d7ace84c469ff16793a59f66e35de2d9e468ef",
+    "run-a36.sh": "d9498aa0913d660ce7b951af6aa5b01cf6bfbca907c105ce5329c264501bc97e",
+    "test_candidate_event_log.py": "6486d72fb3c24061cd476646c540a075648f7778be041d2faebd602c781e2219"
+  },
+  "schema": "map01-v39-wslc-v10-owner-effect-freeze-a36-v1"
+}

@@ -1,0 +1,11 @@
+r84-c8 preflight snapshot — 2026-11-03
+Repository commit: cf3ddf2f8ef44f78fac3cfed78df2904aa596691
+Docker context: desktop-linux
+Docker Engine: 29.8.1
+Pinned image: sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425
+Active containers before run: 0
+WSL effective memory: MemTotal:       24612528 kB SwapTotal:       8388608 kB
+Host C free bytes: 113425551360
+Preflight confirmed Xvfb present; LibreOffice Calc and Tesseract absent from base image; Python Xlib/MCP/Pillow/numpy present.
+Frozen runner installs exact LibreOffice Calc 4:7.4.7-1+deb12u14 and Tesseract 5.3.0-2 from Debian mirrors before launching GUI.
+The experiment script has no model/provider/API calls. Docker bridge is needed for Debian package setup; no image pull/build/prune or Docker setting change. Source mount is read-only; only r84-c8 evidence directory is writable.

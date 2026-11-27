@@ -1,0 +1,37 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c05-first-producer",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && mkdir /root/17-x11-c05-70ab && mkdir /root/17-x11-c05-70ab/out && tar -xf - -C /root/17-x11-c05-70ab && docker run --pull never --network none --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --tmpfs /tmp:rw,size=32m -v /root/17-x11-c05-70ab/src:/src:ro -v /root/17-x11-c05-70ab/out:/out --name 17-x11-c05-study-70ab sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f python -B /src/probe.py"
+  ],
+  "launcher_pid": 88701,
+  "start_utc": "2026-10-03T17:09:19.486372+00:00",
+  "start_ns": 58324307207708,
+  "stdin": {
+    "path": "work/x11-gil-ready-arm-c05-70ab/freeze.tar",
+    "bytes": 102400,
+    "sha256": "58816b6af40e24bdbc2536190972574046434b39fc0dd794477a5ad9e7de27bd"
+  },
+  "pid": 88702,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T17:09:46.394613+00:00",
+  "end_ns": 58351215168333,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 44,
+      "sha256": "d1c0b9277a062fb417033252f4ecff8f689595d6008e78b858d71f452744b581"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

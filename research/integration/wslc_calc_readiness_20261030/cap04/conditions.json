@@ -1,0 +1,25 @@
+{
+  "name": "agent-interface-calc-inventory-da80227208124338834dec567a16f92d",
+  "image_id": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "scope": "read built image package inventory only",
+  "timeout_s": 30,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-inventory-da80227208124338834dec567a16f92d",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-capabilities-20261030-a04\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--entrypoint",
+    "/bin/cat",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "/opt/calc-ocr-packages.tsv"
+  ]
+}

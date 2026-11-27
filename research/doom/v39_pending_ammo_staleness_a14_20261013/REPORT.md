@@ -1,0 +1,7 @@
+# V39 pending-turn ammo staleness A14 — WSLc result
+
+Decision: **PASS_CONSTRUCTION_PENDING_TURN_FRESH_ACTION_ADMISSION**. One frozen WSLc candidate invocation passed 2/2 tests using Python 3.14.8 and image `sha256:3e93e42958f7e4b1525a638c2388fc67419dc59eeb1d70334b0c17d80bcf8782`. All eight frozen source files match current `origin/main` at `964c9197d5083ab55ea7fdc9105427623e89e677` by byte hash and Git blob identity. An independent auditor reconstructed both result arms from the saved log.
+
+In the unchanged control, source/current ammo stayed 6 at sequence 11 and the same synthetic minimum-5 answer reached `READY_FOR_FRESH_EXECUTOR_ADMISSION` only. When ammo changed from source 6 to current 4 during the pending turn, the answer remained eligible but fresh admission rejected it with `ammo_minimum_failed`. Both arms left `executor_admission=null` and `input_authority_admitted=false`.
+
+This verifies that the tested final-admission path uses fresh same-binding ammo to accept/reject the synthetic action, with a no-change control. It does not validate the minimum-ammo threshold tactically, model behavior, game semantics, physical release, recovery, progress, or task outcome. The fake client/response are not a real inference or live threat exposure. The original local preflight failures are retained unaltered in `INPUT/`; this WSLc candidate itself was run once. Host cgroup/swap limits were unavailable, so no hard memory claim is made.

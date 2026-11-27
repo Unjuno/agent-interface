@@ -1,0 +1,11 @@
+{
+  "attempt_id": "RP-PREFLIGHT-CURRENT-MAIN-20261121-03",
+  "frozen_at_utc": "2026-11-20T20:45:00Z",
+  "source_revision": "cfb691b3b890d01c0b24fd1cd988609a62c4dd2a",
+  "environment": "Ubuntu WSL2 ext4 checkout, Python 3.12.3, Git 2.43.0",
+  "checkout": "/home/user/agent-interface-rp-preflight-r03-20261121",
+  "runner": "python3 release/first_run_smoke_v1/preflight.py --root <checkout> --out <new-report.json>",
+  "frozen_expected_status": "PASS_LAUNCHER_BOUNDARY",
+  "decision_rule": "Pass only if every launcher-boundary check in the pinned current-main script passes; preserve failures without changing criteria.",
+  "scope": "Read-only launcher/source/mode boundary on Linux ext4. No dependency install, runtime download, display, runtime import, model call, demo, GUI input, Docker, or formal allocation. Not a fresh supported-host golden demo or release acceptance."
+}

@@ -1,0 +1,3043 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r19",
+  "blocked_call_id": "545895767fdd41be89e1b7b35adbbcdf",
+  "blocked_io_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "generation_after": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "generation_before": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "pid": 19956,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 479849261129500,
+    "started_monotonic_ns": 479849260593000,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 142346596,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 54676,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 32880
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 142346596,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 54676,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 32880
+      }
+    ],
+    "status": "observed"
+  },
+  "blocked_io_release_readback": {
+    "reason": "no recovered release receipt during retained callback",
+    "status": "not_requested"
+  },
+  "caller_kind": "mcp_stdio",
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 479848015000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "9633ba74b505404c81ce1762ff7b2efa"
+  },
+  "dispatch_attempts": 1,
+  "effect_readback": {
+    "clicked": true,
+    "saved": true,
+    "text": "SUPERVISED-MCP-OK-20261024-R19"
+  },
+  "ended_utc": "2026-10-23T20:49:13.684766+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "SUPERVISED-MCP-OK-20261024-R19"
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 142346596,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "code": 83,
+        "kind": "char"
+      },
+      {
+        "code": 85,
+        "kind": "char"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 86,
+        "kind": "char"
+      },
+      {
+        "code": 73,
+        "kind": "char"
+      },
+      {
+        "code": 83,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 68,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 77,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 80,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 79,
+        "kind": "char"
+      },
+      {
+        "code": 75,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 54,
+        "kind": "char"
+      },
+      {
+        "code": 49,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 50,
+        "kind": "char"
+      },
+      {
+        "code": 52,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 49,
+        "kind": "char"
+      },
+      {
+        "code": 57,
+        "kind": "char"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": "SUPERVISED-MCP-OK-20261024-R19"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 142346596,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 142346596,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\fixture\\fixture-meta.json",
+    "pid": 54676,
+    "target_identity": {
+      "generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+      "owner": {
+        "creation_time_100ns": 134372621373975012,
+        "pid": 54676,
+        "window_thread_id": 32880
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "hook_started": {
+    "callback_entry_ns": null,
+    "callback_return_ns": null,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 479849082407600,
+        "callback_return_ns": 479853145769700,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "hook_handle": 271647603,
+    "ready_ns": 479845329764800,
+    "thread_id": 36104
+  },
+  "hook_stopped": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 479849082407600,
+    "callback_return_ns": 479853145769700,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 479849082407600,
+        "callback_return_ns": 479853145769700,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 271647603,
+    "ready_ns": 479845329764800,
+    "thread_exited": true,
+    "thread_id": 36104,
+    "unhook_last_error": null,
+    "unhook_return": true,
+    "vk": 81
+  },
+  "hook_trace_after_dispatch": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 479849082407600,
+    "callback_return_ns": 479853145769700,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 479849082407600,
+        "callback_return_ns": 479853145769700,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 271647603,
+    "ready_ns": 479845329764800,
+    "thread_id": 36104,
+    "vk": 81
+  },
+  "hook_trace_after_recovery": {
+    "blocked_q_down_suppressed": true,
+    "callback_entry_ns": 479849082407600,
+    "callback_return_ns": 479853145769700,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 479849082407600,
+        "callback_return_ns": 479853145769700,
+        "flags": 16,
+        "message": 256,
+        "suppressed": true,
+        "vk": 81
+      }
+    ],
+    "flags": 16,
+    "hook_handle": 271647603,
+    "ready_ns": 479845329764800,
+    "thread_id": 36104,
+    "vk": 81
+  },
+  "hook_wait": {
+    "ended_monotonic_ns": 479849082632600,
+    "entered": true,
+    "hook_trace": {
+      "callback_entry_ns": 479849082407600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 479849082407600,
+          "callback_return_ns": 479853145769700,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 271647603,
+      "ready_ns": 479845329764800,
+      "thread_id": 36104,
+      "vk": 81
+    },
+    "poll_interval_ms": 250,
+    "started_monotonic_ns": 479848066947800,
+    "status_polls": [
+      {
+        "action_status": null,
+        "call_id": null,
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": null,
+        "is_error": true,
+        "operation_id": null,
+        "operation_invoked": false,
+        "returned_monotonic_ns": 479848068228900,
+        "started_monotonic_ns": 479848066951100,
+        "status": "unknown_call"
+      },
+      {
+        "action_status": "running",
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 479848339624900,
+        "started_monotonic_ns": 479848334991600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 479848601373900,
+        "started_monotonic_ns": 479848599731100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 479848865414800,
+        "started_monotonic_ns": 479848863874600,
+        "status": null
+      }
+    ]
+  },
+  "independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "generation_after": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "generation_before": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "pid": 24328,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 479857342760800,
+    "started_monotonic_ns": 479857342216900,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 142346596,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 54676,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 32880
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 142346596,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 54676,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 32880
+      }
+    ],
+    "status": "observed"
+  },
+  "post_cancel_io_hold": {
+    "ended_monotonic_ns": 479853145320800,
+    "hook_trace_after_release": {
+      "callback_entry_ns": 479849082407600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 479849082407600,
+          "callback_return_ns": 479853145769700,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 271647603,
+      "ready_ns": 479845329764800,
+      "thread_id": 36104,
+      "vk": 81
+    },
+    "hook_trace_before_release": {
+      "callback_entry_ns": 479849082407600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 479849082407600,
+          "callback_return_ns": 479853145769700,
+          "flags": 16,
+          "message": 256,
+          "suppressed": true,
+          "vk": 81
+        }
+      ],
+      "flags": 16,
+      "hook_handle": 271647603,
+      "ready_ns": 479845329764800,
+      "thread_id": 36104,
+      "vk": 81
+    },
+    "independent_readback_completed_before_release": false,
+    "initial_readback_completed_before_release": true,
+    "producer_liveness_samples": [
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479849087470600,
+        "status": "unknown",
+        "wait_result": 258
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479849316691100,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479849567130900,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479849817433300,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479850009371400,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479850260067700,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479850509503800,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479850760219300,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479851008179000,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479851256989000,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479851511449400,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479851761578700,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479852013020700,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479852268315500,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479852522446900,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479852771855900,
+        "status": "exited",
+        "wait_result": 0
+      },
+      {
+        "creation_time_100ns": 134372621402947238,
+        "exit_code": 65536,
+        "pid": 51436,
+        "sampled_monotonic_ns": 479853023226500,
+        "status": "exited",
+        "wait_result": 0
+      }
+    ],
+    "started_monotonic_ns": 479849085974300,
+    "status_polls": [
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849087251600,
+        "started_monotonic_ns": 479849085982400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849144768700,
+        "started_monotonic_ns": 479849143088900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849207792700,
+        "started_monotonic_ns": 479849206203100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849270762700,
+        "started_monotonic_ns": 479849269091400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849316608400,
+        "started_monotonic_ns": 479849314987100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849379275900,
+        "started_monotonic_ns": 479849377523700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849440934500,
+        "started_monotonic_ns": 479849439465600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849503968000,
+        "started_monotonic_ns": 479849502191200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849567037700,
+        "started_monotonic_ns": 479849565426100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849630158900,
+        "started_monotonic_ns": 479849628490600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849692268100,
+        "started_monotonic_ns": 479849690556400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849754236800,
+        "started_monotonic_ns": 479849752627700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849817345200,
+        "started_monotonic_ns": 479849815765200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849879843700,
+        "started_monotonic_ns": 479849878239300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479849946410100,
+        "started_monotonic_ns": 479849941126900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850009143500,
+        "started_monotonic_ns": 479850004093400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850067623100,
+        "started_monotonic_ns": 479850066066900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850130817300,
+        "started_monotonic_ns": 479850129199900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850193893100,
+        "started_monotonic_ns": 479850192146000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850259919600,
+        "started_monotonic_ns": 479850254691400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850322090700,
+        "started_monotonic_ns": 479850316664800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850384627700,
+        "started_monotonic_ns": 479850379170200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850444605200,
+        "started_monotonic_ns": 479850440644000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850509084400,
+        "started_monotonic_ns": 479850503906300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850568489500,
+        "started_monotonic_ns": 479850566820900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850633752900,
+        "started_monotonic_ns": 479850630202800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850696995900,
+        "started_monotonic_ns": 479850692792300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850760001400,
+        "started_monotonic_ns": 479850755602500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850822359600,
+        "started_monotonic_ns": 479850816994500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850882274700,
+        "started_monotonic_ns": 479850879938300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479850948095100,
+        "started_monotonic_ns": 479850943460400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851008049100,
+        "started_monotonic_ns": 479851005274000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851070395100,
+        "started_monotonic_ns": 479851067102800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851132883300,
+        "started_monotonic_ns": 479851130696500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851195768100,
+        "started_monotonic_ns": 479851193841500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851256902400,
+        "started_monotonic_ns": 479851255437100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851320202600,
+        "started_monotonic_ns": 479851318461400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851386825100,
+        "started_monotonic_ns": 479851381270100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851450407700,
+        "started_monotonic_ns": 479851445485900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851511295100,
+        "started_monotonic_ns": 479851507563900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851574686700,
+        "started_monotonic_ns": 479851569720000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851637027100,
+        "started_monotonic_ns": 479851632258800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851698694600,
+        "started_monotonic_ns": 479851695160600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851761412100,
+        "started_monotonic_ns": 479851757998500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851825738300,
+        "started_monotonic_ns": 479851820846700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851887271400,
+        "started_monotonic_ns": 479851883658500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479851950057100,
+        "started_monotonic_ns": 479851946836900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852012911000,
+        "started_monotonic_ns": 479852010894100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852074129100,
+        "started_monotonic_ns": 479852072608100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852141215900,
+        "started_monotonic_ns": 479852136482800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852204499100,
+        "started_monotonic_ns": 479852200083300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852268134700,
+        "started_monotonic_ns": 479852264259100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852328586600,
+        "started_monotonic_ns": 479852326912700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852391400900,
+        "started_monotonic_ns": 479852389437700,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852458170700,
+        "started_monotonic_ns": 479852453714200,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852522162700,
+        "started_monotonic_ns": 479852516000900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852580887200,
+        "started_monotonic_ns": 479852577314400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852645929800,
+        "started_monotonic_ns": 479852640586000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852708254800,
+        "started_monotonic_ns": 479852703642800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852771633900,
+        "started_monotonic_ns": 479852766897400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852834238300,
+        "started_monotonic_ns": 479852830224300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852896406600,
+        "started_monotonic_ns": 479852892446800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479852960264200,
+        "started_monotonic_ns": 479852955776900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479853023040300,
+        "started_monotonic_ns": 479853018020400,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "unknown",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 479853084757600,
+        "started_monotonic_ns": 479853081709200,
+        "status": null
+      }
+    ],
+    "target_hold_ms": 4000
+  },
+  "pre_cancel_status_readback": {
+    "action": {
+      "metadata": {
+        "program_id": "supervised-standard-cancel-effect-r19",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+      "result": null,
+      "status": "running",
+      "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+    },
+    "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 479938015000000,
+        "lease_id": "supervised-standard-cancel-r19"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "text",
+          "text": "SUPERVISED-MCP-OK-20261024-R19"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "supervised-standard-cancel-effect-r19",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "previous_foreground_hwnd": 393882,
+  "probe_pid": 15140,
+  "probe_status": "completed_with_independent_effect",
+  "producer_exit_witness": {
+    "creation_time_100ns": 134372621402947238,
+    "observed_monotonic_ns": 479853146157200,
+    "pid": 51436,
+    "status": "exited",
+    "wait_started_monotonic_ns": 479853145518000
+  },
+  "producer_identity_from_cancel": {
+    "creation_time_100ns": 134372621402947238,
+    "pid": 51436
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 479938015000000,
+      "lease_id": "supervised-standard-cancel-r19"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R19"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-cancel-effect-r19",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_cancel": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"545895767fdd41be89e1b7b35adbbcdf\", \"operation_id\": \"7b6c8de98a6b4f32a076b0d34befe1bf\", \"cancellation\": {\"operation_id\": \"7b6c8de98a6b4f32a076b0d34befe1bf\", \"action_operation_id\": \"fe3555ff65b642eebbdb3881d36f042a\", \"target_generation\": \"8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d\", \"status\": \"pending\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"operation_id\": \"fe3555ff65b642eebbdb3881d36f042a\", \"target_generation\": \"8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d\", \"deadline_ns\": 479938015000000, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:Q\", \"key:fixture:S\", \"unicode:002D\", \"unicode:0030\", \"unicode:0031\", \"unicode:0032\", \"unicode:0034\", \"unicode:0036\", \"unicode:0039\", \"unicode:0043\", \"unicode:0044\", \"unicode:0045\", \"unicode:0049\", \"unicode:004B\", \"unicode:004D\", \"unicode:004F\", \"unicode:0050\", \"unicode:0052\", \"unicode:0053\", \"unicode:0055\", \"unicode:0056\"], \"status\": \"pending\", \"producer_identity\": {\"pid\": 51436, \"creation_time_100ns\": 134372621402947238}, \"producer_exit_code\": null, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": 479852062000000, \"recovery_id\": null, \"release_confirmed\": false, \"completion_release_receipt\": null, \"completion_readback\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"cancel_pending\"}, \"owner_phase\": \"cancel_pending\"}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"operation_invoked\": false, \"input_dispatched\": false, \"scope\": \"supervised_win32\"}",
+        "type": "text"
+      }
+    ],
+    "elapsed_ms": 1.6839,
+    "is_error": false,
+    "response": {
+      "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+      "cancellation": {
+        "action_operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+        "owner_phase": "cancel_pending",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 479852062000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 479938015000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0031",
+            "unicode:0032",
+            "unicode:0034",
+            "unicode:0036",
+            "unicode:0039",
+            "unicode:0043",
+            "unicode:0044",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004B",
+            "unicode:004D",
+            "unicode:004F",
+            "unicode:0050",
+            "unicode:0052",
+            "unicode:0053",
+            "unicode:0055",
+            "unicode:0056"
+          ],
+          "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372621402947238,
+            "pid": 51436
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "pending",
+        "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+        "task_success": null
+      },
+      "input_dispatched": false,
+      "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 479849085954700,
+    "started_monotonic_ns": 479849084270800
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "response": {
+      "cancellation_operation_id": null,
+      "cleanup_status": "UNKNOWN",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "status": "busy",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 479861347381100,
+    "started_monotonic_ns": 479861346012000
+  },
+  "public_close_attempts": [
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"unresolved_operation_id\": \"fe3555ff65b642eebbdb3881d36f042a\", \"session\": {\"session_id\": \"533cb52ae2b547f3ad260f1f4f5c362f\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": [\"545895767fdd41be89e1b7b35adbbcdf\"]}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r19\\\\run\\\\calls\\\\6bbe4500a220486aa78e228772da5f8d\", \"call_id\": \"6bbe4500a220486aa78e228772da5f8d\"}",
+          "type": "text"
+        }
+      ],
+      "is_error": false,
+      "response": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\6bbe4500a220486aa78e228772da5f8d",
+        "call_id": "6bbe4500a220486aa78e228772da5f8d",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": [
+            "545895767fdd41be89e1b7b35adbbcdf"
+          ]
+        },
+        "status": "busy",
+        "task_success": null,
+        "unresolved_operation_id": "fe3555ff65b642eebbdb3881d36f042a"
+      },
+      "returned_monotonic_ns": 479857367630000,
+      "started_monotonic_ns": 479857362887900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479857473516200,
+      "started_monotonic_ns": 479857472089800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479857585396100,
+      "started_monotonic_ns": 479857583201600
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479857698428100,
+      "started_monotonic_ns": 479857694010000
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479857806424200,
+      "started_monotonic_ns": 479857804061900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479857917641400,
+      "started_monotonic_ns": 479857913970100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858029641800,
+      "started_monotonic_ns": 479858024451900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858138935200,
+      "started_monotonic_ns": 479858136556700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858252553200,
+      "started_monotonic_ns": 479858248457100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858364232700,
+      "started_monotonic_ns": 479858359636400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858471964100,
+      "started_monotonic_ns": 479858470380500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858584472400,
+      "started_monotonic_ns": 479858581789800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858697497800,
+      "started_monotonic_ns": 479858692145300
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858806275200,
+      "started_monotonic_ns": 479858802395900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479858915911000,
+      "started_monotonic_ns": 479858912480100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859026467900,
+      "started_monotonic_ns": 479859023289200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859135053000,
+      "started_monotonic_ns": 479859133610200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859248435400,
+      "started_monotonic_ns": 479859244808300
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859357786900,
+      "started_monotonic_ns": 479859354966700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859468651700,
+      "started_monotonic_ns": 479859465828000
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859580661400,
+      "started_monotonic_ns": 479859576752100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859694207200,
+      "started_monotonic_ns": 479859689000900
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859803134600,
+      "started_monotonic_ns": 479859799270100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479859910028100,
+      "started_monotonic_ns": 479859908402200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860024295800,
+      "started_monotonic_ns": 479860019770800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860134220800,
+      "started_monotonic_ns": 479860130795800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860246162100,
+      "started_monotonic_ns": 479860241803200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860358048100,
+      "started_monotonic_ns": 479860353371400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860469117300,
+      "started_monotonic_ns": 479860464723200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860578142000,
+      "started_monotonic_ns": 479860574470800
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860687556500,
+      "started_monotonic_ns": 479860683585500
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860798530600,
+      "started_monotonic_ns": 479860794747200
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479860907422400,
+      "started_monotonic_ns": 479860906133400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479861017005500,
+      "started_monotonic_ns": 479861015678700
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479861128809800,
+      "started_monotonic_ns": 479861127528100
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479861237316600,
+      "started_monotonic_ns": 479861235991400
+    },
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"busy\", \"operation_invoked\": false, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"cancellation_operation_id\": null}",
+          "type": "text"
+        }
+      ],
+      "is_error": true,
+      "response": {
+        "cancellation_operation_id": null,
+        "cleanup_status": "UNKNOWN",
+        "operation_invoked": false,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "busy",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479861347381100,
+      "started_monotonic_ns": 479861346012000
+    }
+  ],
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"545895767fdd41be89e1b7b35adbbcdf\", \"call\": {\"call_id\": \"545895767fdd41be89e1b7b35adbbcdf\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"supervised-standard-cancel-effect-r19\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"fixture\": \"8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d\"}}, \"authority\": {\"lease_id\": \"supervised-standard-cancel-r19\", \"expires_at_ns\": 479938015000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 70, \"y\": 70}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"op\": \"text\", \"text\": \"SUPERVISED-MCP-OK-20261024-R19\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"keys\": [\"Q\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 479938015000000,
+              "lease_id": "supervised-standard-cancel-r19"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "SUPERVISED-MCP-OK-20261024-R19"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r19",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "response_envelope": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 479938015000000,
+              "lease_id": "supervised-standard-cancel-r19"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "text",
+                "text": "SUPERVISED-MCP-OK-20261024-R19"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-effect-r19",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 479848066925400,
+    "started_monotonic_ns": 479848065441600,
+    "wait_for_result_ms": 0
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"79f7c637861f599f0332adaeb33c5d10f54dc66c1b136ce997100a8b4314d8a6\", \"bytes\": 1456, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"aec75c09551a49ceba0ac30799f6fae5\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 142346596, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 479848015000000, \"capture_ended_ns\": 479848015000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r19\\\\run\\\\calls\\\\757929578e4a4f8ea105c2a4ba0ac0a3\\\\images\\\\f8e563667ca6473e9d87a81527e73ff8.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 479848015000000, \"converted\": 479848031000000, \"encoded\": 479848031000000, \"written\": 479848031000000}}}, \"target_generation\": \"8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"533cb52ae2b547f3ad260f1f4f5c362f\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"aec75c09551a49ceba0ac30799f6fae5\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 142346596, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 479848015000000, \"capture_ended_ns\": 479848015000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r19\\\\run\\\\calls\\\\757929578e4a4f8ea105c2a4ba0ac0a3\\\\images\\\\f8e563667ca6473e9d87a81527e73ff8.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 479848015000000, \"converted\": 479848031000000, \"encoded\": 479848031000000, \"written\": 479848031000000}}}, \"target_generation\": \"8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"533cb52ae2b547f3ad260f1f4f5c362f\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 479848015000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r19\\\\run\\\\calls\\\\757929578e4a4f8ea105c2a4ba0ac0a3\\\\images\\\\f8e563667ca6473e9d87a81527e73ff8.png\", \"relative_path\": \"images\\\\f8e563667ca6473e9d87a81527e73ff8.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"aec75c09551a49ceba0ac30799f6fae5\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 142346596, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 479848015000000, \"capture_ended_ns\": 479848015000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"533cb52ae2b547f3ad260f1f4f5c362f\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r19\\\\run\\\\calls\\\\757929578e4a4f8ea105c2a4ba0ac0a3\", \"call_id\": \"757929578e4a4f8ea105c2a4ba0ac0a3\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\757929578e4a4f8ea105c2a4ba0ac0a3\\images\\f8e563667ca6473e9d87a81527e73ff8.png",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 479848031000000,
+            "encoded": 479848031000000,
+            "started": 479848015000000,
+            "written": 479848031000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 479848015000000,
+        "capture_started_ns": 479848015000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 142346596,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "aec75c09551a49ceba0ac30799f6fae5",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\757929578e4a4f8ea105c2a4ba0ac0a3",
+      "call_id": "757929578e4a4f8ea105c2a4ba0ac0a3",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 479848015000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "aec75c09551a49ceba0ac30799f6fae5",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\757929578e4a4f8ea105c2a4ba0ac0a3\\images\\f8e563667ca6473e9d87a81527e73ff8.png",
+        "recorded_capture": {
+          "capture_ended_ns": 479848015000000,
+          "capture_started_ns": 479848015000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 142346596,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\f8e563667ca6473e9d87a81527e73ff8.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\757929578e4a4f8ea105c2a4ba0ac0a3\\images\\f8e563667ca6473e9d87a81527e73ff8.png",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 479848031000000,
+                "encoded": 479848031000000,
+                "started": 479848015000000,
+                "written": 479848031000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 479848015000000,
+            "capture_started_ns": 479848015000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 142346596,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "aec75c09551a49ceba0ac30799f6fae5",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1456,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r19\\run\\calls\\757929578e4a4f8ea105c2a4ba0ac0a3\\images\\f8e563667ca6473e9d87a81527e73ff8.png",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 479848031000000,
+                  "encoded": 479848031000000,
+                  "started": 479848015000000,
+                  "written": 479848031000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 479848015000000,
+              "capture_started_ns": 479848015000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 142346596,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "aec75c09551a49ceba0ac30799f6fae5",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "79f7c637861f599f0332adaeb33c5d10f54dc66c1b136ce997100a8b4314d8a6"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 479848064096200,
+    "started_monotonic_ns": 479848044728100
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 8, \"expanded_operation_count\": 8, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 8,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 8,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 479848065428400,
+    "started_monotonic_ns": 479848064136900
+  },
+  "result_readbacks": [
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-effect-r19",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "result": null,
+          "status": "running",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+        },
+        "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+        "cancellation": {
+          "action_operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+          "owner_phase": "unknown",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 479852062000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 479938015000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0030",
+              "unicode:0031",
+              "unicode:0032",
+              "unicode:0034",
+              "unicode:0036",
+              "unicode:0039",
+              "unicode:0043",
+              "unicode:0044",
+              "unicode:0045",
+              "unicode:0049",
+              "unicode:004B",
+              "unicode:004D",
+              "unicode:004F",
+              "unicode:0050",
+              "unicode:0052",
+              "unicode:0053",
+              "unicode:0055",
+              "unicode:0056"
+            ],
+            "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+            "phase": "unknown",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372621402947238,
+              "pid": 51436
+            },
+            "recovery_id": "55abf48aa3814d589f8146d65654f8ed",
+            "release_confirmed": false,
+            "replay_allowed": false,
+            "status": "unknown",
+            "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+            "task_success": null,
+            "uncertainty": "recovery_process_exceeded_execution_window"
+          },
+          "status": "unknown",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 479938015000000,
+            "lease_id": "supervised-standard-cancel-r19"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "op": "text",
+              "text": "SUPERVISED-MCP-OK-20261024-R19"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-effect-r19",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 479853150340600,
+      "started_monotonic_ns": 479853146565100
+    }
+  ],
+  "retained_report": {
+    "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+    "compilation": null,
+    "input_dispatched": null,
+    "normalization": null,
+    "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+    "operation_invoked": true,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result": {
+      "replay_allowed": false,
+      "status": "running",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "533cb52ae2b547f3ad260f1f4f5c362f",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": [
+        "545895767fdd41be89e1b7b35adbbcdf"
+      ]
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "metadata": {
+          "program_id": "supervised-standard-cancel-effect-r19",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "result": null,
+        "status": "running",
+        "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+      },
+      "call_id": "545895767fdd41be89e1b7b35adbbcdf",
+      "cancellation": {
+        "action_operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+        "operation_id": "7b6c8de98a6b4f32a076b0d34befe1bf",
+        "owner_phase": "unknown",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 479852062000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 479938015000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S",
+            "unicode:002D",
+            "unicode:0030",
+            "unicode:0031",
+            "unicode:0032",
+            "unicode:0034",
+            "unicode:0036",
+            "unicode:0039",
+            "unicode:0043",
+            "unicode:0044",
+            "unicode:0045",
+            "unicode:0049",
+            "unicode:004B",
+            "unicode:004D",
+            "unicode:004F",
+            "unicode:0050",
+            "unicode:0052",
+            "unicode:0053",
+            "unicode:0055",
+            "unicode:0056"
+          ],
+          "operation_id": "fe3555ff65b642eebbdb3881d36f042a",
+          "phase": "unknown",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372621402947238,
+            "pid": 51436
+          },
+          "recovery_id": "55abf48aa3814d589f8146d65654f8ed",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "unknown",
+          "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+          "task_success": null,
+          "uncertainty": "recovery_process_exceeded_execution_window"
+        },
+        "status": "unknown",
+        "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+        "task_success": null
+      },
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 479938015000000,
+          "lease_id": "supervised-standard-cancel-r19"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R19"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-effect-r19",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "8690312b84717c62cefaffdbfe35ead8e9e4ea7542039bbf9dfe0dfc71c4975d",
+    "task_success": null
+  },
+  "session_close_report": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "busy",
+    "task_success": null,
+    "unresolved_operation_id": "fe3555ff65b642eebbdb3881d36f042a"
+  },
+  "session_mode": "supervised-win32",
+  "source_commit": "9d0342e35aa2e0fd03f5c08f29b6c8bbf331fb47",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-23T20:48:57.189621+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}

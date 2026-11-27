@@ -1,0 +1,25 @@
+{
+  "schema": "v39-child-stderr-custody-result-v1",
+  "allocation_id": "v39-child-stderr-custody-a01-20261009",
+  "status": "PASS_CONSTRUCTION",
+  "formal_pass": false,
+  "base_main_commit": "771e8696b66deb18b4b3baf14e1ab8e2bc537edf",
+  "test_counts": {
+    "normal": 17,
+    "optimized": 17
+  },
+  "checks": {
+    "failed_child_stderr_retained": true,
+    "timeout_is_bounded_and_stream_stays_open": true,
+    "controller_cleanup_regressions": true,
+    "v39_release_identity_regressions": true,
+    "py_compile": true,
+    "git_diff_check": true
+  },
+  "scope": "local synthetic child-process stderr custody only; no live control, model, game, GUI, input release, or task-effect evidence",
+  "limitations": [
+    "The retained A04 child failure cause remains unknown.",
+    "Stderr retention is capped at 1 MiB.",
+    "A reader that does not reach EOF within one second is marked incomplete and its stream is left open."
+  ]
+}

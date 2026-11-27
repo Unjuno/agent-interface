@@ -1,0 +1,49 @@
+{
+  "allocation_id": "8641-T0-A01-20261009",
+  "auditor_command": "python3 src/auditor.py input/protocol.json input/fixture.json input/oracle_fixture.json raw/candidate.json audit/audit.json",
+  "branch": "research/8641-uncertainty-intervention-t0-a01-20261009",
+  "candidate_command": "python3 src/candidate.py input/protocol.json input/fixture.json raw/candidate.json",
+  "candidate_has_no_oracle_input": true,
+  "decision_rules": {
+    "HOLD": "audit integrity, source identification, matched hard gates, or candidate truth-label isolation fails.",
+    "H_FAIL_SCOPED": "audit passes but one or more preregistered H_PASS conditions fail; report exact failed comparator/gate without rerun.",
+    "H_PASS_SCOPED": "source classifier accuracy >=0.70; DECOMPOSED correctness is within 0.01 of both TOTAL_UNCERTAINTY and DECISION_VALUE; mean cost is at least 0.02 lower than both; DECOMPOSED returns UNKNOWN on correlated-duplicate and misspecified-decomposition controls.",
+    "METHOD_PASS_SCOPED": "independent auditor reconstructs all 4,800 rows, all exact hard gates match, source-estimator dependence/epoch/label/cost mutation controls reject 4/4, and no truth labels appear in candidate output."
+  },
+  "expected_candidate_rows": 4800,
+  "file_sha256": {
+    "construction/attempt_04/audit.json": "a10d4aa42c91603f659b329d37f2ff5e1196dff531bfbe10b68ba0929ec83f65",
+    "construction/attempt_04/candidate.json": "7bab4d01cee1eef6159e73c3dbb5f240c7ff8e1627a30cb4b8945f0b44b8764a",
+    "construction/attempt_04/policy_fixture.json": "c2d41451cdde0a4c39e95543070cccfc0251ee53fc1ab9f639d24b8d3a599aae",
+    "input/fixture.json": "d9ee4c6095cacee19c03b0ad8b3d1adeade8251b4af395247b8212cb50dfc027",
+    "input/oracle_fixture.json": "097eef1b68e961b71780ff580f154a3f0e311bc8b4a8d823741af0f929dd7621",
+    "input/policy_fixture.json": "0c366e34e1537749f7986adb33615032a595085a1bc5228b3a8a58009c484913",
+    "input/protocol.json": "de10a0ef9050137c839de3fa1e9b2a2da87997c469ec13147d8c0b966752f68c",
+    "src/auditor.py": "02afc46f32ce0eae7ca1de0a8ef43f783b259319cc14278973f9e4bea494a844",
+    "src/candidate.py": "6aedea716348a16afb3b0d48e5747dae28e796fed076c3cfeb631eba6ff0216c",
+    "src/mutation_controls.py": "ba45f99d3ab939cbf1091cc250fd15537eb9b9370ce03e503b9e78a388f91c39"
+  },
+  "frozen_utc": "2026-10-08T20:14:01Z",
+  "mutation_command": "python3 src/mutation_controls.py input/protocol.json construction/attempt_04/policy_fixture.json input/oracle_fixture.json construction/attempt_04/candidate.json",
+  "no_retry": true,
+  "profiles": [
+    "resampled_noise",
+    "ontology_uncertainty",
+    "stale_epoch",
+    "irreducible_intent",
+    "correlated_duplicate",
+    "misspecified_decomposition"
+  ],
+  "protocol_id": "UIA-8641-v1",
+  "replicates_per_profile": 200,
+  "runtime": {
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "seed_range_inclusive": [
+    51001,
+    51200
+  ],
+  "source_main_commit": "b4046798ed8902745a36e8fda091204233bb06d3"
+}

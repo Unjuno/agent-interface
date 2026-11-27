@@ -1,0 +1,65 @@
+test_already_exact_initial_value_does_not_enter_or_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_already_exact_initial_value_does_not_enter_or_submit) ... ok
+test_missing_field_cannot_receive_input (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_missing_field_cannot_receive_input) ... ok
+test_missing_submit_after_exact_entry_stops_with_prefix (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_missing_submit_after_exact_entry_stops_with_prefix) ... FAIL
+test_missing_value_can_be_entered_then_exact_value_gates_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_missing_value_can_be_entered_then_exact_value_gates_submit) ... FAIL
+test_submit_admission_still_requires_observed_exact_value (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_submit_admission_still_requires_observed_exact_value) ... ok
+test_unknown_value_after_input_cannot_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_unknown_value_after_input_cannot_submit) ... FAIL
+test_wrong_value_after_input_cannot_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_wrong_value_after_input_cannot_submit) ... FAIL
+
+======================================================================
+FAIL: test_missing_submit_after_exact_entry_stops_with_prefix (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_missing_submit_after_exact_entry_stops_with_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_form_guarded_x11.py", line 109, in test_missing_submit_after_exact_entry_stops_with_prefix
+    self.assertEqual(row['result']['completed_transitions'], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_missing_value_can_be_entered_then_exact_value_gates_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_missing_value_can_be_entered_then_exact_value_gates_submit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_form_guarded_x11.py", line 78, in test_missing_value_can_be_entered_then_exact_value_gates_submit
+    self.assertEqual(r['outcome'], 'TASK_SUCCEEDED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SAFE_YIELD' != 'TASK_SUCCEEDED'
+- SAFE_YIELD
++ TASK_SUCCEEDED
+
+
+======================================================================
+FAIL: test_unknown_value_after_input_cannot_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_unknown_value_after_input_cannot_submit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_form_guarded_x11.py", line 95, in test_unknown_value_after_input_cannot_submit
+    self.assertEqual((r['outcome'], r['reason']), ('SAFE_YIELD', 'effect_unavailable'))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('SAFE_YIELD', 'missing_symbol') != ('SAFE_YIELD', 'effect_unavailable')
+
+First differing element 1:
+'missing_symbol'
+'effect_unavailable'
+
+- ('SAFE_YIELD', 'missing_symbol')
++ ('SAFE_YIELD', 'effect_unavailable')
+
+======================================================================
+FAIL: test_wrong_value_after_input_cannot_submit (test_compiled_form_guarded_x11.CompiledFormGuardedX11Tests.test_wrong_value_after_input_cannot_submit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_form_guarded_x11.py", line 88, in test_wrong_value_after_input_cannot_submit
+    self.assertEqual((r['outcome'], r['reason']), ('SAFE_YIELD', 'effect_failed'))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('SAFE_YIELD', 'missing_symbol') != ('SAFE_YIELD', 'effect_failed')
+
+First differing element 1:
+'missing_symbol'
+'effect_failed'
+
+- ('SAFE_YIELD', 'missing_symbol')
++ ('SAFE_YIELD', 'effect_failed')
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+FAILED (failures=4)

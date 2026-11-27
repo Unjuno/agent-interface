@@ -1,0 +1,181 @@
+diff --git a/research/doom/map01_overlap_controller_v39.py b/research/doom/map01_overlap_controller_v39.py
+index 000d206310..70289191b6 100644
+--- a/research/doom/map01_overlap_controller_v39.py
++++ b/research/doom/map01_overlap_controller_v39.py
+@@ -546,6 +546,49 @@ def final_admission_from_planner_result(planner_result, terminal_observed_ns,
+     }, policy_invalidation, decided_ns)
+ 
+ 
++def typed_event_transport_timing_rows(events):
++    """Retain producer, stdout, queue and monitor timestamps per typed event."""
++    timing_rows = []
++    stage_fields = (
++        "typed_ready_ns", "emit_ns", "stdout_handoff_started_ns",
++        "controller_parsed_ns", "controller_enqueued_ns",
++        "controller_dequeued_ns", "controller_monitor_started_ns",
++        "controller_monitor_finished_ns",
++    )
++    interval_fields = (
++        ("typed_ready_to_emit_call_ms", "typed_ready_ns", "emit_ns"),
++        ("producer_pre_handoff_ms", "emit_ns", "stdout_handoff_started_ns"),
++        ("stdout_handoff_to_controller_parse_ms", "stdout_handoff_started_ns",
++         "controller_parsed_ns"),
++        ("controller_parse_to_enqueue_ms", "controller_parsed_ns",
++         "controller_enqueued_ns"),
++        ("controller_queue_wait_ms", "controller_enqueued_ns",
++         "controller_dequeued_ns"),
++        ("controller_dispatch_to_monitor_ms", "controller_dequeued_ns",
++         "controller_monitor_started_ns"),
++        ("controller_monitor_service_ms", "controller_monitor_started_ns",
++         "controller_monitor_finished_ns"),
++    )
++    for event in events:
++        if type(event) is not dict or event.get("event") != "typed_observation":
++            continue
++        row = {"sequence": event.get("sequence")}
++        row.update({field: event.get(field) for field in stage_fields})
++        stamps = [row[field] for field in stage_fields]
++        row["stage_order_valid"] = (
++            all(type(stamp) is int for stamp in stamps) and
++            all(left <= right for left, right in zip(stamps, stamps[1:])))
++        row["intervals_ms"] = {}
++        for label, start_field, end_field in interval_fields:
++            start, end = row[start_field], row[end_field]
++            row["intervals_ms"][label] = (
++                (end - start) / 1e6
++                if type(start) is int and type(end) is int and end >= start
++                else None)
++        timing_rows.append(row)
++    return timing_rows
++
++
+ def bind_first_plan_acceptance(receipt, record):
+     expected = {"id", "accepted_ns"}
+     if type(record) is not dict or not expected.issubset(record):
+@@ -1113,7 +1156,14 @@ def main():
+         def reader():
+             try:
+                 for line in process.stdout:
+-                    row = json.loads(line); all_events.append(row); incoming.put(row)
++                    row = json.loads(line)
++                    is_typed = row.get("event") == "typed_observation"
++                    if is_typed:
++                        row["controller_parsed_ns"] = time.perf_counter_ns()
++                    all_events.append(row)
++                    if is_typed:
++                        row["controller_enqueued_ns"] = time.perf_counter_ns()
++                    incoming.put(row)
+             except BaseException as error:
+                 reader_errors.append(f"{type(error).__name__}: {error}")
+         latest = None
+@@ -1131,6 +1181,9 @@ def main():
+                         detail="stderr not synchronously drained"
+                         raise RuntimeError(f"session exited before expected event: {detail}")
+                     continue
++                is_typed = row.get("event") == "typed_observation"
++                if is_typed:
++                    row["controller_dequeued_ns"] = time.perf_counter_ns()
+                 if consumed_events is not None:
+                     consumed_events.append(row)
+                 if row["event"] == "observation":
+@@ -1138,7 +1191,13 @@ def main():
+                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                                if observation_monitor is not None else set())
+                 if row["event"] in event_types:
+-                    invalidation = observation_monitor.observe(row)
++                    if is_typed:
++                        row["controller_monitor_started_ns"] = time.perf_counter_ns()
++                    try:
++                        invalidation = observation_monitor.observe(row)
++                    finally:
++                        if is_typed:
++                            row["controller_monitor_finished_ns"] = time.perf_counter_ns()
+                     if invalidation is not None:
+                         if invalidation.get("event") == "running_action_invalidation":
+                             return invalidation
+@@ -1883,6 +1942,7 @@ def main():
+           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
+           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
+           "typed_observation_contract":"health/ammo and RGB SHA-256 are extracted from the captured in-memory frame and emitted before transport/artifact publication; every retained full observation must later match epoch, binding, RGB hash and both signal values",
++          "typed_event_timing_contract":"emit_ns marks producer callback/log start; stdout_handoff_started_ns follows both producer JSONL appends and precedes stdout serialization/write; controller timestamps mark parse, enqueue, dequeue and monitor boundaries on the same host monotonic clock; intervals are stage spans, not isolated pipe latency or a performance claim",
+           "typed_observations":len(typed_events),
+           "typed_artifact_reconciliations":typed_reconciliations,
+           "typed_artifact_reconciled":sum(row["matched"] for row in typed_reconciliations),
+@@ -1891,11 +1951,24 @@ def main():
+                                        for row in typed_events.values()],
+           "typed_ready_to_emit_ms":[(row["emit_ns"]-row["typed_ready_ns"])/1e6
+                                     for row in typed_events.values()],
++          "typed_ready_to_emit_call_ms":[
++              (row["emit_ns"]-row["typed_ready_ns"])/1e6
++              for row in typed_events.values()],
+           "typed_capture_to_artifact_ready_ms":[
+               row["capture_to_artifact_ready_ms"] for row in full_events.values()],
+           "typed_emit_to_artifact_ready_ms":[
+               (full_events[sequence]["artifact_ready_ns"]-typed["emit_ns"])/1e6
+               for sequence,typed in typed_events.items() if sequence in full_events],
++          "typed_emit_call_to_artifact_ready_ms":[
++              (full_events[sequence]["artifact_ready_ns"]-typed["emit_ns"])/1e6
++              for sequence,typed in typed_events.items() if sequence in full_events],
++          "typed_stdout_handoff_to_artifact_ready_ms":[
++              (full_events[sequence]["artifact_ready_ns"]-
++               typed["stdout_handoff_started_ns"])/1e6
++              for sequence,typed in typed_events.items()
++              if sequence in full_events and
++              type(typed.get("stdout_handoff_started_ns")) is int],
++          "typed_event_transport_timing_rows":typed_event_transport_timing_rows(all_events),
+           "effect_receipt_extra_steps":0,
+           "contingency_contract":"preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+           "contingencies_authored":sum(len(x["action"].get("contingencies",[]))
+diff --git a/research/doom/session_map01_v12.py b/research/doom/session_map01_v12.py
+index e701035302..f468b65a48 100644
+--- a/research/doom/session_map01_v12.py
++++ b/research/doom/session_map01_v12.py
+@@ -105,7 +105,13 @@ def main():
+                 stream.write(encoded + "\n")
+             with (args.out / "delivered.jsonl").open("a") as stream:
+                 stream.write(encoded + "\n")
+-            print(encoded, flush=True)
++            if row.get("event") == "typed_observation":
++                # emit_ns is producer-side log start. The handoff marker is
++                # after both raw appends and before stdout serialization/write.
++                row["stdout_handoff_started_ns"] = time.perf_counter_ns()
++                print(json.dumps(row), flush=True)
++            else:
++                print(encoded, flush=True)
+ 
+     sources = {}
+     for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",
+diff --git a/research/doom/test_map01_v39_pair_wait_dispatch.py b/research/doom/test_map01_v39_pair_wait_dispatch.py
+index 9a8ffee61a..4339d04ac3 100644
+--- a/research/doom/test_map01_v39_pair_wait_dispatch.py
++++ b/research/doom/test_map01_v39_pair_wait_dispatch.py
+@@ -271,7 +271,7 @@ class PairWaitDispatchTests(unittest.TestCase):
+         enqueues = calls(stdout_loop, "put")
+         self.assertEqual(len(decodes), 1)
+         self.assertEqual(len(enqueues), 1)
+-        self.assertEqual(decodes[0].lineno, enqueues[0].lineno)
++        self.assertLess(decodes[0].lineno, enqueues[0].lineno)
+ 
+     def test_full_observation_dispatches_zero_ammo_invalidation(self):
+         build_wait, monitor_type = load_controller_dispatch(CONTROLLER)
+diff --git a/research/doom/test_overlap_controller_v39_wait.py b/research/doom/test_overlap_controller_v39_wait.py
+index 66fbecb5dd..dbdc79a35a 100644
+--- a/research/doom/test_overlap_controller_v39_wait.py
++++ b/research/doom/test_overlap_controller_v39_wait.py
+@@ -45,11 +45,16 @@ class ScriptQueue:
+ class Clock:
+     def __init__(self):
+         self.value = 0
++        self.value_ns = 0
+ 
+     def monotonic(self):
+         self.value += .01
+         return self.value
+ 
++    def perf_counter_ns(self):
++        self.value_ns += 1
++        return self.value_ns
++
+ 
+ def extract_wait(process, rows):
+     tree = ast.parse(SOURCE.read_bytes())

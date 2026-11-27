@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/xterm-cancel-recovery-audit-reconciliation-v1",
+  "raw_trial_mutated": false,
+  "observations": [
+    {
+      "auditor": "audit.py",
+      "outcome": "failed assertion",
+      "detail": "The frozen auditor required old xterm session exit_code == -15. The retained result records exit_code 15 after SIGTERM. Exact session absence is separately recorded and required.",
+      "disposition": "Preserved unchanged; exit-code convention reconciled in audit_reconciled.py."
+    },
+    {
+      "auditor": "first audit_reconciled.py run",
+      "outcome": "failed assertion",
+      "detail": "The first reconciliation still expected distinct numeric native surface IDs. Xvfb reused XID 4194316, while process_generation and window_generation changed.",
+      "disposition": "Preserved as an audit observation; final reconciled audit requires same reused XID and different process/window generation IDs."
+    }
+  ],
+  "final_reconciled_audit": "audit-reconciled.json",
+  "final_status": "PASS_XTERM_CANCEL_NEW_GENERATION_EFFECT_SCOPED",
+  "checks_passed": 16,
+  "checks_total": 16,
+  "interpretation": "These were auditor expectation mismatches, not reruns or changes to the live trial. The original trial result remains authoritative and unchanged."
+}

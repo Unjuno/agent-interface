@@ -1,0 +1,2719 @@
+{
+  "modules": [
+    "test_input_owner_rpc_v2",
+    "test_map01_process_identity_backend",
+    "test_input_owner_v12_process_identity",
+    "test_input_owner_v12_explicit_up_cancel",
+    "test_executor_v12_owner_release_rpc_failure"
+  ],
+  "tests": 39,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "rows": [
+    {
+      "case": "peer-eof",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343990169953400,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343990169953400
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343980171658700,
+              "valid_until_ns": 343990169953400,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343980171632200,
+                      "sync_returned_ns": 343980171648700,
+                      "keymap_sampled_ns": 343980171650800,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343980171632200,
+                    343980171650800
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343990169953400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "admission": {
+        "event": "input_admission",
+        "key": "a",
+        "keycode": 38,
+        "admitted_ns": 343980171365100,
+        "input_ack_ns": 343980171388300,
+        "valid_until_ns": 343990169953400,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343990169953400
+        ],
+        "intent_token": "rpc-v2-intent"
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_after": []
+    },
+    {
+      "case": "blocked-release",
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": false,
+          "owner_thread_stopped": false,
+          "close_error": "RuntimeError: input owner still alive; cleanup unverified",
+          "protocol_error": null,
+          "release_records": [],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "fake_down_before_resume": [
+        38
+      ],
+      "fake_down_after": [],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "stale-generation",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994188604000,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994188604000
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": "owner operation failed",
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984190363900,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": null,
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "codec",
+      "wire": {
+        "deadline_ns": 343994193731900,
+        "intent_token": "rpc-v2-intent",
+        "expected_focus": 41,
+        "expected_surface": 41,
+        "expected_geometry": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "cancel_requested": false,
+        "focus_invalid": false,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343994193731900
+        ],
+        "target_window_identity": [
+          1,
+          41,
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          343994193731900
+        ]
+      },
+      "process": [
+        1,
+        41,
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        343994193731900
+      ],
+      "window": [
+        1,
+        41,
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        343994193731900
+      ],
+      "cancel_sticky": true,
+      "changed_source_refused": true
+    },
+    {
+      "case": "duplicate-id",
+      "sent_second": {
+        "schema": "input-owner-rpc-v2",
+        "service_id": "owned-service-v2",
+        "request_id": 1,
+        "op": "down",
+        "lease": {
+          "deadline_ns": 343994196267600,
+          "intent_token": "rpc-v2-intent",
+          "expected_focus": 41,
+          "expected_surface": 41,
+          "expected_geometry": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "cancel_requested": false,
+          "focus_invalid": false,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            343994196267600
+          ],
+          "target_window_identity": null
+        },
+        "key": "d"
+      },
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": "ValueError: RPC request identity/schema invalid",
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984197534500,
+              "valid_until_ns": 343994196267600,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984197510400,
+                      "sync_returned_ns": 343984197527500,
+                      "keymap_sampled_ns": 343984197528700,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984197510400,
+                    343984197528700
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994196267600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "fake_down_after": [],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "lease-rebind",
+      "sent_second": {
+        "schema": "input-owner-rpc-v2",
+        "service_id": "owned-service-v2",
+        "request_id": 2,
+        "op": "down",
+        "lease": {
+          "deadline_ns": 343994200062600,
+          "intent_token": "rpc-v2-intent",
+          "expected_focus": 41,
+          "expected_surface": 41,
+          "expected_geometry": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "cancel_requested": false,
+          "focus_invalid": false,
+          "target_process_identity": [
+            1,
+            41,
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            343994200062600
+          ],
+          "target_window_identity": null
+        },
+        "key": "d"
+      },
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": "ValueError: same-intent source binding changed",
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984201399200,
+              "valid_until_ns": 343994200062600,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984201342300,
+                      "sync_returned_ns": 343984201390600,
+                      "keymap_sampled_ns": 343984201392300,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984201342300,
+                    343984201392300
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994200062600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "fake_down_after": [],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "duplicate-json-member",
+      "sent_second": {
+        "schema": "input-owner-rpc-v2",
+        "service_id": "owned-service-v2",
+        "request_id": 2,
+        "op": "down",
+        "lease": {
+          "deadline_ns": 343994203735100,
+          "intent_token": "rpc-v2-intent",
+          "expected_focus": 41,
+          "expected_surface": 41,
+          "expected_geometry": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "cancel_requested": false,
+          "focus_invalid": false,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            343994203735100
+          ],
+          "target_window_identity": null
+        },
+        "key": "d"
+      },
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": "ValueError: duplicate JSON member",
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984204769100,
+              "valid_until_ns": 343994203735100,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984204741300,
+                      "sync_returned_ns": 343984204760900,
+                      "keymap_sampled_ns": 343984204762400,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984204741300,
+                    343984204762400
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994203735100
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "fake_down_after": [],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "pre-send-refusal",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994208525200,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994208525200
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "close": {
+        "schema": "input-owner-service-close-v2",
+        "display": ":fake",
+        "service_id": "owned-service-v2",
+        "verified": true,
+        "owner_thread_stopped": true,
+        "close_error": null,
+        "protocol_error": null,
+        "release_records": [
+          {
+            "event": "owner_release",
+            "reason": "close",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 343984209965200,
+            "valid_until_ns": 343994208525200,
+            "intent_token": "rpc-v2-intent",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 343984209941900,
+                    "sync_returned_ns": 343984209957900,
+                    "keymap_sampled_ns": 343984209959000,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  343984209941900,
+                  343984209959000
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994208525200
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        ],
+        "physical_verification_authoritative": false
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "invalid_attempts_sent": 0
+    },
+    {
+      "case": "inconsistent-close",
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984214168000,
+              "valid_until_ns": 343994213103400,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984214145200,
+                      "sync_returned_ns": 343984214161300,
+                      "keymap_sampled_ns": 343984214162500,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984214145200,
+                    343984214162500
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994213103400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "received": [
+        {
+          "schema": "input-owner-rpc-ready-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "capabilities": {
+            "process_identity": true,
+            "window_lifecycle": false,
+            "operations": [
+              "close",
+              "down",
+              "input_state",
+              "release",
+              "up",
+              "up_batch"
+            ]
+          }
+        },
+        {
+          "schema": "input-owner-rpc-response-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "ok": true,
+          "result": {
+            "event": "input_admission",
+            "key": "a",
+            "keycode": 38,
+            "admitted_ns": 343984213889600,
+            "input_ack_ns": 343984213907100,
+            "valid_until_ns": 343994213103400,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994213103400
+            ],
+            "intent_token": "rpc-v2-intent"
+          },
+          "records": [],
+          "error": null
+        },
+        {
+          "schema": "input-owner-rpc-response-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "ok": true,
+          "result": {
+            "schema": "input-owner-service-close-v2",
+            "display": ":fake",
+            "service_id": "owned-service-v2",
+            "verified": true,
+            "owner_thread_stopped": false,
+            "close_error": null,
+            "protocol_error": null,
+            "release_records": [
+              {
+                "event": "owner_release",
+                "reason": "close",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "key_state_errors": [],
+                "verified_ns": 343984214168000,
+                "valid_until_ns": 343994213103400,
+                "intent_token": "rpc-v2-intent",
+                "key_release_attempts": {
+                  "38": {
+                    "attempts": [
+                      {
+                        "attempt": 1,
+                        "keyrelease_started_ns": 343984214145200,
+                        "sync_returned_ns": 343984214161300,
+                        "keymap_sampled_ns": 343984214162500,
+                        "server_key_down_before": true,
+                        "server_key_down_after": false,
+                        "keymap_before_error": null,
+                        "keymap_after_error": null,
+                        "keyrelease_error": null,
+                        "sync_error": null
+                      }
+                    ],
+                    "verified": true
+                  }
+                },
+                "key_release_intervals_ns": [
+                  {
+                    "keycode": 38,
+                    "interval_ns": [
+                      343984214145200,
+                      343984214162500
+                    ]
+                  }
+                ],
+                "key_state_source": "x11_query_keymap",
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  343994213103400
+                ],
+                "target_process_identity_reader": {
+                  "retired": true,
+                  "pending": false,
+                  "thread_alive": true,
+                  "close_error": null
+                },
+                "target_focus_query_failed": false
+              }
+            ],
+            "physical_verification_authoritative": false
+          },
+          "records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984214168000,
+              "valid_until_ns": 343994213103400,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984214145200,
+                      "sync_returned_ns": 343984214161300,
+                      "keymap_sampled_ns": 343984214162500,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984214145200,
+                    343984214162500
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994213103400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "error": null
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "interrupted-close",
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984217957300,
+              "valid_until_ns": 343994216773200,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984217933200,
+                      "sync_returned_ns": 343984217949600,
+                      "keymap_sampled_ns": 343984217950800,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984217933200,
+                    343984217950800
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994216773200
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "primary_interrupt_preserved": true
+    },
+    {
+      "case": "bad-ready",
+      "no_client_created": true,
+      "fake_down_after": [],
+      "edges": []
+    },
+    {
+      "case": "active-generation",
+      "admission": {
+        "event": "input_admission",
+        "key": "a",
+        "keycode": 38,
+        "admitted_ns": 343984226145400,
+        "input_ack_ns": 343984226172800,
+        "valid_until_ns": 343994224978900,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343994224978900
+        ],
+        "intent_token": "rpc-v2-intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "target_generation_invalidated",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "key_state_errors": [],
+        "verified_ns": 343984261828200,
+        "valid_until_ns": 343994224978900,
+        "intent_token": "rpc-v2-intent",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keyrelease_started_ns": 343984261780000,
+                "sync_returned_ns": 343984261816400,
+                "keymap_sampled_ns": 343984261818600,
+                "server_key_down_before": true,
+                "server_key_down_after": false,
+                "keymap_before_error": null,
+                "keymap_after_error": null,
+                "keyrelease_error": null,
+                "sync_error": null
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "keycode": 38,
+            "interval_ns": [
+              343984261780000,
+              343984261818600
+            ]
+          }
+        ],
+        "key_state_source": "x11_query_keymap",
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343994224978900
+        ],
+        "target_process_identity_reader": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target_focus_query_failed": false
+      },
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994224978900,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994224978900
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "input_state",
+          "lease": null,
+          "key": null
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 3,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "target_generation_invalidated",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984261828200,
+              "valid_until_ns": 343994224978900,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984261780000,
+                      "sync_returned_ns": 343984261816400,
+                      "keymap_sampled_ns": 343984261818600,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984261780000,
+                    343984261818600
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994224978900
+              ],
+              "target_process_identity_reader": {
+                "retired": false,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984262578700,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994224978900
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "explicit_update_sent": false
+    },
+    {
+      "case": "active-explicit-cancel",
+      "admission": {
+        "event": "input_admission",
+        "key": "a",
+        "keycode": 38,
+        "admitted_ns": 343984267030700,
+        "input_ack_ns": 343984267047000,
+        "valid_until_ns": 343994266188600,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343994266188600
+        ],
+        "intent_token": "rpc-v2-intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "key_state_errors": [],
+        "verified_ns": 343984267377600,
+        "valid_until_ns": 343994266188600,
+        "intent_token": "rpc-v2-intent",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keyrelease_started_ns": 343984267359800,
+                "sync_returned_ns": 343984267371500,
+                "keymap_sampled_ns": 343984267372600,
+                "server_key_down_before": true,
+                "server_key_down_after": false,
+                "keymap_before_error": null,
+                "keymap_after_error": null,
+                "keyrelease_error": null,
+                "sync_error": null
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "keycode": 38,
+            "interval_ns": [
+              343984267359800,
+              343984267372600
+            ]
+          }
+        ],
+        "key_state_source": "x11_query_keymap",
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343994266188600
+        ],
+        "target_process_identity_reader": {
+          "retired": true,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target_focus_query_failed": true
+      },
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994266188600,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994266188600
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "input_state",
+          "lease": {
+            "deadline_ns": 343994266188600,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": true,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994266188600
+            ],
+            "target_window_identity": null
+          },
+          "key": null
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 3,
+          "op": "input_state",
+          "lease": null,
+          "key": null
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 4,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "cancelled",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984267377600,
+              "valid_until_ns": 343994266188600,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984267359800,
+                      "sync_returned_ns": 343984267371500,
+                      "keymap_sampled_ns": 343984267372600,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984267359800,
+                    343984267372600
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994266188600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": true
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984267984400,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994266188600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": true
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "explicit_update_sent": true
+    },
+    {
+      "case": "active-lease-expiry",
+      "admission": {
+        "event": "input_admission",
+        "key": "a",
+        "keycode": 38,
+        "admitted_ns": 343984273386600,
+        "input_ack_ns": 343984273410100,
+        "valid_until_ns": 343984572417600,
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343984572417600
+        ],
+        "intent_token": "rpc-v2-intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "expired",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "key_state_errors": [],
+        "verified_ns": 343984578833900,
+        "valid_until_ns": 343984572417600,
+        "intent_token": "rpc-v2-intent",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keyrelease_started_ns": 343984578763200,
+                "sync_returned_ns": 343984578816800,
+                "keymap_sampled_ns": 343984578820000,
+                "server_key_down_before": true,
+                "server_key_down_after": false,
+                "keymap_before_error": null,
+                "keymap_after_error": null,
+                "keyrelease_error": null,
+                "sync_error": null
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "keycode": 38,
+            "interval_ns": [
+              343984578763200,
+              343984578820000
+            ]
+          }
+        ],
+        "key_state_source": "x11_query_keymap",
+        "target_process_identity": [
+          1,
+          41,
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          343984572417600
+        ],
+        "target_process_identity_reader": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target_focus_query_failed": true
+      },
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343984572417600,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343984572417600
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "input_state",
+          "lease": null,
+          "key": null
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 3,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "expired",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984578833900,
+              "valid_until_ns": 343984572417600,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984578763200,
+                      "sync_returned_ns": 343984578816800,
+                      "keymap_sampled_ns": 343984578820000,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984578763200,
+                    343984578820000
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343984572417600
+              ],
+              "target_process_identity_reader": {
+                "retired": false,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": true
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984579816600,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343984572417600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": true
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "explicit_update_sent": false
+    },
+    {
+      "case": "raw-close",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994584485400,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994584485400
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "close": {
+        "schema": "input-owner-service-close-v2",
+        "display": ":fake",
+        "service_id": "owned-service-v2",
+        "verified": true,
+        "owner_thread_stopped": true,
+        "close_error": null,
+        "protocol_error": null,
+        "release_records": [
+          {
+            "event": "owner_release",
+            "reason": "close",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 343984585727400,
+            "valid_until_ns": 343994584485400,
+            "intent_token": "rpc-v2-intent",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 343984585700700,
+                    "sync_returned_ns": 343984585719500,
+                    "keymap_sampled_ns": 343984585720900,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  343984585700700,
+                  343984585720900
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994584485400
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        ],
+        "physical_verification_authoritative": false
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ]
+    },
+    {
+      "case": "drop",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994588484300,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994588484300
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984751025900,
+              "valid_until_ns": 343994588484300,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984750952200,
+                      "sync_returned_ns": 343984751004300,
+                      "keymap_sampled_ns": 343984751007100,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984750952200,
+                    343984751007100
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994588484300
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_at_unknown": [
+        38
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "wrong-id",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994756811600,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994756811600
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984786027400,
+              "valid_until_ns": 343994756811600,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984785967800,
+                      "sync_returned_ns": 343984786007600,
+                      "keymap_sampled_ns": 343984786011100,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984785967800,
+                    343984786011100
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994756811600
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_at_unknown": [
+        38
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "invalid-records",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994791672100,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994791672100
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984793029000,
+              "valid_until_ns": 343994791672100,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984793006900,
+                      "sync_returned_ns": 343984793021300,
+                      "keymap_sampled_ns": 343984793022600,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984793006900,
+                    343984793022600
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994791672100
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_at_unknown": [
+        38
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "partial",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994795663400,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994795663400
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "target_generation_invalidated",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984970782100,
+              "valid_until_ns": 343994795663400,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984970672000,
+                      "sync_returned_ns": 343984970760000,
+                      "keymap_sampled_ns": 343984970763300,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984970672000,
+                    343984970763300
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994795663400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": true,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984970999300,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994795663400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": true,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_at_unknown": [
+        38
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "unsupported-window",
+      "refused_before_send": true,
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 343994976798700,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994976798700
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        },
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "op": "close",
+          "lease": null,
+          "key": null
+        }
+      ],
+      "close": {
+        "schema": "input-owner-service-close-v2",
+        "display": ":fake",
+        "service_id": "owned-service-v2",
+        "verified": true,
+        "owner_thread_stopped": true,
+        "close_error": null,
+        "protocol_error": null,
+        "release_records": [
+          {
+            "event": "owner_release",
+            "reason": "close",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 343984978176900,
+            "valid_until_ns": 343994976798700,
+            "intent_token": "rpc-v2-intent",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 343984978152300,
+                    "sync_returned_ns": 343984978168600,
+                    "keymap_sampled_ns": 343984978170000,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  343984978152300,
+                  343984978170000
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              343994976798700
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        ],
+        "physical_verification_authoritative": false
+      },
+      "receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 343984978176900,
+              "valid_until_ns": 343994976798700,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 343984978152300,
+                      "sync_returned_ns": 343984978168600,
+                      "keymap_sampled_ns": 343984978170000,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    343984978152300,
+                    343984978170000
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                343994976798700
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ]
+    }
+  ],
+  "source_sha256_lf": {
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+    "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+    "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+    "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+    "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+    "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+    "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+    "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+    "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+    "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+    "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+    "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+    "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+    "research/live_control/test_input_owner_rpc_v2.py": "78375808a584b33475f015f31b42957ac3922fd60a06644e36ba6fb75d65bae5",
+    "research/live_control/test_input_owner_v12_process_identity.py": "58d384226a7dc737ab27ed100e96b14c98e069259bcc6e216629a9af45ceecff",
+    "research/live_control/test_executor_v12_owner_release_rpc_failure.py": "c1fac5033c8ecea64874146c1085e14a2cdda9b2486ee3a04441d363cea82423",
+    "research/live_control/input_owner_rpc_v2.py": "4702b860a2eeab484ec92f02da0f128663ad96f58c89c801aefb2e99eb8167be",
+    "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe"
+  },
+  "optimize": 0,
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]"
+}

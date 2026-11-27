@@ -1,0 +1,49 @@
+{
+  "schema": "win32-hidden-hwnd-reuse-batch-audit-v1",
+  "attempt_id": "win32-hwnd-reuse-20261024-r02",
+  "status": "NO_HANDLE_REUSE_OBSERVED_IN_THIS_BATCH",
+  "checks": [
+    {
+      "check": "attempt_id_matches",
+      "passed": true
+    },
+    {
+      "check": "source_commit_matches",
+      "passed": true
+    },
+    {
+      "check": "no_input_or_activation",
+      "passed": true
+    },
+    {
+      "check": "cohort_sizes_exact",
+      "passed": true
+    },
+    {
+      "check": "each_cohort_has_unique_handles",
+      "passed": true
+    },
+    {
+      "check": "all_first_handles_destroyed_before_second",
+      "passed": true
+    },
+    {
+      "check": "all_second_handles_destroyed",
+      "passed": true
+    },
+    {
+      "check": "same_pid_thread_creation_identity",
+      "passed": true
+    },
+    {
+      "check": "status_matches_frozen_discriminator",
+      "passed": true
+    },
+    {
+      "check": "match_rows_recomputed",
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}

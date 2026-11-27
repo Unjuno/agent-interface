@@ -1,0 +1,50 @@
+Executing <Task pending name='Task-2' coro=<GuardedWin32BackendCompositionTests.test_cancel_during_final_generation_read_sends_no_compensating_input() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:322> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\futures.py:387, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.609 seconds
+.Executing <Task pending name='Task-10' coro=<GuardedWin32BackendCompositionTests.test_public_caller_backend_accept_before_return() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:316> wait_for=<Task pending name='Task-11' coro=<GuardedWin32BackendCompositionTests._run_case.<locals>.call() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:181> cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:384> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.609 seconds
+.Executing <Task pending name='Task-18' coro=<GuardedWin32BackendCompositionTests.test_public_caller_backend_block_before_acceptance() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:313> wait_for=<Task pending name='Task-19' coro=<GuardedWin32BackendCompositionTests._run_case.<locals>.call() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:181> cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:384> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.578 seconds
+.Executing <Task pending name='Task-26' coro=<GuardedWin32BackendCompositionTests.test_public_caller_backend_unretired_producer_stays_unknown() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:319> wait_for=<Task pending name='Task-27' coro=<GuardedWin32BackendCompositionTests._run_case.<locals>.call() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py:181> cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:384> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.594 seconds
+.Windows fatal exception: stack overflow
+
+Current thread 0x0000aa6c (most recent call first):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 514 in _mock_add_spec
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 457 in __init__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1106 in __init__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1050 in _get_child_mock
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 673 in __getattr__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\ctypes\__init__.py", line 512 in cast
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\backends\win32_v1\backend.py", line 414 in _handle_value
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\backends\win32_v1\backend.py", line 373 in _target_incarnation_cookie
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\backends\win32_v1\backend.py", line 357 in target_generation
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py", line 92 in <lambda>
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\owned_win32_session.py", line 69 in current_target_generation
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\owned_win32_session.py", line 76 in bind_target_generation
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\mcp_win32.py", line 30 in interface_guarded_win32_bind_target
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\server\fastmcp\utilities\func_metadata.py", line 113 in call_fn_with_arg_validation
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\server\fastmcp\tools\base.py", line 101 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\server\fastmcp\tools\tool_manager.py", line 93 in call_tool
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\server\fastmcp\server.py", line 362 in call_tool
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\mcp_server.py", line 116 in call_tool
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py", line 105 in call
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\main-a396aac\runtime\cli_v1\test_mcp_win32_backend_composition.py", line 109 in test_public_mcp_rejects_changed_window_thread_before_operation_creation
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 84 in _run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 1928 in _run_once
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 608 in run_forever
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py", line 321 in run_forever
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 641 in run_until_complete
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112 in _callMaybeAsync
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90 in _callTestMethod
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 623 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 131 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 678 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 122 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py", line 84 in __call__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\runner.py", line 217 in run
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\main.py", line 274 in runTests
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\main.py", line 102 in __init__
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\__main__.py", line 18 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main

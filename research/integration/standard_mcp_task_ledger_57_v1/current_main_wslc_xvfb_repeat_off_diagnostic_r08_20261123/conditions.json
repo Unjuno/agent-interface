@@ -1,0 +1,18 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-WSLC-XVFB-CURRENT-MAIN-R08-REPEAT-OFF-DIAGNOSTIC-20261123",
+  "frozen_at_utc": "2026-11-23T14:09:30Z",
+  "source_revision": "36da81e3fb97dca875e4dc5b1d13d5385574b400",
+  "source_tree": "5ee7dcc7751fa7e7d12800eae855f5e65902c4be",
+  "runtime_tree": "a8101de9d6bc868a523e412ec3a98d40d6a8649e",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "runtime": "WSLc 3.0.5.0; local image, pull never; network none; ephemeral --rm; source bind readonly; evidence bind writable; private tmpfs /tmp; cpus=2, memory=4g (swap limit unavailable); rootfs not read-only.",
+  "display": "Private Xvfb :88, 1024x768x24, -ac. Before the caller test, Python Xlib sets global auto-repeat mode off and records get_keyboard_control readback.",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "production_code_override": "None. XRes and retired-release budgets remain current-main values (0.5 s and 1.5 s).",
+  "environment_diagnostic": "Disable global X server key repeat only. This is a mechanism diagnostic, not a representative desktop condition or product PASS.",
+  "hypothesis": "The repeated A KeyPress events at roughly 40 ms intervals in R05/R07 are caused by X server auto-repeat while A remains down. With auto-repeat disabled, the excess A effects should disappear even if release/recovery status remains UNKNOWN.",
+  "decision_rule": "Run exactly one normal and one optimized caller attempt without retries. Keep test process outcome separate from the independent old-task effect oracle, release/readback, late horizon, fresh-generation task, and cleanup. The result can identify mechanism only; it cannot satisfy live task, efficiency, reliability, MAP01, preview, or distribution gates.",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "limits": "Synthetic Xvfb only; auto-repeat-off differs from ordinary desktop behavior; no live GUI/provider or model call."
+}

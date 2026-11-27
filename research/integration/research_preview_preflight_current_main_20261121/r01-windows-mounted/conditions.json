@@ -1,0 +1,10 @@
+{
+  "attempt_id": "RP-PREFLIGHT-CURRENT-MAIN-20261121-01",
+  "source_revision": "cfb691b3b890d01c0b24fd1cd988609a62c4dd2a",
+  "environment": "Ubuntu WSL2, Python 3.12.3, invoked against the current Windows-mounted repository checkout",
+  "runner": "release/first_run_smoke_v1/preflight.py --root <repository-root> --out <new-report.json>",
+  "frozen_expected_status": "PASS_LAUNCHER_BOUNDARY",
+  "decision_rule": "PASS only if every named launcher-boundary check in the pinned preflight passes; preserve FAIL/HOLD without changing criteria.",
+  "scope": "Read-only launcher/source/mode boundary. No install, dependency download, display open, runtime import, model call, demo, or GUI input. This is not a supported-host preview acceptance result.",
+  "frozen_at_utc": "2026-11-20T20:41:10Z"
+}

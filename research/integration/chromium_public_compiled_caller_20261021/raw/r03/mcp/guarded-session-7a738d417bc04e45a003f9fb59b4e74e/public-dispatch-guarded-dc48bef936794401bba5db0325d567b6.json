@@ -1,0 +1,178 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 397410040032,
+      "ended_ns": 398118087431,
+      "emissions": 27,
+      "program_emissions": 27,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 398118085903
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 5,
+          "requested_ms": 20,
+          "started_ns": 397528578543,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397548671776
+        },
+        {
+          "operation_index": 7,
+          "requested_ms": 20,
+          "started_ns": 397577535716,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397597653907
+        },
+        {
+          "operation_index": 9,
+          "requested_ms": 20,
+          "started_ns": 397626354063,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397646440611
+        },
+        {
+          "operation_index": 11,
+          "requested_ms": 20,
+          "started_ns": 397674409324,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397694495832
+        },
+        {
+          "operation_index": 13,
+          "requested_ms": 20,
+          "started_ns": 397724531284,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397744611846
+        },
+        {
+          "operation_index": 15,
+          "requested_ms": 20,
+          "started_ns": 397774597070,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397794690129
+        },
+        {
+          "operation_index": 17,
+          "requested_ms": 20,
+          "started_ns": 397823240206,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397843319321
+        },
+        {
+          "operation_index": 19,
+          "requested_ms": 20,
+          "started_ns": 397873086971,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397893178545
+        },
+        {
+          "operation_index": 21,
+          "requested_ms": 20,
+          "started_ns": 397924431543,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397944515103
+        },
+        {
+          "operation_index": 23,
+          "requested_ms": 20,
+          "started_ns": 397973425710,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 397993502297
+        },
+        {
+          "operation_index": 25,
+          "requested_ms": 20,
+          "started_ns": 398022819016,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 398042900080
+        },
+        {
+          "operation_index": 27,
+          "requested_ms": 20,
+          "started_ns": 398072705250,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 398092789433
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "error": "X11BackendError('native target guard refused: MISSING')",
+      "failed_op": 28,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": false
+  }
+}

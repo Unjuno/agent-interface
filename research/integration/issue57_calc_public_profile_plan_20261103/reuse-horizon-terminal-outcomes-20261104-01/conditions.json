@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/reuse-horizon-comparison-v3",
+  "base_sha": "cf3ddf2f8ef44f78fac3cfed78df2904aa596691",
+  "source_commit_before_test": "f3a91ac8b5c36f73043cc7f1105b02f0eac34605",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "docker_engine": "29.8.1",
+  "docker_wsl_config": "32GB/12 CPU/16GB swap/gradual reclaim",
+  "network": "none",
+  "cpus": 2,
+  "memory": "4g",
+  "memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "init": true,
+  "source_mount": "read-only",
+  "scope": "synthetic reuse horizon tests; no provider or GUI calls",
+  "provider_generations": 0,
+  "max_c_model_attempts_per_task": 3,
+  "modes": [
+    "normal",
+    "optimized -O"
+  ]
+}

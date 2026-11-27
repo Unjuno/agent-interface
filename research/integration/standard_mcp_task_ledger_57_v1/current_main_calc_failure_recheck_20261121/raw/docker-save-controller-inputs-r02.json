@@ -1,0 +1,401 @@
+{
+  "inputs": {
+    "descriptor": {
+      "artifact_name": "task-artifact.fods",
+      "attempt_id": "calc-offline-e2e-01",
+      "blank_bytes": 751,
+      "blank_identity": [
+        87,
+        193276,
+        751,
+        1795214445355919635,
+        1795214445355919635
+      ],
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "call_id": "a99b49d55cdd4c559c0ccf05ab8bc04f",
+      "expected_values": {
+        "A1": "24680",
+        "A2": "13579"
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "schema": "agent-interface/calc-task-artifact-descriptor-v1",
+      "target_pid": 4321,
+      "target_start_ticks": 98765,
+      "target_xid": 20,
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "method_receipt": {
+      "completed_transitions": 2,
+      "critical_events": [
+        {
+          "action": "populate_cells",
+          "event": "branch_selected",
+          "evidence_ref": "observation-2",
+          "matched_conditions": {
+            "blank": true,
+            "context_ok": true
+          },
+          "outcome": "action",
+          "state": "blank_sheet"
+        },
+        {
+          "action": "populate_cells",
+          "action_id": "action-a336289a427943459db4a23f497a6b97",
+          "event": "action_terminal",
+          "execution_accepted_ns": 250642539531081,
+          "execution_started_ns": 250641582283838,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "populate_cells",
+          "action_id": "action-a336289a427943459db4a23f497a6b97",
+          "effect_observation_accepted_ns": 250642571885739,
+          "effect_observation_captured_ns": 250642558409478,
+          "effect_verification_accepted_ns": 250642572670545,
+          "effect_verification_started_ns": 250642571982314,
+          "event": "effect_checked",
+          "evidence_ref": "observation-16",
+          "execution_accepted_ns": 250642539531081,
+          "status": "succeeded"
+        },
+        {
+          "action": "persist_document",
+          "event": "branch_selected",
+          "evidence_ref": "observation-16",
+          "matched_conditions": {
+            "cells_match": true,
+            "context_ok": true
+          },
+          "outcome": "action",
+          "state": "values_entered"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a15b0753aa9c4fc9afcf52f586e34449",
+          "event": "action_terminal",
+          "execution_accepted_ns": 250643037691283,
+          "execution_started_ns": 250642573160144,
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a15b0753aa9c4fc9afcf52f586e34449",
+          "effect_observation_accepted_ns": 250643069951508,
+          "effect_observation_captured_ns": 250643056205082,
+          "effect_verification_accepted_ns": 250643071183835,
+          "effect_verification_started_ns": 250643070026352,
+          "event": "effect_checked",
+          "evidence_ref": "observation-20",
+          "execution_accepted_ns": 250643037691283,
+          "status": "unavailable"
+        },
+        {
+          "completed_transitions": 2,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_unavailable"
+        }
+      ],
+      "elapsed_ns": 1534007945,
+      "ended_ns": 250643071244299,
+      "format": "compiled-gui-runtime-receipt-v1",
+      "frontier_model_resumptions": 0,
+      "input_authority": "admission_per_action_only",
+      "interface_id": "planner-calc-two-cell-v1",
+      "latest_evidence_ref": "observation-20",
+      "method": "populate-and-save",
+      "method_version": "1",
+      "observations": [
+        {
+          "captured_ns": 250641558700113,
+          "evidence_digest": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba",
+          "evidence_ref": "observation-2",
+          "observation_accepted_ns": 250641581830394,
+          "observation_started_ns": 250641537252197,
+          "predicates": {
+            "blank": true,
+            "cells_match": "unknown",
+            "context_ok": true
+          },
+          "sequence": 2
+        },
+        {
+          "captured_ns": 250642558409478,
+          "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+          "evidence_ref": "observation-16",
+          "observation_accepted_ns": 250642571885739,
+          "observation_started_ns": 250642539609768,
+          "predicates": {
+            "blank": false,
+            "cells_match": true,
+            "context_ok": true
+          },
+          "sequence": 16
+        },
+        {
+          "captured_ns": 250643056205082,
+          "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578",
+          "evidence_ref": "observation-20",
+          "observation_accepted_ns": 250643069951508,
+          "observation_started_ns": 250643037786587,
+          "predicates": {
+            "blank": false,
+            "cells_match": true,
+            "context_ok": true
+          },
+          "sequence": 20
+        }
+      ],
+      "outcome": "SAFE_YIELD",
+      "pending_effect": {
+        "action": "persist_document",
+        "effect_ref": "compiled-ad2ed75d29774d3482778884fbf13692-34-execution",
+        "expected_effect": {
+          "cells_match": true
+        }
+      },
+      "raw_evidence_retention": "adapter_responsibility_unverified",
+      "reason": "effect_unavailable",
+      "session_scope": "native-x11:fa60d46940124f6c893c92b7b05c1191",
+      "started_ns": 250641537236354,
+      "task_plan_interface": {
+        "actions": {
+          "persist_document": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "request_save",
+            "target_symbol": "save_control"
+          },
+          "populate_cells": {
+            "expected_effect": {
+              "cells_match": true
+            },
+            "operation": "enter_pair",
+            "target_symbol": "cell_entry"
+          }
+        },
+        "format": "compiled-gui-interface-v1",
+        "interface_id": "planner-calc-two-cell-v1",
+        "method": {
+          "initial_state": "blank_sheet",
+          "max_runtime_ms": 9000,
+          "max_transitions": 2,
+          "name": "populate-and-save",
+          "states": {
+            "blank_sheet": {
+              "branches": [
+                {
+                  "action": "populate_cells",
+                  "next_state": "values_entered",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "blank": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "save_handoff": {
+              "branches": [
+                {
+                  "action": null,
+                  "next_state": null,
+                  "outcome": "yield",
+                  "reason": "effect_unavailable",
+                  "when": {
+                    "context_ok": true
+                  }
+                }
+              ]
+            },
+            "values_entered": {
+              "branches": [
+                {
+                  "action": "persist_document",
+                  "next_state": "save_handoff",
+                  "outcome": "action",
+                  "reason": null,
+                  "when": {
+                    "cells_match": true,
+                    "context_ok": true
+                  }
+                }
+              ]
+            }
+          },
+          "version": "1"
+        },
+        "predicates": [
+          "context_ok",
+          "blank",
+          "cells_match"
+        ],
+        "session_scope": "native-x11:fa60d46940124f6c893c92b7b05c1191",
+        "surface": "x11-window-20",
+        "symbols": {
+          "cell_entry": {
+            "dependencies": [
+              "context_ok"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "calc_entry"
+          },
+          "save_control": {
+            "dependencies": [
+              "context_ok",
+              "cells_match"
+            ],
+            "identity_predicate": "context_ok",
+            "kind": "target_reference",
+            "target_reference": "calc_save"
+          }
+        }
+      },
+      "task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+      "transitions": [
+        {
+          "action": "populate_cells",
+          "action_id": "action-a336289a427943459db4a23f497a6b97",
+          "effect_ref": "compiled-ad2ed75d29774d3482778884fbf13692-20-execution",
+          "evidence_ref": "observation-2",
+          "execution_accepted_ns": 250642539531081,
+          "execution_started_ns": 250641582283838,
+          "from_state": "blank_sheet",
+          "matched_conditions": {
+            "blank": true,
+            "context_ok": true
+          },
+          "observation_sequence": 2,
+          "release_verified": true,
+          "to_state": "values_entered"
+        },
+        {
+          "action": "persist_document",
+          "action_id": "action-a15b0753aa9c4fc9afcf52f586e34449",
+          "effect_ref": "compiled-ad2ed75d29774d3482778884fbf13692-34-execution",
+          "evidence_ref": "observation-16",
+          "execution_accepted_ns": 250643037691283,
+          "execution_started_ns": 250642573160144,
+          "from_state": "values_entered",
+          "matched_conditions": {
+            "cells_match": true,
+            "context_ok": true
+          },
+          "observation_sequence": 16,
+          "release_verified": true,
+          "to_state": "save_handoff"
+        }
+      ]
+    },
+    "parent_task_plan": {
+      "actions": {
+        "persist_document": {
+          "expected_effect": {
+            "cells_match": true
+          },
+          "operation": "request_save",
+          "target_symbol": "save_control"
+        },
+        "populate_cells": {
+          "expected_effect": {
+            "cells_match": true
+          },
+          "operation": "enter_pair",
+          "target_symbol": "cell_entry"
+        }
+      },
+      "interface_id": "planner-calc-two-cell-v1",
+      "method": {
+        "initial_state": "blank_sheet",
+        "max_runtime_ms": 9000,
+        "max_transitions": 2,
+        "name": "populate-and-save",
+        "states": {
+          "blank_sheet": {
+            "branches": [
+              {
+                "action": "populate_cells",
+                "next_state": "values_entered",
+                "outcome": "action",
+                "reason": null,
+                "when": {
+                  "blank": true,
+                  "context_ok": true
+                }
+              }
+            ]
+          },
+          "save_handoff": {
+            "branches": [
+              {
+                "action": null,
+                "next_state": null,
+                "outcome": "yield",
+                "reason": "effect_unavailable",
+                "when": {
+                  "context_ok": true
+                }
+              }
+            ]
+          },
+          "values_entered": {
+            "branches": [
+              {
+                "action": "persist_document",
+                "next_state": "save_handoff",
+                "outcome": "action",
+                "reason": null,
+                "when": {
+                  "cells_match": true,
+                  "context_ok": true
+                }
+              }
+            ]
+          }
+        },
+        "version": "1"
+      },
+      "predicates": [
+        "context_ok",
+        "blank",
+        "cells_match"
+      ],
+      "schema": "agent-interface/calc-symbolic-plan-v1",
+      "symbols": {
+        "cell_entry": {
+          "dependencies": [
+            "context_ok"
+          ],
+          "identity_predicate": "context_ok",
+          "role": "entry"
+        },
+        "save_control": {
+          "dependencies": [
+            "context_ok",
+            "cells_match"
+          ],
+          "identity_predicate": "context_ok",
+          "role": "save"
+        }
+      }
+    },
+    "parent_task_plan_sha256": "ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2",
+    "save_request": {
+      "attempt_id": "calc-offline-e2e-01",
+      "call_id": "a99b49d55cdd4c559c0ccf05ab8bc04f",
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "save_request_id": "d2b410b835d7698f3d953ab7dac1da04",
+      "save_request_monotonic_ns": 250643070895201,
+      "schema": "agent-interface/calc-task-save-request-v1",
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  },
+  "receipt": null
+}

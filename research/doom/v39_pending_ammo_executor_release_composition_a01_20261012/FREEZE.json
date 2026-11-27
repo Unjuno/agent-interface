@@ -1,0 +1,163 @@
+{
+  "arms": 2,
+  "artifacts": {
+    "Containerfile": {
+      "bytes": 180,
+      "sha256": "8b85389c1485c0f8b4b6bb5eeb3a7eba1b16e1a46a2682718930c3cc15f7cd5d"
+    },
+    "HYPOTHESIS.md": {
+      "bytes": 2174,
+      "sha256": "c0d9486c0c7610906227e64243a22fe7070e92d05ea7c5cbfd018845a52daa2c"
+    },
+    "README.md": {
+      "bytes": 1026,
+      "sha256": "a4b6e9469aa5e46adeee1b2afbcddd7652669e9da31109d70d5c5233aeab2ca7"
+    },
+    "RUNS.md": {
+      "bytes": 673,
+      "sha256": "c9144b6f3b7b9545e53368b24eaaf02a44322f99bafc22b7d1ea8c6e00d7adfc"
+    },
+    "audit_composition.py": {
+      "bytes": 2785,
+      "sha256": "49b9ccda8b765bb5be8bdf49362718f452a16baf340dc1ef9c217c1fb26f612b"
+    },
+    "fake_x.py": {
+      "bytes": 2021,
+      "sha256": "f7baa04829bcbbb3b9d6457b5a50a7666de18a627d75edd0153c65a3b6b64bba"
+    },
+    "test_composition.py": {
+      "bytes": 11791,
+      "sha256": "af9d0d5689ff290c82495e3fc235dffd585c4fb5211514d2e29465c666fa754c"
+    }
+  },
+  "candidate": "test_composition.py",
+  "classification": "CONSTRUCTION_ONLY_FAKE_XTEST_EXECUTOR_RELEASE_COMPOSITION",
+  "container": {
+    "cpus": "1",
+    "image": "visual-context-staleness:a01-20261012",
+    "image_id": "sha256:4fc7258eb9f2430d573bcbd352fc9851eee6ce96a65ff026274dfb317119bb7b",
+    "memory": "512m requested; swap cgroup unavailable warning observed",
+    "network": "none",
+    "python": "3.14.8",
+    "wslc_version": "3.0.1.0"
+  },
+  "decision_rule": "PASS only if the soft ammo-4 arm preserves active fire and answer eligibility with verified eventual cleanup, while the hard ammo-0 arm invalidates, cancels executor before planner interrupt, verifies empty owner release, publishes release before terminal, rejects the stale answer, and leaves fake-X key state empty.",
+  "experiment_id": "v39_pending_ammo_executor_release_composition_a01_20261012",
+  "formal_candidate_invocations": 1,
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "repository": "Unjuno/agent-interface",
+  "sources": {
+    "executor_v11.py": {
+      "bytes": 1915,
+      "git_blob": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+      "local_path": "source/executor_v11.py",
+      "repo_path": "research/live_control/executor_v11.py",
+      "sha256": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676"
+    },
+    "executor_v12.py": {
+      "bytes": 11757,
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "local_path": "source/executor_v12.py",
+      "repo_path": "research/live_control/executor_v12.py",
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    },
+    "executor_v13.py": {
+      "bytes": 12659,
+      "git_blob": "1339491237d4c52f686548e2de8e84f3d5ccf41c",
+      "local_path": "source/executor_v13.py",
+      "repo_path": "research/live_control/executor_v13.py",
+      "sha256": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b"
+    },
+    "executor_v3.py": {
+      "bytes": 3794,
+      "git_blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "local_path": "source/executor_v3.py",
+      "repo_path": "research/live_control/executor_v3.py",
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    "executor_v5.py": {
+      "bytes": 4408,
+      "git_blob": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+      "local_path": "source/executor_v5.py",
+      "repo_path": "research/live_control/executor_v5.py",
+      "sha256": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400"
+    },
+    "input_owner_v10.py": {
+      "bytes": 19041,
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "local_path": "source/input_owner_v10.py",
+      "repo_path": "research/live_control/input_owner_v10.py",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    "input_owner_v12.py": {
+      "bytes": 35405,
+      "git_blob": "95308351e5cd0ebd9b4d39d2df3ca566928bd437",
+      "local_path": "source/input_owner_v12.py",
+      "repo_path": "research/live_control/input_owner_v12.py",
+      "sha256": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19"
+    },
+    "input_transition_owner_v3.py": {
+      "bytes": 20643,
+      "git_blob": "079ed1a3fc1dc3b3342bdf1d3393ffa2ecb9dc3c",
+      "local_path": "source/input_transition_owner_v3.py",
+      "repo_path": "research/live_control/input_transition_owner_v3.py",
+      "sha256": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2"
+    },
+    "input_transition_owner_v4.py": {
+      "bytes": 13021,
+      "git_blob": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "local_path": "source/input_transition_owner_v4.py",
+      "repo_path": "research/live_control/input_transition_owner_v4.py",
+      "sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    },
+    "lease.py": {
+      "bytes": 899,
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "local_path": "source/lease.py",
+      "repo_path": "research/live_control/lease.py",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    "lease_cause_v1.py": {
+      "bytes": 924,
+      "git_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "local_path": "source/lease_cause_v1.py",
+      "repo_path": "research/live_control/lease_cause_v1.py",
+      "sha256": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918"
+    },
+    "lease_cause_v2.py": {
+      "bytes": 1228,
+      "git_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "local_path": "source/lease_cause_v2.py",
+      "repo_path": "research/live_control/lease_cause_v2.py",
+      "sha256": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47"
+    },
+    "lease_release_v1.py": {
+      "bytes": 816,
+      "git_blob": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "local_path": "source/lease_release_v1.py",
+      "repo_path": "research/live_control/lease_release_v1.py",
+      "sha256": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+    },
+    "map01_overlap_controller_v39.py": {
+      "bytes": 112524,
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "local_path": "source/map01_overlap_controller_v39.py",
+      "repo_path": "research/doom/map01_overlap_controller_v39.py",
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607"
+    },
+    "observable_signal_guard_v2.py": {
+      "bytes": 7404,
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "local_path": "source/observable_signal_guard_v2.py",
+      "repo_path": "research/live_control/observable_signal_guard_v2.py",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "persistent_planner_adapter_v2.py": {
+      "bytes": 11709,
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "local_path": "source/persistent_planner_adapter_v2.py",
+      "repo_path": "research/live_control/persistent_planner_adapter_v2.py",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "actual_xterm_class_and_interactive_pty": true,
+    "frozen_report_digest_matches_conditions": true,
+    "preflight_no_input_or_effect": true,
+    "prior_display_mismatch_preserved": true,
+    "private_process_cleanup": true
+  },
+  "current_matching_processes": [],
+  "preflight_failure_record": {
+    "display_lock_absent": true,
+    "display_server": ":189",
+    "display_socket_absent": true,
+    "input_calls": 0,
+    "preflight_journal_exists": false,
+    "runner_exit_code": 1,
+    "status": "FAIL_PREFLIGHT_DISPLAY_MISMATCH",
+    "surfaced_exception": "Xlib.error.ConnectionClosedError in observer.close after Xvfb teardown; earlier mapped-window wait failure was masked by cleanup ordering.",
+    "task_effects": 0,
+    "timestamp_local": "2026-10-23T20:59:17.955027+09:00",
+    "xterm_environment_display": ":188",
+    "xterm_log": "preflight-attempt/xterm.log",
+    "xterm_log_sha256": "c795238f8aed947e06ff2666766e0f7065bbc4b1a5b7aa46816a046be3ecd8c8",
+    "xterm_log_text": "xterm: Xt error: Can't open display: :188\n"
+  },
+  "preflight_report_sha256": "7bf35e0e7c0e5e396d2efe71f83fd1d6ea73650d56edfa05a54aec0836b01233",
+  "status": "PASS_XTERM_PREFLIGHT_AUDIT",
+  "timestamp_local": "2026-10-23T20:59:17.971106+09:00"
+}

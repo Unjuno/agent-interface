@@ -1,0 +1,64 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p12-prereg-v1",
+  "attempt": "current-main-appserver-matched-efficiency-20261025-p12",
+  "preregistered_utc": "2026-10-25T12:25:13.821707+00:00",
+  "status": "FROZEN_BEFORE_PROVIDER_CALL",
+  "base_commit": "8c54119050115bca8227d76c8f71dab637e484a1",
+  "python": "3.13.14",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "pair_count": 1,
+  "trial_count": 2,
+  "pair_order": [
+    [
+      "direct_public_input",
+      "compiled_public_caller"
+    ]
+  ],
+  "provider_turn_limit": 1,
+  "timeout_seconds": 90,
+  "retry_count": 0,
+  "recovery_count": 0,
+  "source_sha256": {
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_public_mcp_caller_v1.py": "73cd96d2d9c8a15ae78799b8c2e22747615c8106d5a087e000fbbeec19f2e800",
+    "research/integration/standard_mcp_task_ledger_57_v1/ledger.py": "fd35a86b148eb7415f53f0da564d8c5e0ccbb2589ded7bce1edb7bf3b112b714",
+    "runtime/cli_v1/test_mcp_owned_process.py": "c1c676648a77d7361293f18f739ccbb5be4b82864d183079359de08c5fc82720",
+    "research/integration/standard_mcp_task_ledger_57_v1/app_server_provider_to_public_mcp_v1.py": "d0cd5ba2729476db67544fe030cd922443c05b4fec5e57f1a6ae7cb733e8b948",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "research/live_control/persistent_planner_adapter_v2.py": "2a416b23744a3d9b0c0917d4b70cecd5b4c2e868de1260547e4e9507fa8fe117",
+    "runtime/cli_v1/mcp_relay.py": "53237fc22f7b3ce036818432349bebd309cf263181fd8be354025ae7cc260ddf",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py": "ceeba770ddd155e1ae615475314fe0d2df9e6e1ddbca8f232724b952a3e5522e",
+    "research/live_control/codex_app_server_client_v2.py": "ae1e4806e43793fab8f2cd0eddc10464104e7d5d43b93f6f1bd450c7a218ddda",
+    "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py": "ab05d8b0a9a7bbac6a539c18aea585f7ba53c3349d034e5b257b3225a8ce0944"
+  },
+  "runner_sha256": {
+    "run_arm.py": "e742082a88459fa7e96b9f5ac4fc4affde972372c2f38f3e3a6dd232047afcca",
+    "fake_factory.py": "3b2f9e9800c9ebf799907393998ef4416921819f833bfd78db3bd20819391543",
+    "privacy_redact.py": "e31137dfbd800b7344d3890ad41bfa3296a99f4d8d42f7d2b571df3515c51933",
+    "test_fake_factory.py": "1cd773f2e60774425a0886feb2aad15a5f03ff4e19f43025c87aea81ceb752be",
+    "test_privacy_redact.py": "635a77d74ac36c5f4f9299ed736bbe62978f401dc69dac91e645d638510a45f5",
+    "test_standard_caller.py": "22278de282873c0d942063da0fb0d00ddf21961681aeb2d466a5577549416111",
+    "preflight_appserver.py": "c3f453f1e557305f09ad1910926b568de8e8830f5fa5e29c7276f4dd5db53ac1"
+  },
+  "first_outcomes": "Each of two P12 cells is immutable. No retry/replacement; any failure or unknown counts against its arm.",
+  "raw_custody": "privacy_redact skips ledger/raw and all .bin files byte-for-byte. Independently reconcile raw hashes before deciding pass. Do not run post-hoc path sanitizer.",
+  "execution": "Fresh child-owned deterministic Fake X session per arm; one public observation, one model turn, one mint, one route-specific action; no WSLc/Docker/physical input.",
+  "limits": "Synthetic Fake X only; no live GUI/MAP01/blocked-I/O recovery/broad reliability claim.",
+  "predecessor": "Independent one-pair P12 replication; does not alter P10/P11 outcomes.",
+  "amendment": "AMENDMENT-001: before any provider call, default Python 3.11.9 was found unsupported by the Windows pipe client. The input-free preflight stopped before starting App Server. Use installed Python 3.13.14; all other frozen conditions and source hashes remain unchanged.",
+  "preflight_attempts": [
+    {
+      "attempt": "preflight-001",
+      "runtime": "3.11.9",
+      "outcome": "STOP_BEFORE_APP_SERVER_START",
+      "provider_turns": 0
+    },
+    {
+      "attempt": "preflight-002",
+      "runtime": "3.13.14",
+      "outcome": "INITIALIZE_AND_CLOSE_OK",
+      "provider_turns": 0,
+      "protocol_sha256": "c33e1337a81b141973bfd5dea332574aa10aef3912c2d51e72e5f3cd2fd56e36"
+    }
+  ]
+}

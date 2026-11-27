@@ -1,0 +1,74 @@
+{
+  "action_call_id": "dbeae90b6665457dadf6ab9d584bd7b3",
+  "cancellation": {
+    "cleanup_deadline_ns": 482474500000000,
+    "cleanup_latency_ns": null,
+    "cleanup_latency_perf_counter_ns": null,
+    "cleanup_requested_monotonic_ns": 482469500000000,
+    "cleanup_requested_perf_counter_ns": 482469530895000,
+    "completion_readback": null,
+    "completion_readback_attempt": null,
+    "completion_readback_outcome": "not_attempted",
+    "completion_release_receipt": null,
+    "deadline_ns": 482469328000000,
+    "late_input_horizon_ns": 0,
+    "late_input_max_observed_gap_ns": null,
+    "late_input_max_sample_gap_ns": null,
+    "late_input_observation_count": 0,
+    "late_input_observation_end_ns": null,
+    "late_input_observation_start_ns": null,
+    "late_input_release_received_ns": null,
+    "late_input_validation_error": null,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "operation_id": "20932769098b4f4eb54f0b8ead7e5f15",
+    "phase": "recovery_pending",
+    "producer_exit_code": 0,
+    "producer_gate_state": "authorization_attempted",
+    "producer_identity": {
+      "creation_time_100ns": 134399133655611321,
+      "pid": 32052
+    },
+    "readback": null,
+    "recovery_completed_monotonic_ns": null,
+    "recovery_completed_perf_counter_ns": null,
+    "recovery_id": "5aae055a67b443d3a825fabe9e848ed8",
+    "recovery_release_attempts": [
+      {
+        "domain": "key_up",
+        "encoding": "virtual_key",
+        "error_type": null,
+        "key_names": [
+          "A"
+        ],
+        "ordinal": 0,
+        "outcome": "returned",
+        "sendinput_call_started": true,
+        "sendinput_error_type": null,
+        "sendinput_return_count": 1,
+        "virtual_key": 65
+      }
+    ],
+    "recovery_release_key_up_attempts": [
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      }
+    ],
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "pending",
+    "target_generation": "df886be8908134fa5439596efbff76a6e3531b21a0f508aaabe54ad316fbe9e6",
+    "task_success": null,
+    "uncertainty": null
+  },
+  "input_dispatched": true,
+  "operation_id": "20932769098b4f4eb54f0b8ead7e5f15",
+  "release_confirmed": false,
+  "replay_allowed": false,
+  "status": "unknown",
+  "target_generation": "df886be8908134fa5439596efbff76a6e3531b21a0f508aaabe54ad316fbe9e6",
+  "task_success": null
+}

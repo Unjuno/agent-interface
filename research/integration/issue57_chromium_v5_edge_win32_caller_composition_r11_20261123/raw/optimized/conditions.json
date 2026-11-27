@@ -1,0 +1,45 @@
+{
+  "scope": "R11: one positive and one changed-generation visible Edge task using native Win32 input per Python mode",
+  "main_base": "6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3",
+  "experiment_head": "ea8ebfb8a88c0de592728e6a43db3c6a7c59b45b",
+  "tracked_worktree_diff_empty": true,
+  "worktree_status_before_run": [
+    "?? research/integration/issue57_chromium_v5_edge_win32_caller_composition_r11_20261123/raw/"
+  ],
+  "task_value": "t9910254",
+  "task_scorer": "independent local HTTP server exact POST body",
+  "target_point_source": "fixed fixture points for known local HTML controls; no model call",
+  "browser": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "node": "v24.13.0",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "input_adapter": "Win32Backend SendInput to a visible Edge HWND; CDP is passive capture/navigation only",
+  "release_evidence": "Win32Backend SendInput terminal release receipt plus witnessed GetAsyncKeyState readback",
+  "provider_calls": 0,
+  "task_network_scope": "loopback form server; ambient browser egress not measured",
+  "cases": {
+    "positive": "V5 mint, real TargetHandleStore, caller v3, compiled two-action path, native SendInput, exact POST score",
+    "changed-generation": "after native entry, same-target page reload changes loader generation; exact token restored from localStorage; next admission must refuse before native SendInput"
+  },
+  "python_optimization": true,
+  "source_sha256": {
+    "research\\live_control\\test_windows_v5_edge_win32_caller_v3_r11_v1.py": "813a526fd14b02586ae4767eab5a728235eabba79ec9382446896339c998148c",
+    "runtime\\backends\\win32_v1\\backend.py": "91f275555ec23b904c025719831e16c0ab9d4e0314e22edad691c122ffcfc4e7",
+    "runtime\\core_v1\\contract.py": "1bf182e0f2a1b4adaabab4168631e87d54832970bf0454dd2804eef835a4fa2f",
+    "research\\live_control\\session_v33.py": "a228cadbd1c787da021189ad4b9d823e8bed78a062fe57920db39035876fdd15",
+    "research\\live_control\\test_chromium_v5_generation_mint_guard_v1.py": "5e9368f1a3f44969a61aa86708bf6268c60aec8dc56c02f7ce01c846d26d1792",
+    "research\\live_control\\test_windows_compiled_gui_edge_live_v1.py": "6ad8d7cbba3c6c8e722f3bb0106654d65837a1cb2488fa6a201f7063e6c0066d",
+    "research\\live_control\\model_point_target_v1.py": "52230d07dc981ec73846ee0c4c2ba21ae20cfbdad98e0f15382390ef06c623c4",
+    "research\\live_control\\integrated_efficiency_compiled_adapter_v2.py": "11bbed693c1529afaff924f12bb0b078f92cb5f81254ce52906d818fc1c1a59e",
+    "research\\live_control\\integrated_efficiency_compiled_execution_v2.py": "cfaca241b679dfc82ec6cf16fa840684457ef6d29728f0052255dd06a0cd4198",
+    "research\\live_control\\adaptive_acquisition_caller_v3.py": "0a3b05a8708c6aa8385f0d93fe36e89f26cba7b608e73cd9cf3dca90de163874",
+    "research\\live_control\\windows_ocr_observer_v1.py": "5586acb0d24fda89bab090caf4b6086f9c54252b98ceffca58f8117c66b784eb",
+    "research\\live_control\\windows_ocr_worker_v1.ps1": "9292982d55d698f0c341feddd399ee358f0da2ef88bd20695890780f57610da2",
+    "runtime\\core_v1\\compiled_gui.py": "f117733b583a381c871709525a21ecf370595c936cd1476bc80bd547165e549c",
+    "runtime\\guarded_x11_v1\\handles.py": "b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7",
+    "runtime\\guarded_x11_v1\\handles_base.py": "616132365dd807541f8d733564de96a3efe3b602db6479d332a0820e4f9f961e",
+    "runtime\\guarded_x11_v1\\handles_texture.py": "b78d09aa2cbd2e5bfa3a33567bb4038f5eabbb3dd138627a675583bc27f30774",
+    "docs\\PROJECT_OVERVIEW.md": "38a69ae0e5c8924a9bda91ecc30e26e394039c13dd13ab8774a2a7570f78b4f0",
+    "research\\integration\\issue57_chromium_v5_edge_win32_caller_composition_r11_20261123\\PROTOCOL.md": "aa7e79f477f670619ac77c88b59b18db7126f32eececaf0326ecae641651e58a"
+  }
+}

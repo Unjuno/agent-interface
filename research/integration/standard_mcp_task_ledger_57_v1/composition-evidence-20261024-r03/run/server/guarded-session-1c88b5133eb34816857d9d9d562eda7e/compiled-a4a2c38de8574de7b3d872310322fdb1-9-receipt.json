@@ -1,0 +1,57 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "owned-compiled-profile",
+  "method": "one-visible-transition",
+  "method_version": "1",
+  "session_scope": "native-x11:ba85231c9ce64e1f9f9902813fbadbef",
+  "outcome": "SAFE_YIELD",
+  "reason": "association_changed",
+  "completed_transitions": 0,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 528129079744900,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "bd261bf859a108e93e8947bf2b9323875ec4fd2bf526499506d507d4cb6f4ce3",
+      "predicates": {
+        "phase": 0,
+        "present": true
+      },
+      "observation_started_ns": 528129078913100,
+      "observation_accepted_ns": 528129080879000
+    }
+  ],
+  "transitions": [],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "before",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "admission_refused",
+      "action": "enter",
+      "status": "association_changed",
+      "reason": "association_changed"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 0
+    }
+  ],
+  "latest_evidence_ref": "observation-2",
+  "pending_effect": null,
+  "started_ns": 528129078904100,
+  "ended_ns": 528129081668200,
+  "elapsed_ns": 2764100,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

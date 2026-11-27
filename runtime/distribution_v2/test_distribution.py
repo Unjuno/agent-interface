@@ -13,6 +13,91 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_top_level_help_exposes_optional_stdio_without_dependencies(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            out = td / 'runtime.pyz'
+            build(root, out, td / 'manifest.json', td / 'sum')
+            for flag in ('-h', '--help'):
+                result = subprocess.run([sys.executable, '-S', str(out), flag], cwd=td,
+                                        capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stderr, '')
+                self.assertIn('mcp', result.stdout)
+                self.assertIn('relay', result.stdout)
+                self.assertIn('mcp==1.30.0', result.stdout)
+
+    def test_archive_contains_tracked_internal_import_dependencies(self):
+        import ast
+        root = Path(__file__).resolve().parents[2]
+        tracked = set(subprocess.check_output(
+            ['git','-C',str(root),'ls-tree','-r','--name-only','HEAD','runtime'],
+            text=True).splitlines())
+        with tempfile.TemporaryDirectory() as td:
+            td=Path(td);archive=td/'runtime.pyz'
+            build(root,archive,td/'manifest.json',td/'sums')
+            with zipfile.ZipFile(archive) as z:
+                names=set(z.namelist())
+                missing=set()
+                for path in sorted(names):
+                    if not path.startswith('runtime/') or not path.endswith('.py'):
+                        continue
+                    module=path[:-3].replace('/','.')
+                    package=module if path.endswith('/__init__.py') else module.rpartition('.')[0]
+                    for node in ast.walk(ast.parse(z.read(path))):
+                        modules=[]
+                        if isinstance(node,ast.Import):
+                            modules=[item.name for item in node.names]
+                        elif isinstance(node,ast.ImportFrom):
+                            if node.level:
+                                parts=package.split('.')
+                                base='.'.join(parts[:len(parts)-node.level+1])
+                                name=base+('.'+node.module if node.module else '')
+                            else:
+                                name=node.module or ''
+                            if name:
+                                modules=[name]+[name+'.'+item.name for item in node.names if item.name!='*']
+                        for name in modules:
+                            if not name.startswith('runtime.'):
+                                continue
+                            stem=name.replace('.','/')
+                            for candidate in (stem+'.py',stem+'/__init__.py'):
+                                if candidate in tracked and candidate not in names:
+                                    missing.add((path,candidate))
+                self.assertEqual(sorted(missing),[])
+
+    def test_packaged_supervised_mode_reaches_platform_check(self):
+        import importlib.util
+        if not sys.platform.startswith('linux') or importlib.util.find_spec('mcp') is None:
+            self.skipTest('requires Linux and optional MCP dependency')
+        root=Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as temp:
+            temp=Path(temp);archive=temp/'runtime.pyz'
+            build(root,archive,temp/'manifest.json',temp/'sum')
+            targets=temp/'targets.json';targets.write_text('{}',encoding='utf-8')
+            result=subprocess.run([sys.executable,str(archive),'mcp','--targets',str(targets),
+                '--output-directory',str(temp/'out'),'--session-mode','supervised-win32'],
+                cwd=temp,input='',capture_output=True,text=True,timeout=10)
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('supervised-win32 requires a Windows host',result.stderr)
+            self.assertNotIn('ModuleNotFoundError',result.stderr)
+
+    def test_bundled_primary_stdio_starts_and_rejects_missing_config(self):
+        import shutil
+        node = shutil.which('node')
+        if node is None:
+            self.skipTest('Node.js is required for the host bundle')
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            build(root, td/'runtime.pyz', td/'manifest.json', td/'sums', host_directory=td/'host')
+            result = subprocess.run([node, str(td/'host/primary_stdio.mjs')], cwd=td,
+                                    capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn('Usage: node primary_stdio.mjs --config', result.stderr)
+            self.assertEqual(result.stdout, '')
+
     def test_optional_host_bundle_uses_exact_committed_files_and_refuses_conflict(self):
         import hashlib
         from runtime.distribution_v2.build import HOST_SOURCE_FILES
@@ -214,6 +299,26 @@ print('archive method passed without optional dependencies')
                     support["optional_dependencies"]["guarded_win32_python_api"],
                     ["Pillow"],
                 )
+
+    def test_portable_archive_includes_public_win32_capture_module(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            archive_path = td / "runtime.pyz"
+            build(root, archive_path, td / "manifest.json", td / "sum")
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertIn("runtime/backends/win32_v1/capture_artifacts.py", archive.namelist())
+            code = """
+import sys
+sys.path.insert(0, sys.argv[1])
+from runtime.backends.win32_v1 import capture_artifacts
+assert callable(capture_artifacts.CaptureArtifacts)
+print('public Win32 capture module imported')
+"""
+            proc = subprocess.run([sys.executable, "-I", "-S", "-c", code, str(archive_path)],
+                                  cwd=td, capture_output=True, text=True, timeout=10)
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+            self.assertEqual(proc.stdout.strip(), "public Win32 capture module imported")
 
     def test_malformed_targets_fail_before_native_backend(self):
         root = Path(__file__).resolve().parents[2]

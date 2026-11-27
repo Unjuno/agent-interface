@@ -28,6 +28,7 @@ def _observed(signal, signal_id):
     if (type(signal) is not dict or signal.get("format") != "observable-signal-v1" or
             signal.get("status") != "observed" or signal.get("signal_id") != signal_id or
             not signal_value_in_domain(signal_id, signal.get("value")) or
+            (signal_id == "health" and signal["value"] < 1) or
             type(signal.get("sequence")) is not int or
             type(signal.get("capture_ns")) is not int or
             type(signal.get("binding")) is not dict):

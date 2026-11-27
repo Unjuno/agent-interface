@@ -1,0 +1,13 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p09-amendment-v1",
+  "time": "2026-10-25",
+  "trigger": "The second arm's retained owner click receipt has no button_press_count field; the independent effect receipt carries the exact count. The scorer looked for the count in the wrong receipt and returned false despite a successful click and pixel effect.",
+  "classification": "INDEPENDENT_SCORER_FIELD_MISMATCH",
+  "correction": "Score exactly one owner-side click from one retained click receipt plus effect receipt button_press_count == 1. Preserve both existing RESULT.json files; do not replay either provider or action.",
+  "corrected_runner_sha256": "ff5f7a80776fa5522bbde07da863c01a10931e35f36fb0b8f5f12d8e43b383fe",
+  "scope_affected": "Independent offline scoring only. No prompt, model, effort, target, action route, runtime, retry, or recovery change.",
+  "remaining_trial_policy": "Proceed only with the four remaining predeclared pair-arm cells once each. Preserve the original two outcomes and attach any supplemental offline score separately.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false
+}

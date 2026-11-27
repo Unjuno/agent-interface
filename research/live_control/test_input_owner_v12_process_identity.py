@@ -1,0 +1,350 @@
+"""Actual V12 owner with isolated read-only identity client; Fake X only."""
+from contextlib import contextmanager
+import json
+from pathlib import Path
+import sys
+import threading
+import tempfile
+import time
+from types import SimpleNamespace
+import unittest
+from unittest.mock import Mock, patch
+
+sys.path[:0] = [str(Path(__file__).resolve().parent), str(Path(__file__).resolve().parents[2])]
+from test_input_owner_v12_explicit_up_cancel import FakeDisplay
+from input_owner_v12 import InputOwner
+from lease_release_v1 import Lease
+from executor_v3 import DecisionRequired, Cancelled
+import target_process_identity_v1 as identity
+
+
+class Reader:
+    def __init__(self):
+        self.value = 'a' * 64
+        self.block = False
+        self.entered, self.resume, self.closed = threading.Event(), threading.Event(), threading.Event()
+    def read(self, operation, xid):
+        if operation == 'focus_id':
+            return self.focus().focus
+        self.entered.set()
+        if self.block and not self.resume.wait(3):
+            raise RuntimeError('test reader not resumed')
+        return self.value
+    def close(self):
+        self.closed.set()
+
+
+@contextmanager
+def fixture():
+    import input_owner_v12 as native
+    display, reader = FakeDisplay(), Reader()
+    reader.focus = lambda: display.get_input_focus()
+    events = []
+    def emit(connection, event, code):
+        events.append((event, code))
+        if event == native.X.KeyPress:
+            display.down.add(code)
+        elif event == native.X.KeyRelease:
+            display.down.discard(code)
+    with patch.object(native.display, 'Display', return_value=display), patch.object(
+            native.xtest, 'fake_input', side_effect=emit), patch.object(
+            identity, 'X11TargetQueries', return_value=reader):
+        owner = InputOwner(':fake', process_identity=True)
+        lease = Lease(time.perf_counter_ns() + 1_000_000_000)
+        lease.expected_focus = 41
+        lease.expected_surface = 41
+        lease.target_process_identity = (1, 41, 'a' * 64, lease.deadline)
+        try:
+            yield owner, lease, display, reader, events
+        finally:
+            reader.resume.set()
+            owner.close()
+            owner.identity_reader.worker.thread.join(1) if owner.identity_reader.worker.thread else None
+
+
+class OwnerIdentityTests(unittest.TestCase):
+    def test_active_identity_query_is_bounded_and_releases_held_key(self):
+        with fixture() as (owner, lease, display, reader, events):
+            lease.deadline=time.perf_counter_ns()+5_000_000_000
+            lease.target_process_identity=(1,41,'a'*64,lease.deadline)
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            try:
+                limit=time.monotonic()+1.5
+                while time.monotonic()<limit and not any(
+                        row.get('event')=='owner_release' for row in owner.records):
+                    time.sleep(.01)
+                release=next(row for row in reversed(owner.records)
+                             if row.get('event')=='owner_release')
+                self.assertEqual(release['reason'], 'target_generation_invalidated')
+                self.assertTrue(release['verified'])
+                self.assertEqual(release['keys_down'], [])
+                self.assertEqual(release['keys_unknown'], [])
+                self.assertEqual(display.down, set())
+                state=owner.identity_reader.worker.snapshot()
+                self.assertTrue(state['retired'])
+                self.assertTrue(state['pending'])
+                self.assertTrue(state['thread_alive'])
+            finally:
+                reader.resume.set()
+
+    def test_opt_in_delayed_input_owner_query_retires_then_quarantined_reader_finishes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'fault.jsonl'
+            reader = SimpleNamespace(read=Mock(return_value='a' * 64),
+                                     close=threading.Event().set)
+            with patch.dict('os.environ', {
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_DELAY_MS': '1500',
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_OCCURRENCE': '1',
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_FAULT_PATH': str(path),
+            }), patch.object(identity, 'X11TargetQueries', return_value=reader):
+                delayed = identity.IdentityReader(':fake', purpose='input_owner')
+                with self.assertRaises(RuntimeError):
+                    delayed.read(41, perf_deadline_ns=time.perf_counter_ns()+100_000_000)
+                self.assertTrue(delayed.worker.snapshot()['retired'])
+                self.assertTrue(delayed.worker.snapshot()['pending'])
+                self.assertTrue(delayed.worker.snapshot()['thread_alive'])
+                deadline = time.monotonic()+2
+                while time.monotonic()<deadline and delayed.worker.snapshot()['thread_alive']:
+                    time.sleep(.01)
+                self.assertFalse(delayed.worker.snapshot()['thread_alive'])
+                self.assertFalse(delayed.worker.snapshot()['pending'])
+                reader.read.assert_not_called()
+                rows=[json.loads(line) for line in path.read_text().splitlines()]
+                self.assertEqual([row['event'] for row in rows],
+                                 ['delay_started','delay_finished'])
+                self.assertEqual(rows[0]['purpose'],'input_owner')
+                self.assertEqual(rows[0]['operation'],'process_identity')
+                self.assertGreaterEqual(rows[1]['finished_ns']-rows[0]['started_ns'],
+                                        1_400_000_000)
+
+    def test_reply_completed_after_wait_timeout_before_owner_stop_check(self):
+        for ok in (True, False):
+            with self.subTest(reply_ok=ok):
+                owner = object.__new__(InputOwner)
+                owner.closed = False
+                owner.error = None
+                owner.stopped = threading.Event()
+                owner.stop_requested = threading.Event()
+                requests = []
+                owner.requests = SimpleNamespace(put=requests.append)
+                outcome = 'close-result' if ok else ValueError('close failed')
+
+                class TimeoutThenReply:
+                    completed = False
+                    def wait(self, _timeout):
+                        # Model the worker replying and stopping after wait
+                        # times out, before the caller checks stopped.
+                        requests[0][4].append((ok, outcome))
+                        self.completed = True
+                        owner.stopped.set()
+                        return False
+                    def is_set(self):
+                        return self.completed
+
+                done = TimeoutThenReply()
+                with patch.dict(InputOwner.call.__globals__,
+                                {'threading': SimpleNamespace(Event=lambda: done)}):
+                    if ok:
+                        self.assertEqual(owner.call('close'), 'close-result')
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'close failed'):
+                            owner.call('close')
+
+    def test_stopped_owner_without_reply_still_fails_closed(self):
+        owner = object.__new__(InputOwner)
+        owner.closed = False
+        owner.error = None
+        owner.stopped = threading.Event()
+        owner.stop_requested = threading.Event()
+        owner.requests = SimpleNamespace(put=lambda _request: None)
+
+        class TimeoutWithoutReply:
+            def wait(self, _timeout):
+                owner.stopped.set()
+                return False
+            def is_set(self):
+                return False
+
+        with patch.dict(InputOwner.call.__globals__,
+                        {'threading': SimpleNamespace(Event=TimeoutWithoutReply)}):
+            with self.assertRaisesRegex(RuntimeError, 'stopped before reply'):
+                owner.call('close')
+
+    def test_first_focus_wait_cancel_discards_late_reply_without_press(self):
+        with fixture() as (owner, lease, display, reader, events):
+            entered, resume = threading.Event(), threading.Event()
+            errors = []
+            def focus():
+                entered.set()
+                if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            def invoke():
+                try: owner.call('down', lease, 'W')
+                except BaseException as error: errors.append(error)
+            caller = threading.Thread(target=invoke)
+            caller.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                lease.set()
+                caller.join(1)
+                self.assertFalse(caller.is_alive())
+                self.assertEqual(len(errors), 1)
+                self.assertIsInstance(errors[0], DecisionRequired)
+                self.assertEqual(events, [])
+                resume.set()
+                self.assertTrue(reader.closed.wait(1))
+                self.assertEqual(events, [])
+            finally:
+                resume.set()
+                caller.join(1)
+
+    def test_blocked_focus_read_does_not_prevent_cancel_cleanup(self):
+        with fixture() as (owner, lease, display, reader, events):
+            block, entered, resume = threading.Event(), threading.Event(), threading.Event()
+            def focus():
+                if block.is_set():
+                    entered.set()
+                    self.assertNotEqual(threading.get_ident(), owner.thread.ident)
+                    if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            try:
+                owner.call('down', lease, 'W')
+                block.set()
+                self.assertTrue(entered.wait(1))
+                lease.set()
+                self.assertIsNotNone(lease.wait_interruption(.2))
+                self.assertEqual(display.down, set())
+                self.assertFalse(resume.is_set())
+                self.assertTrue(owner.identity_reader.worker.snapshot()['retired'])
+                self.assertTrue(owner.identity_reader.worker.snapshot()['pending'])
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'cancelled')
+                self.assertTrue(lease.interruption_snapshot()['record']['target_focus_query_failed'])
+            finally:
+                resume.set()
+
+    def test_blocked_focus_original_expiry_releases_before_resume(self):
+        with fixture() as (owner, lease, display, reader, events):
+            block, entered, resume = threading.Event(), threading.Event(), threading.Event()
+            lease.deadline = time.perf_counter_ns() + 100_000_000
+            lease.target_process_identity = (1, 41, 'a' * 64, lease.deadline)
+            def focus():
+                if block.is_set():
+                    entered.set()
+                    if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            try:
+                owner.call('down', lease, 'W')
+                block.set()
+                self.assertTrue(entered.wait(1))
+                self.assertIsNotNone(lease.wait_interruption(1))
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'expired')
+                self.assertEqual(display.down, set())
+                self.assertFalse(resume.is_set())
+            finally:
+                resume.set()
+
+    def test_held_focus_failure_is_distinct_from_observed_change(self):
+        for mode in ('transport', 'malformed', 'changed'):
+            with self.subTest(mode=mode), fixture() as (owner, lease, display, reader, events):
+                owner.call('down', lease, 'W')
+                def focus():
+                    if mode == 'transport': raise OSError('focus unavailable')
+                    return SimpleNamespace(focus=None if mode == 'malformed' else 42)
+                display.get_input_focus = focus
+                self.assertIsNotNone(lease.wait_interruption(1))
+                reason = 'focus_changed' if mode == 'changed' else 'target_query_invalidated'
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], reason)
+                self.assertEqual(display.down, set())
+                self.assertEqual(owner.identity_reader.worker.snapshot()['retired'], mode != 'changed')
+
+    def test_final_focus_read_cannot_change_cancel_or_source_before_press(self):
+        for mode in ('cancel', 'source', 'deadline'):
+            with self.subTest(mode=mode), fixture() as (owner, lease, display, reader, events):
+                calls = 0
+                def focus():
+                    nonlocal calls
+                    calls += 1
+                    if calls == 2:
+                        if mode == 'cancel': lease.set()
+                        elif mode == 'source': lease.target_process_identity = (1, 41, 'b' * 64, lease.deadline)
+                        else: lease.deadline += 1_000_000
+                    return SimpleNamespace(focus=41)
+                display.get_input_focus = focus
+                with self.assertRaises((DecisionRequired, Cancelled)):
+                    owner.call('down', lease, 'W')
+                self.assertEqual(events, [])
+
+    def test_fresh_source_admits_and_release_does_not_query_identity(self):
+        with fixture() as (owner, lease, display, reader, events):
+            owner.call('down', lease, 'W')
+            reader.value = 'b' * 64
+            release = owner.call('release', lease)
+            self.assertTrue(release['verified'])
+            self.assertEqual(display.down, set())
+            self.assertEqual(events, [(2, 38), (3, 38)])
+
+    def test_changed_unbound_or_deadline_relabelled_source_refuses(self):
+        for mode in ('changed', 'missing', 'deadline', 'surface'):
+            with self.subTest(mode=mode), fixture() as (owner, lease, display, reader, events):
+                if mode == 'changed': reader.value = 'b' * 64
+                elif mode == 'missing': lease.target_process_identity = None
+                elif mode == 'deadline': lease.deadline += 1_000_000
+                else: lease.target_process_identity = (1, 99, 'a' * 64, lease.deadline)
+                with self.assertRaises(DecisionRequired): owner.call('down', lease, 'W')
+                self.assertEqual(events, [])
+
+    def test_held_generation_change_wakes_lease_and_releases_prefix(self):
+        with fixture() as (owner, lease, display, reader, events):
+            owner.call('down', lease, 'W')
+            reader.value = 'b' * 64
+            self.assertIsNotNone(lease.wait_interruption(1))
+            self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'target_generation_invalidated')
+            self.assertEqual(display.down, set())
+            with self.assertRaises(DecisionRequired): owner.call('down', lease, 'A')
+            self.assertEqual([code for event, code in events if event == 2], [38])
+
+    def test_blocked_held_identity_does_not_prevent_cancel_cleanup(self):
+        with fixture() as (owner, lease, display, reader, events):
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            lease.set()
+            self.assertIsNotNone(lease.wait_interruption(1))
+            self.assertEqual(display.down, set())
+            self.assertTrue(owner.identity_reader.worker.snapshot()['retired'])
+            record = lease.interruption_snapshot()['record']
+            self.assertTrue(record['target_process_identity_reader']['retired'])
+            self.assertTrue(record['target_process_identity_reader']['pending'])
+            self.assertEqual(record['target_process_identity'], list(lease.target_process_identity))
+            self.assertFalse(reader.closed.is_set())
+            reader.resume.set()
+            self.assertTrue(reader.closed.wait(1))
+            self.assertEqual([code for event, code in events if event == 2], [38])
+
+    def test_blocked_identity_original_expiry_releases_before_reader_resumes(self):
+        with fixture() as (owner, lease, display, reader, events):
+            lease.deadline = time.perf_counter_ns() + 100_000_000
+            lease.target_process_identity = (1, 41, 'a' * 64, lease.deadline)
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            self.assertIsNotNone(lease.wait_interruption(1))
+            self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'expired')
+            self.assertEqual(display.down, set())
+            self.assertFalse(reader.closed.is_set())
+
+    def test_close_while_identity_is_blocked_stops_input_owner(self):
+        with fixture() as (owner, lease, display, reader, events):
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            owner.close()
+            self.assertTrue(owner.stopped.is_set())
+            self.assertFalse(owner.thread.is_alive())
+            self.assertEqual(display.down, set())
+            self.assertFalse(reader.closed.is_set())

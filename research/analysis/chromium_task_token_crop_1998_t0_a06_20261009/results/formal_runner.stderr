@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-1998-chromium-a06/research/analysis/chromium_task_token_crop_1998_t0_a06_20261009/formal_runner.py", line 20, in <module>
+    if __name__=="__main__": raise SystemExit(main())
+                                              ~~~~^^
+  File "/private/tmp/agent-interface-1998-chromium-a06/research/analysis/chromium_task_token_crop_1998_t0_a06_20261009/formal_runner.py", line 11, in main
+    out=PKG/"results"; out.mkdir(exist_ok=False)
+                       ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/private/tmp/agent-interface-1998-chromium-a06/research/analysis/chromium_task_token_crop_1998_t0_a06_20261009/results'

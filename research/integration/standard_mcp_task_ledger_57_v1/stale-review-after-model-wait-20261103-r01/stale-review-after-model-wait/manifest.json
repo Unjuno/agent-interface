@@ -1,0 +1,160 @@
+{
+  "compiled_result": {
+    "call_directory": "D:\\CodexData\\Temp\\tmp2xpu2fa0\\080b30fda3414e55b6dfaa6488eed7c6",
+    "call_id": "080b30fda3414e55b6dfaa6488eed7c6",
+    "cleanup_status": "UNKNOWN",
+    "effect_status": "unknown",
+    "error": "RuntimeError('ValueError: reviewed source is no longer current')",
+    "late_server_request_possible": true,
+    "operation": "guarded_calc_compiled",
+    "operation_invoked": true,
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 100561437000000,
+      "pid": 44684,
+      "release_confirmed": false,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": "UNKNOWN",
+      "compiled_scope": "native-x11:0bcd2a03e087417c87115823dc114353",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 2,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 100561468000000,
+        "pid": 44684,
+        "release_confirmed": false,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 44684,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": true,
+      "session_id": "c9d4812c10cc45daadf3bd613790b7c0",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "status": "runtime_failed",
+    "task_success": null
+  },
+  "environment": "synthetic Fake X; no model/provider request was sent",
+  "new_sequence": 2,
+  "no_input_state_artifact": true,
+  "old_sequence": 1,
+  "owner_close": {
+    "authority_granted": false,
+    "call_directory": "D:\\CodexData\\Temp\\tmp2xpu2fa0\\5f9471da80a047b091949b89ddf6758b",
+    "call_id": "5f9471da80a047b091949b89ddf6758b",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release_attempted": false,
+    "release_confirmed": null,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": "UNKNOWN",
+      "compiled_scope": "native-x11:0bcd2a03e087417c87115823dc114353",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 2,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 100561718000000,
+        "pid": 44684,
+        "release_confirmed": false,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 44684,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": true,
+      "session_id": "c9d4812c10cc45daadf3bd613790b7c0",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "c9d4812c10cc45daadf3bd613790b7c0",
+    "status": "closed",
+    "verified": true
+  },
+  "raw_evidence": "raw-runtime/ (observations, owner RPC receipts, calls)",
+  "release_confirmed": null,
+  "schema": "agent-interface/calc-stale-review-after-wait-v1",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "7d0b9fc49670d2a5fbcea3d5b1a5c6c9d51b4f12cf9184000edff7ce21786d78",
+    "runtime/cli_v1/mcp_server.py": "4122e78bef98f4eacece76d6dae3f049bf75b000c57ad2f95311b119ac1285ca",
+    "runtime/cli_v1/owned_guarded_session.py": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc",
+    "runtime/cli_v1/test_mcp_owned_process.py": "7e035e5b46734480c7ef7c9aaf9d6b699e1107e2d55260e1c8ebc5a03b3ace65",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "0cd7f0d42be1bd93bf83d0ffdb636e846b41a8d5ab7503ae830789b176af4071"
+  },
+  "wait_simulation": "20 ms bounded test delay plus changed window title metadata"
+}

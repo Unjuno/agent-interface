@@ -1,0 +1,61 @@
+{
+  "source_commit": "29fa6de1924fe248eec8a4f97d8ec6b05039c63d",
+  "baseline_commit": "527d7a940c23dbbb6af3831dc6705eb2a24ef096",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "scope": "pure signal doubles; live Linux test skipped",
+  "runs": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_xvfb_pause_cleanup",
+        "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+        "-v"
+      ],
+      "raw": "raw-normal.txt",
+      "discovered": 8,
+      "passed": 7,
+      "skipped_live": 1,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_xvfb_pause_cleanup",
+        "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+        "-v"
+      ],
+      "raw": "raw-optimized.txt",
+      "discovered": 8,
+      "passed": 7,
+      "skipped_live": 1,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "research\\integration\\xvfb_pause_cleanup_20261023_r01\\reproduce_baseline.py"
+      ],
+      "raw": "raw-baseline.txt",
+      "tests": 2,
+      "expected_failures": 2,
+      "exit_code": 1
+    }
+  ],
+  "initial_red": {
+    "raw": "raw-red.txt",
+    "discovered": 5,
+    "failures": 4,
+    "exit_code": 1
+  },
+  "wslc_runtime_operations": 0,
+  "container_image_operations": 0,
+  "real_signals": 0,
+  "native_input": false,
+  "live_trial_status": "NOT_EXECUTED; exact unused allocation and qualified image unresolved"
+}

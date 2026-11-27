@@ -1,0 +1,122 @@
+{
+  "scope": "synthetic_only",
+  "accept_before_block": true,
+  "stubborn_producer": false,
+  "cancel_before_gate": false,
+  "result": {
+    "call_id": "fa8b8a9000e24ea68bcda00dc12b0ba4",
+    "action": {
+      "operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "running",
+      "metadata": {
+        "source": "synthetic_public_mcp_admission"
+      },
+      "result": null
+    },
+    "cancellation": {
+      "operation_id": "1ad8577d60ed4e2a8d369b94500553cd",
+      "action_operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "recovered",
+      "release_confirmed": true,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "deadline_ns": 425869375000000,
+        "obligations": [
+          "key:CTRL"
+        ],
+        "status": "recovered",
+        "producer_identity": {
+          "pid": 47340,
+          "creation_time_100ns": 1000047340
+        },
+        "producer_exit_code": -15,
+        "producer_gate_state": "authorization_attempted",
+        "cleanup_deadline_ns": 425860140000000,
+        "recovery_id": "c28c6e27a69e437d8b882ed9b8523af3",
+        "release_confirmed": true,
+        "task_success": null,
+        "replay_allowed": false,
+        "uncertainty": null,
+        "phase": "recovered"
+      },
+      "owner_phase": "recovered"
+    },
+    "task_effect": null,
+    "operation_invoked": false,
+    "input_dispatched": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "events": [
+    {
+      "kind": "producer_authorized",
+      "action": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "status": "admitted",
+        "metadata": {
+          "source": "synthetic_public_mcp_admission"
+        },
+        "result": null
+      },
+      "pid": 47340
+    },
+    {
+      "kind": "producer_down_entered",
+      "pid": 47340
+    },
+    {
+      "kind": "producer_down_accepted",
+      "pid": 47340
+    },
+    {
+      "kind": "producer_exit_confirmed",
+      "pid": 47340,
+      "exitcode": -15
+    },
+    {
+      "kind": "recovery_request",
+      "request": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "recovery_id": "c28c6e27a69e437d8b882ed9b8523af3",
+        "deadline_ns": 425860140000000,
+        "obligations": [
+          "key:CTRL"
+        ],
+        "request_id": "c28c6e27a69e437d8b882ed9b8523af3"
+      },
+      "pid": 42408
+    },
+    {
+      "kind": "recovery_up",
+      "pid": 42408
+    },
+    {
+      "kind": "observer_request",
+      "request": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "recovery_id": "c28c6e27a69e437d8b882ed9b8523af3",
+        "deadline_ns": 425860140000000,
+        "obligations": [
+          "key:CTRL"
+        ],
+        "request_id": "c28c6e27a69e437d8b882ed9b8523af3"
+      },
+      "pid": 40128
+    }
+  ],
+  "helper_pids": [
+    42408,
+    40128
+  ],
+  "producer_factory_calls": [
+    "dddddddddddddddddddddddddddddddd"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "interpretation": "Merged main reproduces bounded XRes release observation and preserves old task failure/UNKNOWN/no-replay separately from fresh-generation task success. Raw traces attribute repeated effects to A remaining held through the deliberately withheld cancellation acknowledgement; the scheduled delayed B KeyPress was not observed.",
+  "manifest_files_verified": 18,
+  "runs": {
+    "normal": {
+      "cancel_response": "pending",
+      "exit_code": 0,
+      "final_keys_up": true,
+      "fresh_task_oracle": "pass",
+      "old_generation_unknown_no_replay": true,
+      "old_task_effect_count": [
+        4
+      ],
+      "old_task_oracle": "fail",
+      "release_readback_verified": true,
+      "xres_disconnect": true
+    },
+    "optimized": {
+      "cancel_response": "pending",
+      "exit_code": 0,
+      "final_keys_up": true,
+      "fresh_task_oracle": "pass",
+      "old_generation_unknown_no_replay": true,
+      "old_task_effect_count": [
+        19
+      ],
+      "old_task_oracle": "fail",
+      "release_readback_verified": true,
+      "xres_disconnect": true
+    }
+  },
+  "source_blobs_checked": 7,
+  "source_revision": "96c3476e9c665d801d6f57814ff7241b868d5636",
+  "status": "PASS_AUDIT_POSTMERGE_STANDARD_CALLER_SPLIT_OUTCOME"
+}

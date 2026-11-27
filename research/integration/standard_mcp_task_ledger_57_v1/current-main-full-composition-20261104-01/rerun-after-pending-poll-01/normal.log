@@ -1,0 +1,16 @@
+....................................................................execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=52 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=52 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...............................................Executing <Task pending name='Task-262' coro=<OwnedProcessMCPTests.test_interface_close_during_pending_cancel_preserves_single_transaction() running at /workspace/runtime/cli_v1/test_mcp_owned_process.py:4260> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at /usr/lib/python3.11/asyncio/futures.py:387, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.315 seconds
+....Executing <Task finished name='Task-281' coro=<OwnedProcessMCPTests.test_owned_process_window_discovery_is_read_only_and_uses_query_worker() done, defined at /workspace/runtime/cli_v1/test_mcp_owned_process.py:721> result=None created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.637 seconds
+....................................................................................................
+----------------------------------------------------------------------
+Ran 219 tests in 94.568s
+
+OK

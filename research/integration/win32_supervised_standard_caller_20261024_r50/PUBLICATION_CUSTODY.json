@@ -1,0 +1,30 @@
+{
+  "schema": "win32-r50-publication-custody-v1",
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r50-c0cbe581-accf-43b1-b50b-83e556fb47e8",
+  "source_commit": "47d5e9b6c45ecabd682f71731244dbc085ffa88f",
+  "private_originals": {
+    "manifest": "LOCAL_ONLY/win32-r50-originals-20261024/SHA256SUMS",
+    "manifest_entries": 67,
+    "verified_before_public_sanitization": true,
+    "path_publicly_redacted": true
+  },
+  "public_derivative": {
+    "manifest": "SHA256SUMS_PUBLIC_R01",
+    "redactions": {
+      "absolute_windows_path_occurrences_replaced": 66,
+      "host_name_occurrences_replaced": 2,
+      "preexisting_window_title_occurrences_replaced": 0,
+      "residual_user_paths_or_host_name_matches": 0,
+      "raw_outcome_changed": false,
+      "fixture_png_changed": false
+    },
+    "manifest_files": 68
+  },
+  "validation": {
+    "preflight": "PASS 13/13",
+    "phase1_release": "STRICT_RELEASE_PASS 11/11",
+    "combined_audit": "FAIL_OR_UNKNOWN 8/13",
+    "runtime_task_success": null,
+    "wslc_used": false
+  }
+}

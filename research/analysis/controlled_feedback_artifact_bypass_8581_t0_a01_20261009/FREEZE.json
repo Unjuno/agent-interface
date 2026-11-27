@@ -1,0 +1,42 @@
+{
+  "allocation": "UNJUNO-8581-CONTROLLED-FEEDBACK-ARTIFACT-BYPASS-T0-A01-20261009",
+  "base_branch": "main",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8581-feedback-artifact-bypass-t0-20261009",
+  "construction": {
+    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 48 paired trials; 640 checks; mutations 8/8 rejected; BYPASS_DEFEATS_FEEDBACK_SCOPED",
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "tests": "4/4 PASS"
+  },
+  "decision_gate": "PLAN.md",
+  "environment": {
+    "dependencies": "standard library only",
+    "machine": "arm64",
+    "model_GUI": "none",
+    "network": "not used",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "private_data": "none",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "runtime": "host CPython; stdlib finite method simulator",
+    "shared_runtime": "none"
+  },
+  "formal_commands": {
+    "auditor": "python3.12 research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/auditor.py --spec research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/spec.json --raw research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/results/candidate.raw.json --output research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/results/audit.raw.json",
+    "candidate": "python3.12 research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/candidate.py --spec research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/spec.json --output research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/results/candidate.raw.json",
+    "invocation_limit": "one candidate, one auditor, zero retries"
+  },
+  "frozen_at_utc": "2026-10-08T21:31:32+00:00",
+  "package_path": "research/analysis/controlled_feedback_artifact_bypass_8581_t0_a01_20261009/",
+  "preregistration_gate": "Push frozen commit and preregister commit plus FREEZE.json SHA on Issue #8581. Verify remote file and comment before formal run.",
+  "schema": "issue-8581-feedback-access-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "6bfce97ff6ca93f5967521184b268c4cc7356ff97399f3fc2c88e2a4de65cc46",
+    "README.md": "9eccbb99027f075e6111bed032af363fc8c33eb34286f0aaf19eb4cf0d1d26f1",
+    "auditor.py": "3155f2ada6b9ffd24c7b59ab210086e2cbe5320b7c96711ac1314624af2c2a8c",
+    "candidate.py": "a683635a9d8fc1929a6b1d787306756519bb525d9782fe738980dc1b021e7908",
+    "spec.json": "4ca2061bf3c80f956f7dde757eb3dd5d1fa6dee3b88783ee09488b3465e092a7",
+    "tests/test_construction.py": "f46c26466d1b1f2d2ea63b79af7e885cdfe35d8746358b4b37a3cd1a189d9e98"
+  }
+}

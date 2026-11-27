@@ -1,0 +1,205 @@
+{
+  "checks": [
+    {
+      "name": "frozen_input_manifest",
+      "observed": [
+        {
+          "actual": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+          "expected": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+          "pass": true,
+          "path": "input_owner_v10.py"
+        },
+        {
+          "actual": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+          "expected": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+          "pass": true,
+          "path": "map01_overlap_controller_v39.py"
+        },
+        {
+          "actual": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b",
+          "expected": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b",
+          "pass": true,
+          "path": "doom_controller_failure_cleanup_v1.py"
+        },
+        {
+          "actual": "bd56d8ab9fcb70bfa9df1a4fcea591ab2aabcdb69800b4f89a66fae6b4a2d34b",
+          "expected": "bd56d8ab9fcb70bfa9df1a4fcea591ab2aabcdb69800b4f89a66fae6b4a2d34b",
+          "pass": true,
+          "path": "app_probe.py"
+        },
+        {
+          "actual": "8b410ce40dd1debd4207e2eabfd5ac98a68f9b097451ef1448c4fd41293c1bf6",
+          "expected": "8b410ce40dd1debd4207e2eabfd5ac98a68f9b097451ef1448c4fd41293c1bf6",
+          "pass": true,
+          "path": "candidate.py"
+        },
+        {
+          "actual": "37df295a40f79ad012ad0a03a899eadd6746a9b611fc30f43dd088c7e5da6784",
+          "expected": "37df295a40f79ad012ad0a03a899eadd6746a9b611fc30f43dd088c7e5da6784",
+          "pass": true,
+          "path": "auditor.py"
+        },
+        {
+          "actual": "e15a3a22e50ab6d3500ba1dd233cf5da55f4bc506c6ef0d5199860f305b2f571",
+          "expected": "e15a3a22e50ab6d3500ba1dd233cf5da55f4bc506c6ef0d5199860f305b2f571",
+          "pass": true,
+          "path": "run-a35.sh"
+        },
+        {
+          "actual": "0613decfcec9aa1e843c86913914c267870132ae13649c7eefc52b4a13014967",
+          "expected": "0613decfcec9aa1e843c86913914c267870132ae13649c7eefc52b4a13014967",
+          "pass": true,
+          "path": "FREEZE.json"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "merged_main_source_identity",
+      "observed": {
+        "doom_controller_failure_cleanup_v1.py": true,
+        "input_owner_v10.py": true,
+        "map01_overlap_controller_v39.py": true
+      },
+      "pass": true
+    },
+    {
+      "name": "experiment_identity",
+      "observed": "MAP01-V39-WSLC-V10-APP-EFFECT-A35-20261015-01",
+      "pass": true
+    },
+    {
+      "name": "candidate_complete",
+      "observed": {
+        "candidate_complete": null,
+        "errors": [
+          {
+            "dispatch_attempted": false,
+            "message": "Expecting value: line 1 column 1 (char 0)",
+            "type": "JSONDecodeError"
+          }
+        ],
+        "status": "STOP"
+      },
+      "pass": false
+    },
+    {
+      "name": "V10_admission_matches_dispatch",
+      "observed": {
+        "admission": {},
+        "dispatch": {}
+      },
+      "pass": false
+    },
+    {
+      "name": "separate_app_received_matching_keypress",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "exactly_one_matching_press_and_release",
+      "observed": {
+        "keypress_effect_count": 0,
+        "keyrelease_count": 0
+      },
+      "pass": false
+    },
+    {
+      "name": "app_task_effect_observed_independently",
+      "observed": {
+        "app_report": null,
+        "task_effect": {
+          "after_keypress": null,
+          "independent_counter_after_keypress": null,
+          "initial_counter": null
+        }
+      },
+      "pass": false
+    },
+    {
+      "name": "bounded_application_feedback",
+      "observed": {
+        "bound_ns": 200000000,
+        "response_latency_ns": null
+      },
+      "pass": false
+    },
+    {
+      "name": "separate_app_received_matching_keyrelease",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "app_terminal_task_state_preserved",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "V10_release_is_verified_known_empty",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "bounded_expiry_recovery",
+      "observed": {
+        "bound_ns": 1000000000,
+        "overshoot_ns": null
+      },
+      "pass": false
+    },
+    {
+      "name": "app_release_arrived_within_recovery_bound",
+      "observed": {
+        "bound_ns": 1000000000,
+        "deadline_ns": null,
+        "release_ns": null
+      },
+      "pass": false
+    },
+    {
+      "name": "independent_X11_keymap_reports_up",
+      "observed": {},
+      "pass": false
+    },
+    {
+      "name": "current_V39_predicate_accepts_V10_expiry_receipt",
+      "observed": {
+        "error": "RuntimeError: cover terminal lacks allowed status and verified empty release: None",
+        "terminal": null
+      },
+      "pass": false
+    },
+    {
+      "name": "merged_PR8771_predicate_accepts_V10_release",
+      "observed": null,
+      "pass": false
+    },
+    {
+      "name": "missing_known_empty_fields_are_rejected_by_both_predicates",
+      "observed": {},
+      "pass": false
+    },
+    {
+      "name": "expiry_receipt_is_from_V10_owner_history",
+      "observed": {
+        "owner_record_count": 0,
+        "release": null
+      },
+      "pass": false
+    },
+    {
+      "name": "owner_and_app_stopped_cleanly",
+      "observed": {
+        "xvfb_exit": 0
+      },
+      "pass": false
+    }
+  ],
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A35-20261015-01",
+  "independent_audit": true,
+  "passed": 3,
+  "schema": "map01-v39-wslc-v10-owner-effect-audit-a35-v1",
+  "scope": "V10 X11 input-owner release evidence and synthetic app task effect; no Doom, model, Windows desktop, or physical input",
+  "status": "FAIL",
+  "total": 20
+}

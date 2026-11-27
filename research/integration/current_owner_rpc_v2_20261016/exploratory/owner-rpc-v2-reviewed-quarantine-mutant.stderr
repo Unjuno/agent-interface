@@ -1,0 +1,36 @@
+test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) ... 
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='drop') ... FAIL
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='wrong-id') ... FAIL
+  test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='invalid-records') ... FAIL
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='drop')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 154, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='wrong-id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 154, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+======================================================================
+FAIL: test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) (fault='invalid-records')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 154, in test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner
+    with self.assertRaises(c.RpcQuarantined): client.call('down', lease, 'd')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: RpcQuarantined not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.345s
+
+FAILED (failures=3)

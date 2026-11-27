@@ -1,0 +1,19 @@
+{
+  "tested_code": "deb110d9c157da4c17f7894c59c303cd45419b07",
+  "legacy": {
+    "base": "1d2db3d6ff957a2147b06d846505da294ecad487",
+    "path": "research/live_control/integrated_efficiency_compiled_execution_v1.py",
+    "git_blob": "fae676dcb2765c88586a5c21c515ee4476924b08",
+    "git_byte_sha256": "cfc0dad7955b7c5601b452fdb4fba1d8420879762ca32c9e83d3dc45ee5f7bd2"
+  },
+  "no_capture": {
+    "expression": "if name == \"execute\" and isinstance(error, ExecutionReceiptError):",
+    "replacement": "if False:",
+    "compiled_utf8_sha256": "ee5d7e570e603e9dcd2691a3dae952170bdf8e690e69032de51c1184edd819ad"
+  },
+  "stale_builder": {
+    "expression": "interface_for_target(copy.deepcopy(_payload))",
+    "replacement": "interface_for_target(dict(target=copy.deepcopy(spec['cached_target']), check=copy.deepcopy(_payload['check'])))",
+    "compiled_utf8_sha256": "f7129e980f01930b75e5543160cd8db5ad3430b2a61273a23ca5430497dcbf35"
+  }
+}

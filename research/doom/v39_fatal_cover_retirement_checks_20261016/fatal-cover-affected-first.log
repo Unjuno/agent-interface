@@ -1,0 +1,361 @@
+test_abort_fault_after_ack_keeps_original_terminal_failure (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_abort_fault_after_ack_keeps_original_terminal_failure) ... FAIL
+test_actual_executor_failure_reaches_controller_without_renewal (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_actual_executor_failure_reaches_controller_without_renewal) ... FAIL
+test_answer_completion_race_still_checks_terminal (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_answer_completion_race_still_checks_terminal) ... ok
+test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails) ... ok
+test_completion_during_interrupt_needs_no_transport_abort (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_completion_during_interrupt_needs_no_transport_abort) ... FAIL
+test_completion_racing_abort_does_not_claim_transport_closed (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_completion_racing_abort_does_not_claim_transport_closed) ... FAIL
+test_cover_cancel_is_written_before_planner_interrupt_can_block (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_cover_cancel_is_written_before_planner_interrupt_can_block) ... ok
+test_failed_cover_saves_original_terminal_before_abort_without_remote_ack (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_failed_cover_saves_original_terminal_before_abort_without_remote_ack) ... FAIL
+test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout) ... FAIL
+test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary) ... FAIL
+test_interrupt_transport_error_keeps_terminal_failure_primary (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_transport_error_keeps_terminal_failure_primary) ... FAIL
+test_neutral_cancellation_races_keep_final_admission (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_neutral_cancellation_races_keep_final_admission) ... ok
+test_neutral_natural_terminals_keep_renewal (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_neutral_natural_terminals_keep_renewal) ... ok
+test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) ... 
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='unverified') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='numeric_verified') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='wrong_event') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='missing_event') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='keys') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='buttons') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='unknown_keys') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='key_state_errors') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='missing_lists') ... FAIL
+  test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='null') ... FAIL
+test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) ... 
+  test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='failed') ... FAIL
+  test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='needs_decision') ... FAIL
+  test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='cancelled') ... FAIL
+  test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='unknown') ... FAIL
+test_planner_interrupt_is_attempted_if_cover_cancel_write_fails (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_planner_interrupt_is_attempted_if_cover_cancel_write_fails) ... ok
+test_post_answer_cancel_rejects_bad_terminal (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_post_answer_cancel_rejects_bad_terminal) ... ok
+test_renewed_cover_rejects_failure_before_another_submit (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_renewed_cover_rejects_failure_before_another_submit) ... FAIL
+
+======================================================================
+FAIL: test_abort_fault_after_ack_keeps_original_terminal_failure (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_abort_fault_after_ack_keeps_original_terminal_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 519, in test_abort_fault_after_ack_keeps_original_terminal_failure
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_actual_executor_failure_reaches_controller_without_renewal (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_actual_executor_failure_reaches_controller_without_renewal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 302, in test_actual_executor_failure_reaches_controller_without_renewal
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_completion_during_interrupt_needs_no_transport_abort (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_completion_during_interrupt_needs_no_transport_abort)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 511, in test_completion_during_interrupt_needs_no_transport_abort
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_completion_racing_abort_does_not_claim_transport_closed (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_completion_racing_abort_does_not_claim_transport_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 528, in test_completion_racing_abort_does_not_claim_transport_closed
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_failed_cover_saves_original_terminal_before_abort_without_remote_ack (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_failed_cover_saves_original_terminal_before_abort_without_remote_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 465, in test_failed_cover_saves_original_terminal_before_abort_without_remote_ack
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 501, in test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 476, in test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_interrupt_transport_error_keeps_terminal_failure_primary (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_interrupt_transport_error_keeps_terminal_failure_primary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 313, in test_interrupt_transport_error_keeps_terminal_failure_primary
+    self.assert_rejected(trace)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='unverified')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='numeric_verified')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='wrong_event')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='missing_event')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='keys')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='buttons')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='unknown_keys')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='key_state_errors')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='missing_lists')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_bad_release (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_bad_release) (release='null')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 288, in test_pending_rejects_bad_release
+    self.assert_rejected(self.exercise("pending-" + name, "completed", release))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 272, in test_pending_rejects_failed_decision_and_unrequested_cancel
+    self.assert_rejected(self.exercise("pending-" + status, status, NEUTRAL))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='needs_decision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 272, in test_pending_rejects_failed_decision_and_unrequested_cancel
+    self.assert_rejected(self.exercise("pending-" + status, status, NEUTRAL))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='cancelled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 272, in test_pending_rejects_failed_decision_and_unrequested_cancel
+    self.assert_rejected(self.exercise("pending-" + status, status, NEUTRAL))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_pending_rejects_failed_decision_and_unrequested_cancel (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_pending_rejects_failed_decision_and_unrequested_cancel) (status='unknown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 272, in test_pending_rejects_failed_decision_and_unrequested_cancel
+    self.assert_rejected(self.exercise("pending-" + status, status, NEUTRAL))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_renewed_cover_rejects_failure_before_another_submit (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_renewed_cover_rejects_failure_before_another_submit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 291, in test_renewed_cover_rejects_failure_before_another_submit
+    self.assert_rejected(self.exercise("renewed-failed", "failed", NEUTRAL,
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                       renewed=True), renewed=True)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 264, in assert_rejected
+    self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     1 if pending else 0)
+                     ^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.119s
+
+FAILED (failures=23)

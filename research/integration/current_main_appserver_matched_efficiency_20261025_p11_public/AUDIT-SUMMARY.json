@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/p11-sanitized-audit-summary-v1",
+  "study": "current-main-appserver-matched-efficiency-20261025-p11",
+  "classification": "PASS_SCOPED_MATCHED_FAKE_X_COMPARISON",
+  "source_commit": "63cc6c4505745ddf4f4ac85baacb4828ca572d49",
+  "current_main_at_publication": "75d55fabec81791de4ff899c9d7478f8ff1ad02e",
+  "runtime_source_hashes_verified": "10/10",
+  "runner_hashes_verified": "6/6",
+  "local_original_packet_manifest_entries_verified": "522/522",
+  "pair_count": 3,
+  "cell_count": 6,
+  "checks_per_cell": "15/15",
+  "successes": {
+    "direct_public_input": "3/3",
+    "compiled_public_caller": "3/3"
+  },
+  "exact_two_sided_95pct_clopper_pearson_interval_each_arm": [
+    0.2924017738212866,
+    1.0
+  ],
+  "paired_median_direct_minus_compiled": {
+    "provider_turn_ms": 759.1435,
+    "observation_to_action_return_ms": 753.9227,
+    "total_trial_ms": 888.1243,
+    "input_tokens": -6,
+    "output_tokens": 2,
+    "reasoning_output_tokens": 2
+  },
+  "public_tool_calls_per_cell": 5,
+  "runtime_task_success": null,
+  "separate_synthetic_task_effect_scorer": "passed for all six cells",
+  "image_input_usage": "unavailable",
+  "upstream_billing_reconciliation": "unavailable",
+  "raw_packet_published": false,
+  "raw_packet_local_only_reason": "immutable provider/MCP bin files contain a local Windows profile path",
+  "scope": "synthetic Fake X only; no physical input, live application, MAP01, WSLc, blocked-I/O release/recovery, or broad reliability claim"
+}

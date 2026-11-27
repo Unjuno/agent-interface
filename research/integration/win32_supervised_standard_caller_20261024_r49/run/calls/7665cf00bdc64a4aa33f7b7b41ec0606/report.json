@@ -1,0 +1,146 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "recovered",
+    "input_dispatched": null,
+    "release_confirmed": true,
+    "effect_status": "unknown",
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "normalization": null,
+  "compilation": null,
+  "supervision": {
+    "call_id": "7665cf00bdc64a4aa33f7b7b41ec0606",
+    "action": {
+      "operation_id": "e8d35620d938415ea8fe73706c06d7c5",
+      "target_generation": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652",
+      "status": "recovered",
+      "metadata": {
+        "source": "interface_dispatch",
+        "program_id": "supervised-standard-cancel-q-release-r49-0c53c646"
+      },
+      "result": {
+        "status": "recovered",
+        "input_dispatched": null,
+        "release_confirmed": true,
+        "effect_status": "unknown",
+        "task_success": null,
+        "replay_allowed": false
+      }
+    },
+    "cancellation": {
+      "operation_id": "fbe02d0801bd4e0d8c0169370d7c5e7e",
+      "action_operation_id": "e8d35620d938415ea8fe73706c06d7c5",
+      "target_generation": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652",
+      "status": "recovered",
+      "release_confirmed": true,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "operation_id": "e8d35620d938415ea8fe73706c06d7c5",
+        "target_generation": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652",
+        "deadline_ns": 512991952121100,
+        "obligations": [
+          "button:fixture:left",
+          "key:fixture:CTRL",
+          "key:fixture:Q",
+          "key:fixture:S"
+        ],
+        "status": "recovered",
+        "producer_identity": {
+          "pid": 46928,
+          "creation_time_100ns": 134372951950753221
+        },
+        "producer_exit_code": -15,
+        "producer_gate_state": "authorization_attempted",
+        "cleanup_deadline_ns": 512905850014300,
+        "recovery_id": "698a0d179b104e3b9ebb7ac0dc5608a1",
+        "release_confirmed": true,
+        "completion_release_receipt": null,
+        "completion_readback": null,
+        "completion_readback_outcome": "not_attempted",
+        "completion_readback_attempt": null,
+        "task_success": null,
+        "replay_allowed": false,
+        "uncertainty": null,
+        "phase": "recovered"
+      },
+      "owner_phase": "recovered"
+    },
+    "task_effect": null,
+    "standard_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "supervised-standard-cancel-q-release-r49-0c53c646",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1,
+        "target_generations": {
+          "fixture": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652"
+        }
+      },
+      "authority": {
+        "lease_id": "supervised-standard-recovery-r49-5adc4edc",
+        "expires_at_ns": 512991952121100
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    }
+  },
+  "target_generation": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652",
+  "operation_id": "e8d35620d938415ea8fe73706c06d7c5",
+  "call_id": "7665cf00bdc64a4aa33f7b7b41ec0606",
+  "operation_invoked": true,
+  "input_dispatched": null,
+  "release_confirmed": true,
+  "task_success": null,
+  "replay_allowed": false,
+  "session": {
+    "session_id": "c784e60bfc1d4d1194c8a1e91913dad6",
+    "mode": "supervised-win32",
+    "state": "open",
+    "synthetic_only": false,
+    "call_count": 1,
+    "unresolved_call_ids": []
+  }
+}

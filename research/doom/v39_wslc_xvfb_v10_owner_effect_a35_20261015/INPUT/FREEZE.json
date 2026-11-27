@@ -1,0 +1,41 @@
+{
+  "allocation": "A35 new one-shot; A30-A34 outcomes remain preserved and unpooled",
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A35-20261015-01",
+  "intent_token": "MAP01-V39-WSLC-V10-A35-20261015-01",
+  "source_main": "d82033921f9c2cd5a4c27f9971c46ffa0e781fb2",
+  "source_tree": "c51b9a2ff758ae78fbc31451a175ce90864d81d7",
+  "scope": "V10 X11 input-owner release evidence and synthetic app task effect; no Doom, model, Windows desktop, or physical input",
+  "display": "Unix-domain X11 socket :177; TCP disabled",
+  "lease_ns": 300000000,
+  "app_response_bound_ns": 200000000,
+  "recovery_bound_ns": 1000000000,
+  "runner_file": "run-a35.sh",
+  "runtime_root": "D:\\codex-research\\v39-xvfb-a09-env-20261012",
+  "output_parent": "D:\\codex-research\\v39-xvfb-a09-a35-output",
+  "image": {
+    "name": "a09-owner-close-xvfb:20261012",
+    "id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "os": "linux",
+    "architecture": "amd64",
+    "python": "3.14.8",
+    "pull": "never"
+  },
+  "resources": {
+    "requested_cpus": 1,
+    "requested_memory": "1G",
+    "network": "none",
+    "swap_limit_enforcement": "unknown until WSLc reports; prior identical image run warned unsupported"
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "e6df5fa8e3ece104bf3caa621b0ccfd444acf2fc7287bc30d24d0a3f6ff7c0b8",
+    "map01_overlap_controller_v39.py": "44d489f36aa13191d7a2fbab206e6dea0be4fb9c60a73ca0d0b1bc5de89a1501",
+    "doom_controller_failure_cleanup_v1.py": "042bdae84a113367291b1f18cb1fe1250a9fd35a33c17824faa82a0f0c89cd6b"
+  },
+  "artifact_sha256": {
+    "app_probe.py": "bd56d8ab9fcb70bfa9df1a4fcea591ab2aabcdb69800b4f89a66fae6b4a2d34b",
+    "candidate.py": "8b410ce40dd1debd4207e2eabfd5ac98a68f9b097451ef1448c4fd41293c1bf6",
+    "auditor.py": "37df295a40f79ad012ad0a03a899eadd6746a9b611fc30f43dd088c7e5da6784",
+    "run-a35.sh": "e15a3a22e50ab6d3500ba1dd233cf5da55f4bc506c6ef0d5199860f305b2f571"
+  },
+  "schema": "map01-v39-wslc-v10-owner-effect-freeze-a35-v1"
+}

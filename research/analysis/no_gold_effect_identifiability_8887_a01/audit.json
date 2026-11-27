@@ -1,0 +1,37 @@
+{
+  "accuracy_gap": 0.5,
+  "allocation": "8887-common-mode-observational-equivalence-a01-20261012-01",
+  "candidate_disposition": "UNIDENTIFIABLE_WITHOUT_INDEPENDENCE_EVIDENCE",
+  "mutations": {
+    "checker_bit_flip": "REJECTED",
+    "duplicate_row_id": "REJECTED",
+    "row_drop": "REJECTED",
+    "unsupported_accuracy_claim": "REJECTED"
+  },
+  "same_observables_in_both_worlds": true,
+  "schema": "no_gold_common_mode_audit_v1",
+  "scope": "one finite constructed case; no GUI/checker accuracy claim",
+  "status": "PASS_COUNTEREXAMPLE_ONLY",
+  "worlds": {
+    "A_PERFECT": {
+      "checker_accuracy": {
+        "app_readback": 1.0,
+        "file": 1.0,
+        "shared_parser": 1.0,
+        "visual_receipt": 1.0
+      },
+      "truth": "00001111",
+      "truth_prevalence": 0.5
+    },
+    "B_COMMON_MODE_CHANCE": {
+      "checker_accuracy": {
+        "app_readback": 0.5,
+        "file": 0.5,
+        "shared_parser": 0.5,
+        "visual_receipt": 0.5
+      },
+      "truth": "00110011",
+      "truth_prevalence": 0.5
+    }
+  }
+}

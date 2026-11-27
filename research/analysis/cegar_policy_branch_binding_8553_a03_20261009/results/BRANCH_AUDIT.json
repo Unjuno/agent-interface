@@ -1,0 +1,34 @@
+{
+  "disposition": "CONFIRMED_AUDIT_GAP",
+  "freeze_sha256": "972cdf4ce94a6c2011b946900bc5cf40a8dfc70f24b102894339768206747024",
+  "mutation_controls": {
+    "rejected": 2,
+    "total": 2
+  },
+  "passed": true,
+  "results": {
+    "swapped_observation_routes": {
+      "cases_reconstructed": 5,
+      "errors": [
+        "spurious_loss_safe_separator: policy replay failed: branch ('red',): branch (): goal leaf does not cover an all-goal belief"
+      ],
+      "passed": false,
+      "policies_replayed": 2
+    },
+    "unchanged": {
+      "cases_reconstructed": 5,
+      "errors": [],
+      "passed": true,
+      "policies_replayed": 2
+    },
+    "unsupported_observation_values": {
+      "cases_reconstructed": 5,
+      "errors": [
+        "spurious_loss_safe_separator: policy replay failed: policy branches do not exactly cover emitted observations"
+      ],
+      "passed": false,
+      "policies_replayed": 2
+    }
+  },
+  "schema": "issue8553-a03-branch-binding-audit-v1"
+}

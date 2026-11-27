@@ -1,0 +1,37 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-ordinary-dependency",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && mkdir /root/17-x11-c04-70ab && mkdir /root/17-x11-c04-70ab/out && tar -xf - -C /root/17-x11-c04-70ab && docker run --pull never --network none --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 -v /root/17-x11-c04-70ab/src:/src:ro --name 17-x11-c04-dependency-70ab sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f python -B -c \"import ctypes,hashlib,pathlib,platform,subprocess; h=pathlib.Path(\\\"/src/helper.so\\\"); assert hashlib.sha256(h.read_bytes()).hexdigest()==\\\"bd6258983751563c6ae12670a459893f3322e92b31bd7aeb33268c6b00a084d8\\\"; lib=ctypes.CDLL(str(h)); lib.native_now_ns.restype=ctypes.c_uint64; assert lib.native_now_ns()>0; print(platform.platform()); print(platform.python_version()); print(subprocess.check_output([\\\"dpkg-query\\\",\\\"-W\\\",\\\"xvfb\\\",\\\"libxtst6\\\",\\\"libx11-6\\\"]).decode())\""
+  ],
+  "launcher_pid": 64424,
+  "start_utc": "2026-10-03T16:06:33.315113+00:00",
+  "start_ns": 54558145052791,
+  "stdin": {
+    "path": "work/x11-gil-cancel-c04-70ab/source-construction.tar",
+    "bytes": 102400,
+    "sha256": "655c96984a21e03c31c2f682bcef8c677c5f162c005ae82b80d942097d950d59"
+  },
+  "pid": 64426,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T16:06:36.041844+00:00",
+  "end_ns": 54560871554333,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 157,
+      "sha256": "abe605931b0b4c55dd5da65fe06719b84e18410b85f080839bccde6acd716866"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -15,7 +15,8 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, on_action_completed=None, before_action_dispatch=None, post_release_settle_ms=0, effect_clock=None,
+                 effect_clock_domain="graph"):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -26,6 +27,18 @@ class _Adapter:
             raise ValueError('interface must name this bridge scope and X11 surface')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit perception, effect verifier and cancellation callbacks required')
+        if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
+            raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
+        if guard_perceive is not None and not callable(guard_perceive):
+            raise ValueError('guard_perceive must be callable when supplied')
+        if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
+            raise ValueError('verify_unchanged_effect must be callable when supplied')
+        if on_action_completed is not None and not callable(on_action_completed):
+            raise ValueError('on_action_completed must be callable when supplied')
+        if before_action_dispatch is not None and not callable(before_action_dispatch):
+            raise ValueError('before_action_dispatch must be callable when supplied')
+        if not callable(getattr(bridge,'input_guard',None)):
+            raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
             raise ValueError('one exact binding per declared action required')
         self.bindings = copy.deepcopy(bindings)
@@ -41,7 +54,19 @@ class _Adapter:
                 raise ValueError('explicit guarded tail list required')
         self.bridge = bridge
         self.scope, self.revision, self.surface = bridge.scope, bridge.binding_revision, surface(bridge)
+        self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
+        self.unchanged_verifier = verify_unchanged_effect
+        self.action_completed = on_action_completed
+        if effect_clock is not None and not callable(effect_clock):
+            raise ValueError("effect_clock must be callable when supplied")
+        self.effect_clock = effect_clock
+        self.effect_clock_domain = effect_clock_domain
+        self.before_action_dispatch = before_action_dispatch
+        self.guard_perceive = perceive if guard_perceive is None else guard_perceive
+        self.post_release_settle_ms = post_release_settle_ms
+        self._method_deadline_ns = None
+        self._settle_cancelled = False
         self.run_id = 'compiled-' + uuid.uuid4().hex
         self.event_index = 0
         self.latest = self.native = self.image = None
@@ -53,8 +78,22 @@ class _Adapter:
         self.bridge._save(name + '.json', copy.deepcopy(value))
         return name
 
-    def associated(self):
-        return (self.bridge.scope == self.scope and self.bridge.binding_revision == self.revision
+    def associated(self, native=None):
+        native = self.native if native is None else native
+        generation_matches = True
+        if native is not None:
+            binding = native.get('pointer_binding')
+            if type(binding) is not dict:
+                generation_matches = False
+            else:
+                generation = {key:binding[key] for key in
+                    ('process_generation','window_generation') if key in binding}
+                if self.target_generation is None:
+                    self.target_generation = generation
+                else:
+                    generation_matches = generation == self.target_generation
+        return (generation_matches and self.bridge.scope == self.scope
+                and self.bridge.binding_revision == self.revision
                 and surface(self.bridge) == self.surface and not self.bridge.review_required)
 
     def observe(self, request):
@@ -77,9 +116,15 @@ class _Adapter:
     def _observe(self, request):
         # Every graph iteration captures through the ordinary retained bridge.
         native = self.bridge.observe()
+        # The core and bridge exchange this receipt synchronously, so this
+        # perf-counter timestamp (the core's clock) marks when the completed capture became
+        # available to the graph. Keep native['capture_ns'] untouched for
+        # handle freshness and forensic timing; clocks from isolated capture
+        # backends are not the graph's post-action ordering clock.
+        capture_returned_ns = time.perf_counter_ns()
         _, image = self.bridge.history[native['sequence']]
         self.native, self.image = copy.deepcopy(native), image.copy()
-        associated = (self.associated() and native['pointer_binding']['surface'] ==
+        associated = (self.associated(native) and native['pointer_binding']['surface'] ==
                       self.bridge.backend.targets[self.bridge.target].id and
                       native['binding_revision'] == self.revision)
         predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
@@ -88,7 +133,7 @@ class _Adapter:
         associated = associated and self.associated() and self.bridge.sequence == native['sequence']
         if not associated:
             predicates = {}
-        self.latest = {'sequence':native['sequence'],'captured_ns':native['capture_ns'],
+        self.latest = {'sequence':native['sequence'],'captured_ns':capture_returned_ns,
             'surface':self.surface if associated else 'association_changed',
             'predicates':copy.deepcopy(predicates),'evidence_ref':'observation-' + str(native['sequence']),
             'evidence_digest':native['native']['artifact']['sha256']}
@@ -128,7 +173,8 @@ class _Adapter:
                     outcome.update(eligible=True,status='revalidated',authorization=authorization,valid_until_ns=deadline)
                     self.authorizations[authorization] = {'action':request['action'],'operation':request['operation'],
                         'expected_sequence':self.latest['sequence'],'valid_until_ns':deadline,
-                        'target_reference':symbol['target_reference']}
+                        'target_reference':symbol['target_reference'],
+                        'required_predicates':copy.deepcopy(needed)}
                 else:
                     outcome['status'] = {'STALE':'stale','MISSING':'missing','SCOPE_MISMATCH':'association_changed'}.get(resolution['status'],'authority_unavailable')
         self.retain('admission', {'request':request,'result':outcome})
@@ -148,8 +194,51 @@ class _Adapter:
             raw = {'status':'refused','error':'COMPILED_AUTHORIZATION_INVALID','input_dispatched':False}
         else:
             binding = self.bindings[request['action']]
-            raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
-                tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
+            def verify_input(stage, native, image):
+                row = {'stage':stage,'action':request['action'],
+                    'observation_sequence':native['sequence'],
+                    'evidence_digest':native['native']['artifact']['sha256'],
+                    'required_predicates':copy.deepcopy(authorization['required_predicates']),
+                    'eligible':False}
+                try:
+                    if not self.associated(native):
+                        row['status'] = 'association_changed'
+                        return False
+                    predicates = self.guard_perceive(copy.deepcopy(native),image.copy())
+                    if type(predicates) is not dict:
+                        raise ValueError('perception must return declared predicate values')
+                    row['predicates'] = copy.deepcopy(predicates)
+                    row['eligible'] = (self.associated(native) and
+                        native['binding_revision'] == self.revision and
+                        native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
+                        all(predicates.get(name) is True for name in authorization['required_predicates']))
+                    if row['eligible'] and self.before_action_dispatch is not None:
+                        dispatch_receipt = {
+                            'action':request['action'], 'action_id':action_id,
+                            'operation':request['operation'],
+                            'process_generation':self.target_generation.get('process_generation'),
+                            'window_generation':self.target_generation.get('window_generation'),
+                            'dispatch_started_ns':time.perf_counter_ns()}
+                        dispatch_receipt['evidence_ref'] = (
+                            self.run_id + '-' + str(self.event_index + 1)
+                            + '-pre-dispatch')
+                        self.retain('pre-dispatch', dispatch_receipt)
+                        self.before_action_dispatch(copy.deepcopy(dispatch_receipt))
+                    return row['eligible']
+                except Exception as error:
+                    row['error_type'],row['error'] = type(error).__name__,repr(error)
+                    raise
+                finally:
+                    self.retain('input_dependency',row)
+            # The bridge owns the action identity and creates it before the
+            # guarded input path. Trusted profile code may bind a request
+            # receipt to that exact action at dispatch time; public graph
+            # inputs cannot supply or replace this hook.
+            before_dispatch = getattr(self, 'before_action_dispatch', None)
+            with self.bridge.input_guard(authorization['target_reference'],binding['offset'],
+                    tail=copy.deepcopy(binding['tail']),interaction=binding['interaction'],verify=verify_input):
+                raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
+                    tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
         effect_ref = self.retain('execution', {'request':request,'action_id':action_id,'result':raw})
         releases = list(raw.get('execution',{}).get('releases',[]))
         # Pre-execution backend constraints return the actual cleanup receipt
@@ -177,45 +266,177 @@ class _Adapter:
             if not (raw['input_dispatched'] is False and unresolved):
                 terminal['input_dispatched'] = raw['input_dispatched']
         self.retain('terminal',terminal)
+        if terminal['status'] == 'completed' and neutral and self.post_release_settle_ms:
+            self._settle_after_release()
         return terminal
+
+    def _cancellation_state(self):
+        if self._settle_cancelled:
+            return True
+        return self.cancelled()
+
+    def _settle_after_release(self):
+        # The deadline is established by the core's first clock sample.
+        # No waiting is permitted outside execute_method.
+        if self._method_deadline_ns is None:
+            return
+        start = time.perf_counter_ns()
+        end = min(start + self.post_release_settle_ms * 1_000_000,
+                  self._method_deadline_ns)
+        status = 'settled'
+        while True:
+            cancelled = self._cancellation_state()
+            if type(cancelled) is not bool:
+                raise TypeError('cancellation-state callback must return bool')
+            if cancelled:
+                self._settle_cancelled = True
+                status = 'cancelled'
+                break
+            remaining = end - time.perf_counter_ns()
+            if remaining <= 0:
+                if end == self._method_deadline_ns:
+                    status = 'budget_limited'
+                break
+            time.sleep(min(0.025, remaining / 1_000_000_000))
+        self.retain('post-release-settle', {
+            'status':status, 'requested_ms':self.post_release_settle_ms,
+            'started_ns':start, 'ended_ns':time.perf_counter_ns(),
+        })
 
     def verify_effect(self, request):
         if (not self.associated() or self.latest != request['observation'] or
                 self.bridge.sequence != self.latest['sequence']):
             result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         else:
-            result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            try:
+                result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            except Exception as error:
+                # The graph consumes ordinary callback failure into a typed
+                # partial receipt; retain the originating adapter witness first.
+                try:
+                    self.retain('exception', {'stage':'effect_verification',
+                        'error_type':type(error).__name__,'error':repr(error),
+                        'replay_allowed':False,
+                        'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+                except Exception:
+                    pass
+                raise
             if not self.associated() or self.bridge.sequence != self.latest['sequence']:
                 result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         self.retain('effect', {'request':request,'result':result})
         return result
 
+    def verify_unchanged_effect(self, request):
+        if self.unchanged_verifier is None:
+            raise RuntimeError('unchanged-frame effect verifier was not configured')
+        if (not self.associated() or self.latest != request['observation'] or
+                self.bridge.sequence != self.latest['sequence']):
+            result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
+        else:
+            try:
+                result = self.unchanged_verifier(
+                    copy.deepcopy(request), copy.deepcopy(self.native), self.image.copy())
+            except Exception as error:
+                try:
+                    self.retain('exception', {'stage':'unchanged_effect_verification',
+                        'error_type':type(error).__name__,'error':repr(error),
+                        'replay_allowed':False,
+                        'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+                except Exception:
+                    pass
+                raise
+            if not self.associated() or self.bridge.sequence != self.latest['sequence']:
+                result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
+        self.retain('unchanged-effect', {'request':request,'result':result})
+        return result
+
     def execute_method(self):
+        self._method_deadline_ns = None
+        def graph_clock():
+            # Match compiled_gui.run's default clock and the caller-facing
+            # observation timestamp in _observe. Native lease deadlines stay
+            # on monotonic_ns; only this graph's relative timing uses perf.
+            now = time.perf_counter_ns()
+            if self._method_deadline_ns is None:
+                self._method_deadline_ns = now + self.interface['method']['max_runtime_ms'] * 1_000_000
+            return now
         self.retain('plan', {'interface':self.interface,'bindings':self.bindings,
             'scope':'trusted caller-owned read-only perception/effect callbacks; not independent task scoring'})
         try:
-            result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
-                'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self.cancelled,
-                'journal':lambda event:self.retain('event',event)}, clock=time.monotonic_ns)
+            adapters = {'observe':self.observe,'admit':self.admit,
+                'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self._cancellation_state,
+                'journal':lambda event:self.retain('event',event)}
+            if self.action_completed is not None:
+                adapters['on_action_completed'] = self.action_completed
+            if self.unchanged_verifier is not None:
+                adapters['verify_unchanged_effect'] = self.verify_unchanged_effect
+            result = run_graph(self.interface, adapters, clock=graph_clock,
+                               effect_clock=self.effect_clock,
+                               effect_clock_domain=self.effect_clock_domain)
         except Exception as error:
             self.retain('exception', {'error':repr(error),'replay_allowed':False,
                 'effect_status':'unknown; inspect retained bridge receipts before any new action'})
             raise
         finally:
             self.authorizations.clear()
-        self.retain('receipt',result)
+        try:
+            self.retain('receipt',result)
+        except Exception as error:
+            # Do not let a second persistence failure hide the graph's already
+            # classified in-memory result or turn a completed action into an
+            # uncaught callback exception. A failed final save can never leave
+            # TASK_SUCCEEDED visible to the caller.
+            result = copy.deepcopy(result)
+            result['outcome'] = 'RUNTIME_FAILED'
+            result['reason'] = 'execution_failed'
+            result['raw_evidence_retention'] = 'failed'
+            error_type = type(error).__name__
+            result['retention_failure'] = {
+                'stage':'runtime_receipt',
+                'error_type':error_type,
+                'replay_allowed':False,
+            }
+            critical = result.get('critical_events')
+            if type(critical) is list:
+                if critical and type(critical[-1]) is dict and critical[-1].get('event') == 'runtime_finished':
+                    critical[-1]['outcome'] = 'RUNTIME_FAILED'
+                    critical[-1]['reason'] = 'execution_failed'
+                else:
+                    critical.append({'event':'runtime_finished','outcome':'RUNTIME_FAILED',
+                                     'reason':'execution_failed',
+                                     'completed_transitions':result.get('completed_transitions',0)})
+                critical.insert(max(0,len(critical)-1), {
+                    'event':'journal_write_failed',
+                    'stage':'runtime_receipt',
+                    'error_type':error_type,
+                })
+            return result
         return result
 
 
-def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False):
+def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
+        guard_perceive=None, verify_unchanged_effect=None,
+        on_action_completed=None, before_action_dispatch=None,
+        post_release_settle_ms=0, effect_clock=None,
+                 effect_clock_domain="graph"):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
     offset and tail. Callbacks receive copies of this capture and its exact RGB.
-    Boolean symbol dependencies must all be True. Callbacks are trusted caller
+    An optional guard_perceive receives fresh input-check captures; if omitted,
+    perceive is used. Boolean symbol dependencies must all be True for either
+    callback. An optional bounded post-release delay runs outside the input
+    guard and polls cancellation; it does not prove the effect. Callbacks are trusted caller
     code, not sandboxed or independently certified. Changed pixels do not verify
     text or durable effects. Caller must independently score the task afterward.
     Raw captures, resolutions, input receipts and graph events are retained in
     the bridge output directory. No automatic replay/repair or scope renewal.
     """
-    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled,
+                    guard_perceive=guard_perceive,
+                    verify_unchanged_effect=verify_unchanged_effect,
+                    on_action_completed=on_action_completed,
+                    before_action_dispatch=before_action_dispatch,
+                    post_release_settle_ms=post_release_settle_ms,
+                    effect_clock=effect_clock,
+                    effect_clock_domain=effect_clock_domain).execute_method()

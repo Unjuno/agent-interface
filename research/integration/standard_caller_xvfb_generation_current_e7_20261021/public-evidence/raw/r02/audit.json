@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "destroyed_target_generation_refused": true,
+    "independent_recovery_key_readback_up": true,
+    "one_unittest_passed": true,
+    "post_recovery_independent_effect_and_release": true,
+    "private_xvfb_stopped": true,
+    "process_and_window_generations_bound": true,
+    "recovery_release_verified_and_bounded": true,
+    "recovery_requires_review_and_denies_replay": true,
+    "scoped_result_status": true,
+    "server_close_releases_and_verifies": true,
+    "stale_alias_refused_before_dispatch": true,
+    "standard_observation_and_identity_enabled": true,
+    "xvfb_identity_captured": true
+  },
+  "decision": "PASS_SCOPED_NATIVE_WSL_XVFB_TARGET_GENERATION_RECOVERY",
+  "derived": {
+    "post_recovery_effect": [
+      3
+    ],
+    "post_recovery_effect_latency_ms": 36.558781,
+    "recovery_effect_latency_ms": 34.508013,
+    "recovery_elapsed_ms": 10.245683,
+    "runtime_task_success_api": null,
+    "test_runtime_seconds": 1.247
+  },
+  "qualification": "One native WSL/Xvfb test only. Synthetic task oracle is independent of the runtime API. Does not establish physical input, MAP01, general-purpose recovery, population reliability, or matched efficiency; no WSLc/Docker allocation was used.",
+  "run_id": "native-wsl-xvfb-current-main-e7-generation-recovery-r02-20261021"
+}

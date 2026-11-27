@@ -1,0 +1,158 @@
+{
+  "raw": {
+    "interface": {
+      "format": "compiled-gui-interface-v1",
+      "interface_id": "owned-compiled-profile",
+      "session_scope": "native-x11:452ae212d89d4f67a6e6e7abd06f4cd0",
+      "surface": "x11-window-20",
+      "predicates": [
+        "phase",
+        "present"
+      ],
+      "symbols": {
+        "field": {
+          "kind": "target_reference",
+          "target_reference": "field",
+          "identity_predicate": "present",
+          "dependencies": [
+            "present"
+          ]
+        }
+      },
+      "actions": {
+        "enter": {
+          "target_symbol": "field",
+          "operation": "enter",
+          "expected_effect": {
+            "phase": 1
+          }
+        }
+      },
+      "method": {
+        "name": "one-visible-transition",
+        "version": "1",
+        "initial_state": "before",
+        "max_transitions": 1,
+        "max_runtime_ms": 5000,
+        "states": {
+          "before": {
+            "branches": [
+              {
+                "when": {
+                  "phase": 0
+                },
+                "outcome": "action",
+                "action": "enter",
+                "next_state": "done",
+                "reason": null
+              }
+            ]
+          },
+          "done": {
+            "branches": [
+              {
+                "when": {
+                  "phase": 1
+                },
+                "outcome": "complete",
+                "action": null,
+                "next_state": null,
+                "reason": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    "bindings": {
+      "enter": {
+        "interaction": "keyboard",
+        "offset": [
+          6,
+          6
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "a"
+            ]
+          }
+        ]
+      }
+    },
+    "predicate_rules": {
+      "phase": {
+        "point": [
+          1,
+          1
+        ],
+        "states": [
+          {
+            "rgb": [
+              31,
+              29,
+              1
+            ],
+            "value": 0
+          },
+          {
+            "rgb": [
+              255,
+              0,
+              0
+            ],
+            "value": 1
+          }
+        ]
+      },
+      "present": {
+        "point": [
+          2,
+          2
+        ],
+        "states": [
+          {
+            "rgb": [
+              62,
+              58,
+              4
+            ],
+            "value": true
+          }
+        ]
+      }
+    },
+    "effect_rules": {
+      "enter": {
+        "point": [
+          1,
+          1
+        ],
+        "rgb": [
+          255,
+          0,
+          0
+        ]
+      }
+    },
+    "wait_for_result_ms": 10000
+  },
+  "usage": {
+    "input_tokens": 11090,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 410,
+    "reasoning_output_tokens": 65
+  },
+  "call_id": "01a16f2e-e917-7f82-8719-8e78e9ae297e",
+  "thread_id": "01a16f2e-e8da-7f40-bc99-4dbb1929d168",
+  "turn_id": "01a16f2e-e917-7f82-8719-8e78e9ae297e",
+  "turn_status": "completed",
+  "answer_eligible": true,
+  "runner_ns": 11573204900,
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "low",
+  "cost": null
+}

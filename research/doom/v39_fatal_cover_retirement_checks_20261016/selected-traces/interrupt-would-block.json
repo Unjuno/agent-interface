@@ -1,0 +1,148 @@
+{
+  "case": "interrupt-would-block",
+  "commands": [
+    {
+      "op": "submit",
+      "id": "cover-0",
+      "expected_sequence": 1,
+      "valid_until_ns": 320908253270500,
+      "steps": [
+        {
+          "op": "coast",
+          "duration_ms": 5000,
+          "sample_ms": 250
+        },
+        {
+          "op": "coast",
+          "duration_ms": 5000,
+          "sample_ms": 250
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event": "ready",
+      "fixture": {
+        "loaded": true
+      }
+    },
+    {
+      "event": "observation",
+      "sequence": 1,
+      "capture_ns": 100,
+      "image": "synthetic.png",
+      "step": 0,
+      "pointer_binding": {
+        "focus": 7,
+        "surface": 7
+      }
+    },
+    {
+      "event": "accepted",
+      "id": "cover-0",
+      "accepted_ns": 105,
+      "steps": [],
+      "program_sha256": "synthetic",
+      "intent_token": "test"
+    },
+    {
+      "event": "terminal",
+      "status": "failed",
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "terminal_ns": 120,
+      "error": "injected input error",
+      "id": "cover-0"
+    }
+  ],
+  "timeline": [
+    "read:ready",
+    "read:observation",
+    "write:submit",
+    "read:accepted",
+    "read:terminal",
+    "local_invalidation:synthetic-turn",
+    "abort_transport",
+    "planner_return"
+  ],
+  "stage": "cover_terminal_validation",
+  "planner_timeout_requested": 90,
+  "pending_at_terminal": true,
+  "fatal_receipt_at_abort": {
+    "schema": "fatal-cover-terminal-v1",
+    "terminal": {
+      "event": "terminal",
+      "status": "failed",
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "terminal_ns": 120,
+      "error": "injected input error",
+      "id": "cover-0"
+    },
+    "local_invalidation": {
+      "outcome": "locally_invalidated"
+    },
+    "planner_future_done_at_receipt": false,
+    "failure": {
+      "type": "RuntimeError",
+      "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'status': 'failed', 'release': {'event': 'owner_release', 'verified': True, 'keys_down': [], 'buttons_down': [], '"
+    },
+    "physical_input_state": "unverified",
+    "grants_input_authority": false,
+    "task_effect": "unknown",
+    "input_recovery_required": true
+  },
+  "cleanup_error": "RuntimeError",
+  "error": {
+    "type": "RuntimeError",
+    "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'status': 'failed', 'release': {'event': 'owner_release', 'verified': True, 'keys_down': [], 'buttons_down': [], 'keys_unknown': [], 'key_state_errors': []}, 'terminal_ns': 120, 'error': 'injected input error', 'id': 'cover-0'}"
+  },
+  "error_notes": [
+    "pending planner turn transport aborted"
+  ],
+  "fatal_receipt": {
+    "schema": "fatal-cover-terminal-v1",
+    "terminal": {
+      "event": "terminal",
+      "status": "failed",
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "terminal_ns": 120,
+      "error": "injected input error",
+      "id": "cover-0"
+    },
+    "local_invalidation": {
+      "outcome": "locally_invalidated"
+    },
+    "planner_future_done_at_receipt": false,
+    "failure": {
+      "type": "RuntimeError",
+      "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'status': 'failed', 'release': {'event': 'owner_release', 'verified': True, 'keys_down': [], 'buttons_down': [], '"
+    },
+    "physical_input_state": "unverified",
+    "grants_input_authority": false,
+    "task_effect": "unknown",
+    "input_recovery_required": true
+  },
+  "main_elapsed_ns": 2177600,
+  "all_futures_done": true
+}

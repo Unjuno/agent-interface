@@ -1,0 +1,18 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c05-terminal",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect --format \"{{json .State}}\" 17-x11-c05-study-70ab && test -z \"$(docker ps -q)\""
+  ],
+  "launcher_pid": 89038,
+  "start_utc": "2026-10-03T17:10:27.374284+00:00",
+  "start_ns": 58392194805083,
+  "pid": 89039
+}

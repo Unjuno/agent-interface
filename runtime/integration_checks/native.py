@@ -19,6 +19,16 @@ SUITES = {
     'win32': ['runtime.guarded_win32_v1.test_effect', 'runtime.guarded_win32_v1.test_effect_quarantine', 'runtime.guarded_win32_v1.test_fixture_cleanup', 'runtime.guarded_win32_v1.test_kill_failure', 'runtime.guarded_win32_v1.test_late_state', 'runtime.guarded_win32_v1.test_move', 'runtime.guarded_win32_v1.test_recovery', 'runtime.guarded_win32_v1.test_sparse_effect', 'runtime.guarded_win32_v1.test_unicode_neutral', 'runtime.guarded_win32_v1.test_verifier_pending', 'runtime.guarded_win32_v1.test_worker_effect', 'runtime.backends.win32_v1.test_integration'],
 }
 
+SUITES['protocol'].append('research.doom.test_v39_queue_wait_budget_currentmain')
+SUITES['win32'].extend(['runtime.backends.win32_v1.test_focus_guard_inert', 'runtime.backends.win32_v1.test_focus_drift_current'])
+SUITES['win32'].append('runtime.backends.win32_v1.test_unbound_input_policy')
+SUITES['win32'].append('runtime.backends.win32_v1.test_preflight_cleanup_failure')
+SUITES['win32'].append('runtime.backends.win32_v1.test_recovery_unknown_receipt')
+SUITES['win32'].append('runtime.backends.win32_v1.test_recovery_concurrency')
+SUITES['win32'].append('runtime.guarded_win32_v1.test_win32_pipe_send')
+if sys.platform == 'win32':
+    SUITES['win32'].append('runtime.cli_v1.test_mcp_supervised_backend_composition')
+
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_utf8_2d0b')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
@@ -30,6 +40,7 @@ SUITES['protocol'].append('test_app_server_known_eof')
 SUITES['protocol'].append('test_app_server_runtime_eligibility')
 SUITES['protocol'].append('test_app_server_send_snapshot')
 SUITES['protocol'].append('test_appserver_bounded_close_e0cc')
+SUITES['protocol'].append('test_appserver_stderr_backpressure_current_main_r01')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 
@@ -46,6 +57,23 @@ SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')
 SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
 
 SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
+SUITES["protocol"].append("test_grounding_failure_accounting")
+SUITES["protocol"].append("test_compiled_caller_handoff_v2")
+SUITES["harness"].append("test_compiled_form_guarded_x11")
+SUITES["harness"].append("test_compiled_native_caller_composition")
+SUITES["harness"].append("runtime.guarded_x11_v1.test_compiled_native_dependencies")
+SUITES["harness"].append("test_compiled_observation_cancellation")
+SUITES["protocol"].append("runtime.cli_v1.test_mcp_transport_cancellation")
+SUITES["protocol"].extend([
+    "runtime.core_v1.test_compiled_gui_effect_verifier_exception",
+    "runtime.core_v1.test_compiled_gui_journal_exception",
+    "runtime.core_v1.test_compiled_callback_failure_composition",
+])
+SUITES["harness"].append("test_compiled_callback_caller_failures")
+
+SUITES['protocol'].append('test_adaptive_report_custody')
+
+SUITES['protocol'].append('test_adaptive_report_metrics')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

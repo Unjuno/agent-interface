@@ -1,0 +1,22 @@
+{
+  "candidate_error": {
+    "message": "backend did not publish owner readiness and held-key arm",
+    "type": "RuntimeError"
+  },
+  "display": ":0",
+  "focus_id": 2097152,
+  "forced_owner_kill": false,
+  "game_or_model": false,
+  "keycode_w": 25,
+  "physical_input": false,
+  "recovery_pass": false,
+  "schema": "v39-v15-process-owner-xvfb-a05-raw-v1",
+  "session_kill_signal": 9,
+  "session_stderr": "Traceback (most recent call last):\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py\", line 315, in <module>\n    main()\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py\", line 102, in main\n    session_child(sys.argv[2], int(sys.argv[3]), Path(sys.argv[4]), Path(sys.argv[5]))\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py\", line 67, in session_child\n    backend.raw(\"w\", True)\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/doom_owner_thread_release_batch_backend_v1.py\", line 243, in raw\n    record = self.owner.call(\"down\", self.lease, key)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/live_control/input_owner_process_v1.py\", line 441, in call\n    validate_request(request, request_id)\n  File \"/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/live_control/input_owner_process_v1.py\", line 142, in validate_request\n    raise ValueError(\"key not allowlisted\")\nValueError: key not allowlisted\n",
+  "session_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n",
+  "xvfb_displayfd_ready": true,
+  "xvfb_pid": 1740,
+  "xvfb_return_code": 0,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_tcp_enabled": false
+}

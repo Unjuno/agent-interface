@@ -1,5 +1,17 @@
 # Public MCP transport
 
+[Worker interruption receipts](../../research/live_control/mcp_interruption_receipts_20261016/README.md)
+preserve a separate `interruption.json` before propagating non-Exception stops.
+Result lookup returns that receipt, or unavailable if it could not be saved;
+it never substitutes a prior completed report or replays the action. Existing
+backend reports remain unchanged. An interrupted worker's terminal state is not
+proof of physical release, task success, or server restart/recovery readiness.
+
+For optional same-process XID continuity checks in guarded-x11 mode, see
+[direct-window lifecycle evidence](../guarded_x11_v1/WINDOW_LIFECYCLE.md).
+`--guarded-window-lifecycle` requires the process-identity and query-worker flags;
+it has Fake X construction evidence, not native/live qualification.
+
 This optional adapter exposes the existing public `observe` and `dispatch` APIs
 to an MCP host. It returns metadata as text and the selected PNG as a separate
 image block, so the host need not parse base64 out of CLI text. It launches no
@@ -253,6 +265,293 @@ image-grounded aliases on one retained connection. It reuses the shared
 rejection, result retrieval and close lifecycle. It selects no actions and
 requires no helper model. The default remains one-shot.
 
+For a qualified trusted local Linux X server in the caller's PID namespace,
+add `--guarded-process-identity` at startup to require the
+[XRes/process-incarnation digest](../guarded_x11_v1/PROCESS_IDENTITY.md).
+The Python constructor equivalent is
+`create_server(..., session_mode='guarded-x11', guarded_process_identity=True)`.
+Other session modes reject this selection. The default is false; it cannot be
+changed by a tool call. `session.process_identity` reports the selected policy,
+not successful identity qualification. A captured source's
+`pointer_binding.process_generation` carries its sampled digest.
+
+Missing evidence refuses the observation/input and requires review; the server
+does not reopen the connection or fall back to the legacy mode. A changed digest
+refuses old aliases and is checked again before each new key/button press;
+cleanup releases remain available. Raw retained reports and delivered source
+metadata retain the same digest. This has Fake X composition coverage through
+the public MCP server, bridge, handle resolution and session/backend. Live MCP
+transport with process identity remains unqualified. Namespace correspondence
+is a caller precondition, not authenticated by this flag. Same-process resource
+reuse, sampling races and synchronous blocked-I/O release remain unresolved.
+
+The experimental `--guarded-query-worker` option additionally separates active
+focus/process queries and exposes call-ID-scoped `interface_guarded_cancel` for
+guarded input and compiled calls, outside the busy slot. It requires
+`--guarded-process-identity`; see the
+[exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
+It does not establish a physical release deadline or isolate all observations.
+
+In a guarded cancellation receipt, `input_dispatched=false` in the
+`cancel_requested` acknowledgement is not a statement that the original
+action dispatched no input. The action may already have changed the target
+or left an input held before cancellation. Nor does that field establish the
+result of a separate cleanup release. Check the original call's retained
+evidence, the cancellation's `release_confirmed` and `cleanup_status`, and
+an appropriate independent task-effect observation. A recorded example has
+an `a` press and target effect before a `cancel_requested` response carrying
+`input_dispatched=false`; cleanup remains `UNKNOWN` despite a later separate
+keys-up readback. See the [bounded Xvfb evidence](../../research/integration/wslc_idle_cancel_immediate_ack_20261101/).
+Do not replay an action whose result or cleanup remains uncertain.
+
+## Opt-in supervised Win32 mode
+
+On Windows, `--session-mode supervised-win32` selects the standard
+`interface_observe` / `interface_validate` / `interface_dispatch` route for
+one explicitly configured HWND. Copy the matching
+`target_generation` from the full observation receipt into
+`program.source.target_generations`; the owner checks it again at admission
+and immediately before opening the gated producer. Producer exit, its release
+receipt, and a separately supervised neutral-state readback are retained as
+distinct custody evidence. `interface_results` retrieves the exact call's
+retained result; `interface_cancel` requests bounded recovery for that call.
+When normal completion does not have an accepted neutral readback, the action
+stays `unknown` and `release_confirmed` stays false. Its
+`completion_custody.completion_readback_outcome` distinguishes
+`not_attempted`, `missing`, `non_neutral`, `invalid`, and `verified`; a rejected
+attempt, when present, is retained in `completion_readback_attempt`. Only the
+accepted `completion_readback` alongside completed custody confirms neutral
+state. A retained attempt by itself never confirms release.
+
+An `unknown` action status is **not** proof that producer custody has finished.
+If its completion custody is unresolved, do not close the fixture window or
+reuse the session. First preserve the exact action and producer records and
+verify that the recorded producer identity is absent. Then stop the old MCP
+server without deleting its protected journal, and start a fresh
+supervised-Win32 session against the same configured logical target name. Keep
+the recovery target alive and obtain its current generation from a fresh
+observation.
+Call `interface_recover_orphaned_input` once with the source operation ID,
+source target generation, frozen obligations, an audited `source_custody_record`,
+and the fresh observation generation as `recovery_target_generation`. The
+source generation remains the generation of the unknown action; the recovery
+generation identifies only the currently configured target used for bounded
+release, neutral readback, and horizon. New key obligations retain the original
+Win32 input encoding as `key:<target>:<key>:<virtual_key|scan_code>` so orphan
+recovery emits a matching key-up. Historical three-part key obligations remain
+readable and mean `virtual_key`. The record must identify
+`UNKNOWN_RELEASE_UNCONFIRMED_STOPPED`, set `do_not_replay=true`,
+`observed_producer_live=false`, preserve the dispatch evidence and retain
+`task_success=null` and `replay_allowed=false`. Set
+`late_server_request_possible=true` whenever the source lacks a valid finite
+late-input horizon. These fields must come from retained receipts and a fresh
+process-identity check; do not synthesize them to bypass validation.
+
+The fresh server requires the source operation, source generation, and
+obligations to match the durable fence, confirms the exact producer is absent,
+and checks that the configured target still has the separately supplied
+recovery generation before it issues one bounded release and neutral readback.
+When a late request remains possible, it also requires the configured horizon.
+The recovery receipt includes `late_input_observation_start_monotonic_ns` and
+counts the release-to-first-readback interval in
+`late_input_max_observed_gap_ns`; both that initial interval and later sampling
+gaps must satisfy `late_input_max_sample_gap_ns` before the horizon can resolve
+the persistent fence.
+Recovery is a separate attempt: it does not change the source action from
+`unknown`, infer task success, or authorize replay. A successful recovery
+resolves the old source fence and consumes the recovery generation too; any
+subsequent task action requires another fresh target generation. A generation
+mismatch, missing source evidence, live producer, failed release/readback, or
+missing horizon leaves the persistent fence unresolved. Keep the fixture alive
+for diagnosis and do not manually clear the journal. A replacement HWND cannot
+prove source task success; it is accepted only as a distinct, freshly observed
+recovery target for the bounded release path.
+
+`task_success` remains null unless an independent task-effect certificate is
+integrated for that task. An embedding application may configure a
+server-side task oracle with the public `supervised_win32_task_oracle=`
+parameter when constructing the supervised server. In that
+case, `interface_verify_task(call_id, wait_for_result_ms)` asks that configured
+oracle to inspect the application-specific effect of that exact action. This
+check is independent of producer completion and cancellation recovery: the
+application effect may be observed while the input producer is still running.
+A verified task effect does not confirm input release, neutral readback, or
+recovery. The client provides only the action call ID; it cannot submit a
+success receipt or choose the oracle. The oracle must return the one-use
+receipt bound to that action's call ID, operation ID, target generation, and
+observation time window. A timeout, invalid or mismatched receipt, or repeated
+verification leaves the effect unknown and cannot be retried. Without an
+application-configured oracle, the tool is not registered and `task_success`
+remains null. This mechanism proves only the application-specific effect
+checked by that oracle.
+
+Native supervised-Win32 admission also uses a per-logon durable custody fence
+under `%LOCALAPPDATA%\Unjuno\AgentInterface\custody-v1`, serialized by a
+session-local named mutex. An admitted action remains fenced across MCP server
+replacement until normal completion confirms release, a pre-start refusal
+proves the producer gate stayed closed, or orphan recovery confirms release.
+The native fence factory refuses packaged processes (including Microsoft Store
+Python) with `CUSTODY_FENCE_PACKAGED_PROCESS_UNSUPPORTED` before creating state
+or changing ACLs. Packaged processes can see a private filesystem/registry view
+under the same logon namespace and miss the existing shared custody journal.
+An unavailable package-identity query also refuses. Use an unpackaged Python
+installation; changing interpreter must not reset or migrate existing custody.
+Unpackaged identity alone does not prove that different launcher contexts see
+the same physical store. Qualify that continuity before changing contexts.
+If the authority deadline expires during gated producer startup, the initial
+dispatch result is `not_dispatched` only when process identity was verified,
+the owner confirms the start gate stayed closed, the gated producer is retired,
+and the persistent fence confirms that exact producer is absent. The receipt
+keeps `input_dispatched=false`, `release_confirmed=false`, `task_success=null`,
+and `replay_allowed=false`; it does not claim an input release or task effect.
+That proven no-dispatch clears the pending fence and retires the target
+generation. If any witness is missing or authorization was attempted, preserve
+`unknown` and the unresolved fence for explicit recovery.
+After the producer starts, the Win32 backend also checks the absolute authority
+deadline before each task operation and each native input-down event. If a wait
+or earlier operation crosses expiry, later task operations are refused and
+verified input release still runs as cleanup. This is a cooperative boundary
+check; it cannot preempt a native call already in progress or make the clock
+check and `SendInput` atomic. A returned terminal result remains subject to the
+owner's completion and custody checks.
+After verified orphan recovery or proven no-dispatch cleanup, its source and
+recovery target generations remain retired across MCP server replacement;
+admission rejects them and requires a fresh target generation. Ordinary
+successful actions do not retire their generation. The journal retains the
+unresolved operation ID, target generation, input obligations, bounded phase
+fields, and at most 512 retired generation digests; it stores a digest of the
+Windows logon namespace, not the raw logon identifier. Missing, corrupt,
+mismatched, or full state fails closed. Do not manually delete these files to
+clear a fence.
+
+After recovered native dispatch, the exact `interface_results(call_id=...)`
+readback may retrieve `action.program_actions_lower_bound`, a lower-bound
+count of producer input calls, plus `program_actions_capture_status` and a
+bounded `program_actions_capture_error_code` when capture is unavailable.
+When recovery finishes asynchronously after the dispatch worker returns, this
+readback performs the one-shot capture. The durable dispatch witness is updated
+before the custody fence resolves. These fields do not prove task effect,
+continuous neutrality, or non-delivery beyond the retained counter's scope.
+The native producer also retains a bounded `action.program_operation_receipts`
+snapshot, projected in the same exact result row after producer retirement. It
+has one zero-based entry per frozen program operation, with the phase, number
+of `SendInput` attempts, returned event count, and local cursor-action count.
+`lease_refused_before_sendinput` identifies an operation whose deadline check
+refused it before that operation called `SendInput`. `sendinput_in_flight`
+means the child stopped after entering the call and before recording its return;
+delivery is UNKNOWN unless a positive returned count is already recorded.
+`sendinput_returned` records the most recent SendInput return, and
+`local_action_in_flight`/`local_action_returned` bracket cursor positioning.
+`completed` means the operation body returned. These are API receipts, not
+application delivery, consumption, or task effect. This diagnostic never
+upgrades UNKNOWN effect, release, task success, or replay eligibility. On an
+older/custom producer without this reader, capture is explicitly unavailable.
+Automatic Win32 recovery retains native helper receipts in the exact
+`interface_results` row's `cancellation.result.recovery_release_attempts`.
+Rows identify the release domain (`key_up`, `button_up`, or `unicode_up`),
+applicable key/button label, whether `SendInput` was called, its returned event
+count, and whether the call returned or raised. Keyboard recovery also exposes
+`action.recovery_release_key_up_attempts`, including the virtual-key value and
+the exact `virtual_key` or `scan_code` encoding. A returned native attempt means
+`SendInput` reported its event count; it does not prove delivery to the intended
+app, app consumption, or neutral input state. Those remain separate
+release/readback/horizon evidence.
+
+The native fence applies a protected DACL to its journal directory, journal
+files, and registry marker key. The DACL grants full access to the current
+user, SYSTEM, and local Administrators. ACL setup failure prevents the fence
+from initializing or reading custody. This limits access by other Windows
+accounts; it is not tamper-resistant against another process running as the
+same user or an administrator. Protect the user profile with the host's normal
+account controls; use a dedicated profile for experiments that require a
+stronger custody boundary.
+
+The default late-input horizon remains zero because no finite horizon has been
+qualified against native Windows input. For a controlled experiment that needs
+normal-completion or cancel/restart horizon evidence, set
+`--supervised-win32-late-input-horizon-ms` to a positive value from 1 to 60000.
+The independent observer samples the input state for that interval after its
+first neutral post-exit readback on normal completion, or after confirmed
+release during recovery. This is bounded sampled evidence, not a proof of
+continuous neutrality or that no later OS/application effect can occur. With
+zero, an UNKNOWN cancellation remains persistently fenced, and normal
+completion release alone does not clear the persistent fence.
+
+A retained live fixture discriminator illustrates the distinction: after one
+real A keydown and confirmed release, the route completed a verified 2 s
+input-state horizon, while the fixture's own 6 s GUI timer produced its
+application effect 3.953 s after the horizon. The timer was scheduled by the
+pre-release keydown; this is application-level asynchronous work, not evidence
+that Windows delivered a stale key event after the horizon. The raw packet is
+in [r07](../../research/integration/win32_live_delayed_input_recovery_20261110/r07/README.md).
+The public action correctly retained `task_success=null`; input neutrality and
+application task completion remain separate signals.
+
+`interface_close.release_confirmed` describes release performed by the close
+operation itself. A successful close retires the owned session but does not
+issue another input release, so this field remains false even when a retained
+completed-action or cancellation receipt independently confirms neutral input
+state. Inspect that exact action or cancellation result for its release
+evidence; do not interpret the close field as revoking or replacing it.
+
+This opt-in route has focused synthetic composition coverage and native Win32
+implementation, but does not establish atomic
+capture-to-input fencing, a hard physical release deadline, all blocked-I/O
+recovery classes, MAP01, matched efficiency, or broad reliability. Use only a
+fresh owned fixture or an explicitly assigned target; the server does not
+discover or launch targets.
+
+```sh
+python -m runtime.cli_v1.mcp_server \
+  --targets /absolute/one-window.json \
+  --output-directory /absolute/fresh-receipts \
+  --session-mode supervised-win32
+```
+
+## Caller-side compiled methods over supervised Win32
+
+`runtime.cli_v1.supervised_win32_compiled.run_public_compiled` composes the
+existing bounded compiled graph through a caller's standard
+`interface_observe` and `interface_dispatch` MCP calls. It is a Python caller
+adapter; the supervised Win32 MCP server does not register a new compiled
+endpoint. Supply one ordinary standard program template for each compiled
+action, an explicit client-region, and application-owned `perceive` and
+`verify_effect` callbacks. The callbacks receive both the retained raw
+observation report and the standard MCP reply (including its delivered image
+block when available). They are trusted caller code, not an independent task
+oracle.
+
+The adapter pins the SHA-256 `target_generation` returned by the first
+standard observation. A missing, malformed, or changed generation stops the
+graph before another dispatch. Each selected action receives a copied program
+template with a fresh local observation sequence, the configured target's
+generation, and new program/lease IDs; the standard Win32 admission still
+rechecks that generation before producer start. The adapter never retries a
+dispatch and returns the standard action call IDs so the caller can retrieve
+each action receipt. It also returns standard observation call IDs so callers
+can retrieve raw capture evidence. Separately invoke `interface_verify_task`
+for each action where configured. Its graph outcome is not task success:
+`task_success` remains null in this adapter's result; only the separate
+independent tool can return a verified task effect.
+
+After a pending dispatch result is joined by its exact `call_id`, the server
+may briefly remain busy while the dispatch response finishes. The caller
+retries read-only `interface_observe` on `busy` at most three times by default
+(10 ms between attempts), records those attempts, and yields if the bounded
+retry budget is exhausted. It never retries the dispatch.
+
+Callbacks are synchronous and trusted. A blocked observation, perception,
+dispatch transport, or effect verifier can block the caller; the compiled graph
+deadline cannot preempt it. This caller adapter does not add cancellation or
+durable recovery for the whole graph. Use it only with one live supervised
+server session, preserve returned observation/action call IDs, and treat a
+raised or uncertain call as no-replay until its standard custody receipt is
+reconciled.
+The local composition tests prove the configured fixture path through the
+standard MCP observation/dispatch operations; they do not prove native Win32
+behavior, physical release under blocked platform I/O, MAP01 success, or
+efficiency.
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \
@@ -291,6 +590,93 @@ review returns an image/source for new aliases. This is the bridge's focused
 window contract, not authenticated application identity or transient-family
 review. Aliases expire under the bridge's existing bounded lifetime and remain
 session-local. Closing or restarting does not revive them.
+
+In guarded owned-process mode with process-identity and query-worker options,
+`interface_guarded_window_metadata(window_id)` reads bounded title, class, role,
+transient/parent, mapped, focus, and process/window-incarnation cues for one
+explicit XID. It neither enumerates windows nor selects or focuses the supplied
+ID. These X11 properties are untrusted cues and do not authorize input into a
+dialog. A query failure retires the reader and requires closing/reviewing a
+fresh session. `interface_guarded_window_metadata_revalidate(metadata_call_id)`
+re-queries only a finished metadata call retained in this server's memory. Its
+source must be no older than 500 ms both before and after the fresh query,
+mapped, and focused before/after. It returns
+`revalidated` only if a fresh sample matches the exact XID, transient/parent,
+class/title/role cues, process incarnation and window incarnation. A filesystem
+report or caller-supplied metadata cannot replace that source. This remains
+observation only and does not create a dialog input reference or make Save-As
+supported.
+
+The registered `calc-ocr-save-v1` owned-process route reserves a call-local
+blank `task-artifact.fods` and binds its descriptor to the reviewed process
+generation, exact XID/PID/start-tick tuple, and fresh window incarnation. The
+verifier recomputes the generation from that tuple and checks that the later
+target-exit receipt has the same identity. The parent retains the descriptor
+and fixed-profile Ctrl+S request in its in-memory call ledger; the report file
+is presentation and cannot authorize task verification. The server must be
+started with guarded window lifecycle enabled; without it, the Calc endpoint
+rejects the request before creating an owner call or emitting input.
+`interface_verify_task(call_id)` is available only after the owner close receipt
+proves process retirement and neutral input release. The optional launch route
+opens the reserved FODS, but the fixed profile's Ctrl+S remains only a save
+request. Missing or unchanged saved bytes return UNKNOWN; parsed changed bytes
+also remain UNKNOWN until a trusted GUI save path proves that exact task
+document was saved. The route does not yet support Save-As or establish a
+successful Calc task.
+
+`interface_guarded_calc_prepare(attempt_id)` creates one blank server-owned
+FODS reservation. Its response reports `target_launch_status=not_attempted` and
+`parent_process_custody=not_established` because preparation itself does not
+launch Calc. Without launch configuration, pass its call ID as
+`prepared_call_id` to `interface_guarded_calc_compiled`; the parent-held
+reservation is consumed once and the artifact binds to the reviewed existing
+window generation. One reservation is allowed at a time and expires after five
+minutes.
+
+Preparation may also receive bounded `task_values` for A1/A2 and an optional
+`task_plan`. The values are copied into the parent-owned artifact descriptor
+and drive the registered input, OCR match, and independent post-close FODS
+score. The plan is a finite declarative graph with only the registered
+enter-pair and Save-request operations; it contains no coordinates, aliases,
+values, callbacks, or executable code. The parent retains and hashes the plan,
+binds it to fresh reviewed aliases at execution, and revalidates that binding
+against the released runtime receipt before accepting the Save custody receipt.
+This optional route has synthetic composed regression coverage; it does not
+establish live-provider efficiency, warm reuse, invalidation/repair, or
+cross-domain behavior.
+
+For the opt-in Debian LibreOffice launch path, provide both absolute executable
+paths when starting the server:
+
+```text
+--calc-launcher-executable /usr/lib/libreoffice/program/oosplash
+--calc-gui-executable /usr/lib/libreoffice/program/soffice.bin
+```
+
+This requires POSIX guarded-X11 mode, process identity, query worker, window
+lifecycle, an owned-process session, and exactly one configured X11 root
+window. The pinned oosplash/soffice.bin package contract is checked at launch.
+For this pinned Debian/Xvfb path the launcher sets
+`SAL_USE_VCLPLUGIN=gen`; live comparison showed the default backend mapped a
+focused Calc window while rendering a uniform gray frame, whereas `gen` rendered
+the Calc grid and menus. This environment override grants no input authority.
+The fixed Calc OCR profile runs one numeric-only PSM 6 pass on a 2x enlarged
+crop containing A1 and A2, preserving its existing per-cell confidence
+threshold. A retained live frame showed the previous whole-screen OCR reading
+correct transient values below threshold and yielding before Save. The crop/
+scale candidate currently has one exploratory blank/filled screenshot pair; a
+fresh live profile run is required before treating it as qualified. It does not
+establish a trusted saved effect.
+The public sequence is prepare, `interface_guarded_calc_launch`, inspect the
+returned candidate, then explicitly review that XID with
+`interface_guarded_review_window` before `interface_guarded_calc_compiled`.
+Discovery never focuses a window or grants input; profile execution is rejected
+until the exact candidate is reviewed and bound. Only one launch attempt is
+allowed per server. If discovery fails or the session closes while Calc is
+still running, bounded process-group cleanup is separate from a clean target
+exit receipt and cannot prove task success. This route connects launch and
+parent cleanup custody; it does not yet prove delayed-input recovery, trusted
+saved task effect, or an efficiency comparison.
 
 The immediate capture does not wait for redraw or establish semantic completion.
 `wait_update` is a bounded delay. CTRL+A emission does not prove selection, and
@@ -450,7 +836,20 @@ python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory
 
 Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
 
-Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
+Response writes are serialized on worker threads so a blocked client-facing
+stdout write does not immediately stop the JSON-lines reader. The relay keeps
+at most 16 ordinary response writes pending. At that bound it may read one
+bounded lookahead line past one deferred ordinary request, allowing a following
+valid `interface_guarded_cancel` to dispatch first. The earlier request keeps
+its ID and is considered after the cancellation response is successfully
+written. Only one cancellation response may use the reserved slot; while that
+response is pending, the relay dispatches no later tool. A failed cancellation
+response write terminates the relay. More than one ordinary request queued ahead
+can still delay cancellation until an output slot opens. This does not establish
+input release, server-side queue drainage, or a hard cancellation bound under
+sustained output blockage.
+
+Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by increasing IDs. During the single-line cancellation lookahead, one cancel ID may be accepted before the immediately preceding deferred ID; the relay tracks both and restores the sequence when it processes the deferred request. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
 Each request and response line is UTF-8 JSON, independent of the host locale.
 The pipe is read and written as bytes; malformed UTF-8 is refused before SDK
@@ -531,6 +930,14 @@ absolute `expires_at_ns` for a new program. The response contains a stable
 ID. Compare and keep that identity in your caller. Do not translate Windows
 wall/monotonic time into the sample or reuse it across execution hosts.
 
+The additive `clock_info` object reports the underlying `implementation`,
+`resolution` in seconds, `monotonic`, and `adjustable` from `time.get_clock_info`.
+The function name alone does not identify the underlying timer: Windows Python
+3.11 uses GetTickCount64, while Python 3.13 uses QueryPerformanceCounter. When
+an experiment requires QPC, qualify the actual implementation in every process
+and use the same interpreter for caller, server and spawned helpers. Metadata
+does not synchronize clocks or grant a deadline or input authority.
+
 For example, an explicitly authorized five-second validity window can be authored
 as `expires_at_ns = sample.monotonic_ns + 5_000_000_000`. Receipt/presentation and
 model waiting consume that window. An old sample is not renewed by reading
@@ -587,3 +994,68 @@ needed one explicit final observation because the first final frame was stale.
 separate initial partial-presentation STOP. These cases do not qualify generic
 render reliability, wait defaults, speed or token savings, and do not certify
 provider MCP conversion of the Python route.
+
+## Active visual-check worker
+
+Explicit `--guarded-observation-worker` additionally selects
+[active visual-check isolation](../guarded_x11_v1/OBSERVATION_WORKER.md), requiring
+the existing guarded process-identity and query-worker flags. It keeps active
+capture/observation persistence on a separate read-only client and fences late
+replies before source publication. Defaults retain existing behavior. This is
+Fake X qualified construction, not physical release, live recovery or task success.
+
+## Guarded release-only recovery
+
+`interface_guarded_recover_input(current_binding_revision=...)` exposes
+[one explicit recovery attempt](../guarded_x11_v1/RECOVERY.md) on an already open,
+idle guarded owner with unverified cleanup. It does not open/reconnect, observe or
+replay a task. Accepted attempts revoke old grounding and consume the revision
+even on failure. Verified neutrality still requires window review and fresh
+aliases for grounded editing. Pending native I/O remains pending; the busy slot
+prevents concurrent recovery/cleanup writers. Real platform timing and task
+effects remain unqualified.
+
+## Explicit response wait budget
+
+Guarded input and release-only recovery accept optional `wait_for_result_ms`
+(0..10000; default null preserves full await). [Wait semantics](WAIT_BUDGET.md)
+return either the original terminal result or pending with one call ID, unknown
+effects and no release/task confirmation. Queued/running work retains custody
+and may still execute; ending this wait does not cancel or permit replay. Read
+the original `interface_results(call_id)`. Other input/recovery/close remains busy
+until the writer finishes. This is a cooperative response wait, not a hard
+transport/OS/physical-release bound or a task-success predicate.
+
+Recovery accepts the same response-wait option but is not a cancellation target.
+It is one synchronous release-only transaction under the normal busy slot; a
+pending response means that exact recovery still owns the slot. Poll its call ID
+with `interface_results`; do not issue another recovery or use
+`interface_guarded_cancel` on the recovery call. Cancellation remains for
+guarded input and compiled calls with cooperative cancellation tokens whose
+uncertain owner retirement may need separate cleanup custody.
+
+## Public compiled X11 method
+
+`interface_guarded_compiled(interface, bindings, predicate_rules, effect_rules,
+wait_for_result_ms=1000)` composes the existing bounded compiled graph with the
+standard owned-process caller. The tool is registered only when
+`--session-mode guarded-x11`, `--guarded-process-identity`,
+`--guarded-query-worker`, and `--guarded-owned-process` are enabled. Use the
+`compiled_scope` and `compiled_surface` returned by an earlier guarded
+observation; bind actions only to aliases already minted by the guarded bridge.
+Predicate and effect rules are finite exact-pixel tables. Unknown pixel values
+remain unknown; this interface accepts no executable callbacks, OCR, generic
+vision, or task-specific scoring code.
+
+The process/window generation observed first is pinned for the invocation when
+present. A changed or missing generation stops continuation before another
+perception/effect verdict or input. A graph `TASK_SUCCEEDED` remains a method
+verdict and the public `task_success` field stays null. The method's transition
+and runtime bounds do not preempt blocking platform I/O. A short response wait
+returns a call ID while the same owner retains custody; retrieve it through
+`interface_results`. `interface_guarded_cancel(call_id)` may retire that owner.
+Retirement does not prove neutral input: report release as verified only when a
+separate native readback says so. Never repeat a pending or uncertain request.
+The local Fake X composition suite is construction evidence only; live GUI use,
+application task effects, MAP01, bounded physical release and matched efficiency
+remain unqualified.

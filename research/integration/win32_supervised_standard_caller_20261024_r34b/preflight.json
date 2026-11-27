@@ -1,0 +1,150 @@
+{
+  "checks": {
+    "frozen_commit_and_conditions_hash": true,
+    "frozen_packet_hashes_match": true,
+    "native_windows": true,
+    "predecessor_hashes_match": true,
+    "predecessor_semantics_match": true,
+    "registry_value_unchanged_absent": true,
+    "source_hashes_match": true,
+    "task_effect_oracle_matches_frozen_operations": true,
+    "trace_wrappers_fake_selftest": true,
+    "tracked_tree_clean": true
+  },
+  "conditions_sha256": "70a824a01177224c05b0206e2b91fe1e2944de3b4d9b09dc2207a681b4e18bea",
+  "frozen_packet_hashes": {
+    "PREPARATION.md": "90810b5422356ad1a784c0afb7ac02befc826fa06258d37bd8b21d1441f3f8c0",
+    "README.md": "308ddfa9993cbbcf117da0e902ff26adaa5bc96db60c323aebf46c4b2c8773b7",
+    "audit.py": "40bc331af6bf1a8de956ce12ef48df7ae566eacc93609216e795303ffc19e2d7",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "67b50ee4d3e6641f30a4e552a494cfa4770900f3f0f50ee71e95222d7d46dfb7",
+    "probe.py": "8ac8b7c4b0d5f98aea59cc8323a875535488759d0b026b45845d2b332248b309",
+    "trace_analysis.py": "b5f7c4ae94bba52b18cb3c28d49439b3e85b94b7e7d2b74293280364877094b4"
+  },
+  "instrumentation_smoke": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "R34_TRACE_SELFTEST_PASS\n",
+    "trace_events": [
+      {
+        "event": "sitecustomize_loaded",
+        "monotonic_ns": 489974952473000,
+        "pid": 45148
+      },
+      {
+        "event": "recovery_trace_wrappers_installed",
+        "monotonic_ns": 489975064212000,
+        "pid": 45148
+      },
+      {
+        "deadline_ns": 489976031000000,
+        "event": "exchange_enter",
+        "helper": "recovery",
+        "monotonic_ns": 489975065792900,
+        "pid": 45148,
+        "recovery_id": "smoke",
+        "request_id": "smoke"
+      },
+      {
+        "elapsed_ns": 11300,
+        "event": "exchange_return",
+        "helper": "recovery",
+        "monotonic_ns": 489975066020200,
+        "pid": 45148,
+        "request_id": "smoke",
+        "result_neutral": null,
+        "result_release_accepted": null
+      },
+      {
+        "event": "recover_enter",
+        "monotonic_ns": 489975066180900,
+        "operation_id": "op",
+        "pid": 45148,
+        "recovery_id": "rec"
+      },
+      {
+        "event": "release_all_enter",
+        "monotonic_ns": 489975066460500,
+        "pid": 45148
+      },
+      {
+        "event": "sendinput_enter",
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "monotonic_ns": 489975066666700,
+        "pid": 45148,
+        "scan_code": 0,
+        "vk": 81
+      },
+      {
+        "elapsed_ns": 25400,
+        "event": "sendinput_return",
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "monotonic_ns": 489975066832300,
+        "pid": 45148,
+        "scan_code": 0,
+        "vk": 81
+      },
+      {
+        "elapsed_ns": 10766400,
+        "event": "release_all_return",
+        "monotonic_ns": 489975077412000,
+        "pid": 45148,
+        "verified": true
+      },
+      {
+        "elapsed_ns": 11198800,
+        "event": "recover_return",
+        "monotonic_ns": 489975077639300,
+        "operation_id": "op",
+        "pid": 45148,
+        "recovery_id": "rec",
+        "release_accepted": true
+      }
+    ]
+  },
+  "native_input_sent": false,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "predecessor_hashes": {
+    "audit": "d9c72ee90dc8ab4e8ddd60132a7281a29c9f5472629993036f9602f7ea5db0f4",
+    "raw": "517db644ac8323cba32277ca05a1280b0efbd180cc3eedad8455cd84d1590b78",
+    "trace_diagnosis": "8d491f04fc1eb2bd8a20f8daaf49b6564230e431e9aa447d36ac5e2c0531365a"
+  },
+  "predecessor_semantics": {
+    "r33_exact_fixture_effect_and_cleanup": true,
+    "r33_lacked_distinct_post_return_q_up_hook_event": true,
+    "r33_proved_same_generation_q_down_before_cancel": true,
+    "r33_recovery_q_up_sendinput_returned_before_callback_release": true,
+    "r33_retained_twenty_hold_polls": true,
+    "r33_strict_fail_19_of_21": true
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "registry_read_only": {
+    "present": false,
+    "type": null,
+    "value": null
+  },
+  "schema": "win32-supervised-standard-caller-r34-preflight-v1",
+  "source_commit": "0526a4f358b95c47e8f1b1c63e7636382eb7a01a",
+  "source_sha256": {
+    "audit.py": "40bc331af6bf1a8de956ce12ef48df7ae566eacc93609216e795303ffc19e2d7",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "67b50ee4d3e6641f30a4e552a494cfa4770900f3f0f50ee71e95222d7d46dfb7",
+    "probe.py": "8ac8b7c4b0d5f98aea59cc8323a875535488759d0b026b45845d2b332248b309",
+    "trace_analysis.py": "b5f7c4ae94bba52b18cb3c28d49439b3e85b94b7e7d2b74293280364877094b4"
+  },
+  "status": "PASS",
+  "task_effect_oracle": {
+    "declared_text": "",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "text_operations": []
+  },
+  "utc": "2026-10-23T23:37:46.775976+00:00"
+}

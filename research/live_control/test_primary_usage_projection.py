@@ -37,6 +37,18 @@ class UsageProjectionTest(unittest.TestCase):
         self.assertNotIn('PRIVATE', json.dumps(result))
         self.assertIsNone(arm['cost_usd'])
 
+    def test_response_reused_across_windows_is_rejected(self):
+        selection = [dict(name='first', begin_call_id='a', end_call_id='a'),
+                     dict(name='second', begin_call_id='b', end_call_id='b')]
+        with self.assertRaisesRegex(ValueError, 'response identity crosses windows'):
+            project([call(), usage(), output(), call('b'), usage(), output('b')], selection)
+
+    def test_distinct_responses_across_windows_are_accepted(self):
+        selection = [dict(name='first', begin_call_id='a', end_call_id='a'),
+                     dict(name='second', begin_call_id='b', end_call_id='b')]
+        result = project([call(), usage(), output(), call('b'), usage('other'), output('b')], selection)
+        self.assertEqual([w['totals']['total_tokens'] for w in result['windows']], [120, 120])
+
     def test_conflicting_duplicate_rejected(self):
         with self.assertRaises(ValueError):
             project([call(), usage(), usage(inp=101), output()], SELECTION)

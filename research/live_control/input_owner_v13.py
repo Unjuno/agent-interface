@@ -112,35 +112,43 @@ class InputOwner(Previous):
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision
-            revision += 1
-            for code in list(held):
-                xtest.fake_input(d, X.KeyRelease, code)
-            for button in list(buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
-            mask = d.screen().root.query_pointer().mask
-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            # Cancellation may arrive during key-up synchronization and state
-            # verification; classify it immediately before recording the cause.
-            if reason == 'release' and active is not None and active.cancel.is_set():
-                reason = 'cancelled'
-            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None)
-            if active is not None and hasattr(active, 'record_interruption'):
-                active.record_interruption(record)
-            self.records.append(record)
-            if down or buttons_down:
-                raise RuntimeError('owner release not verified: ' + repr(down))
-            buttons.clear()
-            touched_buttons.clear()
-            held.clear()
-            touched.clear()
-            active = None
-            return record
+            nonlocal active, revision, fault
+            try:
+                revision += 1
+                for code in list(held):
+                    xtest.fake_input(d, X.KeyRelease, code)
+                for button in list(buttons):
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                d.sync()
+                mask = d.screen().root.query_pointer().mask
+                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+                bitmap = d.query_keymap()
+                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+                # Cancellation may arrive during key-up synchronization and state
+                # verification; classify it immediately before recording the cause.
+                if reason == 'release' and active is not None and active.cancel.is_set():
+                    reason = 'cancelled'
+                record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
+                              keys_down=down, verified_ns=time.perf_counter_ns(),
+                              valid_until_ns=active.deadline if active else None)
+                if active is not None and hasattr(active, 'record_interruption'):
+                    active.record_interruption(record)
+                self.records.append(record)
+                if down or buttons_down:
+                    raise RuntimeError('owner release not verified: ' + repr(down))
+                buttons.clear()
+                touched_buttons.clear()
+                held.clear()
+                touched.clear()
+                active = None
+                return record
+
+            except Exception as exc:
+                # An unverified release keeps held/touched state for cleanup,
+                # but must never leave the old lease authorized for new input.
+                fault = exc
+                active = None
+                raise
 
         try:
             while True:

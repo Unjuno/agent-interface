@@ -1,0 +1,83 @@
+"""Source-bound local counterexample; Fake X transport, no live application."""
+import contextlib,copy,hashlib,json,os,subprocess,sys,time,unittest
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'compiled-semantic-press-20261016'
+BASE='05e2a2197668246502810ed023724c4ee914828e'
+if len(sys.argv)>1:
+    from unittest.mock import patch
+    from PIL import Image
+    import research.live_control.test_compiled_native_caller_composition as fixture
+    from runtime.guarded_x11_v1.compiled import _Adapter
+    original_fake,original_execute=fixture.FakeX,_Adapter.execute
+    rows=[]
+    for arm in ('current','explicit_keyboard_guard'):
+        for change in ('stable','false','unknown','generation'):
+            case=fixture.CompiledNativeCallerTests();held={};witness=[]
+            def fake_factory(owner):
+                fake=original_fake(owner);held['fake']=fake;return fake
+            def execute(adapter,request):
+                if request['action']!='submit_form':return original_execute(adapter,request)
+                bridge=adapter.bridge;fake=held['fake'];before=bridge.sequence
+                selected=copy.deepcopy(adapter.latest)
+                if change in ('false','unknown'):
+                    image=Image.frombytes('RGB',(32,32),fake.raw,'raw','BGRX')
+                    image.putpixel((31,31),(0 if change=='false' else 3,0,0))
+                    fake.raw=image.tobytes('raw','BGRX')
+                if change=='generation':fake.generation='b'*64
+                perceive=adapter.perceive
+                def meaning(native,image):
+                    value=perceive(native,image)
+                    if image.getpixel((31,31))[0]==3:value['field_value_matches_task']='unknown'
+                    return value
+                adapter.perceive=meaning
+                checks=[]
+                def verify(stage,native,image):
+                    predicates=meaning(native,image)
+                    checks.append(dict(stage=stage,sequence=native['sequence'],predicates=predicates))
+                    return predicates.get('field_value_matches_task') is True
+                binding=adapter.bindings['submit_form']
+                guard=(bridge.input_guard('final_submit',binding['offset'],tail=binding['tail'],verify=verify)
+                    if arm=='explicit_keyboard_guard' else contextlib.nullcontext())
+                try:
+                    with guard:terminal=original_execute(adapter,request)
+                finally:
+                    images=[]
+                    for sequence in bridge.history:
+                        if sequence>before:
+                            native,image=bridge.history[sequence]
+                            images.append(dict(sequence=sequence,predicates=meaning(native,image),
+                                marker=image.getpixel((31,31))[0],native=copy.deepcopy(native)))
+                    witness.append(dict(selected=selected,frames=images,additional_checks=checks))
+                return terminal
+            try:
+                with patch.object(fixture,'FakeX',side_effect=fake_factory),patch.object(_Adapter,'execute',execute):
+                    row=case.cell()
+                row.update(arm=arm,change=change,witness=witness)
+                rows.append(row)
+            finally:case.doCleanups()
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'{mode}-records.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
+    report=[dict(arm=r['arm'],change=r['change'],emissions=r['emissions'],
+        caller=r['result']['outcome'],core=r['result']['compiled_execution_receipt']['outcome'],
+        reason=r['result']['compiled_execution_receipt']['reason'],
+        prefix=r['result']['compiled_execution_receipt']['completed_transitions'],
+        selected_value=r['witness'][0]['selected']['predicates']['field_value_matches_task'],
+        first_native_value=r['witness'][0]['frames'][0]['predicates']['field_value_matches_task'],
+        additional_checks=r['witness'][0]['additional_checks']) for r in rows]
+    (OUT/f'{mode}-result.json').write_text(json.dumps(dict(pid=os.getpid(),optimize=sys.flags.optimize,rows=report),indent=2)+'\n')
+    print(json.dumps(report,indent=2));sys.exit(0)
+OUT.mkdir(exist_ok=False)
+head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+if head!=BASE:raise ValueError('source changed')
+env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=str(ROOT));env.pop('DISPLAY',None)
+receipts=[]
+for mode,flags in [('normal',[]),('optimized',['-O'])]:
+    cmd=[sys.executable,*flags,str(Path(__file__)),'child'];start=datetime.now(timezone.utc).isoformat();t=time.monotonic_ns();run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+    for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]:(OUT/f'{mode}.{stream}').write_bytes(data)
+    receipts.append(dict(mode=mode,command=cmd,started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),elapsed_ns=time.monotonic_ns()-t,returncode=run.returncode))
+    if run.returncode:raise ValueError(run.stderr.decode(errors='replace'))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+(OUT/'CONDITIONS.json').write_text(json.dumps(dict(base=BASE,python=sys.version,scope='current compiled adapter plus explicit caller-owned keyboard guard control; Fake X transport and synthetic semantics only',probe_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),cases=4,arms=2,model_calls=0,native_display_input=False,independent_app_score=False),indent=2)+'\n')
+print(json.dumps(receipts,indent=2))

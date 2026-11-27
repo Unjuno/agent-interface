@@ -1,0 +1,13 @@
+# R38d — timestamped Win32 task-effect observation
+
+**Disposition: `PASS_SCOPED` for one native-Windows fixture sequence.** The 14-check input-free preflight passed. One public observation, one validation, one dispatch, five read-only result polls, and one server-side task-oracle call completed. The exact click/save/token effect was verified against the same call ID, operation ID, target generation, and oracle ID. The action receipt confirmed terminal release; the separate completion readback was neutral. The fixture exited with code 0 and foreground restoration was confirmed.
+
+The packet-local fixture recorded the save-file write start and completion, and the server oracle sampled `time.monotonic_ns()` before it read the effect and event log. The measurements share one Windows clock. The observation capture was recorded at 498549765000000 ns; dispatch began at 498549781000000 ns and returned `pending` at 498559781000000 ns. The fixture's save write start/end both read 498560578000000 ns; the producer execution ended at that same recorded time. The exact task oracle observed the matching effect at 498560843000000 ns and returned at 498560859000000 ns.
+
+The raw timestamp difference from the save-write reading to oracle observation is 265 ms. The host reports the `monotonic_ns` implementation as `GetTickCount64()` with 15.625 ms resolution, so this is a quantized measurement. The additive audit expands the effect-to-oracle interval to **249.375–280.625 ms**. Equal save-write readings mean the write interval was shorter than one reported clock quantum; they do not prove a zero-duration write. The exact application-state transition inside that write is not observed.
+
+The fixture's save event occurred about 797 ms after the caller received `pending`, within the same dispatch, and about 265 ms before the oracle observed the saved effect (with the clock-resolution interval above). This provides one end-to-end timing sample for a synthetic fixture. It is not a latency distribution or efficiency comparison: model tokens/calls and a matched baseline were not measured. It establishes no MAP01 behavior, broad reliability, real-app transfer, or WSLc result. WSLc and Docker were not used.
+
+R38, R38b, and R38c are preserved setup/pre-MCP failures with no input. R38d is the only live input attempt; it was not retried. The first frozen post-run audit and one additive audit script had schema lookup defects. Those failures are preserved; `audit_followup_v3.json` is the corrected additive audit over the unchanged raw files, with clock quantization included.
+
+See `conditions.json`, `PRERUN_CUSTODY.json`, `preflight.json`, `run/phase2_task/`, `audit_followup_v3.json`, and `SHA256SUMS` for the frozen conditions and evidence.

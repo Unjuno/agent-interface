@@ -1,0 +1,5 @@
+1. python3 -B -m unittest ... under Ubuntu Python 3.12.3 failed at import: Pillow was absent; no test body or X action ran.
+2. After a temporary venv install of Pillow and python-xlib, 7 proposal unit tests passed, then the composition module import failed because mcp was absent; no composition test body ran.
+3. Installing unpinned latest mcp 2.3.0 failed at import because the repository code uses the MCP v1 FastMCP API; no composition test body ran.
+4. Installing mcp<2 (resolved 1.30.0) reached the composition import, then failed because the test's calc_g10_fresh_admission_v1 support module is intentionally in an external current-main scratch fixture. No composition test body ran.
+5. Added that fixture directory to research.live_control.__path__, keeping the current-main repository package and tests first. Normal and optimized selected suites each then passed 10/10.

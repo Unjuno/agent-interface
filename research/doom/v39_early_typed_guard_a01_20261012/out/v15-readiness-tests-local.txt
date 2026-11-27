@@ -1,0 +1,125 @@
+test_inner_game_is_closed_when_final_sample_raises (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_inner_game_is_closed_when_final_sample_raises) ... ok
+test_reentrant_close_during_final_sample_does_not_repeat_cleanup (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_reentrant_close_during_final_sample_does_not_repeat_cleanup) ... ok
+test_repeated_close_reports_the_original_cleanup_failure (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_repeated_close_reports_the_original_cleanup_failure) ... ok
+test_sample_and_cleanup_errors_are_both_grouped (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_sample_and_cleanup_errors_are_both_grouped) ... ok
+test_session_unwind_preserves_controller_sample_and_close_errors (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_session_unwind_preserves_controller_sample_and_close_errors) ... ok
+test_successful_sample_preserves_inner_close_result_and_is_idempotent (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_successful_sample_preserves_inner_close_result_and_is_idempotent) ... ok
+test_wrapped_close_failure_is_replayed_without_a_false_success (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_wrapped_close_failure_is_replayed_without_a_false_success) ... ok
+test_v15_selects_release_ordered_executor_and_hashes_sources (research.doom.test_session_map01_v15.SessionSelectionTests.test_v15_selects_release_ordered_executor_and_hashes_sources) ... ok
+test_event_clock_v2_composes_with_receipts (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_event_clock_v2_composes_with_receipts) ... ERROR
+test_non_progress_payload_fails_closed (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_non_progress_payload_fails_closed) ... ERROR
+test_pipe_wait_samples_and_wakes_on_command (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_pipe_wait_samples_and_wakes_on_command) ... ERROR
+C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:622: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='r' encoding='cp932'>
+  with outcome.testPartExecutor(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_scorer_files_never_mark_controller_visible (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_scorer_files_never_mark_controller_visible) ... ERROR
+test_terminal_repeat_allowed_but_mutation_fails (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_terminal_repeat_allowed_but_mutation_fails) ... ERROR
+test_buffer_limit_fails_closed (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_buffer_limit_fails_closed) ... ok
+test_commands_and_samples_share_owner_thread (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_commands_and_samples_share_owner_thread) ... ok
+test_eof_with_empty_buffer_stops_cleanly (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_eof_with_empty_buffer_stops_cleanly) ... ok
+test_eof_with_partial_command_fails_closed (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_eof_with_partial_command_fails_closed) ... ok
+test_invalid_sample_rate_rejected (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_invalid_sample_rate_rejected) ... ok
+test_long_command_records_missed_periods (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_long_command_records_missed_periods) ... ok
+test_long_sample_records_missed_periods_without_catchup (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_long_sample_records_missed_periods_without_catchup) ... ok
+test_multiple_commands_in_one_read (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_multiple_commands_in_one_read) ... ok
+test_periodic_sampling_without_commands (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_periodic_sampling_without_commands) ... ok
+test_real_pipe_eof_and_same_thread (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_real_pipe_eof_and_same_thread) ... ERROR
+test_scorer_payload_never_enters_command_callback (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_scorer_payload_never_enters_command_callback) ... ok
+test_split_command_across_reads (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_split_command_across_reads) ... ok
+test_cleanup_winning_inside_up_batch_is_joined_through_backend (research.doom.test_release_batch_owner_race_composition.ReleaseBatchOwnerRaceTests.test_cleanup_winning_inside_up_batch_is_joined_through_backend) ... ok
+test_cancelled_pending_up_is_not_sent_to_revoked_lease (research.doom.test_release_batch_cancelled_lease.CancelledLeaseReleaseTests.test_cancelled_pending_up_is_not_sent_to_revoked_lease) ... ok
+test_failed_owner_cleanup_preserves_unattempted_up_disposition (research.doom.test_release_batch_cancelled_lease.CancelledLeaseReleaseTests.test_failed_owner_cleanup_preserves_unattempted_up_disposition) ... ok
+test_ordinary_pending_up_still_uses_up_batch (research.doom.test_release_batch_cancelled_lease.CancelledLeaseReleaseTests.test_ordinary_pending_up_still_uses_up_batch) ... ok
+test_multikey_release_batch_v3 (unittest.loader._FailedTest.test_multikey_release_batch_v3) ... ERROR
+test_authored_cover_still_uses_original_guard (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_authored_cover_still_uses_original_guard) ... ok
+test_completed_and_legacy_actions_preserve_authored_cover_reuse (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_completed_and_legacy_actions_preserve_authored_cover_reuse) ... ok
+test_cover_invalidation_receipt_distinguishes_preacceptance_from_cancel (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_cover_invalidation_receipt_distinguishes_preacceptance_from_cancel) ... ok
+test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release) ... ok
+test_observations_consumed_during_executor_ack_are_replayed_after_admission (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_observations_consumed_during_executor_ack_are_replayed_after_admission) ... ok
+test_production_action_ack_replay_follows_guard_admission_before_terminal_wait (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_production_action_ack_replay_follows_guard_admission_before_terminal_wait) ... ok
+test_production_initial_cover_rejection_branch_uses_caller_reset (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_production_initial_cover_rejection_branch_uses_caller_reset) ... ok
+test_rejected_action_followup_keeps_model_turn_alive_on_damage (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_rejected_action_followup_keeps_model_turn_alive_on_damage) ... ok
+test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral) ... ok
+test_running_invalidation_interrupts_planner_and_requires_verified_empty_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_running_invalidation_interrupts_planner_and_requires_verified_empty_release) ... ok
+test_running_invalidation_rejects_nonempty_or_unverified_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_running_invalidation_rejects_nonempty_or_unverified_release) ... ok
+test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in) ... ok
+test_soft_ack_observation_is_replayed_without_false_invalidation (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_soft_ack_observation_is_replayed_without_false_invalidation) ... ok
+test_stale_executor_rejection_replans_from_new_image_and_hud (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_stale_executor_rejection_replans_from_new_image_and_hud) ... ok
+test_stale_initial_cover_caller_recovers_fresh_planner_source_without_cancel (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_stale_initial_cover_caller_recovers_fresh_planner_source_without_cancel) ... ok
+test_stale_partial_action_does_not_reuse_discarded_remaining_cover (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_stale_partial_action_does_not_reuse_discarded_remaining_cover) ... ok
+
+======================================================================
+ERROR: test_event_clock_v2_composes_with_receipts (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_event_clock_v2_composes_with_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 22, in test_event_clock_v2_composes_with_receipts
+    sink=ScorerFileSink(Path(tmp))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sink() takes no arguments
+
+======================================================================
+ERROR: test_non_progress_payload_fails_closed (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_non_progress_payload_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 32, in test_non_progress_payload_fails_closed
+    sink=ScorerFileSink(Path(tmp))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sink() takes no arguments
+
+======================================================================
+ERROR: test_pipe_wait_samples_and_wakes_on_command (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_pipe_wait_samples_and_wakes_on_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 9, in test_pipe_wait_samples_and_wakes_on_command
+    sink=ScorerFileSink(Path(tmp))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sink() takes no arguments
+
+======================================================================
+ERROR: test_scorer_files_never_mark_controller_visible (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_scorer_files_never_mark_controller_visible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 17, in test_scorer_files_never_mark_controller_visible
+    sink=ScorerFileSink(Path(tmp));sample=ProgressSample(1,0,0,False,False,False)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sink() takes no arguments
+
+======================================================================
+ERROR: test_terminal_repeat_allowed_but_mutation_fails (research.doom.test_map01_scorer_stdio_adapter_v1.Tests.test_terminal_repeat_allowed_but_mutation_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 27, in test_terminal_repeat_allowed_but_mutation_fails
+    sink=ScorerFileSink(Path(tmp));base={'scheduled_ns':1,'sample_started_ns':1,'sample_finished_ns':1,'start_lateness_ns':0,'missed_periods_before':0}
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Sink() takes no arguments
+
+======================================================================
+ERROR: test_real_pipe_eof_and_same_thread (research.doom.test_main_thread_scorer_polling_v1.PollingTests.test_real_pipe_eof_and_same_thread)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\test_main_thread_scorer_polling_v1.py", line 173, in test_real_pipe_eof_and_same_thread
+    stats = loop.run(
+            ^^^^^^^^^
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\main_thread_scorer_polling_v1.py", line 125, in run
+    if not self.wait_readable(fd, timeout_s):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\codex-research\worktrees\v39-early-typed-guard-a01-20261012\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+======================================================================
+ERROR: test_multikey_release_batch_v3 (unittest.loader._FailedTest.test_multikey_release_batch_v3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_multikey_release_batch_v3
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'research.doom.test_multikey_release_batch_v3'
+
+
+----------------------------------------------------------------------
+Ran 46 tests in 0.072s
+
+FAILED (errors=7)

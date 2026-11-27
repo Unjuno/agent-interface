@@ -1,0 +1,28 @@
+F
+======================================================================
+FAIL: test_parent_custodied_calc_launch_is_opt_in_and_gates_profile (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_parent_custodied_calc_launch_is_opt_in_and_gates_profile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/runtime/cli_v1/test_mcp_owned_process.py", line 976, in test_parent_custodied_calc_launch_is_opt_in_and_gates_profile
+    self.assertEqual(entry['status'],'minted',entry)
+AssertionError: 'refused' != 'minted'
+- refused
++ minted
+ : {'operation': 'guarded_mint', 'task_success': None, 'replay_allowed': False, 'status': 'refused', 'error': "ValueError('handle region outside observation')", 'input_dispatched': False, 'session': {'session_id': '803deb4caae3473688428791a22bdef8', 'mode': 'guarded-x11-owned-process', 'state': 'open', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': False, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'compiled_scope': 'native-x11:6ba46efc82c54207b1ae8bb2a2f6b32c', 'compiled_surface': 'x11-window-20', 'observations': None, 'target_queries': {'retired': False, 'pending': False, 'thread_alive': True, 'close_error': None}, 'target': 'app', 'observation_sequence': 1, 'review_required': False, 'interrupted_execution': None, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_process_pid': 22, 'owner_x_client_resource_base': 18874368, 'owner_process': {'pid': 22, 'alive': True, 'liveness_observed_monotonic_ns': 5888254938832, 'exitcode': None, 'retired': False, 'release_confirmed': None, 'x_client_resource_base': 18874368}, 'owner_client_disconnect': None, 'owner_input_obligations_source': 'child_rpc_snapshot', 'owner_input_obligations_live_read': {'status': 'not_read'}, 'owner_release_attempt': None, 'cleanup_status': None}, 'call_directory': '/tmp/tmp8kkpesp6/1417f7b7c74543509b94318667d403f7', 'call_id': '1417f7b7c74543509b94318667d403f7'}
+
+----------------------------------------------------------------------
+Ran 1 test in 1.009s
+
+FAILED (failures=1)

@@ -1,0 +1,34 @@
+{
+  "audit_method": "Non-executing source identity and retained WSLc transcript audit; unittest was not rerun.",
+  "audit_status": "PASS_SCOPED",
+  "four_cases_present": true,
+  "limitations": [
+    "synthetic signal values",
+    "AST-extracted controller functions",
+    "no live cancel/release or game-control claim"
+  ],
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "passing_case_names": [
+    "test_health_floor_crossing_invalidates",
+    "test_mixed_epoch_fails_closed",
+    "test_within_envelope_pair_is_soft_and_non_authoritative",
+    "test_zero_ammo_floor_crossing_invalidates"
+  ],
+  "scope": "CONSTRUCTION_ONLY_SOURCE_MONITOR_BOUNDARY",
+  "source_checks": [
+    {
+      "byte_count_matches": true,
+      "git_blob_matches_freeze": true,
+      "sha256_matches_freeze": true,
+      "source": "map01_overlap_controller_v39.py"
+    },
+    {
+      "byte_count_matches": true,
+      "git_blob_matches_freeze": true,
+      "sha256_matches_freeze": true,
+      "source": "observable_signal_guard_v2.py"
+    }
+  ],
+  "test_sha256_matches_freeze": true,
+  "wslc_transcript_exit_zero": true
+}

@@ -1,0 +1,58 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r01",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-native-sendinput-recovery-20261023-r01",
+        "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154"
+      },
+      "name": "attempt_and_source_pinned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "platform": "Windows-10-10.0.26300-SP0",
+        "resource_commands": [],
+        "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner"
+      },
+      "name": "native_windows_and_no_wslc",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "name": "exactly_two_frozen_schedules",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect_after_close": null,
+        "effect_readback": null,
+        "event_count": 0,
+        "exit_code": null,
+        "fresh_generation": null,
+        "hwnd_gone": null,
+        "prior_generations": []
+      },
+      "name": "fresh_target_independent_task_effect",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "release": {},
+        "status": null
+      },
+      "name": "fresh_public_mcp_task_and_verified_release",
+      "passed": false
+    },
+    {
+      "evidence": [],
+      "name": "runner_cleanup_confirmed",
+      "passed": false
+    }
+  ],
+  "passed": 2,
+  "schema": "win32-native-sendinput-recovery-audit-v1",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 6
+}

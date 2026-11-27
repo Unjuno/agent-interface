@@ -1,0 +1,18 @@
+{
+  "scope": "two controlled post-key-down fault trials; not arbitrary crash or model-driven recovery",
+  "status": "audited",
+  "trials": [
+    {
+      "budget_ms": 2000,
+      "passed": false,
+      "reason": "deadline_refusal",
+      "trial": "two-second-refusal"
+    },
+    {
+      "a1": 731,
+      "budget_ms": 4000,
+      "passed": true,
+      "trial": "four-second-success"
+    }
+  ]
+}
