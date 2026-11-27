@@ -27,6 +27,18 @@ class Map01V39CoastTests(unittest.TestCase):
                 target_process_identity=True, target_window_lifecycle=False,
                 owned_input_service=True)
 
+    def test_owned_cancel_rotates_only_with_advertised_capability(self):
+        terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        with patch.object(controller,"rotate_retired_owner_after_cancel",return_value={"generation":1}) as rotate:
+            result=controller.recover_cover_owner_after_cancel_if_retired(
+                Namespace(stdin=object()),object(),terminal,minimum_sequence=7,
+                target_process_identity=True,target_window_lifecycle=False,
+                owned_input_service=True,owned_rotation_supported=True)
+        self.assertEqual(result,{"generation":1});rotate.assert_called_once()
+
     def test_owned_cancel_with_healthy_reader_does_not_stop(self):
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": {"verified": True, "keys_down": [], "buttons_down": [],

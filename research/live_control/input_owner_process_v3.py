@@ -12,6 +12,7 @@ import multiprocessing
 import os
 from pathlib import Path
 import socket
+import threading
 import sys
 import time
 import uuid
@@ -75,9 +76,11 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,can
     try:
         with factory(display=display,out=out,service_id=service_id) as owner:
             native=getattr(owner,'_inner',owner)
+            normal_close=threading.Event()
             if cancel_channel is not None:
                 from input_owner_cancel_v4 import CancellationService
-                relay=CancellationService(cancel_channel,display=display,service_id=service_id,owner_id=owner.owner_id)
+                relay=CancellationService(cancel_channel,display=display,service_id=service_id,
+                                          owner_id=owner.owner_id,normal_close=normal_close)
             startup=dict(schema='owned-owner-startup-v3',service_id=service_id,display=display,
                          pid=os.getpid(),parent_pid=os.getppid(),supervisor_pid=supervisor_pid,
                          owner_id=owner.owner_id,started_perf_ns=time.perf_counter_ns(),
@@ -88,7 +91,7 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,can
             startup_hash=publish_json_exclusive(out/'startup.json',startup)
             ready.send(dict(ok=True,startup=startup));ready.close()
             try:
-                options=dict(lease_registry=relay.registry) if relay is not None else {}
+                options=dict(lease_registry=relay.registry,on_verified_close=normal_close.set) if relay is not None else {}
                 core=rpc.serve_owner(channel,owner,display=display,service_id=service_id,**options)
             except BaseException as error:
                 service_error=type(error).__name__+': '+str(error)

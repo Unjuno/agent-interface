@@ -1167,7 +1167,8 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
 
 def recover_cover_owner_after_cancel_if_retired(
         process, wait, terminal, *, minimum_sequence,
-        target_process_identity, target_window_lifecycle, owned_input_service):
+        target_process_identity, target_window_lifecycle, owned_input_service,
+        owned_rotation_supported=False):
     """Handle a retired identity reader before replanning after cancellation.
 
     An owned service has no qualified generation transition yet, so stop before
@@ -1179,16 +1180,17 @@ def recover_cover_owner_after_cancel_if_retired(
     lifecycle is explicitly supported; transferred owners and window-lifecycle
     readers have separate custody contracts.
     """
-    flags = (target_process_identity, target_window_lifecycle, owned_input_service)
+    flags = (target_process_identity, target_window_lifecycle, owned_input_service, owned_rotation_supported)
     if any(type(value) is not bool for value in flags):
         raise ValueError("boolean owner-recovery route selection required")
-    if (owned_input_service and target_process_identity and type(terminal) is dict
+    if (owned_input_service and not owned_rotation_supported and target_process_identity and type(terminal) is dict
             and terminal.get("status") == "cancelled"):
         release = terminal.get("release")
         reader = release.get("target_process_identity_reader") if type(release) is dict else None
         if type(reader) is dict and reader.get("retired") is True:
             raise RuntimeError("retired identity reader: owned service recovery unavailable")
-    if (not target_process_identity or target_window_lifecycle or owned_input_service
+    if (not target_process_identity or target_window_lifecycle
+            or (owned_input_service and not owned_rotation_supported)
             or type(terminal) is not dict or terminal.get("status") != "cancelled"):
         return None
     return rotate_retired_owner_after_cancel(
@@ -1891,6 +1893,9 @@ def main():
         failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
         failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
+        operations = ready.get("operations")
+        owned_rotation_supported = (type(operations) is list and
+            "rotate_input_owner" in operations and "refresh_owner_source" in operations)
         if args.renewal_passive_observer and "probe_cover_renewal" not in ready.get("operations", []):
             raise RuntimeError("required passive renewal transport is unavailable")
         if args.post_load_clock_gate:
@@ -1914,7 +1919,8 @@ def main():
                     process, wait, terminal, minimum_sequence=latest["sequence"],
                     target_process_identity=args.target_process_identity,
                     target_window_lifecycle=args.target_window_lifecycle,
-                    owned_input_service=args.owned_input_service)
+                    owned_input_service=args.owned_input_service,
+                    owned_rotation_supported=owned_rotation_supported)
                 if rotation is not None:
                     latest = rotation["source_observation"]
                     owner_generation_rotations.append(
@@ -2545,8 +2551,10 @@ def main():
                             process, wait, terminal, minimum_sequence=latest["sequence"],
                             target_process_identity=args.target_process_identity,
                             target_window_lifecycle=args.target_window_lifecycle,
-                            owned_input_service=args.owned_input_service)
+                            owned_input_service=args.owned_input_service,
+                            owned_rotation_supported=owned_rotation_supported)
                         if rotation is not None:
+                            latest=rotation["source_observation"]
                             owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:
                     terminal=boundary
