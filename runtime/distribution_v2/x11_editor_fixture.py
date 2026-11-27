@@ -3,7 +3,16 @@ from Xlib import X, XK, display
 root=pathlib.Path(sys.argv[1]);connection=display.Display();screen=connection.screen()
 window=screen.root.create_window(20,20,300,150,0,screen.root_depth,X.InputOutput,X.CopyFromParent,
     background_pixel=0x334455,event_mask=X.KeyPressMask|X.KeyReleaseMask)
-window.map();connection.sync()
+window.map()
+if len(sys.argv)>2 and sys.argv[2]=='textured':
+    window.set_input_focus(X.RevertToParent,X.CurrentTime)
+    screen.root.warp_pointer(68,68)
+    gc=window.create_gc(foreground=0xffffff)
+    for row in range(10):
+        for col in range(18):
+            if (row+col)%2==0:
+                window.fill_rectangle(gc,col*16,row*16,16,16)
+connection.sync()
 (root/'app-ready.json').write_text(json.dumps({'window_id':window.id,'pid':os.getpid()}),encoding='utf-8')
 text=''
 with (root/'app-events.jsonl').open('x',encoding='utf-8',buffering=1) as log:
