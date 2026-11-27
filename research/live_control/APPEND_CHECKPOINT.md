@@ -4,6 +4,15 @@ append_checkpoint_v1 stores canonical JSON frames containing version,index,previ
 
 The loader validates every frame's sequence/hash chain and refuses empty, malformed, oversized, torn or corrupt files. It does not drop a partial tail or silently return a previous state. Bounds are256 records,1MiB per frame and16MiB total, with no automatic reset/compaction. It assumes a trusted local file and cooperating single writer; hashes are damage detection, not authentication, and cannot detect replacement/truncation to an earlier complete valid journal. Power loss and filesystem rollback remain unproven.
 
+A new command requires two available record slots: one for the pre-send
+uncertainty checkpoint and one for its reply. If only one record slot remains,
+`durable_submit_v4` refuses the command before transport and leaves the journal
+unchanged. A command-free recovery read can still use that last slot to record
+an already-pending result. This reserves record count only: an oversized reply,
+the separate byte/frame limits, a sync failure, process loss or power loss can
+still prevent the post-reply checkpoint, and uncertainty must remain visible.
+It does not extend the 256-record lifetime or add compaction.
+
 ## Recovery evidence before timing
 
 probe_append_checkpoint_v1/results/append-checkpoint-01: partial tail, invalid JSON, repeated frame and changed payload all refuse before transport and preserve bytes. Injected fsync failure during the pre-send commit propagates before transport; a complete pending frame remains readable and the next command is blocked. This tests process-visible uncertainty, not physical durability after failed sync. At256 records the next append refuses without changing bytes. Zero transport calls in these controls. Corrupt journals currently block reads through this wrapper too; no automatic salvage or independent runtime reconciliation UI is implemented.
