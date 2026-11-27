@@ -223,7 +223,9 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
             meta.outcome_summary.error === null : meta.status === 'completed';
           if (!completed || meta.image_status !== 'image' || !releases?.length ||
               releases.some(r => r.verified !== true || !Array.isArray(r.keys_down) ||
-                r.keys_down.length !== 0 || !Array.isArray(r.buttons_down) || r.buttons_down.length !== 0)) {
+                r.keys_down.length !== 0 || !Array.isArray(r.buttons_down) || r.buttons_down.length !== 0 ||
+                ['keys_unknown', 'key_state_errors'].some(field => field in r &&
+                  (!Array.isArray(r[field]) || r[field].length !== 0)))) {
             stop('incomplete input or unverified neutral release');
           }
           if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {
