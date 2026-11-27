@@ -34,6 +34,23 @@ class AcceptanceHelpers(unittest.TestCase):
                 self.assertEqual(json.loads((out / '02-setup.json').read_text()), row)
                 run_step.assert_not_called()
 
+    def test_invalid_existing_venv_stops_live_acceptance_before_doctor(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'
+            (root / 'runtime' / '.venv').mkdir(parents=True)
+            preflight = {'name': 'preflight', 'returncode': 0, 'parsed_json': None}
+            with (mock.patch.object(mod, 'run_step', return_value=preflight) as run,
+                  mock.patch.object(sys, 'argv', ['accept', '--root', str(root),
+                                                 '--out', str(out), '--live',
+                                                 '--install-dependencies']),
+                  mock.patch('builtins.print')):
+                self.assertEqual(mod.main(), 1)
+            self.assertEqual([call.args[3] for call in run.call_args_list], ['preflight'])
+            report = json.loads((out / 'acceptance.json').read_text())
+            self.assertFalse(report['passed'])
+            self.assertEqual(report['failed_step'], 'setup')
+            self.assertEqual(report['steps'][-1]['status'], 'invalid_existing_venv')
+
     @mock.patch.object(mod.subprocess, 'run')
     def test_run_step_retains_stdout_stderr_and_json(self, run):
         run.return_value=FakeCompleted(stdout='{"passed": true}\n', stderr='note\n')
