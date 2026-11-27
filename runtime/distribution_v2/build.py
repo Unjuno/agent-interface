@@ -99,6 +99,7 @@ SOURCE_FILES = (
     "runtime/guarded_x11_v1/calc_symbolic_plan_v1.py",
     "runtime/guarded_x11_v1/calc_task_artifact_v1.py",
     "runtime/guarded_x11_v1/cancel_supervisor.py",
+    "runtime/guarded_x11_v1/private_display_owner.py",
     "runtime/guarded_x11_v1/owned_xlib_connector.py",
     "runtime/guarded_x11_v1/pidfd_transfer.py",
     "runtime/guarded_x11_v1/pixel_profile.py",

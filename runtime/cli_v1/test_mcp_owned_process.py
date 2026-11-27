@@ -4404,6 +4404,52 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             await asyncio.sleep(0.01)
         self.fail('cancellation did not reach a terminal receipt before the test deadline')
 
+    @unittest.skipUnless(shutil.which('Xvfb') and shutil.which('xauth'),
+                         'Xvfb and xauth required')
+    async def test_public_server_owns_private_display_lifecycle(self):
+        from Xlib import display
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            display_owner = PrivateDisplayOwner(root / 'private-display')
+            session = display_owner.start(timeout_s=5)
+            with patch.dict(os.environ, {'XAUTHORITY':str(session.authority)}):
+                connection = display.Display(session.display)
+            try:
+                screen = connection.screen()
+                app_window = screen.root.create_window(
+                    20, 20, 320, 200, 0, screen.root_depth,
+                    X.InputOutput, X.CopyFromParent)
+                app_window.map()
+                connection.sync()
+                target_window = app_window.id
+            finally:
+                pass
+            server = create_server(
+                {'app':target_window}, root / 'server',
+                display_name=session.display, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                guarded_prestarted_cancel_supervisor=True,
+                _guarded_owned_display_owner=display_owner,
+                _guarded_xauthority=str(session.authority))
+            try:
+                async with server.settings.lifespan(server):
+                    observed = metadata(await server.call_tool(
+                        'interface_guarded_observe', {}))
+                    self.assertEqual(observed['status'], 'observed', observed)
+                    close = metadata(await server.call_tool('interface_close', {}))
+                    self.assertEqual(close['owned_display_close']['status'],
+                                     'retired', close)
+                    self.assertTrue(close['owned_display_cleanup_verified'], close)
+                self.assertIsNotNone(display_owner._process.poll())
+            finally:
+                display_owner.close(timeout_s=3)
+                try:
+                    connection.close()
+                except Exception:
+                    pass
+
     async def test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
