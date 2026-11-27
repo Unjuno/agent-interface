@@ -254,6 +254,8 @@ class StartupCloseFenceTests(unittest.TestCase):
                 with self.assertRaisesRegex(OSError,'second pipe failed') as caught:owner._ensure_started()
             self.assertEqual([h.calls for h in context.first],[1,1])
             self.assertIn(context.first[0],owner._unclosed_startup_handles)
+            self.assertEqual(owner.snapshot()['startup_handle_cleanup'],
+                             {'status':'unknown','unconfirmed_handles':1})
             self.assertIn('OSError',' '.join(getattr(caught.exception,'__notes__',[])))
             self.assertIsNot(owner.close()['verified'],True)
             self.assertEqual(context.first[0].calls,1)
@@ -270,6 +272,30 @@ class StartupCloseFenceTests(unittest.TestCase):
                 with self.assertRaisesRegex(OSError,'original start error') as caught: owner._ensure_started()
             self.assertIs(owner._starting_process,child)
             self.assertIn('RuntimeError',' '.join(getattr(caught.exception,'__notes__',[])))
+            self.assertIsNot(owner.close()['verified'],True)
+
+    def test_post_spawn_child_pipe_close_error_is_not_retried(self):
+        class Tracked(Conn):
+            def __init__(self, fail=False): self.calls=0; self.fail=fail
+            def close(self):
+                self.calls+=1
+                if self.fail:raise OSError('child close ambiguous')
+        class PipeContext(Context):
+            def __init__(self, process):
+                super().__init__(process);self.first=(Tracked(),Tracked(True));self.second=(Tracked(),Tracked());self.calls=0
+            def Pipe(self, duplex=True):
+                self.calls+=1
+                return self.first if self.calls==1 else self.second
+        child=Process(threading.Event(),threading.Event()); child.resume.set()
+        context=PipeContext(child)
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=context):
+                with self.assertRaisesRegex(OSError,'child close ambiguous'):owner._ensure_started()
+            self.assertEqual(context.first[1].calls,1)
+            self.assertIn(context.first[1],owner._unclosed_startup_handles)
+            self.assertEqual([context.first[0].calls,context.second[0].calls,context.second[1].calls],[1,1,1])
+            self.assertFalse(child.is_alive())
             self.assertIsNot(owner.close()['verified'],True)
 
     def test_failed_partial_allocation_does_not_report_verified_close(self):

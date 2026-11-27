@@ -461,6 +461,20 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             raise RuntimeError('owned guarded session unavailable: ' + self.state)
         context = multiprocessing.get_context('spawn')
         allocated = []
+
+        def close_startup_handle(connection):
+            # Remove before calling close: an exception may occur after the
+            # descriptor was closed, so a blind retry is not safe.
+            for index, candidate in enumerate(allocated):
+                if candidate is connection:
+                    allocated.pop(index)
+                    break
+            try:
+                connection.close()
+            except BaseException:
+                self._unclosed_startup_handles.append(connection)
+                raise
+
         try:
             rpc_parent, rpc_child = context.Pipe(duplex=True)
             allocated.extend((rpc_parent, rpc_child))
@@ -482,13 +496,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                       self._owner_factory, input_obligations_state),
                 name='guarded-x11-owner-' + self.session_id[:8])
         except BaseException as allocation_error:
-            for connection in allocated:
+            for connection in tuple(allocated):
                 try:
-                    connection.close()
-                except Exception as cleanup_error:
-                    # Close can fail after changing handle state. Retain the
-                    # reference and do not retry an ambiguous close implicitly.
-                    self._unclosed_startup_handles.append(connection)
+                    close_startup_handle(connection)
+                except BaseException as cleanup_error:
                     allocation_error.add_note(
                         'startup handle close failed: ' + type(cleanup_error).__name__)
             raise
@@ -503,8 +514,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             if cancelled_before_start:
                 raise RuntimeError('owned startup cancelled before process start')
             process.start()
-            rpc_child.close()
-            control_child.close()
+            close_startup_handle(rpc_child)
+            close_startup_handle(control_child)
             self._process, self._rpc, self._control = process, rpc_parent, control_parent
             if not rpc_parent.poll(_STARTUP_TIMEOUT_S):
                 self._execution_unknown = True
@@ -543,11 +554,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     startup_error.add_note('startup retirement failed: ' + type(cleanup_error).__name__)
             if self.state == 'opening':
                 self.state = 'failed'
-            for connection in (rpc_parent, control_parent, rpc_child, control_child):
+            for connection in tuple(allocated):
                 try:
-                    connection.close()
-                except OSError:
-                    pass
+                    close_startup_handle(connection)
+                except BaseException as cleanup_error:
+                    startup_error.add_note(
+                        'startup handle close failed: ' + type(cleanup_error).__name__)
             raise
 
     def _request_locked(self, operation, arguments=None):
@@ -632,6 +644,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    owner_release_attempt=deepcopy(self._owner_release_attempt),
                    cleanup_status='UNKNOWN' if execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
+        unclosed = len(getattr(self, '_unclosed_startup_handles', ()))
+        if unclosed:
+            row['startup_handle_cleanup'] = {'status':'unknown',
+                                             'unconfirmed_handles':unclosed}
         if getattr(self, '_calc_process_group_custody', None) is not None:
             row['calc_process_group_custody'] = deepcopy(
                 self._calc_process_group_custody)
