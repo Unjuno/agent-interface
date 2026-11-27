@@ -53,6 +53,11 @@ _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
 _OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192
 _OWNER_INPUT_OBLIGATIONS_MAGIC = b'AIOL'
 _OWNER_INPUT_OBLIGATIONS_HEADER_SIZE = 40
+_LIFECYCLE_FALLBACK_LOCK = threading.RLock()
+
+
+class OwnedReplyAfterRetirement(RuntimeError):
+    """An owner response arrived after retirement started."""
 
 
 def _publish_owner_input_obligations(shared_state, keys, buttons):
@@ -351,6 +356,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._control = None
         self._process = None
         self._rpc_lock = threading.Lock()
+        self._lifecycle_lock = threading.RLock()
+        self._lifecycle_epoch = 0
+        self._retiring = False
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
@@ -362,6 +370,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._owner_input_obligations_live_read = {'status':'not_read'}
         self._owner_release_attempt = None
         self.review_required = False
+
+    def _lifecycle_guard(self):
+        return getattr(self, '_lifecycle_lock', _LIFECYCLE_FALLBACK_LOCK)
+
+    def _lifecycle_version(self):
+        with self._lifecycle_guard():
+            if getattr(self, '_retiring', False):
+                raise OwnedReplyAfterRetirement('owned guarded session is retiring')
+            return getattr(self, '_lifecycle_epoch', 0)
 
     def _apply_snapshot(self, snapshot):
         self._snapshot_cache = deepcopy(snapshot)
@@ -457,20 +474,28 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             raise
 
     def _request_locked(self, operation, arguments=None):
+        # Close retains its existing cleanup semantics; this fence covers ordinary RPCs.
+        version = None if operation == 'close' else self._lifecycle_version()
         self._ensure_started()
         if self._rpc is None:
             raise RuntimeError('owned guarded RPC channel unavailable')
         self._rpc.send({'operation':operation, 'arguments':arguments or {}})
         response = self._rpc.recv()
         snapshot = response.get('snapshot')
-        if isinstance(snapshot, dict):
-            self._apply_snapshot(snapshot)
-        if response.get('ok') is not True:
-            self._execution_unknown = True
-            self.review_required = True
-            raise RuntimeError(response.get('error_type', 'owned_call_failed') + ': ' +
-                               response.get('error', ''))
-        return response.get('result')
+        with self._lifecycle_guard():
+            if version is not None and (getattr(self, '_retiring', False)
+                    or getattr(self, '_lifecycle_epoch', 0) != version):
+                self._execution_unknown = True
+                self.review_required = True
+                raise OwnedReplyAfterRetirement('owned guarded response arrived after retirement')
+            if isinstance(snapshot, dict):
+                self._apply_snapshot(snapshot)
+            if response.get('ok') is not True:
+                self._execution_unknown = True
+                self.review_required = True
+                raise RuntimeError(response.get('error_type', 'owned_call_failed') + ': ' +
+                                   response.get('error', ''))
+            return response.get('result')
 
     def _call(self, method, **arguments):
         with self._rpc_lock:
@@ -1066,9 +1091,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     late_server_request_possible=True)
 
     def _retire(self, reason):
-        process = self._process
-        if process is None:
-            return {'retired':False, 'exitcode':None, 'reason':reason}
+        with self._lifecycle_guard():
+            process = self._process
+            if process is None:
+                return {'retired':False, 'exitcode':None, 'reason':reason}
+            self._retiring = True
+            self._lifecycle_epoch = getattr(self, '_lifecycle_epoch', 0) + 1
         kill_escalated = False
         if process.is_alive():
             process.terminate()
