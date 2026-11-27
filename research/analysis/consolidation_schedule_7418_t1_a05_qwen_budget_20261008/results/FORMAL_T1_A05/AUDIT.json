@@ -1,0 +1,151 @@
+{
+  "accuracies": {
+    "4501/batch_2": 0.5666666666666667,
+    "4501/episodic_only": 0.26666666666666666,
+    "4501/per_episode": 0.43333333333333335,
+    "4501/terminal": 0.6333333333333333,
+    "4502/batch_2": 0.5666666666666667,
+    "4502/episodic_only": 0.26666666666666666,
+    "4502/per_episode": 0.43333333333333335,
+    "4502/terminal": 0.6333333333333333,
+    "4503/batch_2": 0.5666666666666667,
+    "4503/episodic_only": 0.26666666666666666,
+    "4503/per_episode": 0.4,
+    "4503/terminal": 0.6333333333333333
+  },
+  "consolidation_rows": 30,
+  "consolidation_updates_per_seed_arm": {
+    "4501/batch_2": 3,
+    "4501/episodic_only": 0,
+    "4501/per_episode": 6,
+    "4501/terminal": 1,
+    "4502/batch_2": 3,
+    "4502/episodic_only": 0,
+    "4502/per_episode": 6,
+    "4502/terminal": 1,
+    "4503/batch_2": 3,
+    "4503/episodic_only": 0,
+    "4503/per_episode": 6,
+    "4503/terminal": 1
+  },
+  "decision": "PASS_CADENCE_SENSITIVITY_SCOPED",
+  "errors": [],
+  "max_abs_accuracy_difference": 0.366667,
+  "paired_accuracy_differences": {
+    "4501:batch_2-terminal": -0.066667,
+    "4501:episodic_only-batch_2": -0.3,
+    "4501:episodic_only-per_episode": -0.166667,
+    "4501:episodic_only-terminal": -0.366667,
+    "4501:per_episode-batch_2": -0.133333,
+    "4501:per_episode-terminal": -0.2,
+    "4502:batch_2-terminal": -0.066667,
+    "4502:episodic_only-batch_2": -0.3,
+    "4502:episodic_only-per_episode": -0.166667,
+    "4502:episodic_only-terminal": -0.366667,
+    "4502:per_episode-batch_2": -0.133333,
+    "4502:per_episode-terminal": -0.2,
+    "4503:batch_2-terminal": -0.066667,
+    "4503:episodic_only-batch_2": -0.3,
+    "4503:episodic_only-per_episode": -0.133333,
+    "4503:episodic_only-terminal": -0.366667,
+    "4503:per_episode-batch_2": -0.166667,
+    "4503:per_episode-terminal": -0.233333
+  },
+  "per_seed_arm_metrics": {
+    "4501/batch_2": {
+      "calls": 30,
+      "completion_tokens": 615,
+      "duration_ms": 24558,
+      "errors": 0,
+      "prompt_tokens": 8161
+    },
+    "4501/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 30808,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4501/per_episode": {
+      "calls": 30,
+      "completion_tokens": 642,
+      "duration_ms": 24911,
+      "errors": 0,
+      "prompt_tokens": 8621
+    },
+    "4501/terminal": {
+      "calls": 30,
+      "completion_tokens": 459,
+      "duration_ms": 18695,
+      "errors": 0,
+      "prompt_tokens": 6371
+    },
+    "4502/batch_2": {
+      "calls": 30,
+      "completion_tokens": 615,
+      "duration_ms": 24145,
+      "errors": 0,
+      "prompt_tokens": 8161
+    },
+    "4502/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 29182,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4502/per_episode": {
+      "calls": 30,
+      "completion_tokens": 642,
+      "duration_ms": 25879,
+      "errors": 0,
+      "prompt_tokens": 8621
+    },
+    "4502/terminal": {
+      "calls": 30,
+      "completion_tokens": 459,
+      "duration_ms": 18908,
+      "errors": 0,
+      "prompt_tokens": 6371
+    },
+    "4503/batch_2": {
+      "calls": 30,
+      "completion_tokens": 615,
+      "duration_ms": 25565,
+      "errors": 0,
+      "prompt_tokens": 8161
+    },
+    "4503/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 27284,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4503/per_episode": {
+      "calls": 30,
+      "completion_tokens": 641,
+      "duration_ms": 25579,
+      "errors": 0,
+      "prompt_tokens": 8621
+    },
+    "4503/terminal": {
+      "calls": 30,
+      "completion_tokens": 459,
+      "duration_ms": 19245,
+      "errors": 0,
+      "prompt_tokens": 6371
+    }
+  },
+  "qualifying_consistent_contrasts": [
+    "episodic_only vs per_episode: [-0.166667, -0.166667, -0.133333]",
+    "episodic_only vs batch_2: [-0.3, -0.3, -0.3]",
+    "episodic_only vs terminal: [-0.366667, -0.366667, -0.366667]",
+    "per_episode vs batch_2: [-0.133333, -0.133333, -0.166667]",
+    "per_episode vs terminal: [-0.2, -0.2, -0.233333]"
+  ],
+  "query_rows": 360,
+  "rows": 390,
+  "scope": "single synthetic ledger, one local model family, three fixed seeds; no GUI/product/action inference",
+  "status": "PASS_METHOD"
+}
