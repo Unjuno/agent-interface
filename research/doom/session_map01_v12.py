@@ -579,6 +579,15 @@ def close_before_control_effect(executor, out, emit, operation):
     raise RuntimeError("input retirement is unresolved; control effect refused")
 
 
+def supports_owner_generation_rotation(backend):
+    """Advertise only explicitly qualified owner-generation implementations."""
+    if (not callable(getattr(backend, "rotate_input_owner_after_cancel", None))
+            or getattr(backend, "window_identity", None) is not None):
+        return False
+    return (getattr(backend, "_provided_input_owner", None) is None
+            or getattr(backend, "owned_generation_rotation_supported", False) is True)
+
+
 def main(*, post_load_gate=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -867,9 +876,7 @@ def main(*, post_load_gate=None):
 
             probe_delivery = PassiveProbeDelivery(check_probe_source, backend.capture_cover_renewal, emit)
             operations.append("probe_cover_renewal")
-        if (callable(getattr(backend, "rotate_input_owner_after_cancel", None))
-                     and getattr(backend, "window_identity", None) is None
-                     and getattr(backend, "_provided_input_owner", None) is None):
+        if supports_owner_generation_rotation(backend):
             operations.append("rotate_input_owner")
             operations.append("refresh_owner_source")
         if args.fixture_out is not None:

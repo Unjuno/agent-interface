@@ -29,6 +29,31 @@ if sys.argv[2] == "wait":
 """
 
 
+class LeaseWriterHeartbeatTests(unittest.TestCase):
+    def test_persistent_write_error_stops_after_three_attempts(self):
+        writer=job.LeaseWriter(Path("/unused")); calls=[]
+        class Stop:
+            def wait(self,_): return False
+        writer.stop=Stop()
+        def write(value):
+            calls.append(value);raise OSError("persistent failure")
+        writer.write=write
+        writer.heartbeat()
+        self.assertEqual(calls,[1,2,3])
+
+    def test_one_transient_write_error_does_not_abandon_future_renewals(self):
+        writer=job.LeaseWriter(Path("/unused")); calls=[]
+        class Stop:
+            def __init__(self): self.count=0
+            def wait(self,_): self.count+=1; return self.count>3
+        writer.stop=Stop()
+        def write(value):
+            calls.append(value)
+            if value==1: raise OSError("injected transient rename failure")
+        writer.write=write
+        writer.heartbeat()
+        self.assertEqual(calls,[1,2,3])
+
 @unittest.skipUnless(os.name == "nt", "requires the Windows Job Object APIs")
 class NativePreflightJobTests(unittest.TestCase):
     def test_normal_exit_receipt(self):

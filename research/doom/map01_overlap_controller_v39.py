@@ -1062,6 +1062,13 @@ def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=
             if event is None:
                 fail('terminal_before_cancel_ack', row)
             if released is None:
+                intent = guard.active_intent
+                if (type(intent) is dict and qualified_interruption_release(row, intent.get('intent_token'))):
+                    try:
+                        receipt = guard.record_interrupted_terminal(row)
+                    except Exception as error:
+                        fail('interrupted_terminal_invalid', row, error)
+                    return event, None, None, row, receipt
                 fail('terminal_without_release', row)
             try:
                 receipt = guard.record_cancelled_terminal(row)
@@ -1167,20 +1174,30 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
 
 def recover_cover_owner_after_cancel_if_retired(
         process, wait, terminal, *, minimum_sequence,
-        target_process_identity, target_window_lifecycle, owned_input_service):
-    """Rotate a retired identity reader before replanning after cover cancel.
+        target_process_identity, target_window_lifecycle, owned_input_service,
+        owned_rotation_supported=False):
+    """Handle a retired identity reader before replanning after cancellation.
 
-    Cover cancellation can retire the process-identity reader even though the
+    An owned service has no qualified generation transition yet, so stop before
+    another action; an in-process owner can use the supported rotation protocol.
+    Cancellation can retire the process-identity reader even though the
     cancelled cover's release is verified empty. Reusing that reader for the
     next action makes the owner reject its first key-down with an opaque
     needs_decision terminal. Recover only on the backend route whose owner
     lifecycle is explicitly supported; transferred owners and window-lifecycle
     readers have separate custody contracts.
     """
-    flags = (target_process_identity, target_window_lifecycle, owned_input_service)
+    flags = (target_process_identity, target_window_lifecycle, owned_input_service, owned_rotation_supported)
     if any(type(value) is not bool for value in flags):
         raise ValueError("boolean owner-recovery route selection required")
-    if (not target_process_identity or target_window_lifecycle or owned_input_service
+    if (owned_input_service and not owned_rotation_supported and target_process_identity and type(terminal) is dict
+            and terminal.get("status") == "cancelled"):
+        release = terminal.get("release")
+        reader = release.get("target_process_identity_reader") if type(release) is dict else None
+        if type(reader) is dict and reader.get("retired") is True:
+            raise RuntimeError("retired identity reader: owned service recovery unavailable")
+    if (not target_process_identity or target_window_lifecycle
+            or (owned_input_service and not owned_rotation_supported)
             or type(terminal) is not dict or terminal.get("status") != "cancelled"):
         return None
     return rotate_retired_owner_after_cancel(
@@ -1883,6 +1900,9 @@ def main():
         failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
         failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
+        operations = ready.get("operations")
+        owned_rotation_supported = (type(operations) is list and
+            "rotate_input_owner" in operations and "refresh_owner_source" in operations)
         if args.renewal_passive_observer and "probe_cover_renewal" not in ready.get("operations", []):
             raise RuntimeError("required passive renewal transport is unavailable")
         if args.post_load_clock_gate:
@@ -1906,7 +1926,8 @@ def main():
                     process, wait, terminal, minimum_sequence=latest["sequence"],
                     target_process_identity=args.target_process_identity,
                     target_window_lifecycle=args.target_window_lifecycle,
-                    owned_input_service=args.owned_input_service)
+                    owned_input_service=args.owned_input_service,
+                    owned_rotation_supported=owned_rotation_supported)
                 if rotation is not None:
                     latest = rotation["source_observation"]
                     owner_generation_rotations.append(
@@ -2532,13 +2553,23 @@ def main():
                     (cancel_event,physical_release_event,release_pending_receipt,
                      terminal,guard_receipt)=cancel_invalidated_action(
                         process,wait,identifier,running_guard,failure_root=args.out)
-                    if (index + 1 < args.iterations and args.target_process_identity
-                            and not args.target_window_lifecycle
-                            and not args.owned_input_service):
-                        rotation=rotate_retired_owner_after_cancel(
-                            process, wait, terminal,
-                            minimum_sequence=latest["sequence"])
+                    if index + 1 < args.iterations:
+                        if terminal.get('status') == 'needs_decision':
+                            if (not args.target_process_identity or args.target_window_lifecycle
+                                    or (args.owned_input_service and not owned_rotation_supported)):
+                                raise RuntimeError('qualified owner interruption has no eligible recovery slot')
+                            rotation=rotate_retired_owner_after_cancel(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                expected_intent_token=accepted.get('intent_token'))
+                        else:
+                            rotation=recover_cover_owner_after_cancel_if_retired(
+                                process, wait, terminal, minimum_sequence=latest["sequence"],
+                                target_process_identity=args.target_process_identity,
+                                target_window_lifecycle=args.target_window_lifecycle,
+                                owned_input_service=args.owned_input_service,
+                                owned_rotation_supported=owned_rotation_supported)
                         if rotation is not None:
+                            latest=rotation["source_observation"]
                             owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:
                     terminal=boundary
@@ -2546,7 +2577,8 @@ def main():
                             and qualified_interruption_release(
                                 terminal, accepted.get("intent_token"))):
                         if (index + 1 >= args.iterations or not args.target_process_identity
-                                or args.target_window_lifecycle or args.owned_input_service):
+                                or args.target_window_lifecycle
+                                or (args.owned_input_service and not owned_rotation_supported)):
                             raise RuntimeError("qualified owner interruption has no eligible recovery slot")
                         guard_receipt,rotation=recover_owner_interruption(
                             process,wait,terminal,running_guard,

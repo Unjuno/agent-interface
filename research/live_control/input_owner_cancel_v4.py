@@ -46,9 +46,10 @@ def validate_cause(cause,dto):
 
 
 class CancellationService:
-    def __init__(self,sock,*,display,service_id,owner_id,cause_timeout=1):
+    def __init__(self,sock,*,display,service_id,owner_id,cause_timeout=1,normal_close=None):
         self.sock=sock;self.display=display;self.service_id=service_id;self.owner_id=owner_id
         self.cause_timeout=rpc._timeout(cause_timeout);self.registry=LeaseRegistry()
+        self.normal_close=normal_close
         self.stop=threading.Event();self.records=[]
         self.thread=threading.Thread(target=self._run,name='owned-cancel-control',daemon=False)
         self.thread.start()
@@ -81,7 +82,10 @@ class CancellationService:
                 self.records.append(dict(request=copy.deepcopy(request),response=copy.deepcopy(response)))
                 rpc._send_frame(self.sock,response,time.monotonic()+2)
         except BaseException as error:
-            if not self.stop.is_set():self.registry.retire(type(error).__name__+': '+str(error))
+            expected_eof = (isinstance(error, EOFError) and not buffer and self.normal_close is not None
+                            and self.normal_close.is_set())
+            if not self.stop.is_set() and not expected_eof:
+                self.registry.retire(type(error).__name__+': '+str(error))
         finally:
             try:rpc._detach_socket(self.sock)
             except BaseException as error:

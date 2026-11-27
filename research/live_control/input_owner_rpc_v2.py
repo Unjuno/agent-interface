@@ -433,7 +433,7 @@ def _close_owner(owner, native, display, service_id, protocol_error):
         physical_verification_authoritative=False)
 
 
-def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None):
+def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None, on_verified_close=None):
     """Serve one explicitly supplied strict owner; EOF closes that same owner.
 
     Return value must be retained by an external supervisor for recovery. This
@@ -472,6 +472,8 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
             if op == 'close':
                 receipt = _close_owner(owner, native, display, service_id, None)
                 result = receipt
+                if receipt.get('verified') is True and on_verified_close is not None:
+                    on_verified_close()
             else:
                 try:
                     result = owner.call('input_state' if op=='release_state' else op, lease, request['key'])

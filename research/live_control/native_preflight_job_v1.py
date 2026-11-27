@@ -213,12 +213,17 @@ class LeaseWriter:
 
     def heartbeat(self):
         counter = 0
+        consecutive_errors = 0
         while not self.stop.wait(.25):
             counter += 1
             try:
                 self.write(counter)
             except OSError:
-                break
+                consecutive_errors += 1
+                if consecutive_errors >= 3:
+                    break
+            else:
+                consecutive_errors = 0
 
     def __enter__(self):
         self.write(0)

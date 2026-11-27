@@ -68,6 +68,55 @@ class OwnedOwnerAdapter:
             self._leases[lease.intent_token]=lease
             self._bindings[lease.intent_token]=rpc.encode_lease(lease)
 
+    def _apply_owned_interruption(self, lease, keys, rows):
+        """Bind a remote cleanup to the original lease without granting authority."""
+        from input_owner_cancel_v4 import validate_cause
+        from verified_interruption_release_v1 import qualified_interruption_release
+        if (type(keys) is not list or type(rows) is not list or len(rows)!=len(keys)
+                or not keys or any(type(row) is not dict for row in rows)):
+            raise ValueError('interruption batch shape invalid')
+        record=rows[0].get('owner_cleanup_record')
+        if type(record) is not dict:
+            raise ValueError('interruption cleanup record absent')
+        seen_codes=set()
+        for key,row in zip(keys,rows):
+            admission=row.get('admission_receipt')
+            code=row.get('owner_cleanup_keycode')
+            if (row.get('key')!=key or row.get('owner_id')!=self.owner_id
+                    or row.get('intent_token')!=lease.intent_token or row.get('valid_until_ns')!=lease.deadline
+                    or row.get('owner_interruption_cleanup_join') is not True
+                    or row.get('owner_cleanup_release_verified') is not True
+                    or row.get('ordinary_release_candidate') is not False
+                    or row.get('owner_cleanup_record')!=record
+                    or row.get('admission_receipt_valid') is not True
+                    or type(admission) is not dict or admission.get('event')!='input_admission'
+                    or admission.get('key')!=key or admission.get('owner_id')!=self.owner_id
+                    or admission.get('keycode')!=code
+                    or admission.get('intent_token')!=lease.intent_token
+                    or admission.get('valid_until_ns')!=lease.deadline or type(code) is not int or code<=0
+                    or code in seen_codes or str(code) not in record.get('key_release_attempts',{})):
+                raise ValueError('interruption batch admission or cleanup mismatch')
+            seen_codes.add(code)
+            attempts=record['key_release_attempts'][str(code)].get('attempts')
+            admitted=admission.get('admitted_ns');ack=admission.get('input_ack_ns')
+            verified=record.get('verified_ns')
+            if (type(admitted) is not int or type(ack) is not int or type(verified) is not int
+                    or type(attempts) is not list or not attempts
+                    or type(attempts[0]) is not dict or type(attempts[-1]) is not dict
+                    or type(attempts[0].get('keyrelease_started_ns')) is not int
+                    or type(attempts[-1].get('keymap_sampled_ns')) is not int
+                    or not admitted <= ack < attempts[0]['keyrelease_started_ns']
+                    or not attempts[-1]['keymap_sampled_ns'] <= verified):
+                raise ValueError('interruption release does not follow admitted input')
+        cause=dict(intent_token=lease.intent_token,record=record)
+        if (record not in self.client.records or not validate_cause(cause,rpc.encode_lease(lease))
+                or not qualified_interruption_release(
+                    dict(event='terminal',status='needs_decision',interruption=cause),lease.intent_token)):
+            raise ValueError('interruption cause lacks bound verified owner history')
+        lease.record_interruption(record)
+        if lease.interruption_snapshot()!=cause:
+            raise ValueError('original lease did not retain interruption cause')
+
     def call(self,operation,lease=None,key=None):
         with self._lock:
             if self._closed:raise RuntimeError('external owner adapter closed')
@@ -98,6 +147,9 @@ class OwnedOwnerAdapter:
                 result=self.client.call(operation,lease,key,on_dispatch=mark_attempted)
             else:
                 result=self.client.call(operation,lease,key)
+            if (operation=='up_batch' and type(result) is list
+                    and any(type(row) is dict and row.get('owner_interruption_cleanup_join') is True for row in result)):
+                self._apply_owned_interruption(lease,key,result)
         except rpc.RpcCapacityExhausted as error:
             if operation in ('surface_context','input_state','down'):
                 raise
