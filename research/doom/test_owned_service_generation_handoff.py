@@ -45,6 +45,28 @@ class OwnedServiceHandoffTests(unittest.TestCase):
         self.assertTrue(backend._rotation_broken)
         with self.assertRaisesRegex(ValueError,"no new authority"): backend.claim_executor_custody(object())
 
+    def test_unqualified_interruption_never_retires_owner(self):
+        backend,terminal=self.inert_generation();terminal.update(status="needs_decision",interruption={"intent_token":"t","record":{}})
+        with self.assertRaisesRegex(ValueError,"qualified interruption"):
+            backend.rotate_input_owner_after_cancel(terminal)
+        backend.owner.close.assert_not_called();self.assertFalse(backend._rotation_broken)
+
+    def test_qualified_interruption_can_reach_owned_rotation(self):
+        backend,terminal=self.inert_generation();backend.session=NS(name=":fake");backend._owner_factory=None
+        record={"event":"owner_release","intent_token":"t","reason":"target_query_invalidated","verified":True,
+                "keys_down":[],"buttons_down":[],"keys_unknown":[],"key_state_errors":[],
+                "target_process_identity_reader":{"retired":True},
+                "key_release_attempts":{"38":{"verified":True,"attempts":[{"attempt":1,
+                    "keyrelease_started_ns":10,"sync_returned_ns":11,"keymap_sampled_ns":12,
+                    "server_key_down_before":True,"server_key_down_after":False}]}}}
+        terminal.update(status="needs_decision",interruption={"intent_token":"t","record":record})
+        failure=RuntimeError("injected-new-launch")
+        with patch.object(session_backend,"publish_json_exclusive",return_value="archive"), \
+             patch.object(session_backend,"launch_owner_service",side_effect=failure):
+            with self.assertRaisesRegex(RuntimeError,"injected-new-launch"):
+                backend.rotate_input_owner_after_cancel(terminal)
+        backend.owner.close.assert_called_once()
+
     def test_failed_new_launch_keeps_owned_handle_and_revokes_authority(self):
         backend,terminal=self.inert_generation();backend.session=NS(name=":fake");backend._owner_factory=None
         handle=NS(service_id="new-service",close_channel=Mock(),wait=Mock(return_value={"verified":False}))

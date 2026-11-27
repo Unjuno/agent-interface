@@ -2562,7 +2562,8 @@ def main():
                             and qualified_interruption_release(
                                 terminal, accepted.get("intent_token"))):
                         if (index + 1 >= args.iterations or not args.target_process_identity
-                                or args.target_window_lifecycle or args.owned_input_service):
+                                or args.target_window_lifecycle
+                                or (args.owned_input_service and not owned_rotation_supported)):
                             raise RuntimeError("qualified owner interruption has no eligible recovery slot")
                         guard_receipt,rotation=recover_owner_interruption(
                             process,wait,terminal,running_guard,

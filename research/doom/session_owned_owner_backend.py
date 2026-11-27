@@ -65,8 +65,11 @@ class Backend(Previous):
     def rotate_input_owner_after_cancel(self, terminal):
         """Retire a verified owned generation before creating a fresh one."""
         from input_owner_service_adapter import OwnedOwnerAdapter
-        if type(terminal) is not dict or terminal.get('event') != 'terminal' or terminal.get('status') != 'cancelled':
-            raise ValueError('cancelled terminal required')
+        from verified_interruption_release_v1 import qualified_interruption_release
+        ordinary_cancel=(type(terminal) is dict and terminal.get('status')=='cancelled')
+        if (type(terminal) is not dict or terminal.get('event')!='terminal'
+                or not (ordinary_cancel or qualified_interruption_release(terminal))):
+            raise ValueError('verified cancelled or qualified interruption terminal required')
         identifier=terminal.get('id'); release=terminal.get('release')
         reader=release.get('target_process_identity_reader') if type(release) is dict else None
         if (type(identifier) is not str or not identifier or identifier in self._consumed_rotation_terminals
