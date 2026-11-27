@@ -63,7 +63,7 @@ def _release_then_delayed_shutdown_worker(send_connection):
     time.sleep(0.15)
 
 
-def _release_then_longer_delayed_shutdown_worker(send_connection, _display, _keys, _buttons):
+def _release_then_longer_delayed_shutdown_worker(send_connection, _display, _keys, _buttons, _deadline=None):
     send_connection.send({
         'status':'released',
         'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
@@ -3155,6 +3155,89 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             ('sync',),
         ])
         self.assertEqual(backend.held_buttons, {'left'})
+
+    def test_retired_release_is_unknown_if_completion_observed_after_deadline(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = ':fake'
+        response={'status':'released','release':{'verified':True,'keys_down':[],
+                  'buttons_down':[]},'worker_retired':True,'worker_exitcode':0}
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',return_value=response), \
+             patch('runtime.cli_v1.owned_guarded_session.time.monotonic_ns',side_effect=[90,110]):
+            result=owner._release_retired_owner_inputs({'keys':{'a':38},'buttons':[]},deadline_monotonic_ns=100)
+        self.assertEqual(result['status'],'unknown',result)
+        self.assertEqual(result['reason'],'cancellation_deadline_expired',result)
+
+    def test_release_worker_does_not_emit_when_deadline_expired_during_connect(self):
+        from runtime.cli_v1.owned_guarded_session import _release_retired_inputs_worker
+        backend = Mock()
+        send = Mock()
+        with patch('runtime.backends.x11_v1.backend.X11Backend',return_value=backend), \
+             patch('runtime.cli_v1.owned_guarded_session.time.monotonic_ns',return_value=101):
+            _release_retired_inputs_worker(send, ':fake', {'a':38}, [], deadline_monotonic_ns=100)
+        backend.release_all.assert_not_called()
+        self.assertEqual(send.send.call_args.args[0]['status'],'unknown')
+        self.assertEqual(send.send.call_args.args[0]['reason'],'cancellation_deadline_expired')
+        backend.close.assert_called_once()
+
+    def test_live_cancellation_deadline_is_forwarded_to_release(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'a':38}, 'buttons':[],
+        })
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner._owner_input_obligations={'keys':{},'buttons':[]}
+        owner._owner_input_obligations_source='child_rpc_snapshot'
+        owner._owner_input_obligations_state=shared
+        owner._active_cancel_deadline_ns=time.monotonic_ns()+1_000_000_000
+        owner._observe_owner_client_disconnect=Mock(return_value={'status':'disconnected'})
+        owner._release_retired_owner_inputs=Mock(return_value={'status':'unknown'})
+        owner._cleanup_after_owner_retirement({'retired':True})
+        owner._release_retired_owner_inputs.assert_called_once_with(
+            {'keys':{'a':38},'buttons':[]}, deadline_monotonic_ns=owner._active_cancel_deadline_ns)
+
+    def test_expired_cancellation_does_not_start_retired_owner_release(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'a':38}, 'buttons':[],
+        })
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_state = shared
+        owner._owner_client_disconnect = None
+        owner._owner_release_attempt = None
+        owner._active_cancel_deadline_ns = time.monotonic_ns()-1
+        owner._observe_owner_client_disconnect = Mock(return_value={'status':'disconnected'})
+        owner._release_retired_owner_inputs = Mock()
+        _, release = owner._cleanup_after_owner_retirement({'retired':True})
+        owner._release_retired_owner_inputs.assert_not_called()
+        self.assertEqual(release['status'],'not_attempted')
+        self.assertEqual(release['reason'],'cancellation_deadline_expired')
+
+    def test_deadline_expiring_during_disconnect_prevents_release(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'a':38}, 'buttons':[],
+        })
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_state = shared
+        owner._owner_client_disconnect = None
+        owner._owner_release_attempt = None
+        owner._active_cancel_deadline_ns = time.monotonic_ns()+1_000_000_000
+        def disconnect():
+            owner._active_cancel_deadline_ns = time.monotonic_ns()-1
+            return {'status':'disconnected'}
+        owner._observe_owner_client_disconnect = Mock(side_effect=disconnect)
+        owner._release_retired_owner_inputs = Mock()
+        _, release = owner._cleanup_after_owner_retirement({'retired':True})
+        owner._release_retired_owner_inputs.assert_not_called()
+        self.assertEqual(release['status'],'not_attempted')
+        self.assertEqual(release['reason'],'cancellation_deadline_expired')
 
     def test_retired_owner_with_invalid_live_ledger_does_not_release_stale_cache(self):
         owner = object.__new__(OwnedGuardedSessionOwner)

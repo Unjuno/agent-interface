@@ -126,16 +126,23 @@ def _bind_owner_input_obligation_publisher(owner, shared_state):
         shared_state, keys, buttons))
 
 
-def _release_retired_inputs_worker(send_connection, display_name, keys, buttons):
+def _release_retired_inputs_worker(send_connection, display_name, keys, buttons,
+                                   deadline_monotonic_ns=None):
     """Release only exact prearmed inputs on a fresh X client."""
     backend = None
     try:
         from runtime.backends.x11_v1.backend import X11Backend
 
         backend = X11Backend(display_name, {})
+        if (deadline_monotonic_ns is not None
+                and time.monotonic_ns() >= deadline_monotonic_ns):
+            send_connection.send({'status':'unknown',
+                                  'reason':'cancellation_deadline_expired'})
+            return
         backend.held_keycodes = dict(keys)
         backend.held_buttons = set(buttons)
-        release = backend.release_all()
+        release = (backend.release_all(deadline_monotonic_ns=deadline_monotonic_ns)
+                   if deadline_monotonic_ns is not None else backend.release_all())
         backend.close()
         backend = None
         send_connection.send({
@@ -692,7 +699,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     'worker_retired':None}
         return deepcopy(result)
 
-    def _release_retired_owner_inputs(self, obligations):
+    def _release_retired_owner_inputs(self, obligations, *, deadline_monotonic_ns=None):
+        if (deadline_monotonic_ns is not None
+                and (type(deadline_monotonic_ns) is not int
+                     or time.monotonic_ns() >= deadline_monotonic_ns)):
+            return {'status':'not_attempted', 'reason':'cancellation_deadline_expired',
+                    'worker_retired':None}
         keys = obligations.get('keys') if isinstance(obligations, dict) else None
         buttons = obligations.get('buttons') if isinstance(obligations, dict) else None
         if (not isinstance(keys, dict) or not isinstance(buttons, list)
@@ -707,7 +719,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         try:
             result = supervise_xres_worker(
                 _release_retired_inputs_worker,
-                (self.display_name, keys, buttons),
+                (self.display_name, keys, buttons, deadline_monotonic_ns),
                 timeout_s=_RETIRED_RELEASE_TIMEOUT_S,
                 terminate_grace_s=_RETIRED_RELEASE_TERMINATE_GRACE_S,
                 accepted_statuses=('released', 'unknown'),
@@ -716,6 +728,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return {'status':'unknown', 'reason':'release_supervisor_failed',
                     'error':repr(error), 'worker_retired':None}
         release = result.get('release') if isinstance(result, dict) else None
+        if (deadline_monotonic_ns is not None
+                and time.monotonic_ns() >= deadline_monotonic_ns):
+            return {'status':'unknown', 'reason':'cancellation_deadline_expired',
+                    'worker_retired':result.get('worker_retired'),
+                    'worker_exitcode':result.get('worker_exitcode'),
+                    'elapsed_ms':result.get('elapsed_ms'),
+                    'release':deepcopy(release)}
         if (result.get('status') == 'released' and isinstance(release, dict)
                 and release.get('verified') is True
                 and release.get('keys_down') == []
@@ -839,8 +858,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if (retirement.get('retired') is True
                 and client_disconnect.get('status') == 'disconnected'
                 and self._owner_input_obligations_live_read.get('status') == 'snapshot'):
-            release_attempt = self._release_retired_owner_inputs(
-                getattr(self, '_owner_input_obligations', {'keys':{}, 'buttons':[]}))
+            deadline_ns = getattr(self, '_active_cancel_deadline_ns', None)
+            if type(deadline_ns) is int and time.monotonic_ns() >= deadline_ns:
+                release_attempt = {'status':'not_attempted',
+                                   'reason':'cancellation_deadline_expired'}
+            else:
+                obligations = getattr(self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})
+                release_attempt = (self._release_retired_owner_inputs(
+                    obligations, deadline_monotonic_ns=deadline_ns)
+                    if type(deadline_ns) is int else
+                    self._release_retired_owner_inputs(obligations))
         else:
             release_attempt = {'status':'not_attempted',
                                'reason':('owner_not_retired'
