@@ -1,0 +1,31 @@
+{
+  "schema": "hud-occlusion-xvfb-live-v1",
+  "model_calls": 0,
+  "game_started": false,
+  "input_target": "owned synthetic Xvfb window",
+  "success": true,
+  "clean_health": 100,
+  "baseline_after": {
+    "status": "observed",
+    "value": 0
+  },
+  "candidate_after": {
+    "status": "unknown",
+    "value": null,
+    "reason": "unverified_leading_blank"
+  },
+  "guard": {
+    "status": "UNKNOWN",
+    "requires_new_decision": true,
+    "grants_input_authority": false
+  },
+  "key_down_before": true,
+  "key_down_after": false,
+  "release_verified": true,
+  "release_reason": "cancelled",
+  "cancel_to_verified_ms": 1.820782,
+  "source_sequence": 1,
+  "occluded_sequence": 2,
+  "observation_contract": "synthetic screenshot displayed in owned Xvfb window; no live game or model",
+  "owner_thread_stopped": true
+}
