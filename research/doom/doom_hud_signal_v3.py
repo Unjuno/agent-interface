@@ -59,6 +59,8 @@ class DoomStatusNumberReader(Previous):
                 digit is not None for digit in digits[:first]):
             return self._unknown("invalid_right_aligned_number", sequence, capture_ns, binding,
                                  {"slots": slots})
+        if not self._leading_blanks_match_background(number, first):
+            return self._unknown("unverified_leading_blank", sequence, capture_ns, binding)
         value = int("".join(str(digit) for digit in digits[first:]))
         return {
             "format": "observable-signal-v1", "status": "observed",
