@@ -1,12 +1,15 @@
 import hashlib
+import io
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, load_controller_event, operation_release_verified,
-    reject_duplicate_json_members)
+    capture_raw_stdout_events, reject_duplicate_json_members)
 
 OMIT_TOKEN = object()
 
@@ -619,6 +622,69 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         receipt = self.run_cleanup(None, [admission, released], status="cancelled")
         self.assertFalse(receipt["input_releases_verified_empty"])
 
+    def test_raw_stdout_capture_preserves_exact_bytes_and_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            final_path = Path(directory) / "child-stdout.jsonl"
+            raw = (b'{"event":"observation","sequence":1}\r\n'
+                   b'{"event":"terminal","id":"cover-0"}\n')
+            captured = []
+            metadata = {}
+            capture_raw_stdout_events(
+                io.BytesIO(raw), final_path, metadata, captured.append)
+
+            self.assertEqual(final_path.read_bytes(), raw)
+            self.assertEqual(captured, [raw.splitlines(keepends=True)[0],
+                                        raw.splitlines(keepends=True)[1]])
+            self.assertEqual(metadata["status"], "complete")
+            self.assertEqual(metadata["line_count"], 2)
+            self.assertEqual(metadata["byte_count"], len(raw))
+            self.assertEqual(metadata["sha256"], hashlib.sha256(raw).hexdigest())
+            self.assertFalse(Path(str(final_path) + ".partial").exists())
+
+    def test_raw_stdout_capture_reads_text_process_binary_buffer(self):
+        with tempfile.TemporaryDirectory() as directory:
+            final_path = Path(directory) / "child-stdout.jsonl"
+            raw = b'{"event":"ready"}\n'
+            script = "import sys; sys.stdout.buffer.write(" + repr(raw) + ")"
+            process = subprocess.Popen(
+                [sys.executable, "-c", script],
+                stdout=subprocess.PIPE,
+                text=True,
+            )
+            try:
+                metadata = {}
+                capture_raw_stdout_events(
+                    process.stdout.buffer, final_path, metadata, lambda line: None)
+                self.assertEqual(process.wait(timeout=5), 0)
+                self.assertEqual(final_path.read_bytes(), raw)
+                self.assertEqual(metadata["status"], "complete")
+            finally:
+                process.stdout.close()
+                if process.poll() is None:
+                    process.kill()
+                    process.wait(timeout=5)
+
+    def test_raw_stdout_capture_retains_bad_line_before_parse_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            final_path = Path(directory) / "child-stdout.jsonl"
+            raw = b'{"event":"ok"}\n{not-json}\n'
+            captured = {}
+            def consume(line):
+                if line.startswith(b"{not-json}"):
+                    raise ValueError("malformed event")
+            with self.assertRaisesRegex(ValueError, "malformed event"):
+                capture_raw_stdout_events(
+                    io.BytesIO(raw),
+                    final_path,captured,consume)
+
+            partial = Path(captured["path"])
+            self.assertEqual(partial.read_bytes(), raw)
+            self.assertEqual(captured["status"], "incomplete")
+            self.assertEqual(captured["line_count"], 2)
+            self.assertEqual(captured["byte_count"], len(raw))
+            self.assertEqual(captured["sha256"], hashlib.sha256(raw).hexdigest())
+            self.assertFalse(final_path.exists())
+
     def test_failure_preserves_completed_decisions_refreshes_and_controller_events(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
@@ -633,6 +699,10 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             scope = ControllerFailureCleanup(Planner(), output)
             scope.observe_output(events, RetiredReader(), None, None, [])
             scope.observe_progress(decisions, source_refreshes)
+            raw_capture = {"path": "child-stdout.jsonl",
+                           "status": "complete", "byte_count": 20,
+                           "line_count": 1, "sha256": "abc123"}
+            scope.observe_raw_stdout(raw_capture)
             with self.assertRaisesRegex(RuntimeError, "source refresh refused"):
                 with scope:
                     scope.set_stage("source_refresh")
@@ -649,8 +719,10 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             self.assertEqual(progress["decision_count"], 1)
             self.assertEqual(progress["source_refreshes"], source_refreshes)
             self.assertEqual(progress["controller_events"], events)
+            self.assertEqual(progress["raw_stdout_capture"], raw_capture)
+            self.assertEqual(receipt["raw_stdout_capture"], raw_capture)
             self.assertEqual(progress["event_capture_status"], "complete")
-            self.assertIn("raw stdout bytes are not preserved",
+            self.assertIn("exact child stdout bytes",
                           progress["controller_event_capture_scope"])
             self.assertEqual(
                 receipt["diagnostic_progress"]["sha256"],

@@ -44,6 +44,39 @@ def load_controller_event(line):
                       parse_constant=_reject_nonfinite_json, parse_float=_finite_float)
 
 
+def capture_raw_stdout_events(stream, path, capture, consume):
+    """Retain exact child stdout bytes before parsing each JSONL event."""
+    final_path=os.fspath(path)
+    temporary_path=final_path+'.partial'
+    digest=hashlib.sha256()
+    line_count=byte_count=0
+    capture.update({'path':temporary_path,'status':'recording','line_count':0,
+                    'byte_count':0,'sha256':None})
+    try:
+        with open(temporary_path,'wb') as output:
+            for raw_line in stream:
+                if type(raw_line) is not bytes:
+                    raise TypeError('raw child stdout must yield bytes')
+                output.write(raw_line)
+                output.flush()
+                digest.update(raw_line)
+                line_count+=1
+                byte_count+=len(raw_line)
+                capture.update({'line_count':line_count,'byte_count':byte_count})
+                consume(raw_line)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary_path,final_path)
+        capture.update({'path':final_path,'status':'complete',
+                        'sha256':digest.hexdigest()})
+    except BaseException as error:
+        capture.update({'path':temporary_path,'status':'incomplete',
+                        'sha256':digest.hexdigest(),
+                        'error_type':type(error).__name__})
+        raise
+    return capture
+
+
 INPUT_RELEASE_EVENTS = {"input_admission", "input_released", "input_release_transition"}
 
 
@@ -235,6 +268,7 @@ class ControllerFailureCleanup:
         self.events=None;self.reader=None;self.event_wait=None;self.runtime=None
         self.reader_errors=[]
         self.decisions=None;self.source_refreshes=None
+        self.raw_stdout_capture=None
     def track(self, process):
         self.process=process
     def set_stage(self, name):
@@ -245,6 +279,8 @@ class ControllerFailureCleanup:
         self.reader_errors=[] if reader_errors is None else reader_errors
     def observe_progress(self, decisions, source_refreshes):
         self.decisions=decisions;self.source_refreshes=source_refreshes
+    def observe_raw_stdout(self, capture):
+        self.raw_stdout_capture=capture
     def __enter__(self): return self
     def __exit__(self, kind, error, traceback):
         if error is None: return False
@@ -341,6 +377,8 @@ class ControllerFailureCleanup:
             if reader_alive:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
+        if self.raw_stdout_capture is not None:
+            receipt['raw_stdout_capture']=deepcopy(self.raw_stdout_capture)
         if self.decisions is not None and self.source_refreshes is not None:
             def write_failure_progress():
                 events=self.events if type(self.events) is list else []
@@ -353,7 +391,8 @@ class ControllerFailureCleanup:
                     'controller_events':deepcopy(events),
                     'controller_event_capture_scope':(
                         'parent-parsed stdout event objects after controller timing annotations; '
-                        'raw stdout bytes are not preserved by this artifact'),
+                        'exact child stdout bytes and SHA-256 are in raw_stdout_capture'),
+                    'raw_stdout_capture':deepcopy(self.raw_stdout_capture),
                     'event_capture_status':(
                         'complete' if receipt['stdout_reader_retired'] and
                         not receipt['stdout_reader_errors'] else 'incomplete'),

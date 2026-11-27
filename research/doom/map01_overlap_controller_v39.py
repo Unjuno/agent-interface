@@ -25,7 +25,8 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, load_controller_event, operation_release_verified,
+    ControllerFailureCleanup, capture_raw_stdout_events, load_controller_event,
+    operation_release_verified,
     reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_cover_renewal_probe_v1 import (
@@ -1840,6 +1841,9 @@ def main():
         signal_reader = DoomStatusNumberReader(WAD, signal_id="health")
         ammo_reader = DoomStatusNumberReader(WAD, signal_id="ammo")
         runtime = args.out / "runtime"
+        raw_stdout_path=args.out/"child-stdout.jsonl"
+        raw_stdout_capture={}
+        failure_cleanup.observe_raw_stdout(raw_stdout_capture)
         process = subprocess.Popen(session_command(args, runtime),
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             text=True, bufsize=1)
@@ -1848,16 +1852,18 @@ def main():
         all_events = []
         reader_errors = []
         def reader():
+            def consume(raw_line):
+                row = load_controller_event(raw_line.decode("utf-8"))
+                is_typed = row.get("event") == "typed_observation"
+                if is_typed:
+                    row["controller_parsed_ns"] = time.perf_counter_ns()
+                all_events.append(row)
+                if is_typed:
+                    row["controller_enqueued_ns"] = time.perf_counter_ns()
+                incoming.put(row)
             try:
-                for line in process.stdout:
-                    row = load_controller_event(line)
-                    is_typed = row.get("event") == "typed_observation"
-                    if is_typed:
-                        row["controller_parsed_ns"] = time.perf_counter_ns()
-                    all_events.append(row)
-                    if is_typed:
-                        row["controller_enqueued_ns"] = time.perf_counter_ns()
-                    incoming.put(row)
+                capture_raw_stdout_events(
+                    process.stdout.buffer,raw_stdout_path,raw_stdout_capture,consume)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
@@ -2827,6 +2833,11 @@ def main():
         score=wait(lambda r:r["event"]=="post_control_score")
         failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        reader_thread.join(timeout=5)
+        if reader_thread.is_alive():
+            raise RuntimeError("stdout event capture did not finish after child exit")
+        if raw_stdout_capture.get("status") != "complete":
+            raise RuntimeError("raw stdout event capture is incomplete")
         failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
@@ -2852,6 +2863,7 @@ def main():
                 typed_reconciliations.append(reconciliation)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
+          "raw_stdout_capture":deepcopy(raw_stdout_capture),
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
