@@ -137,8 +137,9 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         }
         // Consume the only permit before transmission: an ambiguous delivery is
         // never grounds for retrying release or resuming the prior input.
+        const revision = recoveryRevision;
         recoveryRevision = null;
-        return await host.sendPresented(tool, args, sinks);
+        return await host.sendPresented(tool, {current_binding_revision: revision}, sinks);
       }
       if (stopped && tool !== 'interface_close') throw Error('trial stopped: ' + stopped);
       if (!tools.has(tool)) {
