@@ -13,6 +13,61 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_archive_contains_tracked_internal_import_dependencies(self):
+        import ast
+        root = Path(__file__).resolve().parents[2]
+        tracked = set(subprocess.check_output(
+            ['git','-C',str(root),'ls-tree','-r','--name-only','HEAD','runtime'],
+            text=True).splitlines())
+        with tempfile.TemporaryDirectory() as td:
+            td=Path(td);archive=td/'runtime.pyz'
+            build(root,archive,td/'manifest.json',td/'sums')
+            with zipfile.ZipFile(archive) as z:
+                names=set(z.namelist())
+                missing=set()
+                for path in sorted(names):
+                    if not path.startswith('runtime/') or not path.endswith('.py'):
+                        continue
+                    module=path[:-3].replace('/','.')
+                    package=module if path.endswith('/__init__.py') else module.rpartition('.')[0]
+                    for node in ast.walk(ast.parse(z.read(path))):
+                        modules=[]
+                        if isinstance(node,ast.Import):
+                            modules=[item.name for item in node.names]
+                        elif isinstance(node,ast.ImportFrom):
+                            if node.level:
+                                parts=package.split('.')
+                                base='.'.join(parts[:len(parts)-node.level+1])
+                                name=base+('.'+node.module if node.module else '')
+                            else:
+                                name=node.module or ''
+                            if name:
+                                modules=[name]+[name+'.'+item.name for item in node.names if item.name!='*']
+                        for name in modules:
+                            if not name.startswith('runtime.'):
+                                continue
+                            stem=name.replace('.','/')
+                            for candidate in (stem+'.py',stem+'/__init__.py'):
+                                if candidate in tracked and candidate not in names:
+                                    missing.add((path,candidate))
+                self.assertEqual(sorted(missing),[])
+
+    def test_packaged_supervised_mode_reaches_platform_check(self):
+        import importlib.util
+        if not sys.platform.startswith('linux') or importlib.util.find_spec('mcp') is None:
+            self.skipTest('requires Linux and optional MCP dependency')
+        root=Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as temp:
+            temp=Path(temp);archive=temp/'runtime.pyz'
+            build(root,archive,temp/'manifest.json',temp/'sum')
+            targets=temp/'targets.json';targets.write_text('{}',encoding='utf-8')
+            result=subprocess.run([sys.executable,str(archive),'mcp','--targets',str(targets),
+                '--output-directory',str(temp/'out'),'--session-mode','supervised-win32'],
+                cwd=temp,input='',capture_output=True,text=True,timeout=10)
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('supervised-win32 requires a Windows host',result.stderr)
+            self.assertNotIn('ModuleNotFoundError',result.stderr)
+
     def test_bundled_primary_stdio_starts_and_rejects_missing_config(self):
         import shutil
         node = shutil.which('node')
