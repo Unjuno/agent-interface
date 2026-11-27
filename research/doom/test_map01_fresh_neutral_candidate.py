@@ -82,7 +82,7 @@ class FreshNeutralCandidateTests(unittest.TestCase):
         from test_map01_session_retirement_boundary import command_loop
         run=command_loop(json.dumps({'op':'save_fixture'})+'\n')
         scope=run.__globals__
-        scope.update(setup_events=[],setup_sources={},last_accepted={},last_terminal={},
+        scope.update(door_coordinator=None,setup_events=[],setup_sources={},last_accepted={},last_terminal={},
                      validate_fresh_neutral_completed=lambda *args: None,
                      close_before_control_effect=lambda *args: None,
                      fresh_gate=types.SimpleNamespace(display=':120'))
@@ -104,7 +104,7 @@ class FreshNeutralCandidateTests(unittest.TestCase):
         run=command_loop(json.dumps({'op':'save_fixture'})+'\n')
         scope=run.__globals__
         def reject(*args): raise ValueError('health decreased')
-        scope.update(setup_events=[],setup_sources={},last_accepted={},last_terminal={},
+        scope.update(door_coordinator=None,setup_events=[],setup_sources={},last_accepted={},last_terminal={},
                      validate_fresh_neutral_completed=lambda *args: None,
                      validate_fresh_neutral_snapshot=reject,
                      close_before_control_effect=lambda *args: None,

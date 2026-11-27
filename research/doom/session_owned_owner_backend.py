@@ -26,13 +26,17 @@ def _raise(errors,primary,handle,receipt=None):
 
 class Backend(Previous):
     owned_generation_rotation_supported=True
-    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None,renewal_passive_observer=False):
+    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None,renewal_passive_observer=False,timed_hold=False):
+        if type(timed_hold) is not bool:raise ValueError('timed_hold must be boolean')
+        self._timed_hold_enabled=timed_hold
         self.owned_service=None;self._session_out=Path(out);self._startup_hash=None
         self._owner_factory=_owner_factory;self._rotation_broken=False;self._rotation_handle=None
         self._session_lock=threading.RLock();self._session_close=None;self._session_error=None
         try:
-            self.owned_service=launch_owner_service(display=session.name,out=self._session_out/'input-owner-service',
-                cancellation=True,_owner_factory=_owner_factory)
+            options=dict(display=session.name,out=self._session_out/'input-owner-service',
+                         cancellation=True,_owner_factory=_owner_factory)
+            if timed_hold:options['timed_up']=True
+            self.owned_service=launch_owner_service(**options)
             super().__init__(session,out,emit,signal_readers,owner_service=self.owned_service,
                              renewal_passive_observer=renewal_passive_observer)
             startup=dict(schema='map01-owned-session-startup-v1',startup=self.owned_service.startup,
@@ -106,9 +110,11 @@ class Backend(Previous):
             next_generation=old_generation+1
             new_service=None; new_owner=None
             try:
-                new_service=launch_owner_service(display=self.session.name,
+                options=dict(display=self.session.name,
                     out=self._session_out/f'input-owner-service-generation-{next_generation}',
                     cancellation=True,_owner_factory=self._owner_factory)
+                if self._timed_hold_enabled:options['timed_up']=True
+                new_service=launch_owner_service(**options)
                 new_owner=OwnedOwnerAdapter(new_service,display=self.session.name)
                 if new_owner.owner_id==old.owner_id or new_service.service_id==old_service.service_id:
                     raise ValueError('new owned service identity must differ')
