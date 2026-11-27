@@ -17,6 +17,8 @@
 - Chromium / Google Chrome as documented by the runtime doctor
 - Windows Node.js and the separately installed Codex CLI JavaScript entrypoint visible from WSL (set `AGENT_INTERFACE_WINDOWS_CODEX_JS` when it is outside the default path)
 
+Current-source builds also have a separately selected [native Windows Codex executable candidate](NATIVE_CODEX_CANDIDATE.md). It requires explicit configuration and its own supported-host acceptance; this does not change the frozen RC1 support claim above.
+
 ## Release semantics
 
 This preview promotes a narrow retained desktop path. Research branches may contain newer mechanisms; they are not automatically part of the release. The RC does not move when `main` moves.
