@@ -1,0 +1,114 @@
+{
+  "status": "scoped_provider_compiled_pass",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "low",
+  "script_sha256": "d54aa95641e3db7d4b8b4abb45938777342d694a4edc1f7d8847a786b3fb6766",
+  "codex_sha256": "3097c909fb6d5cd63510d44aceb1d42df9f6e85722a3e447e477def1ecf60e16",
+  "source_hashes_unchanged": true,
+  "host_started_ns": 8555968000000,
+  "host_ended_ns": 8572781000000,
+  "container_task_start_ns": 4624280171,
+  "container_task_end_ns": 15442698922,
+  "container_method_start_ns": 14290686306,
+  "container_method_end_ns": 15439449267,
+  "host_exit": 0,
+  "container_exit": 0,
+  "host_cleanup": "closed_scoped",
+  "container_cleanup": "observed_absent",
+  "turns": [
+    {
+      "id": "pilot-1",
+      "ok": true,
+      "attempted": true,
+      "image_binding_ok": true,
+      "sequence": 1,
+      "usage": {
+        "input_tokens": 12173,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 78,
+        "reasoning_output_tokens": 0
+      },
+      "close_returned": null,
+      "call_id_present": true
+    },
+    {
+      "id": "pilot-2",
+      "ok": true,
+      "attempted": true,
+      "image_binding_ok": true,
+      "sequence": 3,
+      "usage": {
+        "input_tokens": 13550,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "close_returned": true,
+      "call_id_present": true
+    }
+  ],
+  "action_release_checks": {
+    "click-result.json": true,
+    "recovery-save.json": true,
+    "compiled-enter": true
+  },
+  "compiled_recovery_verified": true,
+  "compiled_outcome": "SAFE_YIELD",
+  "compiled_reason": "effect_unavailable",
+  "compiled_transitions": 1,
+  "recovery": {
+    "case": "clear",
+    "cue": "filled",
+    "save_attempted": true,
+    "save_completed": true,
+    "entry_replayed": false,
+    "recovery_started_ns": 15001887128,
+    "recovery_deadline_ns": 18001887128,
+    "recovery_ended_ns": 15438554256
+  },
+  "owner_close_verified": true,
+  "final_neutral_readback": true,
+  "stale_gate_verified": true,
+  "saved_sha256": "ce6ec7592d910737dd730ae2b7bcaf1e9b43c5f98dc38978971c5f4fcf2e0c95",
+  "host_rescore": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ]
+  }
+}

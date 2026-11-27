@@ -1,0 +1,9 @@
+# Job-owned host with current app-server client: R599
+
+Two sequential Windows no-network/no-model cases ran the current-main `CodexAppServerClient` inside a Job-owned Python host against a local fixed JSONL echo server. The client source was independently checked against Git commit `11ecaa75393c9c403ca32f34c6716bcff85f823f`. Normal case: echo succeeded, client close returned, internal reader ended, host exited 0, and outer host cleanup returned `closed_scoped`.
+
+In the held-descendant case the fake server created a grandchild retaining server stdout. The auditor checked its exact process HANDLE, creation FILETIME and membership in the private Job. Echo succeeded, but client close correctly raised TimeoutError with its reader still alive; host exited 1 and the grandchild was still active. Closing the outer Job then coincided with the retained grandchild HANDLE signaling, without fallback termination; outer readers reached EOF and streams closed. This is an explicit client-close failure, not a successful client close or completed model task.
+
+Conditions, exact sources, fixed protocol journals, raw results and logs are in raw.zip; SHA256.json records member hashes. No credential or model was used. The records include ephemeral process IDs, FILETIMEs and nonces. Independent review matched all source hashes, receipt/stream hashes, identity, pre/post wait and no-fallback results. Protocol events use `perf_counter_ns`; host/audit use `monotonic_ns`. Do not subtract timestamps across these clocks. Total audit interval was 1.843 seconds and is not a speed result.
+
+This single synthetic exchange does not establish real Codex startup, authentication, model use, parallel spawn safety, complete descendant recovery in general, WSLc cleanup, input release or benchmark performance. The current client failure when a descendant holds stdout remains real; outer Job cleanup does not repair the client's close semantics.

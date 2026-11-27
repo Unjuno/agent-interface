@@ -1,0 +1,7 @@
+# WSLc retained exit status: R579
+
+WSLc 3.0.3 did not recognize `container wait`; this one no-GUI, no-input sample used a non-auto-removed container instead. Its scoped inspect observed the expected exit code 7, followed by exact-CID removal and an empty exact-ID list. See conditions and redacted observations; complete raw output remains private locally, with checksums listed here. The experiment source hash was captured in the result before launch, and monotonic timestamps are recorded for each command. WSLc warned that swap was not limited.
+
+This does not prove the general semantics of exit codes or removal, behavior after a crash or timeout, release of inputs, real Calc completion, task correctness, or performance. The script does not have an independent custodian after wrapper death and must not be used as a production driver. Failed or missing observations are UNKNOWN; do not infer a result from wrapper process exit code alone.
+
+Independent review found all 12 saved inspect responses matched the CID and label; the last had exited with code 7. Recorded start-to-finish duration was 5.297 s. The script accepts any integer exit code when assigning its status: the expected 7 must be checked from the observation, not inferred from that status. Timestamps were checked in review, not enforced by the script. There is no single total deadline across inspect calls, and a failure before removal can leave a stopped container. The source digest identifies the retained file but is not external proof of executed bytes.
