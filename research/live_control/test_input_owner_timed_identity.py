@@ -101,6 +101,14 @@ class TimedIdentityTests(unittest.TestCase):
                 while display.down and time.monotonic()<limit:time.sleep(.005)
                 self.assertEqual(display.down,set(),"atomic timed release waited behind the identity query")
                 self.assertNotEqual(owner.call("take_timed_up",lease,"atomic")["status"],"released")
+                release=next(row for row in owner.records if row.get("reason")=="target_generation_invalidated")
+                detail=release["target_identity_query_failure"]
+                self.assertEqual(detail["operation"],"process_identity")
+                self.assertEqual(detail["deadline_ns"],admission["timed_deadline_ns"])
+                self.assertLess(detail["started_ns"],detail["deadline_ns"])
+                self.assertGreaterEqual(detail["finished_ns"],detail["deadline_ns"])
+                self.assertEqual(detail["error_type"],"QueryUnavailable")
+                self.assertLessEqual(detail["finished_ns"],release["key_release_intervals_ns"][0]["interval_ns"][0])
             finally:reader.resume.set()
     def test_stalled_identity_read_does_not_hide_hold_deadline(self):
         with fixture() as (owner,lease,display,reader,events):

@@ -427,9 +427,11 @@ class InputOwner:
         active_window_identity = None
         checked_window_identity = None
         next_identity_check = 0
+        identity_query_failure = None
 
         def identity_matches(lease):
-            nonlocal checked_identity, checked_window_identity
+            nonlocal checked_identity, checked_window_identity, identity_query_failure
+            identity_query_failure = None
             if self.identity_reader is None:
                 return True
             from target_process_identity_v1 import valid_source
@@ -438,6 +440,9 @@ class InputOwner:
                     source[1] != getattr(lease, 'expected_surface', None) or
                     (active is lease and source != active_identity)):
                 return False
+            operation = 'process_identity'
+            query_deadline_ns = None
+            started_ns = time.perf_counter_ns()
             try:
                 query_deadline_ns = query_deadline(lease)
                 current = self.identity_reader.read(source[1], perf_deadline_ns=query_deadline_ns,
@@ -450,6 +455,8 @@ class InputOwner:
                             or window_source[3] != source[3]
                             or (active is lease and window_source != active_window_identity)):
                         return False
+                    operation = 'window_identity'
+                    started_ns = time.perf_counter_ns()
                     query_deadline_ns = query_deadline(lease)
                     window = self.window_reader.read_window(source[1], perf_deadline_ns=query_deadline_ns,
                         cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
@@ -460,7 +467,10 @@ class InputOwner:
                 if valid:
                     checked_identity = source
                 return valid
-            except Exception:
+            except Exception as exc:
+                identity_query_failure = dict(operation=operation, started_ns=started_ns,
+                    finished_ns=time.perf_counter_ns(), deadline_ns=query_deadline_ns,
+                    error_type=type(exc).__name__)
                 return False
 
         def final_identity_fence(lease):
@@ -578,6 +588,8 @@ class InputOwner:
                 record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
                 record['target_focus_query_failed'] = focus_query_failed
                 if focus_query_failed:record['target_focus_query_failure'] = copy.deepcopy(focus_query_failure)
+                if reason == 'target_generation_invalidated' and identity_query_failure is not None:
+                    record['target_identity_query_failure'] = copy.deepcopy(identity_query_failure)
             if self.window_reader is not None:
                 record['target_window_identity'] = list(active_window_identity) if active is not None and active_window_identity is not None else None
                 record['target_window_identity_reader'] = self.window_reader.worker.snapshot()
