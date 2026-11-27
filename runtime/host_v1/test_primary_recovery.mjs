@@ -78,3 +78,14 @@ test('normal MCP envelope with execution_failed also permits one explicit recove
  assert.ok(caller.state().stopped);
  assert.deepEqual(calls,['interface_guarded_input','interface_guarded_recover_input']);
 });
+
+test('recovery sends the validated revision even when a caller supplies an unstable getter',async()=>{
+ let sent;let reads=0;const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+  if(tool==='interface_guarded_input')return failure;
+  sent=args.current_binding_revision;return recovered;
+ }},'guarded-local',{});
+ await caller.input('cell',[1,1],'keyboard',[]);
+ const args={get current_binding_revision(){return ++reads===1?7:8;}};
+ await caller.call('interface_guarded_recover_input',args);
+ assert.equal(sent,7);
+});
