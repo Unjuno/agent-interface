@@ -498,13 +498,17 @@ class CodexAppServerClient:
             self._close_local_transport(remaining, owns_process_group)
         except BaseException as error:
             local_error = error
-        try:
-            self._close_journal(remaining)
-        except BaseException as error:
-            if local_error is None:
-                local_error = error
-            else:
-                local_error.add_note("app-server journal close failed: " + type(error).__name__)
+        # A live protocol reader may still append a late frame after a timed-out
+        # close. Keep its journal open until that reader has actually retired.
+        reader = self._reader
+        if reader is None or not reader.is_alive():
+            try:
+                self._close_journal(remaining)
+            except BaseException as error:
+                if local_error is None:
+                    local_error = error
+                else:
+                    local_error.add_note("app-server journal close failed: " + type(error).__name__)
         if retirement_error is not None:
             if local_error is not None:
                 raise retirement_error from local_error
