@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parent
 CASES={
  'startup-refusal.zip':('92f1d1d09625ce65d08908009d7da63cf61f56eb270c6783861a88f0362bd816','41fcea1623de7a78fcd2602d3f72fc74b47eae13d83a159a0624dbeadf6d4122'),
  'controlled-recovery.zip':('5ff95c7e652e0c3955d003d5f72412b5095ec2b39758aad6d6a5bf9b57cf7961','5cdf8c9591062c0125d64d75244d4faa43302fa18826531a24c344cf1b3d1123'),
+ 'validated-revision-recovery.zip':('05e23a725011ffe183d7b5333939f50e0c044f71cbbe29260cf070f205e70cf1','c11599b72d96580c551420eaae22289d19da5d9e36d6a351bc02ff33a96163b3'),
 }
 def digest(b): return hashlib.sha256(b).hexdigest()
 def require(value,message):
@@ -26,7 +27,8 @@ for name,(archive_hash,seal_hash) in CASES.items():
   registration=load(z,'registration.json')
   for path,row in registration['files'].items():
    b=z.read(path);require(len(b)==row['bytes'] and digest(b)==row['sha256'],'bad registration '+path)
-  require(git_blob(z.read('host/primary_caller.mjs'))=='b711066bdda408f4f12ecb4466e07992e6875ba1','tested caller differs')
+  caller='32480a4cb8def43cd52d0bf5baef46a5f4687149' if name=='validated-revision-recovery.zip' else 'b711066bdda408f4f12ecb4466e07992e6875ba1'
+  require(git_blob(z.read('host/primary_caller.mjs'))==caller,'tested caller differs')
   outcome=load(z,'output/result.json')
   if name=='startup-refusal.zip':
    require(outcome['passed'] is False and outcome['input_attempted'] is False,'startup classification differs')
