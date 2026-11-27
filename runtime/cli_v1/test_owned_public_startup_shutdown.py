@@ -27,9 +27,9 @@ class PublicStartupShutdownTests(unittest.IsolatedAsyncioTestCase):
      exiting=asyncio.create_task(lifespan.__aexit__(None,None,None))
      await asyncio.wait_for(asyncio.shield(exiting),12)
      self.assertFalse(call.done())
-     # The child already exists while startup is gated; shutdown has not
-     # independently acquired custody of it at this point.
-     self.assertTrue(spawned[0].is_alive())
+     # A started child with a published process handle must be retired
+     # before shutdown returns, even while the startup caller is gated.
+     self.assertFalse(spawned[0].is_alive())
      receipt=json.loads((Path(directory)/('session-'+captured[0].session_id+'-close.json')).read_text())
      self.assertIs(receipt.get('verified'),False)
      self.assertEqual(receipt.get('cleanup_status'),'UNKNOWN')

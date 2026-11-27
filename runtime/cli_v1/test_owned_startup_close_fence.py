@@ -10,10 +10,12 @@ class Conn:
     def recv(self): return {'ok': True, 'snapshot': {'state': 'open'}}
 
 class Process:
-    pid = 123
+    pid = None
     exitcode = None
-    def __init__(self, entered, resume): self.entered, self.resume, self.alive = entered, resume, True
+    def __init__(self, entered, resume):
+        self.entered, self.resume, self.alive, self.started = entered, resume, False, False
     def start(self):
+        self.started, self.alive, self.pid = True, True, 123
         self.entered.set()
         if not self.resume.wait(5): raise RuntimeError('gate timed out')
     def is_alive(self): return self.alive
@@ -98,6 +100,63 @@ class StartupCloseFenceTests(unittest.TestCase):
                     if second.ident is not None: second.join(5)
                 self.assertFalse(second.is_alive())
 
+    def test_retire_before_process_handle_is_available_stays_unconfirmed(self):
+        entered,resume=threading.Event(),threading.Event()
+        spawned,spawn_resume=threading.Event(),threading.Event();spawn_resume.set()
+        child=Process(spawned,spawn_resume);errors=[]
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            def start():
+                try: owner._ensure_started()
+                except Exception as error: errors.append(error)
+            with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=Context(child,(entered,resume))):
+                t=threading.Thread(target=start);t.start()
+                try:
+                    self.assertTrue(entered.wait(5))
+                    report=owner.retire('shutdown while allocation is gated')
+                    self.assertFalse(report['retired'])
+                    self.assertIsNone(report['exitcode'])
+                finally:
+                    resume.set();t.join(5)
+            self.assertFalse(t.is_alive())
+            self.assertTrue(errors)
+            self.assertFalse(child.started, 'shutdown during allocation must prevent a later spawn')
+            self.assertFalse(child.is_alive())
+
+    def test_retire_during_start_reports_unknown_when_child_probe_raises(self):
+        class Unreadable:
+            pid=123
+            def is_alive(self): raise OSError('process query failed')
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            owner._startup_in_progress=True
+            owner._starting_process=Unreadable()
+            result=owner.retire('shutdown')
+            self.assertFalse(result['retired'])
+            self.assertIsNone(result['exitcode'])
+            self.assertIs(owner._process,owner._starting_process)
+            self.assertTrue(owner._close_during_startup)
+            self.assertTrue(owner.review_required)
+            snapshot=owner.snapshot()['owner_process']
+            self.assertIsNone(snapshot['alive'])
+            self.assertIsNone(snapshot['retired'])
+            self.assertIsNone(snapshot['liveness_observed_monotonic_ns'])
+
+    def test_retire_during_start_reports_unknown_when_pid_probe_raises(self):
+        class Unreadable:
+            @property
+            def pid(self): raise RuntimeError('pid unavailable')
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            owner._startup_in_progress=True
+            owner._starting_process=Unreadable()
+            result=owner.retire('shutdown')
+            self.assertFalse(result['retired'])
+            self.assertIsNone(result['exitcode'])
+            self.assertIsNone(owner._process)
+            self.assertTrue(owner._close_during_startup)
+            self.assertTrue(owner.review_required)
+
     def test_close_before_start_rejects_later_start(self):
         with tempfile.TemporaryDirectory() as root:
             owner=OwnedGuardedSessionOwner({'app':20},root)
@@ -107,7 +166,9 @@ class StartupCloseFenceTests(unittest.TestCase):
                 get_context.assert_not_called()
     def test_start_raises_after_spawn_retains_and_retires_exact_child(self):
         class SpawnThenFail(Process):
-            def start(self): raise OSError('failed after child started')
+            def start(self):
+                self.started, self.alive, self.pid = True, True, 123
+                raise OSError('failed after child started')
         child=SpawnThenFail(threading.Event(),threading.Event())
         with tempfile.TemporaryDirectory() as root:
             owner=OwnedGuardedSessionOwner({'app':20},root)
@@ -142,7 +203,9 @@ class StartupCloseFenceTests(unittest.TestCase):
 
     def test_failed_retirement_preserves_original_start_error_and_child(self):
         class SpawnThenFail(Process):
-            def start(self): raise OSError('original start error')
+            def start(self):
+                self.started, self.alive, self.pid = True, True, 123
+                raise OSError('original start error')
             def terminate(self): raise RuntimeError('retirement failed')
         child=SpawnThenFail(threading.Event(),threading.Event())
         with tempfile.TemporaryDirectory() as root:

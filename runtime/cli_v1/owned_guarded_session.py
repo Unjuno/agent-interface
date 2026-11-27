@@ -364,6 +364,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._lifecycle_lock = threading.Lock()
         self._startup_in_progress = False
+        self._starting_process = None
         self._close_during_startup = False
         self._unregistered_startup_unknown = False
         self._rpc_lock = threading.Lock()
@@ -475,8 +476,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'retention_mode':self.retention_mode},
                   self._owner_factory, input_obligations_state),
             name='guarded-x11-owner-' + self.session_id[:8])
+        # Publish the exact Process object before start. Its PID may remain
+        # unavailable while spawn is incomplete; that state remains UNKNOWN.
+        with self._lifecycle_lock:
+            self._starting_process = process
         self.state = 'opening'
         try:
+            with self._lifecycle_lock:
+                cancelled_before_start = self._close_during_startup
+            if cancelled_before_start:
+                raise RuntimeError('owned startup cancelled before process start')
             process.start()
             rpc_child.close()
             control_child.close()
@@ -561,22 +570,34 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                        'release_confirmed':None,
                        'liveness_observed_monotonic_ns':None if unregistered_unknown else observed_ns}
         else:
-            alive = owner_process.is_alive()
-            observed_ns = time.monotonic_ns()
-            if not alive and self.state == 'open':
+            try:
+                alive = owner_process.is_alive()
+                pid = owner_process.pid
+                exitcode = owner_process.exitcode
+            except Exception as error:
                 self._execution_unknown = True
-                self.state = 'failed'
-                self.error = 'owned guarded process exited without an accepted close receipt'
                 self.review_required = True
-            process = {'pid':owner_process.pid, 'alive':alive,
-                       'liveness_observed_monotonic_ns':observed_ns,
-                       'exitcode':owner_process.exitcode,
-                       'retired':False if self._retirement is None else
-                                 True if isinstance(self._retirement, dict) and
-                                         self._retirement.get('retired') is True else None,
-                       'release_confirmed':False if self._execution_unknown else None,
-                       'x_client_resource_base':self._snapshot_cache.get(
-                           'owner_x_client_resource_base')}
+                self.state = 'failed'
+                process = {'pid':None, 'alive':None, 'exitcode':None,
+                           'retired':None, 'release_confirmed':False,
+                           'liveness_observed_monotonic_ns':None,
+                           'liveness_error_type':type(error).__name__}
+            else:
+                observed_ns = time.monotonic_ns()
+                if not alive and self.state == 'open':
+                    self._execution_unknown = True
+                    self.state = 'failed'
+                    self.error = 'owned guarded process exited without an accepted close receipt'
+                    self.review_required = True
+                process = {'pid':pid, 'alive':alive,
+                           'liveness_observed_monotonic_ns':observed_ns,
+                           'exitcode':exitcode,
+                           'retired':False if self._retirement is None else
+                                     True if isinstance(self._retirement, dict) and
+                                             self._retirement.get('retired') is True else None,
+                           'release_confirmed':False if self._execution_unknown else None,
+                           'x_client_resource_base':self._snapshot_cache.get(
+                               'owner_x_client_resource_base')}
         execution_unknown = self._execution_unknown
         if owner_process is not None:
             process['release_confirmed'] = False if execution_unknown else None
@@ -1201,7 +1222,39 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     def retire(self, reason='explicit owner retirement'):
         """Retire only this exact child; never report input release from death."""
-        return self._retire(reason)
+        pid_error_type = None
+        with self._lifecycle_lock:
+            during_startup = self._startup_in_progress
+            if during_startup:
+                self._close_during_startup = True
+                self._execution_unknown = True
+                self.review_required = True
+                candidate = self._starting_process
+                if self._process is None and candidate is not None:
+                    try:
+                        pid = candidate.pid
+                    except Exception as error:
+                        pid = None
+                        pid_error_type = type(error).__name__
+                    if pid is not None:
+                        self._process = candidate
+        try:
+            result = self._retire(reason)
+            if pid_error_type is not None:
+                result = dict(result, pid_error_type=pid_error_type)
+            return result
+        except Exception as error:
+            if not during_startup:
+                raise
+            # A process probe or retirement failure must not abort server
+            # shutdown as if the pending child had been retired.
+            self.state = 'failed'
+            self.error = reason
+            self._execution_unknown = True
+            self.review_required = True
+            self._retirement = {'reason':reason, 'retired':False, 'exitcode':None,
+                                'error_type':type(error).__name__}
+            return deepcopy(self._retirement)
 
     def close(self):
         with self._lifecycle_lock:
