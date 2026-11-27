@@ -6,11 +6,11 @@ from types import SimpleNamespace
 from unittest.mock import patch
 from Xlib import X
 from runtime.backends.x11_v1.session import X11RuntimeSession
-from runtime.backends.x11_v1.test_mapping_boundary import MappingBoundaryTests
+from runtime.backends.x11_v1 import test_mapping_boundary as mapping_fixtures
 
 class StandardExpiryTests(unittest.TestCase):
     def test_expired_wait_releases_held_key_and_does_not_emit_suffix(self):
-        backend,events,physical,emitted,emit=MappingBoundaryTests().backend()
+        backend,events,physical,emitted,emit=mapping_fixtures.MappingBoundaryTests().backend()
         now=[99]
         backend._wait_update=lambda _ms: now.__setitem__(0,100)
         backend.manifest=lambda: {}
@@ -34,7 +34,7 @@ class StandardExpiryTests(unittest.TestCase):
         self.assertTrue(result["execution"]["releases"][-1]["verified"])
 
     def test_expiry_during_custody_publication_prevents_native_press(self):
-        backend,events,physical,emitted,emit=MappingBoundaryTests().backend()
+        backend,events,physical,emitted,emit=mapping_fixtures.MappingBoundaryTests().backend()
         now=[99]
         backend._publish_input_obligations=lambda:now.__setitem__(0,100)
         backend.manifest=lambda: {}
@@ -54,7 +54,7 @@ class StandardExpiryTests(unittest.TestCase):
     def test_wait_stops_at_deadline_instead_of_full_wait(self):
         import threading
         from runtime.backends.x11_v1.backend import X11BackendError
-        backend,events,physical,emitted,emit=MappingBoundaryTests().backend()
+        backend,events,physical,emitted,emit=mapping_fixtures.MappingBoundaryTests().backend()
         backend._program_deadline_context=threading.local()
         backend._program_deadline_context.deadline=150_000_000
         now=[100_000_000]
@@ -102,6 +102,24 @@ class LiveStandardExpiryTests(unittest.TestCase):
             backend.close()
             window.destroy()
             connection.close()
+
+class PointerDeadlineTests(unittest.TestCase):
+    def test_expiry_during_coordinate_lookup_refuses_motion(self):
+        import threading
+        from runtime.backends.x11_v1.backend import X11BackendError
+        backend,events,physical,emitted,emit=mapping_fixtures.MappingBoundaryTests().backend()
+        backend._program_deadline_context=threading.local()
+        backend._program_deadline_context.deadline=100
+        now=[99]
+        def resolve(*_args):
+            now[0]=100
+            return (20,30)
+        backend._root_point=resolve
+        with patch("runtime.backends.x11_v1.backend.time.monotonic_ns",side_effect=lambda:now[0]), \
+             patch("runtime.backends.x11_v1.backend.xtest.fake_input") as native:
+            with self.assertRaises(X11BackendError):
+                backend.pointer_move("fixture","window_client",10,10)
+        native.assert_not_called()
 
 if __name__=="__main__":
     unittest.main()
