@@ -1,0 +1,124 @@
+{
+  "schema": "v39-retained-action-gate-replay-v1",
+  "classification": "POSTHOC_REPLAY_NOT_NEW_LIVE_ALLOCATION",
+  "current_main_commit": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+  "action_gate_git_blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+  "report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+  "decisions_replayed": 5,
+  "decisions": [
+    {
+      "decision": 0,
+      "source_health": 97,
+      "current_health": 97,
+      "observed_loss": 0,
+      "action_max_health_loss": 8,
+      "action_minimum_health": 89,
+      "cover_monitor_mode": "unauthored_coast_no_policy",
+      "cover_source_iteration": null,
+      "cover_hard_minimum": 97,
+      "admission": "INPUT_ADMITTED",
+      "reason": "fresh_executor_acceptance_after_action_validation",
+      "reevaluation_matches_report": true,
+      "executor_admission": {
+        "event": "accepted",
+        "id": "plan-0-primary-0-1",
+        "accepted_ns": 55510720526282
+      },
+      "effect_receipts": 2,
+      "prior_soft_event_summary": null
+    },
+    {
+      "decision": 1,
+      "source_health": 97,
+      "current_health": 85,
+      "observed_loss": 12,
+      "action_max_health_loss": 8,
+      "action_minimum_health": 89,
+      "cover_monitor_mode": "authored_policy_guard",
+      "cover_source_iteration": 0,
+      "cover_hard_minimum": 85,
+      "admission": "REJECTED_ACTION_NOT_CURRENT",
+      "reason": "REJECTED_PREDICATE",
+      "reevaluation_matches_report": true,
+      "executor_admission": null,
+      "effect_receipts": 0,
+      "prior_soft_event_summary": null
+    },
+    {
+      "decision": 2,
+      "source_health": 85,
+      "current_health": 73,
+      "observed_loss": 12,
+      "action_max_health_loss": 6,
+      "action_minimum_health": 79,
+      "cover_monitor_mode": "unauthored_coast_no_policy",
+      "cover_source_iteration": null,
+      "cover_hard_minimum": 85,
+      "admission": "REJECTED_ACTION_NOT_CURRENT",
+      "reason": "REJECTED_PREDICATE",
+      "reevaluation_matches_report": true,
+      "executor_admission": null,
+      "effect_receipts": 0,
+      "prior_soft_event_summary": {
+        "signal_id": "health",
+        "source_value": 97,
+        "current_value": 85,
+        "hard_minimum": 85,
+        "soft_event_count": 2,
+        "sequence": 62,
+        "observed_during_iteration": 1,
+        "cover_policy_source_iteration": 0,
+        "effect": "prior_cover_preserved",
+        "grants_input_authority": false
+      }
+    },
+    {
+      "decision": 3,
+      "source_health": 73,
+      "current_health": 68,
+      "observed_loss": 5,
+      "action_max_health_loss": 6,
+      "action_minimum_health": 67,
+      "cover_monitor_mode": "unauthored_coast_no_policy",
+      "cover_source_iteration": null,
+      "cover_hard_minimum": 73,
+      "admission": "INPUT_ADMITTED",
+      "reason": "fresh_executor_acceptance_after_action_validation",
+      "reevaluation_matches_report": true,
+      "executor_admission": {
+        "event": "accepted",
+        "id": "plan-3-primary-0-1",
+        "accepted_ns": 55531896125154
+      },
+      "effect_receipts": 0,
+      "prior_soft_event_summary": null
+    },
+    {
+      "decision": 4,
+      "source_health": 65,
+      "current_health": 61,
+      "observed_loss": 4,
+      "action_max_health_loss": 6,
+      "action_minimum_health": 59,
+      "cover_monitor_mode": "authored_policy_guard",
+      "cover_source_iteration": 3,
+      "cover_hard_minimum": 55,
+      "admission": "INPUT_ADMITTED",
+      "reason": "fresh_executor_acceptance_after_action_validation",
+      "reevaluation_matches_report": true,
+      "executor_admission": {
+        "event": "accepted",
+        "id": "plan-4-primary-0-1",
+        "accepted_ns": 55539907458727
+      },
+      "effect_receipts": 2,
+      "prior_soft_event_summary": null
+    }
+  ],
+  "rejected_current_actions": 2,
+  "limitations": [
+    "This re-evaluates recorded action contracts and snapshots; it does not infer that rejected plans were semantically wrong.",
+    "A rejected action receives no executor admission or task effect in this record.",
+    "Historical HUD signals are template-derived; no fresh controller, game, model, GUI, or OS input was run."
+  ]
+}
