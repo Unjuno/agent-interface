@@ -4,7 +4,7 @@ import importlib
 import os
 import time
 from types import SimpleNamespace
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from runtime.guarded_x11_v1.xres_client_fence import (
     client_is_connected,
@@ -161,6 +161,51 @@ class XResClientFenceTests(unittest.TestCase):
                               result)
         self.assertGreater(result['worker_exit_observed_monotonic_ns'],
                            result['worker_result_received_monotonic_ns'])
+
+    def test_expired_outer_deadline_prevents_worker_creation(self):
+        module=importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        with patch.object(module.multiprocessing,'get_context') as get_context, \
+             patch.object(module.time,'monotonic_ns',return_value=101):
+            result=module.supervise_xres_worker(
+                lambda _:None,(),timeout_s=1.5,absolute_deadline_monotonic_ns=100)
+        get_context.assert_not_called()
+        self.assertEqual(result['status'],'unknown',result)
+        self.assertEqual(result['reason'],'transaction_deadline_before_spawn',result)
+        self.assertIsNone(result['worker_retired'])
+
+    def test_outer_deadline_expiring_during_setup_closes_pipes_without_spawn(self):
+        module=importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        receive=Mock();send=Mock();process=Mock()
+        context=SimpleNamespace(Pipe=lambda **kwargs:(receive,send),Process=lambda **kwargs:process)
+        with patch.object(module.multiprocessing,'get_context',return_value=context), \
+             patch.object(module.time,'monotonic_ns',side_effect=[90,101]):
+            result=module.supervise_xres_worker(
+                lambda _:None,(),timeout_s=1.5,absolute_deadline_monotonic_ns=100)
+        process.start.assert_not_called()
+        receive.close.assert_called_once();send.close.assert_called_once()
+        self.assertEqual(result['reason'],'transaction_deadline_before_spawn',result)
+        self.assertEqual(result['status'],'unknown',result)
+
+    def test_outer_deadline_caps_worker_response_wait(self):
+        module=importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        receive=SimpleNamespace(timeout=None)
+        def poll(timeout):receive.timeout=timeout;return True
+        receive.poll=poll;receive.recv=lambda:{'status':'released'};receive.close=lambda:None
+        send=SimpleNamespace(close=lambda:None)
+        class Process:
+            exitcode=0
+            def start(self):pass
+            def join(self,timeout=None):pass
+            def is_alive(self):return False
+        context=SimpleNamespace(Pipe=lambda **kwargs:(receive,send),Process=lambda **kwargs:Process())
+        with patch.object(module.multiprocessing,'get_context',return_value=context), \
+             patch.object(module.time,'monotonic',return_value=10.0), \
+             patch.object(module.time,'monotonic_ns',return_value=10_000_000_000):
+            result=module.supervise_xres_worker(lambda _:None,(),timeout_s=1.5,
+                accepted_statuses=('released',),wait_for_exit_until_deadline=True,
+                absolute_deadline_monotonic_ns=10_200_000_000)
+        self.assertAlmostEqual(receive.timeout,.2,places=6)
+        self.assertEqual(result['status'],'released',result)
 
     def test_release_worker_can_exit_within_remaining_response_deadline(self):
         module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')

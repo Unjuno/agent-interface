@@ -723,7 +723,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 timeout_s=_RETIRED_RELEASE_TIMEOUT_S,
                 terminate_grace_s=_RETIRED_RELEASE_TERMINATE_GRACE_S,
                 accepted_statuses=('released', 'unknown'),
-                wait_for_exit_until_deadline=True)
+                wait_for_exit_until_deadline=True,
+                absolute_deadline_monotonic_ns=deadline_monotonic_ns)
         except Exception as error:
             return {'status':'unknown', 'reason':'release_supervisor_failed',
                     'error':repr(error), 'worker_retired':None}

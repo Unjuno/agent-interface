@@ -3156,6 +3156,16 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         ])
         self.assertEqual(backend.held_buttons, {'left'})
 
+    def test_release_supervisor_receives_outer_cancellation_deadline(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name=':fake'
+        deadline=time.monotonic_ns()+5_000_000_000
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                   return_value={'status':'unknown','worker_retired':True}) as supervisor:
+            owner._release_retired_owner_inputs({'keys':{'a':38},'buttons':[]},
+                                                deadline_monotonic_ns=deadline)
+        self.assertEqual(supervisor.call_args.kwargs['absolute_deadline_monotonic_ns'],deadline)
+
     def test_retired_release_is_unknown_if_completion_observed_after_deadline(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.display_name = ':fake'
@@ -3516,7 +3526,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     owner._observe_owner_client_disconnect = Mock(side_effect=lambda: (
                         events.append('disconnect') or {
                             'status':disconnect_status, 'worker_retired':True}))
-                    owner._release_retired_owner_inputs = Mock(side_effect=lambda seen: (
+                    owner._release_retired_owner_inputs = Mock(side_effect=lambda seen, **kwargs: (
                         events.append(('release', seen)) or {
                             'status':'readback_verified', 'worker_retired':True}))
 
@@ -3527,7 +3537,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         'cancel control response unconfirmed')
                     owner._observe_owner_client_disconnect.assert_called_once_with()
                     if disconnect_status == 'disconnected':
-                        owner._release_retired_owner_inputs.assert_called_once_with(obligations)
+                        owner._release_retired_owner_inputs.assert_called_once_with(
+                            obligations, deadline_monotonic_ns=owner._active_cancel_deadline_ns)
                         self.assertEqual(events, ['retire', 'disconnect', ('release', obligations)])
                         self.assertEqual(result['owner_release_attempt']['status'],
                                          'readback_verified')
@@ -3862,7 +3873,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     'obligations':{'keys':{'CTRL':1}, 'buttons':[]},
                 })
                 self.assertEqual(cleanup.get('owner_release_attempt'), release_result)
-                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]},
+                    deadline_monotonic_ns=cancel['cancellation']['transaction_deadline_monotonic_ns'])
                 self.assertFalse(cleanup['release_confirmed'])
                 self.assertEqual(cleanup['cleanup_status'], 'UNKNOWN')
                 self.assertTrue(cleanup['late_server_request_possible'])
@@ -3925,7 +3937,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                             return_value=release_result) as release_inputs):
                     cancel=metadata(await server.call_tool('interface_guarded_cancel',
                         {'call_id':pending['call_id']}))
-                release_inputs.assert_called_once_with({'keys':{'CTRL':1},'buttons':[]})
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1},'buttons':[]},
+                    deadline_monotonic_ns=cancel['cancellation']['transaction_deadline_monotonic_ns'])
                 self.assertTrue(cancel['owner_process_retired'],cancel)
                 self.assertEqual(cancel.get('owner_client_disconnect'),fence_result)
                 self.assertEqual(cancel.get('owner_input_obligations'),
@@ -3989,14 +4002,18 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
                 def supervise_blocked_release(_target, _args, **kwargs):
                     self.assertEqual(_target.__name__, '_release_retired_inputs_worker')
-                    self.assertEqual(_args[1:], ({'CTRL':1}, []))
+                    self.assertEqual(_args[1:3], ({'CTRL':1}, []))
+                    self.assertEqual(_args[3], kwargs['absolute_deadline_monotonic_ns'])
+                    self.assertIs(kwargs['wait_for_exit_until_deadline'], True)
                     self.assertEqual(kwargs['timeout_s'], 1.5)
                     self.assertEqual(kwargs['terminate_grace_s'], 0.25)
                     self.assertEqual(kwargs['accepted_statuses'], ('released', 'unknown'))
                     return supervise_xres_worker(
                         _blocked_release_worker, (), timeout_s=kwargs['timeout_s'],
                         terminate_grace_s=kwargs['terminate_grace_s'],
-                        accepted_statuses=kwargs['accepted_statuses'])
+                        accepted_statuses=kwargs['accepted_statuses'],
+                        wait_for_exit_until_deadline=kwargs['wait_for_exit_until_deadline'],
+                        absolute_deadline_monotonic_ns=kwargs['absolute_deadline_monotonic_ns'])
 
                 started = time.monotonic()
                 # Force a short event-loop stall just before the public deadline.
@@ -4319,7 +4336,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(cancelled['owner_client_disconnect'],
                                  dict(fence_result,
                                       expected_pid=observed_owner_pids[0]))
-                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]},
+                    deadline_monotonic_ns=cancelled['cancellation']['transaction_deadline_monotonic_ns'])
                 self.assertEqual(cancelled['owner_release_attempt'], release_result)
                 self.assertFalse(cancelled['release_confirmed'])
                 self.assertEqual(cancelled['cleanup_status'], 'UNKNOWN')
