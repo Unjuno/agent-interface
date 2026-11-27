@@ -67,3 +67,14 @@ test('primary exchange keeps release recovery explicit and retains original stop
   assert.deepEqual(calls,['interface_guarded_input','interface_guarded_recover_input']);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('normal MCP envelope with execution_failed also permits one explicit recovery',async()=>{
+ const calls=[];const normalFailure=result({operation:'guarded_input',status:'execution_failed',replay_allowed:false,
+  session:{state:'open',binding_revision:0,recovery_required:true}},false);
+ const caller=createPrimaryCaller({sendPresented:async tool=>{calls.push(tool);return tool==='interface_guarded_input'?normalFailure:recovered;}},'guarded-local',{});
+ await caller.input('cell',[1,1],'keyboard',[]);
+ assert.ok(caller.state().stopped);
+ await caller.call('interface_guarded_recover_input',{current_binding_revision:0});
+ assert.ok(caller.state().stopped);
+ assert.deepEqual(calls,['interface_guarded_input','interface_guarded_recover_input']);
+});
