@@ -71,6 +71,22 @@ class OwnedSessionTests(unittest.TestCase):
             self.assertIn('research/doom/session_owned_owner_backend.py',manifest['files'])
             ROWS.append(dict(case='v15-selection',flags_stripped=True,wrapper_selected=True,manifest=manifest,files=saved(temp)))
 
+    def test_timed_hold_flag_selects_owned_backend_and_is_stripped(self):
+        import session_map01_v15 as session
+        selected_backend=helper().Backend
+        with tempfile.TemporaryDirectory() as temp:
+            (Path(temp)/'sources.json').write_text('{}')
+            base=ModuleType('session_map01_v12');base.vd=NS(DoomGame=object,GameVariable=object)
+            base.sys=NS(stdin=object());seen=[]
+            base.main=lambda:seen.append((base.Backend,list(sys.argv)))
+            argv=['session','--out',temp,'--target-process-identity','--owned-input-service','--owner-timed-hold']
+            with patch.dict(sys.modules,{'session_map01_v12':base}),patch.object(session,'MainThreadScorerStdin',return_value=Mock()),patch.object(
+                    session,'ScorerFileSink',return_value=Mock()),patch.object(sys,'argv',argv):session.main()
+            self.assertIs(seen[0][0].func,selected_backend)
+            self.assertIs(seen[0][0].keywords['timed_hold'],True)
+            self.assertNotIn('--owner-timed-hold',seen[0][1])
+            manifest=json.loads((Path(temp)/'target-process-identity-sources.json').read_text())
+            self.assertIn('research/live_control/session_v4.py',manifest['files'])
     def test_post_load_flag_requires_owned_service_and_reaches_v12(self):
         import map01_overlap_controller_v39 as controller
         import session_map01_v15 as session

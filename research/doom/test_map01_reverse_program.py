@@ -3,6 +3,17 @@ import unittest
 from map01_reverse_program import reverse_stages
 
 class ReverseProgramTests(unittest.TestCase):
+    def test_longer_turn_is_distinct_and_changes_only_one_stage(self):
+        from map01_reverse_program import reverse_manifest
+        baseline=reverse_stages('east-return');candidate=reverse_stages('east-return-turn75')
+        self.assertEqual([i for i,(a,b) in enumerate(zip(baseline,candidate)) if a!=b],[8])
+        self.assertEqual(candidate[8],('reverse-turn-3',[{'op':'hold','keys':['Left'],'duration_ms':475}]))
+        self.assertNotEqual(reverse_manifest('east-return')['suffix_sha256'],reverse_manifest('east-return-turn75')['suffix_sha256'])
+        from map01_door_driver_protocol import DoorDriverProtocol
+        from map01_door_task_contract import DoorTaskContract
+        caller=DoorDriverProtocol('use','a'*64,'b'*64,'c'*64,870,traverse=True,reverse_arm='east-return-turn75')
+        contract=DoorTaskContract('use',traverse=True,reverse_arm='east-return-turn75')
+        self.assertEqual(caller.reverse_arm,contract.reverse_arm)
     def test_matched_programs_differ_only_at_reopen_probe(self):
         control=reverse_stages('control');use=reverse_stages('use')
         self.assertEqual([x[0] for x in control],[x[0] for x in use])

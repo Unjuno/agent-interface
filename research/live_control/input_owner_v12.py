@@ -3,6 +3,7 @@
 This is scheduler-dependent deadline enforcement, not hard real-time control.
 No user callback, image work, file write or stdout write runs on this thread.
 """
+import copy
 import queue
 import threading
 import time
@@ -12,6 +13,9 @@ from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 
 IDENTITY_QUERY_BUDGET_NS = 1_000_000_000
+# During a timed hold, do not start another blocking target query in the
+# final 5 ms. The owner rechecks focus immediately after timed key-up.
+TIMED_QUERY_QUIET_NS = 5_000_000
 
 
 class InputOwner:
@@ -118,6 +122,8 @@ class InputOwner:
         revision = 0
         fault = None
         release_pending = False
+        timed_up = None
+        timed_tickets = set()
         self.ready.set()
 
         def key_is_down(code):
@@ -167,7 +173,7 @@ class InputOwner:
                     break
             return attempts, server_down is False
 
-        def release_keys_batch(lease, keys):
+        def release_keys_batch(lease, keys, *, timed_meta=None):
             nonlocal fault,release_pending
             if (type(keys) is not list or not keys or
                     any(not isinstance(key, str) or not key for key in keys) or
@@ -296,6 +302,9 @@ class InputOwner:
                     physical_verification_authoritative=False,
                     release_batch_initial_up_count=len(codes),
                     release_batch_key_order=[item[0] for item in codes])
+                if timed_meta is not None:
+                    receipt.update(release_mode='owner_deadline',timed_ticket=timed_meta['ticket'],
+                                   timed_deadline_ns=timed_meta['deadline_ns'],timed_armed_ns=timed_meta['armed_ns'])
                 self.records.append(receipt)
                 receipts.append(receipt)
             if any(not receipt["server_keyup_verified"] for receipt in receipts):
@@ -304,27 +313,41 @@ class InputOwner:
             return receipts
 
         focus_query_failed = False
+        focus_query_failure = None
+        focus_query_deadline = None
+
+        def query_deadline(lease):
+            deadline=min(lease.deadline,time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS)
+            if timed_up is not None and timed_up['status']=='armed' and timed_up['lease'] is lease:
+                deadline=min(deadline,timed_up['deadline_ns'])
+            return deadline
 
         def focus_id(lease=None):
+            nonlocal focus_query_deadline
             if self.identity_reader is not None and lease is not None:
+                focus_query_deadline = query_deadline(lease)
                 return self.identity_reader.read_focus(lease.expected_surface,
-                    perf_deadline_ns=min(lease.deadline,
-                        time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS),
+                    perf_deadline_ns=focus_query_deadline,
                     cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
 
         def invalid_focus(lease, pointer=False):
-            nonlocal focus_query_failed
+            nonlocal focus_query_failed, focus_query_failure, focus_query_deadline
             focus_query_failed = False
+            focus_query_failure = None
+            focus_query_deadline = None
             if not hasattr(lease,'expected_focus'):
                 raise ValueError('observed input focus required')
+            started_ns = time.perf_counter_ns()
             try:
                 actual=focus_id(lease)
-            except Exception:
+            except Exception as exc:
                 if self.identity_reader is None:
                     raise
                 focus_query_failed = True
+                focus_query_failure = dict(started_ns=started_ns,finished_ns=time.perf_counter_ns(),
+                    deadline_ns=focus_query_deadline,error_type=type(exc).__name__)
                 return True
             if not pointer:return actual != lease.expected_focus
             surface=getattr(lease,'expected_surface',None)
@@ -402,8 +425,7 @@ class InputOwner:
                     (active is lease and source != active_identity)):
                 return False
             try:
-                query_deadline_ns = min(lease.deadline,
-                    time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS)
+                query_deadline_ns = query_deadline(lease)
                 current = self.identity_reader.read(source[1], perf_deadline_ns=query_deadline_ns,
                     cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
                 valid = (current == source[2] and source == lease.target_process_identity and
@@ -414,8 +436,7 @@ class InputOwner:
                             or window_source[3] != source[3]
                             or (active is lease and window_source != active_window_identity)):
                         return False
-                    query_deadline_ns = min(lease.deadline,
-                        time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS)
+                    query_deadline_ns = query_deadline(lease)
                     window = self.window_reader.read_window(source[1], perf_deadline_ns=query_deadline_ns,
                         cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
                     valid = (valid and window == window_source[2]
@@ -467,7 +488,10 @@ class InputOwner:
             final_identity_fence(lease)
 
         def release(reason):
-            nonlocal active,revision,fault,release_pending
+            nonlocal active,revision,fault,release_pending,timed_up
+            if timed_up is not None and timed_up['status']=='armed':
+                timed_up['status']='cancelled' if reason=='cancelled' else 'interrupted'
+                timed_up['reason']=reason
             revision += 1
             release_pending = True
             key_release_attempts = {}
@@ -539,6 +563,7 @@ class InputOwner:
                 record['target_process_identity'] = list(active_identity) if active_identity is not None else None
                 record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
                 record['target_focus_query_failed'] = focus_query_failed
+                if focus_query_failed:record['target_focus_query_failure'] = copy.deepcopy(focus_query_failure)
             if self.window_reader is not None:
                 record['target_window_identity'] = list(active_window_identity) if active is not None and active_window_identity is not None else None
                 record['target_window_identity_reader'] = self.window_reader.worker.snapshot()
@@ -559,13 +584,41 @@ class InputOwner:
             release_pending = False
             return record
 
+        pending_request = None
         try:
             while True:
                 if self.stop_requested.is_set():
                     release('stop_requested')
                     break
+                # Run a due key release on the owner thread, independently of
+                # the worker doing screenshot or output work. Cancellation and
+                # the original lease always retain precedence over timed success.
+                if (timed_up is not None and timed_up['status']=='armed'
+                        and active is timed_up['lease'] and not active.cancel.is_set()
+                        and time.perf_counter_ns() < active.deadline
+                        and time.perf_counter_ns() >= timed_up['deadline_ns']):
+                    timed_up['status']='firing'
+                    try:
+                        rows=release_keys_batch(active,timed_up['keys'],timed_meta=timed_up)
+                        timed_up['receipts']=rows
+                        if active.cancel.is_set() or any(row.get('cancel_requested_after_sync') is not False for row in rows):
+                            timed_up['status']='cancelled'
+                        elif not rows or any(row.get('server_keyup_verified') is not True for row in rows):
+                            timed_up['status']='unverified'
+                        else:
+                            timed_up['status']='released'
+                    except Exception as error:
+                        timed_up['status']='unverified'
+                        timed_up['error_type']=type(error).__name__
+                        fault=error
+                        release_pending=True
+                    continue
                 # Check before dequeue so a busy request queue cannot starve expiry.
-                if active is not None:
+                defer_query = (active is not None and self.identity_reader is not None
+                    and timed_up is not None and timed_up['status']=='armed'
+                    and active is timed_up['lease'] and not active.cancel.is_set()
+                    and 0 < timed_up['deadline_ns']-time.perf_counter_ns() <= TIMED_QUERY_QUIET_NS)
+                if active is not None and not defer_query:
                     # Cancellation already invalidates this lease. Do not start a
                     # focus query with a cancelled callback and misreport that
                     # expected cancellation as a target-query failure.
@@ -614,16 +667,33 @@ class InputOwner:
                 timeout = .002
                 if active is not None:
                     timeout = min(timeout, max(0, (active.deadline-time.perf_counter_ns())/1e9))
-                try:
-                    op, lease, key, done, reply = self.requests.get(timeout=timeout)
-                except queue.Empty:
+                if timed_up is not None and timed_up['status']=='armed':
+                    timeout = min(timeout, max(0, (timed_up['deadline_ns']-time.perf_counter_ns())/1e9))
+                if pending_request is not None:
+                    op, lease, key, done, reply = pending_request
+                    pending_request = None
+                else:
+                    try:
+                        op, lease, key, done, reply = self.requests.get(timeout=timeout)
+                    except queue.Empty:
+                        continue
+                # A request may have been dequeued immediately before the
+                # timer became due. Preserve its place and run deadline and
+                # cancellation handling before examining its result.
+                if (op=='take_timed_up' and timed_up is not None
+                        and timed_up['status']=='armed'
+                        and active is timed_up['lease']
+                        and time.perf_counter_ns()>=timed_up['deadline_ns']):
+                    pending_request=(op,lease,key,done,reply)
                     continue
                 closing = op == 'close'
                 try:
                     if release_pending and op not in (
-                            'release', 'close', 'input_state', 'surface_context'):
+                            'release', 'close', 'input_state', 'surface_context', 'take_timed_up'):
                         raise RuntimeError(
                             'input owner release pending; retry release before actuation')
+                    if timed_up is not None and op in ('down','down_timed','up','up_batch','move','button_down','button_up','wheel','continue_move','arm_timed_up'):
+                        raise ValueError('timed release must be collected before new input')
                     continuation = op == 'continue_move'
                     if continuation:
                         if not isinstance(key,dict) or set(key)!={'owner_id','expected_revision','x','y','reply_until_ns'}:
@@ -639,8 +709,43 @@ class InputOwner:
                         if not all(point.mask & (X.Button1Mask << (b-1)) for b in buttons):
                             raise DecisionRequired('held button no longer physically down')
                         op='move';key={'x':key['x'],'y':key['y']}
-                    if op in ('move','button_down','button_up','wheel','down','up','up_batch'):revision += 1
-                    if op == 'input_state':
+                    if op in ('move','button_down','button_up','wheel','down','down_timed','up','up_batch'):revision += 1
+                    if op == 'arm_timed_up':
+                        if (type(key) is not dict or set(key)!={'ticket','keys','deadline_ns'}
+                                or type(key['ticket']) is not str or not 1<=len(key['ticket'])<=128
+                                or key['ticket'] in timed_tickets or len(timed_tickets)>=4096
+                                or type(key['keys']) is not list or not key['keys']
+                                or any(type(item) is not str or not item for item in key['keys'])
+                                or len(key['keys'])!=len(set(key['keys']))
+                                or type(key['deadline_ns']) is not int or active is not lease or lease is None
+                                or lease.cancel.is_set() or buttons or not time.perf_counter_ns()<key['deadline_ns']<lease.deadline):
+                            raise ValueError('timed release parameters or lease invalid')
+                        codes=[d.keysym_to_keycode(XK.string_to_keysym(item)) for item in key['keys']]
+                        if not all(codes) or len(set(codes))!=len(codes) or set(codes)!=set(held) or any(held[code] is not lease for code in codes):
+                            raise ValueError('timed release keys do not match owned keys')
+                        timed_tickets.add(key['ticket'])
+                        timed_up={'ticket':key['ticket'],'lease':lease,'keys':list(key['keys']),
+                                  'deadline_ns':key['deadline_ns'],'armed_ns':None,'status':'armed'}
+                        armed_ns=time.perf_counter_ns()
+                        timed_up['armed_ns']=armed_ns
+                        if armed_ns>=key['deadline_ns']:
+                            lease.cancel.set()
+                            late=DecisionRequired('timed release expired during arming')
+                            try:release('cancelled')
+                            except Exception as cleanup:late.add_note('late timed release cleanup failed: '+type(cleanup).__name__)
+                            raise late
+                        result={'ticket':key['ticket'],'deadline_ns':key['deadline_ns'],'armed_ns':armed_ns,'status':'armed'}
+                    elif op == 'take_timed_up':
+                        if (timed_up is None or timed_up['lease'] is not lease
+                                or type(key) is not str or key!=timed_up['ticket'] or timed_up['status'] in ('armed','firing')):
+                            raise ValueError('timed release result unavailable')
+                        if timed_up['status']=='released':
+                            if lease.cancel.is_set():timed_up['status']='cancelled'
+                            elif time.perf_counter_ns()>=lease.deadline:timed_up['status']='expired'
+                            elif getattr(lease,'focus_invalid',False):timed_up['status']='interrupted'
+                        result=copy.deepcopy({name:value for name,value in timed_up.items() if name!='lease'})
+                        timed_up=None
+                    elif op == 'input_state':
                         started=time.perf_counter_ns();point=d.screen().root.query_pointer();focus=focus_id();finished=time.perf_counter_ns()
                         result=dict(owner_id=self.owner_id,revision=revision,sample_started_ns=started,sample_finished_ns=finished,
                             owned_buttons=sorted(buttons),owned_keycodes=sorted(held),physical_pointer_mask=point.mask,
@@ -714,11 +819,22 @@ class InputOwner:
                                 result['target_window_identity'] = list(checked_window_identity)
                     elif op == 'up_batch':
                         result = release_keys_batch(lease, key)
-                    elif op in ('down', 'up'):
+                    elif op in ('down', 'down_timed', 'up'):
+                        timed_request=None
+                        if op=='down_timed':
+                            if (type(key) is not dict or set(key)!={'key','ticket','duration_ms'}
+                                    or type(key['key']) is not str or not key['key']
+                                    or type(key['ticket']) is not str or not 1<=len(key['ticket'])<=128
+                                    or key['ticket'] in timed_tickets or len(timed_tickets)>=4096
+                                    or type(key['duration_ms']) is not int or not 1<=key['duration_ms']<=10_000
+                                    or lease is None or held or buttons
+                                    or time.perf_counter_ns()+key['duration_ms']*1_000_000>=lease.deadline):
+                                raise ValueError('atomic timed press parameters or lease invalid')
+                            timed_request=dict(key);key=timed_request['key']
                         code = d.keysym_to_keycode(XK.string_to_keysym(key))
                         if not code:
                             raise ValueError('key unavailable on input owner')
-                        if op == 'down':
+                        if op in ('down','down_timed'):
                             if fault is not None:
                                 raise RuntimeError('input owner failed closed') from fault
                             if active is not None and active is not lease:
@@ -776,10 +892,25 @@ class InputOwner:
                                 except Exception as cleanup:
                                     late.add_note('late first press cleanup failed: ' + type(cleanup).__name__)
                                 raise late
+                            if timed_request is not None:
+                                timed_deadline=acknowledged+timed_request['duration_ms']*1_000_000
+                                timed_tickets.add(timed_request['ticket'])
+                                timed_up={'ticket':timed_request['ticket'],'lease':lease,'keys':[key],
+                                          'deadline_ns':timed_deadline,'armed_ns':None,'status':'armed'}
+                                armed_ns=time.perf_counter_ns()
+                                timed_up['armed_ns']=armed_ns
+                                if timed_deadline>=lease.deadline or armed_ns>=timed_deadline:
+                                    lease.cancel.set()
+                                    late=DecisionRequired('timed press acknowledgement leaves no valid hold interval')
+                                    try:release('cancelled')
+                                    except Exception as cleanup:late.add_note('late timed press cleanup failed: '+type(cleanup).__name__)
+                                    raise late
                             if first_press:
                                 lease._first_press_applied = True
                             result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=acknowledged, valid_until_ns=lease.deadline)
+                            if timed_request is not None:
+                                result.update(timed_ticket=timed_request['ticket'],timed_deadline_ns=timed_deadline,timed_armed_ns=armed_ns)
                             if first_press_deadline is not None:
                                 result['first_press_deadline_ns'] = first_press_deadline
                                 result['first_press_submission_checked_before_deadline'] = first_press

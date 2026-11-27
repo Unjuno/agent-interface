@@ -36,6 +36,10 @@ class LauncherPreflightTests(unittest.TestCase):
    node=next(x for x in ast.parse(driver.read_text()).body if isinstance(x,ast.FunctionDef) and x.name=='expected_runtime_argv')
    scope={'Path':Path,'root':trial};exec(compile(ast.Module(body=[node],type_ignores=[]),str(driver),'exec'),scope)
    self.assertEqual(scope['expected_runtime_argv'](spec),argv)
+   timed=dict(spec,owner_timed_hold=True,runtime_argv=argv+['--owner-timed-hold'])
+   self.assertEqual(scope['expected_runtime_argv'](timed),timed['runtime_argv'])
+   with self.assertRaisesRegex(ValueError,'timed owner source pins missing'):
+    validate_runtime_inputs(trial,timed,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha)
    self.assertIsNone(validate_runtime_inputs(trial,spec,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha))
    with self.assertRaisesRegex(ValueError,'baseline registration digest'):validate_runtime_inputs(trial,spec,expected_checkout=checkout,baseline_path=baseline,baseline_sha256='0'*64)
    changed_external=dict(spec,files=dict(spec['files'],**{str(external):'0'*64}))

@@ -184,13 +184,17 @@ def expected_runtime_argv(spec):
             or spec.get('candidate_manifest_sha256')!=manifest_sha
             or spec.get('candidate_save_sha256')!=save_sha):
         raise ValueError('registered candidate is not the fixed trial candidate')
-    return [spec['python'],str(checkout/'research/doom/session_map01_v15.py'),
+    argv=[spec['python'],str(checkout/'research/doom/session_map01_v15.py'),
       '--out',str(root/'runtime'),'--seed','990619','--timeout-seconds','75','--skill','1',
       '--load-fixture-manifest',str(candidate),'--target-process-identity','--owned-input-service',
       '--renewal-passive-observer','--post-load-clock-gate','--door-task-arm','use','--door-task-traverse','--door-task-reverse-arm',spec['arm'],
       '--candidate-setup-evidence',str(root/'evidence.json'),'--candidate-setup-evidence-sha256',evidence_sha,
       '--door-expected-manifest-sha256',manifest_sha,'--door-expected-save-sha256',save_sha,
       '--door-expected-iwad-sha256',wad_sha,'--door-expected-restore-tic','870']
+    timed=spec.get('owner_timed_hold',False)
+    if type(timed) is not bool:raise ValueError('timed hold binding malformed')
+    if timed:argv.append('--owner-timed-hold')
+    return argv
 
 
 def run():
@@ -209,7 +213,7 @@ def run():
             'driver, evidence or claim differs')
     require(registered.get('east_reference_sha256')=='89a58ce4069bc4aff69805479164ed2cc9c96a61edb768a6685c1d6ad2fcc9cc',
             'east reference differs from recorded USE endpoint')
-    require(registered['arm']=='east-return' and registered['repeat_limit']==1
+    require(registered['arm'] in ('east-return','east-return-turn75') and registered['repeat_limit']==1
             and registered['model_calls']==0 and registered['candidate_restore_tic']==870,
             'registered trial bounds differ')
     checkout=Path(registered['checkout'])

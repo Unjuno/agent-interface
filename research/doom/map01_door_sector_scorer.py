@@ -19,7 +19,7 @@ class DoorSectorScorer:
     def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False, exit_probe=False, reverse_arm=None):
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         if type(exit_probe) is not bool or exit_probe and not traverse:raise ValueError('invalid exit probe mode')
-        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return') or not traverse or exit_probe):
+        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate','east-return','east-return-turn75') or not traverse or exit_probe):
             raise ValueError('reverse scorer requires traversal without exit probe')
         self.traverse=traverse
         self.exit_probe=exit_probe

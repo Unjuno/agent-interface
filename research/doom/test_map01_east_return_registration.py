@@ -26,6 +26,23 @@ class RegistrationTests(unittest.TestCase):
    self.assertEqual(path.read_bytes(),b'first');self.assertEqual(path.stat().st_mode & 0o777,0o600)
    with self.assertRaises(FileExistsError):write_exclusive(path,b'second')
    self.assertEqual(path.read_bytes(),b'first')
+ def test_timed_hold_is_an_explicit_registered_option(self):
+  hashes={'driver_sha256':'1'*64,'launcher_sha256':'2'*64,'preflight_sha256':'3'*64,'auditor_sha256':'4'*64}
+  args=(Path('/tmp/trial'),'map01-east-ab12.service',Path('/repo'),'a'*40,'b'*40,{'/repo/source':'c'*64},hashes)
+  legacy=build_spec(*args);timed=build_spec(*args,timed_hold=True)
+  self.assertNotIn('owner_timed_hold',legacy)
+  self.assertEqual(timed['runtime_argv'],legacy['runtime_argv']+['--owner-timed-hold'])
+  self.assertIs(timed['owner_timed_hold'],True)
+  self.assertEqual(timed['endpoint_rules'],legacy['endpoint_rules'])
+  with self.assertRaises(ValueError):build_spec(*args,timed_hold=1)
+ def test_longer_turn_is_registered_and_requires_timed_hold(self):
+  hashes={'driver_sha256':'1'*64,'launcher_sha256':'2'*64,'preflight_sha256':'3'*64,'auditor_sha256':'4'*64}
+  args=(Path('/tmp/trial'),'map01-east-ab12.service',Path('/repo'),'a'*40,'b'*40,{'/repo/source':'c'*64},hashes)
+  with self.assertRaises(ValueError):build_spec(*args,arm='east-return-turn75')
+  spec=build_spec(*args,arm='east-return-turn75',timed_hold=True)
+  self.assertEqual(spec['arm'],'east-return-turn75')
+  self.assertEqual(spec['runtime_argv'][spec['runtime_argv'].index('--door-task-reverse-arm')+1],spec['arm'])
+  self.assertIs(spec['owner_timed_hold'],True)
  def test_dirty_checkout_refuses_before_any_allocation(self):
   import map01_east_return_prepare as preparer
   with tempfile.TemporaryDirectory() as tmp:

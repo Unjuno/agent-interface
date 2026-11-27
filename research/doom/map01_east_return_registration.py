@@ -19,8 +19,11 @@ EAST_REFERENCE='89a58ce4069bc4aff69805479164ed2cc9c96a61edb768a6685c1d6ad2fcc9cc
 UNIT_OPTIONS=['UMask=0077','PrivateTmp=yes','PrivateNetwork=yes','RuntimeMaxSec=60s','TimeoutStopSec=5s','KillMode=control-group']
 
 
-def build_spec(root, unit, checkout, revision, tree, files, hashes):
+def build_spec(root, unit, checkout, revision, tree, files, hashes, *, timed_hold=False, arm='east-return'):
     root=Path(root);checkout=Path(checkout)
+    if type(timed_hold) is not bool:raise ValueError('timed_hold must be boolean')
+    if arm not in ('east-return','east-return-turn75'):raise ValueError('invalid east-return arm')
+    if arm=='east-return-turn75' and not timed_hold:raise ValueError('turn75 requires timed hold')
     keys=('driver_sha256','launcher_sha256','preflight_sha256','auditor_sha256')
     if (not root.is_absolute() or not checkout.is_absolute() or type(unit) is not str
             or re.fullmatch(r'map01-east-[a-z0-9]+\.service',unit) is None
@@ -35,11 +38,12 @@ def build_spec(root, unit, checkout, revision, tree, files, hashes):
     argv=[PYTHON,str(checkout/'research/doom/session_map01_v15.py'),'--out',str(root/'runtime'),
           '--seed','990619','--timeout-seconds','75','--skill','1','--load-fixture-manifest',CANDIDATE,
           '--target-process-identity','--owned-input-service','--renewal-passive-observer','--post-load-clock-gate',
-          '--door-task-arm','use','--door-task-traverse','--door-task-reverse-arm','east-return',
+          '--door-task-arm','use','--door-task-traverse','--door-task-reverse-arm',arm,
           '--candidate-setup-evidence',str(root/'evidence.json'),'--candidate-setup-evidence-sha256',EVIDENCE,
           '--door-expected-manifest-sha256',MANIFEST,'--door-expected-save-sha256',SAVE,
           '--door-expected-iwad-sha256',IWAD,'--door-expected-restore-tic','870']
-    return {'schema':'map01-east-return-registration-v1','root':str(root),'unit':unit,'arm':'east-return',
+    if timed_hold:argv.append('--owner-timed-hold')
+    spec={'schema':'map01-east-return-registration-v1','root':str(root),'unit':unit,'arm':arm,
             'checkout':str(checkout),'revision':revision,'tree':tree,'python':PYTHON,
             'pythonpath':':'.join(str(checkout/path) for path in paths),'runtime_argv':argv,
             'candidate_manifest_sha256':MANIFEST,'candidate_save_sha256':SAVE,
@@ -50,3 +54,5 @@ def build_spec(root, unit, checkout, revision, tree, files, hashes):
             'unit_options':list(UNIT_OPTIONS),'files':dict(files),'endpoint_rules':deepcopy(SCOPED_RULES),
             'guard_requires_new_frame':True,
             'scope':'one X11 standard-caller endpoint trial; no model, continuous path, player floor, map completion or speed claim'}
+    if timed_hold:spec['owner_timed_hold']=True
+    return spec

@@ -13,11 +13,13 @@ class OwnedOwnerAdapter:
         self._leases={};self._bindings={};self._close_result=None;self._closed=False;self._closing=False;self.client=self.control=None
         startup=service.startup
         if (type(startup) is not dict or startup.get('display')!=display
-                or startup.get('cancellation_enabled') is not True):
+                or startup.get('cancellation_enabled') is not True
+                or ('timed_up_enabled' in startup and type(startup['timed_up_enabled']) is not bool)):
             raise ValueError('owned cancellation service for the selected display required')
         self.owner_id=startup['owner_id'];self.service_id=startup['service_id']
         try:
-            self.client=rpc.OwnerRpcClient(service.take_socket(),display=display,service_id=self.service_id,timeout=self.timeout)
+            self.client=rpc.OwnerRpcClient(service.take_socket(),display=display,service_id=self.service_id,timeout=self.timeout,
+                                           timed_up=startup.get('timed_up_enabled') is True)
             self.control=CancellationClient(service.take_cancellation_socket(),startup=startup,timeout=self.timeout)
         except BaseException as error:
             error.owner_service_handle=service
@@ -82,7 +84,7 @@ class OwnedOwnerAdapter:
                 if self._leases.get(token) is not lease or expected!=current:
                     self._retain('original_source_changed',dict(operation=operation,intent_token=token))
                     raise ValueError('original backend source binding changed; no RPC sent')
-            if operation in ('down','up','up_batch'):
+            if operation in ('down','down_timed','up','up_batch','arm_timed_up','take_timed_up'):
                 if self.obligation_snapshot() is not None:raise ValueError('external owner release unverified')
                 token=getattr(lease,'intent_token',None)
                 if self._leases.get(token) is not lease:raise ValueError('original backend-bound lease required')
@@ -91,25 +93,32 @@ class OwnedOwnerAdapter:
             if token in self._attempted:
                 try:self.control.wait(token,self.timeout)
                 except Exception as error:self._retain('cancellation_outcome_unknown',dict(error=type(error).__name__))
+        dispatched=False
         def mark_attempted():
+            nonlocal dispatched
+            dispatched=True
             with self._lock:self._attempted.add(token)
         try:
-            if operation in ('down','up','up_batch'):
+            if operation in ('down','down_timed','up','up_batch','arm_timed_up','take_timed_up'):
                 result=self.client.call(operation,lease,key,on_dispatch=mark_attempted)
             else:
                 result=self.client.call(operation,lease,key)
         except rpc.RpcCapacityExhausted as error:
-            if operation in ('surface_context','input_state','down'):
+            if operation in ('surface_context','input_state','down') or (operation in ('arm_timed_up','take_timed_up') and not dispatched):
                 raise
             self._retain('ordinary_rpc_unknown',dict(operation=operation,error=type(error).__name__))
             if operation=='release':
                 return dict(verified=False,error=type(error).__name__,owner_service_obligation=self.obligation_snapshot())
             raise
         except BaseException as error:
+            if operation in ('arm_timed_up','take_timed_up') and not dispatched:
+                raise
             self._retain('ordinary_rpc_unknown',dict(operation=operation,error=type(error).__name__))
             if operation=='release' and isinstance(error,Exception):
                 return dict(verified=False,error=type(error).__name__,owner_service_obligation=self.obligation_snapshot())
             raise
+        if operation=='take_timed_up' and (type(result) is not dict or result.get('status')=='unverified'):
+            self._retain('timed_release_unverified',result)
         if operation=='release' and (type(result) is not dict or result.get('verified') is not True):
             self._retain('ordinary_release_unverified',result)
         obligation=self.obligation_snapshot()
@@ -132,8 +141,11 @@ class OwnedOwnerAdapter:
             self._close_result=dict(schema='owned-adapter-close-v1',verified=False,service_id=self.service_id,
                 owner_id=self.owner_id,service_report=None,ordinary_close=None,obligation=self.obligation_snapshot())
         errors=[];exceptions=[];fatal=False;ordinary=None;report=None
-        for name,action in (('ordinary_close',self.client.close),('control_close',self.control.close),
-                            ('handle_channels',self.service.close_channel),('service_wait',lambda:self.service.wait(self.close_timeout))):
+        # The ordinary close asks the service to retire its own cancellation
+        # relay. Keep the peer open until that retirement is observed so EOF
+        # cannot race ahead of the service's stop signal.
+        for name,action in (('ordinary_close',self.client.close),('service_wait',lambda:self.service.wait(self.close_timeout)),
+                            ('control_close',self.control.close),('handle_channels',self.service.close_channel)):
             try:
                 value=action()
                 if name=='ordinary_close':ordinary=value

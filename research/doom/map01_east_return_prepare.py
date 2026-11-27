@@ -28,7 +28,7 @@ def write_exclusive(path, data):
         stream.write(data);stream.flush();os.fsync(stream.fileno())
 
 
-def prepare():
+def prepare(*, timed_hold=False, arm='east-return'):
     sys.path[:0]=[str(CHECKOUT/'research/doom'),str(CHECKOUT/'research/live_control'),str(CHECKOUT)]
     from map01_candidate_setup_evidence_v1 import read_sealed_directory
     from map01_east_return_registration import build_spec,MANIFEST,SAVE,EVIDENCE,INITIAL_REFERENCE,INITIAL_GUARD,EAST_REFERENCE
@@ -65,6 +65,15 @@ def prepare():
         path=CHECKOUT/'research/doom'/name
         if not path.is_file():raise ValueError('required source is absent')
         pins[str(path)]=sha(path)
+    if timed_hold:
+        for relative in ('research/doom/session_v4.py','research/doom/session_owned_owner_backend.py',
+                         'research/doom/doom_owner_thread_release_batch_backend_v1.py',
+                         'research/doom/doom_process_identity_backend_v1.py',
+                         'research/live_control/session_v4.py','research/live_control/input_owner_v12.py','research/live_control/input_owner_rpc_v2.py',
+                         'research/live_control/input_owner_process_v3.py','research/live_control/input_owner_service_adapter.py'):
+            path=CHECKOUT/relative
+            if not path.is_file():raise ValueError('timed owner source is absent')
+            pins[str(path)]=sha(path)
     artifacts={'driver.py':CHECKOUT/'research/doom/map01_os_east_return_driver.py',
                'launcher.py':CHECKOUT/'research/doom/map01_east_return_launcher.py',
                'preflight.py':CHECKOUT/'research/doom/map01_east_return_launcher_preflight.py',
@@ -84,7 +93,7 @@ def prepare():
         if pins.get(str(CHECKOUT/'research/doom'/name))!=hashes[key]:
             raise ValueError('artifact source changed during preparation')
     token=secrets.token_hex(8);root=Path('/home/user')/('issue59-os-east-return-'+token);unit='map01-east-'+token+'.service'
-    spec=build_spec(root,unit,CHECKOUT,revision,tree,pins,hashes)
+    spec=build_spec(root,unit,CHECKOUT,revision,tree,pins,hashes,timed_hold=timed_hold,arm=arm)
     # The first filesystem mutation creates a new private root, after all source checks.
     os.mkdir(root,0o700)
     for name,data in artifact_bytes.items():write_exclusive(root/name,data)
@@ -95,5 +104,10 @@ def prepare():
 
 
 if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--owner-timed-hold',action='store_true')
+    parser.add_argument('--arm',choices=('east-return','east-return-turn75'),default='east-return')
+    args=parser.parse_args()
     os.umask(0o077)
-    print(json.dumps(prepare(),sort_keys=True))
+    print(json.dumps(prepare(timed_hold=args.owner_timed_hold,arm=args.arm),sort_keys=True))

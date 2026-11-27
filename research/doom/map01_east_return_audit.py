@@ -15,20 +15,20 @@ sys.path[:0]=[str(_CHECKOUT/'research/doom'),str(_CHECKOUT/'research/live_contro
 from map01_reverse_program import reverse_stages
 
 
-def expected_program():
+def expected_program(arm='east-return'):
     prefix=[('cover-0',[{'op':'coast','duration_ms':200,'sample_ms':100}])]
     prefix += [('approach-'+str(i),[{'op':'hold','keys':['Up'],'duration_ms':600}]) for i in range(1,5)]
     prefix += [('intervention',[{'op':'hold','keys':['e'],'duration_ms':120}]),
                ('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':300}])]
-    return prefix+reverse_stages('east-return')
+    return prefix+reverse_stages(arm)
 
 
-def validate_trace(events,samples):
+def validate_trace(events,samples,*,arm='east-return'):
     def require(condition,message):
         if not condition:raise ValueError(message)
     require(type(events) is list and type(samples) is list,'missing trace')
     require(all(type(row) is dict for row in events+samples),'malformed trace row')
-    program=expected_program()
+    program=expected_program(arm)
     command_rows=[(i,row) for i,row in enumerate(events) if row.get('event')=='command']
     require(all(type(row.get('command')) is dict and row['command'].get('op') in ('submit','door-settle','finish') for _,row in command_rows),'unexpected command')
     submits=[(i,row) for i,row in command_rows if row['command']['op']=='submit']
@@ -480,7 +480,7 @@ def _audit_trial(root, seal_sha256, registration_sha256):
     require(hashlib.sha256(registration_bytes).hexdigest()==registration_sha256,'registration hash differs')
     reg=json.loads(registration_bytes,parse_constant=reject_constant)
     require(type(reg) is dict and reg.get('schema')=='map01-east-return-registration-v1'
-            and reg.get('root')==str(root) and reg.get('arm')=='east-return'
+            and reg.get('root')==str(root) and reg.get('arm') in ('east-return','east-return-turn75')
             and type(reg.get('repeat_limit')) is int and reg['repeat_limit']==1
             and type(reg.get('model_calls')) is int and reg['model_calls']==0,'registration scope differs')
     require(canonical(reg.get('endpoint_rules'))==canonical(SCOPED_RULES)
@@ -507,12 +507,12 @@ def _audit_trial(root, seal_sha256, registration_sha256):
         baseline_sha256='4dbe44082da117dde60a7713157065bcc5d490bf720a9a988b1e0e7707b4ee6d')
     events=lines('runtime/events.jsonl');raw=lines('runtime.stdout');driver=lines('driver.jsonl')
     samples=lines('runtime/door-sector-private.jsonl');owner=read('runtime/owner-events.json')
-    validate_trace(events,samples);validate_raw_delivery(events,raw,driver);validate_trial_deadline(worker,driver)
+    validate_trace(events,samples,arm=reg['arm']);validate_raw_delivery(events,raw,driver);validate_trial_deadline(worker,driver)
     identity_tuple=validate_caller_policy(events,driver,manifest_sha=reg['candidate_manifest_sha256'],
-        save_sha=reg['candidate_save_sha256'],evidence_sha=reg['candidate_evidence_sha256'],restore_tic=870)
-    require(validate_owner_events(events,owner)==16,'keyed owner count differs')
-    durations=validate_contract_replay(events)
-    keyed=[stage for stage,steps in expected_program() if steps[0]['op']=='hold']
+        save_sha=reg['candidate_save_sha256'],evidence_sha=reg['candidate_evidence_sha256'],restore_tic=870,arm=reg['arm'])
+    require(validate_owner_events(events,owner,program=expected_program(reg['arm']))==16,'keyed owner count differs')
+    durations=validate_contract_replay(events,arm=reg['arm'])
+    keyed=[stage for stage,steps in expected_program(reg['arm']) if steps[0]['op']=='hold']
     require(list(durations)==keyed and worker.get('keyed_submit_attempted')==keyed
             and worker.get('keyed_submit_written')==keyed and worker.get('input_admissions_observed')==keyed,
             'caller input count differs')
@@ -528,6 +528,11 @@ def _audit_trial(root, seal_sha256, registration_sha256):
         stage='reverse-cross',next_stage='east-turn-1',reference_name='east-reference.png',reference_sha256=east_sha,identity=identity)
     service=read('service-active.json');active=read('display-active.json');display_retired=read('display-retired.json')
     startup_bytes=sealed_bytes('runtime/session-owner-service-startup.json');startup=json.loads(startup_bytes,parse_constant=reject_constant)
+    if reg.get('owner_timed_hold') is True:
+        require(startup.get('startup',{}).get('timed_up_enabled') is True,'timed owner capability missing')
+        transitions=[row for row in events if row.get('event')=='input_release_transition']
+        require(len(transitions)==16 and all(row.get('release_mode')=='owner_deadline' for row in transitions),
+                'timed owner release evidence missing')
     ready=[row for row in events if row.get('event')=='ready']
     require(len(ready)==1,'runtime ready missing or duplicated')
     validate_environment(read('runtime/environment.json'),ready[0],reg)
