@@ -13,6 +13,21 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_top_level_help_exposes_optional_stdio_without_dependencies(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            out = td / 'runtime.pyz'
+            build(root, out, td / 'manifest.json', td / 'sum')
+            for flag in ('-h', '--help'):
+                result = subprocess.run([sys.executable, '-S', str(out), flag], cwd=td,
+                                        capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stderr, '')
+                self.assertIn('mcp', result.stdout)
+                self.assertIn('relay', result.stdout)
+                self.assertIn('mcp==1.30.0', result.stdout)
+
     def test_archive_contains_tracked_internal_import_dependencies(self):
         import ast
         root = Path(__file__).resolve().parents[2]
