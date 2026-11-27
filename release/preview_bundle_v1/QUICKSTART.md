@@ -82,6 +82,8 @@ To authorize installation when no venv exists, add
 golden allocation; it does not imply dependency-download consent.
 
 The runner executes preflight, setup, doctor, retained audit, one fresh run, and `audit-live`, retaining stdout/stderr/return codes for every step. It refuses to reuse the acceptance directory and performs no automatic retry.
+If a command cannot be launched, its step record instead has a null return code
+and a `launch_error`; acceptance stops and preserves that failure.
 
 ## What this preview does not claim
 
