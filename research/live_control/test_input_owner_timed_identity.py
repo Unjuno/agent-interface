@@ -75,6 +75,10 @@ class TimedIdentityTests(unittest.TestCase):
                 release=next(row for row in owner.records if row.get('reason')=='target_query_invalidated')
                 self.assertTrue(release['verified'])
                 self.assertTrue(release['target_focus_query_failed'])
+                attempt=next(iter(release['key_release_attempts'].values()))['attempts'][0]
+                self.assertLessEqual(release['target_focus_query_failure']['finished_ns'],attempt['keymap_before_started_ns'])
+                self.assertLessEqual(attempt['keymap_before_started_ns'],attempt['keymap_before_sampled_ns'])
+                self.assertLessEqual(attempt['keymap_before_sampled_ns'],attempt['keyrelease_started_ns'])
                 self.assertTrue(release['target_process_identity_reader']['retired'])
                 detail=release['target_focus_query_failure']
                 self.assertEqual(detail['deadline_ns'],admission['timed_deadline_ns'])
