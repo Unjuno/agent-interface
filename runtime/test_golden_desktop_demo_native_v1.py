@@ -219,15 +219,16 @@ class NativeCodexPreviewTests(unittest.TestCase):
                      patch.object(preflight.subprocess, "run", side_effect=fake_run):
                     old_identity, old_key = preflight.compatibility_identity(schema)
                     preflight.CLI_EXE_WSL = executable
-                    new_identity, new_key = preflight.compatibility_identity(schema)
+                    chosen_model = "gpt-6.1-terra" if mode == "complete" else preflight.MODEL
+                    new_identity, new_key = preflight.compatibility_identity(schema, model=chosen_model)
                     if mode not in ("complete", "partial"):
                         with self.assertRaises(gate.SchemaPreflightRefused) as stopped:
                             gate.require_compatible([{"name": "compiled", "schema": schema}],
-                                                    root / "cache", gate_dir, workspace)
+                                                    root / "cache", gate_dir, workspace, model=chosen_model)
                         report = stopped.exception.report
                     else:
                         report = gate.require_compatible([{"name": "compiled", "schema": schema}],
-                                                         root / "cache", gate_dir, workspace)
+                                                         root / "cache", gate_dir, workspace, model=chosen_model)
                 self.assertNotIn("node_version", new_identity)
                 self.assertIn("node_version", old_identity)
                 self.assertNotEqual(old_key, new_key)
@@ -237,6 +238,9 @@ class NativeCodexPreviewTests(unittest.TestCase):
                 self.assertTrue(argv[1].endswith("native_preflight_job_v1.py"))
                 self.assertEqual(argv[5:7], ["--native-codex-exe", "W:" + str(executable)])
                 self.assertEqual(argv[10:12], ["handle", "-"])
+                if chosen_model != preflight.MODEL:
+                    self.assertEqual(argv[-1], chosen_model)
+                self.assertEqual(new_identity["requested_model"], chosen_model)
                 result = report["results"][0]["result"]
                 self.assertEqual(result["compatibility_key"], new_key)
                 self.assertEqual(report["accepted"], mode in ("complete", "partial"))

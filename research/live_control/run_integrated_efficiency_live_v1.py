@@ -33,14 +33,15 @@ def records(path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
-def preflight_call(arm, contract):
+def preflight_call(arm, contract, *, model=None):
     root = OUT / "preflight" / arm
     workspace = OUT / "workspaces" / arm
     workspace.mkdir(parents=True, exist_ok=False)
     schema = CONTRACTS[contract][0]
+    options = {} if model is None else {"model": model}
     gate = require_compatible(
         [{"name": contract + "-form-grounding", "schema": schema}],
-        root / "fresh-cache", root / "gate", workspace)
+        root / "fresh-cache", root / "gate", workspace, **options)
     result = gate["results"][0]["result"]
     events = records(root / "gate" / (contract + "-form-grounding") /
                      "model-call" / "events.jsonl")
