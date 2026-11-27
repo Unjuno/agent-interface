@@ -15,7 +15,7 @@ def pair(identifier,seq,stamp):
 class ReverseProtocolTests(unittest.TestCase):
  def test_reverse_program_is_driven_only_after_settled_observations(self):
   from map01_reverse_program import reverse_stages
-  for arm in ('control','use','calibrate'):
+  for arm in ('control','use','calibrate','east-return'):
    p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870,traverse=True,reverse_arm=arm)
    from map01_reverse_program import reverse_manifest
    ready={'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,

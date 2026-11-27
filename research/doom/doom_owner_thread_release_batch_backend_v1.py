@@ -2,10 +2,63 @@
 from __future__ import annotations
 
 import threading
+import time
+import uuid
 from copy import deepcopy
 
 from doom_typed_release_backend_v2 import Backend as Previous, suite
 from input_transition_owner_v4 import InputOwner
+
+
+def build_timed_transition(admission, result, records, *, record_count, dispatch_ns, returned_ns):
+    """Join an atomic press/schedule and collection to its actual owner UP."""
+    from doom_controller_failure_cleanup_v1 import owner_event_verified
+    if (type(admission) is not dict or type(result) is not dict or type(records) is not list
+            or type(record_count) is not int or not 0<=record_count<=len(records)
+            or type(dispatch_ns) is not int or type(returned_ns) is not int):
+        raise ValueError('timed transition evidence unavailable')
+    key=admission.get('key');owner=admission.get('owner_id');token=admission.get('intent_token')
+    ticket=admission.get('timed_ticket');armed=admission.get('timed_armed_ns');deadline=admission.get('timed_deadline_ns')
+    admitted=admission.get('admitted_ns');ack=admission.get('input_ack_ns');until=admission.get('valid_until_ns')
+    receipts=result.get('receipts')
+    if result.get('status')!='released':
+        status=result.get('status')
+        raise ValueError('timed release did not complete: '+str(status)[:40])
+    if (admission.get('event')!='input_admission' or type(admission.get('id')) is not str or not admission['id']
+            or type(admission.get('step')) is not int or admission['step']<0
+            or type(admission.get('keycode')) is not int or admission['keycode']<=0
+            or any(type(value) is not str or not value for value in (key,owner,token,ticket))
+            or any(type(value) is not int for value in (admitted,ack,armed,deadline,until))
+            or not dispatch_ns<=admitted<=ack<=armed<deadline<until or not returned_ns<until
+            or result.get('status')!='released' or result.get('ticket')!=ticket or result.get('keys')!=[key]
+            or type(result.get('deadline_ns')) is not int or result['deadline_ns']!=deadline
+            or type(result.get('armed_ns')) is not int or result['armed_ns']!=armed
+            or result.get('intent_token')!=token or type(receipts) is not list or len(receipts)!=1):
+        raise ValueError('timed press or result differs')
+    receipt=receipts[0]
+    if (not owner_event_verified(receipt) or receipt.get('owner_id')!=owner or receipt.get('key')!=key
+            or receipt.get('keycode')!=admission.get('keycode') or receipt.get('intent_token')!=token
+            or receipt.get('valid_until_ns')!=until or receipt.get('cancel_requested_after_sync') is not False
+            or receipt.get('release_mode')!='owner_deadline' or receipt.get('timed_ticket')!=ticket
+            or receipt.get('timed_deadline_ns')!=deadline or receipt.get('timed_armed_ns')!=armed
+            or receipt.get('release_batch_key_order')!=[key]
+            or not deadline<=receipt['owner_keyrelease_started_ns']<=receipt['owner_keymap_sampled_ns']<=returned_ns
+            or records[record_count:]!=[receipt]):
+        raise ValueError('timed owner release differs')
+    source=deepcopy({name:value for name,value in admission.items() if name!='emit_ns'})
+    source['operation']='down'
+    return {'event':'input_release_transition','id':admission['id'],'step':admission['step'],
+        'operation':'up','key':key,'owner_id':owner,'intent_token':token,'valid_until_ns':until,
+        'release_mode':'owner_deadline','timed_ticket':ticket,'timed_deadline_ns':deadline,'timed_armed_ns':armed,
+        'release_call_started_ns':dispatch_ns,'release_call_returned_ns':returned_ns,
+        'release_call_bracket_ns':returned_ns-dispatch_ns,'admission_receipt':source,'admission_receipt_valid':True,
+        'owner_thread_keyup_receipt':deepcopy(receipt),'owner_thread_keyup_verified':True,
+        'owner_thread_keyup_history_complete':True,'owner_transition_verified':True,
+        'owner_release_history_complete':True,'owner_cleanup_intervened':False,'ordinary_release_candidate':True,
+        'backend_owned_before_release':True,'owner_cleanup_record_count_before_release':record_count,
+        'release_batch_identifier':admission['id'],'release_batch_step':admission['step'],
+        'grants_input_authority':False,'measurement_contract':
+            'bracket covers the atomic press-and-schedule request through timed-result collection; X key-up is owner timed'}
 
 
 class Backend(Previous):
@@ -146,6 +199,59 @@ class Backend(Previous):
             except AttributeError:
                 pass
         return result
+
+    def execute_timed_hold(self, step, cancel, identifier, index):
+        """Run one selected key hold with owner-timed UP and ordinary evidence."""
+        from executor_v3 import Cancelled, DecisionRequired
+        context=getattr(self._release_batch,'context',None)
+        keys=step.get('keys')
+        if (context is None or self._input_event_context!=(identifier,index)
+                or type(keys) is not list or len(keys)!=1 or self.held
+                or type(step.get('duration_ms')) is not int):
+            raise ValueError('timed hold requires one key and an empty batch')
+        if cancel.is_set():raise Cancelled()
+        key=keys[0];ticket=uuid.uuid4().hex
+        records=self.owner.records
+        if type(records) is not list:raise ValueError('owner history unavailable')
+        count=len(records);dispatch=time.perf_counter_ns();admitted=False;taken=False
+        try:
+            admission=self.owner.call('down_timed',self.lease,
+                {'key':key,'ticket':ticket,'duration_ms':step['duration_ms']})
+            admitted=True;self.held.add(key)
+            row=dict(admission,id=identifier,step=index)
+            row.setdefault('owner_id',self.owner.owner_id)
+            row.setdefault('intent_token',getattr(self.lease,'intent_token',None))
+            self._admission_receipts.setdefault(key,[]).append(dict(row))
+            self.emit(row)
+            deadline=row.get('timed_deadline_ns');held_ns=time.perf_counter_ns()
+            if type(deadline) is not int or held_ns>=deadline:
+                raise DecisionRequired('timed hold elapsed before held publication')
+            self.emit(dict(event='keys_held',id=identifier,step=index,keys=[key],input_ack_ns=held_ns))
+            while time.perf_counter_ns()<deadline:
+                if cancel.is_set():raise Cancelled()
+                self.snapshot(identifier,index)
+                remaining=max(0,(deadline-time.perf_counter_ns())/1e9)
+                if cancel.wait(min(.05,remaining)):raise Cancelled()
+            if cancel.is_set():raise Cancelled()
+            result=self.owner.call('take_timed_up',self.lease,ticket)
+            taken=True
+            returned=time.perf_counter_ns()
+            transition=build_timed_transition(row,result,self.owner.records,
+                record_count=count,dispatch_ns=dispatch,returned_ns=returned)
+            self.held.discard(key)
+            self._admission_receipts.pop(key,None)
+            context['rows'].append(transition)
+            self._publish_release_batch(context)
+        except BaseException as primary:
+            if admitted and (key in self.held or not taken):
+                try:
+                    released=self.owner.call('release',self.lease)
+                    if type(released) is dict and released.get('verified') is True:
+                        if not taken:self.owner.call('take_timed_up',self.lease,ticket)
+                        self.held.discard(key)
+                except Exception as cleanup:
+                    primary.add_note('timed hold cleanup unresolved: '+type(cleanup).__name__)
+            raise
 
     def _publish_incomplete_release_batch(self, context, error, *, disposition):
         """Keep observed per-key up receipts when later cleanup cannot finish."""
@@ -500,6 +606,8 @@ class Backend(Previous):
                 "owner_thread_keyup_verified_after_batch": owner_keyup,
                 "physical_verification_authoritative": False,
                 "measurement_contract_v3": (
+                    "owner-scheduled key-up completes before the owner-state sample and telemetry publication"
+                    if row.get("release_mode")=="owner_deadline" else
                     "all explicit key-up calls in this backend-held batch complete before "
                     "the one owner-state sample and before per-key telemetry publication"
                 ),

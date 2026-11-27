@@ -133,16 +133,19 @@ class Backend:
             try:press(step['key'])
             finally:self.raw(step['modifier'],False)
         elif op=='hold':
-            try:
-                for key in step['keys']:checkpoint(); self.raw(key,True)
-                self.emit(dict(event='keys_held',id=identifier,step=index,keys=sorted(self.held),
-                               input_ack_ns=time.perf_counter_ns()))
-                deadline=time.perf_counter()+step['duration_ms']/1000
-                while time.perf_counter()<deadline:
-                    checkpoint(); self.snapshot(identifier,index)
-                    if cancel.wait(min(.05,max(0,deadline-time.perf_counter()))):raise Cancelled()
-            finally:
-                for key in list(self.held):self.raw(key,False)
+            if getattr(self,'_timed_hold_enabled',False):
+                self.execute_timed_hold(step,cancel,identifier,index)
+            else:
+                try:
+                    for key in step['keys']:checkpoint(); self.raw(key,True)
+                    self.emit(dict(event='keys_held',id=identifier,step=index,keys=sorted(self.held),
+                                   input_ack_ns=time.perf_counter_ns()))
+                    deadline=time.perf_counter()+step['duration_ms']/1000
+                    while time.perf_counter()<deadline:
+                        checkpoint(); self.snapshot(identifier,index)
+                        if cancel.wait(min(.05,max(0,deadline-time.perf_counter()))):raise Cancelled()
+                finally:
+                    for key in list(self.held):self.raw(key,False)
         elif op=='wait_title':
             deadline=time.perf_counter()+step['timeout_ms']/1000
             while True:

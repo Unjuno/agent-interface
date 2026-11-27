@@ -46,7 +46,8 @@ class DoorModeTests(unittest.TestCase):
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_arm=None,door_task_traverse=False,door_task_exit=True),object())
  def test_reverse_mode_requires_use_traverse_and_excludes_exit(self):
   session=session_module()
-  self.assertIsNone(session.validate_verified_fixture_setup(args(door_task_arm='use',door_task_traverse=True,door_task_reverse_arm='use'),object()))
+  for arm in ('use','east-return'):
+   self.assertIsNone(session.validate_verified_fixture_setup(args(door_task_arm='use',door_task_traverse=True,door_task_reverse_arm=arm),object()))
   for changes in ({'door_task_arm':'control','door_task_traverse':True,'door_task_reverse_arm':'use'},
                   {'door_task_arm':'use','door_task_reverse_arm':'use'},
                   {'door_task_arm':'use','door_task_traverse':True,'door_task_reverse_arm':'invalid'},

@@ -68,7 +68,7 @@ def finish(gate,c,mutate=None):
 class ReverseContractTests(unittest.TestCase):
  def test_reverse_suffix_requires_every_prior_release_and_fixed_command(self):
   from map01_reverse_program import reverse_stages
-  for arm in ('control','use','calibrate'):
+  for arm in ('control','use','calibrate','east-return'):
    gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
    gate.index=6; gate.identity=('owner',0,7,'abc','def');gate.last_sequence=6
    previous='traverse-1';prior_steps=[{'op':'hold','keys':['Up'],'duration_ms':300}]
@@ -83,7 +83,7 @@ class ReverseContractTests(unittest.TestCase):
     previous=identifier;prior_steps=steps
    self.assertTrue(gate.finished)
  def test_reverse_prefix_requires_open_use_and_short_traverse(self):
-  for arm in ('control','use','calibrate'):
+  for arm in ('control','use','calibrate','east-return'):
    gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
    prior='cover-0'
    for i in range(4):
@@ -103,6 +103,30 @@ class ReverseContractTests(unittest.TestCase):
   with self.assertRaises(ValueError):DoorTaskContract('use',traverse=True,exit_probe=True,exit_arm='use',reverse_arm='use')
 
 class DoorTaskContractTests(unittest.TestCase):
+ def test_timed_hold_is_bound_to_actual_key_ack_and_timer(self):
+  def run(change=None):
+   gate=DoorTaskContract('use')
+   c=command('approach-1',[{'op':'hold','keys':['Up'],'duration_ms':600}])
+   gate.authorize(c,state(),1_100_000_000,release('cover-0'),accepted('cover-0'))
+   def mutate(rows):
+    down=next(r for r in rows if r.get('event')=='input_admission')
+    transition=next(r for r in rows if r.get('event')=='input_release_transition')
+    down.update(timed_ticket='ticket',timed_deadline_ns=down['input_ack_ns']+600_000_000,timed_armed_ns=down['input_ack_ns']+1)
+    transition.update(release_mode='owner_deadline',timed_ticket='ticket',timed_deadline_ns=down['timed_deadline_ns'],timed_armed_ns=down['timed_armed_ns'])
+    transition['admission_receipt']=dict({k:v for k,v in down.items() if k!='emit_ns'},operation='down')
+    up=transition['owner_thread_keyup_receipt'];up['owner_keyrelease_started_ns']=down['timed_deadline_ns']
+    up.update(release_mode='owner_deadline',timed_ticket='ticket',timed_deadline_ns=down['timed_deadline_ns'],timed_armed_ns=down['timed_armed_ns'])
+    up['server_keyup_attempts'][0]['keyrelease_started_ns']=down['timed_deadline_ns']
+    if change:change(down,transition,up)
+   finish(gate,c,mutate)
+  run()
+  for change in (lambda d,t,u:t.update(timed_ticket='other'),
+                 lambda d,t,u:t.update(timed_deadline_ns=t['timed_deadline_ns']-1),
+                 lambda d,t,u:u.update(owner_keyrelease_started_ns=u['owner_keyrelease_started_ns']-1),
+                 lambda d,t,u:u.update(timed_ticket='other'),
+                 lambda d,t,u:u.update(timed_armed_ns=u['timed_armed_ns']+1),
+                 lambda d,t,u:u.pop('release_mode')):
+   with self.subTest(change=change),self.assertRaises(ValueError):run(change)
  def test_initial_cover_requires_fixed_coast_and_proven_completion(self):
   from map01_door_task_contract import validate_initial_cover
   source=state();source['id']='initial'

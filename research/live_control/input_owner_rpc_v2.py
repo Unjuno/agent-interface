@@ -192,21 +192,22 @@ def _read_frame(sock, buffer, deadline):
         buffer.extend(data)
 
 
-def _capabilities():
-    return dict(process_identity=True, window_lifecycle=False, operations=sorted(OPERATIONS),
+def _capabilities(timed_up=False):
+    operations=OPERATIONS | ({'down_timed','arm_timed_up','take_timed_up'} if timed_up else set())
+    return dict(process_identity=True, window_lifecycle=False, operations=sorted(operations),
                 max_requests=MAX_REQUESTS, cleanup_reserve=CLEANUP_RESERVE)
 
 
-def _request(value, expected_id, service_id):
+def _request(value, expected_id, service_id, *, timed_up=False):
     if (type(value) is not dict or set(value) != {'schema', 'service_id', 'request_id', 'op', 'lease', 'key'}
             or value['schema'] != SCHEMA or value['service_id'] != service_id
             or type(value['request_id']) is not int or value['request_id'] != expected_id
             or not 1 <= expected_id <= MAX_REQUESTS):
         raise ValueError('RPC request identity/schema invalid')
     op, dto, key = value['op'], value['lease'], value['key']
-    if type(op) is not str or op not in OPERATIONS:
+    if type(op) is not str or op not in (OPERATIONS | ({'down_timed','arm_timed_up','take_timed_up'} if timed_up else set())):
         raise ValueError('unsupported RPC operation')
-    if op in ('down', 'up', 'up_batch', 'release', 'release_state'):
+    if op in ('down', 'up', 'up_batch', 'release', 'release_state', 'down_timed', 'arm_timed_up', 'take_timed_up'):
         _validate_lease(dto)
     elif dto is not None:
         _validate_lease(dto)
@@ -219,6 +220,26 @@ def _request(value, expected_id, service_id):
         if (type(key) is not list or not key or any(type(k) is not str or k not in KEYS for k in key)
                 or len(key) != len(set(key))):
             raise ValueError('unique allowlisted key batch required')
+    elif op=='down_timed':
+        if (type(key) is not dict or set(key)!={'key','ticket','duration_ms'}
+                or type(key['key']) is not str or key['key'] not in KEYS
+                or type(key['ticket']) is not str or not 1<=len(key['ticket'])<=128
+                or type(key['duration_ms']) is not int or not 1<=key['duration_ms']<=10_000
+                or time.perf_counter_ns()+key['duration_ms']*1_000_000>=dto['deadline_ns']
+                or dto['cancel_requested'] or dto['focus_invalid']):
+            raise ValueError('invalid atomic timed press')
+    elif op=='arm_timed_up':
+        if (type(key) is not dict or set(key)!={'ticket','keys','deadline_ns'}
+                or type(key['ticket']) is not str or not 1<=len(key['ticket'])<=128
+                or type(key['keys']) is not list or not key['keys']
+                or any(type(k) is not str or k not in KEYS for k in key['keys'])
+                or len(key['keys'])!=len(set(key['keys']))
+                or type(key['deadline_ns']) is not int or not time.perf_counter_ns()<key['deadline_ns']<dto['deadline_ns']
+                or dto['cancel_requested'] or dto['focus_invalid']):
+            raise ValueError('invalid timed key release')
+    elif op=='take_timed_up':
+        if type(key) is not str or not 1<=len(key)<=128:
+            raise ValueError('invalid timed release ticket')
     elif op=='surface_context':
         if dto is not None or type(key) is not int or not 1<key<2**32:
             raise ValueError('read-only non-root client XID and no lease required')
@@ -230,6 +251,41 @@ def _request(value, expected_id, service_id):
             or dto['cancel_requested'] or dto['focus_invalid']):
         raise ValueError('expired/cancelled/invalid input admission')
     return op
+
+
+
+def _validate_timed_result(result, records, *, ticket, intent_token):
+    if (type(result) is not dict or result.get('ticket')!=ticket
+            or result.get('intent_token')!=intent_token
+            or result.get('status') not in ('released','cancelled','interrupted','expired','unverified')
+            or type(result.get('deadline_ns')) is not int or type(result.get('armed_ns')) is not int
+            or not 0<result['armed_ns']<result['deadline_ns']
+            or type(result.get('keys')) is not list or not result['keys']
+            or any(type(key) is not str or key not in KEYS for key in result['keys'])
+            or len(set(result['keys']))!=len(result['keys']) or type(records) is not list):
+        raise ValueError('timed release result identity invalid')
+    if result['status']=='released':
+        receipts=result.get('receipts')
+        if type(receipts) is not list or len(receipts)!=len(result['keys']):
+            raise ValueError('timed release receipts missing')
+        owners=set()
+        for key,row in zip(result['keys'],receipts):
+            if (type(row) is not dict or row.get('event')!='owner_explicit_keyup'
+                    or row.get('operation')!='up' or row.get('key')!=key
+                    or row.get('intent_token')!=intent_token or type(row.get('owner_id')) is not str
+                    or row.get('release_mode')!='owner_deadline' or row.get('timed_ticket')!=ticket
+                    or row.get('timed_deadline_ns')!=result['deadline_ns'] or row.get('timed_armed_ns')!=result['armed_ns']
+                    or not row['owner_id'] or row.get('server_keyup_verified') is not True
+                    or row.get('server_key_down_after_keyup') is not False
+                    or row.get('server_sync_completed') is not True
+                    or row.get('cancel_requested_after_sync') is not False
+                    or type(row.get('owner_keyrelease_started_ns')) is not int
+                    or type(row.get('owner_keymap_sampled_ns')) is not int
+                    or not result['deadline_ns']<=row['owner_keyrelease_started_ns']<=row['owner_keymap_sampled_ns']
+                    or sum(existing==row for existing in records)!=1):
+                raise ValueError('timed release receipt differs from owner history')
+            owners.add(row['owner_id'])
+        if len(owners)!=1:raise ValueError('timed release owner differs')
 
 
 def _validate_close_result(result, records, display, service_id):
@@ -282,7 +338,9 @@ def _detach_socket(sock):
 
 
 class OwnerRpcClient:
-    def __init__(self, sock, *, display, service_id, timeout=2):
+    def __init__(self, sock, *, display, service_id, timeout=2, timed_up=False):
+        if type(timed_up) is not bool:raise ValueError('timed_up must be boolean')
+        self.timed_up=timed_up
         self.display, self.service_id = _identity(display), _identity(service_id)
         self.timeout = _timeout(timeout)
         self._sock, self._buffer = sock, bytearray()
@@ -290,6 +348,7 @@ class OwnerRpcClient:
         self._records = []
         self._next_id = 1
         self._cleanup_state_credit = None
+        self._timed_arm = None
         self._quarantined = False
         self._closed = False
         self._close_result = None
@@ -297,7 +356,7 @@ class OwnerRpcClient:
             ready = _read_frame(sock, self._buffer, time.monotonic()+self.timeout)
             if (type(ready) is not dict or set(ready) != {'schema', 'display', 'service_id', 'capabilities'}
                     or ready['schema'] != READY or ready['display'] != self.display
-                    or ready['service_id'] != self.service_id or ready['capabilities'] != _capabilities()
+                    or ready['service_id'] != self.service_id or ready['capabilities'] != _capabilities(self.timed_up)
                     or type(ready['capabilities']) is not dict
                     or ready['capabilities'].get('process_identity') is not True
                     or ready['capabilities'].get('window_lifecycle') is not False
@@ -331,18 +390,29 @@ class OwnerRpcClient:
             cleanup_read = op=='release_state' and identity is not None and identity==self._cleanup_state_credit
             reserve = self._next_id > MAX_REQUESTS-CLEANUP_RESERVE
             if (op=='release_state' and not cleanup_read or self._next_id > MAX_REQUESTS
-                    or op in ('up','up_batch') and self._next_id > MAX_REQUESTS-3
+                    or op in ('up','up_batch','take_timed_up') and self._next_id > MAX_REQUESTS-3
+                    or op=='arm_timed_up' and self._next_id > MAX_REQUESTS-4
                     or op in ('release','input_state','release_state') and self._next_id > MAX_REQUESTS-1
-                    or reserve and op not in ('up','up_batch','release','close') and not cleanup_read):
+                    or reserve and op not in ('up','up_batch','take_timed_up','release','close') and not cleanup_read):
                 raise RpcCapacityExhausted('RPC budget reserved for cleanup; no request sent')
+            if op in ('arm_timed_up','down_timed') and self._timed_arm is not None:
+                raise ValueError('another timed release is outstanding')
+            if op=='take_timed_up' and (self._timed_arm is None or self._timed_arm['identity']!=identity
+                    or self._timed_arm['ticket']!=key):
+                raise ValueError('timed release ticket or identity differs')
+            if (op=='take_timed_up' and time.perf_counter_ns()<self._timed_arm['deadline_ns']
+                    and not self._timed_arm.get('interrupted',False)
+                    and not wire_lease['cancel_requested'] and not wire_lease['focus_invalid']
+                    and time.perf_counter_ns()<wire_lease['deadline_ns']):
+                raise ValueError('timed release is not due')
             if on_dispatch is not None and not callable(on_dispatch):
                 raise ValueError('dispatch hook must be callable')
             request = dict(schema=SCHEMA, service_id=self.service_id, request_id=self._next_id,
                            op=op, lease=wire_lease, key=copy.deepcopy(key))
-            _request(request, self._next_id, self.service_id)
+            _request(request, self._next_id, self.service_id,timed_up=self.timed_up)
             # Consume identity before an uncertain send. No retry on this connection.
             self._next_id += 1
-            if op in ('release_state','down','close') or op=='release' and identity!=self._cleanup_state_credit:
+            if op in ('release_state','down','down_timed','arm_timed_up','close') or op=='release' and identity!=self._cleanup_state_credit:
                 self._cleanup_state_credit=None
             try:
                 if on_dispatch is not None:on_dispatch()
@@ -362,12 +432,43 @@ class OwnerRpcClient:
                 if not response['ok'] or response['error'] is not None:
                     raise RpcOutcomeUnknown('remote operation failed; input/cleanup may be partial',
                                             records=self._records, remote_error=response['error'])
+                if op=='release' and self._timed_arm is not None:
+                    self._timed_arm['interrupted']=True
+                if op=='down_timed':
+                    admission=response['result']
+                    if (type(admission) is not dict or admission.get('event')!='input_admission'
+                            or admission.get('key')!=key['key'] or admission.get('timed_ticket')!=key['ticket']
+                            or admission.get('intent_token')!=wire_lease['intent_token']
+                            or type(admission.get('input_ack_ns')) is not int
+                            or type(admission.get('timed_deadline_ns')) is not int
+                            or type(admission.get('timed_armed_ns')) is not int
+                            or not admission['input_ack_ns']<=admission['timed_armed_ns']<admission['timed_deadline_ns']
+                            or admission['timed_deadline_ns']!=admission['input_ack_ns']+key['duration_ms']*1_000_000
+                            or admission['timed_deadline_ns']>=wire_lease['deadline_ns']
+                            or admission.get('valid_until_ns')!=wire_lease['deadline_ns']):
+                        raise ValueError('atomic timed press acknowledgement differs')
+                    self._timed_arm={'identity':copy.deepcopy(identity),'ticket':key['ticket'],
+                                     'keys':[key['key']],'deadline_ns':admission['timed_deadline_ns'],'armed_ns':admission['timed_armed_ns']}
+                if op=='arm_timed_up':
+                    ack=response['result']
+                    if (type(ack) is not dict or ack.get('status')!='armed' or ack.get('ticket')!=key['ticket']
+                            or ack.get('deadline_ns')!=key['deadline_ns'] or ack.get('intent_token')!=wire_lease['intent_token']
+                            or type(ack.get('armed_ns')) is not int or not 0<ack['armed_ns']<ack['deadline_ns']):
+                        raise ValueError('timed release acknowledgement differs')
+                    self._timed_arm={'identity':copy.deepcopy(identity),'ticket':key['ticket'],
+                                     'keys':list(key['keys']),'deadline_ns':key['deadline_ns'],'armed_ns':ack['armed_ns']}
+                if op=='take_timed_up':
+                    result=response['result'];arm=self._timed_arm
+                    _validate_timed_result(result,self._records,ticket=key,intent_token=wire_lease['intent_token'])
+                    if result['keys']!=arm['keys'] or result['deadline_ns']!=arm['deadline_ns'] or result['armed_ns']!=arm['armed_ns']:
+                        raise ValueError('timed release differs from arm')
+                    self._timed_arm=None
                 if op=='surface_context':
                     geometry=response['result']
                     if (type(geometry) is not list or len(geometry)!=4
                             or any(type(v) is not int for v in geometry) or geometry[2]<=0 or geometry[3]<=0):
                         raise ValueError('read-only surface geometry invalid')
-                if op in ('up','up_batch'):
+                if op in ('up','up_batch','take_timed_up'):
                     self._cleanup_state_credit=copy.deepcopy(identity)
                 if op == 'close':
                     _validate_close_result(response['result'], self._records, self.display, self.service_id)
@@ -433,12 +534,13 @@ def _close_owner(owner, native, display, service_id, protocol_error):
         physical_verification_authoritative=False)
 
 
-def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None, on_verified_close=None):
+def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None, on_verified_close=None, timed_up=False):
     """Serve one explicitly supplied strict owner; EOF closes that same owner.
 
     Return value must be retained by an external supervisor for recovery. This
     function alone supplies no durable receipt or cross-process death policy.
     """
+    if type(timed_up) is not bool:raise ValueError('timed_up must be boolean')
     from input_owner_v12 import InputOwner
     native = getattr(owner, '_inner', owner)
     if (not isinstance(native, InputOwner) or native.identity_reader is None
@@ -454,10 +556,10 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
     protocol_error = None
     try:
         _send_frame(sock, dict(schema=READY, display=display, service_id=service_id,
-                              capabilities=_capabilities()), time.monotonic()+idle_timeout)
+                              capabilities=_capabilities(timed_up)), time.monotonic()+idle_timeout)
         while True:
             request = _read_frame(sock, buffer, time.monotonic()+idle_timeout)
-            op = _request(request, next_id, service_id)
+            op = _request(request, next_id, service_id,timed_up=timed_up)
             next_id += 1
             identity=({k:v for k,v in request['lease'].items() if k not in ('cancel_requested','focus_invalid')}
                       if request['lease'] is not None else None)
@@ -466,7 +568,7 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
             lease = ((lease_registry.decode(request['lease']) if lease_registry is not None
                       else decode_lease(request['lease'], leases))
                      if request['lease'] is not None and op!='release_state' else None)
-            if op in ('release_state','down','close') or op=='release' and identity!=cleanup_identity:
+            if op in ('release_state','down','down_timed','arm_timed_up','close') or op=='release' and identity!=cleanup_identity:
                 cleanup_identity=None
             error = None
             if op == 'close':
@@ -477,7 +579,7 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
             else:
                 try:
                     result = owner.call('input_state' if op=='release_state' else op, lease, request['key'])
-                    if op in ('up','up_batch'):cleanup_identity=copy.deepcopy(identity)
+                    if op in ('up','up_batch','take_timed_up'):cleanup_identity=copy.deepcopy(identity)
                 except Exception as exc:
                     error = dict(type=type(exc).__name__, message=str(exc)[:1000])
                     result = None

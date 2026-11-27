@@ -42,7 +42,7 @@ class OwnedServiceHandoffTests(unittest.TestCase):
     def inert_generation(self):
         backend=session_backend.Backend.__new__(session_backend.Backend)
         backend._session_lock=threading.RLock(); backend._executor_custody_lock=threading.RLock()
-        backend._rotation_broken=False; backend._session_close=None; backend._owner_generation=0
+        backend._rotation_broken=False; backend._session_close=None; backend._owner_generation=0; backend._timed_hold_enabled=False
         backend._consumed_rotation_terminals=set(); backend._executor_custody_owner=None
         backend._executor_release_obligation=None; backend._startup_hash="start"; backend._archived_owner_records=[]
         backend._session_out=Path("/unused"); backend.owner=NS(owner_id="old",obligation_snapshot=lambda:None,
@@ -83,6 +83,14 @@ class OwnedServiceHandoffTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,"injected-new-launch"):
                 backend.rotate_input_owner_after_cancel(terminal)
         backend.owner.close.assert_called_once()
+
+    def test_rotated_service_retains_timed_hold_capability(self):
+        backend,terminal=self.inert_generation();backend.session=NS(name=":fake");backend._owner_factory=None
+        backend._timed_hold_enabled=True
+        with patch.object(session_backend,"publish_json_exclusive",return_value="archive"), \
+             patch.object(session_backend,"launch_owner_service",side_effect=RuntimeError("stop")) as launch:
+            with self.assertRaisesRegex(RuntimeError,"stop"):backend.rotate_input_owner_after_cancel(terminal)
+        self.assertIs(launch.call_args.kwargs.get("timed_up"),True)
 
     def test_failed_new_launch_keeps_owned_handle_and_revokes_authority(self):
         backend,terminal=self.inert_generation();backend.session=NS(name=":fake");backend._owner_factory=None
@@ -231,6 +239,30 @@ class OwnedServiceHandoffTests(unittest.TestCase):
                         self.assertFalse(backend._rotation_handle.process.is_alive())
                         with self.assertRaisesRegex(ValueError,"no new authority"):backend.claim_executor_custody(object())
                 self.assertFalse(backend._session_close["verified"])
+
+    def test_actual_owned_timed_service_rotates_without_losing_capability(self):
+        with tempfile.TemporaryDirectory() as temp:
+            def selected(*args,**kwargs):
+                kwargs.pop("owner_service",None)
+                return session_backend.Backend(*args,**kwargs,_owner_factory=child_geometry,timed_hold=True)
+            with patch.object(fixtures,"Backend",selected):
+                with parent_backend(temp,None) as (backend,events,_):
+                    self.assertTrue(backend.owned_service.startup["timed_up_enabled"])
+                    backend.snapshot("source",0);executor=Executor(backend,events.append)
+                    executor.submit("old",[{"op":"hold","keys":["a"],"duration_ms":1000}],backend.sequence,time.perf_counter_ns()+10_000_000_000)
+                    deadline=time.monotonic()+3
+                    while not any(x.get("event")=="keys_held" for x in events) and time.monotonic()<deadline:time.sleep(.005)
+                    self.assertTrue(any(x.get("event")=="keys_held" for x in events))
+                    worker=executor.active[2];self.assertTrue(executor.cancel("old"));worker.join(4)
+                    self.assertFalse(worker.is_alive());executor.close()
+                    terminal=copy.deepcopy(next(x for x in events if x.get("event")=="terminal" and x.get("id")=="old"))
+                    self.assertEqual(terminal["status"],"cancelled");self.assertTrue(terminal["release"]["verified"])
+                    terminal["release"]["target_process_identity_reader"]={"retired":True,"pending":False,"thread_alive":False}
+                    terminal["input_owner_generation"]=backend._owner_generation;terminal["input_owner_id"]=backend.owner.owner_id
+                    previous=backend.owned_service;receipt=backend.rotate_input_owner_after_cancel(terminal)
+                    self.assertTrue(previous.wait(5)["verified"]);self.assertTrue(backend.owned_service.startup["timed_up_enabled"])
+                    self.assertEqual(receipt["generation"],1);self.assertIsNone(backend._source_identity)
+                    backend.snapshot("new-source",0);self.assertIsNotNone(backend._source_identity)
 
     def test_backend_rotates_verified_cancelled_owner_and_invalidates_source(self):
         with tempfile.TemporaryDirectory() as temp:
