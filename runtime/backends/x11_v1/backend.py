@@ -237,16 +237,17 @@ class X11Backend:
         aliases = {
             "CTRL": "Control_L", "SHIFT": "Shift_L", "ALT": "Alt_L",
             "ENTER": "Return", "TAB": "Tab", "ESC": "Escape", "SPACE": "space",
+            "RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down",
+            "HOME": "Home", "END": "End", "BACKSPACE": "BackSpace",
+            "DELETE": "Delete", "INSERT": "Insert",
         }
         keysym = XK.string_to_keysym(aliases.get(key, key))
         if keysym == 0 and len(key) == 1:
             keysym = XK.string_to_keysym(key.lower())
         code = self.d.keysym_to_keycode(keysym)
         if not code:
-            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down",
-                           "HOME": "Home", "END": "End", "BACKSPACE": "BackSpace",
-                           "DELETE": "Delete", "INSERT": "Insert"}
-            hint = f"; X11 keysym names are case-sensitive, use {suggestions[key]}" if key in suggestions else ""
+            canonical = aliases.get(key)
+            hint = f"; X11 keymap has no keycode for {canonical}" if canonical else ""
             raise X11BackendError(f"unmapped key {key}{hint}")
         return code
 
