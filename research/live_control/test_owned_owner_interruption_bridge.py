@@ -33,6 +33,10 @@ class BridgeTests(unittest.TestCase):
   self.owner.client.records=[]
   with self.assertRaises(ValueError):self.owner.call("up_batch",self.lease,["Up","Shift_L"])
   self.assertIsNone(self.lease.interruption_snapshot());self.assertIsNotNone(self.owner.obligation_snapshot())
+ def test_swapped_cleanup_keycodes_do_not_match_admissions(self):
+  self.rows[0]["owner_cleanup_keycode"]=50;self.rows[1]["owner_cleanup_keycode"]=111
+  with self.assertRaises(ValueError):self.owner.call("up_batch",self.lease,["Up","Shift_L"])
+  self.assertIsNone(self.lease.interruption_snapshot());self.assertIsNotNone(self.owner.obligation_snapshot())
  def test_two_keys_cannot_reuse_one_cleanup_keycode(self):
   self.rows[1]["owner_cleanup_keycode"]=111
   with self.assertRaises(ValueError):self.owner.call("up_batch",self.lease,["Up","Shift_L"])

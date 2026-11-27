@@ -369,6 +369,8 @@ class InputOwner:
                                     result.get("key") if operation == "down"
                                     else result.get("payload")),
                                 "owner_id": result.get("owner_id", self._inner.owner_id),
+                                **({"keycode": keycode} if operation == "down"
+                                   and type(keycode) is int and keycode > 0 else {}),
                                 "intent_token": result.get(
                                     "intent_token", self._intent_token(lease)),
                                 "valid_until_ns": result.get(

@@ -91,6 +91,7 @@ class OwnedOwnerAdapter:
                     or row.get('admission_receipt_valid') is not True
                     or type(admission) is not dict or admission.get('event')!='input_admission'
                     or admission.get('key')!=key or admission.get('owner_id')!=self.owner_id
+                    or admission.get('keycode')!=code
                     or admission.get('intent_token')!=lease.intent_token
                     or admission.get('valid_until_ns')!=lease.deadline or type(code) is not int or code<=0
                     or code in seen_codes or str(code) not in record.get('key_release_attempts',{})):
