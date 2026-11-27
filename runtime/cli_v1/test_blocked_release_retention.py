@@ -1,4 +1,5 @@
 """Offline checks for opt-in retention of the Xvfb integration's raw files."""
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -20,7 +21,8 @@ class BlockedReleaseRetentionTests(unittest.TestCase):
                 self.assertEqual(Path(root), target)
                 (Path(root) / 'receipt.json').write_text('receipt')
             self.assertEqual((target / 'receipt.json').read_text(), 'receipt')
-            self.assertEqual(target.stat().st_mode & 0o777, 0o700)
+            if os.name == 'posix':
+                self.assertEqual(target.stat().st_mode & 0o777, 0o700)
             with self.assertRaises(FileExistsError):
                 _runtime_directory(str(target))
             self.assertEqual((target / 'receipt.json').read_text(), 'receipt')
