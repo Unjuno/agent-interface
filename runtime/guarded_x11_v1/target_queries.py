@@ -351,9 +351,10 @@ class TargetQueryWorker:
             while True:
                 with self.lock:
                     if self.retired: raise QueryUnavailable('target query retired')
-                if cancelled() or time.monotonic_ns() >= deadline_ns:
+                remaining_ns = deadline_ns - time.monotonic_ns()
+                if cancelled() or remaining_ns <= 0:
                     raise QueryUnavailable('target query cancelled or original deadline expired')
-                if job.done.wait(.005):
+                if job.done.wait(min(.005, remaining_ns / 1_000_000_000)):
                     if cancelled() or time.monotonic_ns() >= deadline_ns:
                         raise QueryUnavailable('late target query discarded')
                     if job.error is not None:
