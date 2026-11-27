@@ -1827,6 +1827,9 @@ def main():
     planner_client = start_planner_client(args.out)
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
+        decisions=[]
+        source_refreshes=[]
+        failure_cleanup.observe_progress(decisions, source_refreshes)
         failure_cleanup.set_stage("planner_initialize")
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
@@ -1913,8 +1916,7 @@ def main():
         if runtime_fixture is None:
             raise RuntimeError("v28 requires a loaded fixture receipt")
         latest = wait(lambda r:r["event"] == "observation")
-        decisions=[];model_session_id=planner.thread_id
-        source_refreshes=[]
+        model_session_id=planner.thread_id
         terminal_health_observation=None
         program_admissions=0
         for index in range(args.iterations):
