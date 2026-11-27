@@ -1168,9 +1168,11 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
 def recover_cover_owner_after_cancel_if_retired(
         process, wait, terminal, *, minimum_sequence,
         target_process_identity, target_window_lifecycle, owned_input_service):
-    """Rotate a retired identity reader before replanning after cover cancel.
+    """Handle a retired identity reader before replanning after cancellation.
 
-    Cover cancellation can retire the process-identity reader even though the
+    An owned service has no qualified generation transition yet, so stop before
+    another action; an in-process owner can use the supported rotation protocol.
+    Cancellation can retire the process-identity reader even though the
     cancelled cover's release is verified empty. Reusing that reader for the
     next action makes the owner reject its first key-down with an opaque
     needs_decision terminal. Recover only on the backend route whose owner
@@ -1180,6 +1182,12 @@ def recover_cover_owner_after_cancel_if_retired(
     flags = (target_process_identity, target_window_lifecycle, owned_input_service)
     if any(type(value) is not bool for value in flags):
         raise ValueError("boolean owner-recovery route selection required")
+    if (owned_input_service and target_process_identity and type(terminal) is dict
+            and terminal.get("status") == "cancelled"):
+        release = terminal.get("release")
+        reader = release.get("target_process_identity_reader") if type(release) is dict else None
+        if type(reader) is dict and reader.get("retired") is True:
+            raise RuntimeError("retired identity reader: owned service recovery unavailable")
     if (not target_process_identity or target_window_lifecycle or owned_input_service
             or type(terminal) is not dict or terminal.get("status") != "cancelled"):
         return None
@@ -2532,12 +2540,12 @@ def main():
                     (cancel_event,physical_release_event,release_pending_receipt,
                      terminal,guard_receipt)=cancel_invalidated_action(
                         process,wait,identifier,running_guard,failure_root=args.out)
-                    if (index + 1 < args.iterations and args.target_process_identity
-                            and not args.target_window_lifecycle
-                            and not args.owned_input_service):
-                        rotation=rotate_retired_owner_after_cancel(
-                            process, wait, terminal,
-                            minimum_sequence=latest["sequence"])
+                    if index + 1 < args.iterations:
+                        rotation=recover_cover_owner_after_cancel_if_retired(
+                            process, wait, terminal, minimum_sequence=latest["sequence"],
+                            target_process_identity=args.target_process_identity,
+                            target_window_lifecycle=args.target_window_lifecycle,
+                            owned_input_service=args.owned_input_service)
                         if rotation is not None:
                             owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:

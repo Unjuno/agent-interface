@@ -16,6 +16,27 @@ from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_owned_cancel_with_retired_reader_fails_before_continuation(self):
+        terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        with self.assertRaisesRegex(RuntimeError, "retired.*owned.*recovery"):
+            controller.recover_cover_owner_after_cancel_if_retired(
+                Namespace(stdin=object()), object(), terminal, minimum_sequence=7,
+                target_process_identity=True, target_window_lifecycle=False,
+                owned_input_service=True)
+
+    def test_owned_cancel_with_healthy_reader_does_not_stop(self):
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": False}}}
+        self.assertIsNone(controller.recover_cover_owner_after_cancel_if_retired(
+            Namespace(stdin=object()), object(), terminal, minimum_sequence=7,
+            target_process_identity=True, target_window_lifecycle=False,
+            owned_input_service=True))
+
     def test_cover_cancel_rotates_retired_owner_only_on_eligible_route(self):
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": {"verified": True, "keys_down": [], "buttons_down": [],
@@ -37,7 +58,6 @@ class Map01V39CoastTests(unittest.TestCase):
                 (lambda row: row.update(status="completed"), (True, False, False)),
                 (lambda row: None, (False, False, False)),
                 (lambda row: None, (True, True, False)),
-                (lambda row: None, (True, False, True)),
         ):
             candidate = {**terminal, "release": dict(terminal["release"])}
             terminal_mutation(candidate)
