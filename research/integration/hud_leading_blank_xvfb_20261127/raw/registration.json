@@ -1,0 +1,20 @@
+{
+  "schema": "hud-occlusion-xvfb-registration-v1",
+  "unit": "hud-occlusion-88a381029201.service",
+  "driver_sha256": "bea36b07e7516b55749a221f1eaaffc1b825705c7c6e8bd3349f86d2445374c1",
+  "source_manifest_sha256": "ece670bcbdbfa282865afececfe112a5d4bf661c111e2af8b308dd9c9949456c",
+  "original_seal_sha256": "ebb127fe188456b970b91dbe3ce7e0c474dc3b0ebc8c43bd0a4bc167d65aa399",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "max_runtime_seconds": 30,
+  "steps": [
+    "render sealed 100-health frame in owned Xvfb",
+    "hold one synthetic key on owned X server",
+    "overlay black 3px stripe in first digit",
+    "compare baseline and candidate",
+    "cancel on UNKNOWN and verify X11 key release"
+  ],
+  "model_calls": 0,
+  "game_started": false,
+  "scope": "synthetic display, real X11 event ownership; not native game or physical keyboard",
+  "baseline_reader_sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c"
+}
