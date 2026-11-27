@@ -18,6 +18,15 @@ IDENTITY_QUERY_BUDGET_NS = 1_000_000_000
 TIMED_QUERY_QUIET_NS = 5_000_000
 
 
+def _defer_timed_focus_query(active, identity_reader, timed_up, now_ns):
+    """Give a due timed release the next loop turn before starting a query."""
+    return (active is not None and identity_reader is not None
+            and timed_up is not None and timed_up['status'] == 'armed'
+            and active is timed_up['lease'] and not active.cancel.is_set()
+            and now_ns < active.deadline
+            and timed_up['deadline_ns'] - now_ns <= TIMED_QUERY_QUIET_NS)
+
+
 class InputOwner:
     def __init__(self, display_name, *, process_identity=False, window_lifecycle=False, _window_reader=None):
         if type(process_identity) is not bool:
@@ -614,10 +623,8 @@ class InputOwner:
                         release_pending=True
                     continue
                 # Check before dequeue so a busy request queue cannot starve expiry.
-                defer_query = (active is not None and self.identity_reader is not None
-                    and timed_up is not None and timed_up['status']=='armed'
-                    and active is timed_up['lease'] and not active.cancel.is_set()
-                    and 0 < timed_up['deadline_ns']-time.perf_counter_ns() <= TIMED_QUERY_QUIET_NS)
+                defer_query = _defer_timed_focus_query(
+                    active, self.identity_reader, timed_up, time.perf_counter_ns())
                 if active is not None and not defer_query:
                     # Cancellation already invalidates this lease. Do not start a
                     # focus query with a cancelled callback and misreport that
