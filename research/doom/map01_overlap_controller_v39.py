@@ -27,7 +27,8 @@ sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, capture_raw_stdout_events, load_controller_event,
-    operation_release_verified, reject_control_boundary_failure,
+    child_exit_before_expected_event_error, operation_release_verified,
+    reject_control_boundary_failure,
     reject_stdout_reader_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_cover_renewal_probe_v1 import (
@@ -1945,8 +1946,7 @@ def main():
                     row = incoming.get(timeout=min(.25,max(0.,end-time.monotonic())))
                 except queue.Empty:
                     if process.poll() is not None:
-                        detail="stderr not synchronously drained"
-                        raise RuntimeError(f"session exited before expected event: {detail}")
+                        raise child_exit_before_expected_event_error(process.returncode)
                     continue
                 is_typed = row.get("event") == "typed_observation"
                 if is_typed:

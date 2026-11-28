@@ -9,7 +9,8 @@ from pathlib import Path
 
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, load_controller_event, operation_release_verified,
-    capture_raw_stdout_events, reject_duplicate_json_members,
+    capture_raw_stdout_events, child_exit_before_expected_event_error,
+    reject_duplicate_json_members,
     reject_stdout_reader_failure)
 
 OMIT_TOKEN = object()
@@ -29,6 +30,13 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
+    def test_child_exit_diagnostic_does_not_claim_stderr_was_drained(self):
+        error = child_exit_before_expected_event_error(1)
+        self.assertEqual(
+            str(error),
+            'child exited before expected event (exit_code=1); '
+            'stderr capture is deferred to failure cleanup')
+
     def run_cleanup(self, release_token=OMIT_TOKEN, extra_events=(), status="failed",
                     release_overrides=None, missing_release_fields=()):
         accepted = {
