@@ -46,6 +46,7 @@ class OwnedSessionTests(unittest.TestCase):
                 owned_input_service=True,seed=7,load_fixture_manifest=Path('fixture.json'))
         command=controller.session_command(args,Path('runtime'))
         self.assertIn('--owned-input-service',command)
+        self.assertEqual(command[command.index('--owner-rotation-budget')+1],'4')
         invalid=[]
         for field,value in (('measurement_session',False),('target_process_identity',False),('target_window_lifecycle',True)):
             changed=copy.copy(args);setattr(changed,field,value)
@@ -61,11 +62,14 @@ class OwnedSessionTests(unittest.TestCase):
             base=ModuleType('session_map01_v12');base.vd=NS(DoomGame=object,GameVariable=object)
             base.sys=NS(stdin=object());seen=[]
             base.main=lambda:seen.append((base.Backend,list(sys.argv)))
-            argv=['session','--out',temp,'--target-process-identity','--owned-input-service']
+            argv=['session','--out',temp,'--target-process-identity','--owned-input-service',
+                  '--owner-rotation-budget','12']
             with patch.dict(sys.modules,{'session_map01_v12':base}),patch.object(session,'MainThreadScorerStdin',return_value=Mock()),patch.object(
                     session,'ScorerFileSink',return_value=Mock()),patch.object(sys,'argv',argv):session.main()
-            self.assertIs(seen[0][0],selected_backend)
+            self.assertIs(seen[0][0].func,selected_backend)
+            self.assertEqual(seen[0][0].keywords,{'max_owner_rotations':12})
             self.assertNotIn('--owned-input-service',seen[0][1]);self.assertNotIn('--target-process-identity',seen[0][1])
+            self.assertNotIn('--owner-rotation-budget',seen[0][1])
             manifest=json.loads((Path(temp)/'target-process-identity-sources.json').read_text())
             self.assertTrue(manifest['owned_input_service'])
             self.assertIn('research/doom/session_owned_owner_backend.py',manifest['files'])
@@ -77,9 +81,10 @@ class OwnedSessionTests(unittest.TestCase):
         from map01_post_load_gate_v1 import PostLoadGate
         args = NS(measurement_session=True, target_process_identity=True, target_window_lifecycle=False,
                   owned_input_service=True, post_load_clock_gate=True, seed=7, episode_timeout_seconds=75,
-                  load_fixture_manifest=Path("fixture.json"))
+                  load_fixture_manifest=Path("fixture.json"),iterations=12)
         command = controller.session_command(args, Path("runtime"))
-        self.assertEqual(command[-2:], ["--owned-input-service", "--post-load-clock-gate"])
+        self.assertEqual(command[command.index('--owner-rotation-budget')+1],'12')
+        self.assertIn("--post-load-clock-gate",command)
         with self.assertRaisesRegex(ValueError, "owned input service"):
             controller.session_command(NS(**{**vars(args), "owned_input_service": False}), Path("runtime"))
 
@@ -90,7 +95,7 @@ class OwnedSessionTests(unittest.TestCase):
             seen = []
             base.main = lambda *, post_load_gate: seen.append((post_load_gate, list(sys.argv)))
             argv = ["session", "--out", temp, "--timeout-seconds", "75", "--target-process-identity",
-                    "--owned-input-service", "--post-load-clock-gate"]
+                    "--owned-input-service", "--owner-rotation-budget", "12", "--post-load-clock-gate"]
             with patch.dict(sys.modules, {"session_map01_v12": base}), patch.object(
                     session, "MainThreadScorerStdin", return_value=Mock()), patch.object(
                     session, "ScorerFileSink", return_value=Mock()), patch.object(sys, "argv", argv):
@@ -109,7 +114,7 @@ class OwnedSessionTests(unittest.TestCase):
             seen = []
             base.main = lambda *, post_load_gate: seen.append((post_load_gate, list(sys.argv)))
             argv = ['session', '--out', temp, '--timeout-seconds', '75', '--target-process-identity',
-                    '--owned-input-service', '--post-load-clock-gate', '--verified-fixture-setup',
+                    '--owned-input-service', '--owner-rotation-budget', '12', '--post-load-clock-gate', '--verified-fixture-setup',
                     '--renewal-passive-observer', '--fixture-setup-program-sha256', 'a' * 64,
                     '--load-fixture-manifest', 'parent.json', '--fixture-out', 'new.png']
             with patch.dict(sys.modules, {'session_map01_v12': base}), patch.object(
@@ -249,7 +254,7 @@ class OwnedSessionTests(unittest.TestCase):
         base.main=main;sink=Mock();sink.finalize.side_effect=sink_error
         with tempfile.TemporaryDirectory() as temp,patch.dict(sys.modules,{'session_map01_v12':base}),patch.object(
                 session,'MainThreadScorerStdin',return_value=Mock()),patch.object(session,'ScorerFileSink',return_value=sink),patch.object(
-                session,'_merge_sources',side_effect=source_error),patch.object(sys,'argv',['session','--out',temp,'--target-process-identity','--owned-input-service']):
+                session,'_merge_sources',side_effect=source_error),patch.object(sys,'argv',['session','--out',temp,'--target-process-identity','--owned-input-service','--owner-rotation-budget','12']):
             with self.assertRaises(BaseExceptionGroup) as caught:session.main()
         self.assertEqual(caught.exception.exceptions,(primary,sink_error,source_error))
         ROWS.append(dict(case='v15-finalizer-errors',all_three_preserved=True,scope='inert base session/finalizers; no process'))

@@ -1402,7 +1402,9 @@ def session_command(args, runtime):
         command.append("--target-process-identity")
     if lifecycle:
         command.append('--target-window-lifecycle')
-    if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
+    if getattr(args,'owned_input_service',False):
+        command.extend(('--owned-input-service','--owner-rotation-budget',
+                        str(getattr(args,'iterations',4))))
     if getattr(args, "renewal_passive_observer", False):
         command.append("--renewal-passive-observer")
     if getattr(args, "post_load_clock_gate", False):
