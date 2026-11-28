@@ -1585,12 +1585,8 @@ def observe_cover_submission_events(events, observation_monitor, *, fail_closed=
             if not fail_closed:
                 raise
             if invalidation is None:
-                invalidation = {
-                    "event": "policy_invalidation",
-                    "reason": "renewal_observation_unverified",
-                    "requires_new_decision": True,
-                    "grants_input_authority": False,
-                }
+                invalidation = authority_reducing_policy_invalidation(
+                    "renewal_observation_unverified")
             return dict(invalidation, observation_error_type=type(error).__name__)
     return invalidation
 
