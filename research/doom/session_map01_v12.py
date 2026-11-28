@@ -165,12 +165,18 @@ def validate_verified_fixture_setup(args, post_load_gate):
            ('door_expected_manifest_sha256','door_expected_save_sha256','door_expected_iwad_sha256','door_expected_restore_tic')):
         raise ValueError('door candidate pins require explicit door task mode')
     if candidate_evidence is not None or candidate_evidence_sha is not None:
-        if (not loaded or fresh or candidate_evidence is None
+        if (fresh or candidate_evidence is None
                 or type(candidate_evidence_sha) is not str
                 or re.fullmatch(r'[0-9a-f]{64}', candidate_evidence_sha) is None
                 or type(getattr(args, 'timeout_seconds', None)) is not int
                 or args.timeout_seconds != 75):
-            raise ValueError('candidate evidence is restricted to verified loaded setup with a fixed hash')
+            raise ValueError('candidate evidence requires a fixed hash and bounded non-setup session')
+        if not loaded and (post_load_gate is None or args.load_fixture_manifest is None
+                or args.fixture_out is not None
+                or type(getattr(args, 'seed', None)) is not int or args.seed != 990619
+                or type(getattr(args, 'skill', None)) is not int or args.skill != 1
+                or not getattr(args, 'renewal_passive_observer', False)):
+            raise ValueError('candidate task load requires the pinned fixture, clock gate and owner observer')
     if not fresh and not loaded:
         if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
             raise ValueError("post-load clock gate requires a fixed loaded fixture")
@@ -851,6 +857,8 @@ def main(*, post_load_gate=None):
                 name: DoomStatusNumberReader(iwad, signal_id=name)
                 for name in ("health", "ammo")}
             backend = Backend(session, args.out, emit, signal_readers)
+        if post_load_gate is not None:
+            startup_gate['post_load_clock_gate'] = post_load_gate.revalidate(game, session)
         executor_factory = make_executor_factory(emit)
         executor = executor_factory(backend)
         if args.door_task_arm is not None or args.synthetic_exit_pwad is not None:
