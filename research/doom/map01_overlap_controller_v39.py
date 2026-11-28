@@ -27,7 +27,8 @@ sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, capture_raw_stdout_events, load_controller_event,
-    operation_release_verified, reject_control_boundary_failure,
+    child_exit_before_expected_event_error, operation_release_verified,
+    reject_control_boundary_failure,
     reject_stdout_reader_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_cover_renewal_probe_v1 import (
@@ -1401,7 +1402,9 @@ def session_command(args, runtime):
         command.append("--target-process-identity")
     if lifecycle:
         command.append('--target-window-lifecycle')
-    if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
+    if getattr(args,'owned_input_service',False):
+        command.extend(('--owned-input-service','--owner-rotation-budget',
+                        str(getattr(args,'iterations',4))))
     if getattr(args, "renewal_passive_observer", False):
         command.append("--renewal-passive-observer")
     if getattr(args, "post_load_clock_gate", False):
@@ -1582,12 +1585,8 @@ def observe_cover_submission_events(events, observation_monitor, *, fail_closed=
             if not fail_closed:
                 raise
             if invalidation is None:
-                invalidation = {
-                    "event": "policy_invalidation",
-                    "reason": "renewal_observation_unverified",
-                    "requires_new_decision": True,
-                    "grants_input_authority": False,
-                }
+                invalidation = authority_reducing_policy_invalidation(
+                    "renewal_observation_unverified")
             return dict(invalidation, observation_error_type=type(error).__name__)
     return invalidation
 
@@ -1945,8 +1944,7 @@ def main():
                     row = incoming.get(timeout=min(.25,max(0.,end-time.monotonic())))
                 except queue.Empty:
                     if process.poll() is not None:
-                        detail="stderr not synchronously drained"
-                        raise RuntimeError(f"session exited before expected event: {detail}")
+                        raise child_exit_before_expected_event_error(process.returncode)
                     continue
                 is_typed = row.get("event") == "typed_observation"
                 if is_typed:

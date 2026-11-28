@@ -19,9 +19,17 @@ def _option(name,default=None):
     i=args.index(name)
     if i+1>=len(args):raise ValueError(f'option requires value: {name}')
     return args[i+1]
+def _owner_rotation_budget(iterations):
+    if type(iterations) is not int or iterations < 1:
+        raise ValueError('owned input service requires a positive iteration budget')
+    return iterations
 def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def _base_session_argv(argv, *, process_identity):
     result=[arg for arg in argv if arg!='--measurement-session']
+    if '--owner-rotation-budget' in result:
+        index=result.index('--owner-rotation-budget')
+        if index+1>=len(result):raise ValueError('owner rotation budget requires a value')
+        del result[index:index+2]
     if process_identity:
         result=[arg for arg in result if arg not in ('--target-process-identity','--target-window-lifecycle',
             '--owned-input-service','--post-load-clock-gate')]
@@ -248,6 +256,12 @@ def main():
             TelemetryBackend = partial(TelemetryBackend, window_lifecycle=True)
     if owned_input_service:
         from session_owned_owner_backend import Backend as TelemetryBackend
+        from functools import partial
+        if sys.argv.count('--owner-rotation-budget') != 1:
+            raise ValueError('owned input service requires exactly one owner rotation budget')
+        rotation_budget=_owner_rotation_budget(int(_option('--owner-rotation-budget')))
+        TelemetryBackend=partial(TelemetryBackend,
+                                 max_owner_rotations=rotation_budget)
     if "--renewal-passive-observer" in sys.argv[1:]:
         if not process_identity:
             raise ValueError("passive renewal requires target process identity")

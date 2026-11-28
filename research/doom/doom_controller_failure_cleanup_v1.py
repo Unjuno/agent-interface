@@ -25,6 +25,14 @@ def reject_stdout_reader_failure(row):
         raise RuntimeError('controller stdout capture failed'+suffix)
 
 
+def child_exit_before_expected_event_error(returncode):
+    """Distinguish a child exit from a claim that stderr was drained."""
+    code = returncode if type(returncode) is int else 'unknown'
+    return RuntimeError(
+        f'child exited before expected event (exit_code={code}); '
+        'stderr capture is deferred to failure cleanup')
+
+
 def reject_duplicate_json_members(pairs):
     """Reject duplicate object names when used as json.loads object_pairs_hook."""
     result = {}

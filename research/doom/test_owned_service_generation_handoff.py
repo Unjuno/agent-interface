@@ -43,6 +43,7 @@ class OwnedServiceHandoffTests(unittest.TestCase):
         backend=session_backend.Backend.__new__(session_backend.Backend)
         backend._session_lock=threading.RLock(); backend._executor_custody_lock=threading.RLock()
         backend._rotation_broken=False; backend._session_close=None; backend._owner_generation=0
+        backend.max_owner_rotations=2
         backend._consumed_rotation_terminals=set(); backend._executor_custody_owner=None
         backend._executor_release_obligation=None; backend._startup_hash="start"; backend._archived_owner_records=[]
         backend._session_out=Path("/unused"); backend.owner=NS(owner_id="old",obligation_snapshot=lambda:None,
@@ -124,6 +125,26 @@ class OwnedServiceHandoffTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"generation"):
                 backend.rotate_input_owner_after_cancel(terminal)
             backend.owner.close.assert_not_called(); publish.assert_not_called(); launch.assert_not_called()
+
+    def test_generation_two_cap_refuses_third_rotation_before_side_effects(self):
+        backend,terminal=self.inert_generation()
+        backend._owner_generation=2
+        terminal['input_owner_generation']=2
+        with patch.object(session_backend,"publish_json_exclusive") as publish, \
+             patch.object(session_backend,"launch_owner_service") as launch:
+            with self.assertRaisesRegex(ValueError,"rotation budget exhausted"):
+                backend.rotate_input_owner_after_cancel(terminal)
+            backend.owner.close.assert_not_called()
+            publish.assert_not_called()
+            launch.assert_not_called()
+        self.assertEqual(backend._owner_generation,2)
+        self.assertFalse(backend._rotation_broken)
+
+    def test_owned_rotation_budget_is_bounded_by_iteration_budget(self):
+        import session_map01_v15 as session
+        self.assertEqual(session._owner_rotation_budget(12),12)
+        with self.assertRaisesRegex(ValueError,'positive iteration budget'):
+            session._owner_rotation_budget(0)
 
     def test_unverified_old_close_prevents_new_service(self):
         backend,terminal=self.inert_generation(); backend.owner.close.return_value={"verified":False}
@@ -211,7 +232,8 @@ class OwnedServiceHandoffTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             def selected(*args,**kwargs):
                 kwargs.pop("owner_service",None)
-                return session_backend.Backend(*args,**kwargs,_owner_factory=child_geometry)
+                return session_backend.Backend(*args,**kwargs,_owner_factory=child_geometry,
+                                               max_owner_rotations=12)
             with patch.object(fixtures,"Backend",selected):
                 with self.assertRaises(session_backend.OwnerServiceCleanupUnverified):
                     with parent_backend(temp,None) as (backend,events,_):
@@ -236,7 +258,8 @@ class OwnedServiceHandoffTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             def selected(*args,**kwargs):
                 kwargs.pop("owner_service",None)
-                return session_backend.Backend(*args,**kwargs,_owner_factory=child_geometry)
+                return session_backend.Backend(*args,**kwargs,_owner_factory=child_geometry,
+                                               max_owner_rotations=12)
             with patch.object(fixtures,"Backend",selected):
                 with parent_backend(temp,None) as (backend,events,_):
                     backend.snapshot("source",0)
@@ -259,7 +282,8 @@ class OwnedServiceHandoffTests(unittest.TestCase):
                         executor=executor,backend=backend,executor_factory=lambda b:Executor(b,events.append))
                     self.assertTrue(old.wait(5)["verified"]); self.assertFalse(old.process.is_alive())
                     self.assertNotEqual(backend.owner.owner_id,terminal["input_owner_id"])
-                    self.assertEqual(receipt["generation"],1); self.assertIsNone(backend._source_identity)
+                    self.assertEqual(receipt["generation"],1); self.assertEqual(receipt["max_owner_rotations"],12)
+                    self.assertIsNone(backend._source_identity)
                     self.assertFalse(receipt["grants_input_authority"])
                     from lease import Lease
                     from executor_v3 import DecisionRequired
@@ -272,6 +296,30 @@ class OwnedServiceHandoffTests(unittest.TestCase):
                     if worker:worker.join(4);self.assertFalse(worker.is_alive())
                     final=next(x for x in events if x.get("event")=="terminal" and x.get("id")=="new")
                     self.assertEqual(final["status"],"completed");self.assertTrue(final["release"]["verified"])
+                    for expected_generation in (2,3):
+                        handoff_terminal={"event":"terminal","id":f"recovery-{expected_generation}",
+                            "status":"cancelled","input_owner_generation":backend._owner_generation,
+                            "input_owner_id":backend.owner.owner_id,
+                            "release":{"verified":True,"keys_down":[],"buttons_down":[],
+                                "keys_unknown":[],"key_state_errors":[],
+                                "target_process_identity_reader":{"retired":True,
+                                    "pending":False,"thread_alive":False}}}
+                        protocol.record_terminal(handoff_terminal,backend)
+                        old_service=backend.owned_service
+                        next_executor,rotation=protocol.rotate(
+                            {"op":"rotate_input_owner","id":handoff_terminal["id"]},
+                            executor=replacement,backend=backend,
+                            executor_factory=lambda b:Executor(b,events.append))
+                        self.assertTrue(old_service.wait(5)["verified"])
+                        self.assertFalse(old_service.process.is_alive())
+                        self.assertEqual(rotation["generation"],expected_generation)
+                        self.assertEqual(rotation["max_owner_rotations"],12)
+                        self.assertIsNone(backend._source_identity)
+                        refreshed=protocol.refresh_source(
+                            {"op":"refresh_owner_source","id":handoff_terminal["id"]},
+                            backend=backend)
+                        self.assertEqual(refreshed["generation"],expected_generation)
+                        replacement=next_executor
                     replacement.close()
 
     def test_verified_cancel_close_then_fresh_owner_accepts_new_action(self):

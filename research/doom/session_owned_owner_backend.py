@@ -26,7 +26,11 @@ def _raise(errors,primary,handle,receipt=None):
 
 class Backend(Previous):
     owned_generation_rotation_supported=True
-    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None,renewal_passive_observer=False):
+    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None,
+                 renewal_passive_observer=False,max_owner_rotations=2):
+        if type(max_owner_rotations) is not int or max_owner_rotations < 0:
+            raise ValueError('owner rotation budget must be a nonnegative integer')
+        self.max_owner_rotations=max_owner_rotations
         self.owned_service=None;self._session_out=Path(out);self._startup_hash=None
         self._owner_factory=_owner_factory;self._rotation_broken=False;self._rotation_handle=None
         self._session_lock=threading.RLock();self._session_close=None;self._session_error=None
@@ -36,7 +40,9 @@ class Backend(Previous):
             super().__init__(session,out,emit,signal_readers,owner_service=self.owned_service,
                              renewal_passive_observer=renewal_passive_observer)
             startup=dict(schema='map01-owned-session-startup-v1',startup=self.owned_service.startup,
-                         spawn_pid=self.owned_service.process.pid,grants_input_authority=False)
+                         spawn_pid=self.owned_service.process.pid,
+                         max_owner_rotations=self.max_owner_rotations,
+                         grants_input_authority=False)
             self._startup_hash=publish_json_exclusive(self._session_out/'session-owner-service-startup.json',startup)
         except BaseException as primary:
             handle=self.owned_service or getattr(primary,'owner_service_handle',None)
@@ -89,7 +95,7 @@ class Backend(Previous):
                     or self._executor_custody_owner is not None or self._executor_release_obligation is not None
                     or self.owner.obligation_snapshot() is not None):
                 raise ValueError('owned generation custody not settled')
-            if self._owner_generation >= 2:
+            if self._owner_generation >= self.max_owner_rotations:
                 raise ValueError('owned generation rotation budget exhausted')
             old=self.owner; old_service=self.owned_service; old_generation=self._owner_generation
             self._consumed_rotation_terminals.add(identifier)
@@ -100,7 +106,9 @@ class Backend(Previous):
                 raise OwnerServiceCleanupUnverified(old_close)
             archive=dict(schema='map01-owned-generation-close-v1',generation=old_generation,
                 startup_sha256=self._startup_hash,service_id=old_service.service_id,
-                owner_id=old.owner_id,adapter=old_close,grants_input_authority=False)
+                owner_id=old.owner_id,adapter=old_close,
+                max_owner_rotations=self.max_owner_rotations,
+                grants_input_authority=False)
             archive_hash=publish_json_exclusive(self._session_out/f'owner-generation-{old_generation}-close.json',archive)
             self._archived_owner_records.extend(old.records)
             next_generation=old_generation+1
@@ -114,7 +122,9 @@ class Backend(Previous):
                     raise ValueError('new owned service identity must differ')
                 startup=dict(schema='map01-owned-generation-startup-v1',generation=next_generation,
                     previous_close_sha256=archive_hash,startup=new_service.startup,
-                    spawn_pid=new_service.process.pid,grants_input_authority=False)
+                    spawn_pid=new_service.process.pid,
+                    max_owner_rotations=self.max_owner_rotations,
+                    grants_input_authority=False)
                 startup_hash=publish_json_exclusive(self._session_out/f'owner-generation-{next_generation}-startup.json',startup)
             except BaseException as primary:
                 handle=new_service or getattr(primary,'owner_service_handle',None)
@@ -137,6 +147,7 @@ class Backend(Previous):
             self._rotation_handle=None
             return dict(event='input_owner_generation',terminal_id=identifier,generation=next_generation,
                 previous_generation=old_generation,previous_owner_id=old.owner_id,owner_id=new_owner.owner_id,
+                max_owner_rotations=self.max_owner_rotations,
                 source_invalidated=True,grants_input_authority=False,previous_close_sha256=archive_hash)
 
     def close(self):
@@ -152,6 +163,7 @@ class Backend(Previous):
             rotation_incomplete=getattr(self,'_rotation_broken',False)
             receipt=dict(schema='map01-owned-session-close-v1',startup_sha256=self._startup_hash,
                 service_id=self.owned_service.service_id,adapter=adapter,grants_input_authority=False,
+                max_owner_rotations=self.max_owner_rotations,
                 rotation_incomplete=rotation_incomplete,
                 rotation_service_id=getattr(getattr(self,'_rotation_handle',None),'service_id',None),
                 verified=not rotation_incomplete and not errors and self._startup_hash is not None

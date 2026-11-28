@@ -36,6 +36,31 @@ class Map01V39CoastTests(unittest.TestCase):
                 self.assertFalse(admission["input_authority_admitted"])
                 self.assertFalse(admission["grants_input_authority"])
 
+    def test_unverified_cover_observation_emits_typed_authority_reduction(self):
+        class BrokenObservationMonitor:
+            event_types = {"observation"}
+
+            def observe(self, row):
+                raise ValueError("synthetic unreadable observation")
+
+        with patch.object(controller.time, "perf_counter_ns", return_value=250):
+            invalidation = controller.observe_cover_submission_events(
+                [{"event": "observation", "id": "cover-1"}],
+                BrokenObservationMonitor(), fail_closed=True)
+        self.assertEqual(invalidation["reason"], "renewal_observation_unverified")
+        self.assertEqual(invalidation["observation_error_type"], "ValueError")
+        self.assertEqual(invalidation["outcome"]["status"], "UNKNOWN")
+        self.assertEqual(invalidation["outcome_evaluated_ns"], 250)
+        self.assertTrue(invalidation["requires_new_decision"])
+        self.assertFalse(invalidation["grants_input_authority"])
+        admission = controller.decide_final_admission(
+            {"turn_id": "turn-1", "status": "completed",
+             "answer_eligible": True, "terminal_observed_ns": 200},
+            invalidation, 300)
+        self.assertEqual(admission["status"], "REJECTED_POLICY_INVALIDATED")
+        self.assertFalse(admission["input_authority_admitted"])
+        self.assertFalse(admission["grants_input_authority"])
+
     def test_owned_cancel_with_retired_reader_fails_before_continuation(self):
         terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
                     "release": {"verified": True, "keys_down": [], "buttons_down": [],
