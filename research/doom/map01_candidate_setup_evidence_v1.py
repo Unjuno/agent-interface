@@ -175,9 +175,19 @@ def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, i
                     and registration.get('driver_sha256')==hashlib.sha256(sealed_bytes(root,'driver.py')).hexdigest()
                     and registration.get('launcher_sha256')==hashlib.sha256(sealed_bytes(root,'launcher.py')).hexdigest(),
                     'service registration identity differs')
+            # systemd preserves equivalent 60-second spellings differently
+            # across the recorded invocation and RuntimeMaxUSec property.
+            # Require the registered spelling in argv, and accept only the
+            # semantically identical values 60s/1min for a one-minute run.
+            runtime_values={'60s','1min'} if runtime=='1min' else {runtime}
+            registered_options=registration.get('unit_options')
             options=['UMask=0077','PrivateTmp=yes','PrivateNetwork=yes',
-                     'RuntimeMaxSec='+('60s' if runtime=='1min' else '30s'),
-                     'TimeoutStopSec=5s','KillMode=control-group']
+                     registered_options[3] if type(registered_options) is list and len(registered_options)==6
+                     else '', 'TimeoutStopSec=5s','KillMode=control-group']
+            runtime_option=options[3]
+            require(runtime_option.startswith('RuntimeMaxSec=')
+                    and runtime_option.split('=',1)[1] in runtime_values,
+                    'registered service duration differs')
             expected_argv=['systemd-run','--user','--wait','--pipe','--collect','--unit='+unit]
             for option in options:expected_argv.extend(('-p',option))
             expected_argv.extend((registration['python'],'-B',str(root/'driver.py'),registration_sha))
@@ -187,7 +197,8 @@ def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, i
                     and active_service.get('initial_pids')==[main]
                     and all(props.get(key)==value for key,value in
                         {'Id':unit,'PrivateTmp':'yes','PrivateNetwork':'yes','KillMode':'control-group',
-                         'RuntimeMaxUSec':runtime,'TimeoutStopUSec':'5s','UMask':'0077'}.items())
+                         'TimeoutStopUSec':'5s','UMask':'0077'}.items())
+                    and props.get('RuntimeMaxUSec') in runtime_values
                     and type(props.get('InvocationID')) is str and bool(props['InvocationID'])
                     and outer.get('unit')==unit and outer.get('control_group')==group
                     and outer.get('retired') is True and outer.get('timed_out') is False

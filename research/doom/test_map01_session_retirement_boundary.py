@@ -31,6 +31,7 @@ def command_loop(stdin):
     module = ast.fix_missing_locations(ast.Module(body=definitions + [function], type_ignores=[]))
     namespace = dict(json=json, Path=Path, time=time, hashlib=hashlib, shutil=shutil,
                      probe_delivery=None,
+                     door_coordinator=None,
                      sys=SimpleNamespace(stdin=io.StringIO(stdin)),
                      Expired=type('Expired', (Exception,), {}),
                      vd=SimpleNamespace(__version__='fake', GameVariable=SimpleNamespace(DEATHCOUNT=1, KILLCOUNT=2)),

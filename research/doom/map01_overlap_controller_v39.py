@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import queue
+import re
 import select
 import subprocess
 import sys
@@ -72,9 +73,15 @@ def reusable_cover(decisions):
     if (decisions and not decisions[-1].get("model_action_discarded") and
             not decisions[-1].get("remaining_action_discarded", False) and
             decisions[-1]["action"]["state"] == "active"):
-        validity = decisions[-1]["action"]["next_cover_validity"]
-        return (decisions[-1]["action"]["next_cover"], validity[0],
-                decisions[-1]["iteration"])
+        action = decisions[-1]["action"]
+        commands = action["next_cover"]
+        # An empty next_cover compiles to unauthored coast. Its validity
+        # envelope is not an active policy and must not interrupt a pending
+        # answer when its source ages out.
+        if not commands:
+            return [], None, None
+        validity = action["next_cover_validity"]
+        return commands, validity[0], decisions[-1]["iteration"]
     return [], None, None
 
 
@@ -829,6 +836,34 @@ def final_admission_from_planner_result(planner_result, terminal_observed_ns,
     }, policy_invalidation, decided_ns)
 
 
+def authority_reducing_policy_invalidation(reason, *, terminal=None):
+    """Build a typed UNKNOWN invalidation when a controller boundary loses authority."""
+    if type(reason) is not str or not reason:
+        raise ValueError("policy invalidation reason required")
+    result = {
+        "event": "policy_invalidation",
+        "reason": reason,
+        "outcome": {
+            "status": "UNKNOWN",
+            "reason": reason,
+            "requires_new_decision": True,
+            "grants_input_authority": False,
+            "may_only_preserve_or_reduce_existing_authority": True,
+            "semantic_change_identified": False,
+            "task_success_verified": False,
+        },
+        "outcome_evaluated_ns": time.perf_counter_ns(),
+        "requires_new_decision": True,
+        "grants_input_authority": False,
+    }
+    if terminal is not None:
+        terminal_id = terminal.get("id") if type(terminal) is dict else None
+        if type(terminal_id) is not str or not terminal_id:
+            raise ValueError("cancelled cover terminal id required for owner-generation invalidation")
+        result["terminal_id"] = terminal_id
+    return result
+
+
 def typed_event_transport_timing_rows(events):
     """Retain producer, stdout, queue and monitor timestamps per typed event."""
     timing_rows = []
@@ -1355,6 +1390,13 @@ def session_command(args, runtime):
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", str(getattr(args, "episode_timeout_seconds", 600)), "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    if getattr(args, "measurement_session", False):
+        command.append("--measurement-session")
+    candidate_evidence = getattr(args, "candidate_setup_evidence", None)
+    candidate_evidence_sha256 = getattr(args, "candidate_setup_evidence_sha256", None)
+    if candidate_evidence is not None:
+        command.extend(("--candidate-setup-evidence", str(candidate_evidence.resolve()),
+                        "--candidate-setup-evidence-sha256", candidate_evidence_sha256))
     if identity:
         command.append("--target-process-identity")
     if lifecycle:
@@ -1375,6 +1417,24 @@ def require_release_receipt_session(args):
         raise ValueError(
             "strict release-receipt validation requires --measurement-session "
             "(V15/V12 producer); the V12 default uses V10 receipts")
+
+
+def validate_candidate_setup_evidence_options(args):
+    evidence = getattr(args, "candidate_setup_evidence", None)
+    expected = getattr(args, "candidate_setup_evidence_sha256", None)
+    if evidence is None and expected is None:
+        return
+    if (evidence is None or type(expected) is not str
+            or not re.fullmatch(r"[0-9a-f]{64}", expected)
+            or evidence.is_symlink() or not evidence.is_file()
+            or hashlib.sha256(evidence.read_bytes()).hexdigest() != expected
+            or not getattr(args, "measurement_session", False)
+            or not getattr(args, "target_process_identity", False)
+            or not getattr(args, "owned_input_service", False)
+            or not getattr(args, "post_load_clock_gate", False)
+            or not getattr(args, "renewal_passive_observer", False)
+            or args.seed != 990619 or args.episode_timeout_seconds != 75):
+        raise ValueError("candidate proof requires its matching hash and the pinned measured owner/clock session")
 
 
 def validate_action(action):
@@ -1788,6 +1848,10 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+    parser.add_argument("--candidate-setup-evidence", type=Path,
+                        help="sealed setup proof for a qualified candidate fixture")
+    parser.add_argument("--candidate-setup-evidence-sha256",
+                        help="predeclared SHA-256 of candidate setup proof")
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
     parser.add_argument('--target-window-lifecycle', action='store_true',
@@ -1822,6 +1886,7 @@ def main():
             raise ValueError("post-load clock gate requires the owned input service")
         if args.target_window_lifecycle and not args.target_process_identity:
             raise ValueError('target window lifecycle requires --target-process-identity')
+        validate_candidate_setup_evidence_options(args)
     except ValueError as error:
         parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
@@ -1835,7 +1900,7 @@ def main():
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
             planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
-            base_instructions=(HERE / "map01_motor_responder_v10.txt").read_text())
+            base_instructions=(HERE / "map01_motor_responder_v11.txt").read_text())
         planner.start_session()
         output_schema = json.loads((HERE / "map01_cover_policy_schema_v6.json").read_text())
         signal_reader = DoomStatusNumberReader(WAD, signal_id="health")
@@ -2257,11 +2322,8 @@ def main():
                             cover_terminals.append(current_terminal)
                             recover_cover_owner(current_terminal, "drained_policy_invalidation")
                     elif drained["pending_events"]:
-                        invalidation = {
-                            "event": "policy_invalidation",
-                            "reason": "pending_observation_backlog_limit",
-                            "requires_new_decision": True,
-                        }
+                        invalidation = authority_reducing_policy_invalidation(
+                            "pending_observation_backlog_limit")
                         if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover,failure_root=args.out)
@@ -2292,12 +2354,9 @@ def main():
                 rotation = recover_cover_owner(
                     current_terminal, "planner_turn_complete_cover_cancel")
                 if rotation is not None and invalidation is None:
-                    invalidation = {
-                        "event": "policy_invalidation",
-                        "reason": "retired_owner_generation_after_cover_cancel",
-                        "terminal_id": current_terminal["id"],
-                        "requires_new_decision": True,
-                    }
+                    invalidation = authority_reducing_policy_invalidation(
+                        "retired_owner_generation_after_cover_cancel",
+                        terminal=current_terminal)
             failure_cleanup.set_stage("cover_terminal_validation")
             if current_cover is not None:
                 if getattr(args, "_cycle_max_submissions", None) is not None:

@@ -209,3 +209,19 @@ class PostLoadGateTests(unittest.TestCase):
         self.gate.initial_cover_accepted = False
         with self.assertRaisesRegex(ValueError, "stale"):
             self.submit("cover-0", "coast")
+
+    def test_backend_startup_expiry_requires_a_new_full_clock_proof(self):
+        first = self.qualify()
+        self.clock.sleep(2.01)
+        with self.assertRaisesRegex(ValueError, "stale"):
+            self.submit("cover-0", "coast")
+        renewed = self.gate.revalidate(self.game, self.session)
+        self.assertEqual(first["proof_kind"], "post_load")
+        self.assertEqual(renewed["proof_kind"], "post_backend_startup_revalidation")
+        self.assertGreater(renewed["validated_ns"], first["validated_ns"])
+        self.submit("cover-0", "coast")
+        rows = [json.loads(line) for line in
+                (self.output / "post-load-clock-gate.jsonl").read_text().splitlines()]
+        self.assertEqual([row["event"] for row in rows
+                          if row["event"] in ("gate", "revalidation_gate")],
+                         ["gate", "revalidation_gate"])

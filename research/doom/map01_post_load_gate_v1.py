@@ -55,7 +55,7 @@ class PostLoadGate:
         self.timeout_seconds = timeout_seconds
         self.clock, self.sleep = clock, sleep
         self.display_proof, self.neutral = display_proof, neutral
-        self.game = self.session = self.display = self.validated_ns = None
+        self.game = self.session = self.display = self.loaded_tic = self.validated_ns = None
         self.clock_reserve_deadline_ns = None
         self.initial_cover_pending = False
         self.initial_cover_accepted = False
@@ -99,9 +99,18 @@ class PostLoadGate:
         # from the beginning of the sample using the gate's upper clock rate.
         return sample_started_ns + usable_tics * 1_000_000_000 // MAX_QUALIFIED_TICS_PER_SECOND
 
-    def after_load(self, game, session, *, expected_tic):
-        self.game, self.session, self.loaded_tic = game, session, expected_tic
-        with self.path.open("x", encoding="utf-8") as stream:
+    def after_load(self, game, session, *, expected_tic, revalidate=False):
+        if type(revalidate) is not bool:
+            raise ValueError("boolean post-load revalidation mode required")
+        if revalidate:
+            if (self.loaded_tic is None or game is not self.game or
+                    session is not self.session or expected_tic != self.loaded_tic):
+                raise ValueError("same loaded game and exact fixture tic required for revalidation")
+        elif self.loaded_tic is not None:
+            raise ValueError("post-load clock gate already initialized")
+        else:
+            self.game, self.session, self.loaded_tic = game, session, expected_tic
+        with self.path.open("a" if revalidate else "x", encoding="utf-8") as stream:
             def record(event, **fields):
                 stream.write(json.dumps({"event": event, **fields}, allow_nan=False) + "\n")
                 stream.flush()
@@ -112,8 +121,9 @@ class PostLoadGate:
                 started = self.clock()
                 self.display = self.display_proof(session)
                 initial = self._active_neutral()
-                record("loaded", state=initial, display=self.display, observed_ns=self.clock())
-                if initial["tic"] != expected_tic:
+                record("revalidation_started" if revalidate else "loaded",
+                       state=initial, display=self.display, observed_ns=self.clock())
+                if not revalidate and initial["tic"] != expected_tic:
                     raise ValueError("loaded game clock disagrees with retained fixture tic")
 
                 def refreshed(series, side):
@@ -151,6 +161,8 @@ class PostLoadGate:
                 if finish_ns >= deadline:
                     raise ValueError("post-load clock reserve expired")
                 evidence = {"passed": True, "validated_ns": finish_ns,
+                            "proof_kind": ("post_backend_startup_revalidation" if revalidate
+                                           else "post_load"),
                             "immediate_delta": immediate, "delayed_delta": delayed,
                             "delayed_elapsed_ns": delayed_elapsed, "grants_input_authority": False,
                             "last_refresh_tic": last_clock["tic"],
@@ -159,13 +171,21 @@ class PostLoadGate:
                             "first_input_clock_deadline_ns": deadline,
                             "remaining_game_seconds_required": MIN_FIRST_INPUT_REMAINING_SECONDS,
                             "projection_tics_per_second": MAX_QUALIFIED_TICS_PER_SECOND}
-                record("gate", **evidence)
+                record("revalidation_gate" if revalidate else "gate", **evidence)
                 self.validated_ns = finish_ns
                 self.clock_reserve_deadline_ns = deadline
                 return evidence
             except BaseException as error:
-                record("gate", passed=False, error_type=type(error).__name__, grants_input_authority=False)
+                record("revalidation_gate" if revalidate else "gate",
+                       passed=False, error_type=type(error).__name__, grants_input_authority=False)
                 raise
+
+    def revalidate(self, game, session):
+        """Refresh the bounded clock proof after slow owned-backend startup."""
+        if self.loaded_tic is None:
+            raise ValueError("post-load clock gate must pass before revalidation")
+        return self.after_load(game, session, expected_tic=self.loaded_tic,
+                               revalidate=True)
 
     def _owner_and_source(self, backend, source, command, started):
         owner, service = backend.owner, backend.owned_service

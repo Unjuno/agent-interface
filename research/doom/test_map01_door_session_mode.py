@@ -12,6 +12,54 @@ def args(**changes):
  data.update(changes);return types.SimpleNamespace(**data)
 
 class DoorModeTests(unittest.TestCase):
+ def test_v15_consumes_measurement_marker_before_v12_parser(self):
+  import importlib.util
+  source=Path(__file__).with_name('session_map01_v15.py')
+  spec=importlib.util.spec_from_file_location('candidate_v15_argv',source)
+  module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  argv=['session_map01_v15.py','--measurement-session','--seed','990619',
+        '--target-process-identity','--owned-input-service','--post-load-clock-gate']
+  self.assertEqual(module._base_session_argv(argv,process_identity=True),
+                   ['session_map01_v15.py','--seed','990619'])
+  self.assertEqual(module._base_session_argv(argv,process_identity=False),
+                   ['session_map01_v15.py','--seed','990619','--target-process-identity',
+                    '--owned-input-service','--post-load-clock-gate'])
+
+ def test_v15_candidate_task_load_requires_full_owner_clock_and_pinned_gates(self):
+  import importlib.util
+  source=Path(__file__).with_name('session_map01_v15.py')
+  spec=importlib.util.spec_from_file_location('candidate_v15_options',source)
+  module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  required=['--candidate-setup-evidence','/tmp/evidence.json','--candidate-setup-evidence-sha256','a'*64,
+            '--measurement-session','--target-process-identity','--owned-input-service',
+            '--post-load-clock-gate','--renewal-passive-observer','--seed','990619',
+            '--timeout-seconds','75']
+  self.assertIsNone(module.validate_candidate_runtime_options(required))
+  for invalid in (required[:-1], [x for x in required if x!='--owned-input-service'],
+                  [x for x in required if x!='--target-process-identity'],
+                  [x for x in required if x!='--post-load-clock-gate'],
+                  [x for x in required if x!='--renewal-passive-observer'],
+                  [x for x in required if x!='--candidate-setup-evidence-sha256'],
+                  required+['--target-window-lifecycle'],
+                  [x.replace('990619','1') for x in required],
+                  [x.replace('75','76') for x in required],
+                  [x.replace('--candidate-setup-evidence','--candidate-setup-evidence-path') for x in required]):
+   with self.subTest(invalid=invalid),self.assertRaises(ValueError):
+    module.validate_candidate_runtime_options(invalid)
+
+ def test_candidate_proof_can_bind_normal_task_load_with_clock_and_owner_gates(self):
+  session=session_module()
+  base=dict(door_task_arm=None,door_expected_manifest_sha256=None,door_expected_save_sha256=None,
+            door_expected_iwad_sha256=None,door_expected_restore_tic=None)
+  self.assertIsNone(session.validate_verified_fixture_setup(args(**base),object()))
+  for gate,changes in ((None,{}), (object(),{'load_fixture_manifest':None}),
+                       (object(),{'fixture_out':Path('/tmp/save.png')}),
+                       (object(),{'seed':3}), (object(),{'skill':2}),
+                       (object(),{'renewal_passive_observer':False}),
+                       (object(),{'timeout_seconds':76}), (object(),{'candidate_setup_evidence_sha256':'bad'})):
+   with self.subTest(changes=changes),self.assertRaises(ValueError):
+    session.validate_verified_fixture_setup(args(**{**base,**changes}),gate)
+
  def test_explicit_door_mode_requires_proof_and_clock_gate(self):
   session=session_module()
   self.assertIsNone(session.validate_verified_fixture_setup(args(),object()))

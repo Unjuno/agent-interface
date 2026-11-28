@@ -20,6 +20,12 @@ def _option(name,default=None):
     if i+1>=len(args):raise ValueError(f'option requires value: {name}')
     return args[i+1]
 def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def _base_session_argv(argv, *, process_identity):
+    result=[arg for arg in argv if arg!='--measurement-session']
+    if process_identity:
+        result=[arg for arg in result if arg not in ('--target-process-identity','--target-window-lifecycle',
+            '--owned-input-service','--post-load-clock-gate')]
+    return result
 def _merge_sources(out, *, process_identity=False, window_lifecycle=False,owned_input_service=False):
     path=Path(out)/'sources.json'
     if not path.exists():return False
@@ -180,9 +186,40 @@ def validate_synthetic_runtime_options(argv):
         raise ValueError('synthetic calibration requires owned target and observer without fixture modes')
 
 
+def validate_candidate_runtime_options(argv):
+    names = ('--candidate-setup-evidence', '--candidate-setup-evidence-sha256')
+    if any(item.startswith('--candidate-setup-') and
+           item.split('=', 1)[0] not in names for item in argv):
+        raise ValueError('candidate proof options must use their full registered spelling')
+    present = [name for name in names if any(item == name or item.startswith(name + '=') for item in argv)]
+    if not present:
+        return
+    if (present != list(names)
+            or any(sum(item == name or item.startswith(name + '=') for item in argv) != 1 for name in names)
+            ):
+        raise ValueError('candidate proof requires one evidence path and one pinned hash')
+    required = ('--measurement-session', '--target-process-identity', '--owned-input-service',
+                '--post-load-clock-gate', '--renewal-passive-observer')
+    def option_value(name):
+        matches = [index for index, item in enumerate(argv)
+                   if item == name or item.startswith(name + '=')]
+        if len(matches) != 1:
+            return None
+        index = matches[0]
+        if argv[index] != name:
+            return argv[index].split('=', 1)[1]
+        return argv[index + 1] if index + 1 < len(argv) else None
+    if (any(argv.count(flag) != 1 for flag in required)
+            or '--target-window-lifecycle' in argv
+            or option_value('--seed') != '990619'
+            or option_value('--timeout-seconds') != '75'):
+        raise ValueError('candidate task load requires measured owner, clock and pinned episode gates')
+
+
 def main():
     validate_synthetic_runtime_options(sys.argv[1:])
     validate_door_runtime_options(sys.argv[1:])
+    validate_candidate_runtime_options(sys.argv[1:])
     owned_input_service='--owned-input-service' in sys.argv[1:]
     process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
@@ -227,9 +264,9 @@ def main():
         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
     base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
     original_argv = sys.argv
-    if process_identity:
-        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle','--owned-input-service',
-                                                           '--post-load-clock-gate')]
+    # The marker selects this wrapper in the parent caller and is consumed by
+    # V15's candidate gate above; V12's legacy parser must not receive it.
+    sys.argv = _base_session_argv(original_argv,process_identity=process_identity)
     try:
         if post_load_gate is None:
             base.main()

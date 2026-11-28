@@ -16,6 +16,26 @@ from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_synthetic_policy_invalidations_are_typed_and_authority_reducing(self):
+        terminal = {"event": "terminal", "id": "cover-7", "status": "cancelled"}
+        cases = (
+            ("retired_owner_generation_after_cover_cancel", terminal),
+            ("pending_observation_backlog_limit", None),
+        )
+        for reason, source_terminal in cases:
+            with self.subTest(reason=reason):
+                with patch.object(controller.time, "perf_counter_ns", return_value=250):
+                    invalidation = controller.authority_reducing_policy_invalidation(
+                        reason, terminal=source_terminal)
+                admission = controller.decide_final_admission(
+                    {"turn_id": "turn-7", "status": "completed", "answer_eligible": True,
+                     "terminal_observed_ns": 200}, invalidation, 300)
+                self.assertEqual(admission["status"], "REJECTED_POLICY_INVALIDATED")
+                self.assertEqual(admission["reason"], reason)
+                self.assertEqual(admission["policy_invalidation"]["outcome"]["status"], "UNKNOWN")
+                self.assertFalse(admission["input_authority_admitted"])
+                self.assertFalse(admission["grants_input_authority"])
+
     def test_owned_cancel_with_retired_reader_fails_before_continuation(self):
         terminal = {"event": "terminal", "id": "plan-0", "status": "cancelled",
                     "release": {"verified": True, "keys_down": [], "buttons_down": [],
@@ -500,7 +520,50 @@ class Map01V39CoastTests(unittest.TestCase):
         args.measurement_session = True
         measured = controller.session_command(args, Path("runtime"))
         self.assertEqual(Path(measured[1]).name, "session_map01_v15.py")
-        self.assertEqual(measured[2:], default[2:])
+        self.assertEqual(measured[2:], default[2:] + ["--measurement-session"])
+
+    def test_session_command_forwards_candidate_proof_to_v15(self):
+        args = Namespace(seed=990619, load_fixture_manifest=Path("candidate/fixture.json"),
+                         measurement_session=True,
+                         candidate_setup_evidence=Path("candidate/evidence.json"),
+                         candidate_setup_evidence_sha256="a" * 64)
+        command = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(command[1]).name, "session_map01_v15.py")
+        self.assertIn("--candidate-setup-evidence", command)
+        self.assertIn("--candidate-setup-evidence-sha256", command)
+        self.assertIn("--measurement-session", command)
+        self.assertEqual(command[command.index("--candidate-setup-evidence-sha256") + 1], "a" * 64)
+
+    def test_standard_controller_uses_explicit_map01_exit_objective_prompt(self):
+        prompt = Path(controller.__file__).with_name("map01_motor_responder_v11.txt")
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        self.assertIn('"map01_motor_responder_v11.txt"', source)
+        text = prompt.read_text(encoding="utf-8")
+        self.assertIn("explicit task is to reach the MAP01 exit alive", text)
+        self.assertIn("unmistakable completed-level transition", text)
+        baseline = prompt.with_name("map01_motor_responder_v10.txt").read_text(encoding="utf-8")
+        self.assertEqual(text.replace(
+            " Your explicit task is to reach the MAP01 exit alive. Use visible passages, doors and switches to make route progress; treat movement and a door opening as intermediate progress, and choose exit_or_transition only for an unmistakable completed-level transition.",
+            "", 1), baseline)
+
+    def test_candidate_proof_options_are_hash_bound_and_require_full_live_gate(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as temporary:
+            evidence = Path(temporary) / "evidence.json"
+            evidence.write_text("sealed proof", encoding="utf-8")
+            args = Namespace(candidate_setup_evidence=evidence,
+                             candidate_setup_evidence_sha256=hashlib.sha256(b"sealed proof").hexdigest(),
+                             measurement_session=True, target_process_identity=True,
+                             owned_input_service=True, post_load_clock_gate=True,
+                             renewal_passive_observer=True, seed=990619,
+                             episode_timeout_seconds=75)
+            controller.validate_candidate_setup_evidence_options(args)
+            for change in ({"candidate_setup_evidence_sha256": "b" * 64},
+                           {"owned_input_service": False}, {"post_load_clock_gate": False},
+                           {"seed": 7}, {"episode_timeout_seconds": 76}):
+                with self.subTest(change=change), self.assertRaises(ValueError):
+                    controller.validate_candidate_setup_evidence_options(
+                        Namespace(**{**vars(args), **change}))
 
     def test_rejected_action_followup_keeps_model_turn_alive_on_damage(self):
         previous = {"iteration": 1, "model_action_discarded": True,
@@ -555,6 +618,22 @@ class Map01V39CoastTests(unittest.TestCase):
             with self.subTest(iteration=decision["iteration"]):
                 self.assertEqual(controller.reusable_cover([decision]),
                                  (cover, validity[0], decision["iteration"]))
+
+    def test_active_empty_cover_does_not_reuse_its_validity_as_a_policy(self):
+        decision = {"iteration": 4, "model_action_discarded": False,
+                    "remaining_action_discarded": False,
+                    "action": {"state": "active", "next_cover": [],
+                        "next_cover_validity": [{"signal_id": "health",
+                            "critical_health_minimum": 95,
+                            "maximum_health_loss": 0,
+                            "max_source_age_ms": 2500}]}}
+        commands, validity, source = controller.reusable_cover([decision])
+        self.assertEqual((commands, validity, source), ([], None, None))
+        monitor, receipt = controller.select_cover_monitor(
+            object(), {"authored": None}, commands, source)
+        self.assertIsInstance(monitor, controller.UnauthoredCoastMonitor)
+        self.assertEqual(receipt["monitor_mode"], "unauthored_coast_no_policy")
+        self.assertEqual(monitor.event_types, frozenset())
 
     def test_authored_cover_still_uses_original_guard(self):
         guard = object()
